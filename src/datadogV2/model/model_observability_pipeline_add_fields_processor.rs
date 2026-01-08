@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `add_fields` processor adds static key-value fields to logs.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

@@ -119,6 +119,8 @@ pub struct ApiInstances {
         Option<datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI>,
     pub v2_api_cloud_network_monitoring:
         Option<datadogV2::api_cloud_network_monitoring::CloudNetworkMonitoringAPI>,
+    pub v2_api_observability_pipelines:
+        Option<datadogV2::api_observability_pipelines::ObservabilityPipelinesAPI>,
     pub v2_api_on_call: Option<datadogV2::api_on_call::OnCallAPI>,
     pub v2_api_on_call_paging: Option<datadogV2::api_on_call_paging::OnCallPagingAPI>,
     pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
@@ -133,8 +135,6 @@ pub struct ApiInstances {
     pub v2_api_application_security:
         Option<datadogV2::api_application_security::ApplicationSecurityAPI>,
     pub v2_api_csm_threats: Option<datadogV2::api_csm_threats::CSMThreatsAPI>,
-    pub v2_api_observability_pipelines:
-        Option<datadogV2::api_observability_pipelines::ObservabilityPipelinesAPI>,
     pub v2_api_restriction_policies:
         Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
     pub v2_api_rum: Option<datadogV2::api_rum::RUMAPI>,
@@ -801,6 +801,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.http_client.as_ref().unwrap().clone()
             ));
         }
+        "ObservabilityPipelines" => {
+            world.api_instances.v2_api_observability_pipelines = Some(datadogV2::api_observability_pipelines::ObservabilityPipelinesAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
+        }
         "OnCall" => {
             world.api_instances.v2_api_on_call =
                 Some(datadogV2::api_on_call::OnCallAPI::with_client_and_config(
@@ -884,12 +890,6 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
-        }
-        "ObservabilityPipelines" => {
-            world.api_instances.v2_api_observability_pipelines = Some(datadogV2::api_observability_pipelines::ObservabilityPipelinesAPI::with_client_and_config(
-                world.config.clone(),
-                world.http_client.as_ref().unwrap().clone()
-            ));
         }
         "RestrictionPolicies" => {
             world.api_instances.v2_api_restriction_policies = Some(
@@ -3739,6 +3739,24 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetAggregatedDns".into(), test_v2_get_aggregated_dns);
+    world
+        .function_mappings
+        .insert("v2.ListPipelines".into(), test_v2_list_pipelines);
+    world
+        .function_mappings
+        .insert("v2.CreatePipeline".into(), test_v2_create_pipeline);
+    world
+        .function_mappings
+        .insert("v2.ValidatePipeline".into(), test_v2_validate_pipeline);
+    world
+        .function_mappings
+        .insert("v2.DeletePipeline".into(), test_v2_delete_pipeline);
+    world
+        .function_mappings
+        .insert("v2.GetPipeline".into(), test_v2_get_pipeline);
+    world
+        .function_mappings
+        .insert("v2.UpdatePipeline".into(), test_v2_update_pipeline);
     world.function_mappings.insert(
         "v2.CreateOnCallEscalationPolicy".into(),
         test_v2_create_on_call_escalation_policy,
@@ -4109,24 +4127,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateCloudWorkloadSecurityAgentRule".into(),
         test_v2_update_cloud_workload_security_agent_rule,
     );
-    world
-        .function_mappings
-        .insert("v2.ListPipelines".into(), test_v2_list_pipelines);
-    world
-        .function_mappings
-        .insert("v2.CreatePipeline".into(), test_v2_create_pipeline);
-    world
-        .function_mappings
-        .insert("v2.ValidatePipeline".into(), test_v2_validate_pipeline);
-    world
-        .function_mappings
-        .insert("v2.DeletePipeline".into(), test_v2_delete_pipeline);
-    world
-        .function_mappings
-        .insert("v2.GetPipeline".into(), test_v2_get_pipeline);
-    world
-        .function_mappings
-        .insert("v2.UpdatePipeline".into(), test_v2_update_pipeline);
     world.function_mappings.insert(
         "v2.DeleteRestrictionPolicy".into(),
         test_v2_delete_restriction_policy,
@@ -28360,6 +28360,168 @@ fn test_v2_get_aggregated_dns(world: &mut DatadogWorld, _parameters: &HashMap<St
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_pipelines(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_observability_pipelines
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_observability_pipelines::ListPipelinesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    let response = match block_on(api.list_pipelines_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_observability_pipelines
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_pipeline_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_validate_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_observability_pipelines
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.validate_pipeline_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_observability_pipelines
+        .as_ref()
+        .expect("api instance not found");
+    let pipeline_id =
+        serde_json::from_value(_parameters.get("pipeline_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_pipeline_with_http_info(pipeline_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_observability_pipelines
+        .as_ref()
+        .expect("api instance not found");
+    let pipeline_id =
+        serde_json::from_value(_parameters.get("pipeline_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_pipeline_with_http_info(pipeline_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_observability_pipelines
+        .as_ref()
+        .expect("api instance not found");
+    let pipeline_id =
+        serde_json::from_value(_parameters.get("pipeline_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_pipeline_with_http_info(pipeline_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_create_on_call_escalation_policy(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -31394,168 +31556,6 @@ fn test_v2_update_cloud_workload_security_agent_rule(
     let response = match block_on(
         api.update_cloud_workload_security_agent_rule_with_http_info(agent_rule_id, body),
     ) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_pipelines(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_observability_pipelines
-        .as_ref()
-        .expect("api instance not found");
-    let page_size = _parameters
-        .get("page[size]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_number = _parameters
-        .get("page[number]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_observability_pipelines::ListPipelinesOptionalParams::default();
-    params.page_size = page_size;
-    params.page_number = page_number;
-    let response = match block_on(api.list_pipelines_with_http_info(params)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_create_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_observability_pipelines
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_pipeline_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_validate_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_observability_pipelines
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.validate_pipeline_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_observability_pipelines
-        .as_ref()
-        .expect("api instance not found");
-    let pipeline_id =
-        serde_json::from_value(_parameters.get("pipeline_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_pipeline_with_http_info(pipeline_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_get_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_observability_pipelines
-        .as_ref()
-        .expect("api instance not found");
-    let pipeline_id =
-        serde_json::from_value(_parameters.get("pipeline_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_pipeline_with_http_info(pipeline_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_update_pipeline(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_observability_pipelines
-        .as_ref()
-        .expect("api instance not found");
-    let pipeline_id =
-        serde_json::from_value(_parameters.get("pipeline_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_pipeline_with_http_info(pipeline_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `elasticsearch` destination writes logs to an Elasticsearch cluster.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -18,6 +20,10 @@ pub struct ObservabilityPipelineElasticsearchDestination {
     /// The index to write logs to in Elasticsearch.
     #[serde(rename = "bulk_index")]
     pub bulk_index: Option<String>,
+    /// Configuration options for writing to Elasticsearch Data Streams instead of a fixed index.
+    #[serde(rename = "data_stream")]
+    pub data_stream:
+        Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream>,
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
@@ -43,6 +49,7 @@ impl ObservabilityPipelineElasticsearchDestination {
         ObservabilityPipelineElasticsearchDestination {
             api_version: None,
             bulk_index: None,
+            data_stream: None,
             id,
             inputs,
             type_,
@@ -61,6 +68,14 @@ impl ObservabilityPipelineElasticsearchDestination {
 
     pub fn bulk_index(mut self, value: String) -> Self {
         self.bulk_index = Some(value);
+        self
+    }
+
+    pub fn data_stream(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream,
+    ) -> Self {
+        self.data_stream = Some(value);
         self
     }
 
@@ -92,6 +107,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
             {
                 let mut api_version: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion> = None;
                 let mut bulk_index: Option<String> = None;
+                let mut data_stream: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut type_: Option<
@@ -126,6 +142,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                             }
                             bulk_index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "data_stream" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_stream =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -157,6 +180,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                 let content = ObservabilityPipelineElasticsearchDestination {
                     api_version,
                     bulk_index,
+                    data_stream,
                     id,
                     inputs,
                     type_,
