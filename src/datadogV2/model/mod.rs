@@ -4872,6 +4872,8 @@ pub mod model_batch_upsert_rows_request_data;
 pub use self::model_batch_upsert_rows_request_data::BatchUpsertRowsRequestData;
 pub mod model_batch_upsert_rows_request_data_attributes;
 pub use self::model_batch_upsert_rows_request_data_attributes::BatchUpsertRowsRequestDataAttributes;
+pub mod model_batch_upsert_rows_request_data_attributes_value;
+pub use self::model_batch_upsert_rows_request_data_attributes_value::BatchUpsertRowsRequestDataAttributesValue;
 pub mod model_create_upload_request;
 pub use self::model_create_upload_request::CreateUploadRequest;
 pub mod model_create_upload_request_data;

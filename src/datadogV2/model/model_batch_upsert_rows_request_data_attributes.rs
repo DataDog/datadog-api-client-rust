@@ -11,9 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BatchUpsertRowsRequestDataAttributes {
-    /// Key-value pairs representing row data, where keys are field names from the schema.
+    /// Key-value pairs representing row data, where keys are schema field names and values match the corresponding column types.
     #[serde(rename = "values")]
-    pub values: std::collections::BTreeMap<String, serde_json::Value>,
+    pub values: std::collections::BTreeMap<
+        String,
+        crate::datadogV2::model::BatchUpsertRowsRequestDataAttributesValue,
+    >,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -23,7 +26,10 @@ pub struct BatchUpsertRowsRequestDataAttributes {
 
 impl BatchUpsertRowsRequestDataAttributes {
     pub fn new(
-        values: std::collections::BTreeMap<String, serde_json::Value>,
+        values: std::collections::BTreeMap<
+            String,
+            crate::datadogV2::model::BatchUpsertRowsRequestDataAttributesValue,
+        >,
     ) -> BatchUpsertRowsRequestDataAttributes {
         BatchUpsertRowsRequestDataAttributes {
             values,
@@ -58,8 +64,12 @@ impl<'de> Deserialize<'de> for BatchUpsertRowsRequestDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut values: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut values: Option<
+                    std::collections::BTreeMap<
+                        String,
+                        crate::datadogV2::model::BatchUpsertRowsRequestDataAttributesValue,
+                    >,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
