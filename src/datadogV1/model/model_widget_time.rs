@@ -8,9 +8,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum WidgetTime {
-    WidgetLegacyLiveSpan(Box<crate::datadogV1::model::WidgetLegacyLiveSpan>),
     WidgetNewLiveSpan(Box<crate::datadogV1::model::WidgetNewLiveSpan>),
     WidgetNewFixedSpan(Box<crate::datadogV1::model::WidgetNewFixedSpan>),
+    WidgetLegacyLiveSpan(Box<crate::datadogV1::model::WidgetLegacyLiveSpan>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -20,13 +20,6 @@ impl<'de> Deserialize<'de> for WidgetTime {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::WidgetLegacyLiveSpan>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
-                return Ok(WidgetTime::WidgetLegacyLiveSpan(_v));
-            }
-        }
         if let Ok(_v) =
             serde_json::from_value::<Box<crate::datadogV1::model::WidgetNewLiveSpan>>(value.clone())
         {
@@ -39,6 +32,13 @@ impl<'de> Deserialize<'de> for WidgetTime {
         ) {
             if !_v._unparsed {
                 return Ok(WidgetTime::WidgetNewFixedSpan(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::WidgetLegacyLiveSpan>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(WidgetTime::WidgetLegacyLiveSpan(_v));
             }
         }
 
