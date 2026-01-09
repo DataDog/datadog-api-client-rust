@@ -7,7 +7,6 @@ use datadog_api_client::datadogV1::model::DashboardLayoutType;
 use datadog_api_client::datadogV1::model::DistributionWidgetDefinition;
 use datadog_api_client::datadogV1::model::DistributionWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::DistributionWidgetHistogramRequestQuery;
-use datadog_api_client::datadogV1::model::DistributionWidgetHistogramRequestType;
 use datadog_api_client::datadogV1::model::DistributionWidgetRequest;
 use datadog_api_client::datadogV1::model::DistributionWidgetXAxis;
 use datadog_api_client::datadogV1::model::DistributionWidgetYAxis;
@@ -16,6 +15,7 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionApmResourceStatsData
 use datadog_api_client::datadogV1::model::FormulaAndFunctionApmResourceStatsQueryDefinition;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetHistogramRequestType;
 use datadog_api_client::datadogV1::model::WidgetLayout;
 use datadog_api_client::datadogV1::model::WidgetStyle;
 use datadog_api_client::datadogV1::model::WidgetTextAlign;
@@ -52,7 +52,7 @@ async fn main() {
                                                 ),
                                             ),
                                         )
-                                        .request_type(DistributionWidgetHistogramRequestType::HISTOGRAM)
+                                        .request_type(WidgetHistogramRequestType::HISTOGRAM)
                                         .style(WidgetStyle::new().palette("dog_classic".to_string()))
                                 ],
                                 DistributionWidgetDefinitionType::DISTRIBUTION,

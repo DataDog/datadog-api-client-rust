@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum DistributionWidgetHistogramRequestType {
+pub enum WidgetHistogramRequestType {
     HISTOGRAM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for DistributionWidgetHistogramRequestType {
+impl ToString for WidgetHistogramRequestType {
     fn to_string(&self) -> String {
         match self {
             Self::HISTOGRAM => String::from("histogram"),
@@ -20,7 +20,7 @@ impl ToString for DistributionWidgetHistogramRequestType {
     }
 }
 
-impl Serialize for DistributionWidgetHistogramRequestType {
+impl Serialize for WidgetHistogramRequestType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for DistributionWidgetHistogramRequestType {
     }
 }
 
-impl<'de> Deserialize<'de> for DistributionWidgetHistogramRequestType {
+impl<'de> Deserialize<'de> for WidgetHistogramRequestType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

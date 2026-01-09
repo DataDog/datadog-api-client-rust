@@ -7,7 +7,6 @@ use datadog_api_client::datadogV1::model::DashboardLayoutType;
 use datadog_api_client::datadogV1::model::DistributionWidgetDefinition;
 use datadog_api_client::datadogV1::model::DistributionWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::DistributionWidgetHistogramRequestQuery;
-use datadog_api_client::datadogV1::model::DistributionWidgetHistogramRequestType;
 use datadog_api_client::datadogV1::model::DistributionWidgetRequest;
 use datadog_api_client::datadogV1::model::DistributionWidgetXAxis;
 use datadog_api_client::datadogV1::model::DistributionWidgetYAxis;
@@ -18,6 +17,7 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinition
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
+use datadog_api_client::datadogV1::model::WidgetHistogramRequestType;
 use datadog_api_client::datadogV1::model::WidgetLayout;
 use datadog_api_client::datadogV1::model::WidgetTextAlign;
 
@@ -55,7 +55,7 @@ async fn main() {
                                                 ),
                                             ),
                                         )
-                                        .request_type(DistributionWidgetHistogramRequestType::HISTOGRAM)
+                                        .request_type(WidgetHistogramRequestType::HISTOGRAM)
                                 ],
                                 DistributionWidgetDefinitionType::DISTRIBUTION,
                             )

@@ -20,6 +20,9 @@ pub struct DistributionWidgetXAxis {
     /// Specifies minimum value to show on the x-axis. It takes a number, percentile (p90 === 90th percentile), or auto for default behavior.
     #[serde(rename = "min")]
     pub min: Option<String>,
+    /// Number of value buckets to target, also known as the resolution of the value bins.
+    #[serde(rename = "num_buckets")]
+    pub num_buckets: Option<i64>,
     /// Specifies the scale type. Possible values are `linear`.
     #[serde(rename = "scale")]
     pub scale: Option<String>,
@@ -36,6 +39,7 @@ impl DistributionWidgetXAxis {
             include_zero: None,
             max: None,
             min: None,
+            num_buckets: None,
             scale: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -54,6 +58,11 @@ impl DistributionWidgetXAxis {
 
     pub fn min(mut self, value: String) -> Self {
         self.min = Some(value);
+        self
+    }
+
+    pub fn num_buckets(mut self, value: i64) -> Self {
+        self.num_buckets = Some(value);
         self
     }
 
@@ -97,6 +106,7 @@ impl<'de> Deserialize<'de> for DistributionWidgetXAxis {
                 let mut include_zero: Option<bool> = None;
                 let mut max: Option<String> = None;
                 let mut min: Option<String> = None;
+                let mut num_buckets: Option<i64> = None;
                 let mut scale: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -125,6 +135,13 @@ impl<'de> Deserialize<'de> for DistributionWidgetXAxis {
                             }
                             min = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "num_buckets" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            num_buckets =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "scale" => {
                             if v.is_null() {
                                 continue;
@@ -143,6 +160,7 @@ impl<'de> Deserialize<'de> for DistributionWidgetXAxis {
                     include_zero,
                     max,
                     min,
+                    num_buckets,
                     scale,
                     additional_properties,
                     _unparsed,
