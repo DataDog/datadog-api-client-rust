@@ -96,7 +96,7 @@ impl GetOnCallTeamRoutingRulesOptionalParams {
 pub struct GetScheduleOnCallUserOptionalParams {
     /// Specifies related resources to include in the response as a comma-separated list. Allowed value: `user`.
     pub include: Option<String>,
-    /// Retrieves the on-call user at the given timestamp (ISO-8601). Defaults to the current time if omitted."
+    /// Retrieves the on-call user at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01+00:00`). Defaults to the current time if omitted.
     pub filter_at_ts: Option<String>,
 }
 
@@ -106,7 +106,7 @@ impl GetScheduleOnCallUserOptionalParams {
         self.include = Some(value);
         self
     }
-    /// Retrieves the on-call user at the given timestamp (ISO-8601). Defaults to the current time if omitted."
+    /// Retrieves the on-call user at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01+00:00`). Defaults to the current time if omitted.
     pub fn filter_at_ts(mut self, value: String) -> Self {
         self.filter_at_ts = Some(value);
         self
