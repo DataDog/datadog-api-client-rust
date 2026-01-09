@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Specifies the SASL mechanism for authenticating with a Kafka cluster.
+/// Compression configuration for HTTP requests.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineKafkaSourceSasl {
-    /// SASL mechanism used for Kafka authentication.
-    #[serde(rename = "mechanism")]
-    pub mechanism:
-        Option<crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism>,
+pub struct ObservabilityPipelineHttpClientDestinationCompression {
+    /// Compression algorithm.
+    #[serde(rename = "algorithm")]
+    pub algorithm:
+        crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompressionAlgorithm,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,21 +22,15 @@ pub struct ObservabilityPipelineKafkaSourceSasl {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineKafkaSourceSasl {
-    pub fn new() -> ObservabilityPipelineKafkaSourceSasl {
-        ObservabilityPipelineKafkaSourceSasl {
-            mechanism: None,
+impl ObservabilityPipelineHttpClientDestinationCompression {
+    pub fn new(
+        algorithm: crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompressionAlgorithm,
+    ) -> ObservabilityPipelineHttpClientDestinationCompression {
+        ObservabilityPipelineHttpClientDestinationCompression {
+            algorithm,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn mechanism(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism,
-    ) -> Self {
-        self.mechanism = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -48,20 +42,14 @@ impl ObservabilityPipelineKafkaSourceSasl {
     }
 }
 
-impl Default for ObservabilityPipelineKafkaSourceSasl {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
+impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientDestinationCompression {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineKafkaSourceSaslVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineKafkaSourceSaslVisitor {
-            type Value = ObservabilityPipelineKafkaSourceSasl;
+        struct ObservabilityPipelineHttpClientDestinationCompressionVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineHttpClientDestinationCompressionVisitor {
+            type Value = ObservabilityPipelineHttpClientDestinationCompression;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -71,9 +59,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
             where
                 M: MapAccess<'a>,
             {
-                let mut mechanism: Option<
-                    crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism,
-                > = None;
+                let mut algorithm: Option<crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompressionAlgorithm> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,14 +68,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "mechanism" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            mechanism = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _mechanism) = mechanism {
-                                match _mechanism {
-                                    crate::datadogV2::model::ObservabilityPipelinePipelineKafkaSourceSaslMechanism::UnparsedObject(_mechanism) => {
+                        "algorithm" => {
+                            algorithm = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _algorithm) = algorithm {
+                                match _algorithm {
+                                    crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompressionAlgorithm::UnparsedObject(_algorithm) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -103,9 +86,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
                         }
                     }
                 }
+                let algorithm = algorithm.ok_or_else(|| M::Error::missing_field("algorithm"))?;
 
-                let content = ObservabilityPipelineKafkaSourceSasl {
-                    mechanism,
+                let content = ObservabilityPipelineHttpClientDestinationCompression {
+                    algorithm,
                     additional_properties,
                     _unparsed,
                 };
@@ -114,6 +98,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSourceSasl {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineKafkaSourceSaslVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineHttpClientDestinationCompressionVisitor)
     }
 }

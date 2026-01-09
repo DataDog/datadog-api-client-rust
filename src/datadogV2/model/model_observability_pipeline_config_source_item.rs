@@ -8,41 +8,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ObservabilityPipelineConfigSourceItem {
-    ObservabilityPipelineKafkaSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineKafkaSource>,
-    ),
     ObservabilityPipelineDatadogAgentSource(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogAgentSource>,
     ),
-    ObservabilityPipelineSplunkTcpSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineSplunkTcpSource>,
-    ),
-    ObservabilityPipelineSplunkHecSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecSource>,
+    ObservabilityPipelineAmazonDataFirehoseSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSource>,
     ),
     ObservabilityPipelineAmazonS3Source(
         Box<crate::datadogV2::model::ObservabilityPipelineAmazonS3Source>,
     ),
-    ObservabilityPipelineFluentdSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineFluentdSource>,
-    ),
     ObservabilityPipelineFluentBitSource(
         Box<crate::datadogV2::model::ObservabilityPipelineFluentBitSource>,
     ),
-    ObservabilityPipelineHttpServerSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineHttpServerSource>,
-    ),
-    ObservabilityPipelineSumoLogicSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicSource>,
-    ),
-    ObservabilityPipelineRsyslogSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineRsyslogSource>,
-    ),
-    ObservabilityPipelineSyslogNgSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgSource>,
-    ),
-    ObservabilityPipelineAmazonDataFirehoseSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSource>,
+    ObservabilityPipelineFluentdSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineFluentdSource>,
     ),
     ObservabilityPipelineGooglePubSubSource(
         Box<crate::datadogV2::model::ObservabilityPipelineGooglePubSubSource>,
@@ -50,11 +29,35 @@ pub enum ObservabilityPipelineConfigSourceItem {
     ObservabilityPipelineHttpClientSource(
         Box<crate::datadogV2::model::ObservabilityPipelineHttpClientSource>,
     ),
+    ObservabilityPipelineHttpServerSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineHttpServerSource>,
+    ),
+    ObservabilityPipelineKafkaSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineKafkaSource>,
+    ),
     ObservabilityPipelineLogstashSource(
         Box<crate::datadogV2::model::ObservabilityPipelineLogstashSource>,
     ),
+    ObservabilityPipelineRsyslogSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineRsyslogSource>,
+    ),
     ObservabilityPipelineSocketSource(
         Box<crate::datadogV2::model::ObservabilityPipelineSocketSource>,
+    ),
+    ObservabilityPipelineSplunkHecSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecSource>,
+    ),
+    ObservabilityPipelineSplunkTcpSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineSplunkTcpSource>,
+    ),
+    ObservabilityPipelineSumoLogicSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicSource>,
+    ),
+    ObservabilityPipelineSyslogNgSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgSource>,
+    ),
+    ObservabilityPipelineOpentelemetrySource(
+        Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>,
     ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -65,16 +68,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineKafkaSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineKafkaSource(_v),
-                );
-            }
-        }
         if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV2::model::ObservabilityPipelineDatadogAgentSource>,
         >(value.clone())
@@ -88,23 +81,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
             }
         }
         if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineSplunkTcpSource>,
+            Box<crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSource>,
         >(value.clone())
         {
             if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSplunkTcpSource(_v),
-                );
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSplunkHecSource(_v),
-                );
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineAmazonDataFirehoseSource(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
@@ -114,16 +95,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
             if !_v._unparsed {
                 return Ok(
                     ObservabilityPipelineConfigSourceItem::ObservabilityPipelineAmazonS3Source(_v),
-                );
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineFluentdSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineFluentdSource(_v),
                 );
             }
         }
@@ -138,53 +109,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
             }
         }
         if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineHttpServerSource>,
+            Box<crate::datadogV2::model::ObservabilityPipelineFluentdSource>,
         >(value.clone())
         {
             if !_v._unparsed {
                 return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineHttpServerSource(
-                        _v,
-                    ),
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineFluentdSource(_v),
                 );
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSumoLogicSource(_v),
-                );
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineRsyslogSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineRsyslogSource(_v),
-                );
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSyslogNgSource(_v),
-                );
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineAmazonDataFirehoseSource(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
@@ -212,6 +143,28 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
             }
         }
         if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineHttpServerSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineHttpServerSource(
+                        _v,
+                    ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineKafkaSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineKafkaSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV2::model::ObservabilityPipelineLogstashSource>,
         >(value.clone())
         {
@@ -222,12 +175,74 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
             }
         }
         if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineRsyslogSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineRsyslogSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV2::model::ObservabilityPipelineSocketSource>,
         >(value.clone())
         {
             if !_v._unparsed {
                 return Ok(
                     ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSocketSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSplunkHecSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSplunkTcpSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSplunkTcpSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSumoLogicSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSyslogNgSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineOpentelemetrySource(
+                        _v,
+                    ),
                 );
             }
         }

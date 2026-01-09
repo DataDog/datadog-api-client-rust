@@ -46,7 +46,7 @@ async fn main() {
                                 ),
                             )
                         ],
-                    ).processors(
+                    ).processor_groups(
                         vec![
                             ObservabilityPipelineConfigProcessorGroup::new(
                                 true,
