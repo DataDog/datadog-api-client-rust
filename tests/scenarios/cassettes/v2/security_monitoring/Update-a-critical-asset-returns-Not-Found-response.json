@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"severity\":\"high\"},\"type\":\"critical_assets\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/critical_assets/00000000-0000-0000-0000-000000000001"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"not_found(Critical asset with ID 00000000-0000-0000-0000-000000000001 not found)\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Fri, 02 Jan 2026 19:09:24 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
