@@ -13,8 +13,7 @@ async fn main() {
                 .filter("@severity:(critical OR high)".to_string()),
         ),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.SearchSecurityFindings", true);
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.search_security_findings(body).await;
     if let Ok(value) = resp {
