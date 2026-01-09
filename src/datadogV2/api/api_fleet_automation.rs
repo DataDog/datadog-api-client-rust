@@ -38,7 +38,7 @@ impl GetFleetDeploymentOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListFleetAgentsOptionalParams {
-    /// Page number for pagination (must be greater than 0).
+    /// Page number for pagination (starts at 0).
     pub page_number: Option<i64>,
     /// Number of results per page (must be greater than 0 and less than or equal to 100).
     pub page_size: Option<i64>,
@@ -53,7 +53,7 @@ pub struct ListFleetAgentsOptionalParams {
 }
 
 impl ListFleetAgentsOptionalParams {
-    /// Page number for pagination (must be greater than 0).
+    /// Page number for pagination (starts at 0).
     pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
