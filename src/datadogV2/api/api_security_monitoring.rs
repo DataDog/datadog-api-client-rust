@@ -8627,10 +8627,6 @@ impl SecurityMonitoringAPI {
 
     /// Get a list of security findings that match a search query.
     ///
-    /// This endpoint requires one of the following permissions:
-    /// - `security_monitoring_findings_read`
-    /// - `appsec_vm_read`
-    ///
     /// ### Query Syntax
     ///
     /// This endpoint uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
@@ -8697,10 +8693,6 @@ impl SecurityMonitoringAPI {
 
     /// Get a list of security findings that match a search query.
     ///
-    /// This endpoint requires one of the following permissions:
-    /// - `security_monitoring_findings_read`
-    /// - `appsec_vm_read`
-    ///
     /// ### Query Syntax
     ///
     /// This endpoint uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
@@ -8715,14 +8707,6 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_security_findings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_security_findings' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -10990,10 +10974,6 @@ impl SecurityMonitoringAPI {
 
     /// Get a list of security findings that match a search query.
     ///
-    /// This endpoint requires one of the following permissions:
-    /// - `security_monitoring_findings_read`
-    /// - `appsec_vm_read`
-    ///
     /// ### Query Syntax
     ///
     /// The API uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
@@ -11069,10 +11049,6 @@ impl SecurityMonitoringAPI {
 
     /// Get a list of security findings that match a search query.
     ///
-    /// This endpoint requires one of the following permissions:
-    /// - `security_monitoring_findings_read`
-    /// - `appsec_vm_read`
-    ///
     /// ### Query Syntax
     ///
     /// The API uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
@@ -11087,14 +11063,6 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.search_security_findings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.search_security_findings' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
