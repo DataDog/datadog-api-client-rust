@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `sample` processor allows probabilistic sampling of logs at a fixed rate.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,10 +16,13 @@ pub struct ObservabilityPipelineSampleProcessor {
     /// The display name for a component.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
-    /// Whether this processor is enabled.
+    /// Indicates whether the processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
-    /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
+    /// Optional list of fields to group events by. Each group is sampled independently.
+    #[serde(rename = "group_by")]
+    pub group_by: Option<Vec<String>>,
+    /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which logs this processor targets.
@@ -25,10 +30,7 @@ pub struct ObservabilityPipelineSampleProcessor {
     pub include: String,
     /// The percentage of logs to sample.
     #[serde(rename = "percentage")]
-    pub percentage: Option<f64>,
-    /// Number of events to sample (1 in N).
-    #[serde(rename = "rate")]
-    pub rate: Option<i64>,
+    pub percentage: f64,
     /// The processor type. The value should always be `sample`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
@@ -44,15 +46,16 @@ impl ObservabilityPipelineSampleProcessor {
         enabled: bool,
         id: String,
         include: String,
+        percentage: f64,
         type_: crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
     ) -> ObservabilityPipelineSampleProcessor {
         ObservabilityPipelineSampleProcessor {
             display_name: None,
             enabled,
+            group_by: None,
             id,
             include,
-            percentage: None,
-            rate: None,
+            percentage,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -64,13 +67,8 @@ impl ObservabilityPipelineSampleProcessor {
         self
     }
 
-    pub fn percentage(mut self, value: f64) -> Self {
-        self.percentage = Some(value);
-        self
-    }
-
-    pub fn rate(mut self, value: i64) -> Self {
-        self.rate = Some(value);
+    pub fn group_by(mut self, value: Vec<String>) -> Self {
+        self.group_by = Some(value);
         self
     }
 
@@ -102,10 +100,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
             {
                 let mut display_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
+                let mut group_by: Option<Vec<String>> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
                 let mut percentage: Option<f64> = None;
-                let mut rate: Option<i64> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
                 > = None;
@@ -127,6 +125,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "group_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -134,16 +138,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "percentage" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "rate" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -166,15 +161,16 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
+                let percentage = percentage.ok_or_else(|| M::Error::missing_field("percentage"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineSampleProcessor {
                     display_name,
                     enabled,
+                    group_by,
                     id,
                     include,
                     percentage,
-                    rate,
                     type_,
                     additional_properties,
                     _unparsed,

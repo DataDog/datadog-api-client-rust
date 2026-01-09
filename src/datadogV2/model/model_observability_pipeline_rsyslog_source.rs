@@ -7,11 +7,13 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `rsyslog` source listens for logs over TCP or UDP from an `rsyslog` server using the syslog protocol.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineRsyslogSource {
-    /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (e.g., as input to downstream components).
+    /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
     /// Protocol used by the syslog source to receive messages.

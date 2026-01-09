@@ -7,11 +7,13 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `fluentd` source ingests logs from a Fluentd-compatible service.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineFluentdSource {
-    /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (for example, as the `input` to downstream components).
+    /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
