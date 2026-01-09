@@ -4373,6 +4373,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.GetSPARecommendations".into(),
         test_v2_get_spa_recommendations,
     );
+    world.function_mappings.insert(
+        "v2.GetSPARecommendationsWithShard".into(),
+        test_v2_get_spa_recommendations_with_shard,
+    );
     world
         .function_mappings
         .insert("v2.AggregateSpans".into(), test_v2_aggregate_spans);
@@ -33725,9 +33729,49 @@ fn test_v2_get_spa_recommendations(world: &mut DatadogWorld, _parameters: &HashM
         .v2_api_spa
         .as_ref()
         .expect("api instance not found");
+    let service = serde_json::from_value(_parameters.get("service").unwrap().clone()).unwrap();
+    let bypass_cache = _parameters
+        .get("bypass_cache")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_spa::GetSPARecommendationsOptionalParams::default();
+    params.bypass_cache = bypass_cache;
+    let response = match block_on(api.get_spa_recommendations_with_http_info(service, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_spa_recommendations_with_shard(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_spa
+        .as_ref()
+        .expect("api instance not found");
     let shard = serde_json::from_value(_parameters.get("shard").unwrap().clone()).unwrap();
     let service = serde_json::from_value(_parameters.get("service").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_spa_recommendations_with_http_info(shard, service)) {
+    let bypass_cache = _parameters
+        .get("bypass_cache")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_spa::GetSPARecommendationsWithShardOptionalParams::default();
+    params.bypass_cache = bypass_cache;
+    let response = match block_on(
+        api.get_spa_recommendations_with_shard_with_http_info(shard, service, params),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {
