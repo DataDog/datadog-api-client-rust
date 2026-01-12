@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `reduce` processor aggregates and merges logs based on matching keys and merge strategies.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +16,7 @@ pub struct ObservabilityPipelineReduceProcessor {
     /// The display name for a component.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
-    /// Whether this processor is enabled.
+    /// Indicates whether the processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
     /// A list of fields used to group log events for merging.

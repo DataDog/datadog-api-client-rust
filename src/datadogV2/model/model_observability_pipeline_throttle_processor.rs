@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `throttle` processor limits the number of events that pass through over a given time window.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +16,7 @@ pub struct ObservabilityPipelineThrottleProcessor {
     /// The display name for a component.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
-    /// Whether this processor is enabled.
+    /// Indicates whether the processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
     /// Optional list of fields used to group events before the threshold has been reached.

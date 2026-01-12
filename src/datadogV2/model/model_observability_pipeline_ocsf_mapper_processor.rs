@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `ocsf_mapper` processor transforms logs into the OCSF schema using a predefined mapping configuration.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +16,7 @@ pub struct ObservabilityPipelineOcsfMapperProcessor {
     /// The display name for a component.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
-    /// Whether this processor is enabled.
+    /// Indicates whether the processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline.

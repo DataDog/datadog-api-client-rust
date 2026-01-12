@@ -14,7 +14,17 @@ pub struct ObservabilityPipelineConfig {
     /// A list of destination components where processed logs are sent.
     #[serde(rename = "destinations")]
     pub destinations: Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
+    /// The type of data being ingested. Defaults to `logs` if not specified.
+    #[serde(rename = "pipeline_type")]
+    pub pipeline_type: Option<crate::datadogV2::model::ObservabilityPipelineConfigPipelineType>,
     /// A list of processor groups that transform or enrich log data.
+    #[serde(rename = "processor_groups")]
+    pub processor_groups:
+        Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>>,
+    /// A list of processor groups that transform or enrich log data.
+    ///
+    /// **Deprecated:** This field is deprecated, you should now use the processor_groups field.
+    #[deprecated]
     #[serde(rename = "processors")]
     pub processors: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>>,
     /// A list of configured data sources for the pipeline.
@@ -32,8 +42,11 @@ impl ObservabilityPipelineConfig {
         destinations: Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
         sources: Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
     ) -> ObservabilityPipelineConfig {
+        #[allow(deprecated)]
         ObservabilityPipelineConfig {
             destinations,
+            pipeline_type: None,
+            processor_groups: None,
             processors: None,
             sources,
             additional_properties: std::collections::BTreeMap::new(),
@@ -41,6 +54,25 @@ impl ObservabilityPipelineConfig {
         }
     }
 
+    #[allow(deprecated)]
+    pub fn pipeline_type(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineConfigPipelineType,
+    ) -> Self {
+        self.pipeline_type = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn processor_groups(
+        mut self,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
+    ) -> Self {
+        self.processor_groups = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn processors(
         mut self,
         value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
@@ -78,6 +110,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                 let mut destinations: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
                 > = None;
+                let mut pipeline_type: Option<
+                    crate::datadogV2::model::ObservabilityPipelineConfigPipelineType,
+                > = None;
+                let mut processor_groups: Option<
+                    Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
+                > = None;
                 let mut processors: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
                 > = None;
@@ -94,6 +132,28 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                     match k.as_str() {
                         "destinations" => {
                             destinations =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "pipeline_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            pipeline_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _pipeline_type) = pipeline_type {
+                                match _pipeline_type {
+                                    crate::datadogV2::model::ObservabilityPipelineConfigPipelineType::UnparsedObject(_pipeline_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "processor_groups" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            processor_groups =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "processors" => {
@@ -116,8 +176,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                     destinations.ok_or_else(|| M::Error::missing_field("destinations"))?;
                 let sources = sources.ok_or_else(|| M::Error::missing_field("sources"))?;
 
+                #[allow(deprecated)]
                 let content = ObservabilityPipelineConfig {
                     destinations,
+                    pipeline_type,
+                    processor_groups,
                     processors,
                     sources,
                     additional_properties,

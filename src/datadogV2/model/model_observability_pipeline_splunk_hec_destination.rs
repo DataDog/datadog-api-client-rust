@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `splunk_hec` destination forwards logs to Splunk using the HTTP Event Collector (HEC).
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -19,7 +21,7 @@ pub struct ObservabilityPipelineSplunkHecDestination {
     #[serde(rename = "encoding")]
     pub encoding:
         Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding>,
-    /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (e.g., as input to downstream components).
+    /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
     /// Optional name of the Splunk index where logs are written.

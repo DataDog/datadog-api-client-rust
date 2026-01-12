@@ -6,7 +6,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `enrichment_table` processor enriches logs using a static CSV file or GeoIP database.
+/// The `enrichment_table` processor enriches logs using a static CSV file, GeoIP database, or reference table. Exactly one of `file`, `geoip`, or `reference_table` must be configured.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +16,7 @@ pub struct ObservabilityPipelineEnrichmentTableProcessor {
     /// The display name for a component.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
-    /// Whether this processor is enabled.
+    /// Indicates whether the processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
     /// Defines a static enrichment table loaded from a CSV file.
@@ -29,6 +31,10 @@ pub struct ObservabilityPipelineEnrichmentTableProcessor {
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
+    /// Uses a Datadog reference table to enrich logs.
+    #[serde(rename = "reference_table")]
+    pub reference_table:
+        Option<crate::datadogV2::model::ObservabilityPipelineEnrichmentTableReferenceTable>,
     /// Path where enrichment results should be stored in the log.
     #[serde(rename = "target")]
     pub target: String,
@@ -57,6 +63,7 @@ impl ObservabilityPipelineEnrichmentTableProcessor {
             geoip: None,
             id,
             include,
+            reference_table: None,
             target,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -82,6 +89,14 @@ impl ObservabilityPipelineEnrichmentTableProcessor {
         value: crate::datadogV2::model::ObservabilityPipelineEnrichmentTableGeoIp,
     ) -> Self {
         self.geoip = Some(value);
+        self
+    }
+
+    pub fn reference_table(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineEnrichmentTableReferenceTable,
+    ) -> Self {
+        self.reference_table = Some(value);
         self
     }
 
@@ -121,6 +136,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableProcessor {
                 > = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
+                let mut reference_table: Option<
+                    crate::datadogV2::model::ObservabilityPipelineEnrichmentTableReferenceTable,
+                > = None;
                 let mut target: Option<String> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineEnrichmentTableProcessorType,
@@ -161,6 +179,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableProcessor {
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "reference_table" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            reference_table =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "target" => {
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -195,6 +220,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableProcessor {
                     geoip,
                     id,
                     include,
+                    reference_table,
                     target,
                     type_,
                     additional_properties,

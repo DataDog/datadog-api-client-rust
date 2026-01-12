@@ -8,6 +8,8 @@ use std::fmt::{self, Formatter};
 
 /// The `generate_datadog_metrics` processor creates custom metrics from logs and sends them to Datadog.
 /// Metrics can be counters, gauges, or distributions and optionally grouped by log fields.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -15,7 +17,7 @@ pub struct ObservabilityPipelineGenerateMetricsProcessor {
     /// The display name for a component.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
-    /// Whether this processor is enabled.
+    /// Indicates whether the processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline.

@@ -8,6 +8,8 @@ use std::fmt::{self, Formatter};
 
 /// The `amazon_s3` source ingests logs from an Amazon S3 bucket.
 /// It supports AWS authentication and TLS encryption.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -16,7 +18,7 @@ pub struct ObservabilityPipelineAmazonS3Source {
     /// If omitted, the system’s default credentials are used (for example, the IAM role and environment variables).
     #[serde(rename = "auth")]
     pub auth: Option<crate::datadogV2::model::ObservabilityPipelineAwsAuth>,
-    /// The unique identifier for this component. Used to reference this component in other parts of the pipeline (e.g., as input to downstream components).
+    /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
     /// AWS region where the S3 bucket resides.
