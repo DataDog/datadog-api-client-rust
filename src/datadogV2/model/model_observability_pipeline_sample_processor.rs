@@ -25,10 +25,7 @@ pub struct ObservabilityPipelineSampleProcessor {
     pub include: String,
     /// The percentage of logs to sample.
     #[serde(rename = "percentage")]
-    pub percentage: Option<f64>,
-    /// Number of events to sample (1 in N).
-    #[serde(rename = "rate")]
-    pub rate: Option<i64>,
+    pub percentage: f64,
     /// The processor type. The value should always be `sample`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
@@ -44,6 +41,7 @@ impl ObservabilityPipelineSampleProcessor {
         enabled: bool,
         id: String,
         include: String,
+        percentage: f64,
         type_: crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
     ) -> ObservabilityPipelineSampleProcessor {
         ObservabilityPipelineSampleProcessor {
@@ -51,8 +49,7 @@ impl ObservabilityPipelineSampleProcessor {
             enabled,
             id,
             include,
-            percentage: None,
-            rate: None,
+            percentage,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -61,16 +58,6 @@ impl ObservabilityPipelineSampleProcessor {
 
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
-        self
-    }
-
-    pub fn percentage(mut self, value: f64) -> Self {
-        self.percentage = Some(value);
-        self
-    }
-
-    pub fn rate(mut self, value: i64) -> Self {
-        self.rate = Some(value);
         self
     }
 
@@ -105,7 +92,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
                 let mut percentage: Option<f64> = None;
-                let mut rate: Option<i64> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineSampleProcessorType,
                 > = None;
@@ -134,16 +120,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "percentage" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "rate" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -166,6 +143,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
+                let percentage = percentage.ok_or_else(|| M::Error::missing_field("percentage"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineSampleProcessor {
@@ -174,7 +152,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSampleProcessor {
                     id,
                     include,
                     percentage,
-                    rate,
                     type_,
                     additional_properties,
                     _unparsed,
