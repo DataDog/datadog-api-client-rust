@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineDatadogLogsDestination {
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
@@ -34,12 +37,21 @@ impl ObservabilityPipelineDatadogLogsDestination {
         type_: crate::datadogV2::model::ObservabilityPipelineDatadogLogsDestinationType,
     ) -> ObservabilityPipelineDatadogLogsDestination {
         ObservabilityPipelineDatadogLogsDestination {
+            buffer: None,
             id,
             inputs,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -68,6 +80,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogLogsDestination {
             where
                 M: MapAccess<'a>,
             {
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut type_: Option<
@@ -81,6 +96,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogLogsDestination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -110,6 +139,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogLogsDestination {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineDatadogLogsDestination {
+                    buffer,
                     id,
                     inputs,
                     type_,
