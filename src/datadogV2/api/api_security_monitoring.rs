@@ -8625,11 +8625,11 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get a list of security findings that match a search query.
+    /// Get a list of security findings that match a search query. [See the schema for security findings](<https://docs.datadoghq.com/security/guide/findings-schema/>).
     ///
     /// ### Query Syntax
     ///
-    /// This endpoint uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
+    /// This endpoint uses the logs query syntax. Findings attributes (living in the attributes.attributes. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
     ///
     /// Example: `@severity:(critical OR high) @status:open team:platform`
     pub async fn list_security_findings(
@@ -8691,11 +8691,11 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get a list of security findings that match a search query.
+    /// Get a list of security findings that match a search query. [See the schema for security findings](<https://docs.datadoghq.com/security/guide/findings-schema/>).
     ///
     /// ### Query Syntax
     ///
-    /// This endpoint uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
+    /// This endpoint uses the logs query syntax. Findings attributes (living in the attributes.attributes. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
     ///
     /// Example: `@severity:(critical OR high) @status:open team:platform`
     pub async fn list_security_findings_with_http_info(
@@ -10972,11 +10972,11 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get a list of security findings that match a search query.
+    /// Get a list of security findings that match a search query. [See the schema for security findings](<https://docs.datadoghq.com/security/guide/findings-schema/>).
     ///
     /// ### Query Syntax
     ///
-    /// The API uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
+    /// The API uses the logs query syntax. Findings attributes (living in the attributes.attributes. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
     ///
     /// Example: `@severity:(critical OR high) @status:open team:platform`
     pub async fn search_security_findings(
@@ -11047,11 +11047,11 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get a list of security findings that match a search query.
+    /// Get a list of security findings that match a search query. [See the schema for security findings](<https://docs.datadoghq.com/security/guide/findings-schema/>).
     ///
     /// ### Query Syntax
     ///
-    /// The API uses the logs query syntax. Findings attributes (living in the custom. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
+    /// The API uses the logs query syntax. Findings attributes (living in the attributes.attributes. namespace) are prefixed by @ when queried. Tags are queried without a prefix.
     ///
     /// Example: `@severity:(critical OR high) @status:open team:platform`
     pub async fn search_security_findings_with_http_info(
