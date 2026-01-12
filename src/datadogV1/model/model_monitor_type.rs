@@ -26,6 +26,7 @@ pub enum MonitorType {
     DATABASE_MONITORING_ALERT,
     NETWORK_PERFORMANCE_ALERT,
     COST_ALERT,
+    DATA_QUALITY_ALERT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -51,6 +52,7 @@ impl ToString for MonitorType {
             Self::DATABASE_MONITORING_ALERT => String::from("database-monitoring alert"),
             Self::NETWORK_PERFORMANCE_ALERT => String::from("network-performance alert"),
             Self::COST_ALERT => String::from("cost alert"),
+            Self::DATA_QUALITY_ALERT => String::from("data-quality alert"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -94,6 +96,7 @@ impl<'de> Deserialize<'de> for MonitorType {
             "database-monitoring alert" => Self::DATABASE_MONITORING_ALERT,
             "network-performance alert" => Self::NETWORK_PERFORMANCE_ALERT,
             "cost alert" => Self::COST_ALERT,
+            "data-quality alert" => Self::DATA_QUALITY_ALERT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
