@@ -8,6 +8,8 @@ use std::fmt::{self, Formatter};
 
 /// The `google_cloud_storage` destination stores logs in a Google Cloud Storage (GCS) bucket.
 /// It requires a bucket name, GCP authentication, and metadata fields.
+///
+/// **Supported pipeline types:** logs
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

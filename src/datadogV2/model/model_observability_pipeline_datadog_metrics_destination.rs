@@ -6,28 +6,22 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `rsyslog` destination forwards logs to an external `rsyslog` server over TCP or UDP using the syslog protocol.
+/// The `datadog_metrics` destination forwards metrics to Datadog.
 ///
-/// **Supported pipeline types:** logs
+/// **Supported pipeline types:** metrics
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineRsyslogDestination {
+pub struct ObservabilityPipelineDatadogMetricsDestination {
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
-    /// A list of component IDs whose output is used as the `input` for this component.
+    /// A list of component IDs whose output is used as the input for this component.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
-    /// Optional socket keepalive duration in milliseconds.
-    #[serde(rename = "keepalive")]
-    pub keepalive: Option<i64>,
-    /// Configuration for enabling TLS encryption between the pipeline component and external services.
-    #[serde(rename = "tls")]
-    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
-    /// The destination type. The value should always be `rsyslog`.
+    /// The destination type. The value should always be `datadog_metrics`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ObservabilityPipelineRsyslogDestinationType,
+    pub type_: crate::datadogV2::model::ObservabilityPipelineDatadogMetricsDestinationType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -35,31 +29,19 @@ pub struct ObservabilityPipelineRsyslogDestination {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineRsyslogDestination {
+impl ObservabilityPipelineDatadogMetricsDestination {
     pub fn new(
         id: String,
         inputs: Vec<String>,
-        type_: crate::datadogV2::model::ObservabilityPipelineRsyslogDestinationType,
-    ) -> ObservabilityPipelineRsyslogDestination {
-        ObservabilityPipelineRsyslogDestination {
+        type_: crate::datadogV2::model::ObservabilityPipelineDatadogMetricsDestinationType,
+    ) -> ObservabilityPipelineDatadogMetricsDestination {
+        ObservabilityPipelineDatadogMetricsDestination {
             id,
             inputs,
-            keepalive: None,
-            tls: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn keepalive(mut self, value: i64) -> Self {
-        self.keepalive = Some(value);
-        self
-    }
-
-    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
-        self.tls = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -71,14 +53,14 @@ impl ObservabilityPipelineRsyslogDestination {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineRsyslogDestination {
+impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogMetricsDestination {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineRsyslogDestinationVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineRsyslogDestinationVisitor {
-            type Value = ObservabilityPipelineRsyslogDestination;
+        struct ObservabilityPipelineDatadogMetricsDestinationVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineDatadogMetricsDestinationVisitor {
+            type Value = ObservabilityPipelineDatadogMetricsDestination;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -90,10 +72,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineRsyslogDestination {
             {
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
-                let mut keepalive: Option<i64> = None;
-                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
                 let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineRsyslogDestinationType,
+                    crate::datadogV2::model::ObservabilityPipelineDatadogMetricsDestinationType,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -109,23 +89,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineRsyslogDestination {
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "keepalive" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            keepalive = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "tls" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::ObservabilityPipelineRsyslogDestinationType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::ObservabilityPipelineDatadogMetricsDestinationType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -143,11 +111,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineRsyslogDestination {
                 let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ObservabilityPipelineRsyslogDestination {
+                let content = ObservabilityPipelineDatadogMetricsDestination {
                     id,
                     inputs,
-                    keepalive,
-                    tls,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -157,6 +123,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineRsyslogDestination {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineRsyslogDestinationVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineDatadogMetricsDestinationVisitor)
     }
 }
