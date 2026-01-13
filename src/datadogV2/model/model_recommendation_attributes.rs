@@ -11,6 +11,8 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RecommendationAttributes {
+    #[serde(rename = "confidence_level")]
+    pub confidence_level: Option<f64>,
     /// Resource recommendation for a single Spark component (driver or executor). Contains estimation data used to patch Spark job specs.
     #[serde(rename = "driver")]
     pub driver: crate::datadogV2::model::ComponentRecommendation,
@@ -30,11 +32,17 @@ impl RecommendationAttributes {
         executor: crate::datadogV2::model::ComponentRecommendation,
     ) -> RecommendationAttributes {
         RecommendationAttributes {
+            confidence_level: None,
             driver,
             executor,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn confidence_level(mut self, value: f64) -> Self {
+        self.confidence_level = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -63,6 +71,7 @@ impl<'de> Deserialize<'de> for RecommendationAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut confidence_level: Option<f64> = None;
                 let mut driver: Option<crate::datadogV2::model::ComponentRecommendation> = None;
                 let mut executor: Option<crate::datadogV2::model::ComponentRecommendation> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -73,6 +82,13 @@ impl<'de> Deserialize<'de> for RecommendationAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "confidence_level" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            confidence_level =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "driver" => {
                             driver = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -90,6 +106,7 @@ impl<'de> Deserialize<'de> for RecommendationAttributes {
                 let executor = executor.ok_or_else(|| M::Error::missing_field("executor"))?;
 
                 let content = RecommendationAttributes {
+                    confidence_level,
                     driver,
                     executor,
                     additional_properties,

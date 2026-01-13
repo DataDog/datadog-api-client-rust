@@ -276,6 +276,7 @@ impl Default for Configuration {
             ("v2.get_slo_report".to_owned(), false),
             ("v2.get_slo_report_job_status".to_owned(), false),
             ("v2.get_spa_recommendations".to_owned(), false),
+            ("v2.get_spa_recommendations_with_shard".to_owned(), false),
             ("v2.create_sca_resolve_vulnerable_symbols".to_owned(), false),
             ("v2.create_sca_result".to_owned(), false),
             ("v2.add_member_team".to_owned(), false),
