@@ -2497,6 +2497,30 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_vulnerable_assets,
     );
     world.function_mappings.insert(
+        "v2.ListSecurityMonitoringCriticalAssets".into(),
+        test_v2_list_security_monitoring_critical_assets,
+    );
+    world.function_mappings.insert(
+        "v2.CreateSecurityMonitoringCriticalAsset".into(),
+        test_v2_create_security_monitoring_critical_asset,
+    );
+    world.function_mappings.insert(
+        "v2.GetCriticalAssetsAffectingRule".into(),
+        test_v2_get_critical_assets_affecting_rule,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteSecurityMonitoringCriticalAsset".into(),
+        test_v2_delete_security_monitoring_critical_asset,
+    );
+    world.function_mappings.insert(
+        "v2.GetSecurityMonitoringCriticalAsset".into(),
+        test_v2_get_security_monitoring_critical_asset,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateSecurityMonitoringCriticalAsset".into(),
+        test_v2_update_security_monitoring_critical_asset,
+    );
+    world.function_mappings.insert(
         "v2.ListSecurityFilters".into(),
         test_v2_list_security_filters,
     );
@@ -17996,6 +18020,190 @@ fn test_v2_list_vulnerable_assets(world: &mut DatadogWorld, _parameters: &HashMa
     params.filter_operating_system_name = filter_operating_system_name;
     params.filter_operating_system_version = filter_operating_system_version;
     let response = match block_on(api.list_vulnerable_assets_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_security_monitoring_critical_assets(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_security_monitoring::ListSecurityMonitoringCriticalAssetsOptionalParams::default();
+    params.query = query;
+    let response =
+        match block_on(api.list_security_monitoring_critical_assets_with_http_info(params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_security_monitoring_critical_asset(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_security_monitoring_critical_asset_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_critical_assets_affecting_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_critical_assets_affecting_rule_with_http_info(rule_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_security_monitoring_critical_asset(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let critical_asset_id =
+        serde_json::from_value(_parameters.get("critical_asset_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_security_monitoring_critical_asset_with_http_info(critical_asset_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_security_monitoring_critical_asset(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let critical_asset_id =
+        serde_json::from_value(_parameters.get("critical_asset_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_security_monitoring_critical_asset_with_http_info(critical_asset_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_security_monitoring_critical_asset(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let critical_asset_id =
+        serde_json::from_value(_parameters.get("critical_asset_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.update_security_monitoring_critical_asset_with_http_info(critical_asset_id, body),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {
