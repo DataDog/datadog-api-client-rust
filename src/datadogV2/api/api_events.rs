@@ -186,8 +186,6 @@ impl EventsAPI {
     /// ✅ **Only events with the `change` or `alert` category** are in General Availability. For change events, see [Change Tracking](<https://docs.datadoghq.com/change_tracking>) for more details.
     ///
     /// ❌ For use cases involving other event categories, use the V1 endpoint or reach out to [support](<https://www.datadoghq.com/support/>).
-    ///
-    /// ❌ Notifications are not yet supported for events sent to this endpoint. Use the V1 endpoint for notification functionality.
     pub async fn create_event(
         &self,
         body: crate::datadogV2::model::EventCreateRequestPayload,
@@ -216,8 +214,6 @@ impl EventsAPI {
     /// ✅ **Only events with the `change` or `alert` category** are in General Availability. For change events, see [Change Tracking](<https://docs.datadoghq.com/change_tracking>) for more details.
     ///
     /// ❌ For use cases involving other event categories, use the V1 endpoint or reach out to [support](<https://www.datadoghq.com/support/>).
-    ///
-    /// ❌ Notifications are not yet supported for events sent to this endpoint. Use the V1 endpoint for notification functionality.
     pub async fn create_event_with_http_info(
         &self,
         body: crate::datadogV2::model::EventCreateRequestPayload,
