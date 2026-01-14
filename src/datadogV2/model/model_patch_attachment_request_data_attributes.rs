@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The attributes for updating an attachment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PatchAttachmentRequestDataAttributes {
+    /// The updated attachment object.
     #[serde(rename = "attachment")]
     pub attachment: Option<crate::datadogV2::model::PatchAttachmentRequestDataAttributesAttachment>,
     #[serde(flatten)]

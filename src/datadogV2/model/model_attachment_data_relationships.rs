@@ -6,13 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The attachment's resource relationships.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AttachmentDataRelationships {
+    /// Relationship to incident.
+    #[serde(rename = "incident")]
+    pub incident: Option<crate::datadogV2::model::RelationshipToIncident>,
+    /// Relationship to user.
     #[serde(rename = "last_modified_by_user")]
-    pub last_modified_by_user:
-        Option<crate::datadogV2::model::AttachmentDataRelationshipsLastModifiedByUser>,
+    pub last_modified_by_user: Option<crate::datadogV2::model::RelationshipToUser>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -23,15 +27,21 @@ pub struct AttachmentDataRelationships {
 impl AttachmentDataRelationships {
     pub fn new() -> AttachmentDataRelationships {
         AttachmentDataRelationships {
+            incident: None,
             last_modified_by_user: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    pub fn incident(mut self, value: crate::datadogV2::model::RelationshipToIncident) -> Self {
+        self.incident = Some(value);
+        self
+    }
+
     pub fn last_modified_by_user(
         mut self,
-        value: crate::datadogV2::model::AttachmentDataRelationshipsLastModifiedByUser,
+        value: crate::datadogV2::model::RelationshipToUser,
     ) -> Self {
         self.last_modified_by_user = Some(value);
         self
@@ -69,9 +79,9 @@ impl<'de> Deserialize<'de> for AttachmentDataRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut last_modified_by_user: Option<
-                    crate::datadogV2::model::AttachmentDataRelationshipsLastModifiedByUser,
-                > = None;
+                let mut incident: Option<crate::datadogV2::model::RelationshipToIncident> = None;
+                let mut last_modified_by_user: Option<crate::datadogV2::model::RelationshipToUser> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -80,6 +90,12 @@ impl<'de> Deserialize<'de> for AttachmentDataRelationships {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "incident" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "last_modified_by_user" => {
                             if v.is_null() {
                                 continue;
@@ -96,6 +112,7 @@ impl<'de> Deserialize<'de> for AttachmentDataRelationships {
                 }
 
                 let content = AttachmentDataRelationships {
+                    incident,
                     last_modified_by_user,
                     additional_properties,
                     _unparsed,

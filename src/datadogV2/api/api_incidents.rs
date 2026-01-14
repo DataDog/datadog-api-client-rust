@@ -2163,7 +2163,7 @@ impl IncidentsAPI {
     pub async fn delete_incident_attachment(
         &self,
         incident_id: String,
-        attachment_id: serde_json::Value,
+        attachment_id: String,
     ) -> Result<(), datadog::Error<DeleteIncidentAttachmentError>> {
         match self
             .delete_incident_attachment_with_http_info(incident_id, attachment_id)
@@ -2177,7 +2177,7 @@ impl IncidentsAPI {
     pub async fn delete_incident_attachment_with_http_info(
         &self,
         incident_id: String,
-        attachment_id: serde_json::Value,
+        attachment_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentAttachmentError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_incident_attachment";
@@ -2196,7 +2196,7 @@ impl IncidentsAPI {
             "{}/api/v2/incidents/{incident_id}/attachments/{attachment_id}",
             local_configuration.get_operation_host(operation_id),
             incident_id = datadog::urlencode(incident_id),
-            attachment_id = attachment_id
+            attachment_id = datadog::urlencode(attachment_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -5054,7 +5054,7 @@ impl IncidentsAPI {
     pub async fn update_incident_attachment(
         &self,
         incident_id: String,
-        attachment_id: serde_json::Value,
+        attachment_id: String,
         body: crate::datadogV2::model::PatchAttachmentRequest,
         params: UpdateIncidentAttachmentOptionalParams,
     ) -> Result<crate::datadogV2::model::Attachment, datadog::Error<UpdateIncidentAttachmentError>>
@@ -5079,7 +5079,7 @@ impl IncidentsAPI {
     pub async fn update_incident_attachment_with_http_info(
         &self,
         incident_id: String,
-        attachment_id: serde_json::Value,
+        attachment_id: String,
         body: crate::datadogV2::model::PatchAttachmentRequest,
         params: UpdateIncidentAttachmentOptionalParams,
     ) -> Result<
@@ -5106,7 +5106,7 @@ impl IncidentsAPI {
             "{}/api/v2/incidents/{incident_id}/attachments/{attachment_id}",
             local_configuration.get_operation_host(operation_id),
             incident_id = datadog::urlencode(incident_id),
-            attachment_id = attachment_id
+            attachment_id = datadog::urlencode(attachment_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());

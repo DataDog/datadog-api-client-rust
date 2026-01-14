@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attachment data for a create request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateAttachmentRequestData {
+    /// The attributes for creating an attachment.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateAttachmentRequestDataAttributes>,
     #[serde(rename = "id")]
