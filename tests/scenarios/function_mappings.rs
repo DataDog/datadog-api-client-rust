@@ -18436,10 +18436,14 @@ fn test_v2_list_security_monitoring_rules(
     let page_number = _parameters
         .get("page[number]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
         datadogV2::api_security_monitoring::ListSecurityMonitoringRulesOptionalParams::default();
     params.page_size = page_size;
     params.page_number = page_number;
+    params.query = query;
     let response = match block_on(api.list_security_monitoring_rules_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {

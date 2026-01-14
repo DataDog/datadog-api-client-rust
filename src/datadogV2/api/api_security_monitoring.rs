@@ -511,6 +511,8 @@ pub struct ListSecurityMonitoringRulesOptionalParams {
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
+    /// A search query to filter security rules. You can filter by attributes such as `type`, `source`, `tags`.
+    pub query: Option<String>,
 }
 
 impl ListSecurityMonitoringRulesOptionalParams {
@@ -522,6 +524,11 @@ impl ListSecurityMonitoringRulesOptionalParams {
     /// Specific page number to return.
     pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
+        self
+    }
+    /// A search query to filter security rules. You can filter by attributes such as `type`, `source`, `tags`.
+    pub fn query(mut self, value: String) -> Self {
+        self.query = Some(value);
         self
     }
 }
@@ -9003,6 +9010,7 @@ impl SecurityMonitoringAPI {
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
+        let query = params.query;
 
         let local_client = &self.client;
 
@@ -9020,6 +9028,10 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = page_number {
             local_req_builder =
                 local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
         };
 
         // build headers
