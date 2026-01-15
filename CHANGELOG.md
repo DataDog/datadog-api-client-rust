@@ -1,5 +1,66 @@
 # CHANGELOG
 
+## 0.26.0/2026-01-15
+
+### Added
+* Add subtest for synthetics multistep tests [#1151](https://github.com/DataDog/datadog-api-client-rust/pull/1151)
+* feat - Add data-quality alert monitor type support [#1149](https://github.com/DataDog/datadog-api-client-rust/pull/1149)
+* Add a new end point that allows the SPA recommendation to be called without the shard parameter [#1142](https://github.com/DataDog/datadog-api-client-rust/pull/1142)
+* Add Critical Assets specs to security_monitoring feature [#1138](https://github.com/DataDog/datadog-api-client-rust/pull/1138)
+* Add new Observability Pipelines components [#1133](https://github.com/DataDog/datadog-api-client-rust/pull/1133)
+* Specify accepted types for UpsertRows values [#1125](https://github.com/DataDog/datadog-api-client-rust/pull/1125)
+* Add new bits_ai usage attribution type to Usage Attribution Public API Documentation [#1124](https://github.com/DataDog/datadog-api-client-rust/pull/1124)
+* Add Product Analytics Server-Side Events API endpoint [#1119](https://github.com/DataDog/datadog-api-client-rust/pull/1119)
+* Update /api/v2/cases endpoint to add custom attributes support [#1117](https://github.com/DataDog/datadog-api-client-rust/pull/1117)
+* Add subtest for synthetics multistep tests [#1114](https://github.com/DataDog/datadog-api-client-rust/pull/1114)
+* Documentation for team notifications API [#1113](https://github.com/DataDog/datadog-api-client-rust/pull/1113)
+* Add `query` param in rules list endpoint [#1106](https://github.com/DataDog/datadog-api-client-rust/pull/1106)
+* [RQ-7160] Add llm_spans and deprecate llm_observability [#1099](https://github.com/DataDog/datadog-api-client-rust/pull/1099)
+* Add display_name to Observability Pipeline processors [#1097](https://github.com/DataDog/datadog-api-client-rust/pull/1097)
+* Add a new includeDiscovered query parameter to Software Catalog APIs [#1094](https://github.com/DataDog/datadog-api-client-rust/pull/1094)
+* Add Security Findings Public API beta endpoints [#1093](https://github.com/DataDog/datadog-api-client-rust/pull/1093)
+* Add routes for managing On-Call user notification rules [#1092](https://github.com/DataDog/datadog-api-client-rust/pull/1092)
+* Add anomaly detection options to security monitoring rules [#1090](https://github.com/DataDog/datadog-api-client-rust/pull/1090)
+* Remove preview/unstable tags from GitHub team sync and connections endpoints [#1088](https://github.com/DataDog/datadog-api-client-rust/pull/1088)
+* Added spec for flex_stored_logs [#1084](https://github.com/DataDog/datadog-api-client-rust/pull/1084)
+* Update security finding triage specs [#1083](https://github.com/DataDog/datadog-api-client-rust/pull/1083)
+* Add routes for managing On-Call user notification channels [#1078](https://github.com/DataDog/datadog-api-client-rust/pull/1078)
+* Add host field to Post an event V2 API [#1076](https://github.com/DataDog/datadog-api-client-rust/pull/1076)
+* Add `GET /api/v2/apm/services` endpoint to public documentation [#1073](https://github.com/DataDog/datadog-api-client-rust/pull/1073)
+* Dashboards - Add semantic_mode support to FormulaAndFunctionMetricQueryDefinition [#1066](https://github.com/DataDog/datadog-api-client-rust/pull/1066)
+* Add bar chart widget to Dashboards API [#1065](https://github.com/DataDog/datadog-api-client-rust/pull/1065)
+* Update distribution and heatmap's `markers` ,`num_buckets` properties and allowed request/query [#1064](https://github.com/DataDog/datadog-api-client-rust/pull/1064)
+* Cloud SIEM - Add instantaneousBaseline feature parameter. [#1063](https://github.com/DataDog/datadog-api-client-rust/pull/1063)
+* Add new fields to usage metering api spec [#1061](https://github.com/DataDog/datadog-api-client-rust/pull/1061)
+* Add region_filter_configs and is_global_location_enabled to v2 GCP API [#1057](https://github.com/DataDog/datadog-api-client-rust/pull/1057)
+* update geomap widget definition about `conditional_format` and `text_formats` and view focus [#1055](https://github.com/DataDog/datadog-api-client-rust/pull/1055)
+* On-Call Add positioned schedule policy target [#1051](https://github.com/DataDog/datadog-api-client-rust/pull/1051)
+* Add documentation for synthetics global variable jsonpatch endpoint [#1043](https://github.com/DataDog/datadog-api-client-rust/pull/1043)
+* Add new endpoint for listing rules for a gate [#1041](https://github.com/DataDog/datadog-api-client-rust/pull/1041)
+* Add Row Update Endpoints to Reference Tables API spec [#1031](https://github.com/DataDog/datadog-api-client-rust/pull/1031)
+* Add Support for Monitor Assets [#1012](https://github.com/DataDog/datadog-api-client-rust/pull/1012)
+
+### Deprecated
+* Update docs for Security Finding API endpoints [#1147](https://github.com/DataDog/datadog-api-client-rust/pull/1147)
+
+### Removed
+* Revert - Update specs for AWS account updates and creation for CCM configs [#1136](https://github.com/DataDog/datadog-api-client-rust/pull/1136)
+* Tag security findings Jira endpoints as unstable [#1071](https://github.com/DataDog/datadog-api-client-rust/pull/1071)
+
+### Changed
+* Remove steps from certain expected synthetics api response [#1123](https://github.com/DataDog/datadog-api-client-rust/pull/1123)
+* Mark Incident Impact Endpoints stable [#1089](https://github.com/DataDog/datadog-api-client-rust/pull/1089)
+* Vulnerability Management - Update ListVulnerabilities endpoint query params and response schema [#1082](https://github.com/DataDog/datadog-api-client-rust/pull/1082)
+* Update specs for AWS account updates and creation for CCM configs [#1075](https://github.com/DataDog/datadog-api-client-rust/pull/1075)
+* Add documentation for GET, POST, PATCH, and DELETE api/v2/incidents/incident_id/attachments endpoints [#1068](https://github.com/DataDog/datadog-api-client-rust/pull/1068)
+* add suppression version history [#1050](https://github.com/DataDog/datadog-api-client-rust/pull/1050)
+* Add Security Finding Ticketing endpoints [#1045](https://github.com/DataDog/datadog-api-client-rust/pull/1045)
+* Add processors groups to Observability Pipelines [#1010](https://github.com/DataDog/datadog-api-client-rust/pull/1010)
+
+### Fixed
+* Add field attribute to the Workload Protection hash action [#1046](https://github.com/DataDog/datadog-api-client-rust/pull/1046)
+* remove duplicate sync_enabled field for PATCH Reference Tables request schema [#1038](https://github.com/DataDog/datadog-api-client-rust/pull/1038)
+
 ## 0.25.0/2026-01-08
 
 ### Added
