@@ -192,6 +192,7 @@ impl Default for Configuration {
             ("v2.create_incident_integration".to_owned(), false),
             ("v2.create_incident_notification_rule".to_owned(), false),
             ("v2.create_incident_notification_template".to_owned(), false),
+            ("v2.create_incident_postmortem_attachment".to_owned(), false),
             ("v2.create_incident_todo".to_owned(), false),
             ("v2.create_incident_type".to_owned(), false),
             ("v2.delete_incident".to_owned(), false),
