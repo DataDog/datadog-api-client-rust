@@ -23,9 +23,9 @@ pub struct RumRetentionFilterUpdateAttributes {
     /// The query string for a RUM retention filter.
     #[serde(rename = "query")]
     pub query: Option<String>,
-    /// The sample rate for a RUM retention filter, between 0 and 100.
+    /// The sample rate for a RUM retention filter, between 0.1 and 100.
     #[serde(rename = "sample_rate")]
-    pub sample_rate: Option<i64>,
+    pub sample_rate: Option<f64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -69,7 +69,7 @@ impl RumRetentionFilterUpdateAttributes {
         self
     }
 
-    pub fn sample_rate(mut self, value: i64) -> Self {
+    pub fn sample_rate(mut self, value: f64) -> Self {
         self.sample_rate = Some(value);
         self
     }
@@ -111,7 +111,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateAttributes {
                     None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
-                let mut sample_rate: Option<i64> = None;
+                let mut sample_rate: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
