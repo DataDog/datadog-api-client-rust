@@ -65,9 +65,16 @@ pub struct CaseAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub service_now_ticket: Option<Option<crate::datadogV2::model::ServiceNowTicket>>,
-    /// Case status
+    /// Deprecated way of representing the case status, which only supports OPEN, IN_PROGRESS, and CLOSED statuses. Use `status_name` instead.
+    #[deprecated]
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::CaseStatus>,
+    /// Status group of the case.
+    #[serde(rename = "status_group")]
+    pub status_group: Option<crate::datadogV2::model::CaseStatusGroup>,
+    /// Status of the case. Must be one of the existing statuses for the case's type.
+    #[serde(rename = "status_name")]
+    pub status_name: Option<String>,
     /// Title
     #[serde(rename = "title")]
     pub title: Option<String>,
@@ -101,6 +108,8 @@ impl CaseAttributes {
             priority: None,
             service_now_ticket: None,
             status: None,
+            status_group: None,
+            status_name: None,
             title: None,
             type_: None,
             type_id: None,
@@ -188,6 +197,18 @@ impl CaseAttributes {
     }
 
     #[allow(deprecated)]
+    pub fn status_group(mut self, value: crate::datadogV2::model::CaseStatusGroup) -> Self {
+        self.status_group = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn status_name(mut self, value: String) -> Self {
+        self.status_name = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
@@ -256,6 +277,8 @@ impl<'de> Deserialize<'de> for CaseAttributes {
                     Option<crate::datadogV2::model::ServiceNowTicket>,
                 > = None;
                 let mut status: Option<crate::datadogV2::model::CaseStatus> = None;
+                let mut status_group: Option<crate::datadogV2::model::CaseStatusGroup> = None;
+                let mut status_name: Option<String> = None;
                 let mut title: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::CaseType> = None;
                 let mut type_id: Option<String> = None;
@@ -349,6 +372,30 @@ impl<'de> Deserialize<'de> for CaseAttributes {
                                 }
                             }
                         }
+                        "status_group" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status_group =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _status_group) = status_group {
+                                match _status_group {
+                                    crate::datadogV2::model::CaseStatusGroup::UnparsedObject(
+                                        _status_group,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "status_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "title" => {
                             if v.is_null() {
                                 continue;
@@ -397,6 +444,8 @@ impl<'de> Deserialize<'de> for CaseAttributes {
                     priority,
                     service_now_ticket,
                     status,
+                    status_group,
+                    status_name,
                     title,
                     type_,
                     type_id,

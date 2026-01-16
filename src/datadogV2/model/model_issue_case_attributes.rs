@@ -44,7 +44,8 @@ pub struct IssueCaseAttributes {
     /// Case priority
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::CasePriority>,
-    /// Case status
+    /// Deprecated way of representing the case status, which only supports OPEN, IN_PROGRESS, and CLOSED statuses. Use `status_name` instead.
+    #[deprecated]
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::CaseStatus>,
     /// Title of the case.
@@ -62,6 +63,7 @@ pub struct IssueCaseAttributes {
 
 impl IssueCaseAttributes {
     pub fn new() -> IssueCaseAttributes {
+        #[allow(deprecated)]
         IssueCaseAttributes {
             archived_at: None,
             closed_at: None,
@@ -82,71 +84,85 @@ impl IssueCaseAttributes {
         }
     }
 
+    #[allow(deprecated)]
     pub fn archived_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.archived_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn closed_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.closed_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn creation_source(mut self, value: String) -> Self {
         self.creation_source = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn due_date(mut self, value: String) -> Self {
         self.due_date = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn insights(mut self, value: Vec<crate::datadogV2::model::IssueCaseInsight>) -> Self {
         self.insights = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn jira_issue(mut self, value: crate::datadogV2::model::IssueCaseJiraIssue) -> Self {
         self.jira_issue = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn priority(mut self, value: crate::datadogV2::model::CasePriority) -> Self {
         self.priority = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn status(mut self, value: crate::datadogV2::model::CaseStatus) -> Self {
         self.status = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
@@ -322,6 +338,7 @@ impl<'de> Deserialize<'de> for IssueCaseAttributes {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = IssueCaseAttributes {
                     archived_at,
                     closed_at,
