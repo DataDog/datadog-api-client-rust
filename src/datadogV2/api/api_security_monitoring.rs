@@ -606,12 +606,36 @@ impl ListSecurityMonitoringSignalsOptionalParams {
 pub struct ListSecurityMonitoringSuppressionsOptionalParams {
     /// Query string.
     pub query: Option<String>,
+    /// Attribute used to sort the list of suppression rules. Prefix with `-` to sort in descending order.
+    pub sort: Option<crate::datadogV2::model::SecurityMonitoringSuppressionSort>,
+    /// Size for a given page. Use `-1` to return all items.
+    pub page_size: Option<i64>,
+    /// Specific page number to return.
+    pub page_number: Option<i64>,
 }
 
 impl ListSecurityMonitoringSuppressionsOptionalParams {
     /// Query string.
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
+        self
+    }
+    /// Attribute used to sort the list of suppression rules. Prefix with `-` to sort in descending order.
+    pub fn sort(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSuppressionSort,
+    ) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Size for a given page. Use `-1` to return all items.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
         self
     }
 }
@@ -9958,7 +9982,7 @@ impl SecurityMonitoringAPI {
         &self,
         params: ListSecurityMonitoringSuppressionsOptionalParams,
     ) -> Result<
-        crate::datadogV2::model::SecurityMonitoringSuppressionsResponse,
+        crate::datadogV2::model::SecurityMonitoringPaginatedSuppressionsResponse,
         datadog::Error<ListSecurityMonitoringSuppressionsError>,
     > {
         match self
@@ -9983,7 +10007,9 @@ impl SecurityMonitoringAPI {
         &self,
         params: ListSecurityMonitoringSuppressionsOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringSuppressionsResponse>,
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringPaginatedSuppressionsResponse,
+        >,
         datadog::Error<ListSecurityMonitoringSuppressionsError>,
     > {
         let local_configuration = &self.config;
@@ -9991,6 +10017,9 @@ impl SecurityMonitoringAPI {
 
         // unbox and build optional parameters
         let query = params.query;
+        let sort = params.sort;
+        let page_size = params.page_size;
+        let page_number = params.page_number;
 
         let local_client = &self.client;
 
@@ -10004,6 +10033,18 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = query {
             local_req_builder =
                 local_req_builder.query(&[("query", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
 
         // build headers
@@ -10049,7 +10090,7 @@ impl SecurityMonitoringAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<
-                crate::datadogV2::model::SecurityMonitoringSuppressionsResponse,
+                crate::datadogV2::model::SecurityMonitoringPaginatedSuppressionsResponse,
             >(&local_content)
             {
                 Ok(e) => {

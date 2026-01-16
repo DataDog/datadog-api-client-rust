@@ -18362,8 +18362,20 @@ fn test_v2_list_security_monitoring_suppressions(
     let query = _parameters
         .get("query")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_security_monitoring::ListSecurityMonitoringSuppressionsOptionalParams::default();
     params.query = query;
+    params.sort = sort;
+    params.page_size = page_size;
+    params.page_number = page_number;
     let response = match block_on(api.list_security_monitoring_suppressions_with_http_info(params))
     {
         Ok(response) => response,
