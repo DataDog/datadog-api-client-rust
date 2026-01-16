@@ -12,7 +12,7 @@ async fn main() {
     // there is a valid "case" in the system
     let case_id = std::env::var("CASE_ID").unwrap();
     let body = CaseUpdateStatusRequest::new(CaseUpdateStatus::new(
-        CaseUpdateStatusAttributes::new(CaseStatus::IN_PROGRESS),
+        CaseUpdateStatusAttributes::new().status(CaseStatus::IN_PROGRESS),
         CaseResourceType::CASE,
     ));
     let configuration = datadog::Configuration::new();
