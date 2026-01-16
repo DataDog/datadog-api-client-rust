@@ -1,0 +1,33 @@
+// Update AWS CCM config returns "AWS CCM Config object" response
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_aws_integration::AWSIntegrationAPI;
+use datadog_api_client::datadogV2::model::AWSCcmConfig;
+use datadog_api_client::datadogV2::model::AWSCcmConfigRequest;
+use datadog_api_client::datadogV2::model::AWSCcmConfigRequestAttributes;
+use datadog_api_client::datadogV2::model::AWSCcmConfigRequestData;
+use datadog_api_client::datadogV2::model::AWSCcmConfigType;
+use datadog_api_client::datadogV2::model::DataExportConfig;
+
+#[tokio::main]
+async fn main() {
+    let body = AWSCcmConfigRequest::new(AWSCcmConfigRequestData::new(
+        AWSCcmConfigRequestAttributes::new(AWSCcmConfig::new(vec![DataExportConfig::new(
+            "billing-updated".to_string(),
+            "us-west-2".to_string(),
+            "cost-report-updated".to_string(),
+            "reports-updated".to_string(),
+            "CUR2.0".to_string(),
+        )])),
+        AWSCcmConfigType::CCM_CONFIG,
+    ));
+    let configuration = datadog::Configuration::new();
+    let api = AWSIntegrationAPI::with_config(configuration);
+    let resp = api
+        .update_aws_account_ccm_config("873c7e78-8915-4c7a-a3a7-33a57adf54f4".to_string(), body)
+        .await;
+    if let Ok(value) = resp {
+        println!("{:#?}", value);
+    } else {
+        println!("{:#?}", resp.unwrap_err());
+    }
+}
