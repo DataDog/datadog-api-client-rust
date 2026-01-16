@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attachment data from a response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AttachmentData {
+    /// The attachment's attributes.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::AttachmentDataAttributes,
+    /// The unique identifier of the attachment.
     #[serde(rename = "id")]
     pub id: String,
+    /// The attachment's resource relationships.
     #[serde(rename = "relationships")]
     pub relationships: crate::datadogV2::model::AttachmentDataRelationships,
     /// The incident attachment resource type.

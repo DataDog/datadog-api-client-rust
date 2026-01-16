@@ -7,28 +7,34 @@ use datadog_api_client::datadogV2::model::PatchAttachmentRequest;
 use datadog_api_client::datadogV2::model::PatchAttachmentRequestData;
 use datadog_api_client::datadogV2::model::PatchAttachmentRequestDataAttributes;
 use datadog_api_client::datadogV2::model::PatchAttachmentRequestDataAttributesAttachment;
-use serde_json::Value;
 
 #[tokio::main]
 async fn main() {
+    // there is a valid "incident" in the system
+    let incident_data_id = std::env::var("INCIDENT_DATA_ID").unwrap();
+
+    // there is a valid "incident_attachment" in the system
+    let incident_attachment_data_id = std::env::var("INCIDENT_ATTACHMENT_DATA_ID").unwrap();
     let body = PatchAttachmentRequest::new().data(
-        PatchAttachmentRequestData::new(IncidentAttachmentType::INCIDENT_ATTACHMENTS).attributes(
-            PatchAttachmentRequestDataAttributes::new().attachment(
-                PatchAttachmentRequestDataAttributesAttachment::new()
-                    .document_url(
-                        "https://app.datadoghq.com/notebook/124/Postmortem-IR-124".to_string(),
-                    )
-                    .title("Postmortem-IR-124".to_string()),
-            ),
-        ),
+        PatchAttachmentRequestData::new(IncidentAttachmentType::INCIDENT_ATTACHMENTS)
+            .attributes(
+                PatchAttachmentRequestDataAttributes::new().attachment(
+                    PatchAttachmentRequestDataAttributesAttachment::new()
+                        .document_url(
+                            "https://app.datadoghq.com/notebook/124/Example-Incident".to_string(),
+                        )
+                        .title("Example-Incident".to_string()),
+                ),
+            )
+            .id(incident_attachment_data_id.clone()),
     );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateIncidentAttachment", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .update_incident_attachment(
-            "incident_id".to_string(),
-            Value::from("00000000-0000-0000-0000-000000000002"),
+            incident_data_id.clone(),
+            incident_attachment_data_id.clone(),
             body,
             UpdateIncidentAttachmentOptionalParams::default(),
         )
