@@ -96,6 +96,8 @@ pub struct ApiInstances {
     pub v2_api_aws_logs_integration:
         Option<datadogV2::api_aws_logs_integration::AWSLogsIntegrationAPI>,
     pub v2_api_gcp_integration: Option<datadogV2::api_gcp_integration::GCPIntegrationAPI>,
+    pub v2_api_google_chat_integration:
+        Option<datadogV2::api_google_chat_integration::GoogleChatIntegrationAPI>,
     pub v2_api_microsoft_teams_integration:
         Option<datadogV2::api_microsoft_teams_integration::MicrosoftTeamsIntegrationAPI>,
     pub v2_api_opsgenie_integration:
@@ -708,6 +710,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "GoogleChatIntegration" => {
+            world.api_instances.v2_api_google_chat_integration = Some(datadogV2::api_google_chat_integration::GoogleChatIntegrationAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "MicrosoftTeamsIntegration" => {
             world.api_instances.v2_api_microsoft_teams_integration = Some(datadogV2::api_microsoft_teams_integration::MicrosoftTeamsIntegrationAPI::with_client_and_config(
@@ -3309,6 +3317,30 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.MakeGCPSTSDelegate".into(), test_v2_make_gcpsts_delegate);
+    world.function_mappings.insert(
+        "v2.GetSpaceByDisplayName".into(),
+        test_v2_get_space_by_display_name,
+    );
+    world.function_mappings.insert(
+        "v2.ListOrganizationHandles".into(),
+        test_v2_list_organization_handles,
+    );
+    world.function_mappings.insert(
+        "v2.CreateOrganizationHandle".into(),
+        test_v2_create_organization_handle,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteOrganizationHandle".into(),
+        test_v2_delete_organization_handle,
+    );
+    world.function_mappings.insert(
+        "v2.GetOrganizationHandle".into(),
+        test_v2_get_organization_handle,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateOrganizationHandle".into(),
+        test_v2_update_organization_handle,
+    );
     world
         .function_mappings
         .insert("v2.GetChannelByName".into(), test_v2_get_channel_by_name);
@@ -24910,6 +24942,202 @@ fn test_v2_make_gcpsts_delegate(world: &mut DatadogWorld, _parameters: &HashMap<
     let mut params = datadogV2::api_gcp_integration::MakeGCPSTSDelegateOptionalParams::default();
     params.body = body;
     let response = match block_on(api.make_gcpsts_delegate_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_space_by_display_name(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let domain_name =
+        serde_json::from_value(_parameters.get("domain_name").unwrap().clone()).unwrap();
+    let space_display_name =
+        serde_json::from_value(_parameters.get("space_display_name").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_space_by_display_name_with_http_info(domain_name, space_display_name),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_organization_handles(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let response =
+        match block_on(api.list_organization_handles_with_http_info(organization_binding_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_organization_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.create_organization_handle_with_http_info(organization_binding_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_organization_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_organization_handle_with_http_info(organization_binding_id, handle_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_organization_handle(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_organization_handle_with_http_info(organization_binding_id, handle_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_organization_handle(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_organization_handle_with_http_info(
+        organization_binding_id,
+        handle_id,
+        body,
+    )) {
         Ok(response) => response,
         Err(error) => {
             return match error {
