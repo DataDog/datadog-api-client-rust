@@ -1,0 +1,29 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://frog.datadoghq.com/api/v2/integration/aws/accounts/873c7e78-8915-4c7a-a3a7-33a57adf54f4/ccm_config"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {},
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Fri, 16 Jan 2026 20:07:47 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

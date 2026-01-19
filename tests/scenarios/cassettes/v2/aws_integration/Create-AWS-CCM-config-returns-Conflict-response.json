@@ -1,0 +1,73 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"ccm_config\":{\"data_export_configs\":[{\"bucket_name\":\"billing\",\"bucket_region\":\"us-east-1\",\"report_name\":\"cost-and-usage-report\",\"report_prefix\":\"reports\",\"report_type\":\"CUR2.0\"}]}},\"type\":\"ccm_config\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://frog.datadoghq.com/api/v2/integration/aws/accounts/873c7e78-8915-4c7a-a3a7-33a57adf54f4/ccm_config"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"409\",\"title\":\"Account already exists\",\"detail\":\"CCM config already exists for this account\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 409,
+          "message": "Conflict"
+        }
+      },
+      "recorded_at": "Fri, 16 Jan 2026 20:03:18 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"ccm_config\":{\"data_export_configs\":[{\"bucket_name\":\"billing\",\"bucket_region\":\"us-east-1\",\"report_name\":\"cost-and-usage-report\",\"report_prefix\":\"reports\",\"report_type\":\"CUR2.0\"}]}},\"type\":\"ccm_config\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://frog.datadoghq.com/api/v2/integration/aws/accounts/873c7e78-8915-4c7a-a3a7-33a57adf54f4/ccm_config"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"409\",\"title\":\"Account already exists\",\"detail\":\"CCM config already exists for this account\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 409,
+          "message": "Conflict"
+        }
+      },
+      "recorded_at": "Fri, 16 Jan 2026 20:03:18 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
