@@ -6,17 +6,16 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response object containing the available suppression rules with pagination metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SecurityMonitoringPaginatedSuppressionsResponse {
-    /// A list of suppressions objects.
-    #[serde(rename = "data")]
-    pub data: Option<Vec<crate::datadogV2::model::SecurityMonitoringSuppression>>,
-    /// Metadata for the suppression list response.
-    #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::SecurityMonitoringSuppressionsMeta>,
+pub struct DeletedSuitesRequestDelete {
+    #[serde(rename = "attributes")]
+    pub attributes: crate::datadogV2::model::DeletedSuitesRequestDeleteAttributes,
+    #[serde(rename = "id")]
+    pub id: Option<String>,
+    #[serde(rename = "type")]
+    pub type_: Option<crate::datadogV2::model::DeletedSuitesRequestType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,29 +23,26 @@ pub struct SecurityMonitoringPaginatedSuppressionsResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl SecurityMonitoringPaginatedSuppressionsResponse {
-    pub fn new() -> SecurityMonitoringPaginatedSuppressionsResponse {
-        SecurityMonitoringPaginatedSuppressionsResponse {
-            data: None,
-            meta: None,
+impl DeletedSuitesRequestDelete {
+    pub fn new(
+        attributes: crate::datadogV2::model::DeletedSuitesRequestDeleteAttributes,
+    ) -> DeletedSuitesRequestDelete {
+        DeletedSuitesRequestDelete {
+            attributes,
+            id: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringSuppression>,
-    ) -> Self {
-        self.data = Some(value);
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
         self
     }
 
-    pub fn meta(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringSuppressionsMeta,
-    ) -> Self {
-        self.meta = Some(value);
+    pub fn type_(mut self, value: crate::datadogV2::model::DeletedSuitesRequestType) -> Self {
+        self.type_ = Some(value);
         self
     }
 
@@ -59,20 +55,14 @@ impl SecurityMonitoringPaginatedSuppressionsResponse {
     }
 }
 
-impl Default for SecurityMonitoringPaginatedSuppressionsResponse {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for SecurityMonitoringPaginatedSuppressionsResponse {
+impl<'de> Deserialize<'de> for DeletedSuitesRequestDelete {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SecurityMonitoringPaginatedSuppressionsResponseVisitor;
-        impl<'a> Visitor<'a> for SecurityMonitoringPaginatedSuppressionsResponseVisitor {
-            type Value = SecurityMonitoringPaginatedSuppressionsResponse;
+        struct DeletedSuitesRequestDeleteVisitor;
+        impl<'a> Visitor<'a> for DeletedSuitesRequestDeleteVisitor {
+            type Value = DeletedSuitesRequestDelete;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -82,10 +72,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringPaginatedSuppressionsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::SecurityMonitoringSuppression>> =
-                    None;
-                let mut meta: Option<crate::datadogV2::model::SecurityMonitoringSuppressionsMeta> =
-                    None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::DeletedSuitesRequestDeleteAttributes,
+                > = None;
+                let mut id: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::DeletedSuitesRequestType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -94,17 +85,28 @@ impl<'de> Deserialize<'de> for SecurityMonitoringPaginatedSuppressionsResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "attributes" => {
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "meta" => {
+                        "id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::DeletedSuitesRequestType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -113,10 +115,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringPaginatedSuppressionsResponse {
                         }
                     }
                 }
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
 
-                let content = SecurityMonitoringPaginatedSuppressionsResponse {
-                    data,
-                    meta,
+                let content = DeletedSuitesRequestDelete {
+                    attributes,
+                    id,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -125,6 +129,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringPaginatedSuppressionsResponse {
             }
         }
 
-        deserializer.deserialize_any(SecurityMonitoringPaginatedSuppressionsResponseVisitor)
+        deserializer.deserialize_any(DeletedSuitesRequestDeleteVisitor)
     }
 }

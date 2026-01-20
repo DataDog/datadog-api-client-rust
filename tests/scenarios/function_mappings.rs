@@ -4473,6 +4473,24 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_set_on_demand_concurrency_cap,
     );
     world.function_mappings.insert(
+        "v2.CreateSyntheticsSuite".into(),
+        test_v2_create_synthetics_suite,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteSyntheticsSuites".into(),
+        test_v2_delete_synthetics_suites,
+    );
+    world
+        .function_mappings
+        .insert("v2.SearchSuites".into(), test_v2_search_suites);
+    world
+        .function_mappings
+        .insert("v2.GetSyntheticsSuite".into(), test_v2_get_synthetics_suite);
+    world.function_mappings.insert(
+        "v2.EditSyntheticsSuite".into(),
+        test_v2_edit_synthetics_suite,
+    );
+    world.function_mappings.insert(
         "v2.PatchGlobalVariable".into(),
         test_v2_patch_global_variable,
     );
@@ -18401,20 +18419,8 @@ fn test_v2_list_security_monitoring_suppressions(
     let query = _parameters
         .get("query")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let sort = _parameters
-        .get("sort")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_size = _parameters
-        .get("page[size]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_number = _parameters
-        .get("page[number]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_security_monitoring::ListSecurityMonitoringSuppressionsOptionalParams::default();
     params.query = query;
-    params.sort = sort;
-    params.page_size = page_size;
-    params.page_number = page_number;
     let response = match block_on(api.list_security_monitoring_suppressions_with_http_info(params))
     {
         Ok(response) => response,
@@ -34564,6 +34570,155 @@ fn test_v2_set_on_demand_concurrency_cap(
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.set_on_demand_concurrency_cap_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_synthetics_suite(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_synthetics
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_synthetics_suite_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_synthetics_suites(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_synthetics
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_synthetics_suites_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_search_suites(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_synthetics
+        .as_ref()
+        .expect("api instance not found");
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let facets_only = _parameters
+        .get("facets_only")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let start = _parameters
+        .get("start")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let count = _parameters
+        .get("count")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_synthetics::SearchSuitesOptionalParams::default();
+    params.query = query;
+    params.sort = sort;
+    params.facets_only = facets_only;
+    params.start = start;
+    params.count = count;
+    let response = match block_on(api.search_suites_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_synthetics_suite(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_synthetics
+        .as_ref()
+        .expect("api instance not found");
+    let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_synthetics_suite_with_http_info(public_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_edit_synthetics_suite(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_synthetics
+        .as_ref()
+        .expect("api instance not found");
+    let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.edit_synthetics_suite_with_http_info(public_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
