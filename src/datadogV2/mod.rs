@@ -45,6 +45,7 @@ pub use self::api::api_incident_services;
 pub use self::api::api_incident_teams;
 pub use self::api::api_incidents;
 pub use self::api::api_ip_allowlist;
+pub use self::api::api_jira_integration;
 pub use self::api::api_key_management;
 pub use self::api::api_logs;
 pub use self::api::api_logs_archives;

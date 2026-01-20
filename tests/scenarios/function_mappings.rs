@@ -96,6 +96,7 @@ pub struct ApiInstances {
     pub v2_api_aws_logs_integration:
         Option<datadogV2::api_aws_logs_integration::AWSLogsIntegrationAPI>,
     pub v2_api_gcp_integration: Option<datadogV2::api_gcp_integration::GCPIntegrationAPI>,
+    pub v2_api_jira_integration: Option<datadogV2::api_jira_integration::JiraIntegrationAPI>,
     pub v2_api_microsoft_teams_integration:
         Option<datadogV2::api_microsoft_teams_integration::MicrosoftTeamsIntegrationAPI>,
     pub v2_api_opsgenie_integration:
@@ -704,6 +705,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Incidents" => {
             world.api_instances.v2_api_incidents = Some(
                 datadogV2::api_incidents::IncidentsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "JiraIntegration" => {
+            world.api_instances.v2_api_jira_integration = Some(
+                datadogV2::api_jira_integration::JiraIntegrationAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -3309,6 +3318,32 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.MakeGCPSTSDelegate".into(), test_v2_make_gcpsts_delegate);
+    world
+        .function_mappings
+        .insert("v2.ListJiraAccounts".into(), test_v2_list_jira_accounts);
+    world
+        .function_mappings
+        .insert("v2.DeleteJiraAccount".into(), test_v2_delete_jira_account);
+    world.function_mappings.insert(
+        "v2.ListJiraIssueTemplates".into(),
+        test_v2_list_jira_issue_templates,
+    );
+    world.function_mappings.insert(
+        "v2.CreateJiraIssueTemplate".into(),
+        test_v2_create_jira_issue_template,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteJiraIssueTemplate".into(),
+        test_v2_delete_jira_issue_template,
+    );
+    world.function_mappings.insert(
+        "v2.GetJiraIssueTemplate".into(),
+        test_v2_get_jira_issue_template,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateJiraIssueTemplate".into(),
+        test_v2_update_jira_issue_template,
+    );
     world
         .function_mappings
         .insert("v2.GetChannelByName".into(), test_v2_get_channel_by_name);
@@ -24923,6 +24958,198 @@ fn test_v2_make_gcpsts_delegate(world: &mut DatadogWorld, _parameters: &HashMap<
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_jira_accounts(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_jira_integration
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_jira_accounts_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_jira_account(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_jira_integration
+        .as_ref()
+        .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_jira_account_with_http_info(account_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_jira_issue_templates(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_jira_integration
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_jira_issue_templates_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_jira_issue_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_jira_integration
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_jira_issue_template_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_jira_issue_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_jira_integration
+        .as_ref()
+        .expect("api instance not found");
+    let issue_template_id =
+        serde_json::from_value(_parameters.get("issue_template_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_jira_issue_template_with_http_info(issue_template_id))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_jira_issue_template(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_jira_integration
+        .as_ref()
+        .expect("api instance not found");
+    let issue_template_id =
+        serde_json::from_value(_parameters.get("issue_template_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_jira_issue_template_with_http_info(issue_template_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_jira_issue_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_jira_integration
+        .as_ref()
+        .expect("api instance not found");
+    let issue_template_id =
+        serde_json::from_value(_parameters.get("issue_template_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_jira_issue_template_with_http_info(issue_template_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
