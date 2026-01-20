@@ -19,6 +19,10 @@ pub struct ObservabilityPipelineDatadogLogsDestination {
     /// A list of component IDs whose output is used as the `input` for this component.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
+    /// A list of routing rules that forward matching logs to Datadog using dedicated API keys.
+    #[serde(rename = "routes")]
+    pub routes:
+        Option<Vec<crate::datadogV2::model::ObservabilityPipelineDatadogLogsDestinationRoute>>,
     /// The destination type. The value should always be `datadog_logs`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineDatadogLogsDestinationType,
@@ -38,10 +42,19 @@ impl ObservabilityPipelineDatadogLogsDestination {
         ObservabilityPipelineDatadogLogsDestination {
             id,
             inputs,
+            routes: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn routes(
+        mut self,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineDatadogLogsDestinationRoute>,
+    ) -> Self {
+        self.routes = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -72,6 +85,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogLogsDestination {
             {
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
+                let mut routes: Option<
+                    Vec<crate::datadogV2::model::ObservabilityPipelineDatadogLogsDestinationRoute>,
+                > = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineDatadogLogsDestinationType,
                 > = None;
@@ -88,6 +104,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogLogsDestination {
                         }
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "routes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            routes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -114,6 +136,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogLogsDestination {
                 let content = ObservabilityPipelineDatadogLogsDestination {
                     id,
                     inputs,
+                    routes,
                     type_,
                     additional_properties,
                     _unparsed,

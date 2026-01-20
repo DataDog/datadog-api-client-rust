@@ -6,18 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Synthetics suite search response data
+/// Pagination metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsSuiteSearchResponseData {
-    /// Synthetics suite search response data attributes
-    #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::SyntheticsSuiteSearchResponseDataAttributes>,
-    #[serde(rename = "id")]
-    pub id: Option<uuid::Uuid>,
-    #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::SuiteSearchResponseType>,
+pub struct SecurityMonitoringSuppressionsPageMeta {
+    /// Current page number.
+    #[serde(rename = "pageNumber")]
+    pub page_number: Option<i64>,
+    /// Current page size.
+    #[serde(rename = "pageSize")]
+    pub page_size: Option<i64>,
+    /// Total count of suppressions.
+    #[serde(rename = "totalCount")]
+    pub total_count: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,32 +27,29 @@ pub struct SyntheticsSuiteSearchResponseData {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsSuiteSearchResponseData {
-    pub fn new() -> SyntheticsSuiteSearchResponseData {
-        SyntheticsSuiteSearchResponseData {
-            attributes: None,
-            id: None,
-            type_: None,
+impl SecurityMonitoringSuppressionsPageMeta {
+    pub fn new() -> SecurityMonitoringSuppressionsPageMeta {
+        SecurityMonitoringSuppressionsPageMeta {
+            page_number: None,
+            page_size: None,
+            total_count: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsSuiteSearchResponseDataAttributes,
-    ) -> Self {
-        self.attributes = Some(value);
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
         self
     }
 
-    pub fn id(mut self, value: uuid::Uuid) -> Self {
-        self.id = Some(value);
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV2::model::SuiteSearchResponseType) -> Self {
-        self.type_ = Some(value);
+    pub fn total_count(mut self, value: i64) -> Self {
+        self.total_count = Some(value);
         self
     }
 
@@ -63,20 +62,20 @@ impl SyntheticsSuiteSearchResponseData {
     }
 }
 
-impl Default for SyntheticsSuiteSearchResponseData {
+impl Default for SecurityMonitoringSuppressionsPageMeta {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsSuiteSearchResponseData {
+impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionsPageMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsSuiteSearchResponseDataVisitor;
-        impl<'a> Visitor<'a> for SyntheticsSuiteSearchResponseDataVisitor {
-            type Value = SyntheticsSuiteSearchResponseData;
+        struct SecurityMonitoringSuppressionsPageMetaVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringSuppressionsPageMetaVisitor {
+            type Value = SecurityMonitoringSuppressionsPageMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -86,11 +85,9 @@ impl<'de> Deserialize<'de> for SyntheticsSuiteSearchResponseData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::SyntheticsSuiteSearchResponseDataAttributes,
-                > = None;
-                let mut id: Option<uuid::Uuid> = None;
-                let mut type_: Option<crate::datadogV2::model::SuiteSearchResponseType> = None;
+                let mut page_number: Option<i64> = None;
+                let mut page_size: Option<i64> = None;
+                let mut total_count: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -99,31 +96,25 @@ impl<'de> Deserialize<'de> for SyntheticsSuiteSearchResponseData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
+                        "pageNumber" => {
                             if v.is_null() {
                                 continue;
                             }
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            page_number =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "id" => {
+                        "pageSize" => {
                             if v.is_null() {
                                 continue;
                             }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            page_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "type" => {
+                        "totalCount" => {
                             if v.is_null() {
                                 continue;
                             }
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::SuiteSearchResponseType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                            total_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -133,10 +124,10 @@ impl<'de> Deserialize<'de> for SyntheticsSuiteSearchResponseData {
                     }
                 }
 
-                let content = SyntheticsSuiteSearchResponseData {
-                    attributes,
-                    id,
-                    type_,
+                let content = SecurityMonitoringSuppressionsPageMeta {
+                    page_number,
+                    page_size,
+                    total_count,
                     additional_properties,
                     _unparsed,
                 };
@@ -145,6 +136,6 @@ impl<'de> Deserialize<'de> for SyntheticsSuiteSearchResponseData {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsSuiteSearchResponseDataVisitor)
+        deserializer.deserialize_any(SecurityMonitoringSuppressionsPageMetaVisitor)
     }
 }
