@@ -6,20 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Pagination metadata.
+/// Synthetics suite search response data
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SecurityMonitoringSuppressionsPageMeta {
-    /// Current page number.
-    #[serde(rename = "pageNumber")]
-    pub page_number: Option<i64>,
-    /// Current page size.
-    #[serde(rename = "pageSize")]
-    pub page_size: Option<i64>,
-    /// Total count of suppressions.
-    #[serde(rename = "totalCount")]
-    pub total_count: Option<i64>,
+pub struct SyntheticsSuiteSearchResponseData {
+    /// Synthetics suite search response data attributes
+    #[serde(rename = "attributes")]
+    pub attributes: Option<crate::datadogV2::model::SyntheticsSuiteSearchResponseDataAttributes>,
+    #[serde(rename = "id")]
+    pub id: Option<uuid::Uuid>,
+    #[serde(rename = "type")]
+    pub type_: Option<crate::datadogV2::model::SuiteSearchResponseType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,29 +25,32 @@ pub struct SecurityMonitoringSuppressionsPageMeta {
     pub(crate) _unparsed: bool,
 }
 
-impl SecurityMonitoringSuppressionsPageMeta {
-    pub fn new() -> SecurityMonitoringSuppressionsPageMeta {
-        SecurityMonitoringSuppressionsPageMeta {
-            page_number: None,
-            page_size: None,
-            total_count: None,
+impl SyntheticsSuiteSearchResponseData {
+    pub fn new() -> SyntheticsSuiteSearchResponseData {
+        SyntheticsSuiteSearchResponseData {
+            attributes: None,
+            id: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn page_number(mut self, value: i64) -> Self {
-        self.page_number = Some(value);
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::SyntheticsSuiteSearchResponseDataAttributes,
+    ) -> Self {
+        self.attributes = Some(value);
         self
     }
 
-    pub fn page_size(mut self, value: i64) -> Self {
-        self.page_size = Some(value);
+    pub fn id(mut self, value: uuid::Uuid) -> Self {
+        self.id = Some(value);
         self
     }
 
-    pub fn total_count(mut self, value: i64) -> Self {
-        self.total_count = Some(value);
+    pub fn type_(mut self, value: crate::datadogV2::model::SuiteSearchResponseType) -> Self {
+        self.type_ = Some(value);
         self
     }
 
@@ -62,20 +63,20 @@ impl SecurityMonitoringSuppressionsPageMeta {
     }
 }
 
-impl Default for SecurityMonitoringSuppressionsPageMeta {
+impl Default for SyntheticsSuiteSearchResponseData {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionsPageMeta {
+impl<'de> Deserialize<'de> for SyntheticsSuiteSearchResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SecurityMonitoringSuppressionsPageMetaVisitor;
-        impl<'a> Visitor<'a> for SecurityMonitoringSuppressionsPageMetaVisitor {
-            type Value = SecurityMonitoringSuppressionsPageMeta;
+        struct SyntheticsSuiteSearchResponseDataVisitor;
+        impl<'a> Visitor<'a> for SyntheticsSuiteSearchResponseDataVisitor {
+            type Value = SyntheticsSuiteSearchResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -85,9 +86,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionsPageMeta {
             where
                 M: MapAccess<'a>,
             {
-                let mut page_number: Option<i64> = None;
-                let mut page_size: Option<i64> = None;
-                let mut total_count: Option<i64> = None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::SyntheticsSuiteSearchResponseDataAttributes,
+                > = None;
+                let mut id: Option<uuid::Uuid> = None;
+                let mut type_: Option<crate::datadogV2::model::SuiteSearchResponseType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -96,25 +99,31 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionsPageMeta {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "pageNumber" => {
+                        "attributes" => {
                             if v.is_null() {
                                 continue;
                             }
-                            page_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "pageSize" => {
+                        "id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            page_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "totalCount" => {
+                        "type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            total_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::SuiteSearchResponseType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -124,10 +133,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionsPageMeta {
                     }
                 }
 
-                let content = SecurityMonitoringSuppressionsPageMeta {
-                    page_number,
-                    page_size,
-                    total_count,
+                let content = SyntheticsSuiteSearchResponseData {
+                    attributes,
+                    id,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -136,6 +145,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionsPageMeta {
             }
         }
 
-        deserializer.deserialize_any(SecurityMonitoringSuppressionsPageMetaVisitor)
+        deserializer.deserialize_any(SyntheticsSuiteSearchResponseDataVisitor)
     }
 }
