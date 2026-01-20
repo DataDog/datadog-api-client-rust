@@ -6,12 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Metadata for the suppression list response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DeletedSuitesRequestDeleteRequest {
-    #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::DeletedSuitesRequestDelete,
+pub struct SecurityMonitoringSuppressionsMeta {
+    /// Pagination metadata.
+    #[serde(rename = "page")]
+    pub page: Option<crate::datadogV2::model::SecurityMonitoringSuppressionsPageMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -19,15 +21,21 @@ pub struct DeletedSuitesRequestDeleteRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl DeletedSuitesRequestDeleteRequest {
-    pub fn new(
-        data: crate::datadogV2::model::DeletedSuitesRequestDelete,
-    ) -> DeletedSuitesRequestDeleteRequest {
-        DeletedSuitesRequestDeleteRequest {
-            data,
+impl SecurityMonitoringSuppressionsMeta {
+    pub fn new() -> SecurityMonitoringSuppressionsMeta {
+        SecurityMonitoringSuppressionsMeta {
+            page: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn page(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSuppressionsPageMeta,
+    ) -> Self {
+        self.page = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -39,14 +47,20 @@ impl DeletedSuitesRequestDeleteRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for DeletedSuitesRequestDeleteRequest {
+impl Default for SecurityMonitoringSuppressionsMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionsMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DeletedSuitesRequestDeleteRequestVisitor;
-        impl<'a> Visitor<'a> for DeletedSuitesRequestDeleteRequestVisitor {
-            type Value = DeletedSuitesRequestDeleteRequest;
+        struct SecurityMonitoringSuppressionsMetaVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringSuppressionsMetaVisitor {
+            type Value = SecurityMonitoringSuppressionsMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +70,9 @@ impl<'de> Deserialize<'de> for DeletedSuitesRequestDeleteRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::DeletedSuitesRequestDelete> = None;
+                let mut page: Option<
+                    crate::datadogV2::model::SecurityMonitoringSuppressionsPageMeta,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -65,8 +81,11 @@ impl<'de> Deserialize<'de> for DeletedSuitesRequestDeleteRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "page" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            page = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -75,10 +94,9 @@ impl<'de> Deserialize<'de> for DeletedSuitesRequestDeleteRequest {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = DeletedSuitesRequestDeleteRequest {
-                    data,
+                let content = SecurityMonitoringSuppressionsMeta {
+                    page,
                     additional_properties,
                     _unparsed,
                 };
@@ -87,6 +105,6 @@ impl<'de> Deserialize<'de> for DeletedSuitesRequestDeleteRequest {
             }
         }
 
-        deserializer.deserialize_any(DeletedSuitesRequestDeleteRequestVisitor)
+        deserializer.deserialize_any(SecurityMonitoringSuppressionsMetaVisitor)
     }
 }

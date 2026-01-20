@@ -6,16 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response containing the modified query with applied filters.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SuiteCreateEdit {
-    /// Object containing details about a Synthetic suite.
-    #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::SyntheticsSuite,
-    /// Type for the Synthetics suites responses, `suites`.
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::SyntheticsSuiteTypes,
+pub struct SecurityMonitoringRuleLivetailResponse {
+    /// The modified query with all filters applied.
+    #[serde(rename = "query")]
+    pub query: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -23,17 +21,18 @@ pub struct SuiteCreateEdit {
     pub(crate) _unparsed: bool,
 }
 
-impl SuiteCreateEdit {
-    pub fn new(
-        attributes: crate::datadogV2::model::SyntheticsSuite,
-        type_: crate::datadogV2::model::SyntheticsSuiteTypes,
-    ) -> SuiteCreateEdit {
-        SuiteCreateEdit {
-            attributes,
-            type_,
+impl SecurityMonitoringRuleLivetailResponse {
+    pub fn new() -> SecurityMonitoringRuleLivetailResponse {
+        SecurityMonitoringRuleLivetailResponse {
+            query: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn query(mut self, value: String) -> Self {
+        self.query = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -45,14 +44,20 @@ impl SuiteCreateEdit {
     }
 }
 
-impl<'de> Deserialize<'de> for SuiteCreateEdit {
+impl Default for SecurityMonitoringRuleLivetailResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SecurityMonitoringRuleLivetailResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SuiteCreateEditVisitor;
-        impl<'a> Visitor<'a> for SuiteCreateEditVisitor {
-            type Value = SuiteCreateEdit;
+        struct SecurityMonitoringRuleLivetailResponseVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringRuleLivetailResponseVisitor {
+            type Value = SecurityMonitoringRuleLivetailResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -62,8 +67,7 @@ impl<'de> Deserialize<'de> for SuiteCreateEdit {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::SyntheticsSuite> = None;
-                let mut type_: Option<crate::datadogV2::model::SyntheticsSuiteTypes> = None;
+                let mut query: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -72,19 +76,11 @@ impl<'de> Deserialize<'de> for SuiteCreateEdit {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::SyntheticsSuiteTypes::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
+                        "query" => {
+                            if v.is_null() {
+                                continue;
                             }
+                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -93,12 +89,9 @@ impl<'de> Deserialize<'de> for SuiteCreateEdit {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = SuiteCreateEdit {
-                    attributes,
-                    type_,
+                let content = SecurityMonitoringRuleLivetailResponse {
+                    query,
                     additional_properties,
                     _unparsed,
                 };
@@ -107,6 +100,6 @@ impl<'de> Deserialize<'de> for SuiteCreateEdit {
             }
         }
 
-        deserializer.deserialize_any(SuiteCreateEditVisitor)
+        deserializer.deserialize_any(SecurityMonitoringRuleLivetailResponseVisitor)
     }
 }
