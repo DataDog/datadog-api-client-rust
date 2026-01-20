@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object containing the definition of a metric's tags.
+/// Object containing the definition of a metric's indexed and ingested tags.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricAllTagsAttributes {
-    /// List of indexed tag value pairs.
+    /// List of ingested tags that are not indexed.
+    #[serde(rename = "ingested_tags")]
+    pub ingested_tags: Option<Vec<String>>,
+    /// List of indexed tags.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     #[serde(flatten)]
@@ -24,10 +27,16 @@ pub struct MetricAllTagsAttributes {
 impl MetricAllTagsAttributes {
     pub fn new() -> MetricAllTagsAttributes {
         MetricAllTagsAttributes {
+            ingested_tags: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn ingested_tags(mut self, value: Vec<String>) -> Self {
+        self.ingested_tags = Some(value);
+        self
     }
 
     pub fn tags(mut self, value: Vec<String>) -> Self {
@@ -67,6 +76,7 @@ impl<'de> Deserialize<'de> for MetricAllTagsAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut ingested_tags: Option<Vec<String>> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -76,6 +86,13 @@ impl<'de> Deserialize<'de> for MetricAllTagsAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "ingested_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingested_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -91,6 +108,7 @@ impl<'de> Deserialize<'de> for MetricAllTagsAttributes {
                 }
 
                 let content = MetricAllTagsAttributes {
+                    ingested_tags,
                     tags,
                     additional_properties,
                     _unparsed,

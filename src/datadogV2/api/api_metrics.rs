@@ -167,6 +167,67 @@ impl ListTagConfigurationsOptionalParams {
     }
 }
 
+/// ListTagsByMetricNameOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_tags_by_metric_name`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListTagsByMetricNameOptionalParams {
+    /// The number of seconds of look back (from now) to query for tag data.
+    /// Default value is 14400 (4 hours), minimum value is 14400 (4 hours).
+    pub window_seconds: Option<i64>,
+    /// Filter results to tags from data points that have the specified tags.
+    /// For example, `filter[tags]=env:staging,host:123` returns tags only from data points with both `env:staging` and `host:123`.
+    pub filter_tags: Option<String>,
+    /// Filter returned tags to those matching a substring.
+    /// For example, `filter[match]=env` returns tags like `env:prod`, `environment:staging`, etc.
+    pub filter_match: Option<String>,
+    /// Whether to include tag values in the response.
+    /// Defaults to true.
+    pub filter_include_tag_values: Option<bool>,
+    /// Whether to allow partial results.
+    /// Defaults to false.
+    pub filter_allow_partial: Option<bool>,
+    /// Maximum number of results to return.
+    pub page_limit: Option<i32>,
+}
+
+impl ListTagsByMetricNameOptionalParams {
+    /// The number of seconds of look back (from now) to query for tag data.
+    /// Default value is 14400 (4 hours), minimum value is 14400 (4 hours).
+    pub fn window_seconds(mut self, value: i64) -> Self {
+        self.window_seconds = Some(value);
+        self
+    }
+    /// Filter results to tags from data points that have the specified tags.
+    /// For example, `filter[tags]=env:staging,host:123` returns tags only from data points with both `env:staging` and `host:123`.
+    pub fn filter_tags(mut self, value: String) -> Self {
+        self.filter_tags = Some(value);
+        self
+    }
+    /// Filter returned tags to those matching a substring.
+    /// For example, `filter[match]=env` returns tags like `env:prod`, `environment:staging`, etc.
+    pub fn filter_match(mut self, value: String) -> Self {
+        self.filter_match = Some(value);
+        self
+    }
+    /// Whether to include tag values in the response.
+    /// Defaults to true.
+    pub fn filter_include_tag_values(mut self, value: bool) -> Self {
+        self.filter_include_tag_values = Some(value);
+        self
+    }
+    /// Whether to allow partial results.
+    /// Defaults to false.
+    pub fn filter_allow_partial(mut self, value: bool) -> Self {
+        self.filter_allow_partial = Some(value);
+        self
+    }
+    /// Maximum number of results to return.
+    pub fn page_limit(mut self, value: i32) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+}
+
 /// SubmitMetricsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::submit_metrics`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -1794,16 +1855,18 @@ impl MetricsAPI {
         }
     }
 
-    /// View indexed tag key-value pairs for a given metric name over the previous hour.
+    /// View indexed and ingested tags for a given metric name.
+    /// Results are filtered by the `window[seconds]` parameter, which defaults to 14400 (4 hours).
     pub async fn list_tags_by_metric_name(
         &self,
         metric_name: String,
+        params: ListTagsByMetricNameOptionalParams,
     ) -> Result<
         crate::datadogV2::model::MetricAllTagsResponse,
         datadog::Error<ListTagsByMetricNameError>,
     > {
         match self
-            .list_tags_by_metric_name_with_http_info(metric_name)
+            .list_tags_by_metric_name_with_http_info(metric_name, params)
             .await
         {
             Ok(response_content) => {
@@ -1819,16 +1882,26 @@ impl MetricsAPI {
         }
     }
 
-    /// View indexed tag key-value pairs for a given metric name over the previous hour.
+    /// View indexed and ingested tags for a given metric name.
+    /// Results are filtered by the `window[seconds]` parameter, which defaults to 14400 (4 hours).
     pub async fn list_tags_by_metric_name_with_http_info(
         &self,
         metric_name: String,
+        params: ListTagsByMetricNameOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::MetricAllTagsResponse>,
         datadog::Error<ListTagsByMetricNameError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_tags_by_metric_name";
+
+        // unbox and build optional parameters
+        let window_seconds = params.window_seconds;
+        let filter_tags = params.filter_tags;
+        let filter_match = params.filter_match;
+        let filter_include_tag_values = params.filter_include_tag_values;
+        let filter_allow_partial = params.filter_allow_partial;
+        let page_limit = params.page_limit;
 
         let local_client = &self.client;
 
@@ -1839,6 +1912,31 @@ impl MetricsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = window_seconds {
+            local_req_builder =
+                local_req_builder.query(&[("window[seconds]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_tags {
+            local_req_builder =
+                local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_match {
+            local_req_builder =
+                local_req_builder.query(&[("filter[match]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_include_tag_values {
+            local_req_builder = local_req_builder
+                .query(&[("filter[include_tag_values]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_allow_partial {
+            local_req_builder = local_req_builder
+                .query(&[("filter[allow_partial]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
