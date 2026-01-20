@@ -6,16 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// An entity risk score containing security risk assessment information
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DeletedSuitesRequestDelete {
+pub struct SecurityEntityRiskScore {
+    /// Attributes of an entity risk score
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::DeletedSuitesRequestDeleteAttributes,
+    pub attributes: crate::datadogV2::model::SecurityEntityRiskScoreAttributes,
+    /// Unique identifier for the entity
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: String,
+    /// Resource type
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::DeletedSuitesRequestType>,
+    pub type_: crate::datadogV2::model::SecurityEntityRiskScoreType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -23,27 +27,19 @@ pub struct DeletedSuitesRequestDelete {
     pub(crate) _unparsed: bool,
 }
 
-impl DeletedSuitesRequestDelete {
+impl SecurityEntityRiskScore {
     pub fn new(
-        attributes: crate::datadogV2::model::DeletedSuitesRequestDeleteAttributes,
-    ) -> DeletedSuitesRequestDelete {
-        DeletedSuitesRequestDelete {
+        attributes: crate::datadogV2::model::SecurityEntityRiskScoreAttributes,
+        id: String,
+        type_: crate::datadogV2::model::SecurityEntityRiskScoreType,
+    ) -> SecurityEntityRiskScore {
+        SecurityEntityRiskScore {
             attributes,
-            id: None,
-            type_: None,
+            id,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
-    pub fn type_(mut self, value: crate::datadogV2::model::DeletedSuitesRequestType) -> Self {
-        self.type_ = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -55,14 +51,14 @@ impl DeletedSuitesRequestDelete {
     }
 }
 
-impl<'de> Deserialize<'de> for DeletedSuitesRequestDelete {
+impl<'de> Deserialize<'de> for SecurityEntityRiskScore {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DeletedSuitesRequestDeleteVisitor;
-        impl<'a> Visitor<'a> for DeletedSuitesRequestDeleteVisitor {
-            type Value = DeletedSuitesRequestDelete;
+        struct SecurityEntityRiskScoreVisitor;
+        impl<'a> Visitor<'a> for SecurityEntityRiskScoreVisitor {
+            type Value = SecurityEntityRiskScore;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -73,10 +69,10 @@ impl<'de> Deserialize<'de> for DeletedSuitesRequestDelete {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::DeletedSuitesRequestDeleteAttributes,
+                    crate::datadogV2::model::SecurityEntityRiskScoreAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::DeletedSuitesRequestType> = None;
+                let mut type_: Option<crate::datadogV2::model::SecurityEntityRiskScoreType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,19 +85,13 @@ impl<'de> Deserialize<'de> for DeletedSuitesRequestDelete {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::DeletedSuitesRequestType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::SecurityEntityRiskScoreType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -116,8 +106,10 @@ impl<'de> Deserialize<'de> for DeletedSuitesRequestDelete {
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = DeletedSuitesRequestDelete {
+                let content = SecurityEntityRiskScore {
                     attributes,
                     id,
                     type_,
@@ -129,6 +121,6 @@ impl<'de> Deserialize<'de> for DeletedSuitesRequestDelete {
             }
         }
 
-        deserializer.deserialize_any(DeletedSuitesRequestDeleteVisitor)
+        deserializer.deserialize_any(SecurityEntityRiskScoreVisitor)
     }
 }

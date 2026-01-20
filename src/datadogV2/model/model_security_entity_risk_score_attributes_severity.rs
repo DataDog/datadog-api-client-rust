@@ -6,21 +6,29 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SyntheticsSuiteType {
-    SUITE,
+pub enum SecurityEntityRiskScoreAttributesSeverity {
+    CRITICAL,
+    HIGH,
+    MEDIUM,
+    LOW,
+    INFO,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SyntheticsSuiteType {
+impl ToString for SecurityEntityRiskScoreAttributesSeverity {
     fn to_string(&self) -> String {
         match self {
-            Self::SUITE => String::from("suite"),
+            Self::CRITICAL => String::from("critical"),
+            Self::HIGH => String::from("high"),
+            Self::MEDIUM => String::from("medium"),
+            Self::LOW => String::from("low"),
+            Self::INFO => String::from("info"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for SyntheticsSuiteType {
+impl Serialize for SecurityEntityRiskScoreAttributesSeverity {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,14 +40,18 @@ impl Serialize for SyntheticsSuiteType {
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsSuiteType {
+impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributesSeverity {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "suite" => Self::SUITE,
+            "critical" => Self::CRITICAL,
+            "high" => Self::HIGH,
+            "medium" => Self::MEDIUM,
+            "low" => Self::LOW,
+            "info" => Self::INFO,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

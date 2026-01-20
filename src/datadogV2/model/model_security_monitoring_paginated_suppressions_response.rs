@@ -6,15 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Synthetics suite search response data attributes
+/// Response object containing the available suppression rules with pagination metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsSuiteSearchResponseDataAttributes {
-    #[serde(rename = "suites")]
-    pub suites: Option<Vec<crate::datadogV2::model::SyntheticsSuite>>,
-    #[serde(rename = "total")]
-    pub total: Option<i32>,
+pub struct SecurityMonitoringPaginatedSuppressionsResponse {
+    /// A list of suppressions objects.
+    #[serde(rename = "data")]
+    pub data: Option<Vec<crate::datadogV2::model::SecurityMonitoringSuppression>>,
+    /// Metadata for the suppression list response.
+    #[serde(rename = "meta")]
+    pub meta: Option<crate::datadogV2::model::SecurityMonitoringSuppressionsMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,23 +24,29 @@ pub struct SyntheticsSuiteSearchResponseDataAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsSuiteSearchResponseDataAttributes {
-    pub fn new() -> SyntheticsSuiteSearchResponseDataAttributes {
-        SyntheticsSuiteSearchResponseDataAttributes {
-            suites: None,
-            total: None,
+impl SecurityMonitoringPaginatedSuppressionsResponse {
+    pub fn new() -> SecurityMonitoringPaginatedSuppressionsResponse {
+        SecurityMonitoringPaginatedSuppressionsResponse {
+            data: None,
+            meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn suites(mut self, value: Vec<crate::datadogV2::model::SyntheticsSuite>) -> Self {
-        self.suites = Some(value);
+    pub fn data(
+        mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringSuppression>,
+    ) -> Self {
+        self.data = Some(value);
         self
     }
 
-    pub fn total(mut self, value: i32) -> Self {
-        self.total = Some(value);
+    pub fn meta(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSuppressionsMeta,
+    ) -> Self {
+        self.meta = Some(value);
         self
     }
 
@@ -51,20 +59,20 @@ impl SyntheticsSuiteSearchResponseDataAttributes {
     }
 }
 
-impl Default for SyntheticsSuiteSearchResponseDataAttributes {
+impl Default for SecurityMonitoringPaginatedSuppressionsResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsSuiteSearchResponseDataAttributes {
+impl<'de> Deserialize<'de> for SecurityMonitoringPaginatedSuppressionsResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsSuiteSearchResponseDataAttributesVisitor;
-        impl<'a> Visitor<'a> for SyntheticsSuiteSearchResponseDataAttributesVisitor {
-            type Value = SyntheticsSuiteSearchResponseDataAttributes;
+        struct SecurityMonitoringPaginatedSuppressionsResponseVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringPaginatedSuppressionsResponseVisitor {
+            type Value = SecurityMonitoringPaginatedSuppressionsResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -74,8 +82,10 @@ impl<'de> Deserialize<'de> for SyntheticsSuiteSearchResponseDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut suites: Option<Vec<crate::datadogV2::model::SyntheticsSuite>> = None;
-                let mut total: Option<i32> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::SecurityMonitoringSuppression>> =
+                    None;
+                let mut meta: Option<crate::datadogV2::model::SecurityMonitoringSuppressionsMeta> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -84,17 +94,17 @@ impl<'de> Deserialize<'de> for SyntheticsSuiteSearchResponseDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "suites" => {
+                        "data" => {
                             if v.is_null() {
                                 continue;
                             }
-                            suites = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "total" => {
+                        "meta" => {
                             if v.is_null() {
                                 continue;
                             }
-                            total = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -104,9 +114,9 @@ impl<'de> Deserialize<'de> for SyntheticsSuiteSearchResponseDataAttributes {
                     }
                 }
 
-                let content = SyntheticsSuiteSearchResponseDataAttributes {
-                    suites,
-                    total,
+                let content = SecurityMonitoringPaginatedSuppressionsResponse {
+                    data,
+                    meta,
                     additional_properties,
                     _unparsed,
                 };
@@ -115,6 +125,6 @@ impl<'de> Deserialize<'de> for SyntheticsSuiteSearchResponseDataAttributes {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsSuiteSearchResponseDataAttributesVisitor)
+        deserializer.deserialize_any(SecurityMonitoringPaginatedSuppressionsResponseVisitor)
     }
 }
