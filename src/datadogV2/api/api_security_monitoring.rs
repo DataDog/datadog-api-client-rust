@@ -606,12 +606,36 @@ impl ListSecurityMonitoringSignalsOptionalParams {
 pub struct ListSecurityMonitoringSuppressionsOptionalParams {
     /// Query string.
     pub query: Option<String>,
+    /// Attribute used to sort the list of suppression rules. Prefix with `-` to sort in descending order.
+    pub sort: Option<crate::datadogV2::model::SecurityMonitoringSuppressionSort>,
+    /// Size for a given page. Use `-1` to return all items.
+    pub page_size: Option<i64>,
+    /// Specific page number to return.
+    pub page_number: Option<i64>,
 }
 
 impl ListSecurityMonitoringSuppressionsOptionalParams {
     /// Query string.
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
+        self
+    }
+    /// Attribute used to sort the list of suppression rules. Prefix with `-` to sort in descending order.
+    pub fn sort(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringSuppressionSort,
+    ) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Size for a given page. Use `-1` to return all items.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
         self
     }
 }
@@ -1669,6 +1693,14 @@ pub enum PatchSignalNotificationRuleError {
 pub enum PatchVulnerabilityNotificationRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// PreviewSecurityMonitoringRuleQueryError is a struct for typed errors of method [`SecurityMonitoringAPI::preview_security_monitoring_rule_query`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PreviewSecurityMonitoringRuleQueryError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -9958,7 +9990,7 @@ impl SecurityMonitoringAPI {
         &self,
         params: ListSecurityMonitoringSuppressionsOptionalParams,
     ) -> Result<
-        crate::datadogV2::model::SecurityMonitoringSuppressionsResponse,
+        crate::datadogV2::model::SecurityMonitoringPaginatedSuppressionsResponse,
         datadog::Error<ListSecurityMonitoringSuppressionsError>,
     > {
         match self
@@ -9983,7 +10015,9 @@ impl SecurityMonitoringAPI {
         &self,
         params: ListSecurityMonitoringSuppressionsOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringSuppressionsResponse>,
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringPaginatedSuppressionsResponse,
+        >,
         datadog::Error<ListSecurityMonitoringSuppressionsError>,
     > {
         let local_configuration = &self.config;
@@ -9991,6 +10025,9 @@ impl SecurityMonitoringAPI {
 
         // unbox and build optional parameters
         let query = params.query;
+        let sort = params.sort;
+        let page_size = params.page_size;
+        let page_number = params.page_number;
 
         let local_client = &self.client;
 
@@ -10004,6 +10041,18 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = query {
             local_req_builder =
                 local_req_builder.query(&[("query", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
         };
 
         // build headers
@@ -10049,7 +10098,7 @@ impl SecurityMonitoringAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<
-                crate::datadogV2::model::SecurityMonitoringSuppressionsResponse,
+                crate::datadogV2::model::SecurityMonitoringPaginatedSuppressionsResponse,
             >(&local_content)
             {
                 Ok(e) => {
@@ -11477,6 +11526,166 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<PatchVulnerabilityNotificationRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Preview a security monitoring rule query with security filters, group by fields, and distinct fields applied.
+    /// This endpoint is used in the rule editor to show how the query will be transformed after applying additional filters.
+    pub async fn preview_security_monitoring_rule_query(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringRuleLivetailRequest,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringRuleLivetailResponse,
+        datadog::Error<PreviewSecurityMonitoringRuleQueryError>,
+    > {
+        match self
+            .preview_security_monitoring_rule_query_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Preview a security monitoring rule query with security filters, group by fields, and distinct fields applied.
+    /// This endpoint is used in the rule editor to show how the query will be transformed after applying additional filters.
+    pub async fn preview_security_monitoring_rule_query_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringRuleLivetailRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringRuleLivetailResponse>,
+        datadog::Error<PreviewSecurityMonitoringRuleQueryError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.preview_security_monitoring_rule_query";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/livetail",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringRuleLivetailResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<PreviewSecurityMonitoringRuleQueryError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
