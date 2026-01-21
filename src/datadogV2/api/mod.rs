@@ -35,6 +35,7 @@ pub mod api_deployment_gates;
 pub mod api_domain_allowlist;
 pub mod api_dora_metrics;
 pub mod api_downtimes;
+pub mod api_entity_risk_scores;
 pub mod api_error_tracking;
 pub mod api_events;
 pub mod api_fastly_integration;

@@ -275,6 +275,7 @@ impl Default for Configuration {
             ("v2.list_scorecard_rules".to_owned(), false),
             ("v2.update_scorecard_outcomes_async".to_owned(), false),
             ("v2.update_scorecard_rule".to_owned(), false),
+            ("v2.list_entity_risk_scores".to_owned(), false),
             ("v2.create_incident_service".to_owned(), false),
             ("v2.delete_incident_service".to_owned(), false),
             ("v2.get_incident_service".to_owned(), false),
