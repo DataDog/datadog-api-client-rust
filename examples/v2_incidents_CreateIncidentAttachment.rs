@@ -11,28 +11,28 @@ use datadog_api_client::datadogV2::model::IncidentAttachmentType;
 
 #[tokio::main]
 async fn main() {
+    // there is a valid "incident" in the system
+    let incident_data_id = std::env::var("INCIDENT_DATA_ID").unwrap();
     let body = CreateAttachmentRequest::new().data(
-        CreateAttachmentRequestData::new(IncidentAttachmentType::INCIDENT_ATTACHMENTS)
-            .attributes(
-                CreateAttachmentRequestDataAttributes::new()
-                    .attachment(
-                        CreateAttachmentRequestDataAttributesAttachment::new()
-                            .document_url(
-                                "https://app.datadoghq.com/notebook/123/Postmortem-IR-123"
-                                    .to_string(),
-                            )
-                            .title("Postmortem-IR-123".to_string()),
-                    )
-                    .attachment_type(AttachmentDataAttributesAttachmentType::POSTMORTEM),
-            )
-            .id("00000000-0000-0000-0000-000000000000".to_string()),
+        CreateAttachmentRequestData::new(IncidentAttachmentType::INCIDENT_ATTACHMENTS).attributes(
+            CreateAttachmentRequestDataAttributes::new()
+                .attachment(
+                    CreateAttachmentRequestDataAttributesAttachment::new()
+                        .document_url(
+                            "https://app.datadoghq.com/notebook/ExampleIncident/Example-Incident"
+                                .to_string(),
+                        )
+                        .title("Example-Incident".to_string()),
+                )
+                .attachment_type(AttachmentDataAttributesAttachmentType::POSTMORTEM),
+        ),
     );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateIncidentAttachment", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .create_incident_attachment(
-            "incident_id".to_string(),
+            incident_data_id.clone(),
             body,
             CreateIncidentAttachmentOptionalParams::default(),
         )
