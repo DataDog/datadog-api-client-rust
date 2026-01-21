@@ -23,9 +23,9 @@ pub struct RumRetentionFilterCreateAttributes {
     /// The query string for a RUM retention filter.
     #[serde(rename = "query")]
     pub query: Option<String>,
-    /// The sample rate for a RUM retention filter, between 0 and 100.
+    /// The sample rate for a RUM retention filter, between 0.1 and 100.
     #[serde(rename = "sample_rate")]
-    pub sample_rate: i64,
+    pub sample_rate: f64,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -37,7 +37,7 @@ impl RumRetentionFilterCreateAttributes {
     pub fn new(
         event_type: crate::datadogV2::model::RumRetentionFilterEventType,
         name: String,
-        sample_rate: i64,
+        sample_rate: f64,
     ) -> RumRetentionFilterCreateAttributes {
         RumRetentionFilterCreateAttributes {
             enabled: None,
@@ -91,7 +91,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterCreateAttributes {
                     None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
-                let mut sample_rate: Option<i64> = None;
+                let mut sample_rate: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
