@@ -13,7 +13,7 @@ async fn main() {
         RumRetentionFilterCreateAttributes::new(
             RumRetentionFilterEventType::SESSION,
             "Test creating retention filter".to_string(),
-            50,
+            50.0,
         )
         .enabled(true)
         .query("custom_query".to_string()),

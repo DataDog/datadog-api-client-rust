@@ -15,7 +15,7 @@ async fn main() {
             .event_type(RumRetentionFilterEventType::VIEW)
             .name("Test updating retention filter".to_string())
             .query("view_query".to_string())
-            .sample_rate(100),
+            .sample_rate(100.0 as f64),
         "4b95d361-f65d-4515-9824-c9aaeba5ac2a".to_string(),
         RumRetentionFilterType::RETENTION_FILTERS,
     ));
