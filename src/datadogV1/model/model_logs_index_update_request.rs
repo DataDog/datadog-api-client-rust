@@ -47,6 +47,9 @@ pub struct LogsIndexUpdateRequest {
     /// **Note**: Changing this value affects all logs already in this index. It may also affect billing.
     #[serde(rename = "num_retention_days")]
     pub num_retention_days: Option<i64>,
+    /// A list of tags associated with the index. Tags must be in `key:value` format.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -65,6 +68,7 @@ impl LogsIndexUpdateRequest {
             filter,
             num_flex_logs_retention_days: None,
             num_retention_days: None,
+            tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -108,6 +112,11 @@ impl LogsIndexUpdateRequest {
         self
     }
 
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -144,6 +153,7 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                 let mut filter: Option<crate::datadogV1::model::LogsFilter> = None;
                 let mut num_flex_logs_retention_days: Option<i64> = None;
                 let mut num_retention_days: Option<i64> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -204,6 +214,12 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                             num_retention_days =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -222,6 +238,7 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                     filter,
                     num_flex_logs_retention_days,
                     num_retention_days,
+                    tags,
                     additional_properties,
                     _unparsed,
                 };

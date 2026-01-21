@@ -21,7 +21,11 @@ async fn main() {
         .exclusion_filters(vec![LogsExclusion::new("payment".to_string())
             .filter(LogsExclusionFilter::new(1.0).query("*".to_string()))])
         .num_flex_logs_retention_days(360)
-        .num_retention_days(15);
+        .num_retention_days(15)
+        .tags(vec![
+            "team:backend".to_string(),
+            "env:production".to_string(),
+        ]);
     let configuration = datadog::Configuration::new();
     let api = LogsIndexesAPI::with_config(configuration);
     let resp = api.update_logs_index("name".to_string(), body).await;
