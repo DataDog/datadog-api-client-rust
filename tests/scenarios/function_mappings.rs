@@ -91,6 +91,8 @@ pub struct ApiInstances {
     pub v2_api_downtimes: Option<datadogV2::api_downtimes::DowntimesAPI>,
     pub v2_api_error_tracking: Option<datadogV2::api_error_tracking::ErrorTrackingAPI>,
     pub v2_api_events: Option<datadogV2::api_events::EventsAPI>,
+    pub v2_api_high_availability_multi_region:
+        Option<datadogV2::api_high_availability_multi_region::HighAvailabilityMultiRegionAPI>,
     pub v2_api_incidents: Option<datadogV2::api_incidents::IncidentsAPI>,
     pub v2_api_aws_integration: Option<datadogV2::api_aws_integration::AWSIntegrationAPI>,
     pub v2_api_aws_logs_integration:
@@ -702,6 +704,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "HighAvailabilityMultiRegion" => {
+            world.api_instances.v2_api_high_availability_multi_region = Some(datadogV2::api_high_availability_multi_region::HighAvailabilityMultiRegionAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "Incidents" => {
             world.api_instances.v2_api_incidents = Some(
@@ -3112,6 +3120,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetEvent".into(), test_v2_get_event);
+    world.function_mappings.insert(
+        "v2.GetHamrOrgConnection".into(),
+        test_v2_get_hamr_org_connection,
+    );
+    world.function_mappings.insert(
+        "v2.CreateHamrOrgConnection".into(),
+        test_v2_create_hamr_org_connection,
+    );
     world
         .function_mappings
         .insert("v2.ListIncidents".into(), test_v2_list_incidents);
@@ -23137,6 +23153,58 @@ fn test_v2_get_event(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
         .expect("api instance not found");
     let event_id = serde_json::from_value(_parameters.get("event_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_event_with_http_info(event_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_hamr_org_connection(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_high_availability_multi_region
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_hamr_org_connection_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_hamr_org_connection(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_high_availability_multi_region
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_hamr_org_connection_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
