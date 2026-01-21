@@ -27896,7 +27896,33 @@ fn test_v2_list_tags_by_metric_name(
         .expect("api instance not found");
     let metric_name =
         serde_json::from_value(_parameters.get("metric_name").unwrap().clone()).unwrap();
-    let response = match block_on(api.list_tags_by_metric_name_with_http_info(metric_name)) {
+    let window_seconds = _parameters
+        .get("window[seconds]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tags = _parameters
+        .get("filter[tags]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_match = _parameters
+        .get("filter[match]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_include_tag_values = _parameters
+        .get("filter[include_tag_values]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_allow_partial = _parameters
+        .get("filter[allow_partial]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_metrics::ListTagsByMetricNameOptionalParams::default();
+    params.window_seconds = window_seconds;
+    params.filter_tags = filter_tags;
+    params.filter_match = filter_match;
+    params.filter_include_tag_values = filter_include_tag_values;
+    params.filter_allow_partial = filter_allow_partial;
+    params.page_limit = page_limit;
+    let response = match block_on(api.list_tags_by_metric_name_with_http_info(metric_name, params))
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {

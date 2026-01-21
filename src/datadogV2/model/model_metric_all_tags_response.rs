@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response object that includes a single metric's indexed tags.
+/// Response object that includes a single metric's indexed and ingested tags.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricAllTagsResponse {
-    /// Object for a single metric's indexed tags.
+    /// Object for a single metric's indexed and ingested tags.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::MetricAllTags>,
     #[serde(flatten)]
