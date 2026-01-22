@@ -16,7 +16,7 @@ async fn main() {
     let body = CreateStatusPageRequest::new().data(
         CreateStatusPageRequestData::new(StatusPageDataType::STATUS_PAGES).attributes(
             CreateStatusPageRequestDataAttributes::new(
-                "status-page-5e2fd69be33e79aa".to_string(),
+                "5e2fd69be33e79aa".to_string(),
                 true,
                 "A Status Page".to_string(),
                 CreateStatusPageRequestDataAttributesType::INTERNAL,
