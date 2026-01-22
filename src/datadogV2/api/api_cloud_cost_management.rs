@@ -327,6 +327,22 @@ pub enum UpsertBudgetError {
     UnknownValue(serde_json::Value),
 }
 
+/// ValidateBudgetError is a struct for typed errors of method [`CloudCostManagementAPI::validate_budget`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ValidateBudgetError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ValidateCsvBudgetError is a struct for typed errors of method [`CloudCostManagementAPI::validate_csv_budget`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ValidateCsvBudgetError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ValidateQueryError is a struct for typed errors of method [`CloudCostManagementAPI::validate_query`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1196,7 +1212,7 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// Delete a budget.
+    /// Delete a budget
     pub async fn delete_budget(
         &self,
         budget_id: String,
@@ -1207,7 +1223,7 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// Delete a budget.
+    /// Delete a budget
     pub async fn delete_budget_with_http_info(
         &self,
         budget_id: String,
@@ -1827,11 +1843,12 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// Get a budget.
+    /// Get a budget
     pub async fn get_budget(
         &self,
         budget_id: String,
-    ) -> Result<crate::datadogV2::model::BudgetWithEntries, datadog::Error<GetBudgetError>> {
+    ) -> Result<crate::datadogV2::model::BudgetValidationRequest, datadog::Error<GetBudgetError>>
+    {
         match self.get_budget_with_http_info(budget_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
@@ -1846,12 +1863,12 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// Get a budget.
+    /// Get a budget
     pub async fn get_budget_with_http_info(
         &self,
         budget_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::BudgetWithEntries>,
+        datadog::ResponseContent<crate::datadogV2::model::BudgetValidationRequest>,
         datadog::Error<GetBudgetError>,
     > {
         let local_configuration = &self.config;
@@ -1909,8 +1926,9 @@ impl CloudCostManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::BudgetWithEntries>(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::BudgetValidationRequest>(
+                &local_content,
+            ) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -4754,6 +4772,248 @@ impl CloudCostManagementAPI {
             };
         } else {
             let local_entity: Option<UpsertBudgetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Validate a budget configuration without creating or modifying it
+    pub async fn validate_budget(
+        &self,
+        body: crate::datadogV2::model::BudgetValidationRequest,
+    ) -> Result<
+        crate::datadogV2::model::BudgetValidationResponse,
+        datadog::Error<ValidateBudgetError>,
+    > {
+        match self.validate_budget_with_http_info(body).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Validate a budget configuration without creating or modifying it
+    pub async fn validate_budget_with_http_info(
+        &self,
+        body: crate::datadogV2::model::BudgetValidationRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::BudgetValidationResponse>,
+        datadog::Error<ValidateBudgetError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.validate_budget";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/budget/validate",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::BudgetValidationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ValidateBudgetError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    pub async fn validate_csv_budget(
+        &self,
+    ) -> Result<crate::datadogV2::model::ValidationResponse, datadog::Error<ValidateCsvBudgetError>>
+    {
+        match self.validate_csv_budget_with_http_info().await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub async fn validate_csv_budget_with_http_info(
+        &self,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ValidationResponse>,
+        datadog::Error<ValidateCsvBudgetError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.validate_csv_budget";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/budget/csv/validate",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ValidationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ValidateCsvBudgetError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,

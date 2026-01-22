@@ -6,41 +6,30 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The attributes of a budget.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct BudgetAttributes {
-    /// The timestamp when the budget was created.
+pub struct BudgetWithEntriesDataAttributes {
     #[serde(rename = "created_at")]
     pub created_at: Option<i64>,
-    /// The id of the user that created the budget.
     #[serde(rename = "created_by")]
     pub created_by: Option<String>,
-    /// The month when the budget ends.
     #[serde(rename = "end_month")]
     pub end_month: Option<i64>,
     #[serde(rename = "entries")]
     pub entries: Option<Vec<crate::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItems>>,
-    /// The cost query used to track against the budget.
     #[serde(rename = "metrics_query")]
     pub metrics_query: Option<String>,
-    /// The name of the budget.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The id of the org the budget belongs to.
     #[serde(rename = "org_id")]
     pub org_id: Option<i64>,
-    /// The month when the budget starts.
     #[serde(rename = "start_month")]
     pub start_month: Option<i64>,
-    /// The sum of all budget entries' amounts.
     #[serde(rename = "total_amount")]
     pub total_amount: Option<f64>,
-    /// The timestamp when the budget was last updated.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<i64>,
-    /// The id of the user that created the budget.
     #[serde(rename = "updated_by")]
     pub updated_by: Option<String>,
     #[serde(flatten)]
@@ -50,9 +39,9 @@ pub struct BudgetAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl BudgetAttributes {
-    pub fn new() -> BudgetAttributes {
-        BudgetAttributes {
+impl BudgetWithEntriesDataAttributes {
+    pub fn new() -> BudgetWithEntriesDataAttributes {
+        BudgetWithEntriesDataAttributes {
             created_at: None,
             created_by: None,
             end_month: None,
@@ -136,20 +125,20 @@ impl BudgetAttributes {
     }
 }
 
-impl Default for BudgetAttributes {
+impl Default for BudgetWithEntriesDataAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for BudgetAttributes {
+impl<'de> Deserialize<'de> for BudgetWithEntriesDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BudgetAttributesVisitor;
-        impl<'a> Visitor<'a> for BudgetAttributesVisitor {
-            type Value = BudgetAttributes;
+        struct BudgetWithEntriesDataAttributesVisitor;
+        impl<'a> Visitor<'a> for BudgetWithEntriesDataAttributesVisitor {
+            type Value = BudgetWithEntriesDataAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -257,7 +246,7 @@ impl<'de> Deserialize<'de> for BudgetAttributes {
                     }
                 }
 
-                let content = BudgetAttributes {
+                let content = BudgetWithEntriesDataAttributes {
                     created_at,
                     created_by,
                     end_month,
@@ -277,6 +266,6 @@ impl<'de> Deserialize<'de> for BudgetAttributes {
             }
         }
 
-        deserializer.deserialize_any(BudgetAttributesVisitor)
+        deserializer.deserialize_any(BudgetWithEntriesDataAttributesVisitor)
     }
 }

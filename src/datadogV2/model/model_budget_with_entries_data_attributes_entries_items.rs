@@ -6,20 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The entry of a budget.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct BudgetEntry {
-    /// The `amount` of the budget entry.
+pub struct BudgetWithEntriesDataAttributesEntriesItems {
     #[serde(rename = "amount")]
     pub amount: Option<f64>,
-    /// The `month` of the budget entry.
     #[serde(rename = "month")]
     pub month: Option<i64>,
-    /// The `tag_filters` of the budget entry.
     #[serde(rename = "tag_filters")]
-    pub tag_filters: Option<Vec<crate::datadogV2::model::TagFilter>>,
+    pub tag_filters: Option<
+        Vec<crate::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems>,
+    >,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,9 +25,9 @@ pub struct BudgetEntry {
     pub(crate) _unparsed: bool,
 }
 
-impl BudgetEntry {
-    pub fn new() -> BudgetEntry {
-        BudgetEntry {
+impl BudgetWithEntriesDataAttributesEntriesItems {
+    pub fn new() -> BudgetWithEntriesDataAttributesEntriesItems {
+        BudgetWithEntriesDataAttributesEntriesItems {
             amount: None,
             month: None,
             tag_filters: None,
@@ -48,7 +46,12 @@ impl BudgetEntry {
         self
     }
 
-    pub fn tag_filters(mut self, value: Vec<crate::datadogV2::model::TagFilter>) -> Self {
+    pub fn tag_filters(
+        mut self,
+        value: Vec<
+            crate::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems,
+        >,
+    ) -> Self {
         self.tag_filters = Some(value);
         self
     }
@@ -62,20 +65,20 @@ impl BudgetEntry {
     }
 }
 
-impl Default for BudgetEntry {
+impl Default for BudgetWithEntriesDataAttributesEntriesItems {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for BudgetEntry {
+impl<'de> Deserialize<'de> for BudgetWithEntriesDataAttributesEntriesItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BudgetEntryVisitor;
-        impl<'a> Visitor<'a> for BudgetEntryVisitor {
-            type Value = BudgetEntry;
+        struct BudgetWithEntriesDataAttributesEntriesItemsVisitor;
+        impl<'a> Visitor<'a> for BudgetWithEntriesDataAttributesEntriesItemsVisitor {
+            type Value = BudgetWithEntriesDataAttributesEntriesItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -87,7 +90,7 @@ impl<'de> Deserialize<'de> for BudgetEntry {
             {
                 let mut amount: Option<f64> = None;
                 let mut month: Option<i64> = None;
-                let mut tag_filters: Option<Vec<crate::datadogV2::model::TagFilter>> = None;
+                let mut tag_filters: Option<Vec<crate::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -123,7 +126,7 @@ impl<'de> Deserialize<'de> for BudgetEntry {
                     }
                 }
 
-                let content = BudgetEntry {
+                let content = BudgetWithEntriesDataAttributesEntriesItems {
                     amount,
                     month,
                     tag_filters,
@@ -135,6 +138,6 @@ impl<'de> Deserialize<'de> for BudgetEntry {
             }
         }
 
-        deserializer.deserialize_any(BudgetEntryVisitor)
+        deserializer.deserialize_any(BudgetWithEntriesDataAttributesEntriesItemsVisitor)
     }
 }
