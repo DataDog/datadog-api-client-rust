@@ -6,15 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Tag filter for the budget's entries.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagFilter {
-    /// The key of the tag.
+pub struct BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems {
     #[serde(rename = "tag_key")]
     pub tag_key: Option<String>,
-    /// The value of the tag.
     #[serde(rename = "tag_value")]
     pub tag_value: Option<String>,
     #[serde(flatten)]
@@ -24,9 +21,9 @@ pub struct TagFilter {
     pub(crate) _unparsed: bool,
 }
 
-impl TagFilter {
-    pub fn new() -> TagFilter {
-        TagFilter {
+impl BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems {
+    pub fn new() -> BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems {
+        BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems {
             tag_key: None,
             tag_value: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -53,20 +50,20 @@ impl TagFilter {
     }
 }
 
-impl Default for TagFilter {
+impl Default for BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for TagFilter {
+impl<'de> Deserialize<'de> for BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagFilterVisitor;
-        impl<'a> Visitor<'a> for TagFilterVisitor {
-            type Value = TagFilter;
+        struct BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItemsVisitor;
+        impl<'a> Visitor<'a> for BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItemsVisitor {
+            type Value = BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -106,7 +103,7 @@ impl<'de> Deserialize<'de> for TagFilter {
                     }
                 }
 
-                let content = TagFilter {
+                let content = BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems {
                     tag_key,
                     tag_value,
                     additional_properties,
@@ -117,6 +114,7 @@ impl<'de> Deserialize<'de> for TagFilter {
             }
         }
 
-        deserializer.deserialize_any(TagFilterVisitor)
+        deserializer
+            .deserialize_any(BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItemsVisitor)
     }
 }

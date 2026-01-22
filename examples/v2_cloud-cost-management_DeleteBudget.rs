@@ -1,4 +1,4 @@
-// Delete a budget returns "No Content" response
+// Delete budget returns "No Content" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagementAPI;
 

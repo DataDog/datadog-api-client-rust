@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// An array of budgets.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct BudgetArray {
-    /// The `BudgetArray` `data`.
-    #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::Budget>,
+pub struct BudgetValidationResponseDataAttributes {
+    #[serde(rename = "errors")]
+    pub errors: Option<Vec<String>>,
+    #[serde(rename = "valid")]
+    pub valid: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,13 +21,24 @@ pub struct BudgetArray {
     pub(crate) _unparsed: bool,
 }
 
-impl BudgetArray {
-    pub fn new(data: Vec<crate::datadogV2::model::Budget>) -> BudgetArray {
-        BudgetArray {
-            data,
+impl BudgetValidationResponseDataAttributes {
+    pub fn new() -> BudgetValidationResponseDataAttributes {
+        BudgetValidationResponseDataAttributes {
+            errors: None,
+            valid: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn errors(mut self, value: Vec<String>) -> Self {
+        self.errors = Some(value);
+        self
+    }
+
+    pub fn valid(mut self, value: bool) -> Self {
+        self.valid = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -39,14 +50,20 @@ impl BudgetArray {
     }
 }
 
-impl<'de> Deserialize<'de> for BudgetArray {
+impl Default for BudgetValidationResponseDataAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for BudgetValidationResponseDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BudgetArrayVisitor;
-        impl<'a> Visitor<'a> for BudgetArrayVisitor {
-            type Value = BudgetArray;
+        struct BudgetValidationResponseDataAttributesVisitor;
+        impl<'a> Visitor<'a> for BudgetValidationResponseDataAttributesVisitor {
+            type Value = BudgetValidationResponseDataAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +73,8 @@ impl<'de> Deserialize<'de> for BudgetArray {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::Budget>> = None;
+                let mut errors: Option<Vec<String>> = None;
+                let mut valid: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -65,8 +83,17 @@ impl<'de> Deserialize<'de> for BudgetArray {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "errors" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            errors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "valid" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            valid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -75,10 +102,10 @@ impl<'de> Deserialize<'de> for BudgetArray {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = BudgetArray {
-                    data,
+                let content = BudgetValidationResponseDataAttributes {
+                    errors,
+                    valid,
                     additional_properties,
                     _unparsed,
                 };
@@ -87,6 +114,6 @@ impl<'de> Deserialize<'de> for BudgetArray {
             }
         }
 
-        deserializer.deserialize_any(BudgetArrayVisitor)
+        deserializer.deserialize_any(BudgetValidationResponseDataAttributesVisitor)
     }
 }
