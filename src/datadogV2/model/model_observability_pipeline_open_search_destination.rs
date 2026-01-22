@@ -16,6 +16,10 @@ pub struct ObservabilityPipelineOpenSearchDestination {
     /// The index to write logs to.
     #[serde(rename = "bulk_index")]
     pub bulk_index: Option<String>,
+    /// Configuration options for writing to OpenSearch Data Streams instead of a fixed index.
+    #[serde(rename = "data_stream")]
+    pub data_stream:
+        Option<crate::datadogV2::model::ObservabilityPipelineOpenSearchDestinationDataStream>,
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
@@ -40,6 +44,7 @@ impl ObservabilityPipelineOpenSearchDestination {
     ) -> ObservabilityPipelineOpenSearchDestination {
         ObservabilityPipelineOpenSearchDestination {
             bulk_index: None,
+            data_stream: None,
             id,
             inputs,
             type_,
@@ -50,6 +55,14 @@ impl ObservabilityPipelineOpenSearchDestination {
 
     pub fn bulk_index(mut self, value: String) -> Self {
         self.bulk_index = Some(value);
+        self
+    }
+
+    pub fn data_stream(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineOpenSearchDestinationDataStream,
+    ) -> Self {
+        self.data_stream = Some(value);
         self
     }
 
@@ -80,6 +93,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpenSearchDestination {
                 M: MapAccess<'a>,
             {
                 let mut bulk_index: Option<String> = None;
+                let mut data_stream: Option<
+                    crate::datadogV2::model::ObservabilityPipelineOpenSearchDestinationDataStream,
+                > = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut type_: Option<
@@ -98,6 +114,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpenSearchDestination {
                                 continue;
                             }
                             bulk_index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "data_stream" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_stream =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -129,6 +152,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpenSearchDestination {
 
                 let content = ObservabilityPipelineOpenSearchDestination {
                     bulk_index,
+                    data_stream,
                     id,
                     inputs,
                     type_,

@@ -10,6 +10,7 @@ pub enum ObservabilityPipelineHttpClientSourceAuthStrategy {
     NONE,
     BASIC,
     BEARER,
+    CUSTOM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +20,7 @@ impl ToString for ObservabilityPipelineHttpClientSourceAuthStrategy {
             Self::NONE => String::from("none"),
             Self::BASIC => String::from("basic"),
             Self::BEARER => String::from("bearer"),
+            Self::CUSTOM => String::from("custom"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +48,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientSourceAuthStrategy
             "none" => Self::NONE,
             "basic" => Self::BASIC,
             "bearer" => Self::BEARER,
+            "custom" => Self::CUSTOM,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
