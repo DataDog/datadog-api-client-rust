@@ -6,20 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A budget.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct Budget {
-    /// The attributes of a budget.
+pub struct BudgetValidationResponseData {
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::BudgetAttributes>,
-    /// The id of the budget.
+    pub attributes: Option<crate::datadogV2::model::BudgetValidationResponseDataAttributes>,
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// The type of the object, must be `budget`.
+    /// Budget validation resource type.
     #[serde(rename = "type")]
-    pub type_: String,
+    pub type_: crate::datadogV2::model::BudgetValidationResponseDataType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,9 +24,11 @@ pub struct Budget {
     pub(crate) _unparsed: bool,
 }
 
-impl Budget {
-    pub fn new(type_: String) -> Budget {
-        Budget {
+impl BudgetValidationResponseData {
+    pub fn new(
+        type_: crate::datadogV2::model::BudgetValidationResponseDataType,
+    ) -> BudgetValidationResponseData {
+        BudgetValidationResponseData {
             attributes: None,
             id: None,
             type_,
@@ -38,7 +37,10 @@ impl Budget {
         }
     }
 
-    pub fn attributes(mut self, value: crate::datadogV2::model::BudgetAttributes) -> Self {
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::BudgetValidationResponseDataAttributes,
+    ) -> Self {
         self.attributes = Some(value);
         self
     }
@@ -57,14 +59,14 @@ impl Budget {
     }
 }
 
-impl<'de> Deserialize<'de> for Budget {
+impl<'de> Deserialize<'de> for BudgetValidationResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BudgetVisitor;
-        impl<'a> Visitor<'a> for BudgetVisitor {
-            type Value = Budget;
+        struct BudgetValidationResponseDataVisitor;
+        impl<'a> Visitor<'a> for BudgetValidationResponseDataVisitor {
+            type Value = BudgetValidationResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -74,9 +76,12 @@ impl<'de> Deserialize<'de> for Budget {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::BudgetAttributes> = None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::BudgetValidationResponseDataAttributes,
+                > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::BudgetValidationResponseDataType> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -99,6 +104,14 @@ impl<'de> Deserialize<'de> for Budget {
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::BudgetValidationResponseDataType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -109,7 +122,7 @@ impl<'de> Deserialize<'de> for Budget {
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = Budget {
+                let content = BudgetValidationResponseData {
                     attributes,
                     id,
                     type_,
@@ -121,6 +134,6 @@ impl<'de> Deserialize<'de> for Budget {
             }
         }
 
-        deserializer.deserialize_any(BudgetVisitor)
+        deserializer.deserialize_any(BudgetValidationResponseDataVisitor)
     }
 }

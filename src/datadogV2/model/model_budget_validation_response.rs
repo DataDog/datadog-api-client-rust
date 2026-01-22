@@ -6,14 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// An array of budgets.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct BudgetArray {
-    /// The `BudgetArray` `data`.
+pub struct BudgetValidationResponse {
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::Budget>,
+    pub data: Option<crate::datadogV2::model::BudgetValidationResponseData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,13 +19,18 @@ pub struct BudgetArray {
     pub(crate) _unparsed: bool,
 }
 
-impl BudgetArray {
-    pub fn new(data: Vec<crate::datadogV2::model::Budget>) -> BudgetArray {
-        BudgetArray {
-            data,
+impl BudgetValidationResponse {
+    pub fn new() -> BudgetValidationResponse {
+        BudgetValidationResponse {
+            data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn data(mut self, value: crate::datadogV2::model::BudgetValidationResponseData) -> Self {
+        self.data = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -39,14 +42,20 @@ impl BudgetArray {
     }
 }
 
-impl<'de> Deserialize<'de> for BudgetArray {
+impl Default for BudgetValidationResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for BudgetValidationResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BudgetArrayVisitor;
-        impl<'a> Visitor<'a> for BudgetArrayVisitor {
-            type Value = BudgetArray;
+        struct BudgetValidationResponseVisitor;
+        impl<'a> Visitor<'a> for BudgetValidationResponseVisitor {
+            type Value = BudgetValidationResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +65,7 @@ impl<'de> Deserialize<'de> for BudgetArray {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::Budget>> = None;
+                let mut data: Option<crate::datadogV2::model::BudgetValidationResponseData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -66,6 +75,9 @@ impl<'de> Deserialize<'de> for BudgetArray {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -75,9 +87,8 @@ impl<'de> Deserialize<'de> for BudgetArray {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = BudgetArray {
+                let content = BudgetValidationResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -87,6 +98,6 @@ impl<'de> Deserialize<'de> for BudgetArray {
             }
         }
 
-        deserializer.deserialize_any(BudgetArrayVisitor)
+        deserializer.deserialize_any(BudgetValidationResponseVisitor)
     }
 }
