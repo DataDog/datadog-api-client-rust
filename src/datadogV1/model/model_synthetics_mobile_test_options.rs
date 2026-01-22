@@ -48,7 +48,8 @@ pub struct SyntheticsMobileTestOptions {
     /// A boolean set to not take a screenshot for the step.
     #[serde(rename = "noScreenshot")]
     pub no_screenshot: Option<bool>,
-    /// A list of role identifiers that can be pulled from the Roles API, for restricting read and write access.
+    /// A list of role identifiers that can be pulled from the Roles API, for restricting read and write access. This field is deprecated. Use the restriction policies API to manage permissions.
+    #[deprecated]
     #[serde(rename = "restricted_roles")]
     pub restricted_roles: Option<Vec<String>>,
     /// Object describing the retry strategy to apply to a Synthetic test.
@@ -76,6 +77,7 @@ impl SyntheticsMobileTestOptions {
         mobile_application: crate::datadogV1::model::SyntheticsMobileTestsMobileApplication,
         tick_every: i64,
     ) -> SyntheticsMobileTestOptions {
+        #[allow(deprecated)]
         SyntheticsMobileTestOptions {
             allow_application_crash: None,
             bindings: None,
@@ -99,11 +101,13 @@ impl SyntheticsMobileTestOptions {
         }
     }
 
+    #[allow(deprecated)]
     pub fn allow_application_crash(mut self, value: bool) -> Self {
         self.allow_application_crash = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn bindings(
         mut self,
         value: Vec<crate::datadogV1::model::SyntheticsTestRestrictionPolicyBinding>,
@@ -112,31 +116,37 @@ impl SyntheticsMobileTestOptions {
         self
     }
 
+    #[allow(deprecated)]
     pub fn ci(mut self, value: crate::datadogV1::model::SyntheticsTestCiOptions) -> Self {
         self.ci = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn default_step_timeout(mut self, value: i32) -> Self {
         self.default_step_timeout = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn disable_auto_accept_alert(mut self, value: bool) -> Self {
         self.disable_auto_accept_alert = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn min_failure_duration(mut self, value: i64) -> Self {
         self.min_failure_duration = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn monitor_name(mut self, value: String) -> Self {
         self.monitor_name = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn monitor_options(
         mut self,
         value: crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions,
@@ -145,26 +155,31 @@ impl SyntheticsMobileTestOptions {
         self
     }
 
+    #[allow(deprecated)]
     pub fn monitor_priority(mut self, value: i32) -> Self {
         self.monitor_priority = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn no_screenshot(mut self, value: bool) -> Self {
         self.no_screenshot = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn restricted_roles(mut self, value: Vec<String>) -> Self {
         self.restricted_roles = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn retry(mut self, value: crate::datadogV1::model::SyntheticsTestOptionsRetry) -> Self {
         self.retry = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn scheduling(
         mut self,
         value: crate::datadogV1::model::SyntheticsTestOptionsScheduling,
@@ -173,6 +188,7 @@ impl SyntheticsMobileTestOptions {
         self
     }
 
+    #[allow(deprecated)]
     pub fn verbosity(mut self, value: i32) -> Self {
         self.verbosity = Some(value);
         self
@@ -352,6 +368,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
                     .ok_or_else(|| M::Error::missing_field("mobile_application"))?;
                 let tick_every = tick_every.ok_or_else(|| M::Error::missing_field("tick_every"))?;
 
+                #[allow(deprecated)]
                 let content = SyntheticsMobileTestOptions {
                     allow_application_crash,
                     bindings,
