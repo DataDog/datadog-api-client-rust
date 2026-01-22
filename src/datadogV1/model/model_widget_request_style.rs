@@ -17,6 +17,11 @@ pub struct WidgetRequestStyle {
     /// Width of line displayed.
     #[serde(rename = "line_width")]
     pub line_width: Option<crate::datadogV1::model::WidgetLineWidth>,
+    /// How to order series in timeseries visualizations.
+    /// - `tags`: Order series alphabetically by tag name (default behavior)
+    /// - `values`: Order series by their current metric values (typically descending)
+    #[serde(rename = "order_by")]
+    pub order_by: Option<crate::datadogV1::model::WidgetStyleOrderBy>,
     /// Color palette to apply to the widget.
     #[serde(rename = "palette")]
     pub palette: Option<String>,
@@ -32,6 +37,7 @@ impl WidgetRequestStyle {
         WidgetRequestStyle {
             line_type: None,
             line_width: None,
+            order_by: None,
             palette: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -45,6 +51,11 @@ impl WidgetRequestStyle {
 
     pub fn line_width(mut self, value: crate::datadogV1::model::WidgetLineWidth) -> Self {
         self.line_width = Some(value);
+        self
+    }
+
+    pub fn order_by(mut self, value: crate::datadogV1::model::WidgetStyleOrderBy) -> Self {
+        self.order_by = Some(value);
         self
     }
 
@@ -87,6 +98,7 @@ impl<'de> Deserialize<'de> for WidgetRequestStyle {
             {
                 let mut line_type: Option<crate::datadogV1::model::WidgetLineType> = None;
                 let mut line_width: Option<crate::datadogV1::model::WidgetLineWidth> = None;
+                let mut order_by: Option<crate::datadogV1::model::WidgetStyleOrderBy> = None;
                 let mut palette: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -128,6 +140,22 @@ impl<'de> Deserialize<'de> for WidgetRequestStyle {
                                 }
                             }
                         }
+                        "order_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            order_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _order_by) = order_by {
+                                match _order_by {
+                                    crate::datadogV1::model::WidgetStyleOrderBy::UnparsedObject(
+                                        _order_by,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
                         "palette" => {
                             if v.is_null() {
                                 continue;
@@ -145,6 +173,7 @@ impl<'de> Deserialize<'de> for WidgetRequestStyle {
                 let content = WidgetRequestStyle {
                     line_type,
                     line_width,
+                    order_by,
                     palette,
                     additional_properties,
                     _unparsed,
