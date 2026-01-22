@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The attachment's attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AttachmentDataAttributes {
+    /// The attachment object.
     #[serde(rename = "attachment")]
     pub attachment: Option<crate::datadogV2::model::AttachmentDataAttributesAttachment>,
+    /// The type of the attachment.
     #[serde(rename = "attachment_type")]
     pub attachment_type: Option<crate::datadogV2::model::AttachmentDataAttributesAttachmentType>,
+    /// Timestamp when the attachment was last modified.
     #[serde(rename = "modified")]
     pub modified: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(flatten)]
