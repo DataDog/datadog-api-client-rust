@@ -11,7 +11,8 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsGlobalVariableAttributes {
-    /// A list of role identifiers that can be pulled from the Roles API, for restricting read and write access.
+    /// A list of role identifiers that can be pulled from the Roles API, for restricting read and write access. This field is deprecated. Use the restriction policies API to manage permissions.
+    #[deprecated]
     #[serde(rename = "restricted_roles")]
     pub restricted_roles: Option<Vec<String>>,
     #[serde(flatten)]
@@ -23,6 +24,7 @@ pub struct SyntheticsGlobalVariableAttributes {
 
 impl SyntheticsGlobalVariableAttributes {
     pub fn new() -> SyntheticsGlobalVariableAttributes {
+        #[allow(deprecated)]
         SyntheticsGlobalVariableAttributes {
             restricted_roles: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -30,6 +32,7 @@ impl SyntheticsGlobalVariableAttributes {
         }
     }
 
+    #[allow(deprecated)]
     pub fn restricted_roles(mut self, value: Vec<String>) -> Self {
         self.restricted_roles = Some(value);
         self
@@ -91,6 +94,7 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableAttributes {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = SyntheticsGlobalVariableAttributes {
                     restricted_roles,
                     additional_properties,

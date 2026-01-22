@@ -78,7 +78,8 @@ pub struct SyntheticsTestOptions {
     /// Prevents saving screenshots of the steps.
     #[serde(rename = "noScreenshot")]
     pub no_screenshot: Option<bool>,
-    /// A list of role identifiers that can be pulled from the Roles API, for restricting read and write access.
+    /// A list of role identifiers that can be pulled from the Roles API, for restricting read and write access. This field is deprecated. Use the restriction policies API to manage permissions.
+    #[deprecated]
     #[serde(rename = "restricted_roles")]
     pub restricted_roles: Option<Vec<String>>,
     /// Object describing the retry strategy to apply to a Synthetic test.

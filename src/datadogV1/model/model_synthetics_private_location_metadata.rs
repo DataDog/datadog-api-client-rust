@@ -11,7 +11,8 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsPrivateLocationMetadata {
-    /// A list of role identifiers that can be pulled from the Roles API, for restricting read and write access.
+    /// A list of role identifiers that can be pulled from the Roles API, for restricting read and write access. This field is deprecated. Use the restriction policies API to manage permissions.
+    #[deprecated]
     #[serde(rename = "restricted_roles")]
     pub restricted_roles: Option<Vec<String>>,
     #[serde(flatten)]
@@ -23,6 +24,7 @@ pub struct SyntheticsPrivateLocationMetadata {
 
 impl SyntheticsPrivateLocationMetadata {
     pub fn new() -> SyntheticsPrivateLocationMetadata {
+        #[allow(deprecated)]
         SyntheticsPrivateLocationMetadata {
             restricted_roles: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -30,6 +32,7 @@ impl SyntheticsPrivateLocationMetadata {
         }
     }
 
+    #[allow(deprecated)]
     pub fn restricted_roles(mut self, value: Vec<String>) -> Self {
         self.restricted_roles = Some(value);
         self
@@ -91,6 +94,7 @@ impl<'de> Deserialize<'de> for SyntheticsPrivateLocationMetadata {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = SyntheticsPrivateLocationMetadata {
                     restricted_roles,
                     additional_properties,
