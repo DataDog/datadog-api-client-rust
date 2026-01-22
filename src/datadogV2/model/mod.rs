@@ -1224,6 +1224,8 @@ pub mod model_service_now_ticket_result;
 pub use self::model_service_now_ticket_result::ServiceNowTicketResult;
 pub mod model_case_status;
 pub use self::model_case_status::CaseStatus;
+pub mod model_case_status_group;
+pub use self::model_case_status_group::CaseStatusGroup;
 pub mod model_case_type;
 pub use self::model_case_type::CaseType;
 pub mod model_case_relationships;
