@@ -1847,8 +1847,7 @@ impl CloudCostManagementAPI {
     pub async fn get_budget(
         &self,
         budget_id: String,
-    ) -> Result<crate::datadogV2::model::BudgetValidationRequest, datadog::Error<GetBudgetError>>
-    {
+    ) -> Result<crate::datadogV2::model::BudgetWithEntries, datadog::Error<GetBudgetError>> {
         match self.get_budget_with_http_info(budget_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
@@ -1868,7 +1867,7 @@ impl CloudCostManagementAPI {
         &self,
         budget_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::BudgetValidationRequest>,
+        datadog::ResponseContent<crate::datadogV2::model::BudgetWithEntries>,
         datadog::Error<GetBudgetError>,
     > {
         let local_configuration = &self.config;
@@ -1926,9 +1925,8 @@ impl CloudCostManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::BudgetValidationRequest>(
-                &local_content,
-            ) {
+            match serde_json::from_str::<crate::datadogV2::model::BudgetWithEntries>(&local_content)
+            {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
