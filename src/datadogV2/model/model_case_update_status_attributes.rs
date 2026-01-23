@@ -11,9 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateStatusAttributes {
-    /// Case status
+    /// Deprecated way of representing the case status, which only supports OPEN, IN_PROGRESS, and CLOSED statuses. Use `status_name` instead.
+    #[deprecated]
     #[serde(rename = "status")]
-    pub status: crate::datadogV2::model::CaseStatus,
+    pub status: Option<crate::datadogV2::model::CaseStatus>,
+    /// Status of the case. Must be one of the existing statuses for the case's type.
+    #[serde(rename = "status_name")]
+    pub status_name: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,12 +26,26 @@ pub struct CaseUpdateStatusAttributes {
 }
 
 impl CaseUpdateStatusAttributes {
-    pub fn new(status: crate::datadogV2::model::CaseStatus) -> CaseUpdateStatusAttributes {
+    pub fn new() -> CaseUpdateStatusAttributes {
+        #[allow(deprecated)]
         CaseUpdateStatusAttributes {
-            status,
+            status: None,
+            status_name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn status(mut self, value: crate::datadogV2::model::CaseStatus) -> Self {
+        self.status = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn status_name(mut self, value: String) -> Self {
+        self.status_name = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -36,6 +54,12 @@ impl CaseUpdateStatusAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for CaseUpdateStatusAttributes {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -57,6 +81,7 @@ impl<'de> Deserialize<'de> for CaseUpdateStatusAttributes {
                 M: MapAccess<'a>,
             {
                 let mut status: Option<crate::datadogV2::model::CaseStatus> = None;
+                let mut status_name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -66,6 +91,9 @@ impl<'de> Deserialize<'de> for CaseUpdateStatusAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "status" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
@@ -78,6 +106,13 @@ impl<'de> Deserialize<'de> for CaseUpdateStatusAttributes {
                                 }
                             }
                         }
+                        "status_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -85,10 +120,11 @@ impl<'de> Deserialize<'de> for CaseUpdateStatusAttributes {
                         }
                     }
                 }
-                let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
 
+                #[allow(deprecated)]
                 let content = CaseUpdateStatusAttributes {
                     status,
+                    status_name,
                     additional_properties,
                     _unparsed,
                 };

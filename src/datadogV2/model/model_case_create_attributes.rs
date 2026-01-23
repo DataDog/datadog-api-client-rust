@@ -21,6 +21,9 @@ pub struct CaseCreateAttributes {
     /// Case priority
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::CasePriority>,
+    /// Status of the case. Must be one of the existing statuses for the case's type.
+    #[serde(rename = "status_name")]
+    pub status_name: Option<String>,
     /// Title
     #[serde(rename = "title")]
     pub title: String,
@@ -40,6 +43,7 @@ impl CaseCreateAttributes {
             custom_attributes: None,
             description: None,
             priority: None,
+            status_name: None,
             title,
             type_id,
             additional_properties: std::collections::BTreeMap::new(),
@@ -62,6 +66,11 @@ impl CaseCreateAttributes {
 
     pub fn priority(mut self, value: crate::datadogV2::model::CasePriority) -> Self {
         self.priority = Some(value);
+        self
+    }
+
+    pub fn status_name(mut self, value: String) -> Self {
+        self.status_name = Some(value);
         self
     }
 
@@ -99,6 +108,7 @@ impl<'de> Deserialize<'de> for CaseCreateAttributes {
                 > = None;
                 let mut description: Option<String> = None;
                 let mut priority: Option<crate::datadogV2::model::CasePriority> = None;
+                let mut status_name: Option<String> = None;
                 let mut title: Option<String> = None;
                 let mut type_id: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -139,6 +149,13 @@ impl<'de> Deserialize<'de> for CaseCreateAttributes {
                                 }
                             }
                         }
+                        "status_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "title" => {
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -159,6 +176,7 @@ impl<'de> Deserialize<'de> for CaseCreateAttributes {
                     custom_attributes,
                     description,
                     priority,
+                    status_name,
                     title,
                     type_id,
                     additional_properties,
