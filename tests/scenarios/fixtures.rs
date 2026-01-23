@@ -866,7 +866,9 @@ fn process_param_from_path(
     if let Some(source) = param.get("source") {
         let source_str = source.as_str().unwrap();
         if let Some(value) = path_parameters.get(source_str) {
-            undo_operation.parameters.insert(param_name.clone(), value.clone());
+            undo_operation
+                .parameters
+                .insert(param_name.clone(), value.clone());
         } else {
             panic!("Path parameter '{}' not found", source_str);
         }
