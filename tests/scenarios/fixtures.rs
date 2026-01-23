@@ -52,6 +52,7 @@ pub struct DatadogWorld {
     pub function_mappings: HashMap<String, TestCall>,
     pub operation_id: String,
     pub parameters: HashMap<String, Value>,
+    pub path_parameters: HashMap<String, Value>,
     pub response: Response,
     pub api_name: Option<String>,
     pub api_instances: Box<ApiInstances>,
@@ -457,7 +458,9 @@ fn body_from_file(world: &mut DatadogWorld, path: String) {
 #[given(expr = "request contains {string} parameter from {string}")]
 fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: String) {
     let lookup = lookup(&path, &world.fixtures).expect("failed to lookup parameter");
-    world.parameters.insert(param, lookup);
+    world.parameters.insert(param.clone(), lookup.clone());
+    // Store path parameter for undo operations
+    world.path_parameters.insert(param, lookup);
 }
 
 #[given(expr = "request contains {string} parameter with value {}")]
@@ -466,21 +469,30 @@ fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: 
     let rendered = template(trimmed_value.clone(), &world.fixtures);
     // check if the value was an explicit string
     if trimmed_value != value {
-        world.parameters.insert(param, Value::String(rendered));
+        let val = Value::String(rendered);
+        world.parameters.insert(param.clone(), val.clone());
+        world.path_parameters.insert(param, val);
         return;
     }
     if NUMBER_RE.is_match(&rendered) {
         let number =
             serde_json::Number::from_str(&rendered).expect("couldn't parse param as number");
-        world.parameters.insert(param, Value::Number(number));
+        let val = Value::Number(number);
+        world.parameters.insert(param.clone(), val.clone());
+        world.path_parameters.insert(param, val);
     } else if BOOL_RE.is_match(&rendered) {
         let boolean = Value::Bool(rendered == "true");
-        world.parameters.insert(param, boolean);
+        world.parameters.insert(param.clone(), boolean.clone());
+        world.path_parameters.insert(param, boolean);
     } else if ARRAY_RE.is_match(&rendered) {
         let vec: Vec<Value> = serde_json::from_str(&rendered).expect("couldn't parse param as vec");
-        world.parameters.insert(param, Value::Array(vec));
+        let val = Value::Array(vec);
+        world.parameters.insert(param.clone(), val.clone());
+        world.path_parameters.insert(param, val);
     } else {
-        world.parameters.insert(param, Value::from(rendered));
+        let val = Value::from(rendered);
+        world.parameters.insert(param.clone(), val.clone());
+        world.path_parameters.insert(param, val);
     }
 }
 
@@ -844,6 +856,25 @@ fn process_param_from_request(
     }
 }
 
+fn process_param_from_path(
+    param: &Value,
+    undo_operation: &mut UndoOperation,
+    path_parameters: &HashMap<String, Value>,
+) {
+    let param_name = param.get("name").unwrap().as_str().unwrap().to_string();
+
+    if let Some(source) = param.get("source") {
+        let source_str = source.as_str().unwrap();
+        if let Some(value) = path_parameters.get(source_str) {
+            undo_operation.parameters.insert(param_name.clone(), value.clone());
+        } else {
+            panic!("Path parameter '{}' not found", source_str);
+        }
+    } else {
+        panic!("Path origin requires 'source' field");
+    }
+}
+
 fn build_undo(
     world: &mut DatadogWorld,
     operation_id: &String,
@@ -917,6 +948,12 @@ fn build_undo(
                                 param,
                                 &mut undo_operation,
                                 request_parameters.clone(),
+                            );
+                        } else if origin == "path" {
+                            process_param_from_path(
+                                param,
+                                &mut undo_operation,
+                                &world.path_parameters,
                             );
                         }
                     }
