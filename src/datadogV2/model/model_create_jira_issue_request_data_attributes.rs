@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateJiraIssueRequestDataAttributes {
-    /// Unique identifier of the user assigned to the Jira issue.
+    /// Unique identifier of the Datadog user assigned to the Jira issue.
     #[serde(rename = "assignee_id")]
     pub assignee_id: Option<String>,
     /// Description of the Jira issue. If not provided, the description will be automatically generated.
