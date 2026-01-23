@@ -258,6 +258,8 @@ pub mod model_widget_line_type;
 pub use self::model_widget_line_type::WidgetLineType;
 pub mod model_widget_line_width;
 pub use self::model_widget_line_width::WidgetLineWidth;
+pub mod model_widget_style_order_by;
+pub use self::model_widget_style_order_by::WidgetStyleOrderBy;
 pub mod model_bar_chart_widget_style;
 pub use self::model_bar_chart_widget_style::BarChartWidgetStyle;
 pub mod model_bar_chart_widget_stacked;
