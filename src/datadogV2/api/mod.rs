@@ -79,6 +79,7 @@ pub mod api_sensitive_data_scanner;
 pub mod api_service_accounts;
 pub mod api_service_definition;
 pub mod api_service_level_objectives;
+pub mod api_service_now_integration;
 pub mod api_service_scorecards;
 pub mod api_software_catalog;
 pub mod api_spa;

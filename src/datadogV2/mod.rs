@@ -80,6 +80,7 @@ pub use self::api::api_sensitive_data_scanner;
 pub use self::api::api_service_accounts;
 pub use self::api::api_service_definition;
 pub use self::api::api_service_level_objectives;
+pub use self::api::api_service_now_integration;
 pub use self::api::api_service_scorecards;
 pub use self::api::api_software_catalog;
 pub use self::api::api_spa;
