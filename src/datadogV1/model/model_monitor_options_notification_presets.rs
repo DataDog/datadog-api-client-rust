@@ -11,9 +11,6 @@ pub enum MonitorOptionsNotificationPresets {
     HIDE_QUERY,
     HIDE_HANDLES,
     HIDE_ALL,
-    HIDE_QUERY_AND_HANDLES,
-    SHOW_ONLY_SNAPSHOT,
-    HIDE_HANDLES_AND_FOOTER,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -24,9 +21,6 @@ impl ToString for MonitorOptionsNotificationPresets {
             Self::HIDE_QUERY => String::from("hide_query"),
             Self::HIDE_HANDLES => String::from("hide_handles"),
             Self::HIDE_ALL => String::from("hide_all"),
-            Self::HIDE_QUERY_AND_HANDLES => String::from("hide_query_and_handles"),
-            Self::SHOW_ONLY_SNAPSHOT => String::from("show_only_snapshot"),
-            Self::HIDE_HANDLES_AND_FOOTER => String::from("hide_handles_and_footer"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -55,9 +49,6 @@ impl<'de> Deserialize<'de> for MonitorOptionsNotificationPresets {
             "hide_query" => Self::HIDE_QUERY,
             "hide_handles" => Self::HIDE_HANDLES,
             "hide_all" => Self::HIDE_ALL,
-            "hide_query_and_handles" => Self::HIDE_QUERY_AND_HANDLES,
-            "show_only_snapshot" => Self::SHOW_ONLY_SNAPSHOT,
-            "hide_handles_and_footer" => Self::HIDE_HANDLES_AND_FOOTER,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
