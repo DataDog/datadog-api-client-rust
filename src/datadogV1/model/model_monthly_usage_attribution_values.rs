@@ -198,6 +198,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The Fargate usage by tags.
     #[serde(rename = "fargate_usage")]
     pub fargate_usage: Option<f64>,
+    /// The percentage of Flex Logs Starter usage by tags.
+    #[serde(rename = "flex_logs_starter_percentage")]
+    pub flex_logs_starter_percentage: Option<f64>,
+    /// The Flex Logs Starter usage by tags.
+    #[serde(rename = "flex_logs_starter_usage")]
+    pub flex_logs_starter_usage: Option<f64>,
     /// The percentage of Flex Stored Logs usage by tags.
     #[serde(rename = "flex_stored_logs_percentage")]
     pub flex_stored_logs_percentage: Option<f64>,
@@ -558,6 +564,8 @@ impl MonthlyUsageAttributionValues {
             estimated_ingested_spans_usage: None,
             fargate_percentage: None,
             fargate_usage: None,
+            flex_logs_starter_percentage: None,
+            flex_logs_starter_usage: None,
             flex_stored_logs_percentage: None,
             flex_stored_logs_usage: None,
             functions_percentage: None,
@@ -966,6 +974,16 @@ impl MonthlyUsageAttributionValues {
 
     pub fn fargate_usage(mut self, value: f64) -> Self {
         self.fargate_usage = Some(value);
+        self
+    }
+
+    pub fn flex_logs_starter_percentage(mut self, value: f64) -> Self {
+        self.flex_logs_starter_percentage = Some(value);
+        self
+    }
+
+    pub fn flex_logs_starter_usage(mut self, value: f64) -> Self {
+        self.flex_logs_starter_usage = Some(value);
         self
     }
 
@@ -1543,6 +1561,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut estimated_ingested_spans_usage: Option<f64> = None;
                 let mut fargate_percentage: Option<f64> = None;
                 let mut fargate_usage: Option<f64> = None;
+                let mut flex_logs_starter_percentage: Option<f64> = None;
+                let mut flex_logs_starter_usage: Option<f64> = None;
                 let mut flex_stored_logs_percentage: Option<f64> = None;
                 let mut flex_stored_logs_usage: Option<f64> = None;
                 let mut functions_percentage: Option<f64> = None;
@@ -2078,6 +2098,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                                 continue;
                             }
                             fargate_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "flex_logs_starter_percentage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            flex_logs_starter_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "flex_logs_starter_usage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            flex_logs_starter_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "flex_stored_logs_percentage" => {
@@ -2822,6 +2856,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     estimated_ingested_spans_usage,
                     fargate_percentage,
                     fargate_usage,
+                    flex_logs_starter_percentage,
+                    flex_logs_starter_usage,
                     flex_stored_logs_percentage,
                     flex_stored_logs_usage,
                     functions_percentage,
