@@ -2307,6 +2307,15 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.UnassignCase".into(), test_v2_unassign_case);
     world
         .function_mappings
+        .insert("v2.ListCaseWatchers".into(), test_v2_list_case_watchers);
+    world
+        .function_mappings
+        .insert("v2.UnwatchCase".into(), test_v2_unwatch_case);
+    world
+        .function_mappings
+        .insert("v2.WatchCase".into(), test_v2_watch_case);
+    world
+        .function_mappings
         .insert("v2.GetAllCaseTypes".into(), test_v2_get_all_case_types);
     world
         .function_mappings
@@ -15713,6 +15722,83 @@ fn test_v2_unassign_case(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.unassign_case_with_http_info(case_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_case_watchers(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_case_management
+        .as_ref()
+        .expect("api instance not found");
+    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_case_watchers_with_http_info(case_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_unwatch_case(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_case_management
+        .as_ref()
+        .expect("api instance not found");
+    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
+    let user_id = serde_json::from_value(_parameters.get("user_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.unwatch_case_with_http_info(case_id, user_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_watch_case(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_case_management
+        .as_ref()
+        .expect("api instance not found");
+    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
+    let user_id = serde_json::from_value(_parameters.get("user_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.watch_case_with_http_info(case_id, user_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
