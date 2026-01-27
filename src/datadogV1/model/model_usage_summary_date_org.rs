@@ -83,6 +83,12 @@ pub struct UsageSummaryDateOrg {
     #[deprecated]
     #[serde(rename = "browser_rum_units_sum")]
     pub browser_rum_units_sum: Option<i64>,
+    /// Shows the last value of the amount of cloud spend monitored for Enterprise over all hours in the current date for the given org.
+    #[serde(rename = "ccm_spend_monitored_ent_last")]
+    pub ccm_spend_monitored_ent_last: Option<i64>,
+    /// Shows the last value of the amount of cloud spend monitored for Pro over all hours in the current date for the given org.
+    #[serde(rename = "ccm_spend_monitored_pro_last")]
+    pub ccm_spend_monitored_pro_last: Option<i64>,
     /// Shows the sum of all CI pipeline indexed spans over all hours in the current date for the given org.
     #[serde(rename = "ci_pipeline_indexed_spans_sum")]
     pub ci_pipeline_indexed_spans_sum: Option<i64>,
@@ -708,6 +714,8 @@ impl UsageSummaryDateOrg {
             browser_rum_lite_session_count_sum: None,
             browser_rum_replay_session_count_sum: None,
             browser_rum_units_sum: None,
+            ccm_spend_monitored_ent_last: None,
+            ccm_spend_monitored_pro_last: None,
             ci_pipeline_indexed_spans_sum: None,
             ci_test_indexed_spans_sum: None,
             ci_visibility_itr_committers_hwm: None,
@@ -1041,6 +1049,18 @@ impl UsageSummaryDateOrg {
     #[allow(deprecated)]
     pub fn browser_rum_units_sum(mut self, value: i64) -> Self {
         self.browser_rum_units_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_spend_monitored_ent_last(mut self, value: i64) -> Self {
+        self.ccm_spend_monitored_ent_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_spend_monitored_pro_last(mut self, value: i64) -> Self {
+        self.ccm_spend_monitored_pro_last = Some(value);
         self
     }
 
@@ -2287,6 +2307,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut browser_rum_lite_session_count_sum: Option<i64> = None;
                 let mut browser_rum_replay_session_count_sum: Option<i64> = None;
                 let mut browser_rum_units_sum: Option<i64> = None;
+                let mut ccm_spend_monitored_ent_last: Option<i64> = None;
+                let mut ccm_spend_monitored_pro_last: Option<i64> = None;
                 let mut ci_pipeline_indexed_spans_sum: Option<i64> = None;
                 let mut ci_test_indexed_spans_sum: Option<i64> = None;
                 let mut ci_visibility_itr_committers_hwm: Option<i64> = None;
@@ -2637,6 +2659,18 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                                 continue;
                             }
                             browser_rum_units_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_spend_monitored_ent_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_spend_monitored_ent_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_spend_monitored_pro_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_spend_monitored_pro_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "ci_pipeline_indexed_spans_sum" => {
                             if v.is_null() {
@@ -3829,6 +3863,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     browser_rum_lite_session_count_sum,
                     browser_rum_replay_session_count_sum,
                     browser_rum_units_sum,
+                    ccm_spend_monitored_ent_last,
+                    ccm_spend_monitored_pro_last,
                     ci_pipeline_indexed_spans_sum,
                     ci_test_indexed_spans_sum,
                     ci_visibility_itr_committers_hwm,
