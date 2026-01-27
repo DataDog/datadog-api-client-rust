@@ -80,6 +80,12 @@ pub struct UsageSummaryResponse {
     #[deprecated]
     #[serde(rename = "browser_rum_units_agg_sum")]
     pub browser_rum_units_agg_sum: Option<i64>,
+    /// Shows the sum of the last value of the amount of cloud spend monitored for Enterprise in the current month for all organizations.
+    #[serde(rename = "ccm_spend_monitored_ent_last_sum")]
+    pub ccm_spend_monitored_ent_last_sum: Option<i64>,
+    /// Shows the sum of the last value of the amount of cloud spend monitored for Pro in the current month for all organizations.
+    #[serde(rename = "ccm_spend_monitored_pro_last_sum")]
+    pub ccm_spend_monitored_pro_last_sum: Option<i64>,
     /// Shows the sum of all CI pipeline indexed spans over all hours in the current month for all organizations.
     #[serde(rename = "ci_pipeline_indexed_spans_agg_sum")]
     pub ci_pipeline_indexed_spans_agg_sum: Option<i64>,
@@ -724,6 +730,8 @@ impl UsageSummaryResponse {
             browser_rum_lite_session_count_agg_sum: None,
             browser_rum_replay_session_count_agg_sum: None,
             browser_rum_units_agg_sum: None,
+            ccm_spend_monitored_ent_last_sum: None,
+            ccm_spend_monitored_pro_last_sum: None,
             ci_pipeline_indexed_spans_agg_sum: None,
             ci_test_indexed_spans_agg_sum: None,
             ci_visibility_itr_committers_hwm_sum: None,
@@ -1057,6 +1065,18 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn browser_rum_units_agg_sum(mut self, value: i64) -> Self {
         self.browser_rum_units_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_spend_monitored_ent_last_sum(mut self, value: i64) -> Self {
+        self.ccm_spend_monitored_ent_last_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_spend_monitored_pro_last_sum(mut self, value: i64) -> Self {
+        self.ccm_spend_monitored_pro_last_sum = Some(value);
         self
     }
 
@@ -2358,6 +2378,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut browser_rum_lite_session_count_agg_sum: Option<i64> = None;
                 let mut browser_rum_replay_session_count_agg_sum: Option<i64> = None;
                 let mut browser_rum_units_agg_sum: Option<i64> = None;
+                let mut ccm_spend_monitored_ent_last_sum: Option<i64> = None;
+                let mut ccm_spend_monitored_pro_last_sum: Option<i64> = None;
                 let mut ci_pipeline_indexed_spans_agg_sum: Option<i64> = None;
                 let mut ci_test_indexed_spans_agg_sum: Option<i64> = None;
                 let mut ci_visibility_itr_committers_hwm_sum: Option<i64> = None;
@@ -2713,6 +2735,18 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             browser_rum_units_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_spend_monitored_ent_last_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_spend_monitored_ent_last_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_spend_monitored_pro_last_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_spend_monitored_pro_last_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "ci_pipeline_indexed_spans_agg_sum" => {
                             if v.is_null() {
@@ -3940,6 +3974,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     browser_rum_lite_session_count_agg_sum,
                     browser_rum_replay_session_count_agg_sum,
                     browser_rum_units_agg_sum,
+                    ccm_spend_monitored_ent_last_sum,
+                    ccm_spend_monitored_pro_last_sum,
                     ci_pipeline_indexed_spans_agg_sum,
                     ci_test_indexed_spans_agg_sum,
                     ci_visibility_itr_committers_hwm_sum,
