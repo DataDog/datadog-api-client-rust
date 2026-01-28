@@ -16,13 +16,11 @@ async fn main() {
     .expect("Invalid UUID");
     let status_page_data_id = uuid::Uuid::parse_str(&std::env::var("STATUS_PAGE_DATA_ID").unwrap())
         .expect("Invalid UUID");
-    let body = PatchComponentRequest::new().data(
-        PatchComponentRequestData::new(StatusPagesComponentGroupType::COMPONENTS)
-            .attributes(
-                PatchComponentRequestDataAttributes::new().name("Logs Indexing".to_string()),
-            )
-            .id(status_page_data_attributes_components_0_id.clone()),
-    );
+    let body = PatchComponentRequest::new().data(PatchComponentRequestData::new(
+        PatchComponentRequestDataAttributes::new().name("Logs Indexing".to_string()),
+        status_page_data_attributes_components_0_id.clone(),
+        StatusPagesComponentGroupType::COMPONENTS,
+    ));
     let configuration = datadog::Configuration::new();
     let api = StatusPagesAPI::with_config(configuration);
     let resp = api

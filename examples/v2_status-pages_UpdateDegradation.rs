@@ -16,14 +16,12 @@ async fn main() {
     // there is a valid "degradation" in the system
     let degradation_data_id = uuid::Uuid::parse_str(&std::env::var("DEGRADATION_DATA_ID").unwrap())
         .expect("Invalid UUID");
-    let body = PatchDegradationRequest::new().data(
-        PatchDegradationRequestData::new(PatchDegradationRequestDataType::DEGRADATIONS)
-            .attributes(
-                PatchDegradationRequestDataAttributes::new()
-                    .title("Elevated API Latency in US1".to_string()),
-            )
-            .id(degradation_data_id.clone()),
-    );
+    let body = PatchDegradationRequest::new().data(PatchDegradationRequestData::new(
+        PatchDegradationRequestDataAttributes::new()
+            .title("Elevated API Latency in US1".to_string()),
+        degradation_data_id.clone(),
+        PatchDegradationRequestDataType::DEGRADATIONS,
+    ));
     let configuration = datadog::Configuration::new();
     let api = StatusPagesAPI::with_config(configuration);
     let resp = api

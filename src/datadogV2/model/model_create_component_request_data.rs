@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 pub struct CreateComponentRequestData {
     /// The supported attributes for creating a component.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::CreateComponentRequestDataAttributes>,
+    pub attributes: crate::datadogV2::model::CreateComponentRequestDataAttributes,
     /// The supported relationships for creating a component.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::CreateComponentRequestDataRelationships>,
@@ -28,23 +28,16 @@ pub struct CreateComponentRequestData {
 
 impl CreateComponentRequestData {
     pub fn new(
+        attributes: crate::datadogV2::model::CreateComponentRequestDataAttributes,
         type_: crate::datadogV2::model::StatusPagesComponentGroupType,
     ) -> CreateComponentRequestData {
         CreateComponentRequestData {
-            attributes: None,
+            attributes,
             relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::CreateComponentRequestDataAttributes,
-    ) -> Self {
-        self.attributes = Some(value);
-        self
     }
 
     pub fn relationships(
@@ -98,9 +91,6 @@ impl<'de> Deserialize<'de> for CreateComponentRequestData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relationships" => {
@@ -128,6 +118,7 @@ impl<'de> Deserialize<'de> for CreateComponentRequestData {
                         }
                     }
                 }
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = CreateComponentRequestData {

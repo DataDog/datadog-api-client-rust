@@ -13,15 +13,14 @@ async fn main() {
     // there is a valid "status_page" in the system
     let status_page_data_id = uuid::Uuid::parse_str(&std::env::var("STATUS_PAGE_DATA_ID").unwrap())
         .expect("Invalid UUID");
-    let body = CreateComponentRequest::new().data(
-        CreateComponentRequestData::new(StatusPagesComponentGroupType::COMPONENTS).attributes(
-            CreateComponentRequestDataAttributes::new(
-                "Logs".to_string(),
-                0,
-                CreateComponentRequestDataAttributesType::COMPONENT,
-            ),
+    let body = CreateComponentRequest::new().data(CreateComponentRequestData::new(
+        CreateComponentRequestDataAttributes::new(
+            "Logs".to_string(),
+            0,
+            CreateComponentRequestDataAttributesType::COMPONENT,
         ),
-    );
+        StatusPagesComponentGroupType::COMPONENTS,
+    ));
     let configuration = datadog::Configuration::new();
     let api = StatusPagesAPI::with_config(configuration);
     let resp = api
