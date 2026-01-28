@@ -339,7 +339,16 @@ pub fn given_resource_in_system(
                     if let Some(value) =
                         lookup(&source.as_str().unwrap().to_string(), &world.fixtures)
                     {
-                        given_parameters.insert(param_name.clone(), value);
+                        given_parameters.insert(param_name.clone(), value.clone());
+
+                        // Store in path_parameters for undo operations
+                        world
+                            .path_parameters
+                            .insert(param_name.clone(), value.clone());
+                        let snake_param = param_name.to_case(Case::Snake);
+                        if snake_param != param_name {
+                            world.path_parameters.insert(snake_param, value);
+                        }
                     }
                 };
                 if let Some(template_value) = param.get("value") {
@@ -347,10 +356,17 @@ pub fn given_resource_in_system(
                         template_value.as_str().unwrap().to_string(),
                         &world.fixtures,
                     );
-                    given_parameters.insert(
-                        param_name.clone(),
-                        serde_json::from_str(rendered.as_str()).unwrap(),
-                    );
+                    let parsed_value: Value = serde_json::from_str(rendered.as_str()).unwrap();
+                    given_parameters.insert(param_name.clone(), parsed_value.clone());
+
+                    // Store in path_parameters for undo operations
+                    world
+                        .path_parameters
+                        .insert(param_name.clone(), parsed_value.clone());
+                    let snake_param = param_name.to_case(Case::Snake);
+                    if snake_param != param_name {
+                        world.path_parameters.insert(snake_param, parsed_value);
+                    }
                 };
             }
         }
@@ -459,8 +475,12 @@ fn body_from_file(world: &mut DatadogWorld, path: String) {
 fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: String) {
     let lookup = lookup(&path, &world.fixtures).expect("failed to lookup parameter");
     world.parameters.insert(param.clone(), lookup.clone());
-    // Store path parameter for undo operations
-    world.path_parameters.insert(param, lookup);
+    // Store path parameter for undo operations with naming variants
+    world.path_parameters.insert(param.clone(), lookup.clone());
+    let snake_param = param.to_case(Case::Snake);
+    if snake_param != param {
+        world.path_parameters.insert(snake_param, lookup);
+    }
 }
 
 #[given(expr = "request contains {string} parameter with value {}")]
@@ -471,7 +491,11 @@ fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: 
     if trimmed_value != value {
         let val = Value::String(rendered);
         world.parameters.insert(param.clone(), val.clone());
-        world.path_parameters.insert(param, val);
+        world.path_parameters.insert(param.clone(), val.clone());
+        let snake_param = param.to_case(Case::Snake);
+        if snake_param != param {
+            world.path_parameters.insert(snake_param, val);
+        }
         return;
     }
     if NUMBER_RE.is_match(&rendered) {
@@ -479,20 +503,36 @@ fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: 
             serde_json::Number::from_str(&rendered).expect("couldn't parse param as number");
         let val = Value::Number(number);
         world.parameters.insert(param.clone(), val.clone());
-        world.path_parameters.insert(param, val);
+        world.path_parameters.insert(param.clone(), val.clone());
+        let snake_param = param.to_case(Case::Snake);
+        if snake_param != param {
+            world.path_parameters.insert(snake_param, val);
+        }
     } else if BOOL_RE.is_match(&rendered) {
         let boolean = Value::Bool(rendered == "true");
         world.parameters.insert(param.clone(), boolean.clone());
-        world.path_parameters.insert(param, boolean);
+        world.path_parameters.insert(param.clone(), boolean.clone());
+        let snake_param = param.to_case(Case::Snake);
+        if snake_param != param {
+            world.path_parameters.insert(snake_param, boolean);
+        }
     } else if ARRAY_RE.is_match(&rendered) {
         let vec: Vec<Value> = serde_json::from_str(&rendered).expect("couldn't parse param as vec");
         let val = Value::Array(vec);
         world.parameters.insert(param.clone(), val.clone());
-        world.path_parameters.insert(param, val);
+        world.path_parameters.insert(param.clone(), val.clone());
+        let snake_param = param.to_case(Case::Snake);
+        if snake_param != param {
+            world.path_parameters.insert(snake_param, val);
+        }
     } else {
         let val = Value::from(rendered);
         world.parameters.insert(param.clone(), val.clone());
-        world.path_parameters.insert(param, val);
+        world.path_parameters.insert(param.clone(), val.clone());
+        let snake_param = param.to_case(Case::Snake);
+        if snake_param != param {
+            world.path_parameters.insert(snake_param, val);
+        }
     }
 }
 
@@ -865,12 +905,23 @@ fn process_param_from_path(
 
     if let Some(source) = param.get("source") {
         let source_str = source.as_str().unwrap();
+        // Try multiple naming variants
         if let Some(value) = path_parameters.get(source_str) {
             undo_operation
                 .parameters
                 .insert(param_name.clone(), value.clone());
         } else {
-            panic!("Path parameter '{}' not found", source_str);
+            let snake_source = source_str.to_case(Case::Snake);
+            if let Some(value) = path_parameters.get(&snake_source) {
+                undo_operation
+                    .parameters
+                    .insert(param_name.clone(), value.clone());
+            } else {
+                panic!(
+                    "Path parameter '{}' not found in path_parameters",
+                    source_str
+                );
+            }
         }
     } else {
         panic!("Path origin requires 'source' field");
