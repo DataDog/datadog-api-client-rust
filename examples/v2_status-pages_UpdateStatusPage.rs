@@ -12,14 +12,11 @@ async fn main() {
     // there is a valid "status_page" in the system
     let status_page_data_id = uuid::Uuid::parse_str(&std::env::var("STATUS_PAGE_DATA_ID").unwrap())
         .expect("Invalid UUID");
-    let body = PatchStatusPageRequest::new().data(
-        PatchStatusPageRequestData::new(StatusPageDataType::STATUS_PAGES)
-            .attributes(
-                PatchStatusPageRequestDataAttributes::new()
-                    .name("A Status Page in US1".to_string()),
-            )
-            .id(status_page_data_id.clone()),
-    );
+    let body = PatchStatusPageRequest::new().data(PatchStatusPageRequestData::new(
+        PatchStatusPageRequestDataAttributes::new().name("A Status Page in US1".to_string()),
+        status_page_data_id.clone(),
+        StatusPageDataType::STATUS_PAGES,
+    ));
     let configuration = datadog::Configuration::new();
     let api = StatusPagesAPI::with_config(configuration);
     let resp = api

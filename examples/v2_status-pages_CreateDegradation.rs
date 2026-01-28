@@ -19,25 +19,22 @@ async fn main() {
     .expect("Invalid UUID");
     let status_page_data_id = uuid::Uuid::parse_str(&std::env::var("STATUS_PAGE_DATA_ID").unwrap())
         .expect("Invalid UUID");
-    let body = CreateDegradationRequest::new().data(
-        CreateDegradationRequestData::new(PatchDegradationRequestDataType::DEGRADATIONS)
-            .attributes(
-                CreateDegradationRequestDataAttributes::new(
-                    vec![
-                        CreateDegradationRequestDataAttributesComponentsAffectedItems::new(
-                            status_page_data_attributes_components_0_components_0_id.clone(),
-                            StatusPagesComponentDataAttributesStatus::MAJOR_OUTAGE,
-                        ),
-                    ],
-                    CreateDegradationRequestDataAttributesStatus::INVESTIGATING,
-                    "Elevated API Latency".to_string(),
-                )
-                .description(
-                    "Our API is experiencing elevated latency. We are investigating the issue."
-                        .to_string(),
+    let body = CreateDegradationRequest::new().data(CreateDegradationRequestData::new(
+        CreateDegradationRequestDataAttributes::new(
+            vec![
+                CreateDegradationRequestDataAttributesComponentsAffectedItems::new(
+                    status_page_data_attributes_components_0_components_0_id.clone(),
+                    StatusPagesComponentDataAttributesStatus::MAJOR_OUTAGE,
                 ),
-            ),
-    );
+            ],
+            CreateDegradationRequestDataAttributesStatus::INVESTIGATING,
+            "Elevated API Latency".to_string(),
+        )
+        .description(
+            "Our API is experiencing elevated latency. We are investigating the issue.".to_string(),
+        ),
+        PatchDegradationRequestDataType::DEGRADATIONS,
+    ));
     let configuration = datadog::Configuration::new();
     let api = StatusPagesAPI::with_config(configuration);
     let resp = api

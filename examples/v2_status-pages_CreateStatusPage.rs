@@ -13,27 +13,26 @@ use datadog_api_client::datadogV2::model::StatusPageDataType;
 
 #[tokio::main]
 async fn main() {
-    let body = CreateStatusPageRequest::new().data(
-        CreateStatusPageRequestData::new(StatusPageDataType::STATUS_PAGES).attributes(
-            CreateStatusPageRequestDataAttributes::new(
-                "5e2fd69be33e79aa".to_string(),
-                true,
-                "A Status Page".to_string(),
-                CreateStatusPageRequestDataAttributesType::INTERNAL,
-                CreateStatusPageRequestDataAttributesVisualizationType::BARS_AND_UPTIME_PERCENTAGE,
-            )
-            .components(vec![
-                CreateStatusPageRequestDataAttributesComponentsItems::new()
-                    .name("Login".to_string())
-                    .position(0)
-                    .type_(CreateComponentRequestDataAttributesType::COMPONENT),
-                CreateStatusPageRequestDataAttributesComponentsItems::new()
-                    .name("Settings".to_string())
-                    .position(1)
-                    .type_(CreateComponentRequestDataAttributesType::COMPONENT),
-            ]),
-        ),
-    );
+    let body = CreateStatusPageRequest::new().data(CreateStatusPageRequestData::new(
+        CreateStatusPageRequestDataAttributes::new(
+            "5e2fd69be33e79aa".to_string(),
+            true,
+            "A Status Page".to_string(),
+            CreateStatusPageRequestDataAttributesType::INTERNAL,
+            CreateStatusPageRequestDataAttributesVisualizationType::BARS_AND_UPTIME_PERCENTAGE,
+        )
+        .components(vec![
+            CreateStatusPageRequestDataAttributesComponentsItems::new()
+                .name("Login".to_string())
+                .position(0)
+                .type_(CreateComponentRequestDataAttributesType::COMPONENT),
+            CreateStatusPageRequestDataAttributesComponentsItems::new()
+                .name("Settings".to_string())
+                .position(1)
+                .type_(CreateComponentRequestDataAttributesType::COMPONENT),
+        ]),
+        StatusPageDataType::STATUS_PAGES,
+    ));
     let configuration = datadog::Configuration::new();
     let api = StatusPagesAPI::with_config(configuration);
     let resp = api

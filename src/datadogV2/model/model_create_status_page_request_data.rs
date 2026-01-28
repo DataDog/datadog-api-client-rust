@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 pub struct CreateStatusPageRequestData {
     /// The supported attributes for creating a status page.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::CreateStatusPageRequestDataAttributes>,
+    pub attributes: crate::datadogV2::model::CreateStatusPageRequestDataAttributes,
     /// Status pages resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::StatusPageDataType,
@@ -24,21 +24,16 @@ pub struct CreateStatusPageRequestData {
 }
 
 impl CreateStatusPageRequestData {
-    pub fn new(type_: crate::datadogV2::model::StatusPageDataType) -> CreateStatusPageRequestData {
+    pub fn new(
+        attributes: crate::datadogV2::model::CreateStatusPageRequestDataAttributes,
+        type_: crate::datadogV2::model::StatusPageDataType,
+    ) -> CreateStatusPageRequestData {
         CreateStatusPageRequestData {
-            attributes: None,
+            attributes,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::CreateStatusPageRequestDataAttributes,
-    ) -> Self {
-        self.attributes = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -80,9 +75,6 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -105,6 +97,7 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestData {
                         }
                     }
                 }
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = CreateStatusPageRequestData {

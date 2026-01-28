@@ -12,10 +12,10 @@ use std::fmt::{self, Formatter};
 pub struct PatchDegradationRequestData {
     /// The supported attributes for updating a degradation.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::PatchDegradationRequestDataAttributes>,
+    pub attributes: crate::datadogV2::model::PatchDegradationRequestDataAttributes,
     /// The ID of the degradation.
     #[serde(rename = "id")]
-    pub id: Option<uuid::Uuid>,
+    pub id: uuid::Uuid,
     /// Degradations resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::PatchDegradationRequestDataType,
@@ -28,28 +28,17 @@ pub struct PatchDegradationRequestData {
 
 impl PatchDegradationRequestData {
     pub fn new(
+        attributes: crate::datadogV2::model::PatchDegradationRequestDataAttributes,
+        id: uuid::Uuid,
         type_: crate::datadogV2::model::PatchDegradationRequestDataType,
     ) -> PatchDegradationRequestData {
         PatchDegradationRequestData {
-            attributes: None,
-            id: None,
+            attributes,
+            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::PatchDegradationRequestDataAttributes,
-    ) -> Self {
-        self.attributes = Some(value);
-        self
-    }
-
-    pub fn id(mut self, value: uuid::Uuid) -> Self {
-        self.id = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -93,15 +82,9 @@ impl<'de> Deserialize<'de> for PatchDegradationRequestData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -122,6 +105,8 @@ impl<'de> Deserialize<'de> for PatchDegradationRequestData {
                         }
                     }
                 }
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = PatchDegradationRequestData {
