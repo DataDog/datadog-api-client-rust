@@ -30,6 +30,12 @@ pub struct ObservabilityPipelineConfig {
     /// A list of configured data sources for the pipeline.
     #[serde(rename = "sources")]
     pub sources: Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
+    /// Set to `true` to continue using the legacy search syntax while migrating filter queries. After migrating all queries to the new syntax, set to `false`.
+    /// The legacy syntax is deprecated and will eventually be removed.
+    /// Requires Observability Pipelines Worker 2.11 or later.
+    /// See [Upgrade Your Filter Queries to the New Search Syntax](<https://docs.datadoghq.com/observability_pipelines/guide/upgrade_your_filter_queries_to_the_new_search_syntax/>) for more information.
+    #[serde(rename = "use_legacy_search_syntax")]
+    pub use_legacy_search_syntax: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -49,6 +55,7 @@ impl ObservabilityPipelineConfig {
             processor_groups: None,
             processors: None,
             sources,
+            use_legacy_search_syntax: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -78,6 +85,12 @@ impl ObservabilityPipelineConfig {
         value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
     ) -> Self {
         self.processors = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn use_legacy_search_syntax(mut self, value: bool) -> Self {
+        self.use_legacy_search_syntax = Some(value);
         self
     }
 
@@ -122,6 +135,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                 let mut sources: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
                 > = None;
+                let mut use_legacy_search_syntax: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -165,6 +179,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                         "sources" => {
                             sources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "use_legacy_search_syntax" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            use_legacy_search_syntax =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -183,6 +204,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                     processor_groups,
                     processors,
                     sources,
+                    use_legacy_search_syntax,
                     additional_properties,
                     _unparsed,
                 };
