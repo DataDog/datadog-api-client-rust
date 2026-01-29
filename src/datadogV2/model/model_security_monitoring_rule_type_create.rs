@@ -10,6 +10,7 @@ pub enum SecurityMonitoringRuleTypeCreate {
     API_SECURITY,
     APPLICATION_SECURITY,
     LOG_DETECTION,
+    WORKLOAD_ACTIVITY,
     WORKLOAD_SECURITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -20,6 +21,7 @@ impl ToString for SecurityMonitoringRuleTypeCreate {
             Self::API_SECURITY => String::from("api_security"),
             Self::APPLICATION_SECURITY => String::from("application_security"),
             Self::LOG_DETECTION => String::from("log_detection"),
+            Self::WORKLOAD_ACTIVITY => String::from("workload_activity"),
             Self::WORKLOAD_SECURITY => String::from("workload_security"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -48,6 +50,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleTypeCreate {
             "api_security" => Self::API_SECURITY,
             "application_security" => Self::APPLICATION_SECURITY,
             "log_detection" => Self::LOG_DETECTION,
+            "workload_activity" => Self::WORKLOAD_ACTIVITY,
             "workload_security" => Self::WORKLOAD_SECURITY,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
