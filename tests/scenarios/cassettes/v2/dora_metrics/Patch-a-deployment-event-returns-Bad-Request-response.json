@@ -1,0 +1,73 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"finished_at\":1769678752000000000,\"git\":{\"commit_sha\":\"66adc9350f2cc9b250b69abddab733dd55e1a588\",\"repository_url\":\"https://github.com/organization/example-repository\"},\"id\":\"bf100f167795c925\",\"service\":\"shopist\",\"started_at\":1769675152000000000,\"version\":\"v1.12.07\"}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/dora/deployment"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"bf100f167795c925\",\"type\":\"dora_deployment\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Thu, 29 Jan 2026 09:25:52 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"change_failure\":true,\"remediation\":{\"id\":\"eG42zNIkVjM\",\"type\":\"wrong_type\"}},\"id\":\"bf100f167795c925\",\"type\":\"dora_deployment_patch_request\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "*/*"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/dora/deployments/bf100f167795c925"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Bad Request\",\"detail\":\"attribute \\\"type\\\" must be one of \\\"rollback rollforward\\\"\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Thu, 29 Jan 2026 09:25:52 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
