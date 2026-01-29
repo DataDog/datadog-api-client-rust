@@ -15,7 +15,7 @@ pub struct MonitorNotificationRuleAttributes {
     #[serde(rename = "conditional_recipients")]
     pub conditional_recipients:
         Option<crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients>,
-    /// Filter used to associate the notification rule with monitors.
+    /// Specifies the matching criteria for monitor notifications.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::MonitorNotificationRuleFilter>,
     /// The name of the monitor notification rule.

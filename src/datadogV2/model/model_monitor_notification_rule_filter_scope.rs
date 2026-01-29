@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Filter monitor notifications. A monitor notification must match the scope.
+/// Filters monitor notifications using a scope expression over key:value pairs with boolean logic (AND, OR, NOT).
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorNotificationRuleFilterScope {
-    /// A scope composed of one or several key:value pairs, which can be used to filter monitor notifications on monitor and group tags.
+    /// A scope expression composed by key:value pairs (e.g. `service:foo`) with boolean operators (AND, OR, NOT) and parentheses for grouping.
     #[serde(rename = "scope")]
     pub scope: String,
     #[serde(skip)]

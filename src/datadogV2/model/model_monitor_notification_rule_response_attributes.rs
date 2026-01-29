@@ -18,7 +18,7 @@ pub struct MonitorNotificationRuleResponseAttributes {
     /// Creation time of the monitor notification rule.
     #[serde(rename = "created")]
     pub created: Option<chrono::DateTime<chrono::Utc>>,
-    /// Filter used to associate the notification rule with monitors.
+    /// Specifies the matching criteria for monitor notifications.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::MonitorNotificationRuleFilter>,
     /// Time the monitor notification rule was last modified.
