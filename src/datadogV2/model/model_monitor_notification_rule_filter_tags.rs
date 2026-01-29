@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Filter monitor notifications by tags. A monitor notification must match all tags.
+/// Filters monitor notifications by a list of tag key:value pairs.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorNotificationRuleFilterTags {
-    /// A list of tags (key:value pairs), which can be used to filter monitor notifications on monitor and group tags.
+    /// A list of tag key:value pairs (e.g. `team:product`). All tags must match (AND semantics).
     #[serde(rename = "tags")]
     pub tags: Vec<String>,
     #[serde(skip)]
