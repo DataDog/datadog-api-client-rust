@@ -6,23 +6,16 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project creation attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ProjectCreateAttributes {
-    /// List of enabled custom case type IDs
-    #[serde(rename = "enabled_custom_case_types")]
-    pub enabled_custom_case_types: Option<Vec<String>>,
-    /// Project's key. Cannot be "CASE"
-    #[serde(rename = "key")]
-    pub key: String,
-    /// Project name
-    #[serde(rename = "name")]
-    pub name: String,
-    /// Team UUID to associate with the project
-    #[serde(rename = "team_uuid")]
-    pub team_uuid: Option<String>,
+pub struct IntegrationJiraMetadata {
+    #[serde(rename = "account_id")]
+    pub account_id: Option<String>,
+    #[serde(rename = "issue_type_id")]
+    pub issue_type_id: Option<String>,
+    #[serde(rename = "project_id")]
+    pub project_id: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,25 +23,29 @@ pub struct ProjectCreateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl ProjectCreateAttributes {
-    pub fn new(key: String, name: String) -> ProjectCreateAttributes {
-        ProjectCreateAttributes {
-            enabled_custom_case_types: None,
-            key,
-            name,
-            team_uuid: None,
+impl IntegrationJiraMetadata {
+    pub fn new() -> IntegrationJiraMetadata {
+        IntegrationJiraMetadata {
+            account_id: None,
+            issue_type_id: None,
+            project_id: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn enabled_custom_case_types(mut self, value: Vec<String>) -> Self {
-        self.enabled_custom_case_types = Some(value);
+    pub fn account_id(mut self, value: String) -> Self {
+        self.account_id = Some(value);
         self
     }
 
-    pub fn team_uuid(mut self, value: String) -> Self {
-        self.team_uuid = Some(value);
+    pub fn issue_type_id(mut self, value: String) -> Self {
+        self.issue_type_id = Some(value);
+        self
+    }
+
+    pub fn project_id(mut self, value: String) -> Self {
+        self.project_id = Some(value);
         self
     }
 
@@ -61,14 +58,20 @@ impl ProjectCreateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for ProjectCreateAttributes {
+impl Default for IntegrationJiraMetadata {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for IntegrationJiraMetadata {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ProjectCreateAttributesVisitor;
-        impl<'a> Visitor<'a> for ProjectCreateAttributesVisitor {
-            type Value = ProjectCreateAttributes;
+        struct IntegrationJiraMetadataVisitor;
+        impl<'a> Visitor<'a> for IntegrationJiraMetadataVisitor {
+            type Value = IntegrationJiraMetadata;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -78,10 +81,9 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut enabled_custom_case_types: Option<Vec<String>> = None;
-                let mut key: Option<String> = None;
-                let mut name: Option<String> = None;
-                let mut team_uuid: Option<String> = None;
+                let mut account_id: Option<String> = None;
+                let mut issue_type_id: Option<String> = None;
+                let mut project_id: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,24 +92,24 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "enabled_custom_case_types" => {
+                        "account_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enabled_custom_case_types =
+                            account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "issue_type_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            issue_type_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "key" => {
-                            key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "name" => {
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "team_uuid" => {
+                        "project_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            team_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -116,14 +118,11 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
                         }
                     }
                 }
-                let key = key.ok_or_else(|| M::Error::missing_field("key"))?;
-                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
-                let content = ProjectCreateAttributes {
-                    enabled_custom_case_types,
-                    key,
-                    name,
-                    team_uuid,
+                let content = IntegrationJiraMetadata {
+                    account_id,
+                    issue_type_id,
+                    project_id,
                     additional_properties,
                     _unparsed,
                 };
@@ -132,6 +131,6 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
             }
         }
 
-        deserializer.deserialize_any(ProjectCreateAttributesVisitor)
+        deserializer.deserialize_any(IntegrationJiraMetadataVisitor)
     }
 }

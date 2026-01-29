@@ -6,23 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project creation attributes
+/// On-Call integration settings
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ProjectCreateAttributes {
-    /// List of enabled custom case type IDs
-    #[serde(rename = "enabled_custom_case_types")]
-    pub enabled_custom_case_types: Option<Vec<String>>,
-    /// Project's key. Cannot be "CASE"
-    #[serde(rename = "key")]
-    pub key: String,
-    /// Project name
-    #[serde(rename = "name")]
-    pub name: String,
-    /// Team UUID to associate with the project
-    #[serde(rename = "team_uuid")]
-    pub team_uuid: Option<String>,
+pub struct IntegrationOnCall {
+    /// Whether to auto-assign on-call
+    #[serde(rename = "auto_assign_on_call")]
+    pub auto_assign_on_call: Option<bool>,
+    /// Whether On-Call integration is enabled
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
+    #[serde(rename = "escalation_queries")]
+    pub escalation_queries:
+        Option<Vec<crate::datadogV2::model::IntegrationOnCallEscalationQueriesItems>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,25 +27,32 @@ pub struct ProjectCreateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl ProjectCreateAttributes {
-    pub fn new(key: String, name: String) -> ProjectCreateAttributes {
-        ProjectCreateAttributes {
-            enabled_custom_case_types: None,
-            key,
-            name,
-            team_uuid: None,
+impl IntegrationOnCall {
+    pub fn new() -> IntegrationOnCall {
+        IntegrationOnCall {
+            auto_assign_on_call: None,
+            enabled: None,
+            escalation_queries: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn enabled_custom_case_types(mut self, value: Vec<String>) -> Self {
-        self.enabled_custom_case_types = Some(value);
+    pub fn auto_assign_on_call(mut self, value: bool) -> Self {
+        self.auto_assign_on_call = Some(value);
         self
     }
 
-    pub fn team_uuid(mut self, value: String) -> Self {
-        self.team_uuid = Some(value);
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn escalation_queries(
+        mut self,
+        value: Vec<crate::datadogV2::model::IntegrationOnCallEscalationQueriesItems>,
+    ) -> Self {
+        self.escalation_queries = Some(value);
         self
     }
 
@@ -61,14 +65,20 @@ impl ProjectCreateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for ProjectCreateAttributes {
+impl Default for IntegrationOnCall {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for IntegrationOnCall {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ProjectCreateAttributesVisitor;
-        impl<'a> Visitor<'a> for ProjectCreateAttributesVisitor {
-            type Value = ProjectCreateAttributes;
+        struct IntegrationOnCallVisitor;
+        impl<'a> Visitor<'a> for IntegrationOnCallVisitor {
+            type Value = IntegrationOnCall;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -78,10 +88,11 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut enabled_custom_case_types: Option<Vec<String>> = None;
-                let mut key: Option<String> = None;
-                let mut name: Option<String> = None;
-                let mut team_uuid: Option<String> = None;
+                let mut auto_assign_on_call: Option<bool> = None;
+                let mut enabled: Option<bool> = None;
+                let mut escalation_queries: Option<
+                    Vec<crate::datadogV2::model::IntegrationOnCallEscalationQueriesItems>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,24 +101,25 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "enabled_custom_case_types" => {
+                        "auto_assign_on_call" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enabled_custom_case_types =
+                            auto_assign_on_call =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "key" => {
-                            key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "name" => {
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "team_uuid" => {
+                        "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            team_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "escalation_queries" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            escalation_queries =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -116,14 +128,11 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
                         }
                     }
                 }
-                let key = key.ok_or_else(|| M::Error::missing_field("key"))?;
-                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
-                let content = ProjectCreateAttributes {
-                    enabled_custom_case_types,
-                    key,
-                    name,
-                    team_uuid,
+                let content = IntegrationOnCall {
+                    auto_assign_on_call,
+                    enabled,
+                    escalation_queries,
                     additional_properties,
                     _unparsed,
                 };
@@ -132,6 +141,6 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
             }
         }
 
-        deserializer.deserialize_any(ProjectCreateAttributesVisitor)
+        deserializer.deserialize_any(IntegrationOnCallVisitor)
     }
 }

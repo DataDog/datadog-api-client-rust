@@ -6,23 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project creation attributes
+/// Auto-close inactive cases settings
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ProjectCreateAttributes {
-    /// List of enabled custom case type IDs
-    #[serde(rename = "enabled_custom_case_types")]
-    pub enabled_custom_case_types: Option<Vec<String>>,
-    /// Project's key. Cannot be "CASE"
-    #[serde(rename = "key")]
-    pub key: String,
-    /// Project name
-    #[serde(rename = "name")]
-    pub name: String,
-    /// Team UUID to associate with the project
-    #[serde(rename = "team_uuid")]
-    pub team_uuid: Option<String>,
+pub struct AutoCloseInactiveCases {
+    /// Whether auto-close is enabled
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
+    /// Maximum inactive time in seconds before auto-closing
+    #[serde(rename = "max_inactive_time_in_secs")]
+    pub max_inactive_time_in_secs: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,25 +24,23 @@ pub struct ProjectCreateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl ProjectCreateAttributes {
-    pub fn new(key: String, name: String) -> ProjectCreateAttributes {
-        ProjectCreateAttributes {
-            enabled_custom_case_types: None,
-            key,
-            name,
-            team_uuid: None,
+impl AutoCloseInactiveCases {
+    pub fn new() -> AutoCloseInactiveCases {
+        AutoCloseInactiveCases {
+            enabled: None,
+            max_inactive_time_in_secs: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn enabled_custom_case_types(mut self, value: Vec<String>) -> Self {
-        self.enabled_custom_case_types = Some(value);
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
         self
     }
 
-    pub fn team_uuid(mut self, value: String) -> Self {
-        self.team_uuid = Some(value);
+    pub fn max_inactive_time_in_secs(mut self, value: i64) -> Self {
+        self.max_inactive_time_in_secs = Some(value);
         self
     }
 
@@ -61,14 +53,20 @@ impl ProjectCreateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for ProjectCreateAttributes {
+impl Default for AutoCloseInactiveCases {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for AutoCloseInactiveCases {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ProjectCreateAttributesVisitor;
-        impl<'a> Visitor<'a> for ProjectCreateAttributesVisitor {
-            type Value = ProjectCreateAttributes;
+        struct AutoCloseInactiveCasesVisitor;
+        impl<'a> Visitor<'a> for AutoCloseInactiveCasesVisitor {
+            type Value = AutoCloseInactiveCases;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -78,10 +76,8 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut enabled_custom_case_types: Option<Vec<String>> = None;
-                let mut key: Option<String> = None;
-                let mut name: Option<String> = None;
-                let mut team_uuid: Option<String> = None;
+                let mut enabled: Option<bool> = None;
+                let mut max_inactive_time_in_secs: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,24 +86,18 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "enabled_custom_case_types" => {
+                        "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enabled_custom_case_types =
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "max_inactive_time_in_secs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            max_inactive_time_in_secs =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "key" => {
-                            key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "name" => {
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "team_uuid" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            team_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -116,14 +106,10 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
                         }
                     }
                 }
-                let key = key.ok_or_else(|| M::Error::missing_field("key"))?;
-                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
-                let content = ProjectCreateAttributes {
-                    enabled_custom_case_types,
-                    key,
-                    name,
-                    team_uuid,
+                let content = AutoCloseInactiveCases {
+                    enabled,
+                    max_inactive_time_in_secs,
                     additional_properties,
                     _unparsed,
                 };
@@ -132,6 +118,6 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
             }
         }
 
-        deserializer.deserialize_any(ProjectCreateAttributesVisitor)
+        deserializer.deserialize_any(AutoCloseInactiveCasesVisitor)
     }
 }

@@ -9,7 +9,8 @@ use datadog_api_client::datadogV2::model::ProjectResourceType;
 #[tokio::main]
 async fn main() {
     let body = ProjectCreateRequest::new(ProjectCreate::new(
-        ProjectCreateAttributes::new("SEC".to_string(), "Security Investigation".to_string()),
+        ProjectCreateAttributes::new("SEC".to_string(), "Security Investigation".to_string())
+            .enabled_custom_case_types(vec![]),
         ProjectResourceType::PROJECT,
     ));
     let configuration = datadog::Configuration::new();
