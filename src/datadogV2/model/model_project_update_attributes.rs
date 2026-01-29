@@ -6,20 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project creation attributes
+/// Project update attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ProjectCreateAttributes {
+pub struct ProjectUpdateAttributes {
+    /// Project columns configuration
+    #[serde(rename = "columns_config")]
+    pub columns_config: Option<crate::datadogV2::model::ProjectColumnsConfig>,
     /// List of enabled custom case type IDs
     #[serde(rename = "enabled_custom_case_types")]
     pub enabled_custom_case_types: Option<Vec<String>>,
-    /// Project's key. Cannot be "CASE"
-    #[serde(rename = "key")]
-    pub key: String,
     /// Project name
     #[serde(rename = "name")]
-    pub name: String,
+    pub name: Option<String>,
+    /// Project settings
+    #[serde(rename = "settings")]
+    pub settings: Option<crate::datadogV2::model::ProjectSettings>,
     /// Team UUID to associate with the project
     #[serde(rename = "team_uuid")]
     pub team_uuid: Option<String>,
@@ -30,20 +33,36 @@ pub struct ProjectCreateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl ProjectCreateAttributes {
-    pub fn new(key: String, name: String) -> ProjectCreateAttributes {
-        ProjectCreateAttributes {
+impl ProjectUpdateAttributes {
+    pub fn new() -> ProjectUpdateAttributes {
+        ProjectUpdateAttributes {
+            columns_config: None,
             enabled_custom_case_types: None,
-            key,
-            name,
+            name: None,
+            settings: None,
             team_uuid: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    pub fn columns_config(mut self, value: crate::datadogV2::model::ProjectColumnsConfig) -> Self {
+        self.columns_config = Some(value);
+        self
+    }
+
     pub fn enabled_custom_case_types(mut self, value: Vec<String>) -> Self {
         self.enabled_custom_case_types = Some(value);
+        self
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn settings(mut self, value: crate::datadogV2::model::ProjectSettings) -> Self {
+        self.settings = Some(value);
         self
     }
 
@@ -61,14 +80,20 @@ impl ProjectCreateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for ProjectCreateAttributes {
+impl Default for ProjectUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for ProjectUpdateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ProjectCreateAttributesVisitor;
-        impl<'a> Visitor<'a> for ProjectCreateAttributesVisitor {
-            type Value = ProjectCreateAttributes;
+        struct ProjectUpdateAttributesVisitor;
+        impl<'a> Visitor<'a> for ProjectUpdateAttributesVisitor {
+            type Value = ProjectUpdateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -78,9 +103,11 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut columns_config: Option<crate::datadogV2::model::ProjectColumnsConfig> =
+                    None;
                 let mut enabled_custom_case_types: Option<Vec<String>> = None;
-                let mut key: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut settings: Option<crate::datadogV2::model::ProjectSettings> = None;
                 let mut team_uuid: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -90,6 +117,13 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "columns_config" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            columns_config =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "enabled_custom_case_types" => {
                             if v.is_null() {
                                 continue;
@@ -97,11 +131,17 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
                             enabled_custom_case_types =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "key" => {
-                            key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "settings" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "team_uuid" => {
                             if v.is_null() {
@@ -116,13 +156,12 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
                         }
                     }
                 }
-                let key = key.ok_or_else(|| M::Error::missing_field("key"))?;
-                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
-                let content = ProjectCreateAttributes {
+                let content = ProjectUpdateAttributes {
+                    columns_config,
                     enabled_custom_case_types,
-                    key,
                     name,
+                    settings,
                     team_uuid,
                     additional_properties,
                     _unparsed,
@@ -132,6 +171,6 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
             }
         }
 
-        deserializer.deserialize_any(ProjectCreateAttributesVisitor)
+        deserializer.deserialize_any(ProjectUpdateAttributesVisitor)
     }
 }

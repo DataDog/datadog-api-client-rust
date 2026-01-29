@@ -6,23 +6,16 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project creation attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ProjectCreateAttributes {
-    /// List of enabled custom case type IDs
-    #[serde(rename = "enabled_custom_case_types")]
-    pub enabled_custom_case_types: Option<Vec<String>>,
-    /// Project's key. Cannot be "CASE"
-    #[serde(rename = "key")]
-    pub key: String,
-    /// Project name
-    #[serde(rename = "name")]
-    pub name: String,
-    /// Team UUID to associate with the project
-    #[serde(rename = "team_uuid")]
-    pub team_uuid: Option<String>,
+pub struct ProjectColumnsConfigColumnsItems {
+    #[serde(rename = "sort")]
+    pub sort: Option<crate::datadogV2::model::ProjectColumnsConfigColumnsItemsSort>,
+    #[serde(rename = "sort_field")]
+    pub sort_field: Option<String>,
+    #[serde(rename = "type")]
+    pub type_: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,25 +23,32 @@ pub struct ProjectCreateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl ProjectCreateAttributes {
-    pub fn new(key: String, name: String) -> ProjectCreateAttributes {
-        ProjectCreateAttributes {
-            enabled_custom_case_types: None,
-            key,
-            name,
-            team_uuid: None,
+impl ProjectColumnsConfigColumnsItems {
+    pub fn new() -> ProjectColumnsConfigColumnsItems {
+        ProjectColumnsConfigColumnsItems {
+            sort: None,
+            sort_field: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn enabled_custom_case_types(mut self, value: Vec<String>) -> Self {
-        self.enabled_custom_case_types = Some(value);
+    pub fn sort(
+        mut self,
+        value: crate::datadogV2::model::ProjectColumnsConfigColumnsItemsSort,
+    ) -> Self {
+        self.sort = Some(value);
         self
     }
 
-    pub fn team_uuid(mut self, value: String) -> Self {
-        self.team_uuid = Some(value);
+    pub fn sort_field(mut self, value: String) -> Self {
+        self.sort_field = Some(value);
+        self
+    }
+
+    pub fn type_(mut self, value: String) -> Self {
+        self.type_ = Some(value);
         self
     }
 
@@ -61,14 +61,20 @@ impl ProjectCreateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for ProjectCreateAttributes {
+impl Default for ProjectColumnsConfigColumnsItems {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for ProjectColumnsConfigColumnsItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ProjectCreateAttributesVisitor;
-        impl<'a> Visitor<'a> for ProjectCreateAttributesVisitor {
-            type Value = ProjectCreateAttributes;
+        struct ProjectColumnsConfigColumnsItemsVisitor;
+        impl<'a> Visitor<'a> for ProjectColumnsConfigColumnsItemsVisitor {
+            type Value = ProjectColumnsConfigColumnsItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -78,10 +84,11 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut enabled_custom_case_types: Option<Vec<String>> = None;
-                let mut key: Option<String> = None;
-                let mut name: Option<String> = None;
-                let mut team_uuid: Option<String> = None;
+                let mut sort: Option<
+                    crate::datadogV2::model::ProjectColumnsConfigColumnsItemsSort,
+                > = None;
+                let mut sort_field: Option<String> = None;
+                let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,24 +97,23 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "enabled_custom_case_types" => {
+                        "sort" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enabled_custom_case_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "key" => {
-                            key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "name" => {
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "team_uuid" => {
+                        "sort_field" => {
                             if v.is_null() {
                                 continue;
                             }
-                            team_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            sort_field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -116,14 +122,11 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
                         }
                     }
                 }
-                let key = key.ok_or_else(|| M::Error::missing_field("key"))?;
-                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
-                let content = ProjectCreateAttributes {
-                    enabled_custom_case_types,
-                    key,
-                    name,
-                    team_uuid,
+                let content = ProjectColumnsConfigColumnsItems {
+                    sort,
+                    sort_field,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -132,6 +135,6 @@ impl<'de> Deserialize<'de> for ProjectCreateAttributes {
             }
         }
 
-        deserializer.deserialize_any(ProjectCreateAttributesVisitor)
+        deserializer.deserialize_any(ProjectColumnsConfigColumnsItemsVisitor)
     }
 }
