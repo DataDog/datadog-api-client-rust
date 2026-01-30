@@ -1,11 +1,11 @@
 // Update tag pipeline ruleset returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagementAPI;
+use datadog_api_client::datadogV2::model::DataAttributesRulesItemsMapping;
 use datadog_api_client::datadogV2::model::UpdateRulesetRequest;
 use datadog_api_client::datadogV2::model::UpdateRulesetRequestData;
 use datadog_api_client::datadogV2::model::UpdateRulesetRequestDataAttributes;
 use datadog_api_client::datadogV2::model::UpdateRulesetRequestDataAttributesRulesItems;
-use datadog_api_client::datadogV2::model::UpdateRulesetRequestDataAttributesRulesItemsMapping;
 use datadog_api_client::datadogV2::model::UpdateRulesetRequestDataType;
 
 #[tokio::main]
@@ -20,11 +20,11 @@ async fn main() {
                         "Account Name Mapping".to_string(),
                     )
                     .mapping(Some(
-                        UpdateRulesetRequestDataAttributesRulesItemsMapping::new(
+                        DataAttributesRulesItemsMapping::new(
                             "team_owner".to_string(),
-                            true,
                             vec!["account_name".to_string(), "account_id".to_string()],
-                        ),
+                        )
+                        .if_not_exists(true),
                     ))
                     .query(None)
                     .reference_table(None)],
