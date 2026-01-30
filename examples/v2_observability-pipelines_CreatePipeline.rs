@@ -71,8 +71,7 @@ async fn main() {
                 "pipelines".to_string(),
             ),
         );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreatePipeline", true);
+    let configuration = datadog::Configuration::new();
     let api = ObservabilityPipelinesAPI::with_config(configuration);
     let resp = api.create_pipeline(body).await;
     if let Ok(value) = resp {
