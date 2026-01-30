@@ -71,8 +71,7 @@ async fn main() {
                 "pipelines".to_string(),
             ),
         );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ValidatePipeline", true);
+    let configuration = datadog::Configuration::new();
     let api = ObservabilityPipelinesAPI::with_config(configuration);
     let resp = api.validate_pipeline(body).await;
     if let Ok(value) = resp {
