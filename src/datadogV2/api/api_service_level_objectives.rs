@@ -11,6 +11,22 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// GetSloStatusOptionalParams is a struct for passing parameters to the method [`ServiceLevelObjectivesAPI::get_slo_status`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetSloStatusOptionalParams {
+    /// Whether to exclude correction windows from the SLO status calculation. Defaults to false.
+    pub disable_corrections: Option<bool>,
+}
+
+impl GetSloStatusOptionalParams {
+    /// Whether to exclude correction windows from the SLO status calculation. Defaults to false.
+    pub fn disable_corrections(mut self, value: bool) -> Self {
+        self.disable_corrections = Some(value);
+        self
+    }
+}
+
 /// CreateSLOReportJobError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::create_slo_report_job`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -31,6 +47,15 @@ pub enum GetSLOReportError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSLOReportJobStatusError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetSloStatusError is a struct for typed errors of method [`ServiceLevelObjectivesAPI::get_slo_status`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSloStatusError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -494,6 +519,141 @@ impl ServiceLevelObjectivesAPI {
         } else {
             let local_entity: Option<GetSLOReportJobStatusError> =
                 serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the status of a Service Level Objective (SLO) for a given time period.
+    ///
+    /// This endpoint returns the current SLI value, error budget remaining, and other status information for the specified SLO.
+    pub async fn get_slo_status(
+        &self,
+        slo_id: String,
+        from_ts: i64,
+        to_ts: i64,
+        params: GetSloStatusOptionalParams,
+    ) -> Result<crate::datadogV2::model::SloStatusResponse, datadog::Error<GetSloStatusError>> {
+        match self
+            .get_slo_status_with_http_info(slo_id, from_ts, to_ts, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the status of a Service Level Objective (SLO) for a given time period.
+    ///
+    /// This endpoint returns the current SLI value, error budget remaining, and other status information for the specified SLO.
+    pub async fn get_slo_status_with_http_info(
+        &self,
+        slo_id: String,
+        from_ts: i64,
+        to_ts: i64,
+        params: GetSloStatusOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SloStatusResponse>,
+        datadog::Error<GetSloStatusError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_slo_status";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_slo_status' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let disable_corrections = params.disable_corrections;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/slo/{slo_id}/status",
+            local_configuration.get_operation_host(operation_id),
+            slo_id = datadog::urlencode(slo_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("from_ts", &from_ts.to_string())]);
+        local_req_builder = local_req_builder.query(&[("to_ts", &to_ts.to_string())]);
+        if let Some(ref local_query_param) = disable_corrections {
+            local_req_builder =
+                local_req_builder.query(&[("disable_corrections", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SloStatusResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSloStatusError> = serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,

@@ -4571,6 +4571,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.GetSLOReportJobStatus".into(),
         test_v2_get_slo_report_job_status,
     );
+    world
+        .function_mappings
+        .insert("v2.GetSloStatus".into(), test_v2_get_slo_status);
     world.function_mappings.insert(
         "v2.GetSPARecommendations".into(),
         test_v2_get_spa_recommendations,
@@ -35271,6 +35274,39 @@ fn test_v2_get_slo_report_job_status(
         .expect("api instance not found");
     let report_id = serde_json::from_value(_parameters.get("report_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_slo_report_job_status_with_http_info(report_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_slo_status(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_service_level_objectives
+        .as_ref()
+        .expect("api instance not found");
+    let slo_id = serde_json::from_value(_parameters.get("slo_id").unwrap().clone()).unwrap();
+    let from_ts = serde_json::from_value(_parameters.get("from_ts").unwrap().clone()).unwrap();
+    let to_ts = serde_json::from_value(_parameters.get("to_ts").unwrap().clone()).unwrap();
+    let disable_corrections = _parameters
+        .get("disable_corrections")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_service_level_objectives::GetSloStatusOptionalParams::default();
+    params.disable_corrections = disable_corrections;
+    let response = match block_on(api.get_slo_status_with_http_info(slo_id, from_ts, to_ts, params))
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {
