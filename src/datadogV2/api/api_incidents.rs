@@ -2021,6 +2021,10 @@ impl IncidentsAPI {
     }
 
     /// Create a postmortem attachment for an incident.
+    ///
+    /// The endpoint accepts markdown for notebooks created in Confluence or Google Docs.
+    /// Postmortems created from notebooks need to be formatted using frontend notebook cells,
+    /// in addition to markdown format.
     pub async fn create_incident_postmortem_attachment(
         &self,
         incident_id: String,
@@ -2047,6 +2051,10 @@ impl IncidentsAPI {
     }
 
     /// Create a postmortem attachment for an incident.
+    ///
+    /// The endpoint accepts markdown for notebooks created in Confluence or Google Docs.
+    /// Postmortems created from notebooks need to be formatted using frontend notebook cells,
+    /// in addition to markdown format.
     pub async fn create_incident_postmortem_attachment_with_http_info(
         &self,
         incident_id: String,
