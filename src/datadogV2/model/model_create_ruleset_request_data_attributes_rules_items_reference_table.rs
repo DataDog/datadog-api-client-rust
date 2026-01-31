@@ -17,9 +17,13 @@ pub struct CreateRulesetRequestDataAttributesRulesItemsReferenceTable {
     /// The `reference_table` `field_pairs`.
     #[serde(rename = "field_pairs")]
     pub field_pairs: Vec<crate::datadogV2::model::CreateRulesetRequestDataAttributesRulesItemsReferenceTableFieldPairsItems>,
-    /// The `reference_table` `if_not_exists`.
+    /// Deprecated. Use `if_tag_exists` instead. The `reference_table` `if_not_exists`.
+	#[deprecated]
     #[serde(rename = "if_not_exists")]
     pub if_not_exists: Option<bool>,
+    /// The behavior when the tag already exists.
+    #[serde(rename = "if_tag_exists")]
+    pub if_tag_exists: Option<crate::datadogV2::model::DataAttributesRulesItemsIfTagExists>,
     /// The `reference_table` `source_keys`.
     #[serde(rename = "source_keys")]
     pub source_keys: Vec<String>,
@@ -39,10 +43,12 @@ impl CreateRulesetRequestDataAttributesRulesItemsReferenceTable {
         source_keys: Vec<String>,
         table_name: String,
     ) -> CreateRulesetRequestDataAttributesRulesItemsReferenceTable {
+        #[allow(deprecated)]
         CreateRulesetRequestDataAttributesRulesItemsReferenceTable {
             case_insensitivity: None,
             field_pairs,
             if_not_exists: None,
+            if_tag_exists: None,
             source_keys,
             table_name,
             additional_properties: std::collections::BTreeMap::new(),
@@ -50,13 +56,24 @@ impl CreateRulesetRequestDataAttributesRulesItemsReferenceTable {
         }
     }
 
+    #[allow(deprecated)]
     pub fn case_insensitivity(mut self, value: bool) -> Self {
         self.case_insensitivity = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn if_not_exists(mut self, value: bool) -> Self {
         self.if_not_exists = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn if_tag_exists(
+        mut self,
+        value: crate::datadogV2::model::DataAttributesRulesItemsIfTagExists,
+    ) -> Self {
+        self.if_tag_exists = Some(value);
         self
     }
 
@@ -89,6 +106,9 @@ impl<'de> Deserialize<'de> for CreateRulesetRequestDataAttributesRulesItemsRefer
                 let mut case_insensitivity: Option<bool> = None;
                 let mut field_pairs: Option<Vec<crate::datadogV2::model::CreateRulesetRequestDataAttributesRulesItemsReferenceTableFieldPairsItems>> = None;
                 let mut if_not_exists: Option<bool> = None;
+                let mut if_tag_exists: Option<
+                    crate::datadogV2::model::DataAttributesRulesItemsIfTagExists,
+                > = None;
                 let mut source_keys: Option<Vec<String>> = None;
                 let mut table_name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -117,6 +137,21 @@ impl<'de> Deserialize<'de> for CreateRulesetRequestDataAttributesRulesItemsRefer
                             if_not_exists =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "if_tag_exists" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            if_tag_exists =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _if_tag_exists) = if_tag_exists {
+                                match _if_tag_exists {
+                                    crate::datadogV2::model::DataAttributesRulesItemsIfTagExists::UnparsedObject(_if_tag_exists) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "source_keys" => {
                             source_keys =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -137,10 +172,12 @@ impl<'de> Deserialize<'de> for CreateRulesetRequestDataAttributesRulesItemsRefer
                     source_keys.ok_or_else(|| M::Error::missing_field("source_keys"))?;
                 let table_name = table_name.ok_or_else(|| M::Error::missing_field("table_name"))?;
 
+                #[allow(deprecated)]
                 let content = CreateRulesetRequestDataAttributesRulesItemsReferenceTable {
                     case_insensitivity,
                     field_pairs,
                     if_not_exists,
+                    if_tag_exists,
                     source_keys,
                     table_name,
                     additional_properties,

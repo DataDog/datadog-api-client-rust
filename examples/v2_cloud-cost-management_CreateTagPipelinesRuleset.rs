@@ -28,10 +28,10 @@ async fn main() {
                                     "engineering".to_string(),
                                 ),
                             ),
-                            true,
                             r#"account_id:"123456789" AND service:"web-api""#.to_string(),
                         )
-                        .case_insensitivity(false),
+                        .case_insensitivity(false)
+                        .if_not_exists(true),
                     ))
                     .reference_table(None),
                 ])
