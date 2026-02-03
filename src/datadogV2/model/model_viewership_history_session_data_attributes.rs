@@ -1,0 +1,148 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
+use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
+
+#[non_exhaustive]
+#[skip_serializing_none]
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub struct ViewershipHistorySessionDataAttributes {
+    #[serde(rename = "event_id")]
+    pub event_id: Option<String>,
+    #[serde(rename = "last_watched_at")]
+    pub last_watched_at: chrono::DateTime<chrono::Utc>,
+    #[serde(rename = "session_event")]
+    pub session_event: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    #[serde(rename = "track")]
+    pub track: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
+}
+
+impl ViewershipHistorySessionDataAttributes {
+    pub fn new(
+        last_watched_at: chrono::DateTime<chrono::Utc>,
+    ) -> ViewershipHistorySessionDataAttributes {
+        ViewershipHistorySessionDataAttributes {
+            event_id: None,
+            last_watched_at,
+            session_event: None,
+            track: None,
+            additional_properties: std::collections::BTreeMap::new(),
+            _unparsed: false,
+        }
+    }
+
+    pub fn event_id(mut self, value: String) -> Self {
+        self.event_id = Some(value);
+        self
+    }
+
+    pub fn session_event(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.session_event = Some(value);
+        self
+    }
+
+    pub fn track(mut self, value: String) -> Self {
+        self.track = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
+}
+
+impl<'de> Deserialize<'de> for ViewershipHistorySessionDataAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct ViewershipHistorySessionDataAttributesVisitor;
+        impl<'a> Visitor<'a> for ViewershipHistorySessionDataAttributesVisitor {
+            type Value = ViewershipHistorySessionDataAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut event_id: Option<String> = None;
+                let mut last_watched_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut session_event: Option<
+                    std::collections::BTreeMap<String, serde_json::Value>,
+                > = None;
+                let mut track: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "event_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            event_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "last_watched_at" => {
+                            last_watched_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "session_event" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            session_event =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "track" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            track = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
+                    }
+                }
+                let last_watched_at =
+                    last_watched_at.ok_or_else(|| M::Error::missing_field("last_watched_at"))?;
+
+                let content = ViewershipHistorySessionDataAttributes {
+                    event_id,
+                    last_watched_at,
+                    session_event,
+                    track,
+                    additional_properties,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(ViewershipHistorySessionDataAttributesVisitor)
+    }
+}
