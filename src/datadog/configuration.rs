@@ -234,6 +234,8 @@ impl Default for Configuration {
             ("v2.list_jira_accounts".to_owned(), false),
             ("v2.list_jira_issue_templates".to_owned(), false),
             ("v2.update_jira_issue_template".to_owned(), false),
+            ("v2.create_tenancy_config".to_owned(), false),
+            ("v2.get_tenancy_configs".to_owned(), false),
             ("v2.create_service_now_template".to_owned(), false),
             ("v2.delete_service_now_template".to_owned(), false),
             ("v2.get_service_now_template".to_owned(), false),
