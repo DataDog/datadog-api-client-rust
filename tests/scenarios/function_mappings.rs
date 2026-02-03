@@ -2732,6 +2732,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_security_monitoring_signals_with_pagination,
     );
     world.function_mappings.insert(
+        "v2.CreateSignalInvestigation".into(),
+        test_v2_create_signal_investigation,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateInvestigationFeedback".into(),
+        test_v2_update_investigation_feedback,
+    );
+    world.function_mappings.insert(
+        "v2.GetInvestigationFeedback".into(),
+        test_v2_get_investigation_feedback,
+    );
+    world.function_mappings.insert(
         "v2.SearchSecurityMonitoringSignals".into(),
         test_v2_search_security_monitoring_signals,
     );
@@ -19672,6 +19684,90 @@ fn test_v2_list_security_monitoring_signals_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_create_signal_investigation(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_signal_investigation_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_investigation_feedback(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_investigation_feedback_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_investigation_feedback(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let signal_id = serde_json::from_value(_parameters.get("signal_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_investigation_feedback_with_http_info(signal_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_search_security_monitoring_signals(
