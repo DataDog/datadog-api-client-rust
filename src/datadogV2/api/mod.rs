@@ -58,6 +58,7 @@ pub mod api_microsoft_teams_integration;
 pub mod api_monitors;
 pub mod api_network_device_monitoring;
 pub mod api_observability_pipelines;
+pub mod api_oci_integration;
 pub mod api_okta_integration;
 pub mod api_on_call;
 pub mod api_on_call_paging;

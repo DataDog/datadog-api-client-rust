@@ -1,0 +1,135 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
+use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
+
+#[non_exhaustive]
+#[skip_serializing_none]
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub struct UpdateTenancyConfigDataAttributesRegionsConfig {
+    #[serde(rename = "available")]
+    pub available: Option<Vec<String>>,
+    #[serde(rename = "disabled")]
+    pub disabled: Option<Vec<String>>,
+    #[serde(rename = "enabled")]
+    pub enabled: Option<Vec<String>>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
+}
+
+impl UpdateTenancyConfigDataAttributesRegionsConfig {
+    pub fn new() -> UpdateTenancyConfigDataAttributesRegionsConfig {
+        UpdateTenancyConfigDataAttributesRegionsConfig {
+            available: None,
+            disabled: None,
+            enabled: None,
+            additional_properties: std::collections::BTreeMap::new(),
+            _unparsed: false,
+        }
+    }
+
+    pub fn available(mut self, value: Vec<String>) -> Self {
+        self.available = Some(value);
+        self
+    }
+
+    pub fn disabled(mut self, value: Vec<String>) -> Self {
+        self.disabled = Some(value);
+        self
+    }
+
+    pub fn enabled(mut self, value: Vec<String>) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
+}
+
+impl Default for UpdateTenancyConfigDataAttributesRegionsConfig {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for UpdateTenancyConfigDataAttributesRegionsConfig {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct UpdateTenancyConfigDataAttributesRegionsConfigVisitor;
+        impl<'a> Visitor<'a> for UpdateTenancyConfigDataAttributesRegionsConfigVisitor {
+            type Value = UpdateTenancyConfigDataAttributesRegionsConfig;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut available: Option<Vec<String>> = None;
+                let mut disabled: Option<Vec<String>> = None;
+                let mut enabled: Option<Vec<String>> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "available" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            available = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "disabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
+                    }
+                }
+
+                let content = UpdateTenancyConfigDataAttributesRegionsConfig {
+                    available,
+                    disabled,
+                    enabled,
+                    additional_properties,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(UpdateTenancyConfigDataAttributesRegionsConfigVisitor)
+    }
+}
