@@ -42,6 +42,10 @@ pub struct FlakyTestAttributes {
     /// The current state of the flaky test.
     #[serde(rename = "flaky_state")]
     pub flaky_state: Option<crate::datadogV2::model::FlakyTestAttributesFlakyState>,
+    /// Chronological history of status changes for this flaky test, ordered from most recent to oldest.
+    /// Includes state transitions like new -> quarantined -> fixed, along with the associated commit SHA when available.
+    #[serde(rename = "history")]
+    pub history: Option<Vec<crate::datadogV2::model::FlakyTestHistory>>,
     /// The branch name where the test exhibited flakiness for the last time.
     #[serde(rename = "last_flaked_branch")]
     pub last_flaked_branch: Option<String>,
@@ -98,6 +102,7 @@ impl FlakyTestAttributes {
             first_flaked_ts: None,
             flaky_category: None,
             flaky_state: None,
+            history: None,
             last_flaked_branch: None,
             last_flaked_sha: None,
             last_flaked_ts: None,
@@ -153,6 +158,11 @@ impl FlakyTestAttributes {
         value: crate::datadogV2::model::FlakyTestAttributesFlakyState,
     ) -> Self {
         self.flaky_state = Some(value);
+        self
+    }
+
+    pub fn history(mut self, value: Vec<crate::datadogV2::model::FlakyTestHistory>) -> Self {
+        self.history = Some(value);
         self
     }
 
@@ -254,6 +264,7 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                 let mut flaky_state: Option<
                     crate::datadogV2::model::FlakyTestAttributesFlakyState,
                 > = None;
+                let mut history: Option<Vec<crate::datadogV2::model::FlakyTestHistory>> = None;
                 let mut last_flaked_branch: Option<String> = None;
                 let mut last_flaked_sha: Option<String> = None;
                 let mut last_flaked_ts: Option<i64> = None;
@@ -332,6 +343,12 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                                     _ => {}
                                 }
                             }
+                        }
+                        "history" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            history = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "last_flaked_branch" => {
                             if v.is_null() {
@@ -412,6 +429,7 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                     first_flaked_ts,
                     flaky_category,
                     flaky_state,
+                    history,
                     last_flaked_branch,
                     last_flaked_sha,
                     last_flaked_ts,
