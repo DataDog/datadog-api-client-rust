@@ -63,6 +63,7 @@ pub use self::api::api_oci_integration;
 pub use self::api::api_okta_integration;
 pub use self::api::api_on_call;
 pub use self::api::api_on_call_paging;
+pub use self::api::api_on_prem_management_service;
 pub use self::api::api_opsgenie_integration;
 pub use self::api::api_org_connections;
 pub use self::api::api_organizations;

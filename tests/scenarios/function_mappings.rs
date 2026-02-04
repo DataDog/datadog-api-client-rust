@@ -129,6 +129,8 @@ pub struct ApiInstances {
         Option<datadogV2::api_observability_pipelines::ObservabilityPipelinesAPI>,
     pub v2_api_on_call: Option<datadogV2::api_on_call::OnCallAPI>,
     pub v2_api_on_call_paging: Option<datadogV2::api_on_call_paging::OnCallPagingAPI>,
+    pub v2_api_on_prem_management_service:
+        Option<datadogV2::api_on_prem_management_service::OnPremManagementServiceAPI>,
     pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
     pub v2_api_org_connections: Option<datadogV2::api_org_connections::OrgConnectionsAPI>,
     pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
@@ -865,6 +867,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "OnPremManagementService" => {
+            world.api_instances.v2_api_on_prem_management_service = Some(datadogV2::api_on_prem_management_service::OnPremManagementServiceAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "OrgConnections" => {
             world.api_instances.v2_api_org_connections = Some(
@@ -4149,6 +4157,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.ResolveOnCallPage".into(), test_v2_resolve_on_call_page);
+    world.function_mappings.insert(
+        "v2.CreateOnPremManagementServiceEnrollment".into(),
+        test_v2_create_on_prem_management_service_enrollment,
+    );
+    world.function_mappings.insert(
+        "v2.GetOnPremManagementServiceEnrollment".into(),
+        test_v2_get_on_prem_management_service_enrollment,
+    );
+    world.function_mappings.insert(
+        "v2.RegisterOnPremManagementServiceToken".into(),
+        test_v2_register_on_prem_management_service_token,
+    );
     world
         .function_mappings
         .insert("v2.ListOrgConfigs".into(), test_v2_list_org_configs);
@@ -31376,6 +31396,94 @@ fn test_v2_resolve_on_call_page(world: &mut DatadogWorld, _parameters: &HashMap<
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_on_prem_management_service_enrollment(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_prem_management_service
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_on_prem_management_service_enrollment_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_on_prem_management_service_enrollment(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_prem_management_service
+        .as_ref()
+        .expect("api instance not found");
+    let token_hash =
+        serde_json::from_value(_parameters.get("token_hash").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_on_prem_management_service_enrollment_with_http_info(token_hash)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_register_on_prem_management_service_token(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_prem_management_service
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.register_on_prem_management_service_token_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
