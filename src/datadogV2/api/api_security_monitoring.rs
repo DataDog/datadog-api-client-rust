@@ -1161,6 +1161,15 @@ impl SearchSecurityMonitoringSignalsOptionalParams {
     }
 }
 
+/// ActivateContentPackError is a struct for typed errors of method [`SecurityMonitoringAPI::activate_content_pack`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ActivateContentPackError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// AttachCaseError is a struct for typed errors of method [`SecurityMonitoringAPI::attach_case`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1289,6 +1298,15 @@ pub enum CreateVulnerabilityNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeactivateContentPackError is a struct for typed errors of method [`SecurityMonitoringAPI::deactivate_content_pack`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeactivateContentPackError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteCustomFrameworkError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_custom_framework`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1381,6 +1399,15 @@ pub enum EditSecurityMonitoringSignalIncidentsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EditSecurityMonitoringSignalStateError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetContentPacksStatesError is a struct for typed errors of method [`SecurityMonitoringAPI::get_content_packs_states`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetContentPacksStatesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1879,6 +1906,109 @@ impl SecurityMonitoringAPI {
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
+    }
+
+    /// Activate a security monitoring content pack. This operation configures the necessary
+    /// log filters or security filters depending on the pricing model and updates the content
+    /// pack activation state.
+    pub async fn activate_content_pack(
+        &self,
+        content_pack_id: String,
+    ) -> Result<(), datadog::Error<ActivateContentPackError>> {
+        match self
+            .activate_content_pack_with_http_info(content_pack_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Activate a security monitoring content pack. This operation configures the necessary
+    /// log filters or security filters depending on the pricing model and updates the content
+    /// pack activation state.
+    pub async fn activate_content_pack_with_http_info(
+        &self,
+        content_pack_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<ActivateContentPackError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.activate_content_pack";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.activate_content_pack' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/content_packs/{content_pack_id}/activate",
+            local_configuration.get_operation_host(operation_id),
+            content_pack_id = datadog::urlencode(content_pack_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<ActivateContentPackError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
     }
 
     /// Attach security findings to a case.
@@ -4283,6 +4413,107 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Deactivate a security monitoring content pack. This operation removes the content pack's
+    /// configuration from log filters or security filters and updates the content pack activation state.
+    pub async fn deactivate_content_pack(
+        &self,
+        content_pack_id: String,
+    ) -> Result<(), datadog::Error<DeactivateContentPackError>> {
+        match self
+            .deactivate_content_pack_with_http_info(content_pack_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Deactivate a security monitoring content pack. This operation removes the content pack's
+    /// configuration from log filters or security filters and updates the content pack activation state.
+    pub async fn deactivate_content_pack_with_http_info(
+        &self,
+        content_pack_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeactivateContentPackError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.deactivate_content_pack";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.deactivate_content_pack' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/content_packs/{content_pack_id}/deactivate",
+            local_configuration.get_operation_host(operation_id),
+            content_pack_id = datadog::urlencode(content_pack_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeactivateContentPackError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Delete a custom framework.
     pub async fn delete_custom_framework(
         &self,
@@ -5664,6 +5895,127 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<EditSecurityMonitoringSignalStateError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the activation and configuration states for all security monitoring content packs.
+    /// This endpoint returns status information about each content pack including activation state,
+    /// integration status, and log collection status.
+    pub async fn get_content_packs_states(
+        &self,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringContentPackStatesResponse,
+        datadog::Error<GetContentPacksStatesError>,
+    > {
+        match self.get_content_packs_states_with_http_info().await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the activation and configuration states for all security monitoring content packs.
+    /// This endpoint returns status information about each content pack including activation state,
+    /// integration status, and log collection status.
+    pub async fn get_content_packs_states_with_http_info(
+        &self,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringContentPackStatesResponse,
+        >,
+        datadog::Error<GetContentPacksStatesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_content_packs_states";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_content_packs_states' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/content_packs/states",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringContentPackStatesResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetContentPacksStatesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
