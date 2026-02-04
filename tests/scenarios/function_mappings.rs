@@ -2685,6 +2685,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_suppression_version_history,
     );
     world.function_mappings.insert(
+        "v2.GetContentPacksStates".into(),
+        test_v2_get_content_packs_states,
+    );
+    world.function_mappings.insert(
+        "v2.ActivateContentPack".into(),
+        test_v2_activate_content_pack,
+    );
+    world.function_mappings.insert(
+        "v2.DeactivateContentPack".into(),
+        test_v2_deactivate_content_pack,
+    );
+    world.function_mappings.insert(
         "v2.ListSecurityMonitoringRules".into(),
         test_v2_list_security_monitoring_rules,
     );
@@ -19207,6 +19219,85 @@ fn test_v2_get_suppression_version_history(
     let response = match block_on(
         api.get_suppression_version_history_with_http_info(suppression_id, params),
     ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_content_packs_states(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_content_packs_states_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_activate_content_pack(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let content_pack_id =
+        serde_json::from_value(_parameters.get("content_pack_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.activate_content_pack_with_http_info(content_pack_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_deactivate_content_pack(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let content_pack_id =
+        serde_json::from_value(_parameters.get("content_pack_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.deactivate_content_pack_with_http_info(content_pack_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
