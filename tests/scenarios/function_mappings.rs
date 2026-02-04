@@ -83,6 +83,7 @@ pub struct ApiInstances {
     pub v2_api_csm_coverage_analysis:
         Option<datadogV2::api_csm_coverage_analysis::CSMCoverageAnalysisAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
+    pub v2_api_dashboards: Option<datadogV2::api_dashboards::DashboardsAPI>,
     pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
     pub v2_api_data_deletion: Option<datadogV2::api_data_deletion::DataDeletionAPI>,
     pub v2_api_deployment_gates: Option<datadogV2::api_deployment_gates::DeploymentGatesAPI>,
@@ -125,6 +126,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI>,
     pub v2_api_cloud_network_monitoring:
         Option<datadogV2::api_cloud_network_monitoring::CloudNetworkMonitoringAPI>,
+    pub v2_api_notebooks: Option<datadogV2::api_notebooks::NotebooksAPI>,
     pub v2_api_observability_pipelines:
         Option<datadogV2::api_observability_pipelines::ObservabilityPipelinesAPI>,
     pub v2_api_on_call: Option<datadogV2::api_on_call::OnCallAPI>,
@@ -226,6 +228,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Dashboards" => {
             world.api_instances.v1_api_dashboards = Some(
                 datadogV1::api_dashboards::DashboardsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+            world.api_instances.v2_api_dashboards = Some(
+                datadogV2::api_dashboards::DashboardsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -415,6 +423,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Notebooks" => {
             world.api_instances.v1_api_notebooks = Some(
                 datadogV1::api_notebooks::NotebooksAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+            world.api_instances.v2_api_notebooks = Some(
+                datadogV2::api_notebooks::NotebooksAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -3061,6 +3075,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     );
     world
         .function_mappings
+        .insert("v2.SearchDashboards".into(), test_v2_search_dashboards);
+    world
+        .function_mappings
         .insert("v2.GetAllDatasets".into(), test_v2_get_all_datasets);
     world
         .function_mappings
@@ -4034,6 +4051,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetAggregatedDns".into(), test_v2_get_aggregated_dns);
+    world
+        .function_mappings
+        .insert("v2.SearchNotebooks".into(), test_v2_search_notebooks);
     world
         .function_mappings
         .insert("v2.ListPipelines".into(), test_v2_list_pipelines);
@@ -22406,6 +22426,51 @@ fn test_v2_update_dashboard_list_items(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_search_dashboards(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_dashboards
+        .as_ref()
+        .expect("api instance not found");
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page = _parameters
+        .get("page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_dashboards::SearchDashboardsOptionalParams::default();
+    params.query = query;
+    params.sort = sort;
+    params.include = include;
+    params.page = page;
+    params.limit = limit;
+    let response = match block_on(api.search_dashboards_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_get_all_datasets(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -30423,6 +30488,51 @@ fn test_v2_get_aggregated_dns(world: &mut DatadogWorld, _parameters: &HashMap<St
     params.tags = tags;
     params.limit = limit;
     let response = match block_on(api.get_aggregated_dns_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_search_notebooks(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_notebooks
+        .as_ref()
+        .expect("api instance not found");
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page = _parameters
+        .get("page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_notebooks::SearchNotebooksOptionalParams::default();
+    params.query = query;
+    params.sort = sort;
+    params.include = include;
+    params.page = page;
+    params.limit = limit;
+    let response = match block_on(api.search_notebooks_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
