@@ -1,4 +1,4 @@
-// Create tag pipeline ruleset returns "OK" response
+// Create tag pipeline ruleset with if_tag_exists returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagementAPI;
 use datadog_api_client::datadogV2::model::CreateRulesetRequest;
@@ -8,6 +8,7 @@ use datadog_api_client::datadogV2::model::CreateRulesetRequestDataAttributesRule
 use datadog_api_client::datadogV2::model::CreateRulesetRequestDataAttributesRulesItemsQuery;
 use datadog_api_client::datadogV2::model::CreateRulesetRequestDataAttributesRulesItemsQueryAddition;
 use datadog_api_client::datadogV2::model::CreateRulesetRequestDataType;
+use datadog_api_client::datadogV2::model::DataAttributesRulesItemsIfTagExists;
 
 #[tokio::main]
 async fn main() {
@@ -31,7 +32,7 @@ async fn main() {
                             r#"account_id:"123456789" AND service:"web-api""#.to_string(),
                         )
                         .case_insensitivity(false)
-                        .if_not_exists(true),
+                        .if_tag_exists(DataAttributesRulesItemsIfTagExists::REPLACE),
                     ))
                     .reference_table(None),
                 ])

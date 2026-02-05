@@ -14,15 +14,13 @@ pub struct CreateRulesetRequestDataAttributesRulesItems {
     /// The `items` `enabled`.
     #[serde(rename = "enabled")]
     pub enabled: bool,
-    /// The definition of `CreateRulesetRequestDataAttributesRulesItemsMapping` object.
+    /// The definition of `DataAttributesRulesItemsMapping` object.
     #[serde(
         rename = "mapping",
         default,
         with = "::serde_with::rust::double_option"
     )]
-    pub mapping: Option<
-        Option<crate::datadogV2::model::CreateRulesetRequestDataAttributesRulesItemsMapping>,
-    >,
+    pub mapping: Option<Option<crate::datadogV2::model::DataAttributesRulesItemsMapping>>,
     /// The `items` `metadata`.
     #[serde(
         rename = "metadata",
@@ -69,7 +67,7 @@ impl CreateRulesetRequestDataAttributesRulesItems {
 
     pub fn mapping(
         mut self,
-        value: Option<crate::datadogV2::model::CreateRulesetRequestDataAttributesRulesItemsMapping>,
+        value: Option<crate::datadogV2::model::DataAttributesRulesItemsMapping>,
     ) -> Self {
         self.mapping = Some(value);
         self
@@ -125,7 +123,9 @@ impl<'de> Deserialize<'de> for CreateRulesetRequestDataAttributesRulesItems {
                 M: MapAccess<'a>,
             {
                 let mut enabled: Option<bool> = None;
-                let mut mapping: Option<Option<crate::datadogV2::model::CreateRulesetRequestDataAttributesRulesItemsMapping>> = None;
+                let mut mapping: Option<
+                    Option<crate::datadogV2::model::DataAttributesRulesItemsMapping>,
+                > = None;
                 let mut metadata: Option<Option<std::collections::BTreeMap<String, String>>> = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<
