@@ -26,6 +26,7 @@ async fn main() {
                                 r#"flaky_test_state:active @git.repository.id_v2:"github.com/datadog/shopist""#.to_string(),
                             ),
                         )
+                        .include_history(true)
                         .page(
                             FlakyTestsSearchPageOptions::new()
                                 .cursor(

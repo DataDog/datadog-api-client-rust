@@ -1,4 +1,4 @@
-// Search flaky tests returns "OK" response
+// Search flaky tests returns "OK" response with history
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_test_optimization::SearchFlakyTestsOptionalParams;
 use datadog_api_client::datadogV2::api_test_optimization::TestOptimizationAPI;
@@ -25,14 +25,8 @@ async fn main() {
                             ),
                         )
                         .include_history(true)
-                        .page(
-                            FlakyTestsSearchPageOptions::new()
-                                .cursor(
-                                    "eyJzdGFydEF0IjoiQVFBQUFYS2tMS3pPbm40NGV3QUFBQUJCV0V0clRFdDZVbG8zY3pCRmNsbHJiVmxDWlEifQ==".to_string(),
-                                )
-                                .limit(25),
-                        )
-                        .sort(FlakyTestsSearchSort::FAILURE_RATE_ASCENDING),
+                        .page(FlakyTestsSearchPageOptions::new().limit(10))
+                        .sort(FlakyTestsSearchSort::FQN_ASCENDING),
                 )
                 .type_(FlakyTestsSearchRequestDataType::SEARCH_FLAKY_TESTS_REQUEST),
         );

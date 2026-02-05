@@ -8196,6 +8196,8 @@ pub mod model_flaky_test_attributes;
 pub use self::model_flaky_test_attributes::FlakyTestAttributes;
 pub mod model_flaky_test_attributes_flaky_state;
 pub use self::model_flaky_test_attributes_flaky_state::FlakyTestAttributesFlakyState;
+pub mod model_flaky_test_history;
+pub use self::model_flaky_test_history::FlakyTestHistory;
 pub mod model_flaky_test_pipeline_stats;
 pub use self::model_flaky_test_pipeline_stats::FlakyTestPipelineStats;
 pub mod model_flaky_test_run_metadata;

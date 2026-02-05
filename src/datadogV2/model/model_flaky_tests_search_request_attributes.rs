@@ -14,6 +14,11 @@ pub struct FlakyTestsSearchRequestAttributes {
     /// Search filter settings.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::FlakyTestsSearchFilter>,
+    /// Whether to include the status change history for each flaky test in the response.
+    /// When set to true, each test will include a `history` array with chronological status changes.
+    /// Defaults to false.
+    #[serde(rename = "include_history")]
+    pub include_history: Option<bool>,
     /// Pagination attributes for listing flaky tests.
     #[serde(rename = "page")]
     pub page: Option<crate::datadogV2::model::FlakyTestsSearchPageOptions>,
@@ -31,6 +36,7 @@ impl FlakyTestsSearchRequestAttributes {
     pub fn new() -> FlakyTestsSearchRequestAttributes {
         FlakyTestsSearchRequestAttributes {
             filter: None,
+            include_history: None,
             page: None,
             sort: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -40,6 +46,11 @@ impl FlakyTestsSearchRequestAttributes {
 
     pub fn filter(mut self, value: crate::datadogV2::model::FlakyTestsSearchFilter) -> Self {
         self.filter = Some(value);
+        self
+    }
+
+    pub fn include_history(mut self, value: bool) -> Self {
+        self.include_history = Some(value);
         self
     }
 
@@ -86,6 +97,7 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchRequestAttributes {
                 M: MapAccess<'a>,
             {
                 let mut filter: Option<crate::datadogV2::model::FlakyTestsSearchFilter> = None;
+                let mut include_history: Option<bool> = None;
                 let mut page: Option<crate::datadogV2::model::FlakyTestsSearchPageOptions> = None;
                 let mut sort: Option<crate::datadogV2::model::FlakyTestsSearchSort> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -101,6 +113,13 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchRequestAttributes {
                                 continue;
                             }
                             filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "include_history" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            include_history =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "page" => {
                             if v.is_null() {
@@ -132,6 +151,7 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchRequestAttributes {
 
                 let content = FlakyTestsSearchRequestAttributes {
                     filter,
+                    include_history,
                     page,
                     sort,
                     additional_properties,
