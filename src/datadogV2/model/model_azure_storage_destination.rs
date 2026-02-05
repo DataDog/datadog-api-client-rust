@@ -16,6 +16,9 @@ pub struct AzureStorageDestination {
     /// Optional prefix for blobs written to the container.
     #[serde(rename = "blob_prefix")]
     pub blob_prefix: Option<String>,
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// The name of the Azure Blob Storage container to store logs in.
     #[serde(rename = "container_name")]
     pub container_name: String,
@@ -44,6 +47,7 @@ impl AzureStorageDestination {
     ) -> AzureStorageDestination {
         AzureStorageDestination {
             blob_prefix: None,
+            buffer: None,
             container_name,
             id,
             inputs,
@@ -55,6 +59,14 @@ impl AzureStorageDestination {
 
     pub fn blob_prefix(mut self, value: String) -> Self {
         self.blob_prefix = Some(value);
+        self
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
         self
     }
 
@@ -85,6 +97,9 @@ impl<'de> Deserialize<'de> for AzureStorageDestination {
                 M: MapAccess<'a>,
             {
                 let mut blob_prefix: Option<String> = None;
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut container_name: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -103,6 +118,20 @@ impl<'de> Deserialize<'de> for AzureStorageDestination {
                             }
                             blob_prefix =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "container_name" => {
                             container_name =
@@ -140,6 +169,7 @@ impl<'de> Deserialize<'de> for AzureStorageDestination {
 
                 let content = AzureStorageDestination {
                     blob_prefix,
+                    buffer,
                     container_name,
                     id,
                     inputs,

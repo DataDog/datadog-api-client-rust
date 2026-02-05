@@ -20,6 +20,9 @@ pub struct ObservabilityPipelineAmazonSecurityLakeDestination {
     /// Name of the Amazon S3 bucket in Security Lake (3-63 characters).
     #[serde(rename = "bucket")]
     pub bucket: String,
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Custom source name for the logs in Security Lake.
     #[serde(rename = "custom_source_name")]
     pub custom_source_name: String,
@@ -57,6 +60,7 @@ impl ObservabilityPipelineAmazonSecurityLakeDestination {
         ObservabilityPipelineAmazonSecurityLakeDestination {
             auth: None,
             bucket,
+            buffer: None,
             custom_source_name,
             id,
             inputs,
@@ -70,6 +74,14 @@ impl ObservabilityPipelineAmazonSecurityLakeDestination {
 
     pub fn auth(mut self, value: crate::datadogV2::model::ObservabilityPipelineAwsAuth) -> Self {
         self.auth = Some(value);
+        self
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
         self
     }
 
@@ -106,6 +118,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonSecurityLakeDestinatio
             {
                 let mut auth: Option<crate::datadogV2::model::ObservabilityPipelineAwsAuth> = None;
                 let mut bucket: Option<String> = None;
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut custom_source_name: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -130,6 +145,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonSecurityLakeDestinatio
                         }
                         "bucket" => {
                             bucket = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "custom_source_name" => {
                             custom_source_name =
@@ -179,6 +208,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonSecurityLakeDestinatio
                 let content = ObservabilityPipelineAmazonSecurityLakeDestination {
                     auth,
                     bucket,
+                    buffer,
                     custom_source_name,
                     id,
                     inputs,

@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSumoLogicDestination {
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// The output encoding format.
     #[serde(rename = "encoding")]
     pub encoding: Option<crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationEncoding>,
@@ -51,6 +54,7 @@ impl ObservabilityPipelineSumoLogicDestination {
         type_: crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationType,
     ) -> ObservabilityPipelineSumoLogicDestination {
         ObservabilityPipelineSumoLogicDestination {
+            buffer: None,
             encoding: None,
             header_custom_fields: None,
             header_host_name: None,
@@ -62,6 +66,14 @@ impl ObservabilityPipelineSumoLogicDestination {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
+        self
     }
 
     pub fn encoding(
@@ -121,6 +133,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
             where
                 M: MapAccess<'a>,
             {
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut encoding: Option<
                     crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationEncoding,
                 > = None;
@@ -141,6 +156,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "encoding" => {
                             if v.is_null() {
                                 continue;
@@ -212,6 +241,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineSumoLogicDestination {
+                    buffer,
                     encoding,
                     header_custom_fields,
                     header_host_name,
