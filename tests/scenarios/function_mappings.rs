@@ -156,6 +156,7 @@ pub struct ApiInstances {
     pub v2_api_rum_replay_viewership:
         Option<datadogV2::api_rum_replay_viewership::RumReplayViewershipAPI>,
     pub v2_api_service_scorecards: Option<datadogV2::api_service_scorecards::ServiceScorecardsAPI>,
+    pub v2_api_seats: Option<datadogV2::api_seats::SeatsAPI>,
     pub v2_api_entity_risk_scores: Option<datadogV2::api_entity_risk_scores::EntityRiskScoresAPI>,
     pub v2_api_sensitive_data_scanner:
         Option<datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI>,
@@ -1001,6 +1002,13 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "Seats" => {
+            world.api_instances.v2_api_seats =
+                Some(datadogV2::api_seats::SeatsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ));
         }
         "EntityRiskScores" => {
             world.api_instances.v2_api_entity_risk_scores = Some(
@@ -4613,6 +4621,16 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateScorecardRule".into(),
         test_v2_update_scorecard_rule,
     );
+    world.function_mappings.insert(
+        "v2.UnassignSeatsUserV2".into(),
+        test_v2_unassign_seats_user_v2,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetSeatsUsersV2".into(), test_v2_get_seats_users_v2);
+    world
+        .function_mappings
+        .insert("v2.AssignSeatsUserV2".into(), test_v2_assign_seats_user_v2);
     world.function_mappings.insert(
         "v2.ListEntityRiskScores".into(),
         test_v2_list_entity_risk_scores,
@@ -35390,6 +35408,91 @@ fn test_v2_update_scorecard_rule(world: &mut DatadogWorld, _parameters: &HashMap
     let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_scorecard_rule_with_http_info(rule_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_unassign_seats_user_v2(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_seats
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.unassign_seats_user_v2_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_seats_users_v2(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_seats
+        .as_ref()
+        .expect("api instance not found");
+    let product_code =
+        serde_json::from_value(_parameters.get("product_code").unwrap().clone()).unwrap();
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_seats::GetSeatsUsersV2OptionalParams::default();
+    params.page_limit = page_limit;
+    params.page_cursor = page_cursor;
+    let response = match block_on(api.get_seats_users_v2_with_http_info(product_code, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_assign_seats_user_v2(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_seats
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.assign_seats_user_v2_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
