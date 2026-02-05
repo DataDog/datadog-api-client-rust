@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MicrosoftSentinelDestination {
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Azure AD client ID used for authentication.
     #[serde(rename = "client_id")]
     pub client_id: String,
@@ -52,6 +55,7 @@ impl MicrosoftSentinelDestination {
         type_: crate::datadogV2::model::MicrosoftSentinelDestinationType,
     ) -> MicrosoftSentinelDestination {
         MicrosoftSentinelDestination {
+            buffer: None,
             client_id,
             dcr_immutable_id,
             id,
@@ -62,6 +66,14 @@ impl MicrosoftSentinelDestination {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -90,6 +102,9 @@ impl<'de> Deserialize<'de> for MicrosoftSentinelDestination {
             where
                 M: MapAccess<'a>,
             {
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut client_id: Option<String> = None;
                 let mut dcr_immutable_id: Option<String> = None;
                 let mut id: Option<String> = None;
@@ -106,6 +121,20 @@ impl<'de> Deserialize<'de> for MicrosoftSentinelDestination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "client_id" => {
                             client_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -153,6 +182,7 @@ impl<'de> Deserialize<'de> for MicrosoftSentinelDestination {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = MicrosoftSentinelDestination {
+                    buffer,
                     client_id,
                     dcr_immutable_id,
                     id,

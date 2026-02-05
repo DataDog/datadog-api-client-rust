@@ -17,6 +17,9 @@ pub struct ObservabilityPipelineSplunkHecDestination {
     /// If `false`, Splunk assigns the time the event was received.
     #[serde(rename = "auto_extract_timestamp")]
     pub auto_extract_timestamp: Option<bool>,
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Encoding format for log events.
     #[serde(rename = "encoding")]
     pub encoding:
@@ -51,6 +54,7 @@ impl ObservabilityPipelineSplunkHecDestination {
     ) -> ObservabilityPipelineSplunkHecDestination {
         ObservabilityPipelineSplunkHecDestination {
             auto_extract_timestamp: None,
+            buffer: None,
             encoding: None,
             id,
             index: None,
@@ -64,6 +68,14 @@ impl ObservabilityPipelineSplunkHecDestination {
 
     pub fn auto_extract_timestamp(mut self, value: bool) -> Self {
         self.auto_extract_timestamp = Some(value);
+        self
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
         self
     }
 
@@ -112,6 +124,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                 M: MapAccess<'a>,
             {
                 let mut auto_extract_timestamp: Option<bool> = None;
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut encoding: Option<
                     crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding,
                 > = None;
@@ -136,6 +151,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                             }
                             auto_extract_timestamp =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "encoding" => {
                             if v.is_null() {
@@ -193,6 +222,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
 
                 let content = ObservabilityPipelineSplunkHecDestination {
                     auto_extract_timestamp,
+                    buffer,
                     encoding,
                     id,
                     index,

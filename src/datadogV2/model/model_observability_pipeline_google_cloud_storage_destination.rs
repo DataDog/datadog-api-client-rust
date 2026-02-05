@@ -23,6 +23,9 @@ pub struct ObservabilityPipelineGoogleCloudStorageDestination {
     /// Name of the GCS bucket.
     #[serde(rename = "bucket")]
     pub bucket: String,
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Unique identifier for the destination component.
     #[serde(rename = "id")]
     pub id: String,
@@ -61,6 +64,7 @@ impl ObservabilityPipelineGoogleCloudStorageDestination {
             acl: None,
             auth: None,
             bucket,
+            buffer: None,
             id,
             inputs,
             key_prefix: None,
@@ -82,6 +86,14 @@ impl ObservabilityPipelineGoogleCloudStorageDestination {
 
     pub fn auth(mut self, value: crate::datadogV2::model::ObservabilityPipelineGcpAuth) -> Self {
         self.auth = Some(value);
+        self
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
         self
     }
 
@@ -129,6 +141,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                 > = None;
                 let mut auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth> = None;
                 let mut bucket: Option<String> = None;
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut key_prefix: Option<String> = None;
@@ -169,6 +184,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                         }
                         "bucket" => {
                             bucket = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -229,6 +258,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleCloudStorageDestinatio
                     acl,
                     auth,
                     bucket,
+                    buffer,
                     id,
                     inputs,
                     key_prefix,
