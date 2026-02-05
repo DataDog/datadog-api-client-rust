@@ -40,6 +40,10 @@ pub struct SensitiveDataScannerRuleAttributes {
     /// Integer from 1 (high) to 5 (low) indicating rule issue severity.
     #[serde(rename = "priority")]
     pub priority: Option<i64>,
+    /// Object describing the suppressions for a rule. There are three types of suppressions, `starts_with`, `ends_with`, and `exact_match`.
+    /// Suppressed matches are not obfuscated, counted in metrics, or displayed in the Findings page.
+    #[serde(rename = "suppressions")]
+    pub suppressions: Option<crate::datadogV2::model::SensitiveDataScannerSuppressions>,
     /// List of tags.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -64,6 +68,7 @@ impl SensitiveDataScannerRuleAttributes {
             namespaces: None,
             pattern: None,
             priority: None,
+            suppressions: None,
             tags: None,
             text_replacement: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -111,6 +116,14 @@ impl SensitiveDataScannerRuleAttributes {
 
     pub fn priority(mut self, value: i64) -> Self {
         self.priority = Some(value);
+        self
+    }
+
+    pub fn suppressions(
+        mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerSuppressions,
+    ) -> Self {
+        self.suppressions = Some(value);
         self
     }
 
@@ -169,6 +182,9 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerRuleAttributes {
                 let mut namespaces: Option<Vec<String>> = None;
                 let mut pattern: Option<String> = None;
                 let mut priority: Option<i64> = None;
+                let mut suppressions: Option<
+                    crate::datadogV2::model::SensitiveDataScannerSuppressions,
+                > = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut text_replacement: Option<
                     crate::datadogV2::model::SensitiveDataScannerTextReplacement,
@@ -232,6 +248,13 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerRuleAttributes {
                             }
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "suppressions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            suppressions =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -262,6 +285,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerRuleAttributes {
                     namespaces,
                     pattern,
                     priority,
+                    suppressions,
                     tags,
                     text_replacement,
                     additional_properties,
