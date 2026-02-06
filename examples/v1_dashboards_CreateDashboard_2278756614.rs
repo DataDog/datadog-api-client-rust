@@ -16,6 +16,7 @@ use datadog_api_client::datadogV1::model::SplitGraphWidgetDefinition;
 use datadog_api_client::datadogV1::model::SplitGraphWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::SplitSort;
 use datadog_api_client::datadogV1::model::SplitVectorEntryItem;
+use datadog_api_client::datadogV1::model::TimeseriesRequestStyle;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinition;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetRequest;
@@ -25,7 +26,6 @@ use datadog_api_client::datadogV1::model::WidgetDisplayType;
 use datadog_api_client::datadogV1::model::WidgetLayout;
 use datadog_api_client::datadogV1::model::WidgetLineType;
 use datadog_api_client::datadogV1::model::WidgetLineWidth;
-use datadog_api_client::datadogV1::model::WidgetRequestStyle;
 use datadog_api_client::datadogV1::model::WidgetSort;
 use datadog_api_client::datadogV1::model::WidgetTextAlign;
 
@@ -63,7 +63,7 @@ async fn main() {
                                                     )
                                                     .response_format(FormulaAndFunctionResponseFormat::TIMESERIES)
                                                     .style(
-                                                        WidgetRequestStyle::new()
+                                                        TimeseriesRequestStyle::new()
                                                             .line_type(WidgetLineType::SOLID)
                                                             .line_width(WidgetLineWidth::NORMAL)
                                                             .palette("dog_classic".to_string()),

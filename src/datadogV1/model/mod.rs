@@ -584,6 +584,8 @@ pub mod model_widget_display_type;
 pub use self::model_widget_display_type::WidgetDisplayType;
 pub mod model_timeseries_widget_expression_alias;
 pub use self::model_timeseries_widget_expression_alias::TimeseriesWidgetExpressionAlias;
+pub mod model_timeseries_request_style;
+pub use self::model_timeseries_request_style::TimeseriesRequestStyle;
 pub mod model_timeseries_widget_definition_type;
 pub use self::model_timeseries_widget_definition_type::TimeseriesWidgetDefinitionType;
 pub mod model_toplist_widget_definition;
