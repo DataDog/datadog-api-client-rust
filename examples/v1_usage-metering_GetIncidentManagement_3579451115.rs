@@ -1,4 +1,4 @@
-// Get hourly usage for Incident Management returns "OK" response
+// Get hourly usage for incident management returns "OK" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_usage_metering::GetIncidentManagementOptionalParams;
@@ -10,10 +10,14 @@ async fn main() {
     let api = UsageMeteringAPI::with_config(configuration);
     let resp = api
         .get_incident_management(
-            DateTime::parse_from_rfc3339("2021-11-11T11:11:11.111000+00:00")
+            DateTime::parse_from_rfc3339("2021-11-06T11:11:11+00:00")
                 .expect("Failed to parse datetime")
                 .with_timezone(&Utc),
-            GetIncidentManagementOptionalParams::default(),
+            GetIncidentManagementOptionalParams::default().end_hr(
+                DateTime::parse_from_rfc3339("2021-11-08T11:11:11+00:00")
+                    .expect("Failed to parse datetime")
+                    .with_timezone(&Utc),
+            ),
         )
         .await;
     if let Ok(value) = resp {
