@@ -141,6 +141,7 @@ impl Default for Configuration {
             ("v2.get_open_api".to_owned(), false),
             ("v2.list_apis".to_owned(), false),
             ("v2.update_open_api".to_owned(), false),
+            ("v2.list_aws_cloud_auth_persona_mappings".to_owned(), false),
             ("v2.activate_content_pack".to_owned(), false),
             ("v2.cancel_threat_hunting_job".to_owned(), false),
             ("v2.convert_job_result_to_signal".to_owned(), false),
