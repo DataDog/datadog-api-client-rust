@@ -18,9 +18,13 @@ pub struct RulesetRespDataAttributesRulesItemsQuery {
     /// The `query` `case_insensitivity`.
     #[serde(rename = "case_insensitivity")]
     pub case_insensitivity: Option<bool>,
-    /// The `query` `if_not_exists`.
+    /// Deprecated. Use `if_tag_exists` instead. The `query` `if_not_exists`.
+    #[deprecated]
     #[serde(rename = "if_not_exists")]
-    pub if_not_exists: bool,
+    pub if_not_exists: Option<bool>,
+    /// The behavior when the tag already exists.
+    #[serde(rename = "if_tag_exists")]
+    pub if_tag_exists: Option<crate::datadogV2::model::DataAttributesRulesItemsIfTagExists>,
     /// The `query` `query`.
     #[serde(rename = "query")]
     pub query: String,
@@ -34,21 +38,38 @@ pub struct RulesetRespDataAttributesRulesItemsQuery {
 impl RulesetRespDataAttributesRulesItemsQuery {
     pub fn new(
         addition: Option<crate::datadogV2::model::RulesetRespDataAttributesRulesItemsQueryAddition>,
-        if_not_exists: bool,
         query: String,
     ) -> RulesetRespDataAttributesRulesItemsQuery {
+        #[allow(deprecated)]
         RulesetRespDataAttributesRulesItemsQuery {
             addition,
             case_insensitivity: None,
-            if_not_exists,
+            if_not_exists: None,
+            if_tag_exists: None,
             query,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    #[allow(deprecated)]
     pub fn case_insensitivity(mut self, value: bool) -> Self {
         self.case_insensitivity = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn if_not_exists(mut self, value: bool) -> Self {
+        self.if_not_exists = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn if_tag_exists(
+        mut self,
+        value: crate::datadogV2::model::DataAttributesRulesItemsIfTagExists,
+    ) -> Self {
+        self.if_tag_exists = Some(value);
         self
     }
 
@@ -85,6 +106,9 @@ impl<'de> Deserialize<'de> for RulesetRespDataAttributesRulesItemsQuery {
                 > = None;
                 let mut case_insensitivity: Option<bool> = None;
                 let mut if_not_exists: Option<bool> = None;
+                let mut if_tag_exists: Option<
+                    crate::datadogV2::model::DataAttributesRulesItemsIfTagExists,
+                > = None;
                 let mut query: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -105,8 +129,26 @@ impl<'de> Deserialize<'de> for RulesetRespDataAttributesRulesItemsQuery {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "if_not_exists" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             if_not_exists =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "if_tag_exists" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            if_tag_exists =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _if_tag_exists) = if_tag_exists {
+                                match _if_tag_exists {
+                                    crate::datadogV2::model::DataAttributesRulesItemsIfTagExists::UnparsedObject(_if_tag_exists) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -119,14 +161,14 @@ impl<'de> Deserialize<'de> for RulesetRespDataAttributesRulesItemsQuery {
                     }
                 }
                 let addition = addition.ok_or_else(|| M::Error::missing_field("addition"))?;
-                let if_not_exists =
-                    if_not_exists.ok_or_else(|| M::Error::missing_field("if_not_exists"))?;
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 
+                #[allow(deprecated)]
                 let content = RulesetRespDataAttributesRulesItemsQuery {
                     addition,
                     case_insensitivity,
                     if_not_exists,
+                    if_tag_exists,
                     query,
                     additional_properties,
                     _unparsed,
