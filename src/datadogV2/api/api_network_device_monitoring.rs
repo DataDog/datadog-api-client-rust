@@ -32,28 +32,28 @@ impl GetInterfacesOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListDevicesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 500. Defaults to 50.
     pub page_size: Option<i64>,
-    /// Specific page number to return.
+    /// Specific page number to return. Defaults to 0.
     pub page_number: Option<i64>,
-    /// The field to sort the devices by.
+    /// The field to sort the devices by. Defaults to `name`.
     pub sort: Option<String>,
     /// Filter devices by tag.
     pub filter_tag: Option<String>,
 }
 
 impl ListDevicesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Size for a given page. The maximum allowed value is 500. Defaults to 50.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
-    /// Specific page number to return.
+    /// Specific page number to return. Defaults to 0.
     pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
-    /// The field to sort the devices by.
+    /// The field to sort the devices by. Defaults to `name`.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
@@ -524,7 +524,7 @@ impl NetworkDeviceMonitoringAPI {
         Item = Result<crate::datadogV2::model::DevicesListData, datadog::Error<ListDevicesError>>,
     > + '_ {
         try_stream! {
-            let mut page_size: i64 = 10;
+            let mut page_size: i64 = 50;
             if params.page_size.is_none() {
                 params.page_size = Some(page_size);
             } else {
