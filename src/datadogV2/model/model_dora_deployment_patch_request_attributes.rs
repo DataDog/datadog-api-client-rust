@@ -14,7 +14,7 @@ pub struct DORADeploymentPatchRequestAttributes {
     /// Indicates whether the deployment resulted in a change failure.
     #[serde(rename = "change_failure")]
     pub change_failure: Option<bool>,
-    /// Remediation details for the deployment.
+    /// Remediation details for the deployment. Optional, but required to calculate failed deployment recovery time.
     #[serde(rename = "remediation")]
     pub remediation: Option<crate::datadogV2::model::DORADeploymentPatchRemediation>,
     #[serde(flatten)]

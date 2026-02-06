@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DORAListFailuresRequestData {
-    /// Attributes to get a list of failures.
+    /// Attributes to get a list of incidents.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::DORAListFailuresRequestAttributes,
     /// The definition of `DORAListFailuresRequestDataType` object.
