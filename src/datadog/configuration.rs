@@ -326,6 +326,9 @@ impl Default for Configuration {
             ("v2.update_incident_team".to_owned(), false),
             ("v2.search_flaky_tests".to_owned(), false),
             ("v2.update_flaky_tests".to_owned(), false),
+            ("v2.execute_workflow_from_template".to_owned(), false),
+            ("v2.execute_workflow_from_webhook".to_owned(), false),
+            ("v2.update_workflow_favorite".to_owned(), false),
         ]);
         let mut auth_keys: HashMap<String, APIKey> = HashMap::new();
         auth_keys.insert(
