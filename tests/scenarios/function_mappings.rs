@@ -5090,6 +5090,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListUserPermissions".into(),
         test_v2_list_user_permissions,
     );
+    world.function_mappings.insert(
+        "v2.ExecuteWorkflowFromTemplate".into(),
+        test_v2_execute_workflow_from_template,
+    );
     world
         .function_mappings
         .insert("v2.CreateWorkflow".into(), test_v2_create_workflow);
@@ -5102,6 +5106,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateWorkflow".into(), test_v2_update_workflow);
+    world.function_mappings.insert(
+        "v2.UpdateWorkflowFavorite".into(),
+        test_v2_update_workflow_favorite,
+    );
     world.function_mappings.insert(
         "v2.ListWorkflowInstances".into(),
         test_v2_list_workflow_instances,
@@ -5117,6 +5125,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.CancelWorkflowInstance".into(),
         test_v2_cancel_workflow_instance,
+    );
+    world.function_mappings.insert(
+        "v2.ExecuteWorkflowFromWebhook".into(),
+        test_v2_execute_workflow_from_webhook,
     );
 }
 
@@ -39753,6 +39765,36 @@ fn test_v2_list_user_permissions(world: &mut DatadogWorld, _parameters: &HashMap
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_execute_workflow_from_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let parent_id = serde_json::from_value(_parameters.get("parent_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.execute_workflow_from_template_with_http_info(parent_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_create_workflow(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -39840,6 +39882,36 @@ fn test_v2_update_workflow(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_workflow_with_http_info(workflow_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_workflow_favorite(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let workflow_id =
+        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_workflow_favorite_with_http_info(workflow_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -39980,6 +40052,47 @@ fn test_v2_cancel_workflow_instance(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_execute_workflow_from_webhook(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let workflow_id =
+        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
+    let org_id = serde_json::from_value(_parameters.get("orgId").unwrap().clone()).unwrap();
+    let x_hub_signature_256 =
+        serde_json::from_value(_parameters.get("X-Hub-Signature-256").unwrap().clone()).unwrap();
+    let user_agent =
+        serde_json::from_value(_parameters.get("User-Agent").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.execute_workflow_from_webhook_with_http_info(
+        workflow_id,
+        org_id,
+        x_hub_signature_256,
+        user_agent,
+        body,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

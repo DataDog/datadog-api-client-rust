@@ -6,6 +6,7 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -65,6 +66,24 @@ pub enum DeleteWorkflowError {
     UnknownValue(serde_json::Value),
 }
 
+/// ExecuteWorkflowFromTemplateError is a struct for typed errors of method [`WorkflowAutomationAPI::execute_workflow_from_template`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ExecuteWorkflowFromTemplateError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ExecuteWorkflowFromWebhookError is a struct for typed errors of method [`WorkflowAutomationAPI::execute_workflow_from_webhook`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ExecuteWorkflowFromWebhookError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetWorkflowError is a struct for typed errors of method [`WorkflowAutomationAPI::get_workflow`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -94,6 +113,15 @@ pub enum ListWorkflowInstancesError {
 #[serde(untagged)]
 pub enum UpdateWorkflowError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateWorkflowFavoriteError is a struct for typed errors of method [`WorkflowAutomationAPI::update_workflow_favorite`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateWorkflowFavoriteError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -677,6 +705,399 @@ impl WorkflowAutomationAPI {
         }
     }
 
+    /// Execute a headless workflow instance from a template. This endpoint creates and executes
+    /// a workflow instance based on a template configuration.
+    ///
+    /// **Note**: This endpoint is in public beta and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn execute_workflow_from_template(
+        &self,
+        parent_id: String,
+        body: crate::datadogV2::model::WorkflowHeadlessExecutionRequest,
+    ) -> Result<
+        crate::datadogV2::model::WorkflowHeadlessExecutionResponse,
+        datadog::Error<ExecuteWorkflowFromTemplateError>,
+    > {
+        match self
+            .execute_workflow_from_template_with_http_info(parent_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Execute a headless workflow instance from a template. This endpoint creates and executes
+    /// a workflow instance based on a template configuration.
+    ///
+    /// **Note**: This endpoint is in public beta and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn execute_workflow_from_template_with_http_info(
+        &self,
+        parent_id: String,
+        body: crate::datadogV2::model::WorkflowHeadlessExecutionRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::WorkflowHeadlessExecutionResponse>,
+        datadog::Error<ExecuteWorkflowFromTemplateError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.execute_workflow_from_template";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.execute_workflow_from_template' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/workflow_headless/{parent_id}/instances",
+            local_configuration.get_operation_host(operation_id),
+            parent_id = datadog::urlencode(parent_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::WorkflowHeadlessExecutionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ExecuteWorkflowFromTemplateError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Execute a workflow triggered by a GitHub webhook. This endpoint validates the GitHub webhook signature
+    /// and the GitHub user agent before executing the workflow.
+    ///
+    /// This endpoint requires:
+    /// - Valid GitHub webhook signature in the X-Hub-Signature-256 header
+    /// - GitHub user agent in the User-Agent header
+    /// - Valid organization ID in the orgId query parameter
+    /// - Valid workflow ID in the path
+    ///
+    /// **Note**: This endpoint is in public beta and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn execute_workflow_from_webhook(
+        &self,
+        workflow_id: String,
+        org_id: uuid::Uuid,
+        x_hub_signature_256: String,
+        user_agent: String,
+        body: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Result<
+        crate::datadogV2::model::WorkflowWebhookExecutionResponse,
+        datadog::Error<ExecuteWorkflowFromWebhookError>,
+    > {
+        match self
+            .execute_workflow_from_webhook_with_http_info(
+                workflow_id,
+                org_id,
+                x_hub_signature_256,
+                user_agent,
+                body,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Execute a workflow triggered by a GitHub webhook. This endpoint validates the GitHub webhook signature
+    /// and the GitHub user agent before executing the workflow.
+    ///
+    /// This endpoint requires:
+    /// - Valid GitHub webhook signature in the X-Hub-Signature-256 header
+    /// - GitHub user agent in the User-Agent header
+    /// - Valid organization ID in the orgId query parameter
+    /// - Valid workflow ID in the path
+    ///
+    /// **Note**: This endpoint is in public beta and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn execute_workflow_from_webhook_with_http_info(
+        &self,
+        workflow_id: String,
+        org_id: uuid::Uuid,
+        x_hub_signature_256: String,
+        user_agent: String,
+        body: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::WorkflowWebhookExecutionResponse>,
+        datadog::Error<ExecuteWorkflowFromWebhookError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.execute_workflow_from_webhook";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.execute_workflow_from_webhook' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/workflows/{workflow_id}/webhook",
+            local_configuration.get_operation_host(operation_id),
+            workflow_id = datadog::urlencode(workflow_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("orgId", &org_id.to_string())]);
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        headers.insert(
+            "X-Hub-Signature-256",
+            x_hub_signature_256
+                .to_string()
+                .parse()
+                .expect("failed to parse X-Hub-Signature-256 header"),
+        );
+        headers.insert(
+            "User-Agent",
+            user_agent
+                .to_string()
+                .parse()
+                .expect("failed to parse User-Agent header"),
+        );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::WorkflowWebhookExecutionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ExecuteWorkflowFromWebhookError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
     pub async fn get_workflow(
         &self,
@@ -1170,6 +1591,159 @@ impl WorkflowAutomationAPI {
             };
         } else {
             let local_entity: Option<UpdateWorkflowError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Mark a workflow as favorite or unfavorite for the authenticated user.
+    ///
+    /// **Note**: This endpoint is in public beta and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn update_workflow_favorite(
+        &self,
+        workflow_id: String,
+        body: crate::datadogV2::model::WorkflowFavoriteRequest,
+    ) -> Result<(), datadog::Error<UpdateWorkflowFavoriteError>> {
+        match self
+            .update_workflow_favorite_with_http_info(workflow_id, body)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Mark a workflow as favorite or unfavorite for the authenticated user.
+    ///
+    /// **Note**: This endpoint is in public beta and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn update_workflow_favorite_with_http_info(
+        &self,
+        workflow_id: String,
+        body: crate::datadogV2::model::WorkflowFavoriteRequest,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateWorkflowFavoriteError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_workflow_favorite";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_workflow_favorite' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/workflows/{workflow_id}/favorite",
+            local_configuration.get_operation_host(operation_id),
+            workflow_id = datadog::urlencode(workflow_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<UpdateWorkflowFavoriteError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
