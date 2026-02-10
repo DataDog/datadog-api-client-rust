@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Options for configuring a memory buffer by byte size.
+/// Organization handle attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineMemoryBufferOptions {
-    /// Maximum size of the memory buffer.
-    #[serde(rename = "max_size")]
-    pub max_size: Option<i64>,
-    /// The type of the buffer that will be configured, a memory buffer.
-    #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptionsMemoryType>,
+pub struct GoogleChatOrganizationHandleResponseAttributes {
+    /// Organization handle name.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
+    /// Google space display name.
+    #[serde(rename = "space_display_name")]
+    pub space_display_name: Option<String>,
+    /// Google space resource name.
+    #[serde(rename = "space_resource_name")]
+    pub space_resource_name: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,26 +27,29 @@ pub struct ObservabilityPipelineMemoryBufferOptions {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineMemoryBufferOptions {
-    pub fn new() -> ObservabilityPipelineMemoryBufferOptions {
-        ObservabilityPipelineMemoryBufferOptions {
-            max_size: None,
-            type_: None,
+impl GoogleChatOrganizationHandleResponseAttributes {
+    pub fn new() -> GoogleChatOrganizationHandleResponseAttributes {
+        GoogleChatOrganizationHandleResponseAttributes {
+            name: None,
+            space_display_name: None,
+            space_resource_name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn max_size(mut self, value: i64) -> Self {
-        self.max_size = Some(value);
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
-    pub fn type_(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineBufferOptionsMemoryType,
-    ) -> Self {
-        self.type_ = Some(value);
+    pub fn space_display_name(mut self, value: String) -> Self {
+        self.space_display_name = Some(value);
+        self
+    }
+
+    pub fn space_resource_name(mut self, value: String) -> Self {
+        self.space_resource_name = Some(value);
         self
     }
 
@@ -56,20 +62,20 @@ impl ObservabilityPipelineMemoryBufferOptions {
     }
 }
 
-impl Default for ObservabilityPipelineMemoryBufferOptions {
+impl Default for GoogleChatOrganizationHandleResponseAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferOptions {
+impl<'de> Deserialize<'de> for GoogleChatOrganizationHandleResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineMemoryBufferOptionsVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineMemoryBufferOptionsVisitor {
-            type Value = ObservabilityPipelineMemoryBufferOptions;
+        struct GoogleChatOrganizationHandleResponseAttributesVisitor;
+        impl<'a> Visitor<'a> for GoogleChatOrganizationHandleResponseAttributesVisitor {
+            type Value = GoogleChatOrganizationHandleResponseAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +85,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferOptions {
             where
                 M: MapAccess<'a>,
             {
-                let mut max_size: Option<i64> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineBufferOptionsMemoryType,
-                > = None;
+                let mut name: Option<String> = None;
+                let mut space_display_name: Option<String> = None;
+                let mut space_resource_name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,25 +96,25 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferOptions {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "max_size" => {
+                        "name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            max_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "type" => {
+                        "space_display_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::ObservabilityPipelineBufferOptionsMemoryType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
+                            space_display_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "space_resource_name" => {
+                            if v.is_null() {
+                                continue;
                             }
+                            space_resource_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -119,9 +124,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferOptions {
                     }
                 }
 
-                let content = ObservabilityPipelineMemoryBufferOptions {
-                    max_size,
-                    type_,
+                let content = GoogleChatOrganizationHandleResponseAttributes {
+                    name,
+                    space_display_name,
+                    space_resource_name,
                     additional_properties,
                     _unparsed,
                 };
@@ -130,6 +136,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferOptions {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineMemoryBufferOptionsVisitor)
+        deserializer.deserialize_any(GoogleChatOrganizationHandleResponseAttributesVisitor)
     }
 }
