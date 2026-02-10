@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineDedupeProcessor {
+    /// Configuration for the cache used to detect duplicates.
+    #[serde(rename = "cache")]
+    pub cache: Option<crate::datadogV2::model::ObservabilityPipelineDedupeProcessorCache>,
     /// The display name for a component.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
@@ -51,6 +54,7 @@ impl ObservabilityPipelineDedupeProcessor {
         type_: crate::datadogV2::model::ObservabilityPipelineDedupeProcessorType,
     ) -> ObservabilityPipelineDedupeProcessor {
         ObservabilityPipelineDedupeProcessor {
+            cache: None,
             display_name: None,
             enabled,
             fields,
@@ -61,6 +65,14 @@ impl ObservabilityPipelineDedupeProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn cache(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineDedupeProcessorCache,
+    ) -> Self {
+        self.cache = Some(value);
+        self
     }
 
     pub fn display_name(mut self, value: String) -> Self {
@@ -94,6 +106,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDedupeProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut cache: Option<
+                    crate::datadogV2::model::ObservabilityPipelineDedupeProcessorCache,
+                > = None;
                 let mut display_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut fields: Option<Vec<String>> = None;
@@ -113,6 +128,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDedupeProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "cache" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cache = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "display_name" => {
                             if v.is_null() {
                                 continue;
@@ -169,6 +190,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDedupeProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineDedupeProcessor {
+                    cache,
                     display_name,
                     enabled,
                     fields,
