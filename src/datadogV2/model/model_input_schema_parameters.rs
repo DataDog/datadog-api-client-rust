@@ -11,6 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct InputSchemaParameters {
+    /// The `InputSchemaParameters` `allowExtraValues`.
+    #[serde(rename = "allowExtraValues")]
+    pub allow_extra_values: Option<bool>,
+    /// The `InputSchemaParameters` `allowedValues`.
+    #[serde(rename = "allowedValues")]
+    pub allowed_values: Option<serde_json::Value>,
     /// The `InputSchemaParameters` `defaultValue`.
     #[serde(rename = "defaultValue")]
     pub default_value: Option<serde_json::Value>,
@@ -39,6 +45,8 @@ impl InputSchemaParameters {
         type_: crate::datadogV2::model::InputSchemaParametersType,
     ) -> InputSchemaParameters {
         InputSchemaParameters {
+            allow_extra_values: None,
+            allowed_values: None,
             default_value: None,
             description: None,
             label: None,
@@ -47,6 +55,16 @@ impl InputSchemaParameters {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn allow_extra_values(mut self, value: bool) -> Self {
+        self.allow_extra_values = Some(value);
+        self
+    }
+
+    pub fn allowed_values(mut self, value: serde_json::Value) -> Self {
+        self.allowed_values = Some(value);
+        self
     }
 
     pub fn default_value(mut self, value: serde_json::Value) -> Self {
@@ -90,6 +108,8 @@ impl<'de> Deserialize<'de> for InputSchemaParameters {
             where
                 M: MapAccess<'a>,
             {
+                let mut allow_extra_values: Option<bool> = None;
+                let mut allowed_values: Option<serde_json::Value> = None;
                 let mut default_value: Option<serde_json::Value> = None;
                 let mut description: Option<String> = None;
                 let mut label: Option<String> = None;
@@ -103,6 +123,20 @@ impl<'de> Deserialize<'de> for InputSchemaParameters {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "allowExtraValues" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            allow_extra_values =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "allowedValues" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            allowed_values =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "defaultValue" => {
                             if v.is_null() {
                                 continue;
@@ -148,6 +182,8 @@ impl<'de> Deserialize<'de> for InputSchemaParameters {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = InputSchemaParameters {
+                    allow_extra_values,
+                    allowed_values,
                     default_value,
                     description,
                     label,

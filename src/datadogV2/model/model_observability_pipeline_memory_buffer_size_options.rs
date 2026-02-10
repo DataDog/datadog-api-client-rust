@@ -17,9 +17,6 @@ pub struct ObservabilityPipelineMemoryBufferSizeOptions {
     /// The type of the buffer that will be configured, a memory buffer.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptionsMemoryType>,
-    /// Behavior when the buffer is full (block and stop accepting new events, or drop new events)
-    #[serde(rename = "when_full")]
-    pub when_full: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptionsWhenFull>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -32,7 +29,6 @@ impl ObservabilityPipelineMemoryBufferSizeOptions {
         ObservabilityPipelineMemoryBufferSizeOptions {
             max_events: None,
             type_: None,
-            when_full: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -48,14 +44,6 @@ impl ObservabilityPipelineMemoryBufferSizeOptions {
         value: crate::datadogV2::model::ObservabilityPipelineBufferOptionsMemoryType,
     ) -> Self {
         self.type_ = Some(value);
-        self
-    }
-
-    pub fn when_full(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineBufferOptionsWhenFull,
-    ) -> Self {
-        self.when_full = Some(value);
         self
     }
 
@@ -95,9 +83,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferSizeOptions {
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineBufferOptionsMemoryType,
                 > = None;
-                let mut when_full: Option<
-                    crate::datadogV2::model::ObservabilityPipelineBufferOptionsWhenFull,
-                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -126,20 +111,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferSizeOptions {
                                 }
                             }
                         }
-                        "when_full" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            when_full = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _when_full) = when_full {
-                                match _when_full {
-                                    crate::datadogV2::model::ObservabilityPipelineBufferOptionsWhenFull::UnparsedObject(_when_full) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -151,7 +122,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferSizeOptions {
                 let content = ObservabilityPipelineMemoryBufferSizeOptions {
                     max_events,
                     type_,
-                    when_full,
                     additional_properties,
                     _unparsed,
                 };
