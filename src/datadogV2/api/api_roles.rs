@@ -220,6 +220,9 @@ pub enum UpdateRoleError {
 /// in the Datadog application without using this API. For example, granting
 /// read access on a specific log index to a role can be done in Datadog from the
 /// [Pipelines page](<https://app.datadoghq.com/logs/pipelines>).
+///
+/// Roles can also be managed in bulk through the Datadog UI, which provides
+/// the capability to assign a single permission to multiple roles simultaneously.
 #[derive(Debug, Clone)]
 pub struct RolesAPI {
     config: datadog::Configuration,
