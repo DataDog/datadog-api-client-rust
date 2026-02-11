@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"product_code\":\"incident_response\",\"user_uuids\":[]},\"type\":\"seat-assignments\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "*/*"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/seats/users"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"title\":\"Generic Error\",\"detail\":\"user_uuids is required and must not be empty\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 422,
+          "message": "Unprocessable Entity"
+        }
+      },
+      "recorded_at": "Wed, 11 Feb 2026 18:39:41 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
