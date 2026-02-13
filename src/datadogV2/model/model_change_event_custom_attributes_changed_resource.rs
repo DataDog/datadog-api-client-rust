@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ChangeEventCustomAttributesChangedResource {
-    /// The name of the resource that was changed. Limited to 128 characters.
+    /// The name of the resource that was changed. Limited to 128 characters. Must contain at least one non-whitespace character.
     #[serde(rename = "name")]
     pub name: String,
     /// The type of the resource that was changed.
