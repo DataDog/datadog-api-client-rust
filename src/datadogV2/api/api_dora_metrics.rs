@@ -173,6 +173,7 @@ impl DORAMetricsAPI {
     /// - Deployment Frequency
     /// - Change Lead Time
     /// - Change Failure Rate
+    /// - Failed Deployment Recovery Time
     pub async fn create_dora_deployment(
         &self,
         body: crate::datadogV2::model::DORADeploymentRequest,
@@ -200,6 +201,7 @@ impl DORAMetricsAPI {
     /// - Deployment Frequency
     /// - Change Lead Time
     /// - Change Failure Rate
+    /// - Failed Deployment Recovery Time
     pub async fn create_dora_deployment_with_http_info(
         &self,
         body: crate::datadogV2::model::DORADeploymentRequest,
@@ -324,11 +326,9 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to provide failure data.
-    ///
-    /// This is necessary for:
-    /// - Change Failure Rate
-    /// - Time to Restore
+    /// Use this API endpoint to provide incident data for DORA Metrics.
+    /// Note that change failure rate and failed deployment recovery time are computed from change failures detected on deployments, not from incident events sent through this endpoint.
+    /// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents, including their severity and frequency.
     pub async fn create_dora_failure(
         &self,
         body: crate::datadogV2::model::DORAFailureRequest,
@@ -348,11 +348,9 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to provide failure data.
-    ///
-    /// This is necessary for:
-    /// - Change Failure Rate
-    /// - Time to Restore
+    /// Use this API endpoint to provide incident data for DORA Metrics.
+    /// Note that change failure rate and failed deployment recovery time are computed from change failures detected on deployments, not from incident events sent through this endpoint.
+    /// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents, including their severity and frequency.
     pub async fn create_dora_failure_with_http_info(
         &self,
         body: crate::datadogV2::model::DORAFailureRequest,
@@ -479,11 +477,8 @@ impl DORAMetricsAPI {
 
     /// **Note**: This endpoint is deprecated. Please use `/api/v2/dora/failure` instead.
     ///
-    /// Use this API endpoint to provide failure data.
-    ///
-    /// This is necessary for:
-    /// - Change Failure Rate
-    /// - Time to Restore
+    /// Use this API endpoint to provide incident data.
+    /// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents.
     pub async fn create_dora_incident(
         &self,
         body: crate::datadogV2::model::DORAFailureRequest,
@@ -505,11 +500,8 @@ impl DORAMetricsAPI {
 
     /// **Note**: This endpoint is deprecated. Please use `/api/v2/dora/failure` instead.
     ///
-    /// Use this API endpoint to provide failure data.
-    ///
-    /// This is necessary for:
-    /// - Change Failure Rate
-    /// - Time to Restore
+    /// Use this API endpoint to provide incident data.
+    /// Tracking incidents gives a side-by-side view of how failed deployments translate into real-world incidents.
     pub async fn create_dora_incident_with_http_info(
         &self,
         body: crate::datadogV2::model::DORAFailureRequest,
@@ -725,7 +717,7 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to delete a failure event.
+    /// Use this API endpoint to delete an incident event.
     pub async fn delete_dora_failure(
         &self,
         failure_id: String,
@@ -736,7 +728,7 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to delete a failure event.
+    /// Use this API endpoint to delete an incident event.
     pub async fn delete_dora_failure_with_http_info(
         &self,
         failure_id: String,
@@ -922,7 +914,7 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to get a failure event.
+    /// Use this API endpoint to get an incident event.
     pub async fn get_dora_failure(
         &self,
         failure_id: String,
@@ -944,7 +936,7 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to get a failure event.
+    /// Use this API endpoint to get an incident event.
     pub async fn get_dora_failure_with_http_info(
         &self,
         failure_id: String,
@@ -1185,7 +1177,7 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to get a list of failure events.
+    /// Use this API endpoint to get a list of incident events.
     pub async fn list_dora_failures(
         &self,
         body: crate::datadogV2::model::DORAListFailuresRequest,
@@ -1207,7 +1199,7 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to get a list of failure events.
+    /// Use this API endpoint to get a list of incident events.
     pub async fn list_dora_failures_with_http_info(
         &self,
         body: crate::datadogV2::model::DORAListFailuresRequest,
@@ -1339,7 +1331,7 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to patch a deployment event.
+    /// Update a deployment's change failure status. Use this to mark a deployment as a change failure or back to stable. You can optionally include remediation details to enable failed deployment recovery time calculation.
     pub async fn patch_dora_deployment(
         &self,
         deployment_id: String,
@@ -1354,7 +1346,7 @@ impl DORAMetricsAPI {
         }
     }
 
-    /// Use this API endpoint to patch a deployment event.
+    /// Update a deployment's change failure status. Use this to mark a deployment as a change failure or back to stable. You can optionally include remediation details to enable failed deployment recovery time calculation.
     pub async fn patch_dora_deployment_with_http_info(
         &self,
         deployment_id: String,
