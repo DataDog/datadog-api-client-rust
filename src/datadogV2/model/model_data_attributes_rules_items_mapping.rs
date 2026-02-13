@@ -6,17 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `UpdateRulesetRequestDataAttributesRulesItemsMapping` object.
+/// The definition of `DataAttributesRulesItemsMapping` object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct UpdateRulesetRequestDataAttributesRulesItemsMapping {
+pub struct DataAttributesRulesItemsMapping {
     /// The `mapping` `destination_key`.
     #[serde(rename = "destination_key")]
     pub destination_key: String,
-    /// The `mapping` `if_not_exists`.
+    /// Deprecated. Use `if_tag_exists` instead. The `mapping` `if_not_exists`.
+    #[deprecated]
     #[serde(rename = "if_not_exists")]
-    pub if_not_exists: bool,
+    pub if_not_exists: Option<bool>,
+    /// The behavior when the tag already exists.
+    #[serde(rename = "if_tag_exists")]
+    pub if_tag_exists: Option<crate::datadogV2::model::DataAttributesRulesItemsIfTagExists>,
     /// The `mapping` `source_keys`.
     #[serde(rename = "source_keys")]
     pub source_keys: Vec<String>,
@@ -27,19 +31,35 @@ pub struct UpdateRulesetRequestDataAttributesRulesItemsMapping {
     pub(crate) _unparsed: bool,
 }
 
-impl UpdateRulesetRequestDataAttributesRulesItemsMapping {
+impl DataAttributesRulesItemsMapping {
     pub fn new(
         destination_key: String,
-        if_not_exists: bool,
         source_keys: Vec<String>,
-    ) -> UpdateRulesetRequestDataAttributesRulesItemsMapping {
-        UpdateRulesetRequestDataAttributesRulesItemsMapping {
+    ) -> DataAttributesRulesItemsMapping {
+        #[allow(deprecated)]
+        DataAttributesRulesItemsMapping {
             destination_key,
-            if_not_exists,
+            if_not_exists: None,
+            if_tag_exists: None,
             source_keys,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn if_not_exists(mut self, value: bool) -> Self {
+        self.if_not_exists = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn if_tag_exists(
+        mut self,
+        value: crate::datadogV2::model::DataAttributesRulesItemsIfTagExists,
+    ) -> Self {
+        self.if_tag_exists = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -51,14 +71,14 @@ impl UpdateRulesetRequestDataAttributesRulesItemsMapping {
     }
 }
 
-impl<'de> Deserialize<'de> for UpdateRulesetRequestDataAttributesRulesItemsMapping {
+impl<'de> Deserialize<'de> for DataAttributesRulesItemsMapping {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct UpdateRulesetRequestDataAttributesRulesItemsMappingVisitor;
-        impl<'a> Visitor<'a> for UpdateRulesetRequestDataAttributesRulesItemsMappingVisitor {
-            type Value = UpdateRulesetRequestDataAttributesRulesItemsMapping;
+        struct DataAttributesRulesItemsMappingVisitor;
+        impl<'a> Visitor<'a> for DataAttributesRulesItemsMappingVisitor {
+            type Value = DataAttributesRulesItemsMapping;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,6 +90,9 @@ impl<'de> Deserialize<'de> for UpdateRulesetRequestDataAttributesRulesItemsMappi
             {
                 let mut destination_key: Option<String> = None;
                 let mut if_not_exists: Option<bool> = None;
+                let mut if_tag_exists: Option<
+                    crate::datadogV2::model::DataAttributesRulesItemsIfTagExists,
+                > = None;
                 let mut source_keys: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -84,8 +107,26 @@ impl<'de> Deserialize<'de> for UpdateRulesetRequestDataAttributesRulesItemsMappi
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "if_not_exists" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             if_not_exists =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "if_tag_exists" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            if_tag_exists =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _if_tag_exists) = if_tag_exists {
+                                match _if_tag_exists {
+                                    crate::datadogV2::model::DataAttributesRulesItemsIfTagExists::UnparsedObject(_if_tag_exists) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "source_keys" => {
                             source_keys =
@@ -100,14 +141,14 @@ impl<'de> Deserialize<'de> for UpdateRulesetRequestDataAttributesRulesItemsMappi
                 }
                 let destination_key =
                     destination_key.ok_or_else(|| M::Error::missing_field("destination_key"))?;
-                let if_not_exists =
-                    if_not_exists.ok_or_else(|| M::Error::missing_field("if_not_exists"))?;
                 let source_keys =
                     source_keys.ok_or_else(|| M::Error::missing_field("source_keys"))?;
 
-                let content = UpdateRulesetRequestDataAttributesRulesItemsMapping {
+                #[allow(deprecated)]
+                let content = DataAttributesRulesItemsMapping {
                     destination_key,
                     if_not_exists,
+                    if_tag_exists,
                     source_keys,
                     additional_properties,
                     _unparsed,
@@ -117,6 +158,6 @@ impl<'de> Deserialize<'de> for UpdateRulesetRequestDataAttributesRulesItemsMappi
             }
         }
 
-        deserializer.deserialize_any(UpdateRulesetRequestDataAttributesRulesItemsMappingVisitor)
+        deserializer.deserialize_any(DataAttributesRulesItemsMappingVisitor)
     }
 }

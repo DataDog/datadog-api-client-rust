@@ -3,12 +3,13 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// A generic SLI specification. This is currently used for time-slice SLOs only.
+/// A generic SLI specification. This is used for time-slice and count-based (metric) SLOs only.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum SLOSliSpec {
     SLOTimeSliceSpec(Box<crate::datadogV1::model::SLOTimeSliceSpec>),
+    SLOCountSpec(Box<crate::datadogV1::model::SLOCountSpec>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -23,6 +24,13 @@ impl<'de> Deserialize<'de> for SLOSliSpec {
         {
             if !_v._unparsed {
                 return Ok(SLOSliSpec::SLOTimeSliceSpec(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV1::model::SLOCountSpec>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(SLOSliSpec::SLOCountSpec(_v));
             }
         }
 

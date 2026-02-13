@@ -1,6 +1,7 @@
-// Update tag pipeline ruleset returns "OK" response
+// Update tag pipeline ruleset with if_tag_exists returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagementAPI;
+use datadog_api_client::datadogV2::model::DataAttributesRulesItemsIfTagExists;
 use datadog_api_client::datadogV2::model::DataAttributesRulesItemsMapping;
 use datadog_api_client::datadogV2::model::UpdateRulesetRequest;
 use datadog_api_client::datadogV2::model::UpdateRulesetRequestData;
@@ -24,7 +25,7 @@ async fn main() {
                             "team_owner".to_string(),
                             vec!["account_name".to_string(), "account_id".to_string()],
                         )
-                        .if_not_exists(true),
+                        .if_tag_exists(DataAttributesRulesItemsIfTagExists::REPLACE),
                     ))
                     .query(None)
                     .reference_table(None)],
