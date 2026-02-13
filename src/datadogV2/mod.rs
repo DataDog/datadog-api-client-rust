@@ -23,6 +23,7 @@ pub use self::api::api_ci_visibility_tests;
 pub use self::api::api_cloud_cost_management;
 pub use self::api::api_cloud_network_monitoring;
 pub use self::api::api_cloudflare_integration;
+pub use self::api::api_code_coverage;
 pub use self::api::api_confluent_cloud;
 pub use self::api::api_container_images;
 pub use self::api::api_containers;
