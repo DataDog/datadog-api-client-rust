@@ -1,0 +1,97 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-d1ea4282abe3f68d\",\"name\":\"test-name-d1ea4282abe3f68d\"},\"type\":\"team\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/team"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"587b5f1a-b8ef-42b7-a99a-746cb80422a4\",\"type\":\"team\",\"attributes\":{\"avatar\":null,\"banner\":6,\"created_at\":\"2026-02-12T14:57:57.783497+00:00\",\"description\":null,\"handle\":\"test-handle-d1ea4282abe3f68d\",\"hidden_modules\":null,\"is_managed\":false,\"link_count\":0,\"modified_at\":\"2026-02-12T14:57:57.783497+00:00\",\"name\":\"test-name-d1ea4282abe3f68d\",\"summary\":null,\"user_count\":0,\"visible_modules\":null},\"relationships\":{\"team_links\":{\"data\":[],\"links\":{\"related\":\"/api/v2/team/587b5f1a-b8ef-42b7-a99a-746cb80422a4/links\"}},\"user_team_permissions\":{\"data\":null,\"links\":{\"related\":\"/api/v2/team/587b5f1a-b8ef-42b7-a99a-746cb80422a4/permission-settings\"}}}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 201,
+          "message": "Created"
+        }
+      },
+      "recorded_at": "Thu, 12 Feb 2026 14:57:57 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"role\":\"admin\"},\"type\":\"team_memberships\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/team/587b5f1a-b8ef-42b7-a99a-746cb80422a4/memberships/00000000-0000-dead-beef-000000000000"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"User for ID 00000000-0000-dead-beef-000000000000 not found\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Thu, 12 Feb 2026 14:57:57 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/team/587b5f1a-b8ef-42b7-a99a-746cb80422a4"
+      },
+      "response": {
+        "body": {
+          "string": "",
+          "encoding": null
+        },
+        "headers": {},
+        "status": {
+          "code": 204,
+          "message": "No Content"
+        }
+      },
+      "recorded_at": "Thu, 12 Feb 2026 14:57:57 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
