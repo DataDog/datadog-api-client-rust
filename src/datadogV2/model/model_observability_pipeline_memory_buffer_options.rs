@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ObservabilityPipelineMemoryBufferOptions {
     /// Maximum size of the memory buffer.
     #[serde(rename = "max_size")]
-    pub max_size: Option<i64>,
+    pub max_size: i64,
     /// The type of the buffer that will be configured, a memory buffer.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptionsMemoryType>,
@@ -28,19 +28,14 @@ pub struct ObservabilityPipelineMemoryBufferOptions {
 }
 
 impl ObservabilityPipelineMemoryBufferOptions {
-    pub fn new() -> ObservabilityPipelineMemoryBufferOptions {
+    pub fn new(max_size: i64) -> ObservabilityPipelineMemoryBufferOptions {
         ObservabilityPipelineMemoryBufferOptions {
-            max_size: None,
+            max_size,
             type_: None,
             when_full: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn max_size(mut self, value: i64) -> Self {
-        self.max_size = Some(value);
-        self
     }
 
     pub fn type_(
@@ -65,12 +60,6 @@ impl ObservabilityPipelineMemoryBufferOptions {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for ObservabilityPipelineMemoryBufferOptions {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -107,9 +96,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferOptions {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "max_size" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             max_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -147,6 +133,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferOptions {
                         }
                     }
                 }
+                let max_size = max_size.ok_or_else(|| M::Error::missing_field("max_size"))?;
 
                 let content = ObservabilityPipelineMemoryBufferOptions {
                     max_size,

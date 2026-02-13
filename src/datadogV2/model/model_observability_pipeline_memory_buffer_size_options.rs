@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ObservabilityPipelineMemoryBufferSizeOptions {
     /// Maximum events for the memory buffer.
     #[serde(rename = "max_events")]
-    pub max_events: Option<i64>,
+    pub max_events: i64,
     /// The type of the buffer that will be configured, a memory buffer.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptionsMemoryType>,
@@ -28,19 +28,14 @@ pub struct ObservabilityPipelineMemoryBufferSizeOptions {
 }
 
 impl ObservabilityPipelineMemoryBufferSizeOptions {
-    pub fn new() -> ObservabilityPipelineMemoryBufferSizeOptions {
+    pub fn new(max_events: i64) -> ObservabilityPipelineMemoryBufferSizeOptions {
         ObservabilityPipelineMemoryBufferSizeOptions {
-            max_events: None,
+            max_events,
             type_: None,
             when_full: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn max_events(mut self, value: i64) -> Self {
-        self.max_events = Some(value);
-        self
     }
 
     pub fn type_(
@@ -65,12 +60,6 @@ impl ObservabilityPipelineMemoryBufferSizeOptions {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for ObservabilityPipelineMemoryBufferSizeOptions {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -107,9 +96,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferSizeOptions {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "max_events" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             max_events = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -147,6 +133,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMemoryBufferSizeOptions {
                         }
                     }
                 }
+                let max_events = max_events.ok_or_else(|| M::Error::missing_field("max_events"))?;
 
                 let content = ObservabilityPipelineMemoryBufferSizeOptions {
                     max_events,
