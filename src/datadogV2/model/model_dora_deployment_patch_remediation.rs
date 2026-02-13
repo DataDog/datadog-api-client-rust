@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Remediation details for the deployment.
+/// Remediation details for the deployment. Optional, but required to calculate failed deployment recovery time.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DORADeploymentPatchRemediation {
-    /// The ID of the remediation action.
+    /// The ID of the remediation deployment. Required when the failed deployment must be linked to a remediation deployment.
     #[serde(rename = "id")]
-    pub id: String,
-    /// The type of remediation action taken.
+    pub id: Option<String>,
+    /// The type of remediation action taken. Required when the failed deployment must be linked to a remediation deployment.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::DORADeploymentPatchRemediationType,
+    pub type_: Option<crate::datadogV2::model::DORADeploymentPatchRemediationType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,16 +25,26 @@ pub struct DORADeploymentPatchRemediation {
 }
 
 impl DORADeploymentPatchRemediation {
-    pub fn new(
-        id: String,
-        type_: crate::datadogV2::model::DORADeploymentPatchRemediationType,
-    ) -> DORADeploymentPatchRemediation {
+    pub fn new() -> DORADeploymentPatchRemediation {
         DORADeploymentPatchRemediation {
-            id,
-            type_,
+            id: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn type_(
+        mut self,
+        value: crate::datadogV2::model::DORADeploymentPatchRemediationType,
+    ) -> Self {
+        self.type_ = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -43,6 +53,12 @@ impl DORADeploymentPatchRemediation {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for DORADeploymentPatchRemediation {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -75,9 +91,15 @@ impl<'de> Deserialize<'de> for DORADeploymentPatchRemediation {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -95,8 +117,6 @@ impl<'de> Deserialize<'de> for DORADeploymentPatchRemediation {
                         }
                     }
                 }
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = DORADeploymentPatchRemediation {
                     id,
