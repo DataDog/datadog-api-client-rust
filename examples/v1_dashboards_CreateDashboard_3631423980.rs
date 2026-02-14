@@ -4,6 +4,7 @@ use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
 use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::TimeseriesRequestStyle;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinition;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetRequest;
@@ -12,7 +13,6 @@ use datadog_api_client::datadogV1::model::WidgetDefinition;
 use datadog_api_client::datadogV1::model::WidgetDisplayType;
 use datadog_api_client::datadogV1::model::WidgetLineType;
 use datadog_api_client::datadogV1::model::WidgetLineWidth;
-use datadog_api_client::datadogV1::model::WidgetRequestStyle;
 
 #[tokio::main]
 async fn main() {
@@ -25,7 +25,7 @@ async fn main() {
                     .display_type(WidgetDisplayType::LINE)
                     .q("avg:system.cpu.user{*} by {host}".to_string())
                     .style(
-                        WidgetRequestStyle::new()
+                        TimeseriesRequestStyle::new()
                             .line_type(WidgetLineType::SOLID)
                             .line_width(WidgetLineWidth::NORMAL)
                             .palette("dog_classic".to_string()),
