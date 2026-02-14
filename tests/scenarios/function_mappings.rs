@@ -74,6 +74,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI>,
     pub v2_api_security_monitoring:
         Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
+    pub v2_api_code_coverage: Option<datadogV2::api_code_coverage::CodeCoverageAPI>,
     pub v2_api_container_images: Option<datadogV2::api_container_images::ContainerImagesAPI>,
     pub v2_api_containers: Option<datadogV2::api_containers::ContainersAPI>,
     pub v2_api_cloud_cost_management:
@@ -628,6 +629,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "CIVisibilityTests" => {
             world.api_instances.v2_api_ci_visibility_tests = Some(
                 datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "CodeCoverage" => {
+            world.api_instances.v2_api_code_coverage = Some(
+                datadogV2::api_code_coverage::CodeCoverageAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -2847,6 +2856,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetSecretsRules".into(), test_v2_get_secrets_rules);
+    world.function_mappings.insert(
+        "v2.GetCodeCoverageBranchSummary".into(),
+        test_v2_get_code_coverage_branch_summary,
+    );
+    world.function_mappings.insert(
+        "v2.GetCodeCoverageCommitSummary".into(),
+        test_v2_get_code_coverage_commit_summary,
+    );
     world.function_mappings.insert(
         "v2.ListContainerImages".into(),
         test_v2_list_container_images,
@@ -20603,6 +20620,62 @@ fn test_v2_get_secrets_rules(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.get_secrets_rules_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_code_coverage_branch_summary(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_code_coverage
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_code_coverage_branch_summary_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_code_coverage_commit_summary(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_code_coverage
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_code_coverage_commit_summary_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
