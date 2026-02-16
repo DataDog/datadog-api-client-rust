@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_apm::APMAPI;
 async fn main() {
     let configuration = datadog::Configuration::new();
     let api = APMAPI::with_config(configuration);
-    let resp = api.get_service_list().await;
+    let resp = api.get_service_list("filter[env]".to_string()).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
