@@ -5,7 +5,6 @@ use datadog_api_client::datadogV2::model::CreateDeploymentRuleParams;
 use datadog_api_client::datadogV2::model::CreateDeploymentRuleParamsData;
 use datadog_api_client::datadogV2::model::CreateDeploymentRuleParamsDataAttributes;
 use datadog_api_client::datadogV2::model::DeploymentRuleDataType;
-use datadog_api_client::datadogV2::model::DeploymentRuleOptionsFaultyDeploymentDetection;
 use datadog_api_client::datadogV2::model::DeploymentRulesOptions;
 
 #[tokio::main]
@@ -15,9 +14,7 @@ async fn main() {
     let body = CreateDeploymentRuleParams::new().data(CreateDeploymentRuleParamsData::new(
         CreateDeploymentRuleParamsDataAttributes::new(
             "My deployment rule".to_string(),
-            DeploymentRulesOptions::DeploymentRuleOptionsFaultyDeploymentDetection(Box::new(
-                DeploymentRuleOptionsFaultyDeploymentDetection::new().excluded_resources(vec![]),
-            )),
+            DeploymentRulesOptions::new(),
             "faulty_deployment_detection".to_string(),
         )
         .dry_run(false),

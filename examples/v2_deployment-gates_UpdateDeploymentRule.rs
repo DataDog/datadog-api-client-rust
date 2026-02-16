@@ -2,7 +2,6 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_deployment_gates::DeploymentGatesAPI;
 use datadog_api_client::datadogV2::model::DeploymentRuleDataType;
-use datadog_api_client::datadogV2::model::DeploymentRuleOptionsFaultyDeploymentDetection;
 use datadog_api_client::datadogV2::model::DeploymentRulesOptions;
 use datadog_api_client::datadogV2::model::UpdateDeploymentRuleParams;
 use datadog_api_client::datadogV2::model::UpdateDeploymentRuleParamsData;
@@ -19,9 +18,7 @@ async fn main() {
         UpdateDeploymentRuleParamsDataAttributes::new(
             false,
             "Updated deployment rule".to_string(),
-            DeploymentRulesOptions::DeploymentRuleOptionsFaultyDeploymentDetection(Box::new(
-                DeploymentRuleOptionsFaultyDeploymentDetection::new().excluded_resources(vec![]),
-            )),
+            DeploymentRulesOptions::new(),
         ),
         DeploymentRuleDataType::DEPLOYMENT_RULE,
     ));
