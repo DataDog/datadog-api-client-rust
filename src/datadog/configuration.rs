@@ -136,6 +136,22 @@ impl Default for Configuration {
             ("v2.list_fleet_schedules".to_owned(), false),
             ("v2.trigger_fleet_schedule".to_owned(), false),
             ("v2.update_fleet_schedule".to_owned(), false),
+            ("v2.create_custom_agent_conversation".to_owned(), false),
+            ("v2.create_data_transformation".to_owned(), false),
+            (
+                "v2.create_data_transformation_description".to_owned(),
+                false,
+            ),
+            ("v2.create_pick_action".to_owned(), false),
+            (
+                "v2.create_pick_remediation_from_investigation".to_owned(),
+                false,
+            ),
+            ("v2.create_workflow_description".to_owned(), false),
+            (
+                "v2.create_workflow_scaffold_agentic_stream".to_owned(),
+                false,
+            ),
             ("v2.create_open_api".to_owned(), false),
             ("v2.delete_open_api".to_owned(), false),
             ("v2.get_open_api".to_owned(), false),

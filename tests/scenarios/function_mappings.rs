@@ -51,6 +51,8 @@ pub struct ApiInstances {
     pub v1_api_authentication: Option<datadogV1::api_authentication::AuthenticationAPI>,
     pub v2_api_fleet_automation: Option<datadogV2::api_fleet_automation::FleetAutomationAPI>,
     pub v2_api_actions_datastores: Option<datadogV2::api_actions_datastores::ActionsDatastoresAPI>,
+    pub v2_api_workflow_automation:
+        Option<datadogV2::api_workflow_automation::WorkflowAutomationAPI>,
     pub v2_api_action_connection: Option<datadogV2::api_action_connection::ActionConnectionAPI>,
     pub v2_api_agentless_scanning: Option<datadogV2::api_agentless_scanning::AgentlessScanningAPI>,
     pub v2_api_key_management: Option<datadogV2::api_key_management::KeyManagementAPI>,
@@ -174,8 +176,6 @@ pub struct ApiInstances {
     pub v2_api_incident_teams: Option<datadogV2::api_incident_teams::IncidentTeamsAPI>,
     pub v2_api_test_optimization: Option<datadogV2::api_test_optimization::TestOptimizationAPI>,
     pub v2_api_users: Option<datadogV2::api_users::UsersAPI>,
-    pub v2_api_workflow_automation:
-        Option<datadogV2::api_workflow_automation::WorkflowAutomationAPI>,
 }
 
 pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
@@ -517,6 +517,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "ActionsDatastores" => {
             world.api_instances.v2_api_actions_datastores = Some(
                 datadogV2::api_actions_datastores::ActionsDatastoresAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "WorkflowAutomation" => {
+            world.api_instances.v2_api_workflow_automation = Some(
+                datadogV2::api_workflow_automation::WorkflowAutomationAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -1097,14 +1105,6 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "TestOptimization" => {
             world.api_instances.v2_api_test_optimization = Some(
                 datadogV2::api_test_optimization::TestOptimizationAPI::with_client_and_config(
-                    world.config.clone(),
-                    world.http_client.as_ref().unwrap().clone(),
-                ),
-            );
-        }
-        "WorkflowAutomation" => {
-            world.api_instances.v2_api_workflow_automation = Some(
-                datadogV2::api_workflow_automation::WorkflowAutomationAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -2033,6 +2033,61 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.BulkWriteDatastoreItems".into(),
         test_v2_bulk_write_datastore_items,
+    );
+    world.function_mappings.insert(
+        "v2.CreateCustomAgentConversation".into(),
+        test_v2_create_custom_agent_conversation,
+    );
+    world.function_mappings.insert(
+        "v2.CreateDataTransformation".into(),
+        test_v2_create_data_transformation,
+    );
+    world.function_mappings.insert(
+        "v2.CreateDataTransformationDescription".into(),
+        test_v2_create_data_transformation_description,
+    );
+    world.function_mappings.insert(
+        "v2.CreateWorkflowDescription".into(),
+        test_v2_create_workflow_description,
+    );
+    world
+        .function_mappings
+        .insert("v2.CreatePickAction".into(), test_v2_create_pick_action);
+    world.function_mappings.insert(
+        "v2.CreatePickRemediationFromInvestigation".into(),
+        test_v2_create_pick_remediation_from_investigation,
+    );
+    world.function_mappings.insert(
+        "v2.CreateWorkflowScaffoldAgenticStream".into(),
+        test_v2_create_workflow_scaffold_agentic_stream,
+    );
+    world
+        .function_mappings
+        .insert("v2.CreateWorkflow".into(), test_v2_create_workflow);
+    world
+        .function_mappings
+        .insert("v2.DeleteWorkflow".into(), test_v2_delete_workflow);
+    world
+        .function_mappings
+        .insert("v2.GetWorkflow".into(), test_v2_get_workflow);
+    world
+        .function_mappings
+        .insert("v2.UpdateWorkflow".into(), test_v2_update_workflow);
+    world.function_mappings.insert(
+        "v2.ListWorkflowInstances".into(),
+        test_v2_list_workflow_instances,
+    );
+    world.function_mappings.insert(
+        "v2.CreateWorkflowInstance".into(),
+        test_v2_create_workflow_instance,
+    );
+    world.function_mappings.insert(
+        "v2.GetWorkflowInstance".into(),
+        test_v2_get_workflow_instance,
+    );
+    world.function_mappings.insert(
+        "v2.CancelWorkflowInstance".into(),
+        test_v2_cancel_workflow_instance,
     );
     world.function_mappings.insert(
         "v2.ListAppKeyRegistrations".into(),
@@ -5130,34 +5185,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.ListUserPermissions".into(),
         test_v2_list_user_permissions,
-    );
-    world
-        .function_mappings
-        .insert("v2.CreateWorkflow".into(), test_v2_create_workflow);
-    world
-        .function_mappings
-        .insert("v2.DeleteWorkflow".into(), test_v2_delete_workflow);
-    world
-        .function_mappings
-        .insert("v2.GetWorkflow".into(), test_v2_get_workflow);
-    world
-        .function_mappings
-        .insert("v2.UpdateWorkflow".into(), test_v2_update_workflow);
-    world.function_mappings.insert(
-        "v2.ListWorkflowInstances".into(),
-        test_v2_list_workflow_instances,
-    );
-    world.function_mappings.insert(
-        "v2.CreateWorkflowInstance".into(),
-        test_v2_create_workflow_instance,
-    );
-    world.function_mappings.insert(
-        "v2.GetWorkflowInstance".into(),
-        test_v2_get_workflow_instance,
-    );
-    world.function_mappings.insert(
-        "v2.CancelWorkflowInstance".into(),
-        test_v2_cancel_workflow_instance,
     );
 }
 
@@ -13111,6 +13138,436 @@ fn test_v2_bulk_write_datastore_items(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_custom_agent_conversation(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let custom_agent_id =
+        serde_json::from_value(_parameters.get("custom_agent_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.create_custom_agent_conversation_with_http_info(custom_agent_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_data_transformation(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_data_transformation_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_data_transformation_description(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_data_transformation_description_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_workflow_description(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_workflow_description_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_pick_action(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_pick_action_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_pick_remediation_from_investigation(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_pick_remediation_from_investigation_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_workflow_scaffold_agentic_stream(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_workflow_scaffold_agentic_stream_with_http_info(body))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_workflow(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_workflow_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_workflow(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let workflow_id =
+        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_workflow_with_http_info(workflow_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_workflow(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let workflow_id =
+        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_workflow_with_http_info(workflow_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_workflow(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let workflow_id =
+        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_workflow_with_http_info(workflow_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_workflow_instances(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let workflow_id =
+        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_workflow_automation::ListWorkflowInstancesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    let response = match block_on(api.list_workflow_instances_with_http_info(workflow_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_workflow_instance(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let workflow_id =
+        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_workflow_instance_with_http_info(workflow_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_workflow_instance(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let workflow_id =
+        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
+    let instance_id =
+        serde_json::from_value(_parameters.get("instance_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_workflow_instance_with_http_info(workflow_id, instance_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_cancel_workflow_instance(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let workflow_id =
+        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
+    let instance_id =
+        serde_json::from_value(_parameters.get("instance_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.cancel_workflow_instance_with_http_info(workflow_id, instance_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
@@ -40031,237 +40488,6 @@ fn test_v2_list_user_permissions(world: &mut DatadogWorld, _parameters: &HashMap
             };
         }
     };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_create_workflow(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_workflow_automation
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_workflow_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_workflow(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_workflow_automation
-        .as_ref()
-        .expect("api instance not found");
-    let workflow_id =
-        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_workflow_with_http_info(workflow_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_get_workflow(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_workflow_automation
-        .as_ref()
-        .expect("api instance not found");
-    let workflow_id =
-        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_workflow_with_http_info(workflow_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_update_workflow(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_workflow_automation
-        .as_ref()
-        .expect("api instance not found");
-    let workflow_id =
-        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_workflow_with_http_info(workflow_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_workflow_instances(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_workflow_automation
-        .as_ref()
-        .expect("api instance not found");
-    let workflow_id =
-        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
-    let page_size = _parameters
-        .get("page[size]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_number = _parameters
-        .get("page[number]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params =
-        datadogV2::api_workflow_automation::ListWorkflowInstancesOptionalParams::default();
-    params.page_size = page_size;
-    params.page_number = page_number;
-    let response = match block_on(api.list_workflow_instances_with_http_info(workflow_id, params)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_create_workflow_instance(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_workflow_automation
-        .as_ref()
-        .expect("api instance not found");
-    let workflow_id =
-        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_workflow_instance_with_http_info(workflow_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_get_workflow_instance(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_workflow_automation
-        .as_ref()
-        .expect("api instance not found");
-    let workflow_id =
-        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
-    let instance_id =
-        serde_json::from_value(_parameters.get("instance_id").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.get_workflow_instance_with_http_info(workflow_id, instance_id)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_cancel_workflow_instance(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_workflow_automation
-        .as_ref()
-        .expect("api instance not found");
-    let workflow_id =
-        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
-    let instance_id =
-        serde_json::from_value(_parameters.get("instance_id").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.cancel_workflow_instance_with_http_info(workflow_id, instance_id)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
