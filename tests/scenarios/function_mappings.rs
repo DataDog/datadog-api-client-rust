@@ -14766,7 +14766,9 @@ fn test_v2_get_service_list(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .v2_api_apm
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.get_service_list_with_http_info()) {
+    let filter_env =
+        serde_json::from_value(_parameters.get("filter[env]").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_service_list_with_http_info(filter_env)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

@@ -80,8 +80,9 @@ impl APMAPI {
 
     pub async fn get_service_list(
         &self,
+        filter_env: String,
     ) -> Result<crate::datadogV2::model::ServiceList, datadog::Error<GetServiceListError>> {
-        match self.get_service_list_with_http_info().await {
+        match self.get_service_list_with_http_info(filter_env).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -97,6 +98,7 @@ impl APMAPI {
 
     pub async fn get_service_list_with_http_info(
         &self,
+        filter_env: String,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::ServiceList>,
         datadog::Error<GetServiceListError>,
@@ -112,6 +114,8 @@ impl APMAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("filter[env]", &filter_env.to_string())]);
 
         // build headers
         let mut headers = HeaderMap::new();
