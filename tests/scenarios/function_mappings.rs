@@ -2520,6 +2520,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_custom_framework,
     );
     world.function_mappings.insert(
+        "v2.AssignIntegrationIssues".into(),
+        test_v2_assign_integration_issues,
+    );
+    world
+        .function_mappings
+        .insert("v2.CreateJiraIssue".into(), test_v2_create_jira_issue);
+    world.function_mappings.insert(
         "v2.GetResourceEvaluationFilters".into(),
         test_v2_get_resource_evaluation_filters,
     );
@@ -2563,6 +2570,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.CreateJiraIssues".into(), test_v2_create_jira_issues);
+    world.function_mappings.insert(
+        "v2.GetJiraIssueMetadata".into(),
+        test_v2_get_jira_issue_metadata,
+    );
     world.function_mappings.insert(
         "v2.SearchSecurityFindings".into(),
         test_v2_search_security_findings,
@@ -17545,6 +17556,59 @@ fn test_v2_update_custom_framework(world: &mut DatadogWorld, _parameters: &HashM
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_assign_integration_issues(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.assign_integration_issues_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_jira_issue(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_jira_issue_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_get_resource_evaluation_filters(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -18057,6 +18121,31 @@ fn test_v2_create_jira_issues(world: &mut DatadogWorld, _parameters: &HashMap<St
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.create_jira_issues_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_jira_issue_metadata(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let url = serde_json::from_value(_parameters.get("url").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_jira_issue_metadata_with_http_info(url)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
