@@ -529,6 +529,8 @@ pub struct ListSecurityMonitoringRulesOptionalParams {
     pub page_number: Option<i64>,
     /// A search query to filter security rules. You can filter by attributes such as `type`, `source`, `tags`.
     pub query: Option<String>,
+    /// Attribute used to sort rules. Prefix with `-` to sort in descending order.
+    pub sort: Option<crate::datadogV2::model::SecurityMonitoringRuleSort>,
 }
 
 impl ListSecurityMonitoringRulesOptionalParams {
@@ -545,6 +547,11 @@ impl ListSecurityMonitoringRulesOptionalParams {
     /// A search query to filter security rules. You can filter by attributes such as `type`, `source`, `tags`.
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
+        self
+    }
+    /// Attribute used to sort rules. Prefix with `-` to sort in descending order.
+    pub fn sort(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleSort) -> Self {
+        self.sort = Some(value);
         self
     }
 }
@@ -10176,6 +10183,7 @@ impl SecurityMonitoringAPI {
         let page_size = params.page_size;
         let page_number = params.page_number;
         let query = params.query;
+        let sort = params.sort;
 
         let local_client = &self.client;
 
@@ -10197,6 +10205,10 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = query {
             local_req_builder =
                 local_req_builder.query(&[("query", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
 
         // build headers
