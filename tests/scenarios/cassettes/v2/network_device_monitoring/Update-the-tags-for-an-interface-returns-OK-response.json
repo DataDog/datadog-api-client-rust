@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"tags\":[\"tag:test\",\"tag:testbis\"]},\"id\":\"example:1.2.3.4:1\",\"type\":\"tags\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/ndm/tags/interfaces/example%3A1.2.3.4%3A1"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"example:1.2.3.4:1\",\"type\":\"tags\",\"attributes\":{\"tags\":[\"tag:test\",\"tag:testbis\"]}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Tue, 17 Feb 2026 10:20:37 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
