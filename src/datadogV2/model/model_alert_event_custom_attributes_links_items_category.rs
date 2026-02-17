@@ -10,6 +10,7 @@ pub enum AlertEventCustomAttributesLinksItemsCategory {
     RUNBOOK,
     DOCUMENTATION,
     DASHBOARD,
+    RESOURCE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +20,7 @@ impl ToString for AlertEventCustomAttributesLinksItemsCategory {
             Self::RUNBOOK => String::from("runbook"),
             Self::DOCUMENTATION => String::from("documentation"),
             Self::DASHBOARD => String::from("dashboard"),
+            Self::RESOURCE => String::from("resource"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +48,7 @@ impl<'de> Deserialize<'de> for AlertEventCustomAttributesLinksItemsCategory {
             "runbook" => Self::RUNBOOK,
             "documentation" => Self::DOCUMENTATION,
             "dashboard" => Self::DASHBOARD,
+            "resource" => Self::RESOURCE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
