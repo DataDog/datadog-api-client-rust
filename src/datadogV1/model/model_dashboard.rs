@@ -62,6 +62,9 @@ pub struct Dashboard {
     /// A list of role identifiers. Only the author and users associated with at least one of these roles can edit this dashboard.
     #[serde(rename = "restricted_roles")]
     pub restricted_roles: Option<Vec<String>>,
+    /// List of tabs for organizing dashboard widgets into groups.
+    #[serde(rename = "tabs", default, with = "::serde_with::rust::double_option")]
+    pub tabs: Option<Option<Vec<crate::datadogV1::model::DashboardTab>>>,
     /// List of team names representing ownership of a dashboard.
     #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
     pub tags: Option<Option<Vec<String>>>,
@@ -115,6 +118,7 @@ impl Dashboard {
             notify_list: None,
             reflow_type: None,
             restricted_roles: None,
+            tabs: None,
             tags: None,
             template_variable_presets: None,
             template_variables: None,
@@ -187,6 +191,12 @@ impl Dashboard {
     }
 
     #[allow(deprecated)]
+    pub fn tabs(mut self, value: Option<Vec<crate::datadogV1::model::DashboardTab>>) -> Self {
+        self.tabs = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn tags(mut self, value: Option<Vec<String>>) -> Self {
         self.tags = Some(value);
         self
@@ -253,6 +263,7 @@ impl<'de> Deserialize<'de> for Dashboard {
                 let mut notify_list: Option<Option<Vec<String>>> = None;
                 let mut reflow_type: Option<crate::datadogV1::model::DashboardReflowType> = None;
                 let mut restricted_roles: Option<Vec<String>> = None;
+                let mut tabs: Option<Option<Vec<crate::datadogV1::model::DashboardTab>>> = None;
                 let mut tags: Option<Option<Vec<String>>> = None;
                 let mut template_variable_presets: Option<
                     Option<Vec<crate::datadogV1::model::DashboardTemplateVariablePreset>>,
@@ -350,6 +361,9 @@ impl<'de> Deserialize<'de> for Dashboard {
                             restricted_roles =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tabs" => {
+                            tabs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -398,6 +412,7 @@ impl<'de> Deserialize<'de> for Dashboard {
                     notify_list,
                     reflow_type,
                     restricted_roles,
+                    tabs,
                     tags,
                     template_variable_presets,
                     template_variables,
