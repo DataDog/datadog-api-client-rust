@@ -144,6 +144,25 @@ impl GetIncidentNotificationTemplateOptionalParams {
     }
 }
 
+/// ImportIncidentOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::import_incident`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ImportIncidentOptionalParams {
+    /// Specifies which related object types to include in the response when importing an incident.
+    pub include: Option<Vec<crate::datadogV2::model::IncidentImportRelatedObject>>,
+}
+
+impl ImportIncidentOptionalParams {
+    /// Specifies which related object types to include in the response when importing an incident.
+    pub fn include(
+        mut self,
+        value: Vec<crate::datadogV2::model::IncidentImportRelatedObject>,
+    ) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ListGlobalIncidentHandlesOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::list_global_incident_handles`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -639,6 +658,14 @@ pub enum GetIncidentTodoError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetIncidentTypeError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ImportIncidentError is a struct for typed errors of method [`IncidentsAPI::import_incident`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ImportIncidentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -4721,6 +4748,187 @@ impl IncidentsAPI {
             };
         } else {
             let local_entity: Option<GetIncidentTypeError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Import an incident from an external system. This endpoint allows you to create incidents with
+    /// historical data such as custom timestamps for detection, declaration, and resolution.
+    /// Imported incidents do not execute integrations or notification rules.
+    pub async fn import_incident(
+        &self,
+        body: crate::datadogV2::model::IncidentImportRequest,
+        params: ImportIncidentOptionalParams,
+    ) -> Result<crate::datadogV2::model::IncidentImportResponse, datadog::Error<ImportIncidentError>>
+    {
+        match self.import_incident_with_http_info(body, params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Import an incident from an external system. This endpoint allows you to create incidents with
+    /// historical data such as custom timestamps for detection, declaration, and resolution.
+    /// Imported incidents do not execute integrations or notification rules.
+    pub async fn import_incident_with_http_info(
+        &self,
+        body: crate::datadogV2::model::IncidentImportRequest,
+        params: ImportIncidentOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::IncidentImportResponse>,
+        datadog::Error<ImportIncidentError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.import_incident";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.import_incident' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/incidents/import",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        if let Some(ref local) = include {
+            local_req_builder = local_req_builder.query(&[(
+                "include",
+                &local
+                    .iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::IncidentImportResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ImportIncidentError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
