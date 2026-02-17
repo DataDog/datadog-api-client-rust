@@ -16,6 +16,7 @@ pub enum SecurityMonitoringSuppressionSort {
     START_DATE_DESCENDING,
     EXPIRATION_DATE_DESCENDING,
     UPDATE_DATE_DESCENDING,
+    CREATION_DATE_DESCENDING,
     ENABLED_DESCENDING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -32,6 +33,7 @@ impl ToString for SecurityMonitoringSuppressionSort {
             Self::START_DATE_DESCENDING => String::from("-start_date"),
             Self::EXPIRATION_DATE_DESCENDING => String::from("-expiration_date"),
             Self::UPDATE_DATE_DESCENDING => String::from("-update_date"),
+            Self::CREATION_DATE_DESCENDING => String::from("-creation_date"),
             Self::ENABLED_DESCENDING => String::from("-enabled"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -66,6 +68,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSuppressionSort {
             "-start_date" => Self::START_DATE_DESCENDING,
             "-expiration_date" => Self::EXPIRATION_DATE_DESCENDING,
             "-update_date" => Self::UPDATE_DATE_DESCENDING,
+            "-creation_date" => Self::CREATION_DATE_DESCENDING,
             "-enabled" => Self::ENABLED_DESCENDING,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
