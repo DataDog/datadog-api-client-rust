@@ -11,6 +11,9 @@ pub enum ObservabilityPipelineOcsfMapperProcessorMappingMapping {
     ObservabilityPipelineOcsfMappingLibrary(
         Box<crate::datadogV2::model::ObservabilityPipelineOcsfMappingLibrary>,
     ),
+    ObservabilityPipelineOcsfMappingCustom(
+        Box<crate::datadogV2::model::ObservabilityPipelineOcsfMappingCustom>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -30,6 +33,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOcsfMapperProcessorMappingMa
 					return Ok(ObservabilityPipelineOcsfMapperProcessorMappingMapping::ObservabilityPipelineOcsfMappingLibrary(_v))
 				}
 			}
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineOcsfMappingCustom>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineOcsfMapperProcessorMappingMapping::ObservabilityPipelineOcsfMappingCustom(_v));
+            }
         }
 
         return Ok(
