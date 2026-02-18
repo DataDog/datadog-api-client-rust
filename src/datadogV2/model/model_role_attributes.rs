@@ -20,6 +20,11 @@ pub struct RoleAttributes {
     /// The name of the role. The name is neither unique nor a stable identifier of the role.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The managed role from which this role automatically inherits new permissions.
+    /// Specify one of the following: "Datadog Admin Role", "Datadog Standard Role", or "Datadog Read Only Role".
+    /// If empty or not specified, the role does not automatically inherit permissions from any managed role.
+    #[serde(rename = "receives_permissions_from")]
+    pub receives_permissions_from: Option<Vec<String>>,
     /// Number of users with that role.
     #[serde(rename = "user_count")]
     pub user_count: Option<i64>,
@@ -36,6 +41,7 @@ impl RoleAttributes {
             created_at: None,
             modified_at: None,
             name: None,
+            receives_permissions_from: None,
             user_count: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -54,6 +60,11 @@ impl RoleAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn receives_permissions_from(mut self, value: Vec<String>) -> Self {
+        self.receives_permissions_from = Some(value);
         self
     }
 
@@ -97,6 +108,7 @@ impl<'de> Deserialize<'de> for RoleAttributes {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
+                let mut receives_permissions_from: Option<Vec<String>> = None;
                 let mut user_count: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -125,6 +137,13 @@ impl<'de> Deserialize<'de> for RoleAttributes {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "receives_permissions_from" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            receives_permissions_from =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "user_count" => {
                             if v.is_null() {
                                 continue;
@@ -143,6 +162,7 @@ impl<'de> Deserialize<'de> for RoleAttributes {
                     created_at,
                     modified_at,
                     name,
+                    receives_permissions_from,
                     user_count,
                     additional_properties,
                     _unparsed,

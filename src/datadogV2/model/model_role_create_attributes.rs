@@ -20,6 +20,11 @@ pub struct RoleCreateAttributes {
     /// Name of the role.
     #[serde(rename = "name")]
     pub name: String,
+    /// The managed role from which this role automatically inherits new permissions.
+    /// Specify one of the following: "Datadog Admin Role", "Datadog Standard Role", or "Datadog Read Only Role".
+    /// If empty or not specified, the role does not automatically inherit permissions from any managed role.
+    #[serde(rename = "receives_permissions_from")]
+    pub receives_permissions_from: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -33,6 +38,7 @@ impl RoleCreateAttributes {
             created_at: None,
             modified_at: None,
             name,
+            receives_permissions_from: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -45,6 +51,11 @@ impl RoleCreateAttributes {
 
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
+        self
+    }
+
+    pub fn receives_permissions_from(mut self, value: Vec<String>) -> Self {
+        self.receives_permissions_from = Some(value);
         self
     }
 
@@ -77,6 +88,7 @@ impl<'de> Deserialize<'de> for RoleCreateAttributes {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
+                let mut receives_permissions_from: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -101,6 +113,13 @@ impl<'de> Deserialize<'de> for RoleCreateAttributes {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "receives_permissions_from" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            receives_permissions_from =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -114,6 +133,7 @@ impl<'de> Deserialize<'de> for RoleCreateAttributes {
                     created_at,
                     modified_at,
                     name,
+                    receives_permissions_from,
                     additional_properties,
                     _unparsed,
                 };

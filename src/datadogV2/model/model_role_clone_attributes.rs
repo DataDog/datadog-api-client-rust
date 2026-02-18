@@ -14,6 +14,11 @@ pub struct RoleCloneAttributes {
     /// Name of the new role that is cloned.
     #[serde(rename = "name")]
     pub name: String,
+    /// The managed role from which this role automatically inherits new permissions.
+    /// Specify one of the following: "Datadog Admin Role", "Datadog Standard Role", or "Datadog Read Only Role".
+    /// If empty or not specified, the role does not automatically inherit permissions from any managed role.
+    #[serde(rename = "receives_permissions_from")]
+    pub receives_permissions_from: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,9 +30,15 @@ impl RoleCloneAttributes {
     pub fn new(name: String) -> RoleCloneAttributes {
         RoleCloneAttributes {
             name,
+            receives_permissions_from: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn receives_permissions_from(mut self, value: Vec<String>) -> Self {
+        self.receives_permissions_from = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -57,6 +68,7 @@ impl<'de> Deserialize<'de> for RoleCloneAttributes {
                 M: MapAccess<'a>,
             {
                 let mut name: Option<String> = None;
+                let mut receives_permissions_from: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -67,6 +79,13 @@ impl<'de> Deserialize<'de> for RoleCloneAttributes {
                     match k.as_str() {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "receives_permissions_from" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            receives_permissions_from =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -79,6 +98,7 @@ impl<'de> Deserialize<'de> for RoleCloneAttributes {
 
                 let content = RoleCloneAttributes {
                     name,
+                    receives_permissions_from,
                     additional_properties,
                     _unparsed,
                 };
