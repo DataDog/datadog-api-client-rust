@@ -6862,6 +6862,8 @@ pub mod model_security_monitoring_content_pack_state_meta;
 pub use self::model_security_monitoring_content_pack_state_meta::SecurityMonitoringContentPackStateMeta;
 pub mod model_security_monitoring_sku;
 pub use self::model_security_monitoring_sku::SecurityMonitoringSKU;
+pub mod model_security_monitoring_rule_sort;
+pub use self::model_security_monitoring_rule_sort::SecurityMonitoringRuleSort;
 pub mod model_security_monitoring_list_rules_response;
 pub use self::model_security_monitoring_list_rules_response::SecurityMonitoringListRulesResponse;
 pub mod model_security_monitoring_standard_rule_response;
