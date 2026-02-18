@@ -81,6 +81,7 @@ pub use self::api::api_rum_replay_playlists;
 pub use self::api::api_rum_replay_sessions;
 pub use self::api::api_rum_replay_viewership;
 pub use self::api::api_rum_retention_filters;
+pub use self::api::api_seats;
 pub use self::api::api_security_monitoring;
 pub use self::api::api_sensitive_data_scanner;
 pub use self::api::api_service_accounts;
