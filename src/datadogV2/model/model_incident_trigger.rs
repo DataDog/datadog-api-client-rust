@@ -14,6 +14,9 @@ pub struct IncidentTrigger {
     /// Defines a rate limit for a trigger.
     #[serde(rename = "rateLimit")]
     pub rate_limit: Option<crate::datadogV2::model::TriggerRateLimit>,
+    /// Version of the incident trigger.
+    #[serde(rename = "version")]
+    pub version: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,6 +28,7 @@ impl IncidentTrigger {
     pub fn new() -> IncidentTrigger {
         IncidentTrigger {
             rate_limit: None,
+            version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -32,6 +36,11 @@ impl IncidentTrigger {
 
     pub fn rate_limit(mut self, value: crate::datadogV2::model::TriggerRateLimit) -> Self {
         self.rate_limit = Some(value);
+        self
+    }
+
+    pub fn version(mut self, value: String) -> Self {
+        self.version = Some(value);
         self
     }
 
@@ -68,6 +77,7 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
                 M: MapAccess<'a>,
             {
                 let mut rate_limit: Option<crate::datadogV2::model::TriggerRateLimit> = None;
+                let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,6 +92,12 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
                             }
                             rate_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "version" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -92,6 +108,7 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
 
                 let content = IncidentTrigger {
                     rate_limit,
+                    version,
                     additional_properties,
                     _unparsed,
                 };
