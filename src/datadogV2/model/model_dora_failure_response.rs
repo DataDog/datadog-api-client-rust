@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response after receiving a DORA failure event.
+/// Response after receiving a DORA incident event.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DORAFailureResponse {
-    /// Response after receiving a DORA failure event.
+    /// Response after receiving a DORA incident event.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::DORAFailureResponseData,
     #[serde(flatten)]
