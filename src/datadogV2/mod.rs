@@ -20,6 +20,7 @@ pub use self::api::api_case_management_attribute;
 pub use self::api::api_case_management_type;
 pub use self::api::api_ci_visibility_pipelines;
 pub use self::api::api_ci_visibility_tests;
+pub use self::api::api_cloud_authentication;
 pub use self::api::api_cloud_cost_management;
 pub use self::api::api_cloud_network_monitoring;
 pub use self::api::api_cloudflare_integration;
