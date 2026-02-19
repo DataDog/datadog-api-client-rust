@@ -6,27 +6,31 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SyntheticsTestDetailsType {
-    API,
-    BROWSER,
-    MOBILE,
-    NETWORK,
+pub enum SyntheticsNetworkAssertionOperator {
+    IS,
+    IS_NOT,
+    LESS_THAN,
+    LESS_THAN_OR_EQUAL,
+    MORE_THAN,
+    MORE_THAN_OR_EQUAL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SyntheticsTestDetailsType {
+impl ToString for SyntheticsNetworkAssertionOperator {
     fn to_string(&self) -> String {
         match self {
-            Self::API => String::from("api"),
-            Self::BROWSER => String::from("browser"),
-            Self::MOBILE => String::from("mobile"),
-            Self::NETWORK => String::from("network"),
+            Self::IS => String::from("is"),
+            Self::IS_NOT => String::from("isNot"),
+            Self::LESS_THAN => String::from("lessThan"),
+            Self::LESS_THAN_OR_EQUAL => String::from("lessThanOrEqual"),
+            Self::MORE_THAN => String::from("moreThan"),
+            Self::MORE_THAN_OR_EQUAL => String::from("moreThanOrEqual"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for SyntheticsTestDetailsType {
+impl Serialize for SyntheticsNetworkAssertionOperator {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -38,17 +42,19 @@ impl Serialize for SyntheticsTestDetailsType {
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsTestDetailsType {
+impl<'de> Deserialize<'de> for SyntheticsNetworkAssertionOperator {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "api" => Self::API,
-            "browser" => Self::BROWSER,
-            "mobile" => Self::MOBILE,
-            "network" => Self::NETWORK,
+            "is" => Self::IS,
+            "isNot" => Self::IS_NOT,
+            "lessThan" => Self::LESS_THAN,
+            "lessThanOrEqual" => Self::LESS_THAN_OR_EQUAL,
+            "moreThan" => Self::MORE_THAN,
+            "moreThanOrEqual" => Self::MORE_THAN_OR_EQUAL,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

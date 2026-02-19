@@ -38,7 +38,7 @@ pub struct SyntheticsBatchResult {
     /// The public ID of the Synthetic test.
     #[serde(rename = "test_public_id")]
     pub test_public_id: Option<String>,
-    /// Type of the Synthetic test, either `api` or `browser`.
+    /// Type of the Synthetic test.
     #[serde(rename = "test_type")]
     pub test_type: Option<crate::datadogV1::model::SyntheticsTestDetailsType>,
     #[serde(flatten)]

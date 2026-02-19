@@ -26,6 +26,8 @@ pub enum SyntheticsAssertionType {
     GRPC_METADATA,
     GRPC_PROTO,
     CONNECTION,
+    MULTI_NETWORK_HOP,
+    JITTER,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -51,6 +53,8 @@ impl ToString for SyntheticsAssertionType {
             Self::GRPC_METADATA => String::from("grpcMetadata"),
             Self::GRPC_PROTO => String::from("grpcProto"),
             Self::CONNECTION => String::from("connection"),
+            Self::MULTI_NETWORK_HOP => String::from("multiNetworkHop"),
+            Self::JITTER => String::from("jitter"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -94,6 +98,8 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionType {
             "grpcMetadata" => Self::GRPC_METADATA,
             "grpcProto" => Self::GRPC_PROTO,
             "connection" => Self::CONNECTION,
+            "multiNetworkHop" => Self::MULTI_NETWORK_HOP,
+            "jitter" => Self::JITTER,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

@@ -6,52 +6,46 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object containing details about your Synthetic test.
+/// Object containing details about a Network Path test.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsTestDetails {
-    /// Configuration object for a Synthetic test.
+pub struct SyntheticsNetworkTest {
+    /// Configuration object for a Network Path test.
     #[serde(rename = "config")]
-    pub config: Option<crate::datadogV1::model::SyntheticsTestConfig>,
-    /// Object describing the creator of the shared element.
-    #[serde(rename = "creator")]
-    pub creator: Option<crate::datadogV1::model::Creator>,
-    /// Array of locations used to run the test.
+    pub config: crate::datadogV2::model::SyntheticsNetworkTestConfig,
+    /// Array of locations used to run the test. Network Path tests can be run from managed locations to test public endpoints,
+    /// or from a [Datadog Agent](<https://docs.datadoghq.com/synthetics/network_path_tests/#agent-configuration>) to test private environments.
     #[serde(rename = "locations")]
-    pub locations: Option<Vec<String>>,
+    pub locations: Vec<String>,
     /// Notification message associated with the test.
     #[serde(rename = "message")]
-    pub message: Option<String>,
+    pub message: String,
     /// The associated monitor ID.
     #[serde(rename = "monitor_id")]
     pub monitor_id: Option<i64>,
     /// Name of the test.
     #[serde(rename = "name")]
-    pub name: Option<String>,
+    pub name: String,
     /// Object describing the extra options for a Synthetic test.
     #[serde(rename = "options")]
-    pub options: Option<crate::datadogV1::model::SyntheticsTestOptions>,
-    /// The test public ID.
+    pub options: crate::datadogV2::model::SyntheticsTestOptions,
+    /// The public ID for the test.
     #[serde(rename = "public_id")]
     pub public_id: Option<String>,
     /// Define whether you want to start (`live`) or pause (`paused`) a
     /// Synthetic test.
     #[serde(rename = "status")]
-    pub status: Option<crate::datadogV1::model::SyntheticsTestPauseStatus>,
-    /// The steps of the test if they exist.
-    #[serde(rename = "steps")]
-    pub steps: Option<Vec<crate::datadogV1::model::SyntheticsStep>>,
-    /// The subtype of the Synthetic API test, `http`, `ssl`, `tcp`,
-    /// `dns`, `icmp`, `udp`, `websocket`, `grpc` or `multi`.
+    pub status: Option<crate::datadogV2::model::SyntheticsTestPauseStatus>,
+    /// Subtype of the Synthetic Network Path test: `tcp`, `udp`, or `icmp`.
     #[serde(rename = "subtype")]
-    pub subtype: Option<crate::datadogV1::model::SyntheticsTestDetailsSubType>,
+    pub subtype: Option<crate::datadogV2::model::SyntheticsNetworkTestSubType>,
     /// Array of tags attached to the test.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// Type of the Synthetic test.
+    /// Type of the Synthetic test, `network`.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV1::model::SyntheticsTestDetailsType>,
+    pub type_: crate::datadogV2::model::SyntheticsNetworkTestType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -59,59 +53,34 @@ pub struct SyntheticsTestDetails {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsTestDetails {
-    pub fn new() -> SyntheticsTestDetails {
-        SyntheticsTestDetails {
-            config: None,
-            creator: None,
-            locations: None,
-            message: None,
+impl SyntheticsNetworkTest {
+    pub fn new(
+        config: crate::datadogV2::model::SyntheticsNetworkTestConfig,
+        locations: Vec<String>,
+        message: String,
+        name: String,
+        options: crate::datadogV2::model::SyntheticsTestOptions,
+        type_: crate::datadogV2::model::SyntheticsNetworkTestType,
+    ) -> SyntheticsNetworkTest {
+        SyntheticsNetworkTest {
+            config,
+            locations,
+            message,
             monitor_id: None,
-            name: None,
-            options: None,
+            name,
+            options,
             public_id: None,
             status: None,
-            steps: None,
             subtype: None,
             tags: None,
-            type_: None,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn config(mut self, value: crate::datadogV1::model::SyntheticsTestConfig) -> Self {
-        self.config = Some(value);
-        self
-    }
-
-    pub fn creator(mut self, value: crate::datadogV1::model::Creator) -> Self {
-        self.creator = Some(value);
-        self
-    }
-
-    pub fn locations(mut self, value: Vec<String>) -> Self {
-        self.locations = Some(value);
-        self
-    }
-
-    pub fn message(mut self, value: String) -> Self {
-        self.message = Some(value);
-        self
-    }
-
     pub fn monitor_id(mut self, value: i64) -> Self {
         self.monitor_id = Some(value);
-        self
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
-        self
-    }
-
-    pub fn options(mut self, value: crate::datadogV1::model::SyntheticsTestOptions) -> Self {
-        self.options = Some(value);
         self
     }
 
@@ -120,28 +89,18 @@ impl SyntheticsTestDetails {
         self
     }
 
-    pub fn status(mut self, value: crate::datadogV1::model::SyntheticsTestPauseStatus) -> Self {
+    pub fn status(mut self, value: crate::datadogV2::model::SyntheticsTestPauseStatus) -> Self {
         self.status = Some(value);
         self
     }
 
-    pub fn steps(mut self, value: Vec<crate::datadogV1::model::SyntheticsStep>) -> Self {
-        self.steps = Some(value);
-        self
-    }
-
-    pub fn subtype(mut self, value: crate::datadogV1::model::SyntheticsTestDetailsSubType) -> Self {
+    pub fn subtype(mut self, value: crate::datadogV2::model::SyntheticsNetworkTestSubType) -> Self {
         self.subtype = Some(value);
         self
     }
 
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
-        self
-    }
-
-    pub fn type_(mut self, value: crate::datadogV1::model::SyntheticsTestDetailsType) -> Self {
-        self.type_ = Some(value);
         self
     }
 
@@ -154,20 +113,14 @@ impl SyntheticsTestDetails {
     }
 }
 
-impl Default for SyntheticsTestDetails {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for SyntheticsTestDetails {
+impl<'de> Deserialize<'de> for SyntheticsNetworkTest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsTestDetailsVisitor;
-        impl<'a> Visitor<'a> for SyntheticsTestDetailsVisitor {
-            type Value = SyntheticsTestDetails;
+        struct SyntheticsNetworkTestVisitor;
+        impl<'a> Visitor<'a> for SyntheticsNetworkTestVisitor {
+            type Value = SyntheticsNetworkTest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -177,20 +130,18 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
             where
                 M: MapAccess<'a>,
             {
-                let mut config: Option<crate::datadogV1::model::SyntheticsTestConfig> = None;
-                let mut creator: Option<crate::datadogV1::model::Creator> = None;
+                let mut config: Option<crate::datadogV2::model::SyntheticsNetworkTestConfig> = None;
                 let mut locations: Option<Vec<String>> = None;
                 let mut message: Option<String> = None;
                 let mut monitor_id: Option<i64> = None;
                 let mut name: Option<String> = None;
-                let mut options: Option<crate::datadogV1::model::SyntheticsTestOptions> = None;
+                let mut options: Option<crate::datadogV2::model::SyntheticsTestOptions> = None;
                 let mut public_id: Option<String> = None;
-                let mut status: Option<crate::datadogV1::model::SyntheticsTestPauseStatus> = None;
-                let mut steps: Option<Vec<crate::datadogV1::model::SyntheticsStep>> = None;
-                let mut subtype: Option<crate::datadogV1::model::SyntheticsTestDetailsSubType> =
+                let mut status: Option<crate::datadogV2::model::SyntheticsTestPauseStatus> = None;
+                let mut subtype: Option<crate::datadogV2::model::SyntheticsNetworkTestSubType> =
                     None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut type_: Option<crate::datadogV1::model::SyntheticsTestDetailsType> = None;
+                let mut type_: Option<crate::datadogV2::model::SyntheticsNetworkTestType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -200,27 +151,12 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "config" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "creator" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            creator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "locations" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             locations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "message" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "monitor_id" => {
@@ -230,15 +166,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
                             monitor_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "options" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "public_id" => {
@@ -254,18 +184,12 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV1::model::SyntheticsTestPauseStatus::UnparsedObject(_status) => {
+                                    crate::datadogV2::model::SyntheticsTestPauseStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
                                 }
                             }
-                        }
-                        "steps" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            steps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "subtype" => {
                             if v.is_null() {
@@ -274,7 +198,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
                             subtype = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _subtype) = subtype {
                                 match _subtype {
-                                    crate::datadogV1::model::SyntheticsTestDetailsSubType::UnparsedObject(_subtype) => {
+                                    crate::datadogV2::model::SyntheticsNetworkTestSubType::UnparsedObject(_subtype) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -288,13 +212,10 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV1::model::SyntheticsTestDetailsType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::SyntheticsNetworkTestType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -308,10 +229,15 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
                         }
                     }
                 }
+                let config = config.ok_or_else(|| M::Error::missing_field("config"))?;
+                let locations = locations.ok_or_else(|| M::Error::missing_field("locations"))?;
+                let message = message.ok_or_else(|| M::Error::missing_field("message"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let options = options.ok_or_else(|| M::Error::missing_field("options"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = SyntheticsTestDetails {
+                let content = SyntheticsNetworkTest {
                     config,
-                    creator,
                     locations,
                     message,
                     monitor_id,
@@ -319,7 +245,6 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
                     options,
                     public_id,
                     status,
-                    steps,
                     subtype,
                     tags,
                     type_,
@@ -331,6 +256,6 @@ impl<'de> Deserialize<'de> for SyntheticsTestDetails {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsTestDetailsVisitor)
+        deserializer.deserialize_any(SyntheticsNetworkTestVisitor)
     }
 }
