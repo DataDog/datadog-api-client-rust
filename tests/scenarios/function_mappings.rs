@@ -68,6 +68,7 @@ pub struct ApiInstances {
     pub v2_api_case_management_attribute:
         Option<datadogV2::api_case_management_attribute::CaseManagementAttributeAPI>,
     pub v2_api_software_catalog: Option<datadogV2::api_software_catalog::SoftwareCatalogAPI>,
+    pub v2_api_change_management: Option<datadogV2::api_change_management::ChangeManagementAPI>,
     pub v2_api_ci_visibility_pipelines:
         Option<datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI>,
     pub v2_api_ci_visibility_tests:
@@ -618,6 +619,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "SoftwareCatalog" => {
             world.api_instances.v2_api_software_catalog = Some(
                 datadogV2::api_software_catalog::SoftwareCatalogAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "ChangeManagement" => {
+            world.api_instances.v2_api_change_management = Some(
+                datadogV2::api_change_management::ChangeManagementAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -2486,6 +2495,29 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.ListCatalogRelationWithPagination".into(),
         test_v2_list_catalog_relation_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.CreateChangeRequest".into(),
+        test_v2_create_change_request,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetChangeRequest".into(), test_v2_get_change_request);
+    world.function_mappings.insert(
+        "v2.UpdateChangeRequest".into(),
+        test_v2_update_change_request,
+    );
+    world.function_mappings.insert(
+        "v2.CreateChangeRequestBranch".into(),
+        test_v2_create_change_request_branch,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteChangeRequestDecision".into(),
+        test_v2_delete_change_request_decision,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateChangeRequestDecision".into(),
+        test_v2_update_change_request_decision,
     );
     world.function_mappings.insert(
         "v2.CreateCIAppPipelineEvent".into(),
@@ -17051,6 +17083,185 @@ fn test_v2_list_catalog_relation_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_create_change_request(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_change_management
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_change_request_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_change_request(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_change_management
+        .as_ref()
+        .expect("api instance not found");
+    let change_request_id =
+        serde_json::from_value(_parameters.get("change_request_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_change_request_with_http_info(change_request_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_change_request(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_change_management
+        .as_ref()
+        .expect("api instance not found");
+    let change_request_id =
+        serde_json::from_value(_parameters.get("change_request_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_change_request_with_http_info(change_request_id, body))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_change_request_branch(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_change_management
+        .as_ref()
+        .expect("api instance not found");
+    let change_request_id =
+        serde_json::from_value(_parameters.get("change_request_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_change_request_branch_with_http_info(change_request_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_change_request_decision(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_change_management
+        .as_ref()
+        .expect("api instance not found");
+    let change_request_id =
+        serde_json::from_value(_parameters.get("change_request_id").unwrap().clone()).unwrap();
+    let decision_id =
+        serde_json::from_value(_parameters.get("decision_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_change_request_decision_with_http_info(change_request_id, decision_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_change_request_decision(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_change_management
+        .as_ref()
+        .expect("api instance not found");
+    let change_request_id =
+        serde_json::from_value(_parameters.get("change_request_id").unwrap().clone()).unwrap();
+    let decision_id =
+        serde_json::from_value(_parameters.get("decision_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_change_request_decision_with_http_info(
+        change_request_id,
+        decision_id,
+        body,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_create_ci_app_pipeline_event(
