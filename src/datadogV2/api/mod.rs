@@ -81,6 +81,7 @@ pub mod api_rum_replay_playlists;
 pub mod api_rum_replay_sessions;
 pub mod api_rum_replay_viewership;
 pub mod api_rum_retention_filters;
+pub mod api_rum_user_segments;
 pub mod api_seats;
 pub mod api_security_monitoring;
 pub mod api_sensitive_data_scanner;
