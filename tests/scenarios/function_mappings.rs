@@ -72,6 +72,8 @@ pub struct ApiInstances {
         Option<datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI>,
     pub v2_api_ci_visibility_tests:
         Option<datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI>,
+    pub v2_api_cloud_authentication:
+        Option<datadogV2::api_cloud_authentication::CloudAuthenticationAPI>,
     pub v2_api_security_monitoring:
         Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
     pub v2_api_code_coverage: Option<datadogV2::api_code_coverage::CodeCoverageAPI>,
@@ -630,6 +632,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "CIVisibilityTests" => {
             world.api_instances.v2_api_ci_visibility_tests = Some(
                 datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "CloudAuthentication" => {
+            world.api_instances.v2_api_cloud_authentication = Some(
+                datadogV2::api_cloud_authentication::CloudAuthenticationAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -2520,6 +2530,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.SearchCIAppTestEventsWithPagination".into(),
         test_v2_search_ci_app_test_events_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.ListAWSCloudAuthPersonaMappings".into(),
+        test_v2_list_aws_cloud_auth_persona_mappings,
     );
     world.function_mappings.insert(
         "v2.CreateCustomFramework".into(),
@@ -17482,6 +17496,33 @@ fn test_v2_search_ci_app_test_events_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_list_aws_cloud_auth_persona_mappings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_aws_cloud_auth_persona_mappings_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_create_custom_framework(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
