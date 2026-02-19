@@ -2057,8 +2057,20 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.RegisterAppKey".into(), test_v2_register_app_key);
     world.function_mappings.insert(
+        "v2.ListActionConnections".into(),
+        test_v2_list_action_connections,
+    );
+    world.function_mappings.insert(
         "v2.CreateActionConnection".into(),
         test_v2_create_action_connection,
+    );
+    world.function_mappings.insert(
+        "v2.ListConnectionGroups".into(),
+        test_v2_list_connection_groups,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateConnectionGroup".into(),
+        test_v2_update_connection_group,
     );
     world.function_mappings.insert(
         "v2.DeleteActionConnection".into(),
@@ -13258,6 +13270,68 @@ fn test_v2_register_app_key(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_action_connections(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_action_connection
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_integration = _parameters
+        .get("filter[integration]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tags = _parameters
+        .get("filter[tags]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_environment = _parameters
+        .get("filter[environment]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_connection_ids = _parameters
+        .get("filter[connection_ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_creator_ids = _parameters
+        .get("filter[creator_ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_search = _parameters
+        .get("filter[search]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_action_connection::ListActionConnectionsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.filter_integration = filter_integration;
+    params.filter_tags = filter_tags;
+    params.filter_environment = filter_environment;
+    params.filter_connection_ids = filter_connection_ids;
+    params.filter_creator_ids = filter_creator_ids;
+    params.filter_search = filter_search;
+    params.sort = sort;
+    let response = match block_on(api.list_action_connections_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_create_action_connection(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -13282,6 +13356,96 @@ fn test_v2_create_action_connection(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_connection_groups(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_action_connection
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_integration = _parameters
+        .get("filter[integration]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_environment = _parameters
+        .get("filter[environment]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_connection_group_ids = _parameters
+        .get("filter[connection_group_ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_creator_id = _parameters
+        .get("filter[creator_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_creator_ids = _parameters
+        .get("filter[creator_ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_search = _parameters
+        .get("filter[search]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_action_connection::ListConnectionGroupsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.filter_integration = filter_integration;
+    params.filter_environment = filter_environment;
+    params.filter_connection_group_ids = filter_connection_group_ids;
+    params.filter_creator_id = filter_creator_id;
+    params.filter_creator_ids = filter_creator_ids;
+    params.filter_search = filter_search;
+    params.sort = sort;
+    let response = match block_on(api.list_connection_groups_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_connection_group(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_action_connection
+        .as_ref()
+        .expect("api instance not found");
+    let connection_group_id =
+        serde_json::from_value(_parameters.get("connection_group_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_connection_group_with_http_info(connection_group_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
