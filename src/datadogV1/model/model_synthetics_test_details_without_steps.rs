@@ -46,7 +46,7 @@ pub struct SyntheticsTestDetailsWithoutSteps {
     /// Array of tags attached to the test.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// Type of the Synthetic test, either `api` or `browser`.
+    /// Type of the Synthetic test.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV1::model::SyntheticsTestDetailsType>,
     #[serde(flatten)]
