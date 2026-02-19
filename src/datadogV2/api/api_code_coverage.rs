@@ -95,8 +95,6 @@ impl CodeCoverageAPI {
     /// Retrieve aggregated code coverage statistics for a specific branch in a repository.
     /// This endpoint provides overall coverage metrics as well as breakdowns by service
     /// and code owner.
-    ///
-    /// **Note**: This endpoint requires the `code_coverage_read` permission.
     pub async fn get_code_coverage_branch_summary(
         &self,
         body: crate::datadogV2::model::BranchCoverageSummaryRequest,
@@ -124,8 +122,6 @@ impl CodeCoverageAPI {
     /// Retrieve aggregated code coverage statistics for a specific branch in a repository.
     /// This endpoint provides overall coverage metrics as well as breakdowns by service
     /// and code owner.
-    ///
-    /// **Note**: This endpoint requires the `code_coverage_read` permission.
     pub async fn get_code_coverage_branch_summary_with_http_info(
         &self,
         body: crate::datadogV2::model::BranchCoverageSummaryRequest,
@@ -270,8 +266,6 @@ impl CodeCoverageAPI {
     /// and code owner.
     ///
     /// The commit SHA must be a 40-character hexadecimal string (SHA-1 hash).
-    ///
-    /// **Note**: This endpoint requires the `code_coverage_read` permission.
     pub async fn get_code_coverage_commit_summary(
         &self,
         body: crate::datadogV2::model::CommitCoverageSummaryRequest,
@@ -301,8 +295,6 @@ impl CodeCoverageAPI {
     /// and code owner.
     ///
     /// The commit SHA must be a 40-character hexadecimal string (SHA-1 hash).
-    ///
-    /// **Note**: This endpoint requires the `code_coverage_read` permission.
     pub async fn get_code_coverage_commit_summary_with_http_info(
         &self,
         body: crate::datadogV2::model::CommitCoverageSummaryRequest,
