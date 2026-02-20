@@ -6,14 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing information about multiple integrations.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ListIntegrationsResponse {
-    /// Array of integration objects.
+pub struct PatchMaintenanceRequest {
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::Integration>,
+    pub data: Option<crate::datadogV2::model::PatchMaintenanceRequestData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,13 +19,18 @@ pub struct ListIntegrationsResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl ListIntegrationsResponse {
-    pub fn new(data: Vec<crate::datadogV2::model::Integration>) -> ListIntegrationsResponse {
-        ListIntegrationsResponse {
-            data,
+impl PatchMaintenanceRequest {
+    pub fn new() -> PatchMaintenanceRequest {
+        PatchMaintenanceRequest {
+            data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn data(mut self, value: crate::datadogV2::model::PatchMaintenanceRequestData) -> Self {
+        self.data = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -39,14 +42,20 @@ impl ListIntegrationsResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for ListIntegrationsResponse {
+impl Default for PatchMaintenanceRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for PatchMaintenanceRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ListIntegrationsResponseVisitor;
-        impl<'a> Visitor<'a> for ListIntegrationsResponseVisitor {
-            type Value = ListIntegrationsResponse;
+        struct PatchMaintenanceRequestVisitor;
+        impl<'a> Visitor<'a> for PatchMaintenanceRequestVisitor {
+            type Value = PatchMaintenanceRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +65,7 @@ impl<'de> Deserialize<'de> for ListIntegrationsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::Integration>> = None;
+                let mut data: Option<crate::datadogV2::model::PatchMaintenanceRequestData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -66,6 +75,9 @@ impl<'de> Deserialize<'de> for ListIntegrationsResponse {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -75,9 +87,8 @@ impl<'de> Deserialize<'de> for ListIntegrationsResponse {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = ListIntegrationsResponse {
+                let content = PatchMaintenanceRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -87,6 +98,6 @@ impl<'de> Deserialize<'de> for ListIntegrationsResponse {
             }
         }
 
-        deserializer.deserialize_any(ListIntegrationsResponseVisitor)
+        deserializer.deserialize_any(PatchMaintenanceRequestVisitor)
     }
 }

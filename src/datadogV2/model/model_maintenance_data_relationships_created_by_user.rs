@@ -6,14 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Links for the integration resource.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IntegrationLinks {
-    /// Link to the integration resource.
-    #[serde(rename = "self")]
-    pub self_: Option<String>,
+pub struct MaintenanceDataRelationshipsCreatedByUser {
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::MaintenanceDataRelationshipsCreatedByUserData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,18 +19,15 @@ pub struct IntegrationLinks {
     pub(crate) _unparsed: bool,
 }
 
-impl IntegrationLinks {
-    pub fn new() -> IntegrationLinks {
-        IntegrationLinks {
-            self_: None,
+impl MaintenanceDataRelationshipsCreatedByUser {
+    pub fn new(
+        data: crate::datadogV2::model::MaintenanceDataRelationshipsCreatedByUserData,
+    ) -> MaintenanceDataRelationshipsCreatedByUser {
+        MaintenanceDataRelationshipsCreatedByUser {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn self_(mut self, value: String) -> Self {
-        self.self_ = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -44,20 +39,14 @@ impl IntegrationLinks {
     }
 }
 
-impl Default for IntegrationLinks {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for IntegrationLinks {
+impl<'de> Deserialize<'de> for MaintenanceDataRelationshipsCreatedByUser {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IntegrationLinksVisitor;
-        impl<'a> Visitor<'a> for IntegrationLinksVisitor {
-            type Value = IntegrationLinks;
+        struct MaintenanceDataRelationshipsCreatedByUserVisitor;
+        impl<'a> Visitor<'a> for MaintenanceDataRelationshipsCreatedByUserVisitor {
+            type Value = MaintenanceDataRelationshipsCreatedByUser;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +56,9 @@ impl<'de> Deserialize<'de> for IntegrationLinks {
             where
                 M: MapAccess<'a>,
             {
-                let mut self_: Option<String> = None;
+                let mut data: Option<
+                    crate::datadogV2::model::MaintenanceDataRelationshipsCreatedByUserData,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,11 +67,8 @@ impl<'de> Deserialize<'de> for IntegrationLinks {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "self" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            self_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -89,9 +77,10 @@ impl<'de> Deserialize<'de> for IntegrationLinks {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = IntegrationLinks {
-                    self_,
+                let content = MaintenanceDataRelationshipsCreatedByUser {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -100,6 +89,6 @@ impl<'de> Deserialize<'de> for IntegrationLinks {
             }
         }
 
-        deserializer.deserialize_any(IntegrationLinksVisitor)
+        deserializer.deserialize_any(MaintenanceDataRelationshipsCreatedByUserVisitor)
     }
 }

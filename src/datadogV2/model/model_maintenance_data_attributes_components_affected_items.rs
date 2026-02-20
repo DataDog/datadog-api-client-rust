@@ -6,23 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Integration resource object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct Integration {
-    /// Attributes for an integration.
-    #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::IntegrationAttributes,
-    /// The unique identifier of the integration.
+pub struct MaintenanceDataAttributesComponentsAffectedItems {
+    /// The ID of the component. Must be a component of type `component`.
     #[serde(rename = "id")]
-    pub id: String,
-    /// Links for the integration resource.
-    #[serde(rename = "links")]
-    pub links: Option<crate::datadogV2::model::IntegrationLinks>,
-    /// Integration resource type.
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::IntegrationType,
+    pub id: uuid::Uuid,
+    /// The name of the component.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
+    /// The status of the component.
+    #[serde(rename = "status")]
+    pub status:
+        crate::datadogV2::model::PatchMaintenanceRequestDataAttributesComponentsAffectedItemsStatus,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,24 +27,22 @@ pub struct Integration {
     pub(crate) _unparsed: bool,
 }
 
-impl Integration {
+impl MaintenanceDataAttributesComponentsAffectedItems {
     pub fn new(
-        attributes: crate::datadogV2::model::IntegrationAttributes,
-        id: String,
-        type_: crate::datadogV2::model::IntegrationType,
-    ) -> Integration {
-        Integration {
-            attributes,
+        id: uuid::Uuid,
+        status: crate::datadogV2::model::PatchMaintenanceRequestDataAttributesComponentsAffectedItemsStatus,
+    ) -> MaintenanceDataAttributesComponentsAffectedItems {
+        MaintenanceDataAttributesComponentsAffectedItems {
             id,
-            links: None,
-            type_,
+            name: None,
+            status,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn links(mut self, value: crate::datadogV2::model::IntegrationLinks) -> Self {
-        self.links = Some(value);
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
@@ -60,14 +55,14 @@ impl Integration {
     }
 }
 
-impl<'de> Deserialize<'de> for Integration {
+impl<'de> Deserialize<'de> for MaintenanceDataAttributesComponentsAffectedItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IntegrationVisitor;
-        impl<'a> Visitor<'a> for IntegrationVisitor {
-            type Value = Integration;
+        struct MaintenanceDataAttributesComponentsAffectedItemsVisitor;
+        impl<'a> Visitor<'a> for MaintenanceDataAttributesComponentsAffectedItemsVisitor {
+            type Value = MaintenanceDataAttributesComponentsAffectedItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -77,10 +72,9 @@ impl<'de> Deserialize<'de> for Integration {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::IntegrationAttributes> = None;
-                let mut id: Option<String> = None;
-                let mut links: Option<crate::datadogV2::model::IntegrationLinks> = None;
-                let mut type_: Option<crate::datadogV2::model::IntegrationType> = None;
+                let mut id: Option<uuid::Uuid> = None;
+                let mut name: Option<String> = None;
+                let mut status: Option<crate::datadogV2::model::PatchMaintenanceRequestDataAttributesComponentsAffectedItemsStatus> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,27 +83,22 @@ impl<'de> Deserialize<'de> for Integration {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "links" => {
+                        "name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::IntegrationType::UnparsedObject(
-                                        _type_,
-                                    ) => {
+                        "status" => {
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _status) = status {
+                                match _status {
+                                    crate::datadogV2::model::PatchMaintenanceRequestDataAttributesComponentsAffectedItemsStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
@@ -121,15 +110,13 @@ impl<'de> Deserialize<'de> for Integration {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
 
-                let content = Integration {
-                    attributes,
+                let content = MaintenanceDataAttributesComponentsAffectedItems {
                     id,
-                    links,
-                    type_,
+                    name,
+                    status,
                     additional_properties,
                     _unparsed,
                 };
@@ -138,6 +125,6 @@ impl<'de> Deserialize<'de> for Integration {
             }
         }
 
-        deserializer.deserialize_any(IntegrationVisitor)
+        deserializer.deserialize_any(MaintenanceDataAttributesComponentsAffectedItemsVisitor)
     }
 }

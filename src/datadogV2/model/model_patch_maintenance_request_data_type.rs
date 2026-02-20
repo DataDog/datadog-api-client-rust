@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum IntegrationType {
-    INTEGRATION,
+pub enum PatchMaintenanceRequestDataType {
+    MAINTENANCES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for IntegrationType {
+impl ToString for PatchMaintenanceRequestDataType {
     fn to_string(&self) -> String {
         match self {
-            Self::INTEGRATION => String::from("integration"),
+            Self::MAINTENANCES => String::from("maintenances"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for IntegrationType {
+impl Serialize for PatchMaintenanceRequestDataType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,14 +32,14 @@ impl Serialize for IntegrationType {
     }
 }
 
-impl<'de> Deserialize<'de> for IntegrationType {
+impl<'de> Deserialize<'de> for PatchMaintenanceRequestDataType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "integration" => Self::INTEGRATION,
+            "maintenances" => Self::MAINTENANCES,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
