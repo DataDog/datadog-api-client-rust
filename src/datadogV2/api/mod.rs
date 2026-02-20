@@ -44,6 +44,7 @@ pub mod api_events;
 pub mod api_fastly_integration;
 pub mod api_fleet_automation;
 pub mod api_gcp_integration;
+pub mod api_google_chat_integration;
 pub mod api_high_availability_multi_region;
 pub mod api_incident_services;
 pub mod api_incident_teams;
