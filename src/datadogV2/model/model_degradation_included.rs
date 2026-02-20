@@ -6,13 +6,13 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
-pub enum DegradationArrayIncluded {
+pub enum DegradationIncluded {
     StatusPagesUser(Box<crate::datadogV2::model::StatusPagesUser>),
     StatusPageAsIncluded(Box<crate::datadogV2::model::StatusPageAsIncluded>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl<'de> Deserialize<'de> for DegradationArrayIncluded {
+impl<'de> Deserialize<'de> for DegradationIncluded {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
@@ -22,18 +22,18 @@ impl<'de> Deserialize<'de> for DegradationArrayIncluded {
             serde_json::from_value::<Box<crate::datadogV2::model::StatusPagesUser>>(value.clone())
         {
             if !_v._unparsed {
-                return Ok(DegradationArrayIncluded::StatusPagesUser(_v));
+                return Ok(DegradationIncluded::StatusPagesUser(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::StatusPageAsIncluded>>(
             value.clone(),
         ) {
             if !_v._unparsed {
-                return Ok(DegradationArrayIncluded::StatusPageAsIncluded(_v));
+                return Ok(DegradationIncluded::StatusPageAsIncluded(_v));
             }
         }
 
-        return Ok(DegradationArrayIncluded::UnparsedObject(
+        return Ok(DegradationIncluded::UnparsedObject(
             crate::datadog::UnparsedObject { value },
         ));
     }
