@@ -6,23 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Used for fixed span times, such as 'March 1 to March 7'.
+/// Integration resource object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct WidgetNewFixedSpan {
-    /// Start time in milliseconds since epoch.
-    #[serde(rename = "from")]
-    pub from: i64,
-    /// Whether to hide incomplete cost data in the widget.
-    #[serde(rename = "hide_incomplete_cost_data")]
-    pub hide_incomplete_cost_data: Option<bool>,
-    /// End time in milliseconds since epoch.
-    #[serde(rename = "to")]
-    pub to: i64,
-    /// Type "fixed" denotes a fixed span.
+pub struct Integration {
+    /// Attributes for an integration.
+    #[serde(rename = "attributes")]
+    pub attributes: crate::datadogV2::model::IntegrationAttributes,
+    /// The unique identifier of the integration.
+    #[serde(rename = "id")]
+    pub id: String,
+    /// Links for the integration resource.
+    #[serde(rename = "links")]
+    pub links: Option<crate::datadogV2::model::IntegrationLinks>,
+    /// Integration resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV1::model::WidgetNewFixedSpanType,
+    pub type_: crate::datadogV2::model::IntegrationType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,24 +30,24 @@ pub struct WidgetNewFixedSpan {
     pub(crate) _unparsed: bool,
 }
 
-impl WidgetNewFixedSpan {
+impl Integration {
     pub fn new(
-        from: i64,
-        to: i64,
-        type_: crate::datadogV1::model::WidgetNewFixedSpanType,
-    ) -> WidgetNewFixedSpan {
-        WidgetNewFixedSpan {
-            from,
-            hide_incomplete_cost_data: None,
-            to,
+        attributes: crate::datadogV2::model::IntegrationAttributes,
+        id: String,
+        type_: crate::datadogV2::model::IntegrationType,
+    ) -> Integration {
+        Integration {
+            attributes,
+            id,
+            links: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn hide_incomplete_cost_data(mut self, value: bool) -> Self {
-        self.hide_incomplete_cost_data = Some(value);
+    pub fn links(mut self, value: crate::datadogV2::model::IntegrationLinks) -> Self {
+        self.links = Some(value);
         self
     }
 
@@ -60,14 +60,14 @@ impl WidgetNewFixedSpan {
     }
 }
 
-impl<'de> Deserialize<'de> for WidgetNewFixedSpan {
+impl<'de> Deserialize<'de> for Integration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct WidgetNewFixedSpanVisitor;
-        impl<'a> Visitor<'a> for WidgetNewFixedSpanVisitor {
-            type Value = WidgetNewFixedSpan;
+        struct IntegrationVisitor;
+        impl<'a> Visitor<'a> for IntegrationVisitor {
+            type Value = Integration;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -77,10 +77,10 @@ impl<'de> Deserialize<'de> for WidgetNewFixedSpan {
             where
                 M: MapAccess<'a>,
             {
-                let mut from: Option<i64> = None;
-                let mut hide_incomplete_cost_data: Option<bool> = None;
-                let mut to: Option<i64> = None;
-                let mut type_: Option<crate::datadogV1::model::WidgetNewFixedSpanType> = None;
+                let mut attributes: Option<crate::datadogV2::model::IntegrationAttributes> = None;
+                let mut id: Option<String> = None;
+                let mut links: Option<crate::datadogV2::model::IntegrationLinks> = None;
+                let mut type_: Option<crate::datadogV2::model::IntegrationType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,26 +89,27 @@ impl<'de> Deserialize<'de> for WidgetNewFixedSpan {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "from" => {
-                            from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "attributes" => {
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "hide_incomplete_cost_data" => {
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "links" => {
                             if v.is_null() {
                                 continue;
                             }
-                            hide_incomplete_cost_data =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "to" => {
-                            to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV1::model::WidgetNewFixedSpanType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::IntegrationType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }
@@ -120,14 +121,14 @@ impl<'de> Deserialize<'de> for WidgetNewFixedSpan {
                         }
                     }
                 }
-                let from = from.ok_or_else(|| M::Error::missing_field("from"))?;
-                let to = to.ok_or_else(|| M::Error::missing_field("to"))?;
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = WidgetNewFixedSpan {
-                    from,
-                    hide_incomplete_cost_data,
-                    to,
+                let content = Integration {
+                    attributes,
+                    id,
+                    links,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -137,6 +138,6 @@ impl<'de> Deserialize<'de> for WidgetNewFixedSpan {
             }
         }
 
-        deserializer.deserialize_any(WidgetNewFixedSpanVisitor)
+        deserializer.deserialize_any(IntegrationVisitor)
     }
 }

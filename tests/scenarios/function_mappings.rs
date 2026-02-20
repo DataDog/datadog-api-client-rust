@@ -110,6 +110,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_opsgenie_integration::OpsgenieIntegrationAPI>,
     pub v2_api_service_now_integration:
         Option<datadogV2::api_service_now_integration::ServiceNowIntegrationAPI>,
+    pub v2_api_integrations: Option<datadogV2::api_integrations::IntegrationsAPI>,
     pub v2_api_cloudflare_integration:
         Option<datadogV2::api_cloudflare_integration::CloudflareIntegrationAPI>,
     pub v2_api_confluent_cloud: Option<datadogV2::api_confluent_cloud::ConfluentCloudAPI>,
@@ -795,6 +796,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "Integrations" => {
+            world.api_instances.v2_api_integrations = Some(
+                datadogV2::api_integrations::IntegrationsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "CloudflareIntegration" => {
             world.api_instances.v2_api_cloudflare_integration = Some(datadogV2::api_cloudflare_integration::CloudflareIntegrationAPI::with_client_and_config(
@@ -3737,6 +3746,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListServiceNowUsers".into(),
         test_v2_list_service_now_users,
     );
+    world
+        .function_mappings
+        .insert("v2.ListIntegrations".into(), test_v2_list_integrations);
     world.function_mappings.insert(
         "v2.ListCloudflareAccounts".into(),
         test_v2_list_cloudflare_accounts,
@@ -27722,6 +27734,30 @@ fn test_v2_list_service_now_users(world: &mut DatadogWorld, _parameters: &HashMa
     let instance_id =
         serde_json::from_value(_parameters.get("instance_id").unwrap().clone()).unwrap();
     let response = match block_on(api.list_service_now_users_with_http_info(instance_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_integrations(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_integrations
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_integrations_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {
