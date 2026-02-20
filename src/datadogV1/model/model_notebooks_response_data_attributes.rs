@@ -32,6 +32,9 @@ pub struct NotebooksResponseDataAttributes {
     /// Publication status of the notebook. For now, always "published".
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV1::model::NotebookStatus>,
+    /// List of template variables for this notebook.
+    #[serde(rename = "template_variables")]
+    pub template_variables: Option<Vec<crate::datadogV1::model::NotebookTemplateVariable>>,
     /// Notebook global timeframe.
     #[serde(rename = "time")]
     pub time: Option<crate::datadogV1::model::NotebookGlobalTime>,
@@ -52,6 +55,7 @@ impl NotebooksResponseDataAttributes {
             modified: None,
             name,
             status: None,
+            template_variables: None,
             time: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -85,6 +89,14 @@ impl NotebooksResponseDataAttributes {
 
     pub fn status(mut self, value: crate::datadogV1::model::NotebookStatus) -> Self {
         self.status = Some(value);
+        self
+    }
+
+    pub fn template_variables(
+        mut self,
+        value: Vec<crate::datadogV1::model::NotebookTemplateVariable>,
+    ) -> Self {
+        self.template_variables = Some(value);
         self
     }
 
@@ -126,6 +138,9 @@ impl<'de> Deserialize<'de> for NotebooksResponseDataAttributes {
                 let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut status: Option<crate::datadogV1::model::NotebookStatus> = None;
+                let mut template_variables: Option<
+                    Vec<crate::datadogV1::model::NotebookTemplateVariable>,
+                > = None;
                 let mut time: Option<crate::datadogV1::model::NotebookGlobalTime> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -184,6 +199,13 @@ impl<'de> Deserialize<'de> for NotebooksResponseDataAttributes {
                                 }
                             }
                         }
+                        "template_variables" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            template_variables =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "time" => {
                             if v.is_null() {
                                 continue;
@@ -217,6 +239,7 @@ impl<'de> Deserialize<'de> for NotebooksResponseDataAttributes {
                     modified,
                     name,
                     status,
+                    template_variables,
                     time,
                     additional_properties,
                     _unparsed,
