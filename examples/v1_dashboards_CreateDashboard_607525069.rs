@@ -8,6 +8,7 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionEventAggregation;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
@@ -53,7 +54,12 @@ async fn main() {
                                                             FormulaAndFunctionEventsDataSource::PRODUCT_ANALYTICS,
                                                             "query1".to_string(),
                                                         )
-                                                            .group_by(vec![])
+                                                            .group_by(
+                                                                FormulaAndFunctionEventQueryGroupByConfig
+                                                                ::FormulaAndFunctionEventQueryGroupByList(
+                                                                    vec![],
+                                                                ),
+                                                            )
                                                             .indexes(vec!["*".to_string()])
                                                             .search(
                                                                 FormulaAndFunctionEventQueryDefinitionSearch::new(
