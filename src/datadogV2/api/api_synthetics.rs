@@ -1489,7 +1489,7 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Search for Synthetics suites.
+    /// Search for test suites.
     pub async fn search_suites(
         &self,
         params: SearchSuitesOptionalParams,
@@ -1511,7 +1511,7 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Search for Synthetics suites.
+    /// Search for test suites.
     pub async fn search_suites_with_http_info(
         &self,
         params: SearchSuitesOptionalParams,

@@ -48,7 +48,6 @@ pub mod api_high_availability_multi_region;
 pub mod api_incident_services;
 pub mod api_incident_teams;
 pub mod api_incidents;
-pub mod api_integrations;
 pub mod api_ip_allowlist;
 pub mod api_jira_integration;
 pub mod api_key_management;

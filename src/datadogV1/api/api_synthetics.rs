@@ -2742,7 +2742,7 @@ impl SyntheticsAPI {
     }
 
     /// Get the detailed configuration associated with
-    /// a Synthetic Mobile test.
+    /// a Synthetic mobile test.
     pub async fn get_mobile_test(
         &self,
         public_id: String,
@@ -2763,7 +2763,7 @@ impl SyntheticsAPI {
     }
 
     /// Get the detailed configuration associated with
-    /// a Synthetic Mobile test.
+    /// a Synthetic mobile test.
     pub async fn get_mobile_test_with_http_info(
         &self,
         public_id: String,
@@ -4560,7 +4560,7 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Edit the configuration of a Synthetic Mobile test.
+    /// Edit the configuration of a Synthetic mobile test.
     pub async fn update_mobile_test(
         &self,
         public_id: String,
@@ -4584,7 +4584,7 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Edit the configuration of a Synthetic Mobile test.
+    /// Edit the configuration of a Synthetic mobile test.
     pub async fn update_mobile_test_with_http_info(
         &self,
         public_id: String,
