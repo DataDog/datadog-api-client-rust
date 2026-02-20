@@ -49,7 +49,6 @@ pub use self::api::api_high_availability_multi_region;
 pub use self::api::api_incident_services;
 pub use self::api::api_incident_teams;
 pub use self::api::api_incidents;
-pub use self::api::api_integrations;
 pub use self::api::api_ip_allowlist;
 pub use self::api::api_jira_integration;
 pub use self::api::api_key_management;

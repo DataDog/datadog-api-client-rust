@@ -1,4 +1,4 @@
-// Synthetics: Get a Network Path test returns "OK" response
+// Get a Network Path test returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_synthetics::SyntheticsAPI;
 
@@ -7,7 +7,7 @@ async fn main() {
     let configuration = datadog::Configuration::new();
     let api = SyntheticsAPI::with_config(configuration);
     let resp = api
-        .get_synthetics_network_test("amg-96x-tps".to_string())
+        .get_synthetics_network_test("c7a-uwa-wn2".to_string())
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
