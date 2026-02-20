@@ -88,7 +88,8 @@ pub struct ListTagConfigurationsOptionalParams {
     /// Filter distributions with additional percentile
     /// aggregations enabled or disabled.
     pub filter_include_percentiles: Option<bool>,
-    /// (Preview) Filter custom metrics that have or have not been queried in the past 30 days.
+    /// (Preview) Filter custom metrics that have or have not been queried in the specified window[seconds].
+    /// If no window is provided or the window is less than 2 hours, a default of 2 hours will be applied.
     pub filter_queried: Option<bool>,
     /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
     /// Can only be combined with the filter[queried] filter.
@@ -131,7 +132,8 @@ impl ListTagConfigurationsOptionalParams {
         self.filter_include_percentiles = Some(value);
         self
     }
-    /// (Preview) Filter custom metrics that have or have not been queried in the past 30 days.
+    /// (Preview) Filter custom metrics that have or have not been queried in the specified window[seconds].
+    /// If no window is provided or the window is less than 2 hours, a default of 2 hours will be applied.
     pub fn filter_queried(mut self, value: bool) -> Self {
         self.filter_queried = Some(value);
         self
