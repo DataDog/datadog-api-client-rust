@@ -7,6 +7,7 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionEventAggregation;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
@@ -25,46 +26,79 @@ use datadog_api_client::datadogV1::model::WidgetSortOrderBy;
 
 #[tokio::main]
 async fn main() {
-    let body = Dashboard::new(
-        DashboardLayoutType::ORDERED,
-        "Example-Dashboard with query table widget and storage parameter".to_string(),
-        vec![Widget::new(WidgetDefinition::TableWidgetDefinition(
-            Box::new(TableWidgetDefinition::new(
-                vec![TableWidgetRequest::new()
-                    .formulas(vec![WidgetFormula::new("query1".to_string())
-                        .cell_display_mode(TableWidgetCellDisplayMode::BAR)
-                        .conditional_formats(vec![])])
-                    .queries(vec![
-                        FormulaAndFunctionQueryDefinition::FormulaAndFunctionEventQueryDefinition(
-                            Box::new(
-                                FormulaAndFunctionEventQueryDefinition::new(
-                                    FormulaAndFunctionEventQueryDefinitionCompute::new(
-                                        FormulaAndFunctionEventAggregation::COUNT,
-                                    ),
-                                    FormulaAndFunctionEventsDataSource::LOGS,
-                                    "query1".to_string(),
-                                )
-                                .group_by(vec![])
-                                .indexes(vec!["*".to_string()])
-                                .search(FormulaAndFunctionEventQueryDefinitionSearch::new(
-                                    "".to_string(),
-                                ))
-                                .storage("online_archives".to_string()),
+    let body =
+        Dashboard::new(
+            DashboardLayoutType::ORDERED,
+            "Example-Dashboard with query table widget and storage parameter".to_string(),
+            vec![
+                Widget::new(
+                    WidgetDefinition::TableWidgetDefinition(
+                        Box::new(
+                            TableWidgetDefinition::new(
+                                vec![
+                                    TableWidgetRequest::new()
+                                        .formulas(
+                                            vec![
+                                                WidgetFormula::new("query1".to_string())
+                                                    .cell_display_mode(TableWidgetCellDisplayMode::BAR)
+                                                    .conditional_formats(vec![])
+                                            ],
+                                        )
+                                        .queries(
+                                            vec![
+                                                FormulaAndFunctionQueryDefinition
+                                                ::FormulaAndFunctionEventQueryDefinition(
+                                                    Box::new(
+                                                        FormulaAndFunctionEventQueryDefinition::new(
+                                                            FormulaAndFunctionEventQueryDefinitionCompute::new(
+                                                                FormulaAndFunctionEventAggregation::COUNT,
+                                                            ),
+                                                            FormulaAndFunctionEventsDataSource::LOGS,
+                                                            "query1".to_string(),
+                                                        )
+                                                            .group_by(
+                                                                FormulaAndFunctionEventQueryGroupByConfig
+                                                                ::FormulaAndFunctionEventQueryGroupByList(
+                                                                    vec![],
+                                                                ),
+                                                            )
+                                                            .indexes(vec!["*".to_string()])
+                                                            .search(
+                                                                FormulaAndFunctionEventQueryDefinitionSearch::new(
+                                                                    "".to_string(),
+                                                                ),
+                                                            )
+                                                            .storage("online_archives".to_string()),
+                                                    ),
+                                                )
+                                            ],
+                                        )
+                                        .response_format(FormulaAndFunctionResponseFormat::SCALAR)
+                                        .sort(
+                                            WidgetSortBy::new()
+                                                .count(50)
+                                                .order_by(
+                                                    vec![
+                                                        WidgetSortOrderBy::WidgetFormulaSort(
+                                                            Box::new(
+                                                                WidgetFormulaSort::new(
+                                                                    0,
+                                                                    WidgetSort::DESCENDING,
+                                                                    FormulaType::FORMULA,
+                                                                ),
+                                                            ),
+                                                        )
+                                                    ],
+                                                ),
+                                        )
+                                ],
+                                TableWidgetDefinitionType::QUERY_TABLE,
                             ),
                         ),
-                    ])
-                    .response_format(FormulaAndFunctionResponseFormat::SCALAR)
-                    .sort(WidgetSortBy::new().count(50).order_by(vec![
-                        WidgetSortOrderBy::WidgetFormulaSort(Box::new(WidgetFormulaSort::new(
-                            0,
-                            WidgetSort::DESCENDING,
-                            FormulaType::FORMULA,
-                        ))),
-                    ]))],
-                TableWidgetDefinitionType::QUERY_TABLE,
-            )),
-        ))],
-    );
+                    ),
+                )
+            ],
+        );
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;

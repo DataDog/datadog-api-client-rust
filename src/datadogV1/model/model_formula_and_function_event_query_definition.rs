@@ -20,9 +20,9 @@ pub struct FormulaAndFunctionEventQueryDefinition {
     /// Data source for event platform-based queries.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV1::model::FormulaAndFunctionEventsDataSource,
-    /// Group by options.
+    /// Group by configuration for a formula and functions events query. Can be a list of facet objects or a flat object with a list of fields.
     #[serde(rename = "group_by")]
-    pub group_by: Option<Vec<crate::datadogV1::model::FormulaAndFunctionEventQueryGroupBy>>,
+    pub group_by: Option<crate::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig>,
     /// An array of index names to query in the stream. Omit or use `[]` to query all indexes at once.
     #[serde(rename = "indexes")]
     pub indexes: Option<Vec<String>>,
@@ -69,7 +69,7 @@ impl FormulaAndFunctionEventQueryDefinition {
 
     pub fn group_by(
         mut self,
-        value: Vec<crate::datadogV1::model::FormulaAndFunctionEventQueryGroupBy>,
+        value: crate::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig,
     ) -> Self {
         self.group_by = Some(value);
         self
@@ -127,7 +127,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventQueryDefinition {
                     crate::datadogV1::model::FormulaAndFunctionEventsDataSource,
                 > = None;
                 let mut group_by: Option<
-                    Vec<crate::datadogV1::model::FormulaAndFunctionEventQueryGroupBy>,
+                    crate::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig,
                 > = None;
                 let mut indexes: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
@@ -170,6 +170,14 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventQueryDefinition {
                                 continue;
                             }
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _group_by) = group_by {
+                                match _group_by {
+                                    crate::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig::UnparsedObject(_group_by) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "indexes" => {
                             if v.is_null() {

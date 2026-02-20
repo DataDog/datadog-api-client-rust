@@ -11,6 +11,7 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinition
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryGroupBy;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryGroupBySort;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
@@ -49,19 +50,22 @@ async fn main() {
                                                             "query1".to_string(),
                                                         )
                                                             .group_by(
-                                                                vec![
-                                                                    FormulaAndFunctionEventQueryGroupBy::new(
-                                                                        "service".to_string(),
-                                                                    )
-                                                                        .limit(1000)
-                                                                        .sort(
-                                                                            FormulaAndFunctionEventQueryGroupBySort
-                                                                            ::new(
-                                                                                FormulaAndFunctionEventAggregation
-                                                                                ::COUNT,
-                                                                            ).order(QuerySortOrder::DESC),
+                                                                FormulaAndFunctionEventQueryGroupByConfig
+                                                                ::FormulaAndFunctionEventQueryGroupByList(
+                                                                    vec![
+                                                                        FormulaAndFunctionEventQueryGroupBy::new(
+                                                                            "service".to_string(),
                                                                         )
-                                                                ],
+                                                                            .limit(1000)
+                                                                            .sort(
+                                                                                FormulaAndFunctionEventQueryGroupBySort
+                                                                                ::new(
+                                                                                    FormulaAndFunctionEventAggregation
+                                                                                    ::COUNT,
+                                                                                ).order(QuerySortOrder::DESC),
+                                                                            )
+                                                                    ],
+                                                                ),
                                                             )
                                                             .indexes(vec!["*".to_string()])
                                                             .search(
