@@ -3529,6 +3529,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateIncidentTodo".into(), test_v2_update_incident_todo);
+    world.function_mappings.insert(
+        "v2.ListIncidentTimestampOverrides".into(),
+        test_v2_list_incident_timestamp_overrides,
+    );
+    world.function_mappings.insert(
+        "v2.CreateIncidentTimestampOverride".into(),
+        test_v2_create_incident_timestamp_override,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteIncidentTimestampOverride".into(),
+        test_v2_delete_incident_timestamp_override,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateIncidentTimestampOverride".into(),
+        test_v2_update_incident_timestamp_override,
+    );
     world
         .function_mappings
         .insert("v2.ListAWSAccounts".into(), test_v2_list_aws_accounts);
@@ -26157,6 +26173,162 @@ fn test_v2_update_incident_todo(world: &mut DatadogWorld, _parameters: &HashMap<
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_incident_timestamp_overrides(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_incidents
+        .as_ref()
+        .expect("api instance not found");
+    let incident_id =
+        serde_json::from_value(_parameters.get("incident_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_deleted = _parameters
+        .get("include-deleted")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_incidents::ListIncidentTimestampOverridesOptionalParams::default();
+    params.include = include;
+    params.include_deleted = include_deleted;
+    let response =
+        match block_on(api.list_incident_timestamp_overrides_with_http_info(incident_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_incident_timestamp_override(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_incidents
+        .as_ref()
+        .expect("api instance not found");
+    let incident_id =
+        serde_json::from_value(_parameters.get("incident_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_incidents::CreateIncidentTimestampOverrideOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.create_incident_timestamp_override_with_http_info(
+        incident_id,
+        body,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_incident_timestamp_override(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_incidents
+        .as_ref()
+        .expect("api instance not found");
+    let incident_id =
+        serde_json::from_value(_parameters.get("incident_id").unwrap().clone()).unwrap();
+    let timestamp_override_id =
+        serde_json::from_value(_parameters.get("timestamp_override_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_incident_timestamp_override_with_http_info(incident_id, timestamp_override_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_incident_timestamp_override(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_incidents
+        .as_ref()
+        .expect("api instance not found");
+    let incident_id =
+        serde_json::from_value(_parameters.get("incident_id").unwrap().clone()).unwrap();
+    let timestamp_override_id =
+        serde_json::from_value(_parameters.get("timestamp_override_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_incidents::UpdateIncidentTimestampOverrideOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.update_incident_timestamp_override_with_http_info(
+        incident_id,
+        timestamp_override_id,
+        body,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
