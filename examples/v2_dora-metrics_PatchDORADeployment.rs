@@ -13,10 +13,11 @@ async fn main() {
     let body = DORADeploymentPatchRequest::new(DORADeploymentPatchRequestData::new(
         DORADeploymentPatchRequestAttributes::new()
             .change_failure(true)
-            .remediation(DORADeploymentPatchRemediation::new(
-                "eG42zNIkVjM".to_string(),
-                DORADeploymentPatchRemediationType::ROLLBACK,
-            )),
+            .remediation(
+                DORADeploymentPatchRemediation::new()
+                    .id("eG42zNIkVjM".to_string())
+                    .type_(DORADeploymentPatchRemediationType::ROLLBACK),
+            ),
         "z_RwVLi7v4Y".to_string(),
         DORADeploymentPatchRequestDataType::DORA_DEPLOYMENT_PATCH_REQUEST,
     ));

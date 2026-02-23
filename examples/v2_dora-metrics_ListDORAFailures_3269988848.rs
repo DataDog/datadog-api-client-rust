@@ -1,4 +1,4 @@
-// Get a list of incident events returns "OK" response
+// Get a list of failure events returns "OK" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
@@ -13,14 +13,12 @@ async fn main() {
         DORAListFailuresRequestData::new(
             DORAListFailuresRequestAttributes::new()
                 .from(
-                    DateTime::parse_from_rfc3339("2025-01-01T00:00:00+00:00")
+                    DateTime::parse_from_rfc3339("2025-03-23T00:00:00+00:00")
                         .expect("Failed to parse datetime")
                         .with_timezone(&Utc),
                 )
-                .limit(100)
-                .query("severity:(SEV-1 OR SEV-2) env:production team:backend".to_string())
-                .sort("-started_at".to_string())
-                .to(DateTime::parse_from_rfc3339("2025-01-31T23:59:59+00:00")
+                .limit(1)
+                .to(DateTime::parse_from_rfc3339("2025-03-24T00:00:00+00:00")
                     .expect("Failed to parse datetime")
                     .with_timezone(&Utc)),
         )

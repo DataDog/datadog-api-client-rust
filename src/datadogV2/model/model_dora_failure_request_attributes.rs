@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes to create a DORA failure event.
+/// Attributes to create a DORA incident event.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -18,28 +18,28 @@ pub struct DORAFailureRequestAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub custom_tags: Option<Option<Vec<String>>>,
-    /// Environment name that was impacted by the failure.
+    /// Environment name that was impacted by the incident.
     #[serde(rename = "env")]
     pub env: Option<String>,
-    /// Unix timestamp when the failure finished. It must be in nanoseconds, milliseconds, or seconds.
+    /// Unix timestamp when the incident finished. It must be in nanoseconds, milliseconds, or seconds.
     #[serde(rename = "finished_at")]
     pub finished_at: Option<i64>,
     /// Git info for DORA Metrics events.
     #[serde(rename = "git")]
     pub git: Option<crate::datadogV2::model::DORAGitInfo>,
-    /// Failure ID. Must be 16-128 characters and contain only alphanumeric characters, hyphens, underscores, periods, and colons (a-z, A-Z, 0-9, -, _, ., :).
+    /// Incident ID. Must be 16-128 characters and contain only alphanumeric characters, hyphens, underscores, periods, and colons (a-z, A-Z, 0-9, -, _, ., :).
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Failure name.
+    /// Incident name.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Service names impacted by the failure. If possible, use names registered in the Service Catalog. Required when the team field is not provided.
+    /// Service names impacted by the incident. If possible, use names registered in the Service Catalog. Required when the team field is not provided.
     #[serde(rename = "services")]
     pub services: Option<Vec<String>>,
-    /// Failure severity.
+    /// Incident severity.
     #[serde(rename = "severity")]
     pub severity: Option<String>,
-    /// Unix timestamp when the failure started. It must be in nanoseconds, milliseconds, or seconds.
+    /// Unix timestamp when the incident started. It must be in nanoseconds, milliseconds, or seconds.
     #[serde(rename = "started_at")]
     pub started_at: i64,
     /// Name of the team owning the services impacted. If possible, use team handles registered in Datadog. Required when the services field is not provided.
