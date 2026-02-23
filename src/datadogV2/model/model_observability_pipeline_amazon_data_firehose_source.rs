@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineAmazonDataFirehoseSource {
+    /// Name of the environment variable or secret that holds the Firehose delivery stream address.
+    #[serde(rename = "address_key")]
+    pub address_key: Option<String>,
     /// AWS authentication credentials used for accessing AWS services such as S3.
     /// If omitted, the system’s default credentials are used (for example, the IAM role and environment variables).
     #[serde(rename = "auth")]
@@ -39,6 +42,7 @@ impl ObservabilityPipelineAmazonDataFirehoseSource {
         type_: crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSourceType,
     ) -> ObservabilityPipelineAmazonDataFirehoseSource {
         ObservabilityPipelineAmazonDataFirehoseSource {
+            address_key: None,
             auth: None,
             id,
             tls: None,
@@ -46,6 +50,11 @@ impl ObservabilityPipelineAmazonDataFirehoseSource {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn address_key(mut self, value: String) -> Self {
+        self.address_key = Some(value);
+        self
     }
 
     pub fn auth(mut self, value: crate::datadogV2::model::ObservabilityPipelineAwsAuth) -> Self {
@@ -84,6 +93,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonDataFirehoseSource {
             where
                 M: MapAccess<'a>,
             {
+                let mut address_key: Option<String> = None;
                 let mut auth: Option<crate::datadogV2::model::ObservabilityPipelineAwsAuth> = None;
                 let mut id: Option<String> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
@@ -98,6 +108,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonDataFirehoseSource {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "address_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            address_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "auth" => {
                             if v.is_null() {
                                 continue;
@@ -135,6 +152,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonDataFirehoseSource {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineAmazonDataFirehoseSource {
+                    address_key,
                     auth,
                     id,
                     tls,

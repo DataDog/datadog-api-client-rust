@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineKafkaDestination {
+    /// Name of the environment variable or secret that holds the Kafka bootstrap servers list.
+    #[serde(rename = "bootstrap_servers_key")]
+    pub bootstrap_servers_key: Option<String>,
     /// Compression codec for Kafka messages.
     #[serde(rename = "compression")]
     pub compression:
@@ -76,6 +79,7 @@ impl ObservabilityPipelineKafkaDestination {
         type_: crate::datadogV2::model::ObservabilityPipelineKafkaDestinationType,
     ) -> ObservabilityPipelineKafkaDestination {
         ObservabilityPipelineKafkaDestination {
+            bootstrap_servers_key: None,
             compression: None,
             encoding,
             headers_key: None,
@@ -94,6 +98,11 @@ impl ObservabilityPipelineKafkaDestination {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn bootstrap_servers_key(mut self, value: String) -> Self {
+        self.bootstrap_servers_key = Some(value);
+        self
     }
 
     pub fn compression(
@@ -178,6 +187,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
             where
                 M: MapAccess<'a>,
             {
+                let mut bootstrap_servers_key: Option<String> = None;
                 let mut compression: Option<
                     crate::datadogV2::model::ObservabilityPipelineKafkaDestinationCompression,
                 > = None;
@@ -210,6 +220,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "bootstrap_servers_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bootstrap_servers_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "compression" => {
                             if v.is_null() {
                                 continue;
@@ -330,6 +347,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineKafkaDestination {
+                    bootstrap_servers_key,
                     compression,
                     encoding,
                     headers_key,

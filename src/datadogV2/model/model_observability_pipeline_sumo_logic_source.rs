@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSumoLogicSource {
+    /// Name of the environment variable or secret that holds the listen address for the Sumo Logic receiver.
+    #[serde(rename = "address_key")]
+    pub address_key: Option<String>,
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
@@ -32,11 +35,17 @@ impl ObservabilityPipelineSumoLogicSource {
         type_: crate::datadogV2::model::ObservabilityPipelineSumoLogicSourceType,
     ) -> ObservabilityPipelineSumoLogicSource {
         ObservabilityPipelineSumoLogicSource {
+            address_key: None,
             id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn address_key(mut self, value: String) -> Self {
+        self.address_key = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -65,6 +74,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicSource {
             where
                 M: MapAccess<'a>,
             {
+                let mut address_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineSumoLogicSourceType,
@@ -77,6 +87,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicSource {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "address_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            address_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -102,6 +119,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicSource {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineSumoLogicSource {
+                    address_key,
                     id,
                     type_,
                     additional_properties,

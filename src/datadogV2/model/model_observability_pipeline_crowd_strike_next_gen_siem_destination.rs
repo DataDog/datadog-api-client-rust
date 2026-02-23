@@ -25,6 +25,9 @@ pub struct ObservabilityPipelineCrowdStrikeNextGenSiemDestination {
     #[serde(rename = "encoding")]
     pub encoding:
         crate::datadogV2::model::ObservabilityPipelineCrowdStrikeNextGenSiemDestinationEncoding,
+    /// Name of the environment variable or secret that holds the CrowdStrike endpoint URL.
+    #[serde(rename = "endpoint_url_key")]
+    pub endpoint_url_key: Option<String>,
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
@@ -34,6 +37,9 @@ pub struct ObservabilityPipelineCrowdStrikeNextGenSiemDestination {
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
+    /// Name of the environment variable or secret that holds the CrowdStrike API token.
+    #[serde(rename = "token_key")]
+    pub token_key: Option<String>,
     /// The destination type. The value should always be `crowdstrike_next_gen_siem`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineCrowdStrikeNextGenSiemDestinationType,
@@ -55,9 +61,11 @@ impl ObservabilityPipelineCrowdStrikeNextGenSiemDestination {
             buffer: None,
             compression: None,
             encoding,
+            endpoint_url_key: None,
             id,
             inputs,
             tls: None,
+            token_key: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -80,8 +88,18 @@ impl ObservabilityPipelineCrowdStrikeNextGenSiemDestination {
         self
     }
 
+    pub fn endpoint_url_key(mut self, value: String) -> Self {
+        self.endpoint_url_key = Some(value);
+        self
+    }
+
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
         self.tls = Some(value);
+        self
+    }
+
+    pub fn token_key(mut self, value: String) -> Self {
+        self.token_key = Some(value);
         self
     }
 
@@ -116,9 +134,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCrowdStrikeNextGenSiemDestin
                 > = None;
                 let mut compression: Option<crate::datadogV2::model::ObservabilityPipelineCrowdStrikeNextGenSiemDestinationCompression> = None;
                 let mut encoding: Option<crate::datadogV2::model::ObservabilityPipelineCrowdStrikeNextGenSiemDestinationEncoding> = None;
+                let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
+                let mut token_key: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineCrowdStrikeNextGenSiemDestinationType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -160,6 +180,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCrowdStrikeNextGenSiemDestin
                                 }
                             }
                         }
+                        "endpoint_url_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            endpoint_url_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -171,6 +198,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCrowdStrikeNextGenSiemDestin
                                 continue;
                             }
                             tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "token_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            token_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -199,9 +232,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCrowdStrikeNextGenSiemDestin
                     buffer,
                     compression,
                     encoding,
+                    endpoint_url_key,
                     id,
                     inputs,
                     tls,
+                    token_key,
                     type_,
                     additional_properties,
                     _unparsed,

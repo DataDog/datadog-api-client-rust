@@ -20,6 +20,9 @@ pub struct ObservabilityPipelineTls {
     /// Path to the private key file associated with the TLS client certificate. Used for mutual TLS authentication.
     #[serde(rename = "key_file")]
     pub key_file: Option<String>,
+    /// Name of the environment variable or secret that holds the passphrase for the private key file.
+    #[serde(rename = "key_pass_key")]
+    pub key_pass_key: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -33,6 +36,7 @@ impl ObservabilityPipelineTls {
             ca_file: None,
             crt_file,
             key_file: None,
+            key_pass_key: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -45,6 +49,11 @@ impl ObservabilityPipelineTls {
 
     pub fn key_file(mut self, value: String) -> Self {
         self.key_file = Some(value);
+        self
+    }
+
+    pub fn key_pass_key(mut self, value: String) -> Self {
+        self.key_pass_key = Some(value);
         self
     }
 
@@ -77,6 +86,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTls {
                 let mut ca_file: Option<String> = None;
                 let mut crt_file: Option<String> = None;
                 let mut key_file: Option<String> = None;
+                let mut key_pass_key: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -100,6 +110,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTls {
                             }
                             key_file = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "key_pass_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            key_pass_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -113,6 +130,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTls {
                     ca_file,
                     crt_file,
                     key_file,
+                    key_pass_key,
                     additional_properties,
                     _unparsed,
                 };

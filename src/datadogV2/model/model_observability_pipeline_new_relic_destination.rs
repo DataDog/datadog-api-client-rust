@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineNewRelicDestination {
+    /// Name of the environment variable or secret that holds the New Relic account ID.
+    #[serde(rename = "account_id_key")]
+    pub account_id_key: Option<String>,
     /// Configuration for buffer settings on destination components.
     #[serde(rename = "buffer")]
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
@@ -22,6 +25,9 @@ pub struct ObservabilityPipelineNewRelicDestination {
     /// A list of component IDs whose output is used as the `input` for this component.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
+    /// Name of the environment variable or secret that holds the New Relic license key.
+    #[serde(rename = "license_key_key")]
+    pub license_key_key: Option<String>,
     /// The New Relic region.
     #[serde(rename = "region")]
     pub region: crate::datadogV2::model::ObservabilityPipelineNewRelicDestinationRegion,
@@ -43,9 +49,11 @@ impl ObservabilityPipelineNewRelicDestination {
         type_: crate::datadogV2::model::ObservabilityPipelineNewRelicDestinationType,
     ) -> ObservabilityPipelineNewRelicDestination {
         ObservabilityPipelineNewRelicDestination {
+            account_id_key: None,
             buffer: None,
             id,
             inputs,
+            license_key_key: None,
             region,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -53,11 +61,21 @@ impl ObservabilityPipelineNewRelicDestination {
         }
     }
 
+    pub fn account_id_key(mut self, value: String) -> Self {
+        self.account_id_key = Some(value);
+        self
+    }
+
     pub fn buffer(
         mut self,
         value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
     ) -> Self {
         self.buffer = Some(value);
+        self
+    }
+
+    pub fn license_key_key(mut self, value: String) -> Self {
+        self.license_key_key = Some(value);
         self
     }
 
@@ -87,11 +105,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineNewRelicDestination {
             where
                 M: MapAccess<'a>,
             {
+                let mut account_id_key: Option<String> = None;
                 let mut buffer: Option<
                     crate::datadogV2::model::ObservabilityPipelineBufferOptions,
                 > = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
+                let mut license_key_key: Option<String> = None;
                 let mut region: Option<
                     crate::datadogV2::model::ObservabilityPipelineNewRelicDestinationRegion,
                 > = None;
@@ -106,6 +126,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineNewRelicDestination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "account_id_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_id_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "buffer" => {
                             if v.is_null() {
                                 continue;
@@ -125,6 +152,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineNewRelicDestination {
                         }
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "license_key_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            license_key_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "region" => {
                             region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -161,9 +195,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineNewRelicDestination {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineNewRelicDestination {
+                    account_id_key,
                     buffer,
                     id,
                     inputs,
+                    license_key_key,
                     region,
                     type_,
                     additional_properties,

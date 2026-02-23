@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSocketDestination {
+    /// Name of the environment variable or secret that holds the socket address (host:port).
+    #[serde(rename = "address_key")]
+    pub address_key: Option<String>,
     /// Configuration for buffer settings on destination components.
     #[serde(rename = "buffer")]
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
@@ -54,6 +57,7 @@ impl ObservabilityPipelineSocketDestination {
         type_: crate::datadogV2::model::ObservabilityPipelineSocketDestinationType,
     ) -> ObservabilityPipelineSocketDestination {
         ObservabilityPipelineSocketDestination {
+            address_key: None,
             buffer: None,
             encoding,
             framing,
@@ -65,6 +69,11 @@ impl ObservabilityPipelineSocketDestination {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn address_key(mut self, value: String) -> Self {
+        self.address_key = Some(value);
+        self
     }
 
     pub fn buffer(
@@ -106,6 +115,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSocketDestination {
             where
                 M: MapAccess<'a>,
             {
+                let mut address_key: Option<String> = None;
                 let mut buffer: Option<
                     crate::datadogV2::model::ObservabilityPipelineBufferOptions,
                 > = None;
@@ -132,6 +142,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSocketDestination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "address_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            address_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "buffer" => {
                             if v.is_null() {
                                 continue;
@@ -217,6 +234,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSocketDestination {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineSocketDestination {
+                    address_key,
                     buffer,
                     encoding,
                     framing,

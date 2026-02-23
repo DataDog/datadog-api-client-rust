@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineLogstashSource {
+    /// Name of the environment variable or secret that holds the listen address for the Logstash receiver.
+    #[serde(rename = "address_key")]
+    pub address_key: Option<String>,
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
@@ -35,12 +38,18 @@ impl ObservabilityPipelineLogstashSource {
         type_: crate::datadogV2::model::ObservabilityPipelineLogstashSourceType,
     ) -> ObservabilityPipelineLogstashSource {
         ObservabilityPipelineLogstashSource {
+            address_key: None,
             id,
             tls: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn address_key(mut self, value: String) -> Self {
+        self.address_key = Some(value);
+        self
     }
 
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
@@ -74,6 +83,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineLogstashSource {
             where
                 M: MapAccess<'a>,
             {
+                let mut address_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
                 let mut type_: Option<
@@ -87,6 +97,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineLogstashSource {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "address_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            address_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -118,6 +135,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineLogstashSource {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineLogstashSource {
+                    address_key,
                     id,
                     tls,
                     type_,

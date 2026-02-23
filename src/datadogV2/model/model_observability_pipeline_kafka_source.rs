@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineKafkaSource {
+    /// Name of the environment variable or secret that holds the Kafka bootstrap servers list.
+    #[serde(rename = "bootstrap_servers_key")]
+    pub bootstrap_servers_key: Option<String>,
     /// Consumer group ID used by the Kafka client.
     #[serde(rename = "group_id")]
     pub group_id: String,
@@ -50,6 +53,7 @@ impl ObservabilityPipelineKafkaSource {
         type_: crate::datadogV2::model::ObservabilityPipelineKafkaSourceType,
     ) -> ObservabilityPipelineKafkaSource {
         ObservabilityPipelineKafkaSource {
+            bootstrap_servers_key: None,
             group_id,
             id,
             librdkafka_options: None,
@@ -60,6 +64,11 @@ impl ObservabilityPipelineKafkaSource {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn bootstrap_servers_key(mut self, value: String) -> Self {
+        self.bootstrap_servers_key = Some(value);
+        self
     }
 
     pub fn librdkafka_options(
@@ -106,6 +115,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSource {
             where
                 M: MapAccess<'a>,
             {
+                let mut bootstrap_servers_key: Option<String> = None;
                 let mut group_id: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut librdkafka_options: Option<
@@ -126,6 +136,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSource {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "bootstrap_servers_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bootstrap_servers_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "group_id" => {
                             group_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -178,6 +195,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSource {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineKafkaSource {
+                    bootstrap_servers_key,
                     group_id,
                     id,
                     librdkafka_options,

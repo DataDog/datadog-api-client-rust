@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineGooglePubSubSource {
-    /// GCP credentials used to authenticate with Google Cloud Storage.
+    /// Google Cloud credentials used to authenticate with Google Cloud Storage.
     #[serde(rename = "auth")]
     pub auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth>,
     /// The decoding format used to interpret incoming logs.
@@ -22,7 +22,7 @@ pub struct ObservabilityPipelineGooglePubSubSource {
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
-    /// The GCP project ID that owns the Pub/Sub subscription.
+    /// The Google Cloud project ID that owns the Pub/Sub subscription.
     #[serde(rename = "project")]
     pub project: String,
     /// The Pub/Sub subscription name from which messages are consumed.

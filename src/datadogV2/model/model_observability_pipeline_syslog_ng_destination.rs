@@ -16,6 +16,9 @@ pub struct ObservabilityPipelineSyslogNgDestination {
     /// Configuration for buffer settings on destination components.
     #[serde(rename = "buffer")]
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
+    /// Name of the environment variable or secret that holds the syslog-ng server endpoint URL.
+    #[serde(rename = "endpoint_url_key")]
+    pub endpoint_url_key: Option<String>,
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
@@ -46,6 +49,7 @@ impl ObservabilityPipelineSyslogNgDestination {
     ) -> ObservabilityPipelineSyslogNgDestination {
         ObservabilityPipelineSyslogNgDestination {
             buffer: None,
+            endpoint_url_key: None,
             id,
             inputs,
             keepalive: None,
@@ -61,6 +65,11 @@ impl ObservabilityPipelineSyslogNgDestination {
         value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
     ) -> Self {
         self.buffer = Some(value);
+        self
+    }
+
+    pub fn endpoint_url_key(mut self, value: String) -> Self {
+        self.endpoint_url_key = Some(value);
         self
     }
 
@@ -103,6 +112,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSyslogNgDestination {
                 let mut buffer: Option<
                     crate::datadogV2::model::ObservabilityPipelineBufferOptions,
                 > = None;
+                let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut keepalive: Option<i64> = None;
@@ -131,6 +141,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSyslogNgDestination {
                                     _ => {}
                                 }
                             }
+                        }
+                        "endpoint_url_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            endpoint_url_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -174,6 +191,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSyslogNgDestination {
 
                 let content = ObservabilityPipelineSyslogNgDestination {
                     buffer,
+                    endpoint_url_key,
                     id,
                     inputs,
                     keepalive,

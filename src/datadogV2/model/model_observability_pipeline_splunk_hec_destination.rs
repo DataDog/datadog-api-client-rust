@@ -24,6 +24,9 @@ pub struct ObservabilityPipelineSplunkHecDestination {
     #[serde(rename = "encoding")]
     pub encoding:
         Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding>,
+    /// Name of the environment variable or secret that holds the Splunk HEC endpoint URL.
+    #[serde(rename = "endpoint_url_key")]
+    pub endpoint_url_key: Option<String>,
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
@@ -36,6 +39,9 @@ pub struct ObservabilityPipelineSplunkHecDestination {
     /// The Splunk sourcetype to assign to log events.
     #[serde(rename = "sourcetype")]
     pub sourcetype: Option<String>,
+    /// Name of the environment variable or secret that holds the Splunk HEC token.
+    #[serde(rename = "token_key")]
+    pub token_key: Option<String>,
     /// The destination type. Always `splunk_hec`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationType,
@@ -56,10 +62,12 @@ impl ObservabilityPipelineSplunkHecDestination {
             auto_extract_timestamp: None,
             buffer: None,
             encoding: None,
+            endpoint_url_key: None,
             id,
             index: None,
             inputs,
             sourcetype: None,
+            token_key: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -87,6 +95,11 @@ impl ObservabilityPipelineSplunkHecDestination {
         self
     }
 
+    pub fn endpoint_url_key(mut self, value: String) -> Self {
+        self.endpoint_url_key = Some(value);
+        self
+    }
+
     pub fn index(mut self, value: String) -> Self {
         self.index = Some(value);
         self
@@ -94,6 +107,11 @@ impl ObservabilityPipelineSplunkHecDestination {
 
     pub fn sourcetype(mut self, value: String) -> Self {
         self.sourcetype = Some(value);
+        self
+    }
+
+    pub fn token_key(mut self, value: String) -> Self {
+        self.token_key = Some(value);
         self
     }
 
@@ -130,10 +148,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                 let mut encoding: Option<
                     crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding,
                 > = None;
+                let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut index: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut sourcetype: Option<String> = None;
+                let mut token_key: Option<String> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationType,
                 > = None;
@@ -180,6 +200,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                                 }
                             }
                         }
+                        "endpoint_url_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            endpoint_url_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -197,6 +224,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                                 continue;
                             }
                             sourcetype = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "token_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            token_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -224,10 +257,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                     auto_extract_timestamp,
                     buffer,
                     encoding,
+                    endpoint_url_key,
                     id,
                     index,
                     inputs,
                     sourcetype,
+                    token_key,
                     type_,
                     additional_properties,
                     _unparsed,

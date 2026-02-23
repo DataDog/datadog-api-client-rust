@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// GCP credentials used to authenticate with Google Cloud Storage.
+/// Google Cloud credentials used to authenticate with Google Cloud Storage.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineGcpAuth {
-    /// Path to the GCP service account key file.
+    /// Path to the Google Cloud service account key file.
     #[serde(rename = "credentials_file")]
     pub credentials_file: String,
     #[serde(flatten)]

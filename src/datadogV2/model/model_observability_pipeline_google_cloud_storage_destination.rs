@@ -7,7 +7,7 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `google_cloud_storage` destination stores logs in a Google Cloud Storage (GCS) bucket.
-/// It requires a bucket name, GCP authentication, and metadata fields.
+/// It requires a bucket name, Google Cloud authentication, and metadata fields.
 ///
 /// **Supported pipeline types:** logs
 #[non_exhaustive]
@@ -17,7 +17,7 @@ pub struct ObservabilityPipelineGoogleCloudStorageDestination {
     /// Access control list setting for objects written to the bucket.
     #[serde(rename = "acl")]
     pub acl: Option<crate::datadogV2::model::ObservabilityPipelineGoogleCloudStorageDestinationAcl>,
-    /// GCP credentials used to authenticate with Google Cloud Storage.
+    /// Google Cloud credentials used to authenticate with Google Cloud Storage.
     #[serde(rename = "auth")]
     pub auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth>,
     /// Name of the GCS bucket.
