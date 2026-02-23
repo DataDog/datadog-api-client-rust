@@ -17,6 +17,7 @@ pub enum Trigger {
     ),
     DatastoreTriggerWrapper(Box<crate::datadogV2::model::DatastoreTriggerWrapper>),
     DashboardTriggerWrapper(Box<crate::datadogV2::model::DashboardTriggerWrapper>),
+    FormTriggerWrapper(Box<crate::datadogV2::model::FormTriggerWrapper>),
     GithubWebhookTriggerWrapper(Box<crate::datadogV2::model::GithubWebhookTriggerWrapper>),
     IncidentTriggerWrapper(Box<crate::datadogV2::model::IncidentTriggerWrapper>),
     MonitorTriggerWrapper(Box<crate::datadogV2::model::MonitorTriggerWrapper>),
@@ -88,6 +89,13 @@ impl<'de> Deserialize<'de> for Trigger {
         {
             if !_v._unparsed {
                 return Ok(Trigger::DashboardTriggerWrapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::FormTriggerWrapper>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(Trigger::FormTriggerWrapper(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
