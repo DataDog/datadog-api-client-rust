@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DORAFailureRequestData {
-    /// Attributes to create a DORA failure event.
+    /// Attributes to create a DORA incident event.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::DORAFailureRequestAttributes,
     #[serde(flatten)]

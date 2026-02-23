@@ -17,7 +17,7 @@ pub struct DORAIncidentObject {
     /// The ID of the incident event.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// JSON:API type for DORA failure events.
+    /// JSON:API type for DORA incident events.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::DORAFailureType>,
     #[serde(flatten)]
