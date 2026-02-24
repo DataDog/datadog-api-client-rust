@@ -231,6 +231,7 @@ impl Default for Configuration {
             ("v2.get_incident_postmortem_template".to_owned(), false),
             ("v2.get_incident_todo".to_owned(), false),
             ("v2.get_incident_type".to_owned(), false),
+            ("v2.import_incident".to_owned(), false),
             ("v2.list_global_incident_handles".to_owned(), false),
             ("v2.list_incident_attachments".to_owned(), false),
             ("v2.list_incident_integrations".to_owned(), false),
