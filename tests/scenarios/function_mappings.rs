@@ -4746,6 +4746,42 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_rum_replay_viewership_history_sessions,
     );
     world.function_mappings.insert(
+        "v2.ListScorecardCampaigns".into(),
+        test_v2_list_scorecard_campaigns,
+    );
+    world.function_mappings.insert(
+        "v2.CreateScorecardCampaign".into(),
+        test_v2_create_scorecard_campaign,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteScorecardCampaign".into(),
+        test_v2_delete_scorecard_campaign,
+    );
+    world.function_mappings.insert(
+        "v2.GetScorecardCampaign".into(),
+        test_v2_get_scorecard_campaign,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateScorecardCampaign".into(),
+        test_v2_update_scorecard_campaign,
+    );
+    world.function_mappings.insert(
+        "v2.GenerateScorecardCampaignTeamReports".into(),
+        test_v2_generate_scorecard_campaign_team_reports,
+    );
+    world.function_mappings.insert(
+        "v2.GenerateScorecardCampaignReport".into(),
+        test_v2_generate_scorecard_campaign_report,
+    );
+    world.function_mappings.insert(
+        "v2.ListScorecardDefaultRules".into(),
+        test_v2_list_scorecard_default_rules,
+    );
+    world.function_mappings.insert(
+        "v2.ListScorecardFacets".into(),
+        test_v2_list_scorecard_facets,
+    );
+    world.function_mappings.insert(
         "v2.ListScorecardOutcomes".into(),
         test_v2_list_scorecard_outcomes,
     );
@@ -4779,6 +4815,25 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateScorecardRule".into(),
         test_v2_update_scorecard_rule,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteScorecardRuleWorkflow".into(),
+        test_v2_delete_scorecard_rule_workflow,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateScorecardRuleWorkflow".into(),
+        test_v2_update_scorecard_rule_workflow,
+    );
+    world
+        .function_mappings
+        .insert("v2.ListScorecards".into(), test_v2_list_scorecards);
+    world.function_mappings.insert(
+        "v2.ListScorecardScores".into(),
+        test_v2_list_scorecard_scores,
+    );
+    world.function_mappings.insert(
+        "v2.SetupScorecardRules".into(),
+        test_v2_setup_scorecard_rules,
     );
     world
         .function_mappings
@@ -36060,6 +36115,298 @@ fn test_v2_list_rum_replay_viewership_history_sessions(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_scorecard_campaigns(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_campaign_name = _parameters
+        .get("filter[campaign][name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_campaign_status = _parameters
+        .get("filter[campaign][status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_campaign_owner = _parameters
+        .get("filter[campaign][owner]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_service_scorecards::ListScorecardCampaignsOptionalParams::default();
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    params.filter_campaign_name = filter_campaign_name;
+    params.filter_campaign_status = filter_campaign_status;
+    params.filter_campaign_owner = filter_campaign_owner;
+    let response = match block_on(api.list_scorecard_campaigns_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_scorecard_campaign(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_scorecard_campaign_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_scorecard_campaign(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let campaign_id =
+        serde_json::from_value(_parameters.get("campaign_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_scorecard_campaign_with_http_info(campaign_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_scorecard_campaign(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let campaign_id =
+        serde_json::from_value(_parameters.get("campaign_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_meta = _parameters
+        .get("include_meta")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_service_scorecards::GetScorecardCampaignOptionalParams::default();
+    params.include = include;
+    params.include_meta = include_meta;
+    let response = match block_on(api.get_scorecard_campaign_with_http_info(campaign_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_scorecard_campaign(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let campaign_id =
+        serde_json::from_value(_parameters.get("campaign_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_scorecard_campaign_with_http_info(campaign_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_generate_scorecard_campaign_team_reports(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let campaign_id =
+        serde_json::from_value(_parameters.get("campaign_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.generate_scorecard_campaign_team_reports_with_http_info(campaign_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_generate_scorecard_campaign_report(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let campaign_id =
+        serde_json::from_value(_parameters.get("campaign_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.generate_scorecard_campaign_report_with_http_info(campaign_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_scorecard_default_rules(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_scorecard_default_rules_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_scorecard_facets(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let filter_entity_query = _parameters
+        .get("filter[entity][query]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_service_scorecards::ListScorecardFacetsOptionalParams::default();
+    params.filter_entity_query = filter_entity_query;
+    let response = match block_on(api.list_scorecard_facets_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_scorecard_outcomes(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -36461,6 +36808,191 @@ fn test_v2_update_scorecard_rule(world: &mut DatadogWorld, _parameters: &HashMap
     let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_scorecard_rule_with_http_info(rule_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_scorecard_rule_workflow(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_scorecard_rule_workflow_with_http_info(rule_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_scorecard_rule_workflow(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
+    let workflow_id =
+        serde_json::from_value(_parameters.get("workflow_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_scorecard_rule_workflow_with_http_info(rule_id, workflow_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_scorecards(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_scorecard_id = _parameters
+        .get("filter[scorecard][id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_scorecard_name = _parameters
+        .get("filter[scorecard][name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_scorecard_description = _parameters
+        .get("filter[scorecard][description]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_service_scorecards::ListScorecardsOptionalParams::default();
+    params.page_offset = page_offset;
+    params.page_size = page_size;
+    params.filter_scorecard_id = filter_scorecard_id;
+    params.filter_scorecard_name = filter_scorecard_name;
+    params.filter_scorecard_description = filter_scorecard_description;
+    let response = match block_on(api.list_scorecards_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_scorecard_scores(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let aggregation =
+        serde_json::from_value(_parameters.get("aggregation").unwrap().clone()).unwrap();
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_entity_query = _parameters
+        .get("filter[entity][query]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_id = _parameters
+        .get("filter[rule][id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_enabled = _parameters
+        .get("filter[rule][enabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_custom = _parameters
+        .get("filter[rule][custom]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_service_scorecards::ListScorecardScoresOptionalParams::default();
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    params.filter_entity_query = filter_entity_query;
+    params.filter_rule_id = filter_rule_id;
+    params.filter_rule_enabled = filter_rule_enabled;
+    params.filter_rule_custom = filter_rule_custom;
+    params.sort = sort;
+    let response = match block_on(api.list_scorecard_scores_with_http_info(aggregation, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_setup_scorecard_rules(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_service_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.setup_scorecard_rules_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
