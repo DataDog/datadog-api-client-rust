@@ -20,6 +20,7 @@ pub enum Trigger {
     FormTriggerWrapper(Box<crate::datadogV2::model::FormTriggerWrapper>),
     GithubWebhookTriggerWrapper(Box<crate::datadogV2::model::GithubWebhookTriggerWrapper>),
     IncidentTriggerWrapper(Box<crate::datadogV2::model::IncidentTriggerWrapper>),
+    IncidentScheduleTriggerWrapper(Box<crate::datadogV2::model::IncidentScheduleTriggerWrapper>),
     MonitorTriggerWrapper(Box<crate::datadogV2::model::MonitorTriggerWrapper>),
     NotebookTriggerWrapper(Box<crate::datadogV2::model::NotebookTriggerWrapper>),
     OnCallTriggerWrapper(Box<crate::datadogV2::model::OnCallTriggerWrapper>),
@@ -111,6 +112,14 @@ impl<'de> Deserialize<'de> for Trigger {
         ) {
             if !_v._unparsed {
                 return Ok(Trigger::IncidentTriggerWrapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::IncidentScheduleTriggerWrapper>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(Trigger::IncidentScheduleTriggerWrapper(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::MonitorTriggerWrapper>>(
