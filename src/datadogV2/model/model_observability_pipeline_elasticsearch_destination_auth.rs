@@ -6,18 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Specifies the SASL mechanism for authenticating with a Kafka cluster.
+/// Authentication settings for the Elasticsearch destination.
+/// When `strategy` is `basic`, use `username_key` and `password_key` to reference credentials stored in environment variables or secrets.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineKafkaSasl {
-    /// SASL mechanism used for Kafka authentication.
-    #[serde(rename = "mechanism")]
-    pub mechanism: Option<crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism>,
-    /// Name of the environment variable or secret that holds the SASL password.
+pub struct ObservabilityPipelineElasticsearchDestinationAuth {
+    /// Name of the environment variable or secret that holds the Elasticsearch password (used when `strategy` is `basic`).
     #[serde(rename = "password_key")]
     pub password_key: Option<String>,
-    /// Name of the environment variable or secret that holds the SASL username.
+    /// The authentication strategy to use.
+    #[serde(rename = "strategy")]
+    pub strategy:
+        crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuthStrategy,
+    /// Name of the environment variable or secret that holds the Elasticsearch username (used when `strategy` is `basic`).
     #[serde(rename = "username_key")]
     pub username_key: Option<String>,
     #[serde(flatten)]
@@ -27,23 +29,17 @@ pub struct ObservabilityPipelineKafkaSasl {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineKafkaSasl {
-    pub fn new() -> ObservabilityPipelineKafkaSasl {
-        ObservabilityPipelineKafkaSasl {
-            mechanism: None,
+impl ObservabilityPipelineElasticsearchDestinationAuth {
+    pub fn new(
+        strategy: crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuthStrategy,
+    ) -> ObservabilityPipelineElasticsearchDestinationAuth {
+        ObservabilityPipelineElasticsearchDestinationAuth {
             password_key: None,
+            strategy,
             username_key: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn mechanism(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism,
-    ) -> Self {
-        self.mechanism = Some(value);
-        self
     }
 
     pub fn password_key(mut self, value: String) -> Self {
@@ -65,20 +61,14 @@ impl ObservabilityPipelineKafkaSasl {
     }
 }
 
-impl Default for ObservabilityPipelineKafkaSasl {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSasl {
+impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestinationAuth {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineKafkaSaslVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineKafkaSaslVisitor {
-            type Value = ObservabilityPipelineKafkaSasl;
+        struct ObservabilityPipelineElasticsearchDestinationAuthVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineElasticsearchDestinationAuthVisitor {
+            type Value = ObservabilityPipelineElasticsearchDestinationAuth;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -88,10 +78,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSasl {
             where
                 M: MapAccess<'a>,
             {
-                let mut mechanism: Option<
-                    crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism,
-                > = None;
                 let mut password_key: Option<String> = None;
+                let mut strategy: Option<crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuthStrategy> = None;
                 let mut username_key: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -101,26 +89,23 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSasl {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "mechanism" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            mechanism = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _mechanism) = mechanism {
-                                match _mechanism {
-                                    crate::datadogV2::model::ObservabilityPipelineKafkaSaslMechanism::UnparsedObject(_mechanism) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
-                        }
                         "password_key" => {
                             if v.is_null() {
                                 continue;
                             }
                             password_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "strategy" => {
+                            strategy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _strategy) = strategy {
+                                match _strategy {
+                                    crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuthStrategy::UnparsedObject(_strategy) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "username_key" => {
                             if v.is_null() {
@@ -136,10 +121,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSasl {
                         }
                     }
                 }
+                let strategy = strategy.ok_or_else(|| M::Error::missing_field("strategy"))?;
 
-                let content = ObservabilityPipelineKafkaSasl {
-                    mechanism,
+                let content = ObservabilityPipelineElasticsearchDestinationAuth {
                     password_key,
+                    strategy,
                     username_key,
                     additional_properties,
                     _unparsed,
@@ -149,6 +135,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaSasl {
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineKafkaSaslVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineElasticsearchDestinationAuthVisitor)
     }
 }

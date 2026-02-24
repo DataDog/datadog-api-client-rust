@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSocketSource {
+    /// Name of the environment variable or secret that holds the listen address for the socket.
+    #[serde(rename = "address_key")]
+    pub address_key: Option<String>,
     /// Framing method configuration for the socket source.
     #[serde(rename = "framing")]
     pub framing: crate::datadogV2::model::ObservabilityPipelineSocketSourceFraming,
@@ -43,6 +46,7 @@ impl ObservabilityPipelineSocketSource {
         type_: crate::datadogV2::model::ObservabilityPipelineSocketSourceType,
     ) -> ObservabilityPipelineSocketSource {
         ObservabilityPipelineSocketSource {
+            address_key: None,
             framing,
             id,
             mode,
@@ -51,6 +55,11 @@ impl ObservabilityPipelineSocketSource {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn address_key(mut self, value: String) -> Self {
+        self.address_key = Some(value);
+        self
     }
 
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
@@ -84,6 +93,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSocketSource {
             where
                 M: MapAccess<'a>,
             {
+                let mut address_key: Option<String> = None;
                 let mut framing: Option<
                     crate::datadogV2::model::ObservabilityPipelineSocketSourceFraming,
                 > = None;
@@ -103,6 +113,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSocketSource {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "address_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            address_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "framing" => {
                             framing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _framing) = framing {
@@ -158,6 +175,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSocketSource {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineSocketSource {
+                    address_key,
                     framing,
                     id,
                     mode,

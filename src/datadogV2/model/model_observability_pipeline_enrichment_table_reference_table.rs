@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineEnrichmentTableReferenceTable {
+    /// Name of the environment variable or secret that holds the Datadog application key used to access the reference table.
+    #[serde(rename = "app_key_key")]
+    pub app_key_key: Option<String>,
     /// List of column names to include from the reference table. If not provided, all columns are included.
     #[serde(rename = "columns")]
     pub columns: Option<Vec<String>>,
@@ -33,12 +36,18 @@ impl ObservabilityPipelineEnrichmentTableReferenceTable {
         table_id: String,
     ) -> ObservabilityPipelineEnrichmentTableReferenceTable {
         ObservabilityPipelineEnrichmentTableReferenceTable {
+            app_key_key: None,
             columns: None,
             key_field,
             table_id,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn app_key_key(mut self, value: String) -> Self {
+        self.app_key_key = Some(value);
+        self
     }
 
     pub fn columns(mut self, value: Vec<String>) -> Self {
@@ -72,6 +81,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableReferenceTabl
             where
                 M: MapAccess<'a>,
             {
+                let mut app_key_key: Option<String> = None;
                 let mut columns: Option<Vec<String>> = None;
                 let mut key_field: Option<String> = None;
                 let mut table_id: Option<String> = None;
@@ -83,6 +93,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableReferenceTabl
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "app_key_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            app_key_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "columns" => {
                             if v.is_null() {
                                 continue;
@@ -106,6 +123,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableReferenceTabl
                 let table_id = table_id.ok_or_else(|| M::Error::missing_field("table_id"))?;
 
                 let content = ObservabilityPipelineEnrichmentTableReferenceTable {
+                    app_key_key,
                     columns,
                     key_field,
                     table_id,

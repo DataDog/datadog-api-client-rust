@@ -25,6 +25,9 @@ pub struct ObservabilityPipelineSentinelOneDestination {
     /// The SentinelOne region to send logs to.
     #[serde(rename = "region")]
     pub region: crate::datadogV2::model::ObservabilityPipelineSentinelOneDestinationRegion,
+    /// Name of the environment variable or secret that holds the SentinelOne API token.
+    #[serde(rename = "token_key")]
+    pub token_key: Option<String>,
     /// The destination type. The value should always be `sentinel_one`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineSentinelOneDestinationType,
@@ -47,6 +50,7 @@ impl ObservabilityPipelineSentinelOneDestination {
             id,
             inputs,
             region,
+            token_key: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -58,6 +62,11 @@ impl ObservabilityPipelineSentinelOneDestination {
         value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
     ) -> Self {
         self.buffer = Some(value);
+        self
+    }
+
+    pub fn token_key(mut self, value: String) -> Self {
+        self.token_key = Some(value);
         self
     }
 
@@ -95,6 +104,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSentinelOneDestination {
                 let mut region: Option<
                     crate::datadogV2::model::ObservabilityPipelineSentinelOneDestinationRegion,
                 > = None;
+                let mut token_key: Option<String> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineSentinelOneDestinationType,
                 > = None;
@@ -137,6 +147,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSentinelOneDestination {
                                 }
                             }
                         }
+                        "token_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            token_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -165,6 +181,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSentinelOneDestination {
                     id,
                     inputs,
                     region,
+                    token_key,
                     type_,
                     additional_properties,
                     _unparsed,

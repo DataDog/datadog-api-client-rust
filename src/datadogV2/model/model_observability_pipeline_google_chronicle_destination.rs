@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineGoogleChronicleDestination {
-    /// GCP credentials used to authenticate with Google Cloud Storage.
+    /// Google Cloud credentials used to authenticate with Google Cloud Storage.
     #[serde(rename = "auth")]
     pub auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth>,
     /// Configuration for buffer settings on destination components.
@@ -26,6 +26,9 @@ pub struct ObservabilityPipelineGoogleChronicleDestination {
     #[serde(rename = "encoding")]
     pub encoding:
         Option<crate::datadogV2::model::ObservabilityPipelineGoogleChronicleDestinationEncoding>,
+    /// Name of the environment variable or secret that holds the Google Chronicle endpoint URL.
+    #[serde(rename = "endpoint_url_key")]
+    pub endpoint_url_key: Option<String>,
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
@@ -57,6 +60,7 @@ impl ObservabilityPipelineGoogleChronicleDestination {
             buffer: None,
             customer_id,
             encoding: None,
+            endpoint_url_key: None,
             id,
             inputs,
             log_type: None,
@@ -84,6 +88,11 @@ impl ObservabilityPipelineGoogleChronicleDestination {
         value: crate::datadogV2::model::ObservabilityPipelineGoogleChronicleDestinationEncoding,
     ) -> Self {
         self.encoding = Some(value);
+        self
+    }
+
+    pub fn endpoint_url_key(mut self, value: String) -> Self {
+        self.endpoint_url_key = Some(value);
         self
     }
 
@@ -124,6 +133,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleChronicleDestination {
                 > = None;
                 let mut customer_id: Option<String> = None;
                 let mut encoding: Option<crate::datadogV2::model::ObservabilityPipelineGoogleChronicleDestinationEncoding> = None;
+                let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut log_type: Option<String> = None;
@@ -176,6 +186,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleChronicleDestination {
                                 }
                             }
                         }
+                        "endpoint_url_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            endpoint_url_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -217,6 +234,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGoogleChronicleDestination {
                     buffer,
                     customer_id,
                     encoding,
+                    endpoint_url_key,
                     id,
                     inputs,
                     log_type,

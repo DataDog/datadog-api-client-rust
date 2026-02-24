@@ -21,6 +21,9 @@ pub struct ObservabilityPipelineHttpClientDestination {
     #[serde(rename = "compression")]
     pub compression:
         Option<crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompression>,
+    /// Name of the environment variable or secret that holds a custom header value (used with custom auth strategies).
+    #[serde(rename = "custom_key")]
+    pub custom_key: Option<String>,
     /// Encoding format for log events.
     #[serde(rename = "encoding")]
     pub encoding: crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationEncoding,
@@ -30,12 +33,24 @@ pub struct ObservabilityPipelineHttpClientDestination {
     /// A list of component IDs whose output is used as the input for this component.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
+    /// Name of the environment variable or secret that holds the password (used when `auth_strategy` is `basic`).
+    #[serde(rename = "password_key")]
+    pub password_key: Option<String>,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
+    /// Name of the environment variable or secret that holds the bearer token (used when `auth_strategy` is `bearer`).
+    #[serde(rename = "token_key")]
+    pub token_key: Option<String>,
     /// The destination type. The value should always be `http_client`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationType,
+    /// Name of the environment variable or secret that holds the HTTP endpoint URI.
+    #[serde(rename = "uri_key")]
+    pub uri_key: Option<String>,
+    /// Name of the environment variable or secret that holds the username (used when `auth_strategy` is `basic`).
+    #[serde(rename = "username_key")]
+    pub username_key: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -53,11 +68,16 @@ impl ObservabilityPipelineHttpClientDestination {
         ObservabilityPipelineHttpClientDestination {
             auth_strategy: None,
             compression: None,
+            custom_key: None,
             encoding,
             id,
             inputs,
+            password_key: None,
             tls: None,
+            token_key: None,
             type_,
+            uri_key: None,
+            username_key: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -79,8 +99,33 @@ impl ObservabilityPipelineHttpClientDestination {
         self
     }
 
+    pub fn custom_key(mut self, value: String) -> Self {
+        self.custom_key = Some(value);
+        self
+    }
+
+    pub fn password_key(mut self, value: String) -> Self {
+        self.password_key = Some(value);
+        self
+    }
+
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
         self.tls = Some(value);
+        self
+    }
+
+    pub fn token_key(mut self, value: String) -> Self {
+        self.token_key = Some(value);
+        self
+    }
+
+    pub fn uri_key(mut self, value: String) -> Self {
+        self.uri_key = Some(value);
+        self
+    }
+
+    pub fn username_key(mut self, value: String) -> Self {
+        self.username_key = Some(value);
         self
     }
 
@@ -116,15 +161,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientDestination {
                 let mut compression: Option<
                     crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompression,
                 > = None;
+                let mut custom_key: Option<String> = None;
                 let mut encoding: Option<
                     crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationEncoding,
                 > = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
+                let mut password_key: Option<String> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
+                let mut token_key: Option<String> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationType,
                 > = None;
+                let mut uri_key: Option<String> = None;
+                let mut username_key: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -155,6 +205,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientDestination {
                             compression =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "custom_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "encoding" => {
                             encoding = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _encoding) = encoding {
@@ -172,11 +228,24 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientDestination {
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "password_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            password_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tls" => {
                             if v.is_null() {
                                 continue;
                             }
                             tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "token_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            token_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -188,6 +257,19 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientDestination {
                                     _ => {}
                                 }
                             }
+                        }
+                        "uri_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            uri_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "username_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            username_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -204,11 +286,16 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientDestination {
                 let content = ObservabilityPipelineHttpClientDestination {
                     auth_strategy,
                     compression,
+                    custom_key,
                     encoding,
                     id,
                     inputs,
+                    password_key,
                     tls,
+                    token_key,
                     type_,
+                    uri_key,
+                    username_key,
                     additional_properties,
                     _unparsed,
                 };

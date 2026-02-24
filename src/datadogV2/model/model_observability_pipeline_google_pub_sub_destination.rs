@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineGooglePubSubDestination {
-    /// GCP credentials used to authenticate with Google Cloud Storage.
+    /// Google Cloud credentials used to authenticate with Google Cloud Storage.
     #[serde(rename = "auth")]
     pub auth: Option<crate::datadogV2::model::ObservabilityPipelineGcpAuth>,
     /// Configuration for buffer settings on destination components.
@@ -22,13 +22,16 @@ pub struct ObservabilityPipelineGooglePubSubDestination {
     /// Encoding format for log events.
     #[serde(rename = "encoding")]
     pub encoding: crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestinationEncoding,
+    /// Name of the environment variable or secret that holds the Google Cloud Pub/Sub endpoint URL.
+    #[serde(rename = "endpoint_url_key")]
+    pub endpoint_url_key: Option<String>,
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
     /// A list of component IDs whose output is used as the `input` for this component.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
-    /// The GCP project ID that owns the Pub/Sub topic.
+    /// The Google Cloud project ID that owns the Pub/Sub topic.
     #[serde(rename = "project")]
     pub project: String,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
@@ -60,6 +63,7 @@ impl ObservabilityPipelineGooglePubSubDestination {
             auth: None,
             buffer: None,
             encoding,
+            endpoint_url_key: None,
             id,
             inputs,
             project,
@@ -81,6 +85,11 @@ impl ObservabilityPipelineGooglePubSubDestination {
         value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
     ) -> Self {
         self.buffer = Some(value);
+        self
+    }
+
+    pub fn endpoint_url_key(mut self, value: String) -> Self {
+        self.endpoint_url_key = Some(value);
         self
     }
 
@@ -122,6 +131,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGooglePubSubDestination {
                 let mut encoding: Option<
                     crate::datadogV2::model::ObservabilityPipelineGooglePubSubDestinationEncoding,
                 > = None;
+                let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut project: Option<String> = None;
@@ -168,6 +178,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGooglePubSubDestination {
                                     _ => {}
                                 }
                             }
+                        }
+                        "endpoint_url_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            endpoint_url_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -216,6 +233,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGooglePubSubDestination {
                     auth,
                     buffer,
                     encoding,
+                    endpoint_url_key,
                     id,
                     inputs,
                     project,

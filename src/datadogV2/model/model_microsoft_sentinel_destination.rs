@@ -19,6 +19,12 @@ pub struct MicrosoftSentinelDestination {
     /// Azure AD client ID used for authentication.
     #[serde(rename = "client_id")]
     pub client_id: String,
+    /// Name of the environment variable or secret that holds the Azure AD client secret.
+    #[serde(rename = "client_secret_key")]
+    pub client_secret_key: Option<String>,
+    /// Name of the environment variable or secret that holds the Data Collection Endpoint (DCE) URI.
+    #[serde(rename = "dce_uri_key")]
+    pub dce_uri_key: Option<String>,
     /// The immutable ID of the Data Collection Rule (DCR).
     #[serde(rename = "dcr_immutable_id")]
     pub dcr_immutable_id: String,
@@ -57,6 +63,8 @@ impl MicrosoftSentinelDestination {
         MicrosoftSentinelDestination {
             buffer: None,
             client_id,
+            client_secret_key: None,
+            dce_uri_key: None,
             dcr_immutable_id,
             id,
             inputs,
@@ -73,6 +81,16 @@ impl MicrosoftSentinelDestination {
         value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
     ) -> Self {
         self.buffer = Some(value);
+        self
+    }
+
+    pub fn client_secret_key(mut self, value: String) -> Self {
+        self.client_secret_key = Some(value);
+        self
+    }
+
+    pub fn dce_uri_key(mut self, value: String) -> Self {
+        self.dce_uri_key = Some(value);
         self
     }
 
@@ -106,6 +124,8 @@ impl<'de> Deserialize<'de> for MicrosoftSentinelDestination {
                     crate::datadogV2::model::ObservabilityPipelineBufferOptions,
                 > = None;
                 let mut client_id: Option<String> = None;
+                let mut client_secret_key: Option<String> = None;
+                let mut dce_uri_key: Option<String> = None;
                 let mut dcr_immutable_id: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -137,6 +157,20 @@ impl<'de> Deserialize<'de> for MicrosoftSentinelDestination {
                         }
                         "client_id" => {
                             client_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "client_secret_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            client_secret_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "dce_uri_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dce_uri_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "dcr_immutable_id" => {
                             dcr_immutable_id =
@@ -184,6 +218,8 @@ impl<'de> Deserialize<'de> for MicrosoftSentinelDestination {
                 let content = MicrosoftSentinelDestination {
                     buffer,
                     client_id,
+                    client_secret_key,
+                    dce_uri_key,
                     dcr_immutable_id,
                     id,
                     inputs,

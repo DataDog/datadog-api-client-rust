@@ -19,6 +19,9 @@ pub struct AzureStorageDestination {
     /// Configuration for buffer settings on destination components.
     #[serde(rename = "buffer")]
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
+    /// Name of the environment variable or secret that holds the Azure Storage connection string.
+    #[serde(rename = "connection_string_key")]
+    pub connection_string_key: Option<String>,
     /// The name of the Azure Blob Storage container to store logs in.
     #[serde(rename = "container_name")]
     pub container_name: String,
@@ -48,6 +51,7 @@ impl AzureStorageDestination {
         AzureStorageDestination {
             blob_prefix: None,
             buffer: None,
+            connection_string_key: None,
             container_name,
             id,
             inputs,
@@ -67,6 +71,11 @@ impl AzureStorageDestination {
         value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
     ) -> Self {
         self.buffer = Some(value);
+        self
+    }
+
+    pub fn connection_string_key(mut self, value: String) -> Self {
+        self.connection_string_key = Some(value);
         self
     }
 
@@ -100,6 +109,7 @@ impl<'de> Deserialize<'de> for AzureStorageDestination {
                 let mut buffer: Option<
                     crate::datadogV2::model::ObservabilityPipelineBufferOptions,
                 > = None;
+                let mut connection_string_key: Option<String> = None;
                 let mut container_name: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -132,6 +142,13 @@ impl<'de> Deserialize<'de> for AzureStorageDestination {
                                     _ => {}
                                 }
                             }
+                        }
+                        "connection_string_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            connection_string_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "container_name" => {
                             container_name =
@@ -170,6 +187,7 @@ impl<'de> Deserialize<'de> for AzureStorageDestination {
                 let content = AzureStorageDestination {
                     blob_prefix,
                     buffer,
+                    connection_string_key,
                     container_name,
                     id,
                     inputs,

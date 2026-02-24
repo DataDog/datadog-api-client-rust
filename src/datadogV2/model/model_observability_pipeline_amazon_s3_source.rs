@@ -30,6 +30,9 @@ pub struct ObservabilityPipelineAmazonS3Source {
     /// The source type. Always `amazon_s3`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineAmazonS3SourceType,
+    /// Name of the environment variable or secret that holds the S3 bucket URL.
+    #[serde(rename = "url_key")]
+    pub url_key: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -49,6 +52,7 @@ impl ObservabilityPipelineAmazonS3Source {
             region,
             tls: None,
             type_,
+            url_key: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -61,6 +65,11 @@ impl ObservabilityPipelineAmazonS3Source {
 
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
         self.tls = Some(value);
+        self
+    }
+
+    pub fn url_key(mut self, value: String) -> Self {
+        self.url_key = Some(value);
         self
     }
 
@@ -97,6 +106,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3Source {
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineAmazonS3SourceType,
                 > = None;
+                let mut url_key: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -134,6 +144,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3Source {
                                 }
                             }
                         }
+                        "url_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            url_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -151,6 +167,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3Source {
                     region,
                     tls,
                     type_,
+                    url_key,
                     additional_properties,
                     _unparsed,
                 };

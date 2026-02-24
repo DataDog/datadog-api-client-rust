@@ -19,6 +19,9 @@ pub struct ObservabilityPipelineSumoLogicDestination {
     /// The output encoding format.
     #[serde(rename = "encoding")]
     pub encoding: Option<crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationEncoding>,
+    /// Name of the environment variable or secret that holds the Sumo Logic HTTP endpoint URL.
+    #[serde(rename = "endpoint_url_key")]
+    pub endpoint_url_key: Option<String>,
     /// A list of custom headers to include in the request to Sumo Logic.
     #[serde(rename = "header_custom_fields")]
     pub header_custom_fields: Option<Vec<crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationHeaderCustomFieldsItem>>,
@@ -56,6 +59,7 @@ impl ObservabilityPipelineSumoLogicDestination {
         ObservabilityPipelineSumoLogicDestination {
             buffer: None,
             encoding: None,
+            endpoint_url_key: None,
             header_custom_fields: None,
             header_host_name: None,
             header_source_category: None,
@@ -81,6 +85,11 @@ impl ObservabilityPipelineSumoLogicDestination {
         value: crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationEncoding,
     ) -> Self {
         self.encoding = Some(value);
+        self
+    }
+
+    pub fn endpoint_url_key(mut self, value: String) -> Self {
+        self.endpoint_url_key = Some(value);
         self
     }
 
@@ -139,6 +148,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
                 let mut encoding: Option<
                     crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationEncoding,
                 > = None;
+                let mut endpoint_url_key: Option<String> = None;
                 let mut header_custom_fields: Option<Vec<crate::datadogV2::model::ObservabilityPipelineSumoLogicDestinationHeaderCustomFieldsItem>> = None;
                 let mut header_host_name: Option<String> = None;
                 let mut header_source_category: Option<String> = None;
@@ -183,6 +193,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
                                     _ => {}
                                 }
                             }
+                        }
+                        "endpoint_url_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            endpoint_url_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "header_custom_fields" => {
                             if v.is_null() {
@@ -243,6 +260,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSumoLogicDestination {
                 let content = ObservabilityPipelineSumoLogicDestination {
                     buffer,
                     encoding,
+                    endpoint_url_key,
                     header_custom_fields,
                     header_host_name,
                     header_source_category,

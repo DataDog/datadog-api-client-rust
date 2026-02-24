@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineCloudPremDestination {
+    /// Name of the environment variable or secret that holds the CloudPrem endpoint URL.
+    #[serde(rename = "endpoint_url_key")]
+    pub endpoint_url_key: Option<String>,
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
@@ -36,12 +39,18 @@ impl ObservabilityPipelineCloudPremDestination {
         type_: crate::datadogV2::model::ObservabilityPipelineCloudPremDestinationType,
     ) -> ObservabilityPipelineCloudPremDestination {
         ObservabilityPipelineCloudPremDestination {
+            endpoint_url_key: None,
             id,
             inputs,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn endpoint_url_key(mut self, value: String) -> Self {
+        self.endpoint_url_key = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -70,6 +79,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCloudPremDestination {
             where
                 M: MapAccess<'a>,
             {
+                let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut type_: Option<
@@ -83,6 +93,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCloudPremDestination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "endpoint_url_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            endpoint_url_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -112,6 +129,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCloudPremDestination {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineCloudPremDestination {
+                    endpoint_url_key,
                     id,
                     inputs,
                     type_,

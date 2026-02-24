@@ -17,12 +17,21 @@ pub struct ObservabilityPipelineHttpClientSource {
     #[serde(rename = "auth_strategy")]
     pub auth_strategy:
         Option<crate::datadogV2::model::ObservabilityPipelineHttpClientSourceAuthStrategy>,
+    /// Name of the environment variable or secret that holds a custom header value (used with custom auth strategies).
+    #[serde(rename = "custom_key")]
+    pub custom_key: Option<String>,
     /// The decoding format used to interpret incoming logs.
     #[serde(rename = "decoding")]
     pub decoding: crate::datadogV2::model::ObservabilityPipelineDecoding,
+    /// Name of the environment variable or secret that holds the HTTP endpoint URL to scrape.
+    #[serde(rename = "endpoint_url_key")]
+    pub endpoint_url_key: Option<String>,
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
+    /// Name of the environment variable or secret that holds the password (used when `auth_strategy` is `basic`).
+    #[serde(rename = "password_key")]
+    pub password_key: Option<String>,
     /// The interval (in seconds) between HTTP scrape requests.
     #[serde(rename = "scrape_interval_secs")]
     pub scrape_interval_secs: Option<i64>,
@@ -32,9 +41,15 @@ pub struct ObservabilityPipelineHttpClientSource {
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
+    /// Name of the environment variable or secret that holds the bearer token (used when `auth_strategy` is `bearer`).
+    #[serde(rename = "token_key")]
+    pub token_key: Option<String>,
     /// The source type. The value should always be `http_client`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineHttpClientSourceType,
+    /// Name of the environment variable or secret that holds the username (used when `auth_strategy` is `basic`).
+    #[serde(rename = "username_key")]
+    pub username_key: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -50,12 +65,17 @@ impl ObservabilityPipelineHttpClientSource {
     ) -> ObservabilityPipelineHttpClientSource {
         ObservabilityPipelineHttpClientSource {
             auth_strategy: None,
+            custom_key: None,
             decoding,
+            endpoint_url_key: None,
             id,
+            password_key: None,
             scrape_interval_secs: None,
             scrape_timeout_secs: None,
             tls: None,
+            token_key: None,
             type_,
+            username_key: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -66,6 +86,21 @@ impl ObservabilityPipelineHttpClientSource {
         value: crate::datadogV2::model::ObservabilityPipelineHttpClientSourceAuthStrategy,
     ) -> Self {
         self.auth_strategy = Some(value);
+        self
+    }
+
+    pub fn custom_key(mut self, value: String) -> Self {
+        self.custom_key = Some(value);
+        self
+    }
+
+    pub fn endpoint_url_key(mut self, value: String) -> Self {
+        self.endpoint_url_key = Some(value);
+        self
+    }
+
+    pub fn password_key(mut self, value: String) -> Self {
+        self.password_key = Some(value);
         self
     }
 
@@ -81,6 +116,16 @@ impl ObservabilityPipelineHttpClientSource {
 
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
         self.tls = Some(value);
+        self
+    }
+
+    pub fn token_key(mut self, value: String) -> Self {
+        self.token_key = Some(value);
+        self
+    }
+
+    pub fn username_key(mut self, value: String) -> Self {
+        self.username_key = Some(value);
         self
     }
 
@@ -113,15 +158,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientSource {
                 let mut auth_strategy: Option<
                     crate::datadogV2::model::ObservabilityPipelineHttpClientSourceAuthStrategy,
                 > = None;
+                let mut custom_key: Option<String> = None;
                 let mut decoding: Option<crate::datadogV2::model::ObservabilityPipelineDecoding> =
                     None;
+                let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
+                let mut password_key: Option<String> = None;
                 let mut scrape_interval_secs: Option<i64> = None;
                 let mut scrape_timeout_secs: Option<i64> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
+                let mut token_key: Option<String> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineHttpClientSourceType,
                 > = None;
+                let mut username_key: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -145,6 +195,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientSource {
                                 }
                             }
                         }
+                        "custom_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            custom_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "decoding" => {
                             decoding = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _decoding) = decoding {
@@ -156,8 +212,22 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientSource {
                                 }
                             }
                         }
+                        "endpoint_url_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            endpoint_url_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "password_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            password_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "scrape_interval_secs" => {
                             if v.is_null() {
@@ -179,6 +249,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientSource {
                             }
                             tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "token_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            token_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -189,6 +265,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientSource {
                                     _ => {}
                                 }
                             }
+                        }
+                        "username_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            username_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -203,12 +286,17 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientSource {
 
                 let content = ObservabilityPipelineHttpClientSource {
                     auth_strategy,
+                    custom_key,
                     decoding,
+                    endpoint_url_key,
                     id,
+                    password_key,
                     scrape_interval_secs,
                     scrape_timeout_secs,
                     tls,
+                    token_key,
                     type_,
+                    username_key,
                     additional_properties,
                     _unparsed,
                 };

@@ -17,6 +17,10 @@ pub struct ObservabilityPipelineElasticsearchDestination {
     #[serde(rename = "api_version")]
     pub api_version:
         Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion>,
+    /// Authentication settings for the Elasticsearch destination.
+    /// When `strategy` is `basic`, use `username_key` and `password_key` to reference credentials stored in environment variables or secrets.
+    #[serde(rename = "auth")]
+    pub auth: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationAuth>,
     /// Configuration for buffer settings on destination components.
     #[serde(rename = "buffer")]
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
@@ -27,6 +31,9 @@ pub struct ObservabilityPipelineElasticsearchDestination {
     #[serde(rename = "data_stream")]
     pub data_stream:
         Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream>,
+    /// Name of the environment variable or secret that holds the Elasticsearch endpoint URL.
+    #[serde(rename = "endpoint_url_key")]
+    pub endpoint_url_key: Option<String>,
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
@@ -51,9 +58,11 @@ impl ObservabilityPipelineElasticsearchDestination {
     ) -> ObservabilityPipelineElasticsearchDestination {
         ObservabilityPipelineElasticsearchDestination {
             api_version: None,
+            auth: None,
             buffer: None,
             bulk_index: None,
             data_stream: None,
+            endpoint_url_key: None,
             id,
             inputs,
             type_,
@@ -67,6 +76,14 @@ impl ObservabilityPipelineElasticsearchDestination {
         value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion,
     ) -> Self {
         self.api_version = Some(value);
+        self
+    }
+
+    pub fn auth(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationAuth,
+    ) -> Self {
+        self.auth = Some(value);
         self
     }
 
@@ -88,6 +105,11 @@ impl ObservabilityPipelineElasticsearchDestination {
         value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream,
     ) -> Self {
         self.data_stream = Some(value);
+        self
+    }
+
+    pub fn endpoint_url_key(mut self, value: String) -> Self {
+        self.endpoint_url_key = Some(value);
         self
     }
 
@@ -118,11 +140,15 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                 M: MapAccess<'a>,
             {
                 let mut api_version: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationApiVersion> = None;
+                let mut auth: Option<
+                    crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationAuth,
+                > = None;
                 let mut buffer: Option<
                     crate::datadogV2::model::ObservabilityPipelineBufferOptions,
                 > = None;
                 let mut bulk_index: Option<String> = None;
                 let mut data_stream: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream> = None;
+                let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut type_: Option<
@@ -151,6 +177,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                                 }
                             }
                         }
+                        "auth" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "buffer" => {
                             if v.is_null() {
                                 continue;
@@ -176,6 +208,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                                 continue;
                             }
                             data_stream =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "endpoint_url_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            endpoint_url_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
@@ -208,9 +247,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
 
                 let content = ObservabilityPipelineElasticsearchDestination {
                     api_version,
+                    auth,
                     buffer,
                     bulk_index,
                     data_stream,
+                    endpoint_url_key,
                     id,
                     inputs,
                     type_,
