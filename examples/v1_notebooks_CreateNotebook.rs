@@ -17,6 +17,7 @@ use datadog_api_client::datadogV1::model::NotebookResourceType;
 use datadog_api_client::datadogV1::model::NotebookSplitBy;
 use datadog_api_client::datadogV1::model::NotebookStatus;
 use datadog_api_client::datadogV1::model::NotebookTimeseriesCellAttributes;
+use datadog_api_client::datadogV1::model::TimeseriesRequestStyle;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinition;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetRequest;
@@ -25,7 +26,6 @@ use datadog_api_client::datadogV1::model::WidgetDisplayType;
 use datadog_api_client::datadogV1::model::WidgetLineType;
 use datadog_api_client::datadogV1::model::WidgetLineWidth;
 use datadog_api_client::datadogV1::model::WidgetLiveSpan;
-use datadog_api_client::datadogV1::model::WidgetRequestStyle;
 
 #[tokio::main]
 async fn main() {
@@ -57,7 +57,7 @@ y = 6;
                                         .display_type(WidgetDisplayType::LINE)
                                         .q("avg:system.load.1{*}".to_string())
                                         .style(
-                                            WidgetRequestStyle::new()
+                                            TimeseriesRequestStyle::new()
                                                 .line_type(WidgetLineType::SOLID)
                                                 .line_width(WidgetLineWidth::NORMAL)
                                                 .palette("dog_classic".to_string()),
