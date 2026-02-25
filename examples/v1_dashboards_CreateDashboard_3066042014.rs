@@ -11,6 +11,7 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinition
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
+use datadog_api_client::datadogV1::model::TimeseriesRequestStyle;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinition;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetLegendColumn;
@@ -25,7 +26,6 @@ use datadog_api_client::datadogV1::model::WidgetLineWidth;
 use datadog_api_client::datadogV1::model::WidgetLiveSpanUnit;
 use datadog_api_client::datadogV1::model::WidgetNewLiveSpan;
 use datadog_api_client::datadogV1::model::WidgetNewLiveSpanType;
-use datadog_api_client::datadogV1::model::WidgetRequestStyle;
 use datadog_api_client::datadogV1::model::WidgetTime;
 
 #[tokio::main]
@@ -68,7 +68,7 @@ async fn main() {
                                         )
                                         .response_format(FormulaAndFunctionResponseFormat::TIMESERIES)
                                         .style(
-                                            WidgetRequestStyle::new()
+                                            TimeseriesRequestStyle::new()
                                                 .line_type(WidgetLineType::SOLID)
                                                 .line_width(WidgetLineWidth::NORMAL)
                                                 .palette("dog_classic".to_string()),
