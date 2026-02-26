@@ -161,6 +161,9 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all Cloud Security Management Enterprise GCP hosts over all hours in the current date for the given org.
     #[serde(rename = "csm_host_enterprise_gcp_host_count_top99p")]
     pub csm_host_enterprise_gcp_host_count_top99p: Option<i64>,
+    /// Shows the 99th percentile of all Cloud Security Management Enterprise OCI hosts over all hours in the current date for the given org.
+    #[serde(rename = "csm_host_enterprise_oci_host_count_top99p")]
+    pub csm_host_enterprise_oci_host_count_top99p: Option<i64>,
     /// Shows the 99th percentile of all Cloud Security Management Enterprise hosts over all hours in the current date for the given org.
     #[serde(rename = "csm_host_enterprise_total_host_count_top99p")]
     pub csm_host_enterprise_total_host_count_top99p: Option<i64>,
@@ -721,6 +724,7 @@ impl UsageSummaryDate {
             csm_host_enterprise_compliance_host_count_top99p: None,
             csm_host_enterprise_cws_host_count_top99p: None,
             csm_host_enterprise_gcp_host_count_top99p: None,
+            csm_host_enterprise_oci_host_count_top99p: None,
             csm_host_enterprise_total_host_count_top99p: None,
             cspm_aas_host_top99p: None,
             cspm_aws_host_top99p: None,
@@ -1180,6 +1184,12 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn csm_host_enterprise_gcp_host_count_top99p(mut self, value: i64) -> Self {
         self.csm_host_enterprise_gcp_host_count_top99p = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn csm_host_enterprise_oci_host_count_top99p(mut self, value: i64) -> Self {
+        self.csm_host_enterprise_oci_host_count_top99p = Some(value);
         self
     }
 
@@ -2272,6 +2282,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut csm_host_enterprise_compliance_host_count_top99p: Option<i64> = None;
                 let mut csm_host_enterprise_cws_host_count_top99p: Option<i64> = None;
                 let mut csm_host_enterprise_gcp_host_count_top99p: Option<i64> = None;
+                let mut csm_host_enterprise_oci_host_count_top99p: Option<i64> = None;
                 let mut csm_host_enterprise_total_host_count_top99p: Option<i64> = None;
                 let mut cspm_aas_host_top99p: Option<i64> = None;
                 let mut cspm_aws_host_top99p: Option<i64> = None;
@@ -2748,6 +2759,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             csm_host_enterprise_gcp_host_count_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "csm_host_enterprise_oci_host_count_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_host_enterprise_oci_host_count_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "csm_host_enterprise_total_host_count_top99p" => {
                             if v.is_null() {
@@ -3786,6 +3803,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     csm_host_enterprise_compliance_host_count_top99p,
                     csm_host_enterprise_cws_host_count_top99p,
                     csm_host_enterprise_gcp_host_count_top99p,
+                    csm_host_enterprise_oci_host_count_top99p,
                     csm_host_enterprise_total_host_count_top99p,
                     cspm_aas_host_top99p,
                     cspm_aws_host_top99p,
