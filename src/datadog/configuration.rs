@@ -1051,33 +1051,23 @@ lazy_static! {
                 "v2.submit_product_analytics_event".into(),
                 vec![
                     ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
+                        url: "https://{site}".into(),
                         description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "The regional site for customers.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![
-                                        "datadoghq.com".into(),
-                                        "us3.datadoghq.com".into(),
-                                        "us5.datadoghq.com".into(),
-                                        "ap1.datadoghq.com".into(),
-                                        "ap2.datadoghq.com".into(),
-                                        "datadoghq.eu".into(),
-                                    ],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "browser-intake".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
+                        variables: HashMap::from([(
+                            "site".into(),
+                            ServerVariable {
+                                description: "The intake domain for the regional site.".into(),
+                                default_value: "browser-intake-datadoghq.com".into(),
+                                enum_values: vec![
+                                    "browser-intake-datadoghq.com".into(),
+                                    "browser-intake-us3-datadoghq.com".into(),
+                                    "browser-intake-us5-datadoghq.com".into(),
+                                    "browser-intake-ap1-datadoghq.com".into(),
+                                    "browser-intake-ap2-datadoghq.com".into(),
+                                    "browser-intake-datadoghq.eu".into(),
+                                ],
+                            },
+                        )]),
                     },
                     ServerConfiguration {
                         url: "{protocol}://{name}".into(),
@@ -1117,7 +1107,7 @@ lazy_static! {
                                 "subdomain".into(),
                                 ServerVariable {
                                     description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "browser-intake".into(),
+                                    default_value: "api".into(),
                                     enum_values: vec![],
                                 },
                             ),
