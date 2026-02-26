@@ -2485,6 +2485,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_upsert_catalog_entity,
     );
     world.function_mappings.insert(
+        "v2.ConvertCatalogEntities".into(),
+        test_v2_convert_catalog_entities,
+    );
+    world.function_mappings.insert(
         "v2.PreviewCatalogEntities".into(),
         test_v2_preview_catalog_entities,
     );
@@ -2506,12 +2510,31 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.DeleteCatalogKind".into(), test_v2_delete_catalog_kind);
     world.function_mappings.insert(
+        "v2.AcceptRecommendedEntities".into(),
+        test_v2_accept_recommended_entities,
+    );
+    world.function_mappings.insert(
+        "v2.DeclineRecommendedEntities".into(),
+        test_v2_decline_recommended_entities,
+    );
+    world.function_mappings.insert(
+        "v2.TriggerRecommendedEntities".into(),
+        test_v2_trigger_recommended_entities,
+    );
+    world.function_mappings.insert(
         "v2.ListCatalogRelation".into(),
         test_v2_list_catalog_relation,
     );
     world.function_mappings.insert(
         "v2.ListCatalogRelationWithPagination".into(),
         test_v2_list_catalog_relation_with_pagination,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetIDPConfigValue".into(), test_v2_get_idp_config_value);
+    world.function_mappings.insert(
+        "v2.UpsertIDPConfigValue".into(),
+        test_v2_upsert_idp_config_value,
     );
     world.function_mappings.insert(
         "v2.CreateChangeRequest".into(),
@@ -16838,6 +16861,37 @@ fn test_v2_upsert_catalog_entity(world: &mut DatadogWorld, _parameters: &HashMap
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_convert_catalog_entities(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let target_version =
+        serde_json::from_value(_parameters.get("target_version").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.convert_catalog_entities_with_http_info(target_version, body))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_preview_catalog_entities(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -17034,6 +17088,95 @@ fn test_v2_delete_catalog_kind(world: &mut DatadogWorld, _parameters: &HashMap<S
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_accept_recommended_entities(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.accept_recommended_entities_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_decline_recommended_entities(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.decline_recommended_entities_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_trigger_recommended_entities(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let body = _parameters
+        .get("body")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_software_catalog::TriggerRecommendedEntitiesOptionalParams::default();
+    params.body = body;
+    let response = match block_on(api.trigger_recommended_entities_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_catalog_relation(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -17150,6 +17293,59 @@ fn test_v2_list_catalog_relation_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_get_idp_config_value(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let config_name =
+        serde_json::from_value(_parameters.get("config_name").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_idp_config_value_with_http_info(config_name)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_upsert_idp_config_value(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_software_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let config_name =
+        serde_json::from_value(_parameters.get("config_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.upsert_idp_config_value_with_http_info(config_name, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_create_change_request(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
