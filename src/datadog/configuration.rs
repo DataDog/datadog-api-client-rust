@@ -1051,7 +1051,7 @@ lazy_static! {
                 "v2.submit_product_analytics_event".into(),
                 vec![
                     ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
+                        url: "https://{subdomain}-{site}".into(),
                         description: "No description provided".into(),
                         variables: HashMap::from([
                             (
