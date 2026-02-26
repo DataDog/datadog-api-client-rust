@@ -1150,6 +1150,8 @@ pub mod model_notebook_metadata_type;
 pub use self::model_notebook_metadata_type::NotebookMetadataType;
 pub mod model_notebook_status;
 pub use self::model_notebook_status::NotebookStatus;
+pub mod model_notebook_template_variable;
+pub use self::model_notebook_template_variable::NotebookTemplateVariable;
 pub mod model_notebook_global_time;
 pub use self::model_notebook_global_time::NotebookGlobalTime;
 pub mod model_notebook_resource_type;
