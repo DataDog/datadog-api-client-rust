@@ -5008,6 +5008,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.ListDegradations".into(), test_v2_list_degradations);
     world
         .function_mappings
+        .insert("v2.ListMaintenances".into(), test_v2_list_maintenances);
+    world
+        .function_mappings
         .insert("v2.DeleteStatusPage".into(), test_v2_delete_status_page);
     world
         .function_mappings
@@ -5042,6 +5045,15 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateDegradation".into(), test_v2_update_degradation);
+    world
+        .function_mappings
+        .insert("v2.CreateMaintenance".into(), test_v2_create_maintenance);
+    world
+        .function_mappings
+        .insert("v2.GetMaintenance".into(), test_v2_get_maintenance);
+    world
+        .function_mappings
+        .insert("v2.UpdateMaintenance".into(), test_v2_update_maintenance);
     world.function_mappings.insert(
         "v2.GetOnDemandConcurrencyCap".into(),
         test_v2_get_on_demand_concurrency_cap,
@@ -38463,13 +38475,66 @@ fn test_v2_list_degradations(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let filter_status = _parameters
         .get("filter[status]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_status_pages::ListDegradationsOptionalParams::default();
     params.filter_page_id = filter_page_id;
     params.page_offset = page_offset;
     params.page_limit = page_limit;
     params.include = include;
     params.filter_status = filter_status;
+    params.sort = sort;
     let response = match block_on(api.list_degradations_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_maintenances(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let filter_page_id = _parameters
+        .get("filter[page_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_status_pages::ListMaintenancesOptionalParams::default();
+    params.filter_page_id = filter_page_id;
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
+    params.include = include;
+    params.filter_status = filter_status;
+    params.sort = sort;
+    let response = match block_on(api.list_maintenances_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -38848,6 +38913,116 @@ fn test_v2_update_degradation(world: &mut DatadogWorld, _parameters: &HashMap<St
     let response = match block_on(api.update_degradation_with_http_info(
         page_id,
         degradation_id,
+        body,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_maintenance(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let notify_subscribers = _parameters
+        .get("notify_subscribers")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_status_pages::CreateMaintenanceOptionalParams::default();
+    params.notify_subscribers = notify_subscribers;
+    params.include = include;
+    let response = match block_on(api.create_maintenance_with_http_info(page_id, body, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_maintenance(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let maintenance_id =
+        serde_json::from_value(_parameters.get("maintenance_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_status_pages::GetMaintenanceOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.get_maintenance_with_http_info(page_id, maintenance_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_maintenance(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let maintenance_id =
+        serde_json::from_value(_parameters.get("maintenance_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let notify_subscribers = _parameters
+        .get("notify_subscribers")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_status_pages::UpdateMaintenanceOptionalParams::default();
+    params.notify_subscribers = notify_subscribers;
+    params.include = include;
+    let response = match block_on(api.update_maintenance_with_http_info(
+        page_id,
+        maintenance_id,
         body,
         params,
     )) {

@@ -27,6 +27,9 @@ pub struct DegradationDataAttributesUpdatesItems {
     /// Timestamp of when the update was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Timestamp of when the update started.
+    #[serde(rename = "started_at")]
+    pub started_at: Option<chrono::DateTime<chrono::Utc>>,
     /// The status of the degradation.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::CreateDegradationRequestDataAttributesStatus>,
@@ -45,6 +48,7 @@ impl DegradationDataAttributesUpdatesItems {
             description: None,
             id: None,
             modified_at: None,
+            started_at: None,
             status: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -78,6 +82,11 @@ impl DegradationDataAttributesUpdatesItems {
 
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
+        self
+    }
+
+    pub fn started_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.started_at = Some(value);
         self
     }
 
@@ -126,6 +135,7 @@ impl<'de> Deserialize<'de> for DegradationDataAttributesUpdatesItems {
                 let mut description: Option<String> = None;
                 let mut id: Option<uuid::Uuid> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut started_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut status: Option<
                     crate::datadogV2::model::CreateDegradationRequestDataAttributesStatus,
                 > = None;
@@ -170,6 +180,12 @@ impl<'de> Deserialize<'de> for DegradationDataAttributesUpdatesItems {
                             modified_at =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "started_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            started_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -198,6 +214,7 @@ impl<'de> Deserialize<'de> for DegradationDataAttributesUpdatesItems {
                     description,
                     id,
                     modified_at,
+                    started_at,
                     status,
                     additional_properties,
                     _unparsed,
