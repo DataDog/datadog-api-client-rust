@@ -14,10 +14,10 @@ pub struct DegradationArray {
     pub data: Vec<crate::datadogV2::model::DegradationData>,
     /// The included related resources of a degradation. Client must explicitly request these resources by name in the `include` query parameter.
     #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::DegradationArrayIncluded>>,
+    pub included: Option<Vec<crate::datadogV2::model::DegradationIncluded>>,
     /// Response metadata.
     #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::StatusPagesResponseMeta>,
+    pub meta: Option<crate::datadogV2::model::PaginationMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -36,15 +36,12 @@ impl DegradationArray {
         }
     }
 
-    pub fn included(
-        mut self,
-        value: Vec<crate::datadogV2::model::DegradationArrayIncluded>,
-    ) -> Self {
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::DegradationIncluded>) -> Self {
         self.included = Some(value);
         self
     }
 
-    pub fn meta(mut self, value: crate::datadogV2::model::StatusPagesResponseMeta) -> Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::PaginationMeta) -> Self {
         self.meta = Some(value);
         self
     }
@@ -76,9 +73,8 @@ impl<'de> Deserialize<'de> for DegradationArray {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<Vec<crate::datadogV2::model::DegradationData>> = None;
-                let mut included: Option<Vec<crate::datadogV2::model::DegradationArrayIncluded>> =
-                    None;
-                let mut meta: Option<crate::datadogV2::model::StatusPagesResponseMeta> = None;
+                let mut included: Option<Vec<crate::datadogV2::model::DegradationIncluded>> = None;
+                let mut meta: Option<crate::datadogV2::model::PaginationMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

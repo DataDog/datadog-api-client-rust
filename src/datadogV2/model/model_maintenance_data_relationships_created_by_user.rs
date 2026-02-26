@@ -6,14 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct StatusPagesResponseMeta {
-    /// Offset-based pagination schema.
-    #[serde(rename = "page")]
-    pub page: Option<crate::datadogV2::model::StatusPagesPagination>,
+pub struct MaintenanceDataRelationshipsCreatedByUser {
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::MaintenanceDataRelationshipsCreatedByUserData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,18 +19,15 @@ pub struct StatusPagesResponseMeta {
     pub(crate) _unparsed: bool,
 }
 
-impl StatusPagesResponseMeta {
-    pub fn new() -> StatusPagesResponseMeta {
-        StatusPagesResponseMeta {
-            page: None,
+impl MaintenanceDataRelationshipsCreatedByUser {
+    pub fn new(
+        data: crate::datadogV2::model::MaintenanceDataRelationshipsCreatedByUserData,
+    ) -> MaintenanceDataRelationshipsCreatedByUser {
+        MaintenanceDataRelationshipsCreatedByUser {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn page(mut self, value: crate::datadogV2::model::StatusPagesPagination) -> Self {
-        self.page = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -44,20 +39,14 @@ impl StatusPagesResponseMeta {
     }
 }
 
-impl Default for StatusPagesResponseMeta {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for StatusPagesResponseMeta {
+impl<'de> Deserialize<'de> for MaintenanceDataRelationshipsCreatedByUser {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct StatusPagesResponseMetaVisitor;
-        impl<'a> Visitor<'a> for StatusPagesResponseMetaVisitor {
-            type Value = StatusPagesResponseMeta;
+        struct MaintenanceDataRelationshipsCreatedByUserVisitor;
+        impl<'a> Visitor<'a> for MaintenanceDataRelationshipsCreatedByUserVisitor {
+            type Value = MaintenanceDataRelationshipsCreatedByUser;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +56,9 @@ impl<'de> Deserialize<'de> for StatusPagesResponseMeta {
             where
                 M: MapAccess<'a>,
             {
-                let mut page: Option<crate::datadogV2::model::StatusPagesPagination> = None;
+                let mut data: Option<
+                    crate::datadogV2::model::MaintenanceDataRelationshipsCreatedByUserData,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,11 +67,8 @@ impl<'de> Deserialize<'de> for StatusPagesResponseMeta {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "page" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            page = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -89,9 +77,10 @@ impl<'de> Deserialize<'de> for StatusPagesResponseMeta {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = StatusPagesResponseMeta {
-                    page,
+                let content = MaintenanceDataRelationshipsCreatedByUser {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -100,6 +89,6 @@ impl<'de> Deserialize<'de> for StatusPagesResponseMeta {
             }
         }
 
-        deserializer.deserialize_any(StatusPagesResponseMetaVisitor)
+        deserializer.deserialize_any(MaintenanceDataRelationshipsCreatedByUserVisitor)
     }
 }
