@@ -13,6 +13,7 @@ use datadog_api_client::datadogV1::model::NotebookRelativeTime;
 use datadog_api_client::datadogV1::model::NotebookResourceType;
 use datadog_api_client::datadogV1::model::NotebookSplitBy;
 use datadog_api_client::datadogV1::model::NotebookStatus;
+use datadog_api_client::datadogV1::model::NotebookTemplateVariable;
 use datadog_api_client::datadogV1::model::NotebookTimeseriesCellAttributes;
 use datadog_api_client::datadogV1::model::NotebookUpdateCell;
 use datadog_api_client::datadogV1::model::NotebookUpdateData;
@@ -89,7 +90,13 @@ y = 6;
                 WidgetLiveSpan::PAST_ONE_HOUR,
             ))),
         )
-        .status(NotebookStatus::PUBLISHED),
+        .status(NotebookStatus::PUBLISHED)
+        .template_variables(vec![NotebookTemplateVariable::new(
+            "example-notebook".to_string(),
+        )
+        .available_values(Some(vec![]))
+        .default(Some("*".to_string()))
+        .prefix(Some("service".to_string()))]),
         NotebookResourceType::NOTEBOOKS,
     ));
     let configuration = datadog::Configuration::new();
