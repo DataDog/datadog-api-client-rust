@@ -14,7 +14,8 @@ pub struct HeatMapWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
-    /// List of widget events.
+    /// List of widget events. Deprecated - Use `overlay` request type instead.
+    #[deprecated]
     #[serde(rename = "events")]
     pub events: Option<Vec<crate::datadogV1::model::WidgetEvent>>,
     /// Available legend sizes for a widget. Should be one of "0", "2", "4", "8", "16", or "auto".
@@ -62,6 +63,7 @@ impl HeatMapWidgetDefinition {
         requests: Vec<crate::datadogV1::model::HeatMapWidgetRequest>,
         type_: crate::datadogV1::model::HeatMapWidgetDefinitionType,
     ) -> HeatMapWidgetDefinition {
+        #[allow(deprecated)]
         HeatMapWidgetDefinition {
             custom_links: None,
             events: None,
@@ -81,56 +83,67 @@ impl HeatMapWidgetDefinition {
         }
     }
 
+    #[allow(deprecated)]
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn events(mut self, value: Vec<crate::datadogV1::model::WidgetEvent>) -> Self {
         self.events = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn legend_size(mut self, value: String) -> Self {
         self.legend_size = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn markers(mut self, value: Vec<crate::datadogV1::model::WidgetMarker>) -> Self {
         self.markers = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn show_legend(mut self, value: bool) -> Self {
         self.show_legend = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn xaxis(mut self, value: crate::datadogV1::model::HeatMapWidgetXAxis) -> Self {
         self.xaxis = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn yaxis(mut self, value: crate::datadogV1::model::WidgetAxis) -> Self {
         self.yaxis = Some(value);
         self
@@ -295,6 +308,7 @@ impl<'de> Deserialize<'de> for HeatMapWidgetDefinition {
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
+                #[allow(deprecated)]
                 let content = HeatMapWidgetDefinition {
                     custom_links,
                     events,

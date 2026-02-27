@@ -14,7 +14,8 @@ pub struct TreeMapWidgetRequest {
     /// List of formulas that operate on queries.
     #[serde(rename = "formulas")]
     pub formulas: Option<Vec<crate::datadogV1::model::WidgetFormula>>,
-    /// The widget metrics query.
+    /// The widget metrics query. Deprecated - Use `queries` and `formulas` instead.
+    #[deprecated]
     #[serde(rename = "q")]
     pub q: Option<String>,
     /// List of queries that can be returned directly or used in formulas.
@@ -32,6 +33,7 @@ pub struct TreeMapWidgetRequest {
 
 impl TreeMapWidgetRequest {
     pub fn new() -> TreeMapWidgetRequest {
+        #[allow(deprecated)]
         TreeMapWidgetRequest {
             formulas: None,
             q: None,
@@ -42,16 +44,19 @@ impl TreeMapWidgetRequest {
         }
     }
 
+    #[allow(deprecated)]
     pub fn formulas(mut self, value: Vec<crate::datadogV1::model::WidgetFormula>) -> Self {
         self.formulas = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn q(mut self, value: String) -> Self {
         self.q = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn queries(
         mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
@@ -60,6 +65,7 @@ impl TreeMapWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn response_format(
         mut self,
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
@@ -157,6 +163,7 @@ impl<'de> Deserialize<'de> for TreeMapWidgetRequest {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = TreeMapWidgetRequest {
                     formulas,
                     q,

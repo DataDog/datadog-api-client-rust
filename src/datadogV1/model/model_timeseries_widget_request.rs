@@ -44,7 +44,8 @@ pub struct TimeseriesWidgetRequest {
     /// The log query.
     #[serde(rename = "profile_metrics_query")]
     pub profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition>,
-    /// Widget query.
+    /// Widget query. Deprecated - Use `queries` and `formulas` instead.
+    #[deprecated]
     #[serde(rename = "q")]
     pub q: Option<String>,
     /// List of queries that can be returned directly or used in formulas.
@@ -71,6 +72,7 @@ pub struct TimeseriesWidgetRequest {
 
 impl TimeseriesWidgetRequest {
     pub fn new() -> TimeseriesWidgetRequest {
+        #[allow(deprecated)]
         TimeseriesWidgetRequest {
             apm_query: None,
             audit_query: None,
@@ -94,36 +96,43 @@ impl TimeseriesWidgetRequest {
         }
     }
 
+    #[allow(deprecated)]
     pub fn apm_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.apm_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn audit_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.audit_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn display_type(mut self, value: crate::datadogV1::model::WidgetDisplayType) -> Self {
         self.display_type = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn event_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.event_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn formulas(mut self, value: Vec<crate::datadogV1::model::WidgetFormula>) -> Self {
         self.formulas = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn log_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.log_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn metadata(
         mut self,
         value: Vec<crate::datadogV1::model::TimeseriesWidgetExpressionAlias>,
@@ -132,21 +141,25 @@ impl TimeseriesWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn network_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.network_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn on_right_yaxis(mut self, value: bool) -> Self {
         self.on_right_yaxis = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn process_query(mut self, value: crate::datadogV1::model::ProcessQueryDefinition) -> Self {
         self.process_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn profile_metrics_query(
         mut self,
         value: crate::datadogV1::model::LogQueryDefinition,
@@ -155,11 +168,13 @@ impl TimeseriesWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn q(mut self, value: String) -> Self {
         self.q = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn queries(
         mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
@@ -168,6 +183,7 @@ impl TimeseriesWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn response_format(
         mut self,
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
@@ -176,16 +192,19 @@ impl TimeseriesWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.rum_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn security_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.security_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn style(mut self, value: crate::datadogV1::model::WidgetRequestStyle) -> Self {
         self.style = Some(value);
         self
@@ -393,6 +412,7 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetRequest {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = TimeseriesWidgetRequest {
                     apm_query,
                     audit_query,
