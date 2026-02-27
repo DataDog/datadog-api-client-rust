@@ -32,7 +32,8 @@ pub struct HeatMapWidgetRequest {
     /// The log query.
     #[serde(rename = "profile_metrics_query")]
     pub profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition>,
-    /// Widget query.
+    /// Widget query. Deprecated - Use `queries` and `formulas` instead.
+    #[deprecated]
     #[serde(rename = "q")]
     pub q: Option<String>,
     /// List of queries that can be returned directly or used in formulas.
@@ -41,7 +42,7 @@ pub struct HeatMapWidgetRequest {
     /// A formula and functions metrics query.
     #[serde(rename = "query")]
     pub query: Option<crate::datadogV1::model::FormulaAndFunctionMetricQueryDefinition>,
-    /// Request type for the histogram request.
+    /// Request type for distribution of point values for distribution metrics. Query space aggregator must be `histogram:<metric name>` for points distributions.
     #[serde(rename = "request_type")]
     pub request_type: Option<crate::datadogV1::model::WidgetHistogramRequestType>,
     /// Timeseries, scalar, or event list response. Event list response formats are supported by Geomap widgets.
@@ -65,6 +66,7 @@ pub struct HeatMapWidgetRequest {
 
 impl HeatMapWidgetRequest {
     pub fn new() -> HeatMapWidgetRequest {
+        #[allow(deprecated)]
         HeatMapWidgetRequest {
             apm_query: None,
             event_query: None,
@@ -86,36 +88,43 @@ impl HeatMapWidgetRequest {
         }
     }
 
+    #[allow(deprecated)]
     pub fn apm_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.apm_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn event_query(mut self, value: crate::datadogV1::model::EventQueryDefinition) -> Self {
         self.event_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn formulas(mut self, value: Vec<crate::datadogV1::model::WidgetFormula>) -> Self {
         self.formulas = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn log_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.log_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn network_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.network_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn process_query(mut self, value: crate::datadogV1::model::ProcessQueryDefinition) -> Self {
         self.process_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn profile_metrics_query(
         mut self,
         value: crate::datadogV1::model::LogQueryDefinition,
@@ -124,11 +133,13 @@ impl HeatMapWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn q(mut self, value: String) -> Self {
         self.q = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn queries(
         mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
@@ -137,6 +148,7 @@ impl HeatMapWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn query(
         mut self,
         value: crate::datadogV1::model::FormulaAndFunctionMetricQueryDefinition,
@@ -145,6 +157,7 @@ impl HeatMapWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn request_type(
         mut self,
         value: crate::datadogV1::model::WidgetHistogramRequestType,
@@ -153,6 +166,7 @@ impl HeatMapWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn response_format(
         mut self,
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
@@ -161,16 +175,19 @@ impl HeatMapWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.rum_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn security_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.security_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn style(mut self, value: crate::datadogV1::model::WidgetStyle) -> Self {
         self.style = Some(value);
         self
@@ -361,6 +378,7 @@ impl<'de> Deserialize<'de> for HeatMapWidgetRequest {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = HeatMapWidgetRequest {
                     apm_query,
                     event_query,

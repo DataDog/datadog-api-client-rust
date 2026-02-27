@@ -14,7 +14,8 @@ pub struct TimeseriesWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
-    /// List of widget events.
+    /// List of widget events. Deprecated - Use `overlay` request type instead.
+    #[deprecated]
     #[serde(rename = "events")]
     pub events: Option<Vec<crate::datadogV1::model::WidgetEvent>>,
     /// Columns displayed in the legend.
@@ -68,6 +69,7 @@ impl TimeseriesWidgetDefinition {
         requests: Vec<crate::datadogV1::model::TimeseriesWidgetRequest>,
         type_: crate::datadogV1::model::TimeseriesWidgetDefinitionType,
     ) -> TimeseriesWidgetDefinition {
+        #[allow(deprecated)]
         TimeseriesWidgetDefinition {
             custom_links: None,
             events: None,
@@ -89,16 +91,19 @@ impl TimeseriesWidgetDefinition {
         }
     }
 
+    #[allow(deprecated)]
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn events(mut self, value: Vec<crate::datadogV1::model::WidgetEvent>) -> Self {
         self.events = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn legend_columns(
         mut self,
         value: Vec<crate::datadogV1::model::TimeseriesWidgetLegendColumn>,
@@ -107,6 +112,7 @@ impl TimeseriesWidgetDefinition {
         self
     }
 
+    #[allow(deprecated)]
     pub fn legend_layout(
         mut self,
         value: crate::datadogV1::model::TimeseriesWidgetLegendLayout,
@@ -115,46 +121,55 @@ impl TimeseriesWidgetDefinition {
         self
     }
 
+    #[allow(deprecated)]
     pub fn legend_size(mut self, value: String) -> Self {
         self.legend_size = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn markers(mut self, value: Vec<crate::datadogV1::model::WidgetMarker>) -> Self {
         self.markers = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn right_yaxis(mut self, value: crate::datadogV1::model::WidgetAxis) -> Self {
         self.right_yaxis = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn show_legend(mut self, value: bool) -> Self {
         self.show_legend = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn yaxis(mut self, value: crate::datadogV1::model::WidgetAxis) -> Self {
         self.yaxis = Some(value);
         self
@@ -350,6 +365,7 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
+                #[allow(deprecated)]
                 let content = TimeseriesWidgetDefinition {
                     custom_links,
                     events,
