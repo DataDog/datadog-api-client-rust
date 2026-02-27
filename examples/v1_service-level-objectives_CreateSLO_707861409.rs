@@ -1,4 +1,4 @@
-// Create a new metric SLO object using sli_specification returns "OK" response
+// Create a new metric SLO object using bad events formula returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_service_level_objectives::ServiceLevelObjectivesAPI;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
@@ -44,7 +44,7 @@ async fn main() {
                 )),
             ],
         )
-        .total_events_formula(SLOFormula::new("query1".to_string())),
+        .bad_events_formula(SLOFormula::new("query2".to_string())),
     ))))
     .tags(vec!["env:prod".to_string(), "type:count".to_string()])
     .target_threshold(99.0 as f64)
