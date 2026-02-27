@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSensitiveDataScannerProcessorActionRedactOptions {
-    /// The `ObservabilityPipelineSensitiveDataScannerProcessorActionRedactOptions` `replace`.
+    /// The string used to replace matched sensitive data (for example, "***" or "[REDACTED]").
     #[serde(rename = "replace")]
     pub replace: String,
     #[serde(flatten)]
