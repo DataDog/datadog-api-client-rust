@@ -53,6 +53,10 @@ pub struct Configuration {
     pub proxy_url: Option<String>,
     pub enable_retry: bool,
     pub max_retries: u32,
+    /// OAuth2 bearer token. When set, `BearerTokenMiddleware` will inject
+    /// `Authorization: Bearer <token>` on every request.
+    /// Populated automatically from the `DD_ACCESS_TOKEN` environment variable.
+    pub bearer_token: Option<String>,
 }
 
 impl Configuration {
@@ -107,6 +111,10 @@ impl Configuration {
 
     pub fn set_auth_key(&mut self, operation_str: &str, api_key: APIKey) {
         self.auth_keys.insert(operation_str.to_string(), api_key);
+    }
+
+    pub fn set_bearer_token(&mut self, token: String) {
+        self.bearer_token = Some(token);
     }
 
     pub fn set_proxy_url(&mut self, proxy_url: Option<String>) {
@@ -377,6 +385,7 @@ impl Default for Configuration {
             proxy_url: None,
             enable_retry: false,
             max_retries: 3,
+            bearer_token: env::var("DD_ACCESS_TOKEN").ok(),
         }
     }
 }
