@@ -212,6 +212,9 @@ pub struct UsageSummaryDateOrg {
     /// Shows the sum of all Data Jobs Monitoring hosts over all hours in the current date for the given org.
     #[serde(rename = "data_jobs_monitoring_host_hr_sum")]
     pub data_jobs_monitoring_host_hr_sum: Option<i64>,
+    /// Shows the average of all Data Observability Quality Monitoring usage over all hours in the current date for the given org.
+    #[serde(rename = "data_observability_quality_monitoring_avg")]
+    pub data_observability_quality_monitoring_avg: Option<i64>,
     /// Shows the 99th percentile of all Database Monitoring hosts over all hours in the current month for the given org.
     #[serde(rename = "dbm_host_top99p_sum")]
     pub dbm_host_top99p_sum: Option<i64>,
@@ -757,6 +760,7 @@ impl UsageSummaryDateOrg {
             cws_fargate_task_avg: None,
             cws_host_top99p: None,
             data_jobs_monitoring_host_hr_sum: None,
+            data_observability_quality_monitoring_avg: None,
             dbm_host_top99p_sum: None,
             dbm_queries_avg_sum: None,
             eph_infra_host_agent_sum: None,
@@ -1307,6 +1311,12 @@ impl UsageSummaryDateOrg {
     #[allow(deprecated)]
     pub fn data_jobs_monitoring_host_hr_sum(mut self, value: i64) -> Self {
         self.data_jobs_monitoring_host_hr_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn data_observability_quality_monitoring_avg(mut self, value: i64) -> Self {
+        self.data_observability_quality_monitoring_avg = Some(value);
         self
     }
 
@@ -2350,6 +2360,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut cws_fargate_task_avg: Option<i64> = None;
                 let mut cws_host_top99p: Option<i64> = None;
                 let mut data_jobs_monitoring_host_hr_sum: Option<i64> = None;
+                let mut data_observability_quality_monitoring_avg: Option<i64> = None;
                 let mut dbm_host_top99p_sum: Option<i64> = None;
                 let mut dbm_queries_avg_sum: Option<i64> = None;
                 let mut eph_infra_host_agent_sum: Option<i64> = None;
@@ -2917,6 +2928,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                                 continue;
                             }
                             data_jobs_monitoring_host_hr_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "data_observability_quality_monitoring_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_observability_quality_monitoring_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "dbm_host_top99p_sum" => {
                             if v.is_null() {
@@ -3906,6 +3923,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     cws_fargate_task_avg,
                     cws_host_top99p,
                     data_jobs_monitoring_host_hr_sum,
+                    data_observability_quality_monitoring_avg,
                     dbm_host_top99p_sum,
                     dbm_queries_avg_sum,
                     eph_infra_host_agent_sum,
