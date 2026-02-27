@@ -6,12 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A count-based (metric) SLI specification, composed of three parts: the good events formula, the total events formula,
-/// and the underlying queries.
+/// A count-based (metric) SLI specification, composed of three parts: the good events formula, the bad or total events formula, and the underlying queries.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SLOCountDefinition {
+    /// A formula that specifies how to combine the results of multiple queries.
+    #[serde(rename = "bad_events_formula")]
+    pub bad_events_formula: Option<crate::datadogV1::model::SLOFormula>,
     /// A formula that specifies how to combine the results of multiple queries.
     #[serde(rename = "good_events_formula")]
     pub good_events_formula: crate::datadogV1::model::SLOFormula,
@@ -19,7 +21,7 @@ pub struct SLOCountDefinition {
     pub queries: Vec<crate::datadogV1::model::SLODataSourceQueryDefinition>,
     /// A formula that specifies how to combine the results of multiple queries.
     #[serde(rename = "total_events_formula")]
-    pub total_events_formula: crate::datadogV1::model::SLOFormula,
+    pub total_events_formula: Option<crate::datadogV1::model::SLOFormula>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -31,15 +33,25 @@ impl SLOCountDefinition {
     pub fn new(
         good_events_formula: crate::datadogV1::model::SLOFormula,
         queries: Vec<crate::datadogV1::model::SLODataSourceQueryDefinition>,
-        total_events_formula: crate::datadogV1::model::SLOFormula,
     ) -> SLOCountDefinition {
         SLOCountDefinition {
+            bad_events_formula: None,
             good_events_formula,
             queries,
-            total_events_formula,
+            total_events_formula: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn bad_events_formula(mut self, value: crate::datadogV1::model::SLOFormula) -> Self {
+        self.bad_events_formula = Some(value);
+        self
+    }
+
+    pub fn total_events_formula(mut self, value: crate::datadogV1::model::SLOFormula) -> Self {
+        self.total_events_formula = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -68,6 +80,7 @@ impl<'de> Deserialize<'de> for SLOCountDefinition {
             where
                 M: MapAccess<'a>,
             {
+                let mut bad_events_formula: Option<crate::datadogV1::model::SLOFormula> = None;
                 let mut good_events_formula: Option<crate::datadogV1::model::SLOFormula> = None;
                 let mut queries: Option<
                     Vec<crate::datadogV1::model::SLODataSourceQueryDefinition>,
@@ -81,6 +94,13 @@ impl<'de> Deserialize<'de> for SLOCountDefinition {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "bad_events_formula" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bad_events_formula =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "good_events_formula" => {
                             good_events_formula =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -89,6 +109,9 @@ impl<'de> Deserialize<'de> for SLOCountDefinition {
                             queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "total_events_formula" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             total_events_formula =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -102,10 +125,9 @@ impl<'de> Deserialize<'de> for SLOCountDefinition {
                 let good_events_formula = good_events_formula
                     .ok_or_else(|| M::Error::missing_field("good_events_formula"))?;
                 let queries = queries.ok_or_else(|| M::Error::missing_field("queries"))?;
-                let total_events_formula = total_events_formula
-                    .ok_or_else(|| M::Error::missing_field("total_events_formula"))?;
 
                 let content = SLOCountDefinition {
+                    bad_events_formula,
                     good_events_formula,
                     queries,
                     total_events_formula,

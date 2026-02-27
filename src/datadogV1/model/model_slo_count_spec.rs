@@ -11,8 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SLOCountSpec {
-    /// A count-based (metric) SLI specification, composed of three parts: the good events formula, the total events formula,
-    /// and the underlying queries.
+    /// A count-based (metric) SLI specification, composed of three parts: the good events formula, the bad or total events formula, and the underlying queries.
     #[serde(rename = "count")]
     pub count: crate::datadogV1::model::SLOCountDefinition,
     #[serde(skip)]
