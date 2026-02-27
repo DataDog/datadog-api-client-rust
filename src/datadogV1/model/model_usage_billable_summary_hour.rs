@@ -17,7 +17,8 @@ pub struct UsageBillableSummaryHour {
     /// The account public ID.
     #[serde(rename = "account_public_id")]
     pub account_public_id: Option<String>,
-    /// The billing plan.
+    /// The billing plan (metadata). (Deprecated from May 2026)
+    #[deprecated]
     #[serde(rename = "billing_plan")]
     pub billing_plan: Option<String>,
     /// Shows the last date of usage.
@@ -53,6 +54,7 @@ pub struct UsageBillableSummaryHour {
 
 impl UsageBillableSummaryHour {
     pub fn new() -> UsageBillableSummaryHour {
+        #[allow(deprecated)]
         UsageBillableSummaryHour {
             account_name: None,
             account_public_id: None,
@@ -70,56 +72,67 @@ impl UsageBillableSummaryHour {
         }
     }
 
+    #[allow(deprecated)]
     pub fn account_name(mut self, value: String) -> Self {
         self.account_name = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn account_public_id(mut self, value: String) -> Self {
         self.account_public_id = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn billing_plan(mut self, value: String) -> Self {
         self.billing_plan = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_date = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn num_orgs(mut self, value: i64) -> Self {
         self.num_orgs = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ratio_in_month(mut self, value: f64) -> Self {
         self.ratio_in_month = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn region(mut self, value: String) -> Self {
         self.region = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.start_date = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn usage(mut self, value: crate::datadogV1::model::UsageBillableSummaryKeys) -> Self {
         self.usage = Some(value);
         self
@@ -254,6 +267,7 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryHour {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = UsageBillableSummaryHour {
                     account_name,
                     account_public_id,
