@@ -162,6 +162,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_rum_replay_sessions::RumReplaySessionsAPI>,
     pub v2_api_rum_replay_viewership:
         Option<datadogV2::api_rum_replay_viewership::RumReplayViewershipAPI>,
+    pub v2_api_rum_user_segments: Option<datadogV2::api_rum_user_segments::RUMUserSegmentsAPI>,
     pub v2_api_service_scorecards: Option<datadogV2::api_service_scorecards::ServiceScorecardsAPI>,
     pub v2_api_seats: Option<datadogV2::api_seats::SeatsAPI>,
     pub v2_api_entity_risk_scores: Option<datadogV2::api_entity_risk_scores::EntityRiskScoresAPI>,
@@ -1039,6 +1040,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "RUMUserSegments" => {
+            world.api_instances.v2_api_rum_user_segments = Some(
+                datadogV2::api_rum_user_segments::RUMUserSegmentsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "ServiceScorecards" => {
             world.api_instances.v2_api_service_scorecards = Some(
@@ -4768,6 +4777,33 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListRumReplayViewershipHistorySessions".into(),
         test_v2_list_rum_replay_viewership_history_sessions,
     );
+    world
+        .function_mappings
+        .insert("v2.ListRumSegments".into(), test_v2_list_rum_segments);
+    world
+        .function_mappings
+        .insert("v2.CreateRumSegment".into(), test_v2_create_rum_segment);
+    world.function_mappings.insert(
+        "v2.InitializeRumSegments".into(),
+        test_v2_initialize_rum_segments,
+    );
+    world.function_mappings.insert(
+        "v2.CreateRumStaticSegment".into(),
+        test_v2_create_rum_static_segment,
+    );
+    world.function_mappings.insert(
+        "v2.ListRumSegmentTemplates".into(),
+        test_v2_list_rum_segment_templates,
+    );
+    world
+        .function_mappings
+        .insert("v2.DeleteRumSegment".into(), test_v2_delete_rum_segment);
+    world
+        .function_mappings
+        .insert("v2.GetRumSegment".into(), test_v2_get_rum_segment);
+    world
+        .function_mappings
+        .insert("v2.UpdateRumSegment".into(), test_v2_update_rum_segment);
     world.function_mappings.insert(
         "v2.ListScorecardOutcomes".into(),
         test_v2_list_scorecard_outcomes,
@@ -36254,6 +36290,222 @@ fn test_v2_list_rum_replay_viewership_history_sessions(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_rum_segments(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_user_segments
+        .as_ref()
+        .expect("api instance not found");
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_rum_user_segments::ListRumSegmentsOptionalParams::default();
+    params.sort = sort;
+    params.limit = limit;
+    let response = match block_on(api.list_rum_segments_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_rum_segment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_user_segments
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_rum_segment_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_initialize_rum_segments(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_user_segments
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.initialize_rum_segments_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_rum_static_segment(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_user_segments
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_rum_static_segment_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_rum_segment_templates(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_user_segments
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_rum_segment_templates_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_rum_segment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_user_segments
+        .as_ref()
+        .expect("api instance not found");
+    let segment_id =
+        serde_json::from_value(_parameters.get("segment_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_rum_segment_with_http_info(segment_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_rum_segment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_user_segments
+        .as_ref()
+        .expect("api instance not found");
+    let segment_id =
+        serde_json::from_value(_parameters.get("segment_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_rum_segment_with_http_info(segment_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_rum_segment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_user_segments
+        .as_ref()
+        .expect("api instance not found");
+    let segment_id =
+        serde_json::from_value(_parameters.get("segment_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_rum_segment_with_http_info(segment_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
