@@ -302,6 +302,10 @@ impl {{ structName }} {
 
         let local_client = &self.client;
 
+        {#- x-alternate-path: overrides the URL path used in the generated code without changing the
+            spec path. This is needed when two operations must share the same HTTP method + URL
+            (which OpenAPI disallows as duplicate path keys), so the second operation is defined
+            under a distinct spec path and x-alternate-path provides the real endpoint path. #}
         let local_uri_str = format!(
             "{}{{ operation.get('x-alternate-path', path) }}",
             local_configuration.get_operation_host(operation_id)
