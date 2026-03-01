@@ -17,7 +17,7 @@ pub struct CreateDeploymentRuleParamsDataAttributes {
     /// The name of the deployment rule.
     #[serde(rename = "name")]
     pub name: String,
-    /// Options for deployment rule response representing either faulty deployment detection or monitor options.
+    /// Options for deployment rule response representing either faulty deployment detection or monitor options. The actual type is determined by the parent's 'type' field.
     #[serde(rename = "options")]
     pub options: crate::datadogV2::model::DeploymentRulesOptions,
     /// The type of the deployment rule (faulty_deployment_detection or monitor).
@@ -100,14 +100,6 @@ impl<'de> Deserialize<'de> for CreateDeploymentRuleParamsDataAttributes {
                         }
                         "options" => {
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _options) = options {
-                                match _options {
-                                    crate::datadogV2::model::DeploymentRulesOptions::UnparsedObject(_options) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

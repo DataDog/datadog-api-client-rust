@@ -1,18 +1,44 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::de::{Error, MapAccess, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
+use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
 
-/// Options for deployment rule response representing either faulty deployment detection or monitor options.
+/// Options for deployment rule response representing either faulty deployment detection or monitor options. The actual type is determined by the parent's 'type' field.
 #[non_exhaustive]
+#[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-#[serde(untagged)]
-pub enum DeploymentRulesOptions {
-    DeploymentRuleOptionsFaultyDeploymentDetection(
-        Box<crate::datadogV2::model::DeploymentRuleOptionsFaultyDeploymentDetection>,
-    ),
-    DeploymentRuleOptionsMonitor(Box<crate::datadogV2::model::DeploymentRuleOptionsMonitor>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+pub struct DeploymentRulesOptions {
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
+}
+
+impl DeploymentRulesOptions {
+    pub fn new() -> DeploymentRulesOptions {
+        DeploymentRulesOptions {
+            additional_properties: std::collections::BTreeMap::new(),
+            _unparsed: false,
+        }
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
+}
+
+impl Default for DeploymentRulesOptions {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl<'de> Deserialize<'de> for DeploymentRulesOptions {
@@ -20,28 +46,43 @@ impl<'de> Deserialize<'de> for DeploymentRulesOptions {
     where
         D: Deserializer<'de>,
     {
-        let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::DeploymentRuleOptionsFaultyDeploymentDetection>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    DeploymentRulesOptions::DeploymentRuleOptionsFaultyDeploymentDetection(_v),
-                );
+        struct DeploymentRulesOptionsVisitor;
+        impl<'a> Visitor<'a> for DeploymentRulesOptionsVisitor {
+            type Value = DeploymentRulesOptions;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
             }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::DeploymentRuleOptionsMonitor>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(DeploymentRulesOptions::DeploymentRuleOptionsMonitor(_v));
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
+                    }
+                }
+
+                let content = DeploymentRulesOptions {
+                    additional_properties,
+                    _unparsed,
+                };
+
+                Ok(content)
             }
         }
 
-        return Ok(DeploymentRulesOptions::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+        deserializer.deserialize_any(DeploymentRulesOptionsVisitor)
     }
 }
