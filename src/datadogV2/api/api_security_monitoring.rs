@@ -179,6 +179,22 @@ impl GetSuppressionVersionHistoryOptionalParams {
     }
 }
 
+/// ImportThreatIntelOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::import_threat_intel`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ImportThreatIntelOptionalParams {
+    /// Optional integration account identifier.
+    pub ti_integration_account: Option<String>,
+}
+
+impl ImportThreatIntelOptionalParams {
+    /// Optional integration account identifier.
+    pub fn ti_integration_account(mut self, value: String) -> Self {
+        self.ti_integration_account = Some(value);
+        self
+    }
+}
+
 /// ListAssetsSBOMsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_assets_sbo_ms`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -1265,6 +1281,15 @@ pub enum CreateSecurityFilterError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateSecurityFindingError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_finding`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateSecurityFindingError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateSecurityMonitoringCriticalAssetError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_monitoring_critical_asset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1592,6 +1617,24 @@ pub enum GetVulnerabilityNotificationRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetVulnerabilityNotificationRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ImportSecurityVulnerabilitiesError is a struct for typed errors of method [`SecurityMonitoringAPI::import_security_vulnerabilities`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ImportSecurityVulnerabilitiesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ImportThreatIntelError is a struct for typed errors of method [`SecurityMonitoringAPI::import_threat_intel`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ImportThreatIntelError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -3623,6 +3666,175 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<CreateSecurityFilterError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Allows external integrations to send security findings to Datadog. This endpoint accepts finding data in a custom format and returns an empty response on success.
+    ///
+    /// **Note**: This endpoint is in preview and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn create_security_finding(
+        &self,
+        vendor: String,
+        finding_type: crate::datadogV2::model::SecurityFindingType,
+        body: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Result<(), datadog::Error<CreateSecurityFindingError>> {
+        match self
+            .create_security_finding_with_http_info(vendor, finding_type, body)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Allows external integrations to send security findings to Datadog. This endpoint accepts finding data in a custom format and returns an empty response on success.
+    ///
+    /// **Note**: This endpoint is in preview and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn create_security_finding_with_http_info(
+        &self,
+        vendor: String,
+        finding_type: crate::datadogV2::model::SecurityFindingType,
+        body: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateSecurityFindingError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_security_finding";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_security_finding' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        headers.insert(
+            "vendor",
+            vendor
+                .to_string()
+                .parse()
+                .expect("failed to parse vendor header"),
+        );
+        headers.insert(
+            "finding_type",
+            finding_type
+                .to_string()
+                .parse()
+                .expect("failed to parse finding_type header"),
+        );
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<CreateSecurityFindingError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -8675,6 +8887,340 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<GetVulnerabilityNotificationRulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Import vulnerabilities in CycloneDX 1.5 format. This endpoint validates the payload against the CycloneDX 1.5 schema and additional mandatory field requirements.
+    ///
+    /// **Note**: This endpoint is in preview and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn import_security_vulnerabilities(
+        &self,
+        body: crate::datadogV2::model::CycloneDXBOM,
+    ) -> Result<(), datadog::Error<ImportSecurityVulnerabilitiesError>> {
+        match self
+            .import_security_vulnerabilities_with_http_info(body)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Import vulnerabilities in CycloneDX 1.5 format. This endpoint validates the payload against the CycloneDX 1.5 schema and additional mandatory field requirements.
+    ///
+    /// **Note**: This endpoint is in preview and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn import_security_vulnerabilities_with_http_info(
+        &self,
+        body: crate::datadogV2::model::CycloneDXBOM,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<ImportSecurityVulnerabilitiesError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.import_security_vulnerabilities";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.import_security_vulnerabilities' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/vulnerabilities",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<ImportSecurityVulnerabilitiesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Import threat intelligence feeds with support for IP addresses, domains, and SHA256 hashes. This endpoint requires specific headers to identify the vendor and indicator type.
+    ///
+    /// **Note**: This endpoint is in preview and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn import_threat_intel(
+        &self,
+        ti_vendor: String,
+        ti_indicator: crate::datadogV2::model::ThreatIntelIndicatorType,
+        body: std::collections::BTreeMap<String, serde_json::Value>,
+        params: ImportThreatIntelOptionalParams,
+    ) -> Result<(), datadog::Error<ImportThreatIntelError>> {
+        match self
+            .import_threat_intel_with_http_info(ti_vendor, ti_indicator, body, params)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Import threat intelligence feeds with support for IP addresses, domains, and SHA256 hashes. This endpoint requires specific headers to identify the vendor and indicator type.
+    ///
+    /// **Note**: This endpoint is in preview and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn import_threat_intel_with_http_info(
+        &self,
+        ti_vendor: String,
+        ti_indicator: crate::datadogV2::model::ThreatIntelIndicatorType,
+        body: std::collections::BTreeMap<String, serde_json::Value>,
+        params: ImportThreatIntelOptionalParams,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<ImportThreatIntelError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.import_threat_intel";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.import_threat_intel' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let ti_integration_account = params.ti_integration_account;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/threat-intel-feed",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        headers.insert(
+            "ti_vendor",
+            ti_vendor
+                .to_string()
+                .parse()
+                .expect("failed to parse ti_vendor header"),
+        );
+        headers.insert(
+            "ti_indicator",
+            ti_indicator
+                .to_string()
+                .parse()
+                .expect("failed to parse ti_indicator header"),
+        );
+        if let Some(ref local) = ti_integration_account {
+            headers.insert(
+                "ti_integration_account",
+                local
+                    .to_string()
+                    .parse()
+                    .expect("failed to parse ti_integration_account header"),
+            );
+        }
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<ImportThreatIntelError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

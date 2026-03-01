@@ -2640,6 +2640,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListSecurityFindingsWithPagination".into(),
         test_v2_list_security_findings_with_pagination,
     );
+    world.function_mappings.insert(
+        "v2.CreateSecurityFinding".into(),
+        test_v2_create_security_finding,
+    );
     world
         .function_mappings
         .insert("v2.DetachCase".into(), test_v2_detach_case);
@@ -2693,9 +2697,16 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.PatchSignalNotificationRule".into(),
         test_v2_patch_signal_notification_rule,
     );
+    world
+        .function_mappings
+        .insert("v2.ImportThreatIntel".into(), test_v2_import_threat_intel);
     world.function_mappings.insert(
         "v2.ListVulnerabilities".into(),
         test_v2_list_vulnerabilities,
+    );
+    world.function_mappings.insert(
+        "v2.ImportSecurityVulnerabilities".into(),
+        test_v2_import_security_vulnerabilities,
     );
     world.function_mappings.insert(
         "v2.GetVulnerabilityNotificationRules".into(),
@@ -18416,6 +18427,35 @@ fn test_v2_list_security_findings_with_pagination(
     world.response.code = 200;
 }
 
+fn test_v2_create_security_finding(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let vendor = serde_json::from_value(_parameters.get("vendor").unwrap().clone()).unwrap();
+    let finding_type =
+        serde_json::from_value(_parameters.get("finding_type").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_security_finding_with_http_info(vendor, finding_type, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_detach_case(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -18895,6 +18935,44 @@ fn test_v2_patch_signal_notification_rule(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_import_threat_intel(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let ti_vendor = serde_json::from_value(_parameters.get("ti_vendor").unwrap().clone()).unwrap();
+    let ti_indicator =
+        serde_json::from_value(_parameters.get("ti_indicator").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let ti_integration_account = _parameters
+        .get("ti_integration_account")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_security_monitoring::ImportThreatIntelOptionalParams::default();
+    params.ti_integration_account = ti_integration_account;
+    let response = match block_on(api.import_threat_intel_with_http_info(
+        ti_vendor,
+        ti_indicator,
+        body,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_vulnerabilities(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -19077,6 +19155,34 @@ fn test_v2_list_vulnerabilities(world: &mut DatadogWorld, _parameters: &HashMap<
     params.filter_asset_operating_system_name = filter_asset_operating_system_name;
     params.filter_asset_operating_system_version = filter_asset_operating_system_version;
     let response = match block_on(api.list_vulnerabilities_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_import_security_vulnerabilities(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.import_security_vulnerabilities_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
