@@ -119,6 +119,7 @@ pub struct ApiInstances {
     pub v2_api_fastly_integration: Option<datadogV2::api_fastly_integration::FastlyIntegrationAPI>,
     pub v2_api_okta_integration: Option<datadogV2::api_okta_integration::OktaIntegrationAPI>,
     pub v2_api_ip_allowlist: Option<datadogV2::api_ip_allowlist::IPAllowlistAPI>,
+    pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
     pub v2_api_logs: Option<datadogV2::api_logs::LogsAPI>,
     pub v2_api_logs_archives: Option<datadogV2::api_logs_archives::LogsArchivesAPI>,
     pub v2_api_logs_custom_destinations:
@@ -136,7 +137,6 @@ pub struct ApiInstances {
         Option<datadogV2::api_observability_pipelines::ObservabilityPipelinesAPI>,
     pub v2_api_on_call: Option<datadogV2::api_on_call::OnCallAPI>,
     pub v2_api_on_call_paging: Option<datadogV2::api_on_call_paging::OnCallPagingAPI>,
-    pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
     pub v2_api_org_connections: Option<datadogV2::api_org_connections::OrgConnectionsAPI>,
     pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
     pub v2_api_powerpack: Option<datadogV2::api_powerpack::PowerpackAPI>,
@@ -3913,6 +3913,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateIPAllowlist".into(), test_v2_update_ip_allowlist);
+    world.function_mappings.insert(
+        "v2.UpdateLoginOrgConfigMaxSessionDuration".into(),
+        test_v2_update_login_org_config_max_session_duration,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateOrgSamlConfigurations".into(),
+        test_v2_update_org_saml_configurations,
+    );
+    world
+        .function_mappings
+        .insert("v2.ListOrgConfigs".into(), test_v2_list_org_configs);
+    world
+        .function_mappings
+        .insert("v2.GetOrgConfig".into(), test_v2_get_org_config);
+    world
+        .function_mappings
+        .insert("v2.UpdateOrgConfig".into(), test_v2_update_org_config);
+    world
+        .function_mappings
+        .insert("v2.UploadIdPMetadata".into(), test_v2_upload_idp_metadata);
     world
         .function_mappings
         .insert("v2.SubmitLog".into(), test_v2_submit_log);
@@ -4331,18 +4351,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.ResolveOnCallPage".into(), test_v2_resolve_on_call_page);
-    world
-        .function_mappings
-        .insert("v2.ListOrgConfigs".into(), test_v2_list_org_configs);
-    world
-        .function_mappings
-        .insert("v2.GetOrgConfig".into(), test_v2_get_org_config);
-    world
-        .function_mappings
-        .insert("v2.UpdateOrgConfig".into(), test_v2_update_org_config);
-    world
-        .function_mappings
-        .insert("v2.UploadIdPMetadata".into(), test_v2_upload_idp_metadata);
     world
         .function_mappings
         .insert("v2.ListOrgConnections".into(), test_v2_list_org_connections);
@@ -29018,6 +29026,174 @@ fn test_v2_update_ip_allowlist(world: &mut DatadogWorld, _parameters: &HashMap<S
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_update_login_org_config_max_session_duration(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_organizations
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_login_org_config_max_session_duration_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_org_saml_configurations(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_organizations
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_org_saml_configurations_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_org_configs(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_organizations
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_org_configs_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_org_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_organizations
+        .as_ref()
+        .expect("api instance not found");
+    let org_config_name =
+        serde_json::from_value(_parameters.get("org_config_name").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_org_config_with_http_info(org_config_name)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_org_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_organizations
+        .as_ref()
+        .expect("api instance not found");
+    let org_config_name =
+        serde_json::from_value(_parameters.get("org_config_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_org_config_with_http_info(org_config_name, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_upload_idp_metadata(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_organizations
+        .as_ref()
+        .expect("api instance not found");
+    let idp_file = _parameters.get("idp_file").and_then(|param| {
+        std::fs::read(format!(
+            "tests/scenarios/features/v{}/{}",
+            world.api_version,
+            param.as_str().unwrap()
+        ))
+        .ok()
+    });
+    let mut params = datadogV2::api_organizations::UploadIdPMetadataOptionalParams::default();
+    params.idp_file = idp_file;
+    let response = match block_on(api.upload_idp_metadata_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_submit_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -32576,117 +32752,6 @@ fn test_v2_resolve_on_call_page(world: &mut DatadogWorld, _parameters: &HashMap<
         .expect("api instance not found");
     let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
     let response = match block_on(api.resolve_on_call_page_with_http_info(page_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_org_configs(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_organizations
-        .as_ref()
-        .expect("api instance not found");
-    let response = match block_on(api.list_org_configs_with_http_info()) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_get_org_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_organizations
-        .as_ref()
-        .expect("api instance not found");
-    let org_config_name =
-        serde_json::from_value(_parameters.get("org_config_name").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_org_config_with_http_info(org_config_name)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_update_org_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_organizations
-        .as_ref()
-        .expect("api instance not found");
-    let org_config_name =
-        serde_json::from_value(_parameters.get("org_config_name").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_org_config_with_http_info(org_config_name, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_upload_idp_metadata(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_organizations
-        .as_ref()
-        .expect("api instance not found");
-    let idp_file = _parameters.get("idp_file").and_then(|param| {
-        std::fs::read(format!(
-            "tests/scenarios/features/v{}/{}",
-            world.api_version,
-            param.as_str().unwrap()
-        ))
-        .ok()
-    });
-    let mut params = datadogV2::api_organizations::UploadIdPMetadataOptionalParams::default();
-    params.idp_file = idp_file;
-    let response = match block_on(api.upload_idp_metadata_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

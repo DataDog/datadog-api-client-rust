@@ -273,6 +273,11 @@ impl Default for Configuration {
             ("v2.list_service_now_templates".to_owned(), false),
             ("v2.list_service_now_users".to_owned(), false),
             ("v2.update_service_now_template".to_owned(), false),
+            (
+                "v2.update_login_org_config_max_session_duration".to_owned(),
+                false,
+            ),
+            ("v2.update_org_saml_configurations".to_owned(), false),
             ("v2.add_role_to_restriction_query".to_owned(), false),
             ("v2.create_restriction_query".to_owned(), false),
             ("v2.delete_restriction_query".to_owned(), false),
