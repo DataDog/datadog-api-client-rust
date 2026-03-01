@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumRetentionFilterUpdateAttributes {
+    /// Configuration for cross-product sampling when updating a retention filter. All fields are optional for partial updates.
+    #[serde(rename = "cross_product_sampling")]
+    pub cross_product_sampling: Option<crate::datadogV2::model::RumCrossProductSamplingUpdate>,
     /// Whether the retention filter is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
@@ -36,6 +39,7 @@ pub struct RumRetentionFilterUpdateAttributes {
 impl RumRetentionFilterUpdateAttributes {
     pub fn new() -> RumRetentionFilterUpdateAttributes {
         RumRetentionFilterUpdateAttributes {
+            cross_product_sampling: None,
             enabled: None,
             event_type: None,
             name: None,
@@ -44,6 +48,14 @@ impl RumRetentionFilterUpdateAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn cross_product_sampling(
+        mut self,
+        value: crate::datadogV2::model::RumCrossProductSamplingUpdate,
+    ) -> Self {
+        self.cross_product_sampling = Some(value);
+        self
     }
 
     pub fn enabled(mut self, value: bool) -> Self {
@@ -106,6 +118,9 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut cross_product_sampling: Option<
+                    crate::datadogV2::model::RumCrossProductSamplingUpdate,
+                > = None;
                 let mut enabled: Option<bool> = None;
                 let mut event_type: Option<crate::datadogV2::model::RumRetentionFilterEventType> =
                     None;
@@ -120,6 +135,13 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "cross_product_sampling" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cross_product_sampling =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "enabled" => {
                             if v.is_null() {
                                 continue;
@@ -168,6 +190,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateAttributes {
                 }
 
                 let content = RumRetentionFilterUpdateAttributes {
+                    cross_product_sampling,
                     enabled,
                     event_type,
                     name,
