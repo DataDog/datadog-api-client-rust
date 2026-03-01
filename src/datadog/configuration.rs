@@ -294,6 +294,18 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.validate_monitor_user_template".to_owned(), false),
+            (
+                "v2.create_on_prem_management_service_enrollment".to_owned(),
+                false,
+            ),
+            (
+                "v2.get_on_prem_management_service_enrollment".to_owned(),
+                false,
+            ),
+            (
+                "v2.register_on_prem_management_service_token".to_owned(),
+                false,
+            ),
             ("v2.list_role_templates".to_owned(), false),
             ("v2.create_connection".to_owned(), false),
             ("v2.delete_connection".to_owned(), false),
