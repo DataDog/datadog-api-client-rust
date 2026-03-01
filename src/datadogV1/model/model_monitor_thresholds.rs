@@ -143,25 +143,40 @@ impl<'de> Deserialize<'de> for MonitorThresholds {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "critical" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             critical = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "critical_recovery" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             critical_recovery =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "ok" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             ok = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "unknown" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             unknown = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "warning" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             warning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "warning_recovery" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             warning_recovery =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
