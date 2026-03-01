@@ -9,6 +9,7 @@ pub use self::api::api_aws_logs_integration;
 pub use self::api::api_azure_integration;
 pub use self::api::api_dashboard_lists;
 pub use self::api::api_dashboards;
+pub use self::api::api_database_monitoring;
 pub use self::api::api_downtimes;
 pub use self::api::api_events;
 pub use self::api::api_gcp_integration;

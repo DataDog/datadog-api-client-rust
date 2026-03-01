@@ -303,7 +303,7 @@ impl {{ structName }} {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}{{path}}",
+            "{}{{ operation.get('x-alternate-path', path) }}",
             local_configuration.get_operation_host(operation_id)
             {%- for name, parameter in operation|parameters if parameter.in == "path" %}, {{ name|variable_name }}=
             {%- if parameter.schema.type == "string" %}

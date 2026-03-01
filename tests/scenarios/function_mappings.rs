@@ -32,6 +32,8 @@ pub struct ApiInstances {
     pub v1_api_slack_integration: Option<datadogV1::api_slack_integration::SlackIntegrationAPI>,
     pub v1_api_webhooks_integration:
         Option<datadogV1::api_webhooks_integration::WebhooksIntegrationAPI>,
+    pub v1_api_database_monitoring:
+        Option<datadogV1::api_database_monitoring::DatabaseMonitoringAPI>,
     pub v1_api_logs: Option<datadogV1::api_logs::LogsAPI>,
     pub v1_api_logs_indexes: Option<datadogV1::api_logs_indexes::LogsIndexesAPI>,
     pub v1_api_logs_pipelines: Option<datadogV1::api_logs_pipelines::LogsPipelinesAPI>,
@@ -373,6 +375,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "WebhooksIntegration" => {
             world.api_instances.v1_api_webhooks_integration = Some(
                 datadogV1::api_webhooks_integration::WebhooksIntegrationAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "DatabaseMonitoring" => {
+            world.api_instances.v1_api_database_monitoring = Some(
+                datadogV1::api_database_monitoring::DatabaseMonitoringAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -1644,6 +1654,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v1.UpdateWebhooksIntegration".into(),
         test_v1_update_webhooks_integration,
+    );
+    world.function_mappings.insert(
+        "v1.ListDbmExplainPlans".into(),
+        test_v1_list_dbm_explain_plans,
+    );
+    world.function_mappings.insert(
+        "v1.ListDbmQuerySamples".into(),
+        test_v1_list_dbm_query_samples,
     );
     world
         .function_mappings
@@ -9398,6 +9416,58 @@ fn test_v1_update_webhooks_integration(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v1_list_dbm_explain_plans(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v1_api_database_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let type_ = serde_json::from_value(_parameters.get("type").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_dbm_explain_plans_with_http_info(type_, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v1_list_dbm_query_samples(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v1_api_database_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let type_ = serde_json::from_value(_parameters.get("type").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_dbm_query_samples_with_http_info(type_, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

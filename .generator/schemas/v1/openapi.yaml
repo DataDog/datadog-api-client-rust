@@ -1798,6 +1798,125 @@ components:
           type: integer
       readOnly: true
       type: object
+    DbmExplainPlansRequest:
+      description: Object to send with the request to retrieve DBM explain plans.
+      properties:
+        list:
+          $ref: '#/components/schemas/DbmExplainPlansRequestList'
+      required:
+      - list
+      type: object
+    DbmExplainPlansRequestList:
+      description: Parameters for the DBM explain plans list query.
+      properties:
+        indexes:
+          description: Indexes to query. Use `["databasequery"]` for DBM explain plans.
+          items:
+            type: string
+          type: array
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          maximum: 1000
+          type: integer
+        search:
+          $ref: '#/components/schemas/DbmExplainPlansSearch'
+      required:
+      - indexes
+      - limit
+      - search
+      type: object
+    DbmExplainPlansResponse:
+      description: Response object with DBM explain plan events matching the request.
+      properties:
+        logs:
+          description: Array of DBM explain plan events matching the request.
+          items:
+            $ref: '#/components/schemas/Log'
+          type: array
+        nextLogId:
+          description: Hash identifier of the next event to return in the list. This
+            parameter is used for the pagination feature.
+          nullable: true
+          type: string
+        status:
+          description: Status of the response.
+          type: string
+      type: object
+    DbmExplainPlansSearch:
+      description: Search query parameters for DBM explain plans.
+      properties:
+        query:
+          description: The search query string. Use `dbm_type:plan` to filter for
+            explain plans.
+          example: dbm_type:plan
+          type: string
+      required:
+      - query
+      type: object
+    DbmQuerySamplesRequest:
+      description: Object to send with the request to retrieve DBM query samples.
+      properties:
+        list:
+          $ref: '#/components/schemas/DbmQuerySamplesRequestList'
+      required:
+      - list
+      type: object
+    DbmQuerySamplesRequestList:
+      description: Parameters for the DBM query samples list query.
+      properties:
+        indexes:
+          description: Indexes to query. Use `["databasequery"]` for DBM query samples.
+          items:
+            type: string
+          type: array
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          maximum: 1000
+          type: integer
+        search:
+          $ref: '#/components/schemas/DbmQuerySamplesSearch'
+      required:
+      - indexes
+      - limit
+      - search
+      type: object
+    DbmQuerySamplesResponse:
+      description: Response object with DBM query sample events matching the request.
+      properties:
+        logs:
+          description: Array of DBM query sample events matching the request.
+          items:
+            $ref: '#/components/schemas/Log'
+          type: array
+        nextLogId:
+          description: Hash identifier of the next event to return in the list.
+          nullable: true
+          type: string
+        status:
+          description: Status of the response.
+          type: string
+      type: object
+    DbmQuerySamplesSearch:
+      description: Search query parameters for DBM query samples.
+      properties:
+        query:
+          description: The search query string. Use `dbm_type:activity` to filter
+            for query samples.
+          example: dbm_type:activity
+          type: string
+      required:
+      - query
+      type: object
+    DbmType:
+      description: The type of DBM data to query.
+      enum:
+      - databasequery
+      example: databasequery
+      type: string
+      x-enum-varnames:
+      - DATABASEQUERY
     DistributionPoint:
       description: Array of distribution points.
       example:
@@ -30912,6 +31031,105 @@ paths:
         operator: OR
         permissions:
         - manage_integrations
+  /api/v1/logs-analytics/list:
+    post:
+      description: Retrieve query explain plans from Database Monitoring. Uses the
+        logs-analytics endpoint with `type=databasequery` to fetch explain plans
+        showing how the database engine executes SQL statements. Filter with
+        `dbm_type:plan` in the search query to retrieve only explain plans.
+      operationId: ListDbmExplainPlans
+      parameters:
+      - description: The type of DBM data to query.
+        in: query
+        name: type
+        required: true
+        schema:
+          $ref: '#/components/schemas/DbmType'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DbmExplainPlansRequest'
+        description: DBM explain plans filter
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DbmExplainPlansResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogsAPIErrorResponse'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIErrorResponse'
+          description: Authentication error
+        '429':
+          $ref: '#/components/responses/TooManyRequestsResponse'
+      security:
+      - apiKeyAuth: []
+        appKeyAuth: []
+      summary: List DBM explain plans
+      tags:
+      - Database Monitoring
+      x-codegen-request-body-name: body
+  /api/v1/logs-analytics/query-samples:
+    post:
+      description: Retrieve query samples from Database Monitoring. Uses the logs-analytics
+        endpoint with `type=databasequery` to fetch query samples showing active database
+        statements. Filter with `dbm_type:activity` in the search query to retrieve
+        only query samples.
+      operationId: ListDbmQuerySamples
+      parameters:
+      - description: The type of DBM data to query.
+        in: query
+        name: type
+        required: true
+        schema:
+          $ref: '#/components/schemas/DbmType'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DbmQuerySamplesRequest'
+        description: DBM query samples filter
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DbmQuerySamplesResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogsAPIErrorResponse'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIErrorResponse'
+          description: Authentication error
+        '429':
+          $ref: '#/components/responses/TooManyRequestsResponse'
+      security:
+      - apiKeyAuth: []
+        appKeyAuth: []
+      summary: List DBM query samples
+      tags:
+      - Database Monitoring
+      x-alternate-path: /api/v1/logs-analytics/list
+      x-codegen-request-body-name: body
   /api/v1/logs-queries/list:
     post:
       description: 'List endpoint returns logs that match a log search query.
@@ -39337,6 +39555,11 @@ tags:
     through the API. See the [Dashboards page](https://docs.datadoghq.com/dashboards/)
     for more information.
   name: Dashboards
+- description: 'Query Database Monitoring (DBM) data including query explain plans.
+
+    See the [Database Monitoring page](https://docs.datadoghq.com/database_monitoring/)
+    for more information.'
+  name: Database Monitoring
 - description: '[Downtiming](https://docs.datadoghq.com/monitors/notify/downtimes)
     gives
 

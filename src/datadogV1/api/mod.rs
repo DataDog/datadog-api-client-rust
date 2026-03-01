@@ -8,6 +8,7 @@ pub mod api_aws_logs_integration;
 pub mod api_azure_integration;
 pub mod api_dashboard_lists;
 pub mod api_dashboards;
+pub mod api_database_monitoring;
 pub mod api_downtimes;
 pub mod api_events;
 pub mod api_gcp_integration;
