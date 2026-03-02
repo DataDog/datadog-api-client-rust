@@ -149,32 +149,32 @@ impl<'de> Deserialize<'de> for MonitorThresholds {
                             critical = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "critical_recovery" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             critical_recovery =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "ok" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             ok = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "unknown" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             unknown = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "warning" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             warning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "warning_recovery" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             warning_recovery =

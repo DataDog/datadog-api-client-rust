@@ -78,9 +78,6 @@ impl<'de> Deserialize<'de> for ArbitraryCostUpsertRequestDataAttributesStrategyA
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "percentage" => {
-                            if v.is_null() || v.as_str() == Some("") {
-                                continue;
-                            }
                             percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {

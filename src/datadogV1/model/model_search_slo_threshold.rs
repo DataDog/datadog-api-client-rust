@@ -121,9 +121,6 @@ impl<'de> Deserialize<'de> for SearchSLOThreshold {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "target" => {
-                            if v.is_null() || v.as_str() == Some("") {
-                                continue;
-                            }
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "target_display" => {
@@ -147,7 +144,7 @@ impl<'de> Deserialize<'de> for SearchSLOThreshold {
                             }
                         }
                         "warning" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             warning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

@@ -195,49 +195,49 @@ impl<'de> Deserialize<'de> for UsageCloudSecurityPostureManagementHour {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "aas_host_count" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             aas_host_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "aws_host_count" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             aws_host_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "azure_host_count" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             azure_host_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "compliance_host_count" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             compliance_host_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "container_count" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             container_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "gcp_host_count" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             gcp_host_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "host_count" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             host_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

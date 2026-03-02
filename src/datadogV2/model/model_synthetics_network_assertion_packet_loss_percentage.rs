@@ -95,9 +95,6 @@ impl<'de> Deserialize<'de> for SyntheticsNetworkAssertionPacketLossPercentage {
                             }
                         }
                         "target" => {
-                            if v.is_null() || v.as_str() == Some("") {
-                                continue;
-                            }
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {

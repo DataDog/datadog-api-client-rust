@@ -125,9 +125,6 @@ impl<'de> Deserialize<'de> for RetentionFilterUpdateAttributes {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rate" => {
-                            if v.is_null() || v.as_str() == Some("") {
-                                continue;
-                            }
                             rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "trace_rate" => {

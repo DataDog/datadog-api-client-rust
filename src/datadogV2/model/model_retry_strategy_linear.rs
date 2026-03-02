@@ -74,9 +74,6 @@ impl<'de> Deserialize<'de> for RetryStrategyLinear {
                             interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "maxRetries" => {
-                            if v.is_null() || v.as_str() == Some("") {
-                                continue;
-                            }
                             max_retries =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }

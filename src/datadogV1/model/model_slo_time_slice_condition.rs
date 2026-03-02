@@ -127,9 +127,6 @@ impl<'de> Deserialize<'de> for SLOTimeSliceCondition {
                             }
                         }
                         "threshold" => {
-                            if v.is_null() || v.as_str() == Some("") {
-                                continue;
-                            }
                             threshold = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {

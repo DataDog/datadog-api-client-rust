@@ -81,7 +81,7 @@ impl<'de> Deserialize<'de> for FlakyTestStats {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "failure_rate_pct" => {
-                            if v.is_null() || v.as_str() == Some("") {
+                            if v.as_str() == Some("") {
                                 continue;
                             }
                             failure_rate_pct =
