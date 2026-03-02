@@ -87,13 +87,13 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStepParamsPositionsItems {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "x" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             x = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "y" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             y = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

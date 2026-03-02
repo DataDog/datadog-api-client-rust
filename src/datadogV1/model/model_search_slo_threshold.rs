@@ -144,6 +144,9 @@ impl<'de> Deserialize<'de> for SearchSLOThreshold {
                             }
                         }
                         "warning" => {
+                            if v.as_str() == Some("") {
+                                continue;
+                            }
                             warning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "warning_display" => {

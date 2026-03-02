@@ -179,7 +179,7 @@ impl<'de> Deserialize<'de> for SyntheticsBatchResult {
                             device = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "duration" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -212,7 +212,7 @@ impl<'de> Deserialize<'de> for SyntheticsBatchResult {
                             result_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "retries" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             retries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

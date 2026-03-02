@@ -163,7 +163,7 @@ impl<'de> Deserialize<'de> for CustomCostsFileMetadataWithContent {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "billed_cost" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             billed_cost =
@@ -209,7 +209,7 @@ impl<'de> Deserialize<'de> for CustomCostsFileMetadataWithContent {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "uploaded_at" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             uploaded_at =

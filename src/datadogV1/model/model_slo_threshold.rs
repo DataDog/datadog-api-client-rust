@@ -134,7 +134,7 @@ impl<'de> Deserialize<'de> for SLOThreshold {
                             }
                         }
                         "warning" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             warning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

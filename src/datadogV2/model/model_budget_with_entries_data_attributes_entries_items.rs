@@ -100,7 +100,7 @@ impl<'de> Deserialize<'de> for BudgetWithEntriesDataAttributesEntriesItems {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "amount" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             amount = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

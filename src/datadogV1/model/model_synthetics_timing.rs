@@ -158,55 +158,55 @@ impl<'de> Deserialize<'de> for SyntheticsTiming {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "dns" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             dns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "download" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             download = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "firstByte" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             first_byte = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "handshake" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             handshake = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "redirect" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             redirect = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "ssl" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             ssl = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tcp" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             tcp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "total" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             total = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "wait" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             wait = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

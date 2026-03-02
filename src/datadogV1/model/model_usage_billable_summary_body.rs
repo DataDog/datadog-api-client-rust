@@ -206,7 +206,7 @@ impl<'de> Deserialize<'de> for UsageBillableSummaryBody {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "percentage_in_account" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             percentage_in_account =

@@ -242,7 +242,7 @@ impl<'de> Deserialize<'de> for ServiceLevelObjectiveRequest {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "target_threshold" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             target_threshold =
@@ -279,7 +279,7 @@ impl<'de> Deserialize<'de> for ServiceLevelObjectiveRequest {
                             }
                         }
                         "warning_threshold" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             warning_threshold =

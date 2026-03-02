@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for OnDemandConcurrencyCapAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "on_demand_concurrency_cap" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             on_demand_concurrency_cap =
