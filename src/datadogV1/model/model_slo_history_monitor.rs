@@ -268,7 +268,7 @@ impl<'de> Deserialize<'de> for SLOHistoryMonitor {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "precision" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             precision = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -280,17 +280,20 @@ impl<'de> Deserialize<'de> for SLOHistoryMonitor {
                             preview = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "sli_value" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             sli_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "span_precision" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             span_precision =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "uptime" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             uptime = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

@@ -93,7 +93,7 @@ impl<'de> Deserialize<'de> for SearchSLOResponseDataAttributesFacetsObjectInt {
                             count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

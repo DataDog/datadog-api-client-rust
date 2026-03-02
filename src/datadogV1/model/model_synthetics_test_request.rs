@@ -687,7 +687,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "timeout" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             timeout = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

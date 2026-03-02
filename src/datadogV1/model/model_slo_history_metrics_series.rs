@@ -100,6 +100,9 @@ impl<'de> Deserialize<'de> for SLOHistoryMetricsSeries {
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "sum" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "values" => {

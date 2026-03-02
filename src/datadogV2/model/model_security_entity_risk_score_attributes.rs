@@ -203,9 +203,15 @@ impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "riskScore" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             risk_score = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "riskScoreEvolution" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             risk_score_evolution =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }

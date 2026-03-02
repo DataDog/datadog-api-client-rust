@@ -318,7 +318,7 @@ impl<'de> Deserialize<'de> for SyntheticsStepDetail {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "duration" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -384,7 +384,7 @@ impl<'de> Deserialize<'de> for SyntheticsStepDetail {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "timeToInteractive" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             time_to_interactive =

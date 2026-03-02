@@ -97,13 +97,13 @@ impl<'de> Deserialize<'de> for SyntheticsCoreWebVitals {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "cls" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             cls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "lcp" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             lcp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

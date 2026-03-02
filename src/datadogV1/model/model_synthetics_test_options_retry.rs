@@ -95,7 +95,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsRetry {
                             count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "interval" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

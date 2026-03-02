@@ -204,6 +204,9 @@ impl<'de> Deserialize<'de> for CoverageSummaryAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "patch_coverage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             patch_coverage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -211,6 +214,9 @@ impl<'de> Deserialize<'de> for CoverageSummaryAttributes {
                             services = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "total_coverage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             total_coverage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }

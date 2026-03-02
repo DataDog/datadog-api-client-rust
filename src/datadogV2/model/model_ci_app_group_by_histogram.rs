@@ -79,12 +79,21 @@ impl<'de> Deserialize<'de> for CIAppGroupByHistogram {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "interval" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "max" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             max = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "min" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             min = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {

@@ -104,7 +104,7 @@ impl<'de> Deserialize<'de> for ChargebackBreakdown {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "cost" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             cost = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

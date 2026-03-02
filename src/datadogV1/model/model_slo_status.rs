@@ -164,6 +164,9 @@ impl<'de> Deserialize<'de> for SLOStatus {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "error_budget_remaining" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             error_budget_remaining =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -178,6 +181,9 @@ impl<'de> Deserialize<'de> for SLOStatus {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "sli" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             sli = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "span_precision" => {

@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for SyntheticsSuiteOptions {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "alerting_threshold" => {
-                            if v.is_null() {
+                            if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             alerting_threshold =
