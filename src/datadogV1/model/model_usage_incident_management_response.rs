@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing the incident management usage for each hour for a given organization.
+/// Response containing the Incident Management usage for each hour for a given organization.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageIncidentManagementResponse {
-    /// Get hourly usage for incident management.
+    /// Get hourly usage for Incident Management.
     #[serde(rename = "usage")]
     pub usage: Option<Vec<crate::datadogV1::model::UsageIncidentManagementHour>>,
     #[serde(flatten)]
