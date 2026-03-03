@@ -17,6 +17,9 @@ pub struct SyntheticsTestRequestBodyFile {
     /// Content of the file.
     #[serde(rename = "content")]
     pub content: Option<String>,
+    /// Encoding of the file content. The only supported value is `base64`, indicating the `content` field contains base64-encoded data.
+    #[serde(rename = "encoding")]
+    pub encoding: Option<String>,
     /// Name of the file.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -41,6 +44,7 @@ impl SyntheticsTestRequestBodyFile {
         SyntheticsTestRequestBodyFile {
             bucket_key: None,
             content: None,
+            encoding: None,
             name: None,
             original_file_name: None,
             size: None,
@@ -57,6 +61,11 @@ impl SyntheticsTestRequestBodyFile {
 
     pub fn content(mut self, value: String) -> Self {
         self.content = Some(value);
+        self
+    }
+
+    pub fn encoding(mut self, value: String) -> Self {
+        self.encoding = Some(value);
         self
     }
 
@@ -114,6 +123,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequestBodyFile {
             {
                 let mut bucket_key: Option<String> = None;
                 let mut content: Option<String> = None;
+                let mut encoding: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut original_file_name: Option<String> = None;
                 let mut size: Option<i64> = None;
@@ -137,6 +147,12 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequestBodyFile {
                                 continue;
                             }
                             content = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "encoding" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            encoding = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             if v.is_null() {
@@ -174,6 +190,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequestBodyFile {
                 let content = SyntheticsTestRequestBodyFile {
                     bucket_key,
                     content,
+                    encoding,
                     name,
                     original_file_name,
                     size,
