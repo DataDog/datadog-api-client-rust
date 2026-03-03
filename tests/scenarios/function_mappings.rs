@@ -30176,6 +30176,9 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
     let filter_queried = _parameters
         .get("filter[queried]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_queried_window_seconds = _parameters
+        .get("filter[queried][window][seconds]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_tags = _parameters
         .get("filter[tags]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -30197,6 +30200,7 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
     params.filter_metric_type = filter_metric_type;
     params.filter_include_percentiles = filter_include_percentiles;
     params.filter_queried = filter_queried;
+    params.filter_queried_window_seconds = filter_queried_window_seconds;
     params.filter_tags = filter_tags;
     params.filter_related_assets = filter_related_assets;
     params.window_seconds = window_seconds;
@@ -30243,6 +30247,9 @@ fn test_v2_list_tag_configurations_with_pagination(
     let filter_queried = _parameters
         .get("filter[queried]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_queried_window_seconds = _parameters
+        .get("filter[queried][window][seconds]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_tags = _parameters
         .get("filter[tags]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -30264,6 +30271,7 @@ fn test_v2_list_tag_configurations_with_pagination(
     params.filter_metric_type = filter_metric_type;
     params.filter_include_percentiles = filter_include_percentiles;
     params.filter_queried = filter_queried;
+    params.filter_queried_window_seconds = filter_queried_window_seconds;
     params.filter_tags = filter_tags;
     params.filter_related_assets = filter_related_assets;
     params.window_seconds = window_seconds;
