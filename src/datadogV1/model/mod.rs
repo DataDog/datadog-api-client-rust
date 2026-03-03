@@ -850,6 +850,8 @@ pub mod model_dbm_explain_plans_search;
 pub use self::model_dbm_explain_plans_search::DbmExplainPlansSearch;
 pub mod model_dbm_explain_plans_response;
 pub use self::model_dbm_explain_plans_response::DbmExplainPlansResponse;
+pub mod model_dbm_response_result;
+pub use self::model_dbm_response_result::DbmResponseResult;
 pub mod model_log;
 pub use self::model_log::Log;
 pub mod model_log_content;

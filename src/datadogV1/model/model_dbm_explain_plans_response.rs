@@ -11,19 +11,24 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DbmExplainPlansResponse {
-    /// Array of DBM explain plan events matching the request.
-    #[serde(rename = "logs")]
-    pub logs: Option<Vec<crate::datadogV1::model::Log>>,
-    /// Hash identifier of the next event to return in the list. This parameter is used for the pagination feature.
-    #[serde(
-        rename = "nextLogId",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub next_log_id: Option<Option<String>>,
+    /// Elapsed time of the request in milliseconds.
+    #[serde(rename = "elapsed")]
+    pub elapsed: Option<i64>,
+    /// Total number of events matching the request.
+    #[serde(rename = "hitCount")]
+    pub hit_count: Option<i64>,
+    /// Unique identifier for this request.
+    #[serde(rename = "requestId")]
+    pub request_id: Option<String>,
+    /// Result data container for a DBM query response.
+    #[serde(rename = "result")]
+    pub result: Option<crate::datadogV1::model::DbmResponseResult>,
     /// Status of the response.
     #[serde(rename = "status")]
     pub status: Option<String>,
+    /// Type of the response object.
+    #[serde(rename = "type")]
+    pub type_: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,26 +39,44 @@ pub struct DbmExplainPlansResponse {
 impl DbmExplainPlansResponse {
     pub fn new() -> DbmExplainPlansResponse {
         DbmExplainPlansResponse {
-            logs: None,
-            next_log_id: None,
+            elapsed: None,
+            hit_count: None,
+            request_id: None,
+            result: None,
             status: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn logs(mut self, value: Vec<crate::datadogV1::model::Log>) -> Self {
-        self.logs = Some(value);
+    pub fn elapsed(mut self, value: i64) -> Self {
+        self.elapsed = Some(value);
         self
     }
 
-    pub fn next_log_id(mut self, value: Option<String>) -> Self {
-        self.next_log_id = Some(value);
+    pub fn hit_count(mut self, value: i64) -> Self {
+        self.hit_count = Some(value);
+        self
+    }
+
+    pub fn request_id(mut self, value: String) -> Self {
+        self.request_id = Some(value);
+        self
+    }
+
+    pub fn result(mut self, value: crate::datadogV1::model::DbmResponseResult) -> Self {
+        self.result = Some(value);
         self
     }
 
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
+        self
+    }
+
+    pub fn type_(mut self, value: String) -> Self {
+        self.type_ = Some(value);
         self
     }
 
@@ -89,9 +112,12 @@ impl<'de> Deserialize<'de> for DbmExplainPlansResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut logs: Option<Vec<crate::datadogV1::model::Log>> = None;
-                let mut next_log_id: Option<Option<String>> = None;
+                let mut elapsed: Option<i64> = None;
+                let mut hit_count: Option<i64> = None;
+                let mut request_id: Option<String> = None;
+                let mut result: Option<crate::datadogV1::model::DbmResponseResult> = None;
                 let mut status: Option<String> = None;
+                let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -100,21 +126,41 @@ impl<'de> Deserialize<'de> for DbmExplainPlansResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "logs" => {
+                        "elapsed" => {
                             if v.is_null() {
                                 continue;
                             }
-                            logs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            elapsed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "nextLogId" => {
-                            next_log_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "hitCount" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            hit_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "requestId" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            request_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "result" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            result = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -125,9 +171,12 @@ impl<'de> Deserialize<'de> for DbmExplainPlansResponse {
                 }
 
                 let content = DbmExplainPlansResponse {
-                    logs,
-                    next_log_id,
+                    elapsed,
+                    hit_count,
+                    request_id,
+                    result,
                     status,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };

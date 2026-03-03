@@ -1829,18 +1829,24 @@ components:
     DbmExplainPlansResponse:
       description: Response object with DBM explain plan events matching the request.
       properties:
-        logs:
-          description: Array of DBM explain plan events matching the request.
-          items:
-            $ref: '#/components/schemas/Log'
-          type: array
-        nextLogId:
-          description: Hash identifier of the next event to return in the list. This
-            parameter is used for the pagination feature.
-          nullable: true
+        elapsed:
+          description: Elapsed time of the request in milliseconds.
+          format: int64
+          type: integer
+        hitCount:
+          description: Total number of events matching the request.
+          format: int64
+          type: integer
+        requestId:
+          description: Unique identifier for this request.
           type: string
+        result:
+          $ref: '#/components/schemas/DbmResponseResult'
         status:
           description: Status of the response.
+          type: string
+        type:
+          description: Type of the response object.
           type: string
       type: object
     DbmExplainPlansSearch:
@@ -1885,17 +1891,24 @@ components:
     DbmQuerySamplesResponse:
       description: Response object with DBM query sample events matching the request.
       properties:
-        logs:
-          description: Array of DBM query sample events matching the request.
-          items:
-            $ref: '#/components/schemas/Log'
-          type: array
-        nextLogId:
-          description: Hash identifier of the next event to return in the list.
-          nullable: true
+        elapsed:
+          description: Elapsed time of the request in milliseconds.
+          format: int64
+          type: integer
+        hitCount:
+          description: Total number of events matching the request.
+          format: int64
+          type: integer
+        requestId:
+          description: Unique identifier for this request.
           type: string
+        result:
+          $ref: '#/components/schemas/DbmResponseResult'
         status:
           description: Status of the response.
+          type: string
+        type:
+          description: Type of the response object.
           type: string
       type: object
     DbmQuerySamplesSearch:
@@ -1908,6 +1921,21 @@ components:
           type: string
       required:
       - query
+      type: object
+    DbmResponseResult:
+      description: Result data container for a DBM query response.
+      properties:
+        count:
+          description: Total number of events matching the request.
+          format: int64
+          type: integer
+        events:
+          description: Array of matching DBM events. Each event is a free-form object
+            whose fields vary by database type (MySQL, PostgreSQL, SQL Server, etc.).
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
       type: object
     DbmType:
       description: The type of DBM data to query.
