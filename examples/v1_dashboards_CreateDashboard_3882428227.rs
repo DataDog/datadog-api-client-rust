@@ -45,7 +45,6 @@ async fn main() {
                                                         FormulaAndFunctionEventsDataSource::EVENTS,
                                                         "query1".to_string(),
                                                     )
-                                                        .group_by(vec![])
                                                         .indexes(vec!["*".to_string()])
                                                         .search(
                                                             FormulaAndFunctionEventQueryDefinitionSearch::new(
