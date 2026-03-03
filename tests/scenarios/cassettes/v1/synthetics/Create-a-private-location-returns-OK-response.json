@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Create_a_private_location_returns_OK_response-1706264429\"},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles"
       },
@@ -40,14 +33,7 @@
           "string": "{\"description\":\"Test Test-Create_a_private_location_returns_OK_response-1706264429 description\",\"metadata\":{\"restricted_roles\":[\"88260ec6-bc34-11ee-aae0-da7ad0900002\"]},\"name\":\"Test-Create_a_private_location_returns_OK_response-1706264429\",\"tags\":[\"test:testcreateaprivatelocationreturnsokresponse1706264429\"]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/private-locations"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/private-locations/pl%3Atest-create_a_private_location_returns_ok_response-1706264429-142add9a13d5e67404ac364c8b25d1dc"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/roles/88260ec6-bc34-11ee-aae0-da7ad0900002"
       },

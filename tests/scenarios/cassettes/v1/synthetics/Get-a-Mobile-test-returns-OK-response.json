@@ -6,14 +6,7 @@
           "string": "{\"config\":{\"variables\":[]},\"message\":\"\",\"name\":\"Test-Get_a_Mobile_test_returns_OK_response-1733743097\",\"options\":{\"device_ids\":[\"synthetics:mobile:device:iphone_15_ios_17\"],\"mobileApplication\":{\"applicationId\":\"ab0e0aed-536d-411a-9a99-5428c27d8f8e\",\"referenceId\":\"6115922a-5f5d-455e-bc7e-7955a57f3815\",\"referenceType\":\"version\"},\"tick_every\":3600},\"status\":\"paused\",\"steps\":[],\"type\":\"mobile\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/mobile"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/mobile/n3k-v7t-7xq"
       },
@@ -68,14 +57,7 @@
           "string": "{\"public_ids\":[\"n3k-v7t-7xq\"]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/delete"
       },

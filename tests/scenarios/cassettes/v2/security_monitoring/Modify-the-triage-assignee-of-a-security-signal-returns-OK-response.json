@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"assignee\":{\"uuid\":\"\"}}}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/signals/AQAAAYG1bl5K4HuUewAAAABBWUcxYmw1S0FBQmt2RmhRN0V4ZUVnQUE/assignee"
       },

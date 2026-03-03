@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"arn\":\"invalid-arn\"},\"type\":\"aws_resource\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/ondemand/aws"
       },

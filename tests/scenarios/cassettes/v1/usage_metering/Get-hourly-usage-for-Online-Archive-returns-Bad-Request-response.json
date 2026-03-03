@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json;datetime-format=rfc3339"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v1/usage/online-archive?start_hr=2022-03-05T15%3A58%3A31.986Z&end_hr=2022-03-03T15%3A58%3A31.986Z"
       },

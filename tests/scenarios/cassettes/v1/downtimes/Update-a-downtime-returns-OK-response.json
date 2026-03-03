@@ -6,14 +6,7 @@
           "string": "{\"end\":1684769834,\"message\":\"Test-Update_a_downtime_returns_OK_response-1684766234\",\"recurrence\":{\"period\":1,\"type\":\"weeks\",\"until_date\":1686580634,\"week_days\":[\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\"]},\"scope\":[\"test:testupdateadowntimereturnsokresponse1684766234\"],\"start\":1684766234,\"timezone\":\"Etc/UTC\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/downtime"
       },
@@ -40,14 +33,7 @@
           "string": "{\"message\":\"Test-Update_a_downtime_returns_OK_response-1684766234-updated\",\"mute_first_recovery_notification\":true,\"notify_end_states\":[\"alert\",\"no data\",\"warn\"],\"notify_end_types\":[\"canceled\",\"expired\"]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v1/downtime/2941982639"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/downtime/2941982639"
       },

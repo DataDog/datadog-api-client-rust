@@ -6,14 +6,7 @@
           "string": "{\"filter\":{\"from\":\"now-15m\",\"query\":\"@test.service:web-ui-tests AND @test.status:skip\",\"to\":\"now\"},\"options\":{\"timezone\":\"GMT\"},\"page\":{\"limit\":25},\"sort\":\"timestamp\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/ci/tests/events/search"
       },

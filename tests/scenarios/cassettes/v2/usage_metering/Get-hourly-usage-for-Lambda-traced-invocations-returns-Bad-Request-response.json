@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json;datetime-format=rfc3339"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/usage/lambda_traced_invocations?start_hr=2024-01-21T20%3A56%3A23.911Z&end_hr=2024-01-19T20%3A56%3A23.911Z"
       },

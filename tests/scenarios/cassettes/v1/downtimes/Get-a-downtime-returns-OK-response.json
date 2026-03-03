@@ -6,14 +6,7 @@
           "string": "{\"end\":1684769410,\"message\":\"Test-Get_a_downtime_returns_OK_response-1684765810\",\"recurrence\":{\"period\":1,\"type\":\"weeks\",\"until_date\":1686580210,\"week_days\":[\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\"]},\"scope\":[\"test:testgetadowntimereturnsokresponse1684765810\"],\"start\":1684765810,\"timezone\":\"Etc/UTC\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/downtime"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v1/downtime/2941966869"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/downtime/2941966869"
       },

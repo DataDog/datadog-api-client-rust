@@ -6,14 +6,7 @@
           "string": "{\"index\":\"main\",\"query\":\"host:Test*\",\"sort\":\"asc\",\"time\":{\"from\":\"2022-04-12T13:46:01.054Z\",\"timezone\":\"Europe/Paris\",\"to\":\"2022-04-12T14:46:01.054Z\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/logs-queries/list"
       },

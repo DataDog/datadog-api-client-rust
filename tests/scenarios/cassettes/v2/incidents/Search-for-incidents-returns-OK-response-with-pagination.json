@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/incidents/search?query=state%3A%28active%20OR%20stable%20OR%20resolved%29&page%5Bsize%5D=2"
       },
@@ -31,11 +27,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/incidents/search?query=state%3A%28active%20OR%20stable%20OR%20resolved%29&page%5Bsize%5D=2&page%5Boffset%5D=2"
       },

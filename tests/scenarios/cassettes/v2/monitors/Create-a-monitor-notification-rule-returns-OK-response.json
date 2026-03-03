@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"filter\":{\"tags\":[\"test:test-create_a_monitor_notification_rule_returns_ok_response-1748486175\"]},\"name\":\"test rule\",\"recipients\":[\"slack-test-channel\",\"jira-test\"]},\"type\":\"monitor-notification-rule\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/monitor/notification_rule"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/monitor/notification_rule/5dca07c7-267c-4159-9d8f-7dec1512fb77"
       },

@@ -6,14 +6,7 @@
           "string": "{\"description\":\"\",\"layout_type\":\"ordered\",\"notify_list\":[],\"reflow_type\":\"fixed\",\"template_variables\":[],\"title\":\"Test-Create_a_new_dashboard_with_timeseries_widget_with_custom_unit-1739811056\",\"widgets\":[{\"definition\":{\"legend_layout\":\"auto\",\"requests\":[{\"display_type\":\"line\",\"formulas\":[{\"formula\":\"query1\",\"number_format\":{\"unit\":{\"type\":\"canonical_unit\",\"unit_name\":\"fraction\"},\"unit_scale\":{\"type\":\"canonical_unit\",\"unit_name\":\"apdex\"}}}],\"queries\":[{\"data_source\":\"metrics\",\"name\":\"query1\",\"query\":\"avg:system.cpu.user{*}\"}],\"response_format\":\"timeseries\"}],\"show_legend\":true,\"time\":{},\"title\":\"\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"timeseries\"},\"layout\":{\"height\":5,\"width\":12,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/a8v-698-pen"
       },

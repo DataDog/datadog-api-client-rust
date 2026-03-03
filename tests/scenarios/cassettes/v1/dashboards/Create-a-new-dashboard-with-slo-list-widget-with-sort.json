@@ -6,14 +6,7 @@
           "string": "{\"name\":\"Test-Create_a_new_dashboard_with_slo_list_widget_with_sort-1731699173\",\"query\":{\"denominator\":\"sum:httpservice.hits{!code:3xx}.as_count()\",\"numerator\":\"sum:httpservice.hits{code:2xx}.as_count()\"},\"thresholds\":[{\"target\":95,\"timeframe\":\"7d\",\"warning\":98}],\"type\":\"metric\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/slo"
       },
@@ -40,14 +33,7 @@
           "string": "{\"description\":\"\",\"layout_type\":\"free\",\"notify_list\":[],\"template_variables\":[],\"title\":\"Test-Create_a_new_dashboard_with_slo_list_widget_with_sort-1731699173\",\"widgets\":[{\"definition\":{\"requests\":[{\"query\":{\"limit\":75,\"query_string\":\"env:prod AND service:my-app\",\"sort\":[{\"column\":\"status.sli\",\"order\":\"asc\"}]},\"request_type\":\"slo_list\"}],\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"slo_list\"},\"layout\":{\"height\":21,\"width\":60,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/s9d-ebt-cfz"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/slo/7ae31bf46704510e973d8bf6a1c37430"
       },

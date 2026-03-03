@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"from\":1672527600000,\"indexes\":[\"test-index\",\"test-index-2\"],\"query\":{\"host\":\"abc\",\"service\":\"xyz\"},\"to\":1704063600000},\"type\":\"create_deletion_req\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/deletion/data/logs"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/deletion/requests/754/cancel"
       },

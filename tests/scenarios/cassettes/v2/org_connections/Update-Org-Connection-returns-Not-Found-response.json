@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"connection_types\":[\"logs\"]},\"relationships\":{\"sink_org\":{\"data\":{\"id\":\"83999dcd-7f97-11f0-8de1-1ecf66f1aa85\",\"type\":\"orgs\"}}},\"type\":\"org_connection\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/org_connections"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"connection_types\":[\"logs\",\"metrics\"]},\"id\":\"00000000-0000-0000-0000-000000000000\",\"type\":\"org_connection\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/org_connections/00000000-0000-0000-0000-000000000000"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/org_connections/d348b9ab-c7cf-4298-83a6-b4762fafff5e"
       },

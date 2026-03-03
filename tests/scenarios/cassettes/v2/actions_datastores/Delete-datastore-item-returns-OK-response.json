@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"\",\"name\":\"Test Datastore\",\"org_access\":\"contributor\",\"primary_column_name\":\"id\",\"primary_key_generation_strategy\":\"none\"},\"type\":\"datastores\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/actions-datastores"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"conflict_mode\":\"fail_on_conflict\",\"values\":[{\"data\":\"test-value\",\"id\":\"test-key\"}]},\"type\":\"items\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/actions-datastores/ad9cc3b7-da9b-452d-8eab-a1e0a0a4e3d8/items/bulk"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"item_key\":\"test-key\"},\"type\":\"items\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/actions-datastores/ad9cc3b7-da9b-452d-8eab-a1e0a0a4e3d8/items"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/actions-datastores/ad9cc3b7-da9b-452d-8eab-a1e0a0a4e3d8"
       },

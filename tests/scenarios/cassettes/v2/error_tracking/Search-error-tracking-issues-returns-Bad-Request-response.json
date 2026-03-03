@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"from\":1671612804000,\"query\":\"service:orders-* AND @language:go\",\"to\":1671620004000,\"track\":\"invalid-track\"},\"type\":\"search_request\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/error-tracking/issues/search"
       },

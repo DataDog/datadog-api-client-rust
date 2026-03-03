@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"My Exclusion Filter\",\"enabled\":true,\"parameters\":[\"list.search.query\"],\"path_glob\":\"*\",\"rules_target\":[{\"tags\":{\"category\":\"attack_attempt\",\"type\":\"xss\"}}],\"scope\":[{\"env\":\"staging\",\"service\":\"event-query\"}]},\"type\":\"exclusion_filter\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/remote_config/products/asm/waf/exclusion_filters"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Exclude false positives on a path\",\"enabled\":true,\"event_query\":\"test:1\"},\"type\":\"exclusion_filter\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/remote_config/products/asm/waf/exclusion_filters/bd04e3ac-9f29-4a66-976f-2f409477a329"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/remote_config/products/asm/waf/exclusion_filters/bd04e3ac-9f29-4a66-976f-2f409477a329"
       },

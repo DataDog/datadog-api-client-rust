@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json;datetime-format=rfc3339"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v1/usage/rum_sessions?start_hr=2022-05-05T15%3A31%3A42.562Z&end_hr=2022-05-07T15%3A31%3A42.562Z&type=mobile"
       },

@@ -6,14 +6,7 @@
           "string": "{\"config\":{\"assertions\":[],\"configVariables\":[{\"example\":\"content-type\",\"name\":\"PROPERTY\",\"pattern\":\"content-type\",\"type\":\"text\"}],\"request\":{\"certificateDomains\":[\"https://datadoghq.com\"],\"method\":\"GET\",\"url\":\"https://datadoghq.com\"},\"setCookie\":\"name:test\"},\"locations\":[\"aws:us-east-2\"],\"message\":\"Test message\",\"name\":\"Test-Create_a_browser_test_returns_OK_Returns_saved_rumSettings_response-1734947236\",\"options\":{\"accept_self_signed\":false,\"allow_insecure\":true,\"ci\":{\"executionRule\":\"skipped\"},\"device_ids\":[\"tablet\"],\"disableCors\":true,\"disableCsp\":true,\"follow_redirects\":true,\"ignoreServerCertificateError\":true,\"initialNavigationTimeout\":200,\"min_failure_duration\":10,\"min_location_failed\":1,\"noScreenshot\":true,\"retry\":{\"count\":2,\"interval\":10},\"rumSettings\":{\"applicationId\":\"mockApplicationId\",\"clientTokenId\":12345,\"isEnabled\":true},\"tick_every\":300},\"steps\":[{\"allowFailure\":false,\"isCritical\":true,\"name\":\"Refresh page\",\"params\":{},\"type\":\"refresh\"}],\"tags\":[\"testing:browser\"],\"type\":\"browser\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/browser"
       },
@@ -40,14 +33,7 @@
           "string": "{\"public_ids\":[\"2pq-h6b-phj\"]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/delete"
       },

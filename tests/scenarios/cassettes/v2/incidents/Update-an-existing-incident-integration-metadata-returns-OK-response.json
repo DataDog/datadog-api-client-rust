@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"customer_impacted\":false,\"title\":\"Test-Update_an_existing_incident_integration_metadata_returns_OK_response-1771855632\"},\"type\":\"incidents\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"incident_id\":\"563e989e-7a68-55d3-84b0-9b21d4f809fc\",\"integration_type\":1,\"metadata\":{\"channels\":[{\"channel_id\":\"C0123456789\",\"channel_name\":\"#example-channel-name\",\"redirect_url\":\"https://slack.com/app_redirect?channel=C0123456789&team=T01234567\",\"team_id\":\"T01234567\"}]},\"status\":2},\"type\":\"incident_integrations\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/563e989e-7a68-55d3-84b0-9b21d4f809fc/relationships/integrations"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"incident_id\":\"563e989e-7a68-55d3-84b0-9b21d4f809fc\",\"integration_type\":1,\"metadata\":{\"channels\":[{\"channel_id\":\"C0123456789\",\"channel_name\":\"#updated-channel-name\",\"redirect_url\":\"https://slack.com/app_redirect?channel=C0123456789&team=T01234567\",\"team_id\":\"T01234567\"}]}},\"type\":\"incident_integrations\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/incidents/563e989e-7a68-55d3-84b0-9b21d4f809fc/relationships/integrations/89c6c3eb-f2dc-5663-8261-6f065155450b"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/563e989e-7a68-55d3-84b0-9b21d4f809fc/relationships/integrations/89c6c3eb-f2dc-5663-8261-6f065155450b"
       },
@@ -129,11 +104,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/563e989e-7a68-55d3-84b0-9b21d4f809fc"
       },

@@ -6,14 +6,7 @@
           "string": "{\"description\":\"string\",\"name\":\"Test-Create_a_time_slice_SLO_object_returns_OK_response-1704322484\",\"sli_specification\":{\"time_slice\":{\"comparator\":\">\",\"query\":{\"formulas\":[{\"formula\":\"query1\"}],\"queries\":[{\"data_source\":\"metrics\",\"name\":\"query1\",\"query\":\"trace.servlet.request{env:prod}\"}]},\"threshold\":5}},\"tags\":[\"env:prod\"],\"target_threshold\":97,\"thresholds\":[{\"target\":97,\"target_display\":\"97.0\",\"timeframe\":\"7d\",\"warning\":98,\"warning_display\":\"98.0\"}],\"timeframe\":\"7d\",\"type\":\"time_slice\",\"warning_threshold\":98}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/slo"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/slo/776b80141eda520bbfae33e897849f61"
       },

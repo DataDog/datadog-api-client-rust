@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"compute\":[{\"aggregation\":\"count\",\"interval\":\"5m\",\"type\":\"timeseries\"}],\"filter\":{\"from\":\"now-15m\",\"query\":\"*\",\"to\":\"now\"}},\"type\":\"aggregate_request\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/spans/analytics/aggregate"
       },

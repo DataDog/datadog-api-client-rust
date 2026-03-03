@@ -6,14 +6,7 @@
           "string": "{\"series\":[{\"metric\":\"system.load.1\",\"points\":[[1652349005,1.1]],\"tags\":[\"test:TestSubmitmetricsreturnsPayloadacceptedresponse1652349005\"],\"type\":\"gauge\"}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "text/json, application/json"
-          ],
-          "Content-Type": [
-            "text/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/series"
       },

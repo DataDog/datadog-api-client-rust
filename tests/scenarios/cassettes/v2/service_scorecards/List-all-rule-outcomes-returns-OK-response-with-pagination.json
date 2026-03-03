@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/scorecard/outcomes?page%5Bsize%5D=2&fields%5Boutcome%5D=state&filter%5Boutcome%5D%5Bservice_name%5D=my-service"
       },
@@ -31,11 +27,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/scorecard/outcomes?page%5Bsize%5D=2&page%5Boffset%5D=2&fields%5Boutcome%5D=state&filter%5Boutcome%5D%5Bservice_name%5D=my-service"
       },

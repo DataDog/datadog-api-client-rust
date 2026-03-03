@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-2d88c8b44bfe8721\",\"name\":\"test-name-2d88c8b44bfe8721\"},\"type\":\"team\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"avatar\":\"\ud83e\udd51\",\"banner\":7,\"handle\":\"test-handle-2d88c8b44bfe8721\",\"hidden_modules\":[\"m3\"],\"name\":\"test-name-2d88c8b44bfe8721 updated\",\"visible_modules\":[\"m1\",\"m2\"]},\"type\":\"team\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/team/81011c66-405c-11ee-bec1-da7ad0900002"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team/81011c66-405c-11ee-bec1-da7ad0900002"
       },

@@ -6,14 +6,7 @@
           "string": "{\"cases\":[{\"actions\":[{\"options\":{\"duration\":900},\"type\":\"block_ip\"},{\"options\":{\"userBehaviorName\":\"behavior\"},\"type\":\"user_behavior\"},{\"options\":{\"flaggedIPType\":\"FLAGGED\"},\"type\":\"flag_ip\"}],\"condition\":\"a > 100000\",\"name\":\"\",\"notifications\":[],\"status\":\"info\"}],\"filters\":[],\"groupSignalsBy\":[\"service\"],\"isEnabled\":true,\"message\":\"Test rule\",\"name\":\"Test-Create_a_detection_rule_with_type_application_security_returns_OK_response-1752748524_appsec_rule\",\"options\":{\"detectionMethod\":\"threshold\",\"evaluationWindow\":900,\"keepAlive\":3600,\"maxSignalDuration\":86400},\"queries\":[{\"aggregation\":\"count\",\"distinctFields\":[],\"groupByFields\":[\"service\",\"@http.client_ip\"],\"query\":\"@appsec.security_activity:business_logic.users.login.failure\"}],\"tags\":[],\"type\":\"application_security\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules/wgo-lgy-ajy"
       },

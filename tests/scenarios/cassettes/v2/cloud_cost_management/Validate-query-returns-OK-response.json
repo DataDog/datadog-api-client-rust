@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"Query\":\"example:query AND test:true\"},\"type\":\"validate_query\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/tags/enrichment/validate-query"
       },

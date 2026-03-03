@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"attachment\":{\"documentUrl\":\"https://app.datadoghq.com/notebook/124/Postmortem-IR-124\",\"title\":\"Postmortem-IR-124\"}},\"id\":\"00000000-abcd-0002-0000-000000000000\",\"type\":\"incident_attachments\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/incidents/00000000-0000-0000-0000-00000000000/attachments/00000000-0000-0000-0000-000000000000"
       },

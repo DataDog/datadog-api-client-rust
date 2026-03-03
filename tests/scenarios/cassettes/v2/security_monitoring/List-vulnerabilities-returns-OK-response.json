@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/security/vulnerabilities?filter%5Bcvss.base.severity%5D=High&filter%5Basset.type%5D=Service&filter%5Btool%5D=Infra"
       },

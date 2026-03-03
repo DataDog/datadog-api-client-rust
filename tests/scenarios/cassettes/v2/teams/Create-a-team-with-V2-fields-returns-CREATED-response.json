@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"avatar\":\"\ud83e\udd51\",\"banner\":7,\"handle\":\"test-handle-d8e2060f755d882d\",\"hidden_modules\":[\"m3\"],\"name\":\"test-name-d8e2060f755d882d\",\"visible_modules\":[\"m1\",\"m2\"]},\"type\":\"team\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team/fcaac0f6-405c-11ee-9237-da7ad0900002"
       },

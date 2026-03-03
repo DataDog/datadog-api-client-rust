@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"title\":\"Test-Create_a_new_dashboard_with_timeseries_widget_containing_style_attributes-1731699179 with timeseries widget\",\"widgets\":[{\"definition\":{\"requests\":[{\"display_type\":\"bars\",\"on_right_yaxis\":false,\"q\":\"sum:trace.test.errors{env:prod,service:datadog-api-spec} by {resource_name}.as_count()\",\"style\":{\"line_type\":\"solid\",\"line_width\":\"normal\",\"palette\":\"warm\"}}],\"type\":\"timeseries\"}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/3g2-7q5-mxv"
       },

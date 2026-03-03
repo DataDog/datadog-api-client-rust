@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"title\":\"Test-Create_a_new_dashboard_with_a_timeseries_widget_using_formulas_and_functions_cloud_cost_query-1731699152\",\"widgets\":[{\"definition\":{\"requests\":[{\"display_type\":\"bars\",\"formulas\":[{\"formula\":\"query1\"}],\"queries\":[{\"data_source\":\"cloud_cost\",\"name\":\"query1\",\"query\":\"sum:aws.cost.amortized{*} by {aws_product}.rollup(sum, monthly)\"}],\"response_format\":\"timeseries\",\"style\":{\"line_type\":\"solid\",\"line_width\":\"normal\",\"palette\":\"dog_classic\"}}],\"time\":{\"live_span\":\"week_to_date\"},\"title\":\"Example Cloud Cost Query\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"timeseries\"}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/vyw-yjx-s93"
       },

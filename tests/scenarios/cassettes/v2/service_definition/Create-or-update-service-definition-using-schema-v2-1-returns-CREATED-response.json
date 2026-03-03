@@ -6,14 +6,7 @@
           "string": "{\"contacts\":[{\"contact\":\"contact@datadoghq.com\",\"name\":\"Team Email\",\"type\":\"email\"}],\"dd-service\":\"service-testcreateorupdateservicedefinitionusingschemav21returnscreatedresponse1680112296\",\"extensions\":{\"myorgextension\":\"extensionvalue\"},\"integrations\":{\"opsgenie\":{\"region\":\"US\",\"service-url\":\"https://my-org.opsgenie.com/service/123e4567-e89b-12d3-a456-426614174000\"},\"pagerduty\":{\"service-url\":\"https://my-org.pagerduty.com/service-directory/PMyService\"}},\"links\":[{\"name\":\"Runbook\",\"type\":\"runbook\",\"url\":\"https://my-runbook\"},{\"name\":\"Source Code\",\"provider\":\"GitHub\",\"type\":\"repo\",\"url\":\"https://github.com/DataDog/schema\"},{\"name\":\"Architecture\",\"provider\":\"Gigoogle drivetHub\",\"type\":\"doc\",\"url\":\"https://my-runbook\"}],\"schema-version\":\"v2.1\",\"tags\":[\"my:tag\",\"service:tag\"],\"team\":\"my-team\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/services/definitions"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/services/definitions/service-testcreateorupdateservicedefinitionusingschemav21returnscreatedresponse1680112296"
       },

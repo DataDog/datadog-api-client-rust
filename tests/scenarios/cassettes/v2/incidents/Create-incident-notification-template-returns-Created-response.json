@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Any incidents that harm (or have the potential to) the confidentiality, integrity, or availability of our data.\",\"is_default\":false,\"name\":\"Security Incident\"},\"type\":\"incident_types\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/types"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"category\":\"alert\",\"content\":\"An incident has been declared.\\n\\nTitle: Sample Incident Title\\nSeverity: SEV-2\\nAffected Services: web-service, database-service\\nStatus: active\\n\\nPlease join the incident channel for updates.\",\"name\":\"Test-Create_incident_notification_template_returns_Created_response-1771855595\",\"subject\":\"SEV-2 Incident: Sample Incident Title\"},\"relationships\":{\"incident_type\":{\"data\":{\"id\":\"2cc8f1be-44fd-4c28-a266-d6f849c67ae7\",\"type\":\"incident_types\"}}},\"type\":\"notification_templates\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/notification-templates"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/notification-templates/f5d303e8-5bd4-45f4-9f7e-449c1d57db68"
       },
@@ -95,11 +77,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/types/2cc8f1be-44fd-4c28-a266-d6f849c67ae7"
       },

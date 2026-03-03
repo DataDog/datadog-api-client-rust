@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"api_key\":\"TestListFastlyaccountsreturnsOKresponse1678702250\",\"name\":\"Test-List_Fastly_accounts_returns_OK_response-1678702250\",\"services\":[]},\"type\":\"fastly-accounts\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/integrations/fastly/accounts"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/integrations/fastly/accounts"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/integrations/fastly/accounts/07ec97dd43cd794c847ecf15cb25eb1c"
       },
