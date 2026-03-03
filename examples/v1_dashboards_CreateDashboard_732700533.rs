@@ -1,38 +1,31 @@
-// Create a new timeseries widget with new fixed span time format
+// Create a new dashboard with formulas and functions events query using facet
+// group by
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
 use datadog_api_client::datadogV1::model::DashboardLayoutType;
-use datadog_api_client::datadogV1::model::DashboardReflowType;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventAggregation;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionCompute;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryDefinitionSearch;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryGroupBy;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventQueryGroupByConfig;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinition;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetDefinitionType;
-use datadog_api_client::datadogV1::model::TimeseriesWidgetLegendColumn;
-use datadog_api_client::datadogV1::model::TimeseriesWidgetLegendLayout;
 use datadog_api_client::datadogV1::model::TimeseriesWidgetRequest;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
-use datadog_api_client::datadogV1::model::WidgetDisplayType;
-use datadog_api_client::datadogV1::model::WidgetFormula;
-use datadog_api_client::datadogV1::model::WidgetLineType;
-use datadog_api_client::datadogV1::model::WidgetLineWidth;
-use datadog_api_client::datadogV1::model::WidgetNewFixedSpan;
-use datadog_api_client::datadogV1::model::WidgetNewFixedSpanType;
-use datadog_api_client::datadogV1::model::WidgetRequestStyle;
-use datadog_api_client::datadogV1::model::WidgetTime;
+use datadog_api_client::datadogV1::model::WidgetLayout;
 
 #[tokio::main]
 async fn main() {
     let body =
         Dashboard::new(
             DashboardLayoutType::ORDERED,
-            "Example-Dashboard with new fixed span time".to_string(),
+            "Example-Dashboard with events facet group_by".to_string(),
             vec![
                 Widget::new(
                     WidgetDefinition::TimeseriesWidgetDefinition(
@@ -40,8 +33,6 @@ async fn main() {
                             TimeseriesWidgetDefinition::new(
                                 vec![
                                     TimeseriesWidgetRequest::new()
-                                        .display_type(WidgetDisplayType::LINE)
-                                        .formulas(vec![WidgetFormula::new("query1".to_string())])
                                         .queries(
                                             vec![
                                                 FormulaAndFunctionQueryDefinition
@@ -50,14 +41,23 @@ async fn main() {
                                                         FormulaAndFunctionEventQueryDefinition::new(
                                                             FormulaAndFunctionEventQueryDefinitionCompute::new(
                                                                 FormulaAndFunctionEventAggregation::COUNT,
-                                                            ).metric("@ci.queue_time".to_string()),
-                                                            FormulaAndFunctionEventsDataSource::CI_PIPELINES,
+                                                            ),
+                                                            FormulaAndFunctionEventsDataSource::EVENTS,
                                                             "query1".to_string(),
                                                         )
-                                                            .indexes(vec!["*".to_string()])
+                                                            .group_by(
+                                                                FormulaAndFunctionEventQueryGroupByConfig
+                                                                ::FormulaAndFunctionEventQueryGroupByList(
+                                                                    vec![
+                                                                        FormulaAndFunctionEventQueryGroupBy::new(
+                                                                            "service".to_string(),
+                                                                        ).limit(10)
+                                                                    ],
+                                                                ),
+                                                            )
                                                             .search(
                                                                 FormulaAndFunctionEventQueryDefinitionSearch::new(
-                                                                    "ci_level:job".to_string(),
+                                                                    "".to_string(),
                                                                 ),
                                                             ),
                                                     ),
@@ -65,43 +65,14 @@ async fn main() {
                                             ],
                                         )
                                         .response_format(FormulaAndFunctionResponseFormat::TIMESERIES)
-                                        .style(
-                                            WidgetRequestStyle::new()
-                                                .line_type(WidgetLineType::SOLID)
-                                                .line_width(WidgetLineWidth::NORMAL)
-                                                .palette("dog_classic".to_string()),
-                                        )
                                 ],
                                 TimeseriesWidgetDefinitionType::TIMESERIES,
-                            )
-                                .legend_columns(
-                                    vec![
-                                        TimeseriesWidgetLegendColumn::AVG,
-                                        TimeseriesWidgetLegendColumn::MIN,
-                                        TimeseriesWidgetLegendColumn::MAX,
-                                        TimeseriesWidgetLegendColumn::VALUE,
-                                        TimeseriesWidgetLegendColumn::SUM
-                                    ],
-                                )
-                                .legend_layout(TimeseriesWidgetLegendLayout::AUTO)
-                                .show_legend(true)
-                                .time(
-                                    WidgetTime::WidgetNewFixedSpan(
-                                        Box::new(
-                                            WidgetNewFixedSpan::new(
-                                                1712080128,
-                                                1712083128,
-                                                WidgetNewFixedSpanType::FIXED,
-                                            ).hide_incomplete_cost_data(true),
-                                        ),
-                                    ),
-                                )
-                                .title("".to_string()),
+                            ),
                         ),
                     ),
-                )
+                ).layout(WidgetLayout::new(2, 4, 0, 0))
             ],
-        ).reflow_type(DashboardReflowType::AUTO);
+        );
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api.create_dashboard(body).await;
