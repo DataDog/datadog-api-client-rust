@@ -3,17 +3,10 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\": {\"attributes\": {\"is_enabled\": true}, \"type\": \"azure_uc_config_patch_request\"}}",
+          "string": "{\"data\":{\"attributes\":{\"is_enabled\":true},\"type\":\"azure_uc_config_patch_request\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/cost/azure_uc_config/100"
       },

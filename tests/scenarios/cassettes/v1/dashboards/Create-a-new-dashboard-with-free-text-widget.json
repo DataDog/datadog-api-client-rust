@@ -6,14 +6,7 @@
           "string": "{\"description\":null,\"layout_type\":\"free\",\"notify_list\":[],\"template_variables\":[],\"title\":\"Test-Create_a_new_dashboard_with_free_text_widget-1731699161\",\"widgets\":[{\"definition\":{\"color\":\"#4d4d4d\",\"font_size\":\"auto\",\"text\":\"Example free text\",\"text_align\":\"left\",\"type\":\"free_text\"},\"layout\":{\"height\":6,\"width\":24,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/gdm-q83-k4r"
       },

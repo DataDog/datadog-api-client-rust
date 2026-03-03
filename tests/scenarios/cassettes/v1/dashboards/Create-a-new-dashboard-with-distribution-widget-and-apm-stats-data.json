@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"title\":\"Test-Create_a_new_dashboard_with_distribution_widget_and_apm_stats_data-1731699158\",\"widgets\":[{\"definition\":{\"requests\":[{\"apm_stats_query\":{\"env\":\"prod\",\"name\":\"cassandra.query\",\"primary_tag\":\"datacenter:dc1\",\"row_type\":\"service\",\"service\":\"cassandra\"}}],\"title\":\"\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"distribution\"},\"layout\":{\"height\":4,\"width\":4,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/jbq-s5a-g9h"
       },

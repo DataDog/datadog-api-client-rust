@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"item_keys\":[\"nonexistent\"]},\"type\":\"items\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/actions-datastores/c1eb5bb8-726a-4e59-9a61-ccbb26f95329/items/bulk"
       },

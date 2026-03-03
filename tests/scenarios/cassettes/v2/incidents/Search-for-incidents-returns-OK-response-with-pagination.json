@@ -3,13 +3,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/incidents/search?query=state%3A%28active%20OR%20stable%20OR%20resolved%29&page%5Bsize%5D=2"
+        "uri": "https://api.datadoghq.com/api/v2/incidents/search?page%5Bsize%5D=2&query=state%3A%28active+OR+stable+OR+resolved%29"
       },
       "response": {
         "body": {
@@ -31,13 +27,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/incidents/search?query=state%3A%28active%20OR%20stable%20OR%20resolved%29&page%5Bsize%5D=2&page%5Boffset%5D=2"
+        "uri": "https://api.datadoghq.com/api/v2/incidents/search?page%5Boffset%5D=2&page%5Bsize%5D=2&query=state%3A%28active+OR+stable+OR+resolved%29"
       },
       "response": {
         "body": {

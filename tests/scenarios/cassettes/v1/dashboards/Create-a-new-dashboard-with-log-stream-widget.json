@@ -6,14 +6,7 @@
           "string": "{\"description\":\"\",\"layout_type\":\"free\",\"notify_list\":[],\"template_variables\":[],\"title\":\"Test-Create_a_new_dashboard_with_log_stream_widget-1731699165\",\"widgets\":[{\"definition\":{\"columns\":[\"host\",\"service\"],\"indexes\":[\"main\"],\"message_display\":\"expanded-md\",\"query\":\"\",\"show_date_column\":true,\"show_message_column\":true,\"sort\":{\"column\":\"time\",\"order\":\"desc\"},\"title\":\"\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"log_stream\"},\"layout\":{\"height\":36,\"width\":47,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/eb9-ta5-d6g"
       },

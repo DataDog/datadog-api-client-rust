@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"env\":\"\",\"identifier\":\"my-gate\",\"service\":\"test-service\"},\"type\":\"deployment_gate\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/deployment_gates"
       },

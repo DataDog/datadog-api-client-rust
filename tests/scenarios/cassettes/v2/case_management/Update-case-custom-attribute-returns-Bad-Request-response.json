@@ -3,23 +3,16 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"\ud83c\udf0d\",\"name\":\"World\"},\"type\":\"case_type\"}}",
+          "string": "{\"data\":{\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"🌍\",\"name\":\"World\"},\"type\":\"case_type\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/types"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"b36e8af6-a952-43bb-b54b-d7b80fc1344e\",\"type\":\"case_type\",\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"\ud83c\udf0d\",\"name\":\"World\"}}}",
+          "string": "{\"data\":{\"id\":\"b36e8af6-a952-43bb-b54b-d7b80fc1344e\",\"type\":\"case_type\",\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"🌍\",\"name\":\"World\"}}}",
           "encoding": null
         },
         "headers": {
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"And its brand new description\",\"display_name\":\"Attribute 17557789-0000-0000-0000-175577891000\",\"is_multi\":true,\"key\":\"attribute_1d2a4f8f9b39a284\",\"type\":\"TEXT\"},\"type\":\"custom_attribute\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/types/b36e8af6-a952-43bb-b54b-d7b80fc1344e/custom_attributes"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"priority\":\"P4\",\"title\":\"My new case\",\"type_id\":\"b36e8af6-a952-43bb-b54b-d7b80fc1344e\"},\"relationships\":{\"project\":{\"data\":{\"id\":\"d4bbe1af-f36e-42f1-87c1-493ca35c320e\",\"type\":\"project\"}}},\"type\":\"case\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases"
       },
@@ -108,14 +87,7 @@
           "string": "{\"data\":{\"attributes\":{\"is_multi\":true,\"type\":\"FLOAT\",\"value\":[1,2.4]},\"type\":\"case\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/5ed64f4d-a8d0-4dc6-879c-9b5f10a25cdb/custom_attributes/attribute_1d2a4f8f9b39a284"
       },
@@ -139,11 +111,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/cases/types/b36e8af6-a952-43bb-b54b-d7b80fc1344e"
       },

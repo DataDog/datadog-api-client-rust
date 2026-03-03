@@ -6,14 +6,7 @@
           "string": "{\"filter\":{\"query\":\"source:python\"},\"name\":\"testPipeline\",\"processors\":[{\"is_enabled\":true,\"name\":\"test_filter\",\"sources\":[\"dd.span_id\"],\"type\":\"span-id-remapper\"}],\"tags\":[]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/logs/config/pipelines"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/logs/config/pipelines/duWU4bc3ROq5nz7GVi5TzA"
       },

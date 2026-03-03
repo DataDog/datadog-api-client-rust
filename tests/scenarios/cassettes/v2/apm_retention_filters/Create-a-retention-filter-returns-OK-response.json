@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":true,\"filter\":{\"query\":\"@http.status_code:200 service:my-service\"},\"filter_type\":\"spans-sampling-processor\",\"name\":\"my retention filter\",\"rate\":1},\"type\":\"apm_retention_filter\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/apm/config/retention-filters"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/apm/config/retention-filters/x1aRVkAVQN2CBx1ghs4xDQ"
       },

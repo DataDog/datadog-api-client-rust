@@ -6,14 +6,7 @@
           "string": "{\"from_ts\":1726041488,\"public_ids\":[\"p8m-9gw-nte\"],\"to_ts\":1726055954}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/uptimes"
       },

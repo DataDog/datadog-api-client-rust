@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"severity\":\"invalid_severity\"},\"type\":\"critical_assets\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/critical_assets/00000000-0000-0000-0000-000000000000"
       },

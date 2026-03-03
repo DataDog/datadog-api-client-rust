@@ -6,14 +6,7 @@
           "string": "{\"message\":\"Data quality alert triggered\",\"name\":\"Test-Create_a_Data_Quality_monitor_returns_OK_response-1768238629\",\"options\":{\"thresholds\":{\"critical\":100},\"variables\":[{\"data_source\":\"data_quality_metrics\",\"filter\":\"search for column where `database:production AND table:users`\",\"group_by\":[\"entity_id\"],\"measure\":\"row_count\",\"name\":\"query1\"}]},\"priority\":3,\"query\":\"formula(\\\"query1\\\").last(\\\"5m\\\") > 100\",\"tags\":[\"test:testcreateadataqualitymonitorreturnsokresponse1768238629\",\"env:ci\"],\"type\":\"data-quality alert\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/monitor"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/monitor/250323411"
       },

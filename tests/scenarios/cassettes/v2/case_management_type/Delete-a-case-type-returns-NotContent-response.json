@@ -3,23 +3,16 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"\ud83c\udf0d\",\"name\":\"World\"},\"type\":\"case_type\"}}",
+          "string": "{\"data\":{\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"🌍\",\"name\":\"World\"},\"type\":\"case_type\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/types"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"f580bda9-aed7-49b6-ad70-5707d1c183fa\",\"type\":\"case_type\",\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"\ud83c\udf0d\",\"internal\":false,\"name\":\"World\",\"statuses_config\":{\"open\":{\"status_options\":[{\"name\":\"Open\"}],\"default\":\"Open\"},\"in_progress\":{\"status_options\":[{\"name\":\"In Progress\"}],\"default\":\"In Progress\"},\"closed\":{\"status_options\":[{\"name\":\"Closed\"}],\"default\":\"Closed\"}}}}}",
+          "string": "{\"data\":{\"id\":\"f580bda9-aed7-49b6-ad70-5707d1c183fa\",\"type\":\"case_type\",\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"🌍\",\"internal\":false,\"name\":\"World\",\"statuses_config\":{\"open\":{\"status_options\":[{\"name\":\"Open\"}],\"default\":\"Open\"},\"in_progress\":{\"status_options\":[{\"name\":\"In Progress\"}],\"default\":\"In Progress\"},\"closed\":{\"status_options\":[{\"name\":\"Closed\"}],\"default\":\"Closed\"}}}}}",
           "encoding": null
         },
         "headers": {
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/cases/types/f580bda9-aed7-49b6-ad70-5707d1c183fa"
       },

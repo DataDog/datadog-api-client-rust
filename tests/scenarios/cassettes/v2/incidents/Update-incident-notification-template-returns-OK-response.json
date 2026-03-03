@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Any incidents that harm (or have the potential to) the confidentiality, integrity, or availability of our data.\",\"is_default\":false,\"name\":\"Security Incident\"},\"type\":\"incident_types\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/types"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"category\":\"alert\",\"content\":\"Test notification template\",\"name\":\"Test Template Test-Update_incident_notification_template_returns_OK_response-1771855640\",\"subject\":\"Test Subject\"},\"relationships\":{\"incident_type\":{\"data\":{\"id\":\"cf6591aa-f267-47c2-bf92-3e8ea80b7dd8\",\"type\":\"incident_types\"}}},\"type\":\"notification_templates\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/notification-templates"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"category\":\"update\",\"content\":\"Incident Status Update:\\n\\nTitle: Sample Incident Title\\nNew Status: resolved\\nSeverity: SEV-2\\nServices: web-service, database-service\\nCommander: John Doe\\n\\nFor more details, visit the incident page.\",\"name\":\"Test-Update_incident_notification_template_returns_OK_response-1771855640\",\"subject\":\"Incident Update: Sample Incident Title - resolved\"},\"id\":\"d23357f8-ead4-48d3-b650-9c15359de3f5\",\"type\":\"notification_templates\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/notification-templates/d23357f8-ead4-48d3-b650-9c15359de3f5"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/notification-templates/d23357f8-ead4-48d3-b650-9c15359de3f5"
       },
@@ -129,11 +104,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/types/cf6591aa-f267-47c2-bf92-3e8ea80b7dd8"
       },

@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/sensitive-data-scanner/config"
       },
@@ -34,14 +30,7 @@
           "string": "{\"data\":{\"attributes\":{\"filter\":{\"query\":\"*\"},\"is_enabled\":false,\"name\":\"my-test-group\",\"product_list\":[\"logs\"],\"samplings\":[{\"product\":\"logs\",\"rate\":100}]},\"relationships\":{\"configuration\":{\"data\":{\"id\":\"7957915c634d4dcb581fa154157f5ad9c2947f50be632fb5599862069f4d2d87\",\"type\":\"sensitive_data_scanner_configuration\"}},\"rules\":{\"data\":[]}},\"type\":\"sensitive_data_scanner_group\"},\"meta\":{}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/sensitive-data-scanner/config/groups"
       },
@@ -68,14 +57,7 @@
           "string": "{\"data\":{\"id\":\"7957915c634d4dcb581fa154157f5ad9c2947f50be632fb5599862069f4d2d87\",\"relationships\":{\"groups\":{\"data\":[{\"id\":\"Test-Reorder_Groups_returns_Bad_Request_response-1770219325\",\"type\":\"sensitive_data_scanner_group\"}]}},\"type\":\"sensitive_data_scanner_configuration\"},\"meta\":{}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/sensitive-data-scanner/config"
       },
@@ -102,14 +84,7 @@
           "string": "{\"meta\":{}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/sensitive-data-scanner/config/groups/c8d07dad-d210-4fae-9678-3cb0c16394aa"
       },

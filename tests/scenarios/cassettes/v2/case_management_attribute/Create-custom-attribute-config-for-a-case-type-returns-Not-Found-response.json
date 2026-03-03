@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"display_name\":\"AWS Region 79eef6c4d883c2c5\",\"is_multi\":true,\"key\":\"region_79eef6c4d883c2c5\",\"type\":\"NUMBER\"},\"type\":\"custom_attribute\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/types/9fd476d7-a955-454a-851d-980c655c02d3/custom_attributes"
       },

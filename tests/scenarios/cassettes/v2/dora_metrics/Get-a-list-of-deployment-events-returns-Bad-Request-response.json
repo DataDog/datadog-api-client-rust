@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"limit\":10}}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/dora/deployments"
       },

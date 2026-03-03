@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Powerpack for ABC\",\"group_widget\":{\"definition\":{\"layout_type\":\"ordered\",\"type\":\"group1\",\"widgets\":[]}},\"name\":\"Sample Powerpack\",\"tags\":[\"tag:foo1\"],\"template_variables\":[{\"defaults\":[\"*\"],\"name\":\"test\"}]},\"type\":\"powerpack\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/powerpacks"
       },

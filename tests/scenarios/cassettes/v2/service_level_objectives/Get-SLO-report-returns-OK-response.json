@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "text/csv, application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/slo/report/9fb2dc2a-ead0-11ee-a174-9fe3a9d7627f/download"
       },

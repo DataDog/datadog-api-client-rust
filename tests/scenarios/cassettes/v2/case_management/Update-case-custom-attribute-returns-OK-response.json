@@ -3,23 +3,16 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"\ud83c\udf0d\",\"name\":\"World\"},\"type\":\"case_type\"}}",
+          "string": "{\"data\":{\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"🌍\",\"name\":\"World\"},\"type\":\"case_type\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/types"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"bf109065-175f-4d2f-848d-8f5232dfce1a\",\"type\":\"case_type\",\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"\ud83c\udf0d\",\"name\":\"World\"}}}",
+          "string": "{\"data\":{\"id\":\"bf109065-175f-4d2f-848d-8f5232dfce1a\",\"type\":\"case_type\",\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"🌍\",\"name\":\"World\"}}}",
           "encoding": null
         },
         "headers": {
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"And its brand new description\",\"display_name\":\"Attribute 17557789-0000-0000-0000-175577891300\",\"is_multi\":true,\"key\":\"attribute_661efcf8a00203e4\",\"type\":\"TEXT\"},\"type\":\"custom_attribute\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/types/bf109065-175f-4d2f-848d-8f5232dfce1a/custom_attributes"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"priority\":\"P4\",\"title\":\"My new case\",\"type_id\":\"bf109065-175f-4d2f-848d-8f5232dfce1a\"},\"relationships\":{\"project\":{\"data\":{\"id\":\"d4bbe1af-f36e-42f1-87c1-493ca35c320e\",\"type\":\"project\"}}},\"type\":\"case\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases"
       },
@@ -108,14 +87,7 @@
           "string": "{\"data\":{\"attributes\":{\"is_multi\":true,\"type\":\"TEXT\",\"value\":[\"Abba\",\"The Cure\"]},\"type\":\"case\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/4e88fd93-7a35-46a1-881e-3ee48185afe4/custom_attributes/attribute_661efcf8a00203e4"
       },
@@ -139,11 +111,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/cases/types/bf109065-175f-4d2f-848d-8f5232dfce1a"
       },

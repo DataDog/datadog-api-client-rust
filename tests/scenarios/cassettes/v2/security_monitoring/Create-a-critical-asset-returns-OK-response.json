@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"query\":\"host:testcreateacriticalassetreturnsokresponse1767380942\",\"rule_query\":\"type:(log_detection OR signal_correlation OR workload_security OR application_security) source:cloudtrail\",\"severity\":\"decrease\",\"tags\":[\"team:security\",\"env:test\"]},\"type\":\"critical_assets\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/critical_assets"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/critical_assets/93d5a224-589d-4d6d-adbf-f6657f484ecc"
       },

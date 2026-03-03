@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Create_an_AuthN_Mapping_returns_OK_response-1652349066\"},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"attribute_key\":\"testcreateanauthnmappingreturnsokresponse1652349066\",\"attribute_value\":\"Test-Create_an_AuthN_Mapping_returns_OK_response-1652349066\"},\"relationships\":{\"role\":{\"data\":{\"id\":\"0b9db2f6-d1d9-11ec-ad3d-da7ad0900002\",\"type\":\"roles\"}}},\"type\":\"authn_mappings\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/authn_mappings"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/authn_mappings/0bf0acd6-d1d9-11ec-ad3d-da7ad0900002"
       },
@@ -95,11 +77,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/roles/0b9db2f6-d1d9-11ec-ad3d-da7ad0900002"
       },

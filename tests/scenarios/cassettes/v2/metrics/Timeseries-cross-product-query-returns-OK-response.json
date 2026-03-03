@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"formulas\":[{\"formula\":\"a\",\"limit\":{\"count\":10,\"order\":\"desc\"}}],\"from\":1711977601000,\"interval\":5000,\"queries\":[{\"data_source\":\"metrics\",\"name\":\"a\",\"query\":\"avg:datadog.estimated_usage.metrics.custom{*}\"}],\"to\":1711981201000},\"type\":\"timeseries_request\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/query/timeseries"
       },

@@ -6,14 +6,7 @@
           "string": "{\"config\":{\"assertions\":[{\"operator\":\"lessThan\",\"target\":1000,\"type\":\"responseTime\"}],\"request\":{\"method\":\"GET\",\"url\":\"https://app.datadfoghq.com\"}},\"locations\":[\"aws:eu-west-3\"],\"message\":\"Testing wrong DNS error\",\"name\":\"Test-Get_an_API_test_result_returns_result_with_failure_object-1644495858\",\"options\":{\"min_failure_duration\":0,\"min_location_failed\":1,\"monitor_options\":{\"renotify_interval\":0},\"tick_every\":86400},\"subtype\":\"http\",\"tags\":[],\"type\":\"api\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/api"
       },
@@ -40,14 +33,7 @@
           "string": "{\"tests\":[{\"public_id\":\"ive-g7h-dgu\"}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/trigger"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/ive-g7h-dgu/results/990211588540730529"
       },
@@ -102,14 +84,7 @@
           "string": "{\"public_ids\":[\"ive-g7h-dgu\"]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/delete"
       },

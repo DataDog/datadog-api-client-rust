@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"conditional_recipients\":{\"conditions\":[{\"recipients\":[\"slack-test-channel\",\"jira-test\"],\"scope\":\"transition_type:is_alert\"}]},\"filter\":{\"tags\":[\"test:test-create_a_monitor_notification_rule_with_conditional_recipients_returns_ok_response-1758851459\"]},\"name\":\"test rule\"},\"type\":\"monitor-notification-rule\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/monitor/notification_rule"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/monitor/notification_rule/707b82d7-6898-4b20-a577-64f76881fe89"
       },

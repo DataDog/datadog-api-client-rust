@@ -6,14 +6,7 @@
           "string": "{\"series\":[{\"metric\":\"TestUpdateatagconfigurationreturnsOKresponse1652354372\",\"points\":[[1652354372,1.1]],\"tags\":[\"test:ExampleSubmitmetricsreturnsPayloadacceptedresponse\"],\"type\":\"gauge\"}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "text/json, application/json"
-          ],
-          "Content-Type": [
-            "text/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/series"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"metric_type\":\"gauge\",\"tags\":[\"app\",\"datacenter\",\"TestUpdateatagconfigurationreturnsOKresponse1652354372\"]},\"id\":\"TestUpdateatagconfigurationreturnsOKresponse1652354372\",\"type\":\"manage_tags\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/metrics/TestUpdateatagconfigurationreturnsOKresponse1652354372/tags"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"tags\":[\"app\"]},\"id\":\"TestUpdateatagconfigurationreturnsOKresponse1652354372\",\"type\":\"manage_tags\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/metrics/TestUpdateatagconfigurationreturnsOKresponse1652354372/tags"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/metrics/TestUpdateatagconfigurationreturnsOKresponse1652354372/tags"
       },

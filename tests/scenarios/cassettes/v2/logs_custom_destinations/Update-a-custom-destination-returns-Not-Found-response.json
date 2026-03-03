@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":false,\"forward_tags\":false,\"forward_tags_restriction_list\":[\"datacenter\",\"host\"],\"forward_tags_restriction_list_type\":\"ALLOW_LIST\",\"forwarder_destination\":{\"auth\":{\"password\":\"datadog-custom-destination-password\",\"type\":\"basic\",\"username\":\"datadog-custom-destination-username\"},\"endpoint\":\"https://example.com\",\"type\":\"http\"},\"name\":\"Nginx logs\",\"query\":\"source:nginx\"},\"id\":\"id-from-non-existing-custom-destination\",\"type\":\"custom_destination\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/custom-destinations/id-from-non-existing-custom-destination"
       },

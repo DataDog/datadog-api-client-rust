@@ -6,14 +6,7 @@
           "string": "{\"series\":[{\"metric\":\"static_test_metric_donotdelete\",\"points\":[[1685976245,1.1]],\"tags\":[\"test:static_test_metric_donotdelete\"],\"type\":\"gauge\"}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "text/json, application/json"
-          ],
-          "Content-Type": [
-            "text/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/series"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/metrics/static_test_metric_donotdelete/active-configurations"
       },

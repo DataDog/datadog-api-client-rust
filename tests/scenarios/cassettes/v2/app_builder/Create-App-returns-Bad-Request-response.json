@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"This is a bad example app\",\"queries\":[],\"rootInstanceName\":\"grid0\"},\"type\":\"appDefinitions\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/app-builder/apps"
       },

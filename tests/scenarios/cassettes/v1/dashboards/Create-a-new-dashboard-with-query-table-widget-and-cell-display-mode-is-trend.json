@@ -6,14 +6,7 @@
           "string": "{\"description\":\"\",\"layout_type\":\"free\",\"notify_list\":[],\"template_variables\":[],\"title\":\"Test-Create_a_new_dashboard_with_query_table_widget_and_cell_display_mode_is_trend-1739540217\",\"widgets\":[{\"definition\":{\"has_search_bar\":\"auto\",\"requests\":[{\"formulas\":[{\"cell_display_mode\":\"trend\",\"cell_display_mode_options\":{\"trend_type\":\"line\",\"y_scale\":\"shared\"},\"conditional_formats\":[],\"formula\":\"query1\"}],\"queries\":[{\"aggregator\":\"avg\",\"data_source\":\"metrics\",\"name\":\"query1\",\"query\":\"avg:system.cpu.user{*} by {host}\"}],\"response_format\":\"scalar\",\"sort\":{\"count\":500,\"order_by\":[{\"index\":0,\"order\":\"desc\",\"type\":\"formula\"}]}}],\"time\":{},\"title\":\"\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"query_table\"},\"layout\":{\"height\":32,\"width\":54,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/qw6-574-sem"
       },

@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"api_key\":\"fakekey\",\"email\":\"new@email\",\"name\":\"testaddcloudflareaccountreturnscreatedresponsewithoptionalfilters1704309457\",\"resources\":[\"lb\",\"dns\"],\"zones\":[\"zone-id-1\",\"zone-id-2\"]},\"type\":\"cloudflare-accounts\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/integrations/cloudflare/accounts"
       },

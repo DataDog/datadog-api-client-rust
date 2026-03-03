@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"jira_issue_url\":\"https://datadoghq-sandbox-538.atlassian.net/browse/CSMSEC-105476\"},\"relationships\":{\"findings\":{\"data\":[]},\"project\":{\"data\":{\"id\":\"959a6f71-bac8-4027-b1d3-2264f569296f\",\"type\":\"projects\"}}},\"type\":\"jira_issues\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/security/findings/jira_issues"
       },

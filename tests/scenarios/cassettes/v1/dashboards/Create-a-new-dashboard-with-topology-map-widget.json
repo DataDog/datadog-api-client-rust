@@ -6,14 +6,7 @@
           "string": "{\"description\":\"\",\"layout_type\":\"free\",\"notify_list\":[],\"template_variables\":[],\"title\":\"Test-Create_a_new_dashboard_with_topology_map_widget-1731699180\",\"widgets\":[{\"definition\":{\"requests\":[{\"query\":{\"data_source\":\"service_map\",\"filters\":[\"env:none\",\"environment:*\"],\"service\":\"\"},\"request_type\":\"topology\"}],\"title\":\"\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"topology_map\"},\"layout\":{\"height\":15,\"width\":47,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/9fp-eg8-uae"
       },

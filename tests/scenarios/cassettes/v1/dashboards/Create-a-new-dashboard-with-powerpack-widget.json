@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Sample powerpack\",\"group_widget\":{\"definition\":{\"layout_type\":\"ordered\",\"show_title\":true,\"title\":\"Sample Powerpack\",\"type\":\"group\",\"widgets\":[{\"definition\":{\"content\":\"test\",\"type\":\"note\"}}]},\"layout\":{\"height\":3,\"width\":12,\"x\":0,\"y\":0},\"live_span\":\"1h\"},\"name\":\"Test-Create_a_new_dashboard_with_powerpack_widget-1731699168\",\"tags\":[\"tag:sample\"],\"template_variables\":[{\"defaults\":[\"*\"],\"name\":\"sample\"}]},\"type\":\"powerpack\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/powerpacks"
       },
@@ -40,14 +33,7 @@
           "string": "{\"description\":\"description\",\"layout_type\":\"ordered\",\"title\":\"Test-Create_a_new_dashboard_with_powerpack_widget-1731699168 with powerpack widget\",\"widgets\":[{\"definition\":{\"powerpack_id\":\"65c564d0-a388-11ef-a7cd-da7ad0900002\",\"template_variables\":{\"controlled_by_powerpack\":[{\"name\":\"foo\",\"prefix\":\"bar\",\"values\":[\"baz\",\"qux\",\"quuz\"]}],\"controlled_externally\":[]},\"type\":\"powerpack\"},\"layout\":{\"height\":2,\"is_column_break\":false,\"width\":2,\"x\":1,\"y\":1}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/zb2-4ez-tuk"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/powerpacks/65c564d0-a388-11ef-a7cd-da7ad0900002"
       },

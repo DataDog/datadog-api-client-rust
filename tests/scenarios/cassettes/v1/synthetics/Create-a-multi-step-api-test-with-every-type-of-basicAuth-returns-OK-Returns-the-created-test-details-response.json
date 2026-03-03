@@ -6,14 +6,7 @@
           "string": "{\"config\":{\"steps\":[{\"assertions\":[{\"operator\":\"is\",\"target\":200,\"type\":\"statusCode\"}],\"name\":\"request is sent\",\"request\":{\"basicAuth\":{\"password\":\"password\",\"username\":\"username\"},\"method\":\"GET\",\"url\":\"https://httpbin.org/status/200\"},\"subtype\":\"http\"},{\"assertions\":[{\"operator\":\"is\",\"target\":200,\"type\":\"statusCode\"}],\"name\":\"request is sent\",\"request\":{\"basicAuth\":{\"password\":\"password\",\"type\":\"web\",\"username\":\"username\"},\"method\":\"GET\",\"url\":\"https://httpbin.org/status/200\"},\"subtype\":\"http\"},{\"assertions\":[{\"operator\":\"is\",\"target\":200,\"type\":\"statusCode\"}],\"name\":\"request is sent\",\"request\":{\"basicAuth\":{\"accessKey\":\"accessKey\",\"secretKey\":\"secretKey\",\"type\":\"sigv4\"},\"method\":\"GET\",\"url\":\"https://httpbin.org/status/200\"},\"subtype\":\"http\"},{\"assertions\":[{\"operator\":\"is\",\"target\":200,\"type\":\"statusCode\"}],\"name\":\"request is sent\",\"request\":{\"basicAuth\":{\"type\":\"ntlm\"},\"method\":\"GET\",\"url\":\"https://httpbin.org/status/200\"},\"subtype\":\"http\"},{\"assertions\":[{\"operator\":\"is\",\"target\":200,\"type\":\"statusCode\"}],\"name\":\"request is sent\",\"request\":{\"basicAuth\":{\"password\":\"password\",\"type\":\"digest\",\"username\":\"username\"},\"method\":\"GET\",\"url\":\"https://httpbin.org/status/200\"},\"subtype\":\"http\"},{\"assertions\":[{\"operator\":\"is\",\"target\":200,\"type\":\"statusCode\"}],\"name\":\"request is sent\",\"request\":{\"basicAuth\":{\"accessTokenUrl\":\"accessTokenUrl\",\"clientId\":\"clientId\",\"clientSecret\":\"clientSecret\",\"tokenApiAuthentication\":\"header\",\"type\":\"oauth-client\"},\"method\":\"GET\",\"url\":\"https://httpbin.org/status/200\"},\"subtype\":\"http\"},{\"assertions\":[{\"operator\":\"is\",\"target\":200,\"type\":\"statusCode\"}],\"name\":\"request is sent\",\"request\":{\"basicAuth\":{\"accessTokenUrl\":\"accessTokenUrl\",\"password\":\"password\",\"tokenApiAuthentication\":\"header\",\"type\":\"oauth-rop\",\"username\":\"username\"},\"method\":\"GET\",\"url\":\"https://httpbin.org/status/200\"},\"subtype\":\"http\"}]},\"locations\":[\"aws:us-east-2\"],\"message\":\"BDD test payload: synthetics_api_test_multi_step_with_every_type_of_basic_auth.json\",\"name\":\"Test-Create_a_multi_step_api_test_with_every_type_of_basicAuth_returns_OK_Returns_the_created_test_detail-1733743073\",\"options\":{\"tick_every\":60},\"subtype\":\"multi\",\"type\":\"api\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/api"
       },
@@ -40,14 +33,7 @@
           "string": "{\"public_ids\":[\"vj7-th4-9tj\"]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/delete"
       },
