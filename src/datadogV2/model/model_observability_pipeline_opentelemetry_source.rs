@@ -8,7 +8,7 @@ use std::fmt::{self, Formatter};
 
 /// The `opentelemetry` source receives telemetry data using the OpenTelemetry Protocol (OTLP) over gRPC and HTTP.
 ///
-/// **Supported pipeline types:** logs
+/// **Supported pipeline types:** logs, metrics
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
