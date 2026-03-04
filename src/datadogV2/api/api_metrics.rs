@@ -97,7 +97,7 @@ pub struct ListTagConfigurationsOptionalParams {
     /// (Preview) Filter metrics that are used in dashboards, monitors, notebooks, SLOs.
     pub filter_related_assets: Option<bool>,
     /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
-    /// Default value is 3600 (1 hour), maximum value is 2,592,000 (30 days).
+    /// Default value is 3600 (1 hour), maximum value is 5,184,000 (60 days).
     pub window_seconds: Option<i64>,
     /// Maximum number of results returned.
     pub page_size: Option<i32>,
@@ -150,7 +150,7 @@ impl ListTagConfigurationsOptionalParams {
         self
     }
     /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
-    /// Default value is 3600 (1 hour), maximum value is 2,592,000 (30 days).
+    /// Default value is 3600 (1 hour), maximum value is 5,184,000 (60 days).
     pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
         self
@@ -1647,7 +1647,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Returns all metrics that can be configured in the Metrics Summary page or with Metrics without Limits™ (matching additional filters if specified).
+    /// Returns all metrics for your organization that match the given filter parameters.
     /// Optionally, paginate by using the `page[cursor]` and/or `page[size]` query parameters.
     /// To fetch the first page, pass in a query parameter with either a valid `page[size]` or an empty cursor like `page[cursor]=`. To fetch the next page, pass in the `next_cursor` value from the response as the new `page[cursor]` value.
     /// Once the `meta.pagination.next_cursor` value is null, all pages have been retrieved.
@@ -1710,7 +1710,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Returns all metrics that can be configured in the Metrics Summary page or with Metrics without Limits™ (matching additional filters if specified).
+    /// Returns all metrics for your organization that match the given filter parameters.
     /// Optionally, paginate by using the `page[cursor]` and/or `page[size]` query parameters.
     /// To fetch the first page, pass in a query parameter with either a valid `page[size]` or an empty cursor like `page[cursor]=`. To fetch the next page, pass in the `next_cursor` value from the response as the new `page[cursor]` value.
     /// Once the `meta.pagination.next_cursor` value is null, all pages have been retrieved.
