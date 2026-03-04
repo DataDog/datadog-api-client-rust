@@ -47,7 +47,8 @@ pub struct ChangeWidgetRequest {
     /// The log query.
     #[serde(rename = "profile_metrics_query")]
     pub profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition>,
-    /// Query definition.
+    /// Query definition. Deprecated - Use `queries` and `formulas` instead.
+    #[deprecated]
     #[serde(rename = "q")]
     pub q: Option<String>,
     /// List of queries that can be returned directly or used in formulas.
@@ -74,6 +75,7 @@ pub struct ChangeWidgetRequest {
 
 impl ChangeWidgetRequest {
     pub fn new() -> ChangeWidgetRequest {
+        #[allow(deprecated)]
         ChangeWidgetRequest {
             apm_query: None,
             change_type: None,
@@ -98,61 +100,73 @@ impl ChangeWidgetRequest {
         }
     }
 
+    #[allow(deprecated)]
     pub fn apm_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.apm_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn change_type(mut self, value: crate::datadogV1::model::WidgetChangeType) -> Self {
         self.change_type = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn compare_to(mut self, value: crate::datadogV1::model::WidgetCompareTo) -> Self {
         self.compare_to = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn event_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.event_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn formulas(mut self, value: Vec<crate::datadogV1::model::WidgetFormula>) -> Self {
         self.formulas = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn increase_good(mut self, value: bool) -> Self {
         self.increase_good = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn log_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.log_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn network_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.network_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn order_by(mut self, value: crate::datadogV1::model::WidgetOrderBy) -> Self {
         self.order_by = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn order_dir(mut self, value: crate::datadogV1::model::WidgetSort) -> Self {
         self.order_dir = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn process_query(mut self, value: crate::datadogV1::model::ProcessQueryDefinition) -> Self {
         self.process_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn profile_metrics_query(
         mut self,
         value: crate::datadogV1::model::LogQueryDefinition,
@@ -161,11 +175,13 @@ impl ChangeWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn q(mut self, value: String) -> Self {
         self.q = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn queries(
         mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
@@ -174,6 +190,7 @@ impl ChangeWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn response_format(
         mut self,
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
@@ -182,16 +199,19 @@ impl ChangeWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.rum_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn security_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.security_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn show_present(mut self, value: bool) -> Self {
         self.show_present = Some(value);
         self
@@ -434,6 +454,7 @@ impl<'de> Deserialize<'de> for ChangeWidgetRequest {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = ChangeWidgetRequest {
                     apm_query,
                     change_type,
