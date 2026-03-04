@@ -91,6 +91,12 @@ pub struct ListTagConfigurationsOptionalParams {
     /// (Preview) Filter custom metrics that have or have not been queried in the specified window[seconds].
     /// If no window is provided or the window is less than 2 hours, a default of 2 hours will be applied.
     pub filter_queried: Option<bool>,
+    /// The number of seconds of look back (from now) used by the `filter[queried]` filter logic.
+    /// Must be sent with `filter[queried]` and is only applied when `filter[queried]=true`.
+    /// If `filter[queried]=false`, this parameter is ignored and default queried-window behavior applies.
+    /// If `filter[queried]` is not provided, sending this parameter returns a 400.
+    /// For example: `GET /api/v2/metrics?filter[queried]=true&filter[queried][window][seconds]=7776000`.
+    pub filter_queried_window_seconds: Option<i64>,
     /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
     /// Can only be combined with the filter[queried] filter.
     pub filter_tags: Option<String>,
@@ -136,6 +142,15 @@ impl ListTagConfigurationsOptionalParams {
     /// If no window is provided or the window is less than 2 hours, a default of 2 hours will be applied.
     pub fn filter_queried(mut self, value: bool) -> Self {
         self.filter_queried = Some(value);
+        self
+    }
+    /// The number of seconds of look back (from now) used by the `filter[queried]` filter logic.
+    /// Must be sent with `filter[queried]` and is only applied when `filter[queried]=true`.
+    /// If `filter[queried]=false`, this parameter is ignored and default queried-window behavior applies.
+    /// If `filter[queried]` is not provided, sending this parameter returns a 400.
+    /// For example: `GET /api/v2/metrics?filter[queried]=true&filter[queried][window][seconds]=7776000`.
+    pub fn filter_queried_window_seconds(mut self, value: i64) -> Self {
+        self.filter_queried_window_seconds = Some(value);
         self
     }
     /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
@@ -1732,6 +1747,7 @@ impl MetricsAPI {
         let filter_metric_type = params.filter_metric_type;
         let filter_include_percentiles = params.filter_include_percentiles;
         let filter_queried = params.filter_queried;
+        let filter_queried_window_seconds = params.filter_queried_window_seconds;
         let filter_tags = params.filter_tags;
         let filter_related_assets = params.filter_related_assets;
         let window_seconds = params.window_seconds;
@@ -1768,6 +1784,12 @@ impl MetricsAPI {
         if let Some(ref local_query_param) = filter_queried {
             local_req_builder =
                 local_req_builder.query(&[("filter[queried]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_queried_window_seconds {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[queried][window][seconds]",
+                &local_query_param.to_string(),
+            )]);
         };
         if let Some(ref local_query_param) = filter_tags {
             local_req_builder =
