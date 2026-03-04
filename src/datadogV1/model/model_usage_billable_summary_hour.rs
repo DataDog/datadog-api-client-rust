@@ -17,7 +17,7 @@ pub struct UsageBillableSummaryHour {
     /// The account public ID.
     #[serde(rename = "account_public_id")]
     pub account_public_id: Option<String>,
-    /// The billing plan (metadata). (Deprecated from May 2026)
+    /// The billing plan (metadata). (Deprecated from June 2026)
     #[deprecated]
     #[serde(rename = "billing_plan")]
     pub billing_plan: Option<String>,
