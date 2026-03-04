@@ -11,6 +11,7 @@ pub enum StatusPagesComponentGroupAttributesComponentsItemsStatus {
     DEGRADED,
     PARTIAL_OUTAGE,
     MAJOR_OUTAGE,
+    MAINTENANCE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -21,6 +22,7 @@ impl ToString for StatusPagesComponentGroupAttributesComponentsItemsStatus {
             Self::DEGRADED => String::from("degraded"),
             Self::PARTIAL_OUTAGE => String::from("partial_outage"),
             Self::MAJOR_OUTAGE => String::from("major_outage"),
+            Self::MAINTENANCE => String::from("maintenance"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -49,6 +51,7 @@ impl<'de> Deserialize<'de> for StatusPagesComponentGroupAttributesComponentsItem
             "degraded" => Self::DEGRADED,
             "partial_outage" => Self::PARTIAL_OUTAGE,
             "major_outage" => Self::MAJOR_OUTAGE,
+            "maintenance" => Self::MAINTENANCE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

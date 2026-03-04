@@ -17,7 +17,7 @@ pub struct StatusPageArray {
     pub included: Option<Vec<crate::datadogV2::model::StatusPageArrayIncluded>>,
     /// Response metadata.
     #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::StatusPagesResponseMeta>,
+    pub meta: Option<crate::datadogV2::model::PaginationMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -44,7 +44,7 @@ impl StatusPageArray {
         self
     }
 
-    pub fn meta(mut self, value: crate::datadogV2::model::StatusPagesResponseMeta) -> Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::PaginationMeta) -> Self {
         self.meta = Some(value);
         self
     }
@@ -78,7 +78,7 @@ impl<'de> Deserialize<'de> for StatusPageArray {
                 let mut data: Option<Vec<crate::datadogV2::model::StatusPageData>> = None;
                 let mut included: Option<Vec<crate::datadogV2::model::StatusPageArrayIncluded>> =
                     None;
-                let mut meta: Option<crate::datadogV2::model::StatusPagesResponseMeta> = None;
+                let mut meta: Option<crate::datadogV2::model::PaginationMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
