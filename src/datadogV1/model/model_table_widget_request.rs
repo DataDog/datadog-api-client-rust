@@ -53,7 +53,8 @@ pub struct TableWidgetRequest {
     /// The log query.
     #[serde(rename = "profile_metrics_query")]
     pub profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition>,
-    /// Query definition.
+    /// Query definition. Deprecated - Use `queries` and `formulas` instead.
+    #[deprecated]
     #[serde(rename = "q")]
     pub q: Option<String>,
     /// List of queries that can be returned directly or used in formulas.
@@ -83,6 +84,7 @@ pub struct TableWidgetRequest {
 
 impl TableWidgetRequest {
     pub fn new() -> TableWidgetRequest {
+        #[allow(deprecated)]
         TableWidgetRequest {
             aggregator: None,
             alias: None,
@@ -110,21 +112,25 @@ impl TableWidgetRequest {
         }
     }
 
+    #[allow(deprecated)]
     pub fn aggregator(mut self, value: crate::datadogV1::model::WidgetAggregator) -> Self {
         self.aggregator = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn alias(mut self, value: String) -> Self {
         self.alias = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn apm_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.apm_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn apm_stats_query(
         mut self,
         value: crate::datadogV1::model::ApmStatsQueryDefinition,
@@ -133,6 +139,7 @@ impl TableWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn cell_display_mode(
         mut self,
         value: Vec<crate::datadogV1::model::TableWidgetCellDisplayMode>,
@@ -141,6 +148,7 @@ impl TableWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn conditional_formats(
         mut self,
         value: Vec<crate::datadogV1::model::WidgetConditionalFormat>,
@@ -149,41 +157,49 @@ impl TableWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn event_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.event_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn formulas(mut self, value: Vec<crate::datadogV1::model::WidgetFormula>) -> Self {
         self.formulas = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn log_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.log_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn network_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.network_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn order(mut self, value: crate::datadogV1::model::WidgetSort) -> Self {
         self.order = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn process_query(mut self, value: crate::datadogV1::model::ProcessQueryDefinition) -> Self {
         self.process_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn profile_metrics_query(
         mut self,
         value: crate::datadogV1::model::LogQueryDefinition,
@@ -192,11 +208,13 @@ impl TableWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn q(mut self, value: String) -> Self {
         self.q = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn queries(
         mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
@@ -205,6 +223,7 @@ impl TableWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn response_format(
         mut self,
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
@@ -213,21 +232,25 @@ impl TableWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.rum_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn security_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.security_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn sort(mut self, value: crate::datadogV1::model::WidgetSortBy) -> Self {
         self.sort = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn text_formats(
         mut self,
         value: Vec<Vec<crate::datadogV1::model::TableWidgetTextFormatRule>>,
@@ -480,6 +503,7 @@ impl<'de> Deserialize<'de> for TableWidgetRequest {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = TableWidgetRequest {
                     aggregator,
                     alias,

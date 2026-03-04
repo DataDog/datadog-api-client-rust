@@ -23,7 +23,8 @@ pub struct GeomapWidgetRequest {
     /// The log query.
     #[serde(rename = "log_query")]
     pub log_query: Option<crate::datadogV1::model::LogQueryDefinition>,
-    /// The widget metrics query.
+    /// The widget metrics query. Deprecated - Use `queries` and `formulas` instead.
+    #[deprecated]
     #[serde(rename = "q")]
     pub q: Option<String>,
     /// List of queries that can be returned directly or used in formulas.
@@ -59,6 +60,7 @@ pub struct GeomapWidgetRequest {
 
 impl GeomapWidgetRequest {
     pub fn new() -> GeomapWidgetRequest {
+        #[allow(deprecated)]
         GeomapWidgetRequest {
             columns: None,
             conditional_formats: None,
@@ -78,11 +80,13 @@ impl GeomapWidgetRequest {
         }
     }
 
+    #[allow(deprecated)]
     pub fn columns(mut self, value: Vec<crate::datadogV1::model::ListStreamColumn>) -> Self {
         self.columns = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn conditional_formats(
         mut self,
         value: Vec<crate::datadogV1::model::WidgetConditionalFormat>,
@@ -91,21 +95,25 @@ impl GeomapWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn formulas(mut self, value: Vec<crate::datadogV1::model::WidgetFormula>) -> Self {
         self.formulas = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn log_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.log_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn q(mut self, value: String) -> Self {
         self.q = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn queries(
         mut self,
         value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
@@ -114,11 +122,13 @@ impl GeomapWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn query(mut self, value: crate::datadogV1::model::ListStreamQuery) -> Self {
         self.query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn response_format(
         mut self,
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
@@ -127,26 +137,31 @@ impl GeomapWidgetRequest {
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.rum_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn security_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.security_query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn sort(mut self, value: crate::datadogV1::model::WidgetSortBy) -> Self {
         self.sort = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn style(mut self, value: crate::datadogV1::model::GeomapWidgetRequestStyle) -> Self {
         self.style = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn text_formats(
         mut self,
         value: Vec<crate::datadogV1::model::TableWidgetTextFormatRule>,
@@ -314,6 +329,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetRequest {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = GeomapWidgetRequest {
                     columns,
                     conditional_formats,
