@@ -77,6 +77,7 @@ def cli(specs, output):
     common_files = {
         "configuration.rs": env.get_template("configuration.j2"),
         "mod.rs": env.get_template("common_mod.j2"),
+        "middleware.rs": env.get_template("middleware.j2"),
     }
     librs = env.get_template("lib.j2")
 
