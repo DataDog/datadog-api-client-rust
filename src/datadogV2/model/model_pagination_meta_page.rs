@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct StatusPagesPagination {
+pub struct PaginationMetaPage {
     /// Integer representing the offset to fetch the first page of results.
     #[serde(rename = "first_offset")]
     pub first_offset: Option<i64>,
@@ -21,7 +21,7 @@ pub struct StatusPagesPagination {
         with = "::serde_with::rust::double_option"
     )]
     pub last_offset: Option<Option<i64>>,
-    /// Integer representing the number of elements to returned in the results.
+    /// Integer representing the number of elements to be returned in the results.
     #[serde(rename = "limit")]
     pub limit: Option<i64>,
     /// Integer representing the index of the first element in the next page of results. Equal to page size added to the current offset.
@@ -45,7 +45,7 @@ pub struct StatusPagesPagination {
     #[serde(rename = "total", default, with = "::serde_with::rust::double_option")]
     pub total: Option<Option<i64>>,
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::StatusPagesPaginationType>,
+    pub type_: Option<crate::datadogV2::model::PaginationMetaPageType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -53,9 +53,9 @@ pub struct StatusPagesPagination {
     pub(crate) _unparsed: bool,
 }
 
-impl StatusPagesPagination {
-    pub fn new() -> StatusPagesPagination {
-        StatusPagesPagination {
+impl PaginationMetaPage {
+    pub fn new() -> PaginationMetaPage {
+        PaginationMetaPage {
             first_offset: None,
             last_offset: None,
             limit: None,
@@ -104,7 +104,7 @@ impl StatusPagesPagination {
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV2::model::StatusPagesPaginationType) -> Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::PaginationMetaPageType) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -118,20 +118,20 @@ impl StatusPagesPagination {
     }
 }
 
-impl Default for StatusPagesPagination {
+impl Default for PaginationMetaPage {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for StatusPagesPagination {
+impl<'de> Deserialize<'de> for PaginationMetaPage {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct StatusPagesPaginationVisitor;
-        impl<'a> Visitor<'a> for StatusPagesPaginationVisitor {
-            type Value = StatusPagesPagination;
+        struct PaginationMetaPageVisitor;
+        impl<'a> Visitor<'a> for PaginationMetaPageVisitor {
+            type Value = PaginationMetaPage;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -148,7 +148,7 @@ impl<'de> Deserialize<'de> for StatusPagesPagination {
                 let mut offset: Option<i64> = None;
                 let mut prev_offset: Option<Option<i64>> = None;
                 let mut total: Option<Option<i64>> = None;
-                let mut type_: Option<crate::datadogV2::model::StatusPagesPaginationType> = None;
+                let mut type_: Option<crate::datadogV2::model::PaginationMetaPageType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -198,7 +198,7 @@ impl<'de> Deserialize<'de> for StatusPagesPagination {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::StatusPagesPaginationType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::PaginationMetaPageType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -213,7 +213,7 @@ impl<'de> Deserialize<'de> for StatusPagesPagination {
                     }
                 }
 
-                let content = StatusPagesPagination {
+                let content = PaginationMetaPage {
                     first_offset,
                     last_offset,
                     limit,
@@ -230,6 +230,6 @@ impl<'de> Deserialize<'de> for StatusPagesPagination {
             }
         }
 
-        deserializer.deserialize_any(StatusPagesPaginationVisitor)
+        deserializer.deserialize_any(PaginationMetaPageVisitor)
     }
 }
