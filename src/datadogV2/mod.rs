@@ -54,6 +54,7 @@ pub use self::api::api_integrations;
 pub use self::api::api_ip_allowlist;
 pub use self::api::api_jira_integration;
 pub use self::api::api_key_management;
+pub use self::api::api_llm_observability;
 pub use self::api::api_logs;
 pub use self::api::api_logs_archives;
 pub use self::api::api_logs_custom_destinations;
