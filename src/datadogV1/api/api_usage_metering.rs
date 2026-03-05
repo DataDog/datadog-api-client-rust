@@ -166,9 +166,10 @@ pub struct GetMonthlyUsageAttributionOptionalParams {
     pub end_month: Option<chrono::DateTime<chrono::Utc>>,
     /// The direction to sort by: `[desc, asc]`.
     pub sort_direction: Option<crate::datadogV1::model::UsageSortDirection>,
-    /// The field to sort by.
-    /// The following values have been **deprecated**:
-    /// `estimated_indexed_spans_usage`, `estimated_indexed_spans_percentage`, `estimated_ingested_spans_usage`, `estimated_ingested_spans_percentage`.
+    /// The field to sort by. Sort fields are in the format `<usage_type>_usage`.
+    /// Example: `infra_host_usage`
+    /// To obtain the complete list of usage attribution types that can be used to replace
+    /// `<usage_type>` in the field names, make a request to the [Get usage attribution types API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-usage-attribution-types>).
     pub sort_name: Option<crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics>,
     /// Comma separated list of tag keys used to group usage. If no value is provided the usage will not be broken down by tags.
     ///
@@ -191,9 +192,10 @@ impl GetMonthlyUsageAttributionOptionalParams {
         self.sort_direction = Some(value);
         self
     }
-    /// The field to sort by.
-    /// The following values have been **deprecated**:
-    /// `estimated_indexed_spans_usage`, `estimated_indexed_spans_percentage`, `estimated_ingested_spans_usage`, `estimated_ingested_spans_percentage`.
+    /// The field to sort by. Sort fields are in the format `<usage_type>_usage`.
+    /// Example: `infra_host_usage`
+    /// To obtain the complete list of usage attribution types that can be used to replace
+    /// `<usage_type>` in the field names, make a request to the [Get usage attribution types API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-usage-attribution-types>).
     pub fn sort_name(
         mut self,
         value: crate::datadogV1::model::MonthlyUsageAttributionSupportedMetrics,
@@ -1296,8 +1298,6 @@ impl UsageMeteringAPI {
     ///   cursor := response.metadata.pagination.next_record_id
     /// END
     /// ```
-    /// The following values have been **deprecated**:
-    ///     `estimated_indexed_spans_usage`, `estimated_indexed_spans_percentage`, `estimated_ingested_spans_usage`, `estimated_ingested_spans_percentage`, `llm_observability_usage`, `llm_observability_percentage`.
     pub async fn get_hourly_usage_attribution(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,
@@ -1339,8 +1339,6 @@ impl UsageMeteringAPI {
     ///   cursor := response.metadata.pagination.next_record_id
     /// END
     /// ```
-    /// The following values have been **deprecated**:
-    ///     `estimated_indexed_spans_usage`, `estimated_indexed_spans_percentage`, `estimated_ingested_spans_usage`, `estimated_ingested_spans_percentage`, `llm_observability_usage`, `llm_observability_percentage`.
     pub async fn get_hourly_usage_attribution_with_http_info(
         &self,
         start_hr: chrono::DateTime<chrono::Utc>,

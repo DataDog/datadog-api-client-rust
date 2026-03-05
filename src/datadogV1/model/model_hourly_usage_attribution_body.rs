@@ -39,8 +39,8 @@ pub struct HourlyUsageAttributionBody {
     /// Shows the most recent hour in the current month for all organizations where usages are calculated.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<String>,
-    /// Supported products for hourly usage attribution requests.
-    /// The following values have been **deprecated**: `estimated_indexed_spans_usage`, `estimated_ingested_spans_usage`.
+    /// Supported products for hourly usage attribution requests. Usage types are in the format `<usage_type>_usage`.
+    /// To obtain the complete list of valid usage types, make a request to the [Get usage attribution types API](<https://docs.datadoghq.com/api/latest/usage-metering/#get-usage-attribution-types>).
     #[serde(rename = "usage_type")]
     pub usage_type: Option<crate::datadogV1::model::HourlyUsageAttributionUsageType>,
     #[serde(flatten)]
