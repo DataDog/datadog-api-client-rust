@@ -6,14 +6,7 @@
           "string": "{\"cases\":[{\"condition\":\"a > 0.995\",\"name\":\"\",\"notifications\":[],\"status\":\"info\"}],\"filters\":[],\"isEnabled\":true,\"message\":\"An anomaly detection rule\",\"name\":\"Test-Create_a_detection_rule_with_detection_method_anomaly_detection_returns_OK_response-1765898340\",\"options\":{\"anomalyDetectionOptions\":{\"bucketDuration\":300,\"detectionTolerance\":3,\"learningDuration\":24,\"learningPeriodBaseline\":10},\"detectionMethod\":\"anomaly_detection\",\"evaluationWindow\":900,\"keepAlive\":3600,\"maxSignalDuration\":86400},\"queries\":[{\"aggregation\":\"count\",\"dataSource\":\"logs\",\"distinctFields\":[],\"groupByFields\":[\"@usr.email\",\"@network.client.ip\"],\"hasOptionalGroupByFields\":false,\"name\":\"\",\"query\":\"service:app status:error\"}],\"tags\":[],\"type\":\"log_detection\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules/0vk-kph-3ri"
       },

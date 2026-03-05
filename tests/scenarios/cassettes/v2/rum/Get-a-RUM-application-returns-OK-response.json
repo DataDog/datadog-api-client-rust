@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"test-rum-4a6d822e36907848\",\"type\":\"ios\"},\"type\":\"rum_application_create\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/rum/applications"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/rum/applications/60ddadf3-d37f-4d33-bdf1-f56b674ae8ed"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/rum/applications/60ddadf3-d37f-4d33-bdf1-f56b674ae8ed"
       },

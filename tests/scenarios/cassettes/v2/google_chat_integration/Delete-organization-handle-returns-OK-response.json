@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Delete_organization_handle_returns_OK_response-1770751029\",\"space_resource_name\":\"spaces/AAQA-zFIks8\"}},\"type\":\"google-chat-organization-handle\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/integration/google-chat/organizations/e54cb570-c674-529c-769d-84b312288ed7/organization-handles"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/integration/google-chat/organizations/e54cb570-c674-529c-769d-84b312288ed7/organization-handles/e70e04d1-7547-47de-ad3b-41a345fd1abe"
       },
@@ -61,11 +50,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/integration/google-chat/organizations/e54cb570-c674-529c-769d-84b312288ed7/organization-handles/e70e04d1-7547-47de-ad3b-41a345fd1abe"
       },

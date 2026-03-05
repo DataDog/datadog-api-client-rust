@@ -6,14 +6,7 @@
           "string": "{\"tags\":[\"test:TestPostaneventwithalongtitlereturnsOKresponse1641430251\"],\"text\":\"A text message.\",\"title\":\"Test-Post_an_event_with_a_long_title_returns_OK_response-1641430251 very very very looooooooong looooooooooooong loooooooooooooooooooooong looooooooooooooooooooooooooong title with 100+ characters\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/events"
       },

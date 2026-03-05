@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"category\":\"alert\",\"content\":\"An incident has been declared. Please join the incident channel for updates.\",\"name\":\"Test Template\",\"subject\":\"Incident Alert\"},\"type\":\"invalid_type\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/notification-templates"
       },

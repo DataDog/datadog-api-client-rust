@@ -6,14 +6,7 @@
           "string": "{\"message\":\"some message Notify: @hipchat-channel\",\"name\":\"Test-Create_a_ci_tests_monitor_returns_OK_response-1652800228\",\"options\":{\"thresholds\":{\"critical\":1}},\"priority\":3,\"query\":\"ci-tests(\\\"type:test @git.branch:staging* @test.status:fail\\\").rollup(\\\"count\\\").by(\\\"@test.name\\\").last(\\\"5m\\\") >= 1\",\"tags\":[\"test:testcreateacitestsmonitorreturnsokresponse1652800228\",\"env:ci\"],\"type\":\"ci-tests alert\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/monitor"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/monitor/71774917"
       },

@@ -6,14 +6,7 @@
           "string": "{\"end\":1657667266,\"message\":\"Test-Schedule_a_downtime_with_mutually_exclusive_until_occurrences_and_until_date_properties-1657663666\",\"monitor_tags\":[\"tag0\"],\"recurrence\":{\"period\":1,\"type\":\"weeks\",\"until_date\":1659478066,\"until_occurrences\":3,\"week_days\":[\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\"]},\"scope\":[\"*\"],\"start\":1657663666,\"timezone\":\"Etc/UTC\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/downtime"
       },

@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"message\":\"test message\",\"monitor_identifier\":{\"monitor_tags\":[\"cat:hat\"]},\"schedule\":{\"start\":null},\"scope\":\"test:testcanceladowntimereturnsokresponse1685739202\"},\"type\":\"downtime\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/downtime"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/downtime/83718756-0187-11ee-8c18-da7ad0900002"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/downtime/83718756-0187-11ee-8c18-da7ad0900002"
       },

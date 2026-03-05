@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"id\":\"7d16945b-baf8-411e-ab2a-20fe43af1ea3\",\"relationships\":{\"findings\":{\"data\":[]}},\"type\":\"cases\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/security/findings/cases/7d16945b-baf8-411e-ab2a-20fe43af1ea3"
       },

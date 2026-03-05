@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"data_exclusion_query\":\"account_id:12345\",\"description\":\"This rule suppresses low-severity signals in staging environments.\",\"enabled\":true,\"expiration_date\":1734535475000,\"name\":\"Test-Create_a_suppression_rule_with_an_exclusion_query_returns_OK_response-1732721075\",\"rule_query\":\"type:log_detection source:cloudtrail\",\"start_date\":1733585075000},\"type\":\"suppressions\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions/rv5-3sh-tvp"
       },

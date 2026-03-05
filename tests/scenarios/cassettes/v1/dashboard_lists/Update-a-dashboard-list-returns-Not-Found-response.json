@@ -6,14 +6,7 @@
           "string": "{\"name\":\"Not found\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/lists/manual/0"
       },

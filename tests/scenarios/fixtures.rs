@@ -14,11 +14,11 @@ use lazy_static::lazy_static;
 use minijinja::{Environment, State};
 use regex::Regex;
 use reqwest_middleware::ClientBuilder;
-use rvcr::{VCRMiddleware, VCRMode};
+use reqwest_vcr::{VCRMiddleware, VCRMode};
 use serde_json::{json, Value};
 use sha256::digest;
 use std::{
-    collections::{HashMap, HashSet},
+    collections::HashMap,
     env,
     fs::{create_dir_all, read_to_string, remove_file, File},
     io::Write,
@@ -146,8 +146,8 @@ pub async fn before_scenario(
                 .expect("Failed to initialize rVCR middleware")
                 .with_mode(VCRMode::Record)
                 .with_modify_request(|req| {
-                    req.headers.remove_entry("dd-api-key");
-                    req.headers.remove_entry("dd-application-key");
+                    req.headers.clear();
+                    sort_query_params(&mut req.uri);
                 })
                 .with_modify_response(|res| {
                     res.headers.remove_entry("content-security-policy");
@@ -167,13 +167,12 @@ pub async fn before_scenario(
                 .expect("Failed to initialize rVCR middleware")
                 .with_mode(VCRMode::Replay)
                 .with_modify_request(|req| {
-                    req.headers.remove_entry("dd-api-key");
-                    req.headers.remove_entry("dd-application-key");
+                    req.headers.clear();
+                    sort_query_params(&mut req.uri);
                 })
                 .with_modify_response(|res| {
                     res.headers.remove_entry("content-security-policy");
-                })
-                .with_request_matcher(|vcr_req, req| req_eq(vcr_req, req));
+                });
             vcr_client_builder.with(middleware)
         }
     };
@@ -681,68 +680,20 @@ fn response_is_bool(world: &mut DatadogWorld, path: String, expected: String) {
     assert_eq!(found, expected == "true");
 }
 
-fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
-    let mut lhs_query = urlencoding::decode(
-        lhs.uri
-            .query()
-            .unwrap_or_default()
-            .to_string()
-            .replace("+", "%20")
-            .as_str(),
-    )
-    .expect("UTF-8")
-    .to_string();
 
-    let mut rhs_query = urlencoding::decode(
-        rhs.uri
-            .query()
-            .unwrap_or_default()
-            .to_string()
-            .replace("+", "%20")
-            .as_str(),
-    )
-    .expect("UTF-8")
-    .to_string();
-
-    lhs_query = reformat_rfc3339_datetime(&lhs_query);
-    rhs_query = reformat_rfc3339_datetime(&rhs_query);
-
-    let lhs_queries: HashSet<_> = lhs_query.split("&").into_iter().collect();
-    let rhs_queries: HashSet<_> = rhs_query.split("&").into_iter().collect();
-
-    let lhs_body = lhs
-        .body
-        .string
-        .parse::<serde_json::Value>()
-        .unwrap_or_default();
-    let rhs_body = rhs
-        .body
-        .string
-        .parse::<serde_json::Value>()
-        .unwrap_or_default();
-
-    lhs.uri.scheme() == rhs.uri.scheme()
-        && lhs.uri.host() == rhs.uri.host()
-        && lhs.uri.port() == rhs.uri.port()
-        && lhs.uri.path() == rhs.uri.path()
-        && lhs_queries == rhs_queries
-        && lhs_body == rhs_body
-        && lhs.method == rhs.method
-}
-
-fn reformat_rfc3339_datetime(input: &str) -> String {
-    let re: Regex =
-        Regex::new(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})").unwrap();
-    let result = re.replace_all(input, |captures: &regex::Captures| {
-        let matched_date_time = &captures[0];
-        let parsed_date_time = DateTime::parse_from_rfc3339(matched_date_time)
-            .expect("Failed to parse datetime")
-            .with_timezone(&Utc);
-        let formatted_date_time =
-            parsed_date_time.to_rfc3339_opts(chrono::SecondsFormat::Millis, true);
-        formatted_date_time
-    });
-    result.to_string()
+fn sort_query_params(uri: &mut url::Url) {
+    let mut pairs: Vec<(String, String)> = uri.query_pairs().into_owned().collect();
+    if pairs.is_empty() {
+        return;
+    }
+    pairs.sort_by(|a, b| a.0.cmp(&b.0));
+    uri.set_query(None);
+    {
+        let mut query = uri.query_pairs_mut();
+        for (k, v) in pairs {
+            query.append_pair(&k, &v);
+        }
+    }
 }
 
 fn lookup(path: &String, object: &Value) -> Option<Value> {

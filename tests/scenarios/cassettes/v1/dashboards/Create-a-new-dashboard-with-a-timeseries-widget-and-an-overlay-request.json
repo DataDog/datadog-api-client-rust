@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"title\":\"Test-Create_a_new_dashboard_with_a_timeseries_widget_and_an_overlay_request-1731699152\",\"widgets\":[{\"definition\":{\"requests\":[{\"display_type\":\"line\",\"on_right_yaxis\":false,\"queries\":[{\"data_source\":\"metrics\",\"name\":\"mymetric\",\"query\":\"avg:system.cpu.user{*}\"}],\"response_format\":\"timeseries\"},{\"display_type\":\"overlay\",\"queries\":[{\"data_source\":\"metrics\",\"name\":\"mymetricoverlay\",\"query\":\"avg:system.cpu.user{*}\"}],\"response_format\":\"timeseries\",\"style\":{\"line_type\":\"solid\",\"line_width\":\"normal\",\"palette\":\"purple\"}}],\"type\":\"timeseries\"}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/9kn-skt-493"
       },

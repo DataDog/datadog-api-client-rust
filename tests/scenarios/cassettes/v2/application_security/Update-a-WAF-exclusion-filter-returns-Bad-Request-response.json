@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"blocking\":false,\"conditions\":[{\"operator\":\"match_regex\",\"parameters\":{\"inputs\":[{\"address\":\"server.request.query\",\"key_path\":[\"id\"]}],\"regex\":\"badactor\"}}],\"enabled\":true,\"name\":\"test\",\"path_glob\":\"/test\",\"scope\":[{\"env\":\"test\",\"service\":\"test\"}],\"tags\":{\"category\":\"attack_attempt\",\"type\":\"test\"}},\"type\":\"custom_rule\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/remote_config/products/asm/waf/custom_rules"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Exclude false positives on a path\",\"enabled\":false,\"ip_list\":[\"198.51.100.72\"],\"on_match\":\"monitor\",\"parameters\":[\"list.search.query\"],\"path_glob\":\"/accounts/*\",\"rules_target\":[{\"rule_id\":\"dog-913-009\",\"tags\":{\"category\":\"attack_attempt\",\"type\":\"lfi\"}}],\"scope\":[{\"env\":\"www\",\"service\":\"prod\"}]},\"type\":\"exclusion_filter\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/remote_config/products/asm/waf/exclusion_filters/c72e76c1-ddf7-49bb-b7a2-0b178c16a987"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/remote_config/products/asm/waf/custom_rules/c72e76c1-ddf7-49bb-b7a2-0b178c16a987"
       },

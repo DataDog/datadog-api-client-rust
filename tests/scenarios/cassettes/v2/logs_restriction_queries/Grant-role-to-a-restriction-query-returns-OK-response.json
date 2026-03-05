@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"restriction_query\":\"env:sandbox\"},\"type\":\"logs_restriction_queries\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/restriction_queries"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Grant_role_to_a_restriction_query_returns_OK_response-1763493429\"},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"id\":\"2e209fb6-c4b3-11f0-8483-da7ad0900002\",\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "*/*"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/restriction_queries/2e0a0abc-c4b3-11f0-9b1d-da7ad0900002/roles"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/roles/2e209fb6-c4b3-11f0-8483-da7ad0900002"
       },
@@ -129,11 +104,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/restriction_queries/2e0a0abc-c4b3-11f0-9b1d-da7ad0900002"
       },

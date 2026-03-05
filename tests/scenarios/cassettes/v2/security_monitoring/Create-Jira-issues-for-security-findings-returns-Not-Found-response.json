@@ -6,14 +6,7 @@
           "string": "{\"data\":[{\"attributes\":{},\"relationships\":{\"findings\":{\"data\":[{\"id\":\"ZGZhMDI3ZjdjMDM3YjJmNzcxNTlhZGMwMjdmZWNiNTZ-MTVlYTNmYWU3NjNlOTNlYTE2YjM4N2JmZmI4Yjk5N2Y=\",\"type\":\"findings\"}]},\"project\":{\"data\":{\"id\":\"00000000-0000-0000-0000-000000000000\",\"type\":\"projects\"}}},\"type\":\"jira_issues\"}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security/findings/jira_issues"
       },

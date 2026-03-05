@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"api_key\":\"TestGetFastlyaccountreturnsOKresponse1678702274\",\"name\":\"Test-Get_Fastly_account_returns_OK_response-1678702274\",\"services\":[]},\"type\":\"fastly-accounts\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/integrations/fastly/accounts"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/integrations/fastly/accounts/6d8f2860f9f3e953fb46d554b9a19627"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/integrations/fastly/accounts/6d8f2860f9f3e953fb46d554b9a19627"
       },

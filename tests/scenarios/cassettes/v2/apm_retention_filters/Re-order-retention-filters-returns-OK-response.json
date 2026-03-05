@@ -6,14 +6,7 @@
           "string": "{\"data\":[{\"id\":\"jdZrilSJQLqzb6Cu7aub9Q\",\"type\":\"apm_retention_filter\"},{\"id\":\"7RBOb7dLSYWI01yc3pIH8w\",\"type\":\"apm_retention_filter\"}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "*/*"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/apm/config/retention-filters-execution-order"
       },

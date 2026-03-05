@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-6c891437b748aea8\",\"name\":\"test-name-6c891437b748aea8\"},\"type\":\"team\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-2-6c891437b748aea8\",\"name\":\"test-name-2-6c891437b748aea8\"},\"type\":\"team\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"relationships\":{\"parent_team\":{\"data\":{\"id\":\"4a9a1845-0ba7-4a6f-a34d-6e72a4ffda87\",\"type\":\"team\"}},\"sub_team\":{\"data\":{\"id\":\"21296c73-c9e2-4889-a33f-417d2974b2bd\",\"type\":\"team\"}}},\"type\":\"team_hierarchy_links\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team-hierarchy-links"
       },
@@ -108,14 +87,7 @@
           "string": "{\"data\":{\"relationships\":{\"parent_team\":{\"data\":{\"id\":\"4a9a1845-0ba7-4a6f-a34d-6e72a4ffda87\",\"type\":\"team\"}},\"sub_team\":{\"data\":{\"id\":\"21296c73-c9e2-4889-a33f-417d2974b2bd\",\"type\":\"team\"}}},\"type\":\"team_hierarchy_links\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team-hierarchy-links"
       },
@@ -139,11 +111,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team-hierarchy-links/e980108e-d535-4bdf-84ca-5e8f84a68480"
       },
@@ -163,11 +131,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team/21296c73-c9e2-4889-a33f-417d2974b2bd"
       },
@@ -187,11 +151,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team/4a9a1845-0ba7-4a6f-a34d-6e72a4ffda87"
       },

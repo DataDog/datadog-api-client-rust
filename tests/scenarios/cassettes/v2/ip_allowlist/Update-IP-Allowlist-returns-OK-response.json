@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":false,\"entries\":[]},\"type\":\"ip_allowlist\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/ip_allowlist"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":false,\"entries\":[{\"data\":{\"attributes\":{\"cidr_block\":\"127.0.0.1\",\"note\":\"Test-Update_IP_Allowlist_returns_OK_response-1676046413\"},\"type\":\"ip_allowlist_entry\"}}]},\"type\":\"ip_allowlist\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/ip_allowlist"
       },

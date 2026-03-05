@@ -6,14 +6,7 @@
           "string": "{\"date_happened\":1,\"tags\":[\"test:TestPostaneventinthepastreturnsBadRequestresponse1641430251\"],\"text\":\"A text message.\",\"title\":\"Test-Post_an_event_in_the_past_returns_Bad_Request_response-1641430251\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/events"
       },

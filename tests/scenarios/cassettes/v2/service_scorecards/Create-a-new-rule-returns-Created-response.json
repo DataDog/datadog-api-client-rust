@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":true,\"name\":\"Test-Create_a_new_rule_returns_Created_response-1698877050\",\"scorecard_name\":\"Observability Best Practices\"},\"type\":\"rule\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/scorecard/rules"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/scorecard/rules/b6a60878-a110-4df5-b8aa-648d7f02dd02"
       },

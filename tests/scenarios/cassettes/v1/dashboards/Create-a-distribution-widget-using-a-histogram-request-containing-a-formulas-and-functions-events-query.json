@@ -6,14 +6,7 @@
           "string": "{\"description\":\"Test-Create_a_distribution_widget_using_a_histogram_request_containing_a_formulas_and_functions_events_qu-1772451042\",\"layout_type\":\"ordered\",\"title\":\"Test-Create_a_distribution_widget_using_a_histogram_request_containing_a_formulas_and_functions_events_qu-1772451042\",\"widgets\":[{\"definition\":{\"requests\":[{\"query\":{\"compute\":{\"aggregation\":\"min\",\"metric\":\"@duration\"},\"data_source\":\"events\",\"indexes\":[\"*\"],\"name\":\"query1\",\"search\":{\"query\":\"\"}},\"request_type\":\"histogram\"}],\"show_legend\":false,\"title\":\"Events Platform - Request latency HOP\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"distribution\",\"xaxis\":{\"include_zero\":true,\"max\":\"auto\",\"min\":\"auto\",\"scale\":\"linear\"},\"yaxis\":{\"include_zero\":true,\"max\":\"auto\",\"min\":\"auto\",\"scale\":\"linear\"}},\"layout\":{\"height\":2,\"width\":4,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/gz8-vqv-w54"
       },

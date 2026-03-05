@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"compute\":{\"aggregation_type\":\"count\"},\"filter\":{\"query\":\"source:Test-Update_a_log_based_metric_returns_OK_response-1686138930\"}},\"id\":\"Test-Update_a_log_based_metric_returns_OK_response-1686138930\",\"type\":\"logs_metrics\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/metrics"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"filter\":{\"query\":\"source:Test-Update_a_log_based_metric_returns_OK_response-1686138930-updated\"}},\"type\":\"logs_metrics\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/metrics/Test_Update_a_log_based_metric_returns_OK_response_1686138930"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/metrics/Test_Update_a_log_based_metric_returns_OK_response_1686138930"
       },

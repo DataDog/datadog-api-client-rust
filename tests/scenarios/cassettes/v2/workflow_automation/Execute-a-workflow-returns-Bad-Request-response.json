@@ -6,14 +6,7 @@
           "string": "{\"meta\":{\"payload\":{\"input\":\"value\"}}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/workflows/malformed/instances"
       },

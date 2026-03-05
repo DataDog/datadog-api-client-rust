@@ -6,14 +6,7 @@
           "string": "{\"filter\":{\"query\":\"source:python\"},\"name\":\"testPipelineArrayLength\",\"processors\":[{\"is_enabled\":true,\"name\":\"count_tags\",\"operation\":{\"source\":\"tags\",\"target\":\"tagCount\",\"type\":\"length\"},\"type\":\"array-processor\"}],\"tags\":[]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/logs/config/pipelines"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/logs/config/pipelines/MB-HZA9rRlKRHb-2LpYBxw"
       },

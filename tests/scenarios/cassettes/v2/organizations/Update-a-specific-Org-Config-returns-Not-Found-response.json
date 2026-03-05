@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"value\":[]},\"type\":\"org_configs\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/org_configs/i_dont_exist"
       },

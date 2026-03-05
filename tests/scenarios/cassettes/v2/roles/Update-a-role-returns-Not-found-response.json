@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/permissions"
       },
@@ -34,14 +30,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"updated\"},\"id\":\"00000000-dead-beef-dead-ffffffffffff\",\"relationships\":{\"permissions\":{\"data\":[{\"id\":\"6f66600e-dd12-11e8-9e55-7f30fbb45e73\",\"type\":\"permissions\"}]}},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/roles/00000000-dead-beef-dead-ffffffffffff"
       },

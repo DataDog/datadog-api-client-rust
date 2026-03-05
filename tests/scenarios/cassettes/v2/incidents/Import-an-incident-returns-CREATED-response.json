@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"title\":\"Test-Import_an_incident_returns_CREATED_response-1771855606\",\"visibility\":\"organization\"},\"type\":\"incidents\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/import"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/e2fe83b8-e433-476f-bf2c-d076aee55bed"
       },

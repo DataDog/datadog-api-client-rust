@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Worldwide case type\",\"emoji\":\"\ud83c\udf0d\",\"name\":\"World\"},\"type\":\"case_type\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/types"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"And its brand new description\",\"display_name\":\"Attribute 17557801-0000-0000-0000-175578010600\",\"is_multi\":true,\"key\":\"attribute_a058b510f096c932\",\"type\":\"TEXT\"},\"type\":\"custom_attribute\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/types/fdf93265-be3d-4a97-ae0d-540b049f7753/custom_attributes"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/cases/types/fdf93265-be3d-4a97-ae0d-540b049f7753/custom_attributes/7ce13520-94b7-4391-bb64-c45776011f05"
       },
@@ -95,11 +77,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/cases/types/fdf93265-be3d-4a97-ae0d-540b049f7753"
       },

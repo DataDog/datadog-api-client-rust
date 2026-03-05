@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Update_a_role_returns_Bad_Role_ID_response-1713825714\"},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/permissions"
       },
@@ -68,14 +57,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Update_a_role_returns_Bad_Role_ID_response-1713825714-updated\"},\"id\":\"00000000-dead-beef-dead-ffffffffffff\",\"relationships\":{\"permissions\":{\"data\":[{\"id\":\"6f66600e-dd12-11e8-9e55-7f30fbb45e73\",\"type\":\"permissions\"}]}},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/roles/84a464fa-00f9-11ef-935d-da7ad0900002"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/roles/84a464fa-00f9-11ef-935d-da7ad0900002"
       },

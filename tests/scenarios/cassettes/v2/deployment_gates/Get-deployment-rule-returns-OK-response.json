@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"dry_run\":false,\"env\":\"production\",\"identifier\":\"my-gate-testgetdeploymentrulereturnsokresponse1765358631\",\"service\":\"my-service\"},\"type\":\"deployment_gate\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/deployment_gates"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"dry_run\":false,\"name\":\"My deployment rule\",\"options\":{\"excluded_resources\":[]},\"type\":\"faulty_deployment_detection\"},\"type\":\"deployment_rule\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/deployment_gates/6177e46c-44dc-453d-8af8-8af86aa93c29/rules"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/deployment_gates/6177e46c-44dc-453d-8af8-8af86aa93c29/rules/38e32cd3-d245-49c1-85c5-b039ef868a18"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/deployment_gates/6177e46c-44dc-453d-8af8-8af86aa93c29/rules/38e32cd3-d245-49c1-85c5-b039ef868a18"
       },
@@ -123,11 +101,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/deployment_gates/6177e46c-44dc-453d-8af8-8af86aa93c29"
       },

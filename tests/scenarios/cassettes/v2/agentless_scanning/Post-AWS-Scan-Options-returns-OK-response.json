@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"lambda\":true,\"sensitive_data\":false,\"vuln_containers_os\":true,\"vuln_host_os\":true},\"id\":\"000000000003\",\"type\":\"aws_scan_options\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "*/*"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/aws"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/aws/000000000003"
       },

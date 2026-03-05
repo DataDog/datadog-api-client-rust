@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-a75ee0b8b483d66f\",\"name\":\"test-name-a75ee0b8b483d66f\"},\"type\":\"team\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-2-a75ee0b8b483d66f\",\"name\":\"test-name-2-a75ee0b8b483d66f\"},\"type\":\"team\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"relationships\":{\"parent_team\":{\"data\":{\"id\":\"b85e63cd-1d9f-4b71-a47c-f5a99d4a4afd\",\"type\":\"team\"}},\"sub_team\":{\"data\":{\"id\":\"2d096572-eb6a-4579-ba38-b4247cf75e17\",\"type\":\"team\"}}},\"type\":\"team_hierarchy_links\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team-hierarchy-links"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team-hierarchy-links/fb94d43b-fe10-4c5f-ae7c-4ad745428651"
       },
@@ -129,11 +104,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team/2d096572-eb6a-4579-ba38-b4247cf75e17"
       },
@@ -153,11 +124,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team/b85e63cd-1d9f-4b71-a47c-f5a99d4a4afd"
       },

@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Update_a_single_service_object_returns_OK_response-1654804626\",\"opsgenie_api_key\":\"00000000-0000-0000-0000-000000000000\",\"region\":\"us\"},\"type\":\"opsgenie-service\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/integration/opsgenie/services"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Update_a_single_service_object_returns_OK_response-1654804626--updated\",\"opsgenie_api_key\":\"00000000-0000-0000-0000-000000000000\",\"region\":\"eu\"},\"id\":\"0b04ddfb-b00a-4243-baed-33ff1bff0909\",\"type\":\"opsgenie-service\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/integration/opsgenie/services/0b04ddfb-b00a-4243-baed-33ff1bff0909"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/integration/opsgenie/services/0b04ddfb-b00a-4243-baed-33ff1bff0909"
       },

@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"item_key\":\"primaryKey\"},\"type\":\"items\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/actions-datastores/invalid-uuid/items"
       },

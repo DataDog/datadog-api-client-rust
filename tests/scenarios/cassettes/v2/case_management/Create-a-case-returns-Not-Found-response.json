@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"priority\":\"NOT_DEFINED\",\"title\":\"Security breach investigation\",\"type_id\":\"00000000-0000-0000-0000-000000000001\"},\"relationships\":{\"assignee\":{\"data\":{\"id\":\"721074c8-63df-4d8f-a43d-ab41dd24ec35\",\"type\":\"user\"}},\"project\":{\"data\":{\"id\":\"721074c8-63df-4d8f-a43d-ab41dd24ec35\",\"type\":\"project\"}}},\"type\":\"case\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases"
       },

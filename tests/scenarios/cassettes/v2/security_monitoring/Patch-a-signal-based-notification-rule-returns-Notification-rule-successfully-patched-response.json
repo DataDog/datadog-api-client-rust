@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":true,\"name\":\"Test-Patch_a_signal_based_notification_rule_returns_Notification_rule_successfully_patched_response-1738763172\",\"selectors\":{\"query\":\"env:test\",\"rule_types\":[\"signal_correlation\"],\"severities\":[\"critical\"],\"trigger_source\":\"security_signals\"},\"targets\":[\"@email@email.com\"]},\"type\":\"notification_rules\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security/signals/notification_rules"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":true,\"name\":\"Rule 1\",\"selectors\":{\"query\":\"(source:production_service OR env:prod)\",\"rule_types\":[\"misconfiguration\",\"attack_path\"],\"severities\":[\"critical\"],\"trigger_source\":\"security_findings\"},\"targets\":[\"@john.doe@email.com\"],\"time_aggregation\":86400,\"version\":1},\"id\":\"aaa-bbb-ccc\",\"type\":\"notification_rules\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/security/signals/notification_rules/ob0-6ru-hc6"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security/signals/notification_rules/ob0-6ru-hc6"
       },

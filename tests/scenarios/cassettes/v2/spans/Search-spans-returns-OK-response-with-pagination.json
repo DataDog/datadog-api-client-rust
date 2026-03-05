@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"filter\":{\"from\":\"now-15m\",\"query\":\"service:python*\",\"to\":\"now\"},\"options\":{\"timezone\":\"GMT\"},\"page\":{\"limit\":2},\"sort\":\"timestamp\"},\"type\":\"search_request\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/spans/events/search"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"filter\":{\"from\":\"now-15m\",\"query\":\"service:python*\",\"to\":\"now\"},\"options\":{\"timezone\":\"GMT\"},\"page\":{\"cursor\":\"eyJhZnRlciI6IkFnQUFBWWtHdW9TSmhsc20td0FBQUFBQUFBQVlBQUFBQUVGWmEwZDFjRVJDUVVGRGJqQmZWbFJsV0VONWR6aHBUQUFBQUNRQUFBQUFNREU0T1RBMll6QXROVEZrT0MwME5EYzVMV0ZsT0RndE56WXdZbVl4TldRM016QXkiLCJ2YWx1ZXMiOlsiMjAyMy0wNi0yOVQxMDozNzoxNC4yNDlaIiwtMjA0MDg0NjU5N119\",\"limit\":2},\"sort\":\"timestamp\"},\"type\":\"search_request\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/spans/events/search"
       },

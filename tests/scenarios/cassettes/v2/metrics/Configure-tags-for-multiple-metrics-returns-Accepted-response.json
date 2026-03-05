@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"email\":\"Test-Configure_tags_for_multiple_metrics_returns_Accepted_response-1701962406@datadoghq.com\",\"title\":\"user title\"},\"type\":\"users\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/users"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"emails\":[\"test-configure_tags_for_multiple_metrics_returns_accepted_response-1701962406@datadoghq.com\"],\"tags\":[\"test\",\"testconfiguretagsformultiplemetricsreturnsacceptedresponse1701962406\"]},\"id\":\"system.load.1\",\"type\":\"metric_bulk_configure_tags\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/metrics/config/bulk-tags"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"emails\":[\"test-configure_tags_for_multiple_metrics_returns_accepted_response-1701962406@datadoghq.com\"]},\"id\":\"system.load.1\",\"type\":\"metric_bulk_configure_tags\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/metrics/config/bulk-tags"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/users/1a6aac59-9514-11ee-8d56-0adb1a638a47"
       },
