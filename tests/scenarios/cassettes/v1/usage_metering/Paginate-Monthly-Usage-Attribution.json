@@ -3,13 +3,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json;datetime-format=rfc3339"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v1/usage/monthly-attribution?start_month=2022-03-26T15%3A05%3A25.629Z&fields=infra_host_usage"
+        "uri": "https://api.datadoghq.com/api/v1/usage/monthly-attribution?fields=infra_host_usage&start_month=2022-03-26T15%3A05%3A25.629Z"
       },
       "response": {
         "body": {
@@ -31,13 +27,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json;datetime-format=rfc3339"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v1/usage/monthly-attribution?next_record_id=null&start_month=2022-03-26T15%3A05%3A25.629Z&fields=infra_host_usage"
+        "uri": "https://api.datadoghq.com/api/v1/usage/monthly-attribution?fields=infra_host_usage&next_record_id=null&start_month=2022-03-26T15%3A05%3A25.629Z"
       },
       "response": {
         "body": {

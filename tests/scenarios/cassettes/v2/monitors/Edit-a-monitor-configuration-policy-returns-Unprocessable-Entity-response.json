@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"policy\":{\"tag_key\":\"testeditamonitorconfigurationpolicyreturnsunprocessableentityresponse1748486178\",\"tag_key_required\":false,\"valid_tag_values\":[\"prod\",\"staging\"]},\"policy_type\":\"tag\"},\"type\":\"monitor-config-policy\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/monitor/policy"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"policy\":{\"tag_key\":\"testeditamonitorconfigurationpolicyreturnsunprocessableentityresponse1748486178\",\"tag_key_required\":false,\"valid_tag_values\":[\"prod\",\"staging\"]},\"policy_type\":\"tag\"},\"id\":\"00000000-0000-1234-0000-000000000000\",\"type\":\"monitor-config-policy\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/monitor/policy/f2f83512-b2c2-4dc4-a8db-c785cd818d6f"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/monitor/policy/f2f83512-b2c2-4dc4-a8db-c785cd818d6f"
       },

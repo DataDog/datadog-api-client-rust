@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"item_changes\":{},\"item_key\":\"itemKey\"},\"type\":\"items\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/actions-datastores/3cfdd0b8-c490-4969-8d51-69add64a70ea/items"
       },

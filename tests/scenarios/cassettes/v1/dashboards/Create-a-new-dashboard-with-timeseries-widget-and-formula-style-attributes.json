@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"reflow_type\":\"auto\",\"title\":\"Test-Create_a_new_dashboard_with_timeseries_widget_and_formula_style_attributes-1731699178 with formula style\",\"widgets\":[{\"definition\":{\"legend_columns\":[\"avg\",\"min\",\"max\",\"value\",\"sum\"],\"legend_layout\":\"auto\",\"requests\":[{\"display_type\":\"line\",\"formulas\":[{\"formula\":\"query1\",\"style\":{\"palette\":\"classic\",\"palette_index\":4}}],\"queries\":[{\"data_source\":\"metrics\",\"name\":\"query1\",\"query\":\"avg:system.cpu.user{*}\"}],\"response_format\":\"timeseries\",\"style\":{\"line_type\":\"solid\",\"line_width\":\"normal\",\"palette\":\"dog_classic\"}}],\"show_legend\":true,\"time\":{},\"title\":\"styled timeseries\",\"type\":\"timeseries\"}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/z42-55x-nbm"
       },

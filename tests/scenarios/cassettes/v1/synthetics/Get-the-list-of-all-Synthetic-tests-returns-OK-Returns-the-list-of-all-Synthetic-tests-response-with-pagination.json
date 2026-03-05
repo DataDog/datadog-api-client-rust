@@ -3,13 +3,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v1/synthetics/tests?page_size=2&page_number=0"
+        "uri": "https://api.datadoghq.com/api/v1/synthetics/tests?page_number=0&page_size=2"
       },
       "response": {
         "body": {
@@ -31,13 +27,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v1/synthetics/tests?page_size=2&page_number=1"
+        "uri": "https://api.datadoghq.com/api/v1/synthetics/tests?page_number=1&page_size=2"
       },
       "response": {
         "body": {

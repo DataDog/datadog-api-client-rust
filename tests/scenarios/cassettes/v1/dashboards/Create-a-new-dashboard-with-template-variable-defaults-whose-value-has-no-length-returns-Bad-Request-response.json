@@ -6,14 +6,7 @@
           "string": "{\"description\":null,\"layout_type\":\"ordered\",\"notify_list\":[],\"reflow_type\":\"auto\",\"restricted_roles\":[],\"template_variables\":[{\"available_values\":[\"my-host\",\"host1\",\"host2\"],\"defaults\":[\"\"],\"name\":\"host1\",\"prefix\":\"host\"}],\"title\":\"\",\"widgets\":[{\"definition\":{\"requests\":{\"fill\":{\"q\":\"avg:system.cpu.user{*}\"}},\"type\":\"hostmap\"}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },

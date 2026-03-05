@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"email\":\"Test-List_On_Call_notification_channels_for_a_user_returns_OK_response-1765550440@datadoghq.com\",\"title\":\"user title\"},\"type\":\"users\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/users"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"config\":{\"address\":\"test-list_on_call_notification_channels_for_a_user_returns_ok_response-1765550440@datadoghq.com\",\"formats\":[\"html\"],\"type\":\"email\"}},\"type\":\"notification_channels\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/on-call/users/c7fe3658-67dd-4a91-bf86-3709728fd8a5/notification-channels"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/on-call/users/c7fe3658-67dd-4a91-bf86-3709728fd8a5/notification-channels"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/users/c7fe3658-67dd-4a91-bf86-3709728fd8a5"
       },

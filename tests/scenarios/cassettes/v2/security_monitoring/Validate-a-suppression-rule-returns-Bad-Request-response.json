@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"data_exclusion_query\":\"not enough attributes\",\"enabled\":false,\"name\":\"cold_harbour\",\"rule_query\":\"rule:[A-Invalid\"},\"type\":\"suppressions\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "*/*"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions/validation"
       },

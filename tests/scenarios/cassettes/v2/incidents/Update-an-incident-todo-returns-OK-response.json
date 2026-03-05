@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"customer_impacted\":false,\"title\":\"Test-Update_an_incident_todo_returns_OK_response-1771855634\"},\"type\":\"incidents\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"assignees\":[\"@test.user@test.com\",{\"icon\":\"https://a.slack-edge.com/80588/img/slackbot_48.png\",\"id\":\"USLACKBOT\",\"name\":\"Slackbot\",\"source\":\"slack\"}],\"content\":\"Follow up with customer about the impact they saw.\"},\"type\":\"incident_todos\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/b99fac19-2e06-582e-ad48-14978a16a3aa/relationships/todos"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"assignees\":[\"@test.user@test.com\"],\"completed\":\"2023-03-06T22:00:00.000000+00:00\",\"content\":\"Restore lost data.\",\"due_date\":\"2023-07-10T05:00:00.000000+00:00\"},\"type\":\"incident_todos\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/incidents/b99fac19-2e06-582e-ad48-14978a16a3aa/relationships/todos/5a7ef902-7819-5f66-800b-24cbc39c5529"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/b99fac19-2e06-582e-ad48-14978a16a3aa/relationships/todos/5a7ef902-7819-5f66-800b-24cbc39c5529"
       },
@@ -133,11 +108,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/b99fac19-2e06-582e-ad48-14978a16a3aa"
       },

@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"email\":\"Test-Get_team_on_call_users_returns_OK_response-1764252702@datadoghq.com\",\"title\":\"user title\"},\"type\":\"users\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/users"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-ecfc4ff61997ed40\",\"name\":\"test-name-ecfc4ff61997ed40\"},\"type\":\"team\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"layers\":[{\"effective_date\":\"2025-11-17T14:11:42.299Z\",\"end_date\":\"2025-12-07T14:11:42.299Z\",\"interval\":{\"days\":1},\"members\":[{\"user\":{\"id\":\"ffde914a-cb9a-11f0-ae87-2a5e5028fcef\"}}],\"name\":\"Layer 1\",\"restrictions\":[{\"end_day\":\"friday\",\"end_time\":\"17:00:00\",\"start_day\":\"monday\",\"start_time\":\"09:00:00\"}],\"rotation_start\":\"2025-11-22T14:11:42.299Z\"}],\"name\":\"Test-Get_team_on_call_users_returns_OK_response-1764252702\",\"time_zone\":\"America/New_York\"},\"relationships\":{\"teams\":{\"data\":[{\"id\":\"65aea9d0-941c-4607-bf8a-14fc0dac2820\",\"type\":\"teams\"}]}},\"type\":\"schedules\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/on-call/schedules"
       },
@@ -108,14 +87,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Get_team_on_call_users_returns_OK_response-1764252702\",\"resolve_page_on_policy_end\":true,\"retries\":2,\"steps\":[{\"assignment\":\"default\",\"escalate_after_seconds\":3600,\"targets\":[{\"id\":\"fc8f8844-54c3-4898-aabc-68d6fccbe20e\",\"type\":\"teams\"},{\"id\":\"4325ddef-dc72-4609-90c2-01167759f277\",\"type\":\"schedules\"},{\"config\":{\"schedule\":{\"position\":\"previous\"}},\"id\":\"4325ddef-dc72-4609-90c2-01167759f277\",\"type\":\"schedules\"},{\"id\":\"ffde914a-cb9a-11f0-ae87-2a5e5028fcef\",\"type\":\"users\"}]},{\"assignment\":\"round-robin\",\"escalate_after_seconds\":3600,\"targets\":[{\"id\":\"fc8f8844-54c3-4898-aabc-68d6fccbe20e\",\"type\":\"teams\"}]}]},\"relationships\":{\"teams\":{\"data\":[{\"id\":\"fc8f8844-54c3-4898-aabc-68d6fccbe20e\",\"type\":\"teams\"}]}},\"type\":\"policies\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/on-call/escalation-policies"
       },
@@ -142,14 +114,7 @@
           "string": "{\"data\":{\"attributes\":{\"rules\":[{\"actions\":[],\"policy_id\":\"5a7ecb26-4ebe-4496-bcfb-ff30c655a1a9\",\"query\":\"\",\"urgency\":\"low\"}]},\"id\":\"fc8f8844-54c3-4898-aabc-68d6fccbe20e\",\"type\":\"team_routing_rules\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/on-call/teams/fc8f8844-54c3-4898-aabc-68d6fccbe20e/routing-rules"
       },
@@ -173,11 +138,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/on-call/teams/fc8f8844-54c3-4898-aabc-68d6fccbe20e/on-call?include=responders%2Cescalations.responders"
       },
@@ -204,14 +165,7 @@
           "string": "{\"data\":{\"attributes\":{\"rules\":[]},\"id\":\"fc8f8844-54c3-4898-aabc-68d6fccbe20e\",\"type\":\"team_routing_rules\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/on-call/teams/fc8f8844-54c3-4898-aabc-68d6fccbe20e/routing-rules"
       },
@@ -235,11 +189,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/on-call/escalation-policies/5a7ecb26-4ebe-4496-bcfb-ff30c655a1a9"
       },
@@ -259,11 +209,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/on-call/schedules/4325ddef-dc72-4609-90c2-01167759f277"
       },
@@ -283,11 +229,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team/fc8f8844-54c3-4898-aabc-68d6fccbe20e"
       },
@@ -307,11 +249,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/users/ffde914a-cb9a-11f0-ae87-2a5e5028fcef"
       },

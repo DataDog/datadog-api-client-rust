@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"restriction_query\":\"env:sandbox\"},\"type\":\"logs_restriction_queries\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/restriction_queries"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/restriction_queries/2cc39998-c4b3-11f0-8b4b-da7ad0900002"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/restriction_queries/2cc39998-c4b3-11f0-8b4b-da7ad0900002"
       },

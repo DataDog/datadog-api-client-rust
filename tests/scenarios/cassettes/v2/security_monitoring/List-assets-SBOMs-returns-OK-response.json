@@ -3,13 +3,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/security/sboms?filter%5Bpackage_name%5D=pandas&filter%5Basset_type%5D=Service"
+        "uri": "https://api.datadoghq.com/api/v2/security/sboms?filter%5Basset_type%5D=Service&filter%5Bpackage_name%5D=pandas"
       },
       "response": {
         "body": {

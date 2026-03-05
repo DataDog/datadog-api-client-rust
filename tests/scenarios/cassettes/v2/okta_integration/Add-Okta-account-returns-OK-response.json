@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"auth_method\":\"oauth\",\"client_id\":\"client_id\",\"client_secret\":\"client_secret\",\"domain\":\"https://example.okta.com/\",\"name\":\"testaddoktaaccountreturnsokresponse1706540332\"},\"id\":\"f749daaf-682e-4208-a38d-c9b43162c609\",\"type\":\"okta-accounts\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/integrations/okta/accounts"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/integrations/okta/accounts/1e62be98-94ab-403d-9491-98b7fbf9a7de"
       },

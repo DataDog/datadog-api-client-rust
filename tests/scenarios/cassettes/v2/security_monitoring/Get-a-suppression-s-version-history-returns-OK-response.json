@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Test-Get_a_suppression_s_version_history_returns_OK_response-1769009705\",\"enabled\":true,\"name\":\"suppression ee42c68404916b9e\",\"rule_query\":\"source:cloudtrail\",\"suppression_query\":\"env:test\",\"tags\":[\"technique:T1110-brute-force\",\"source:cloudtrail\"]},\"type\":\"suppressions\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions/joc-mpc-lbz/version_history"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions/joc-mpc-lbz"
       },

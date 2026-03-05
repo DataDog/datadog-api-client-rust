@@ -6,14 +6,7 @@
           "string": "{\"series\":[{\"metric\":\"TestListtagsbymetricnamereturnsSuccessresponse1652354618\",\"points\":[[1652354618,1.1]],\"tags\":[\"test:ExampleSubmitmetricsreturnsPayloadacceptedresponse\"],\"type\":\"gauge\"}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "text/json, application/json"
-          ],
-          "Content-Type": [
-            "text/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/series"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"metric_type\":\"gauge\",\"tags\":[\"app\",\"datacenter\",\"TestListtagsbymetricnamereturnsSuccessresponse1652354618\"]},\"id\":\"TestListtagsbymetricnamereturnsSuccessresponse1652354618\",\"type\":\"manage_tags\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/metrics/TestListtagsbymetricnamereturnsSuccessresponse1652354618/tags"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/metrics/TestListtagsbymetricnamereturnsSuccessresponse1652354618/all-tags"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/metrics/TestListtagsbymetricnamereturnsSuccessresponse1652354618/tags"
       },

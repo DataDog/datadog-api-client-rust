@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"},\"event_type\":\"session\",\"filter\":{\"query\":\"source:Test-Delete_a_rum_based_metric_returns_No_Content_response-1732807880\"},\"group_by\":[{\"path\":\"@browser.name\",\"tag_name\":\"browser_name\"}],\"uniqueness\":{\"when\":\"match\"}},\"id\":\"testdeletearumbasedmetricreturnsnocontentresponse1732807880\",\"type\":\"rum_metrics\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/rum/config/metrics"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/rum/config/metrics/testdeletearumbasedmetricreturnsnocontentresponse1732807880"
       },
@@ -61,11 +50,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/rum/config/metrics/testdeletearumbasedmetricreturnsnocontentresponse1732807880"
       },

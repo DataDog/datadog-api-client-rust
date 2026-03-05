@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Revoke_permission_returns_OK_response-1713825711\"},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/permissions"
       },
@@ -68,14 +57,7 @@
           "string": "{\"data\":{\"id\":\"6f66600e-dd12-11e8-9e55-7f30fbb45e73\",\"type\":\"permissions\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles/83470892-00f9-11ef-a8b2-da7ad0900002/permissions"
       },
@@ -102,14 +84,7 @@
           "string": "{\"data\":{\"id\":\"6f66600e-dd12-11e8-9e55-7f30fbb45e73\",\"type\":\"permissions\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/roles/83470892-00f9-11ef-a8b2-da7ad0900002/permissions"
       },
@@ -133,11 +108,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/roles/83470892-00f9-11ef-a8b2-da7ad0900002"
       },

@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"config\":{\"assertions\":[{\"operator\":\"lessThan\",\"property\":\"avg\",\"target\":500,\"type\":\"latency\"}],\"request\":{\"e2e_queries\":50,\"host\":\"example.com\",\"max_ttl\":30,\"port\":443,\"tcp_method\":\"prefer_sack\",\"traceroute_queries\":3}},\"locations\":[\"aws:us-east-1\",\"agent:my-agent-name\"],\"message\":\"Network Path test notification\",\"name\":\"Example Network Path test\",\"options\":{\"tick_every\":60},\"status\":\"live\",\"subtype\":\"tcp\",\"tags\":[\"env:production\"],\"type\":\"network\"},\"type\":\"network\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/synthetics/tests/network"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"public_ids\":[\"iab-wcx-mhp\"]},\"type\":\"delete_tests_request\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/synthetics/tests/bulk-delete"
       },

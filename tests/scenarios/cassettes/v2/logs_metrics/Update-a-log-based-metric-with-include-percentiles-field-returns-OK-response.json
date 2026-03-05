@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"compute\":{\"aggregation_type\":\"distribution\",\"include_percentiles\":true,\"path\":\"@duration\"},\"filter\":{\"query\":\"source:Test-Update_a_log_based_metric_with_include_percentiles_field_returns_OK_response-1686138962\"}},\"id\":\"Test-Update_a_log_based_metric_with_include_percentiles_field_returns_OK_response-1686138962\",\"type\":\"logs_metrics\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/metrics"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"compute\":{\"include_percentiles\":false}},\"type\":\"logs_metrics\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/metrics/Test_Update_a_log_based_metric_with_include_percentiles_field_returns_OK_response_1686138962"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/metrics/Test_Update_a_log_based_metric_with_include_percentiles_field_returns_OK_response_1686138962"
       },

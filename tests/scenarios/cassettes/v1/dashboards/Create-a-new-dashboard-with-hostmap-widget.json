@@ -6,14 +6,7 @@
           "string": "{\"description\":null,\"layout_type\":\"free\",\"notify_list\":[],\"template_variables\":[],\"title\":\"Test-Create_a_new_dashboard_with_hostmap_widget-1731699162\",\"widgets\":[{\"definition\":{\"no_group_hosts\":true,\"no_metric_hosts\":true,\"node_type\":\"host\",\"requests\":{\"fill\":{\"q\":\"avg:system.cpu.user{*} by {host}\"}},\"style\":{\"palette\":\"green_to_orange\",\"palette_flip\":false},\"title\":\"\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"hostmap\"},\"layout\":{\"height\":22,\"width\":47,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/cny-7s9-9di"
       },

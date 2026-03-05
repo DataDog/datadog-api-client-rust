@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"account_tags\":[\"key:value\"],\"auth_config\":{\"role_name\":\"DatadogIntegrationRole\"},\"aws_account_id\":\"123456789012\",\"aws_partition\":\"aws\",\"aws_regions\":{\"include_only\":[\"us-east-1\"]},\"logs_config\":{\"lambda_forwarder\":{\"lambdas\":[\"arn:aws:lambda:us-east-1:123456789012:function:DatadogLambdaLogForwarder\"],\"sources\":[\"s3\"]}},\"metrics_config\":{\"automute_enabled\":true,\"collect_cloudwatch_alarms\":false,\"collect_custom_metrics\":false,\"enabled\":true,\"namespace_filters\":{\"include_only\":[\"AWS/EC2\"]},\"tag_filters\":[{\"namespace\":\"AWS/EC2\",\"tags\":[\"key:value\"]}]},\"resources_config\":{\"cloud_security_posture_management_collection\":false,\"extended_collection\":false},\"traces_config\":{\"xray_services\":{\"include_only\":[\"AWS/AppSync\"]}}},\"id\":\"00000000-abcd-0001-0000-000000000000\",\"type\":\"account\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/integration/aws/accounts"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"account_tags\":[\"key:value\"],\"auth_config\":{\"role_name\":\"DatadogIntegrationRole\"},\"aws_account_id\":\"123456789012\",\"aws_partition\":\"aws\",\"logs_config\":{\"lambda_forwarder\":{\"lambdas\":[\"arn:aws:lambda:us-east-1:123456789012:function:DatadogLambdaLogForwarder\"],\"sources\":[\"s3\"]}},\"metrics_config\":{\"automute_enabled\":true,\"collect_cloudwatch_alarms\":true,\"collect_custom_metrics\":true,\"enabled\":true,\"tag_filters\":[{\"namespace\":\"AWS/EC2\",\"tags\":[\"key:value\"]}]},\"resources_config\":{\"cloud_security_posture_management_collection\":false,\"extended_collection\":false},\"traces_config\":{}},\"type\":\"account\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/integration/aws/accounts/28a2004c-84b4-4f07-a2a4-01c9ab6a021e"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/integration/aws/accounts/28a2004c-84b4-4f07-a2a4-01c9ab6a021e"
       },

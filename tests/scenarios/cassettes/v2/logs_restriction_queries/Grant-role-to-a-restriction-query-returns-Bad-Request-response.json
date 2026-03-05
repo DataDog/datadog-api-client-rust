@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"id\":\"3653d3c6-0c75-11ea-ad28-fb5701eabc7d\",\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "*/*"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/logs/config/restriction_queries/malformed_id/roles"
       },

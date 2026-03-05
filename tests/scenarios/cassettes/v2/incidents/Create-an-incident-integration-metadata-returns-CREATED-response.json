@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"customer_impacted\":false,\"title\":\"Test-Create_an_incident_integration_metadata_returns_CREATED_response-1771855588\"},\"type\":\"incidents\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"incident_id\":\"b5a0789a-5592-56fc-8ba4-bfae2e983acf\",\"integration_type\":1,\"metadata\":{\"channels\":[{\"channel_id\":\"C0123456789\",\"channel_name\":\"#new-channel\",\"redirect_url\":\"https://slack.com/app_redirect?channel=C0123456789&team=T01234567\",\"team_id\":\"T01234567\"}]}},\"type\":\"incident_integrations\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/b5a0789a-5592-56fc-8ba4-bfae2e983acf/relationships/integrations"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/b5a0789a-5592-56fc-8ba4-bfae2e983acf/relationships/integrations/4b033fce-123e-5390-be11-ce0c26a7e1dd"
       },
@@ -95,11 +77,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/b5a0789a-5592-56fc-8ba4-bfae2e983acf"
       },

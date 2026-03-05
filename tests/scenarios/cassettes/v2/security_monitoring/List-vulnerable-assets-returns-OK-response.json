@@ -3,13 +3,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/security/vulnerable-assets?filter%5Btype%5D=Host&filter%5Brepository_url%5D=github.com%2Fdatadog%2Fdd-go&filter%5Brisks.in_production%5D=true"
+        "uri": "https://api.datadoghq.com/api/v2/security/vulnerable-assets?filter%5Brepository_url%5D=github.com%2Fdatadog%2Fdd-go&filter%5Brisks.in_production%5D=true&filter%5Btype%5D=Host"
       },
       "response": {
         "body": {

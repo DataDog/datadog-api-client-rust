@@ -6,14 +6,7 @@
           "string": "{\"description\":\"\",\"layout_type\":\"free\",\"notify_list\":[],\"template_variables\":[],\"title\":\"Test-Create_a_new_dashboard_with_iframe_widget-1731699163\",\"widgets\":[{\"definition\":{\"type\":\"iframe\",\"url\":\"https://docs.datadoghq.com/api/latest/\"},\"layout\":{\"height\":12,\"width\":12,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/y65-35v-xh5"
       },

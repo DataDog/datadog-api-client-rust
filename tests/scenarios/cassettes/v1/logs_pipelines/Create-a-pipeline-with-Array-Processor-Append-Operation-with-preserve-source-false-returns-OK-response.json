@@ -6,14 +6,7 @@
           "string": "{\"filter\":{\"query\":\"source:python\"},\"name\":\"testPipelineArrayAppendNoPreserve\",\"processors\":[{\"is_enabled\":true,\"name\":\"append_ip_and_remove_source\",\"operation\":{\"preserve_source\":false,\"source\":\"network.client.ip\",\"target\":\"sourceIps\",\"type\":\"append\"},\"type\":\"array-processor\"}],\"tags\":[]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/logs/config/pipelines"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/logs/config/pipelines/B91fO94kQnCeZ4bOoZQOWg"
       },

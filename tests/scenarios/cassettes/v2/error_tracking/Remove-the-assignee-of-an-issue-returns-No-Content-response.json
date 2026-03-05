@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"from\":1759416220000,\"query\":\"service:synthetics-browser\",\"to\":1760712220000,\"track\":\"rum\"},\"type\":\"search_request\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/error-tracking/issues/search"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/error-tracking/issues/d3ab59c6-84ee-11f0-87bb-da7ad0900002/assignee"
       },

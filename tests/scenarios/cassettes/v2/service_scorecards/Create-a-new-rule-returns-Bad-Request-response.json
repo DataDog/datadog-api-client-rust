@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":true,\"level\":2,\"name\":\"Team Defined\",\"scorecard_id\":\"NOT.FOUND\"},\"type\":\"rule\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/scorecard/rules"
       },

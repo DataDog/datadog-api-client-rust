@@ -6,14 +6,7 @@
           "string": "{\"apiVersion\":\"v3\",\"datadog\":{\"codeLocations\":[{\"paths\":[]}],\"events\":[{}],\"logs\":[{}],\"performanceData\":{\"tags\":[]},\"pipelines\":{\"fingerprints\":[]}},\"integrations\":{\"opsgenie\":{\"serviceURL\":\"https://www.opsgenie.com/service/shopping-cart\"},\"pagerduty\":{\"serviceURL\":\"https://www.pagerduty.com/service-directory/Pshopping-cart\"}},\"kind\":\"service\",\"metadata\":{\"additionalOwners\":[],\"contacts\":[{\"contact\":\"https://slack/\",\"type\":\"slack\"}],\"id\":\"4b163705-23c0-4573-b2fb-f6cea2163fcb\",\"inheritFrom\":\"application:default/myapp\",\"links\":[{\"name\":\"mylink\",\"type\":\"link\",\"url\":\"https://mylink\"}],\"name\":\"service-testcreateorupdatesoftwarecatalogentityusingschemav3returnsacceptedresponse1724786638\",\"tags\":[\"this:tag\",\"that:tag\"]},\"spec\":{\"dependsOn\":[],\"languages\":[]}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/catalog/entity"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/catalog/entity/4806b73a-3a45-48bf-bd44-0d68fb5aa96a"
       },

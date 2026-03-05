@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-129c4638a0cbf5ab\",\"name\":\"test-name-129c4638a0cbf5ab\"},\"type\":\"team\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"email\":{\"enabled\":true},\"slack\":{\"channel\":\"aaa-omg-ops\",\"workspace\":\"Datadog\"}},\"type\":\"team_notification_rules\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team/b103bc00-af0b-48ee-ad0a-2cae69341320/notification-rules"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"pagerduty\":{\"service_name\":\"Datadog-prod\"},\"slack\":{\"channel\":\"aaa-governance-ops\",\"workspace\":\"Datadog\"}},\"id\":\"5bff55f5-6777-4494-a2bd-23e0a6a3d751\",\"type\":\"team_notification_rules\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/team/b103bc00-af0b-48ee-ad0a-2cae69341320/notification-rules/5bff55f5-6777-4494-a2bd-23e0a6a3d751"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team/b103bc00-af0b-48ee-ad0a-2cae69341320"
       },

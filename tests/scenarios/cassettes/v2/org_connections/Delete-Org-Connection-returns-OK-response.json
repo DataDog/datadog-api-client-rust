@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"connection_types\":[\"logs\"]},\"relationships\":{\"sink_org\":{\"data\":{\"id\":\"83999dcd-7f97-11f0-8de1-1ecf66f1aa85\",\"type\":\"orgs\"}}},\"type\":\"org_connection\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/org_connections"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/org_connections/7b01f30c-6100-4cbf-b583-a5e353d7edb7"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/org_connections/7b01f30c-6100-4cbf-b583-a5e353d7edb7"
       },

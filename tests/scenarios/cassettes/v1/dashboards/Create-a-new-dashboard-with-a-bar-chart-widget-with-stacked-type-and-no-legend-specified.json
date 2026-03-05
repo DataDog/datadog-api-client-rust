@@ -6,14 +6,7 @@
           "string": "{\"description\":\"\",\"layout_type\":\"free\",\"notify_list\":[],\"template_variables\":[],\"title\":\"Test-Create_a_new_dashboard_with_a_bar_chart_widget_with_stacked_type_and_no_legend_specified-1765833935\",\"widgets\":[{\"definition\":{\"requests\":[{\"formulas\":[{\"formula\":\"query1\"}],\"queries\":[{\"aggregator\":\"avg\",\"data_source\":\"metrics\",\"name\":\"query1\",\"query\":\"avg:system.cpu.user{*} by {service}\"}],\"response_format\":\"scalar\",\"sort\":{\"count\":10,\"order_by\":[{\"name\":\"service\",\"order\":\"asc\",\"type\":\"group\"}]}}],\"style\":{\"display\":{\"type\":\"stacked\"},\"palette\":\"dog_classic\",\"scaling\":\"relative\"},\"time\":{},\"title\":\"\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"bar_chart\"},\"layout\":{\"height\":15,\"width\":47,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/6yv-ayr-nyv"
       },

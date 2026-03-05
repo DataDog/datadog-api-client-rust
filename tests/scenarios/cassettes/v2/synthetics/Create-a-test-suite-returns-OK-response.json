@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"message\":\"Notification message\",\"name\":\"Example suite name\",\"options\":{},\"tags\":[\"env:production\"],\"tests\":[],\"type\":\"suite\"},\"type\":\"suites\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/synthetics/suites"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"public_ids\":[\"36n-bb6-njj\"]},\"type\":\"delete_suites_request\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/synthetics/suites/bulk-delete"
       },

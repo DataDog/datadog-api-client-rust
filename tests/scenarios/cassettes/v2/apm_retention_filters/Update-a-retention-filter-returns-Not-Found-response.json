@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":true,\"filter\":{\"query\":\"@_top_level:1 test:service-demo\"},\"filter_type\":\"spans-sampling-processor\",\"name\":\"test\",\"rate\":0.9},\"id\":\"not_found\",\"type\":\"apm_retention_filter\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/apm/config/retention-filters/not_found"
       },

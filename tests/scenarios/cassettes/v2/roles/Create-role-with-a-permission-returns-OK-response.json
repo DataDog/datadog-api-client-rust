@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/permissions"
       },
@@ -34,14 +30,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Create_role_with_a_permission_returns_OK_response-1713825704\"},\"relationships\":{\"permissions\":{\"data\":[{\"id\":\"6f66600e-dd12-11e8-9e55-7f30fbb45e73\",\"type\":\"permissions\"}]}},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/roles/7faf4564-00f9-11ef-a1a3-da7ad0900002"
       },

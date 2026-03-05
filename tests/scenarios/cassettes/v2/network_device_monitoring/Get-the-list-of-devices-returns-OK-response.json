@@ -3,13 +3,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/ndm/devices?page%5Bsize%5D=1&page%5Bnumber%5D=0&filter%5Btag%5D=device_namespace%3Adefault"
+        "uri": "https://api.datadoghq.com/api/v2/ndm/devices?filter%5Btag%5D=device_namespace%3Adefault&page%5Bnumber%5D=0&page%5Bsize%5D=1"
       },
       "response": {
         "body": {

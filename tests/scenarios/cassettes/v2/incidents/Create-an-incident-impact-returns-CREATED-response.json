@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"customer_impacted\":false,\"title\":\"Test-Create_an_incident_impact_returns_CREATED_response-1758052013\"},\"type\":\"incidents\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Outage in the us-east-1 region\",\"end_at\":\"2025-09-12T14:50:00.000Z\",\"start_at\":\"2025-09-12T13:50:00.000Z\"},\"type\":\"incident_impacts\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/5826fc99-ad8c-54cb-8c18-cd270bfe42fb/impacts"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/5826fc99-ad8c-54cb-8c18-cd270bfe42fb/impacts/7d4f5663-7c01-4727-b90b-323953603092"
       },
@@ -95,11 +77,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/5826fc99-ad8c-54cb-8c18-cd270bfe42fb"
       },

@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"integration\":{\"credentials\":{\"account_id\":\"123456789123\",\"role\":\"MyRoleUpdated\",\"type\":\"AWSAssumeRole\"},\"type\":\"AWS\"},\"name\":\"Cassette Connection\"},\"type\":\"action_connection\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/actions/connections/cb460d51-3c88-4e87-adac-d47131d0423d"
       },

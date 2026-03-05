@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"relationships\":{\"findings\":{\"data\":[]}},\"type\":\"cases\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "*/*"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security/findings/cases"
       },

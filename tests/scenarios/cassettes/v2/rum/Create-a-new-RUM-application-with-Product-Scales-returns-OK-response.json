@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"test-rum-with-product-scales-b91c7f54876a951d\",\"product_analytics_retention_state\":\"NONE\",\"rum_event_processing_state\":\"ERROR_FOCUSED_MODE\",\"type\":\"browser\"},\"type\":\"rum_application_create\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/rum/applications"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/rum/applications/51419fd9-a73f-4508-9f74-ad07d6669a47"
       },

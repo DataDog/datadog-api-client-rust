@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"This rule suppresses low-severity signals in staging environments.\",\"enabled\":true,\"expiration_date\":1764332845000,\"name\":\"Test-Create_a_suppression_rule_returns_OK_response-1762518445\",\"rule_query\":\"type:log_detection source:cloudtrail\",\"start_date\":1763382445000,\"suppression_query\":\"env:staging status:low\",\"tags\":[\"technique:T1110-brute-force\",\"source:cloudtrail\"]},\"type\":\"suppressions\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions/oxk-jlo-pc8"
       },

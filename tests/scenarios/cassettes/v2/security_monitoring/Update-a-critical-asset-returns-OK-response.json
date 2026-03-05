@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"query\":\"security:monitoring\",\"rule_query\":\"source:k9\",\"severity\":\"medium\",\"tags\":[\"team:security\"]},\"type\":\"critical_assets\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/critical_assets"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":false,\"query\":\"no:alert\",\"rule_query\":\"type:(log_detection OR signal_correlation OR workload_security OR application_security) ruleId:djg-ktx-ipq\",\"severity\":\"decrease\",\"tags\":[\"env:production\"],\"version\":1},\"type\":\"critical_assets\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/critical_assets/8fb467ae-b5c8-4bb1-822d-7648fe10a912"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/critical_assets/8fb467ae-b5c8-4bb1-822d-7648fe10a912"
       },

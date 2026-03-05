@@ -3,13 +3,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json;datetime-format=rfc3339"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v1/usage/aws_lambda?start_hr=2022-03-27T00%3A41%3A24.021Z&end_hr=2022-03-29T00%3A41%3A24.021Z"
+        "uri": "https://api.datadoghq.com/api/v1/usage/aws_lambda?end_hr=2022-03-29T00%3A41%3A24.021Z&start_hr=2022-03-27T00%3A41%3A24.021Z"
       },
       "response": {
         "body": {

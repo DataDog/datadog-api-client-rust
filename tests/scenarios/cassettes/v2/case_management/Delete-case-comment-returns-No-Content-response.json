@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"priority\":\"P4\",\"title\":\"My new case\",\"type_id\":\"00000000-0000-0000-0000-000000000001\"},\"relationships\":{\"project\":{\"data\":{\"id\":\"d4bbe1af-f36e-42f1-87c1-493ca35c320e\",\"type\":\"project\"}}},\"type\":\"case\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"comment\":\"This is my new comment !\"},\"type\":\"case\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/ba3da7da-9df1-4b1d-82be-e7d3d8ee865f/comment"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/cases/ba3da7da-9df1-4b1d-82be-e7d3d8ee865f/comment/bd8ee088-15bc-43a1-bc95-92e365b71459"
       },
@@ -95,11 +77,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/cases/ba3da7da-9df1-4b1d-82be-e7d3d8ee865f/comment/bd8ee088-15bc-43a1-bc95-92e365b71459"
       },

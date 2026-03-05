@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"account_id\":\"123456789123\",\"bucket_name\":\"dd-cost-bucket\",\"bucket_region\":\"us-east-1\",\"report_name\":\"dd-report-name\",\"report_prefix\":\"dd-report-prefix\"},\"type\":\"aws_cur_config_post_request\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cost/aws_cur_config"
       },

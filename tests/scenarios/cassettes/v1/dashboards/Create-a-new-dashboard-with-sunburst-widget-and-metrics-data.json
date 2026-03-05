@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"title\":\"Test-Create_a_new_dashboard_with_sunburst_widget_and_metrics_data-1731699176\",\"widgets\":[{\"definition\":{\"requests\":[{\"formulas\":[{\"formula\":\"query1\"}],\"queries\":[{\"aggregator\":\"sum\",\"data_source\":\"metrics\",\"name\":\"query1\",\"query\":\"sum:system.mem.used{*} by {service}\"}],\"response_format\":\"scalar\",\"style\":{\"palette\":\"dog_classic\"}}],\"title\":\"\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"sunburst\"},\"layout\":{\"height\":4,\"width\":4,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/qfx-a3h-kme"
       },

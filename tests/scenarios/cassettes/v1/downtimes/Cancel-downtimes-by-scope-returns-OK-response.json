@@ -6,14 +6,7 @@
           "string": "{\"end\":1684769382,\"message\":\"Test-Cancel_downtimes_by_scope_returns_OK_response-1684765782\",\"recurrence\":{\"period\":1,\"type\":\"weeks\",\"until_date\":1686580182,\"week_days\":[\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\"]},\"scope\":[\"test:testcanceldowntimesbyscopereturnsokresponse1684765782\"],\"start\":1684765782,\"timezone\":\"Etc/UTC\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/downtime"
       },
@@ -40,14 +33,7 @@
           "string": "{\"scope\":\"test:testcanceldowntimesbyscopereturnsokresponse1684765782\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/downtime/cancel/by_scope"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/downtime/2941965647"
       },

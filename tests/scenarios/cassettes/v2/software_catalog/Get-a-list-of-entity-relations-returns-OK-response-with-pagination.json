@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20"
       },
@@ -31,11 +27,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=20"
       },
@@ -59,11 +51,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=40"
       },
@@ -87,11 +75,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=60"
       },
@@ -115,11 +99,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=80"
       },
@@ -143,11 +123,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=100"
       },
@@ -171,11 +147,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=120"
       },
@@ -199,11 +171,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=140"
       },
@@ -227,11 +195,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=160"
       },
@@ -255,11 +219,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=180"
       },
@@ -283,11 +243,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=200"
       },
@@ -311,11 +267,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=220"
       },
@@ -339,11 +291,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=240"
       },
@@ -367,11 +315,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=260"
       },
@@ -395,11 +339,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=280"
       },
@@ -423,11 +363,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=300"
       },
@@ -451,11 +387,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=320"
       },
@@ -479,11 +411,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=340"
       },
@@ -507,11 +435,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=360"
       },
@@ -535,11 +459,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=380"
       },
@@ -563,11 +483,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=400"
       },
@@ -591,11 +507,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=420"
       },
@@ -619,11 +531,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=440"
       },
@@ -647,11 +555,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=460"
       },
@@ -675,11 +579,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=480"
       },
@@ -703,11 +603,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=500"
       },
@@ -731,11 +627,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=520"
       },
@@ -759,11 +651,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=540"
       },
@@ -787,11 +675,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=560"
       },
@@ -815,11 +699,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=580"
       },
@@ -843,11 +723,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=600"
       },
@@ -871,11 +747,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=620"
       },
@@ -899,11 +771,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=640"
       },
@@ -927,11 +795,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=660"
       },
@@ -955,11 +819,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=680"
       },
@@ -983,11 +843,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=700"
       },
@@ -1011,11 +867,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=720"
       },
@@ -1039,11 +891,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=740"
       },
@@ -1067,11 +915,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=760"
       },
@@ -1095,11 +939,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=780"
       },
@@ -1123,11 +963,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=800"
       },
@@ -1151,11 +987,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=820"
       },
@@ -1179,11 +1011,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=840"
       },
@@ -1207,11 +1035,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=860"
       },
@@ -1235,11 +1059,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=880"
       },
@@ -1263,11 +1083,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=900"
       },
@@ -1291,11 +1107,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=920"
       },
@@ -1319,11 +1131,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=940"
       },
@@ -1347,11 +1155,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=960"
       },
@@ -1375,11 +1179,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=980"
       },
@@ -1403,11 +1203,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1000"
       },
@@ -1431,11 +1227,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1020"
       },
@@ -1459,11 +1251,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1040"
       },
@@ -1487,11 +1275,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1060"
       },
@@ -1515,11 +1299,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1080"
       },
@@ -1543,11 +1323,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1100"
       },
@@ -1571,11 +1347,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1120"
       },
@@ -1599,11 +1371,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1140"
       },
@@ -1627,11 +1395,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1160"
       },
@@ -1655,11 +1419,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1180"
       },
@@ -1683,11 +1443,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1200"
       },
@@ -1711,11 +1467,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1220"
       },
@@ -1739,11 +1491,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1240"
       },
@@ -1767,11 +1515,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1260"
       },
@@ -1795,11 +1539,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1280"
       },
@@ -1823,11 +1563,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1300"
       },
@@ -1851,11 +1587,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1320"
       },
@@ -1879,11 +1611,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1340"
       },
@@ -1907,11 +1635,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1360"
       },
@@ -1935,11 +1659,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1380"
       },
@@ -1963,11 +1683,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1400"
       },
@@ -1991,11 +1707,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1420"
       },
@@ -2019,11 +1731,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1440"
       },
@@ -2047,11 +1755,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1460"
       },
@@ -2075,11 +1779,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1480"
       },
@@ -2103,11 +1803,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1500"
       },
@@ -2131,11 +1827,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1520"
       },
@@ -2159,11 +1851,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1540"
       },
@@ -2187,11 +1875,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1560"
       },
@@ -2215,11 +1899,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1580"
       },
@@ -2243,11 +1923,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1600"
       },
@@ -2271,11 +1947,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1620"
       },
@@ -2299,11 +1971,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1640"
       },
@@ -2327,11 +1995,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1660"
       },
@@ -2355,11 +2019,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1680"
       },
@@ -2383,11 +2043,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1700"
       },
@@ -2411,11 +2067,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1720"
       },
@@ -2439,11 +2091,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1740"
       },
@@ -2467,11 +2115,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1760"
       },
@@ -2495,11 +2139,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1780"
       },
@@ -2523,11 +2163,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1800"
       },
@@ -2551,11 +2187,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1820"
       },
@@ -2579,11 +2211,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1840"
       },
@@ -2607,11 +2235,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1860"
       },
@@ -2635,11 +2259,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1880"
       },
@@ -2663,11 +2283,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1900"
       },
@@ -2691,11 +2307,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1920"
       },
@@ -2719,11 +2331,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1940"
       },
@@ -2747,11 +2355,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1960"
       },
@@ -2775,11 +2379,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=1980"
       },
@@ -2803,11 +2403,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=2000"
       },
@@ -2831,11 +2427,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=2020"
       },
@@ -2859,11 +2451,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=2040"
       },
@@ -2887,11 +2475,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=2060"
       },
@@ -2915,11 +2499,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=2080"
       },
@@ -2943,11 +2523,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=2100"
       },
@@ -2971,11 +2547,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/catalog/relation?page%5Blimit%5D=20&page%5Boffset%5D=2120"
       },

@@ -6,14 +6,7 @@
           "string": "{\"data\":[{\"id\":\"325631eb-94c9-49c0-93f9-ab7e4fd24529\",\"type\":\"retention_filters\"}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/rum/applications/1d4b9c34-7ac4-423a-91cf-9902d926e9b3/relationships/retention_filters"
       },

@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Get_all_workflow_webhook_handles_returns_OK_response-1748457950\",\"url\":\"https://prod-100.westus.logic.azure.com:443/workflows/abcd1234\"},\"type\":\"workflows-webhook-handle\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/integration/ms-teams/configuration/workflows-webhook-handles"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/integration/ms-teams/configuration/workflows-webhook-handles"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/a415a4f2-2b2b-49ad-9f53-3ff6cf5427a4"
       },

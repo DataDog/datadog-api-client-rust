@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"title\":\"Test-Create_a_new_dashboard_with_a_query_value_widget_using_timeseries_background-1731699151 with QVW Timeseries Background\",\"widgets\":[{\"definition\":{\"autoscale\":true,\"precision\":2,\"requests\":[{\"formulas\":[{\"formula\":\"query1\"}],\"queries\":[{\"aggregator\":\"percentile\",\"data_source\":\"metrics\",\"name\":\"query1\",\"query\":\"sum:my.cool.count.metric{*}\"}],\"response_format\":\"scalar\"}],\"time\":{},\"timeseries_background\":{\"type\":\"area\",\"yaxis\":{\"include_zero\":true}},\"title\":\"\",\"title_align\":\"left\",\"title_size\":\"16\",\"type\":\"query_value\"},\"layout\":{\"height\":2,\"width\":2,\"x\":0,\"y\":0}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/t7h-dt9-gt6"
       },

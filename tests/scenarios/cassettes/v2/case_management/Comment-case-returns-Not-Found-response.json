@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"comment\":\"Hello world !\"},\"type\":\"case\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/cases/67d80aa3-36ff-44b9-a694-c501a7591737/comment"
       },

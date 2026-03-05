@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/security/sboms/Repository?filter%5Basset_name%5D=github.com%2Fdatadog%2Fdatadog-agent"
       },

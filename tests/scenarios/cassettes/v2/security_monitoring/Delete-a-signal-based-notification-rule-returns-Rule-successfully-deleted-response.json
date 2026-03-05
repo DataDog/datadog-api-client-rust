@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":true,\"name\":\"Test-Delete_a_signal_based_notification_rule_returns_Rule_successfully_deleted_response-1738763144\",\"selectors\":{\"query\":\"env:test\",\"rule_types\":[\"signal_correlation\"],\"severities\":[\"critical\"],\"trigger_source\":\"security_signals\"},\"targets\":[\"@email@email.com\"]},\"type\":\"notification_rules\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security/signals/notification_rules"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security/signals/notification_rules/x4n-qps-p3w"
       },
@@ -61,11 +50,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security/signals/notification_rules/x4n-qps-p3w"
       },

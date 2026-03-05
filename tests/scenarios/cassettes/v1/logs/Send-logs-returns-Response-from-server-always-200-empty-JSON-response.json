@@ -6,14 +6,7 @@
           "string": "[{\"ddtags\":\"host:TestSendlogsreturnsResponsefromserveralways200emptyJSONresponse1649774806\",\"message\":\"Test-Send_logs_returns_Response_from_server_always_200_empty_JSON_response-1649774806\"}]",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://http-intake.logs.datadoghq.com/v1/input"
       },
