@@ -46,6 +46,7 @@ pub struct Configuration {
     pub(crate) user_agent: String,
     pub(crate) unstable_operations: HashMap<String, bool>,
     pub(crate) auth_keys: HashMap<String, APIKey>,
+    pub(crate) pat: Option<String>,
     pub server_index: usize,
     pub server_variables: HashMap<String, String>,
     pub server_operation_index: HashMap<String, usize>,
@@ -107,6 +108,27 @@ impl Configuration {
 
     pub fn set_auth_key(&mut self, operation_str: &str, api_key: APIKey) {
         self.auth_keys.insert(operation_str.to_string(), api_key);
+    }
+
+    /// Set a bearer token for authentication.
+    pub fn set_pat(&mut self, pat: String) {
+        self.pat = Some(pat);
+    }
+
+    /// Build authentication headers for an API request.
+    /// All configured auth credentials are sent; the server decides which to use.
+    pub fn auth_headers(&self) -> Vec<(String, String)> {
+        let mut headers = Vec::new();
+        if let Some(ref pat) = self.pat {
+            headers.push(("Authorization".to_string(), format!("Bearer {}", pat)));
+        }
+        if let Some(key) = self.auth_keys.get("apiKeyAuth") {
+            headers.push(("DD-API-KEY".to_string(), key.key.clone()));
+        }
+        if let Some(key) = self.auth_keys.get("appKeyAuth") {
+            headers.push(("DD-APPLICATION-KEY".to_string(), key.key.clone()));
+        }
+        headers
     }
 
     pub fn set_proxy_url(&mut self, proxy_url: Option<String>) {
@@ -363,10 +385,14 @@ impl Default for Configuration {
             },
         );
 
+        // DD_BEARER_TOKEN env var enables Bearer token auth (mutually exclusive with API key auth)
+        let pat = env::var("DD_BEARER_TOKEN").ok().filter(|p| !p.is_empty());
+
         Self {
             user_agent: DEFAULT_USER_AGENT.clone(),
             unstable_operations,
             auth_keys,
+            pat,
             server_index: 0,
             server_variables: HashMap::from([(
                 "site".into(),
