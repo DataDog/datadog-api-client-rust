@@ -59,7 +59,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions?sort=-name&query=id%3Amru-avx-npf%20OR%20id%3Aqjl-xxu-vlo"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions?query=id%3Amru-avx-npf+OR+id%3Aqjl-xxu-vlo&sort=-name"
       },
       "response": {
         "body": {

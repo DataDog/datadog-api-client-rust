@@ -59,7 +59,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v1/slo/correction?offset=1&limit=1"
+        "uri": "https://api.datadoghq.com/api/v1/slo/correction?limit=1&offset=1"
       },
       "response": {
         "body": {

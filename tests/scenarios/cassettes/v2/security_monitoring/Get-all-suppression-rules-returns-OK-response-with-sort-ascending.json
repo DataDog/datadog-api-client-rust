@@ -59,7 +59,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions?sort=name&query=id%3Ax91-nfr-3ws%20OR%20id%3A4ni-qbs-lxd"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions?query=id%3Ax91-nfr-3ws+OR+id%3A4ni-qbs-lxd&sort=name"
       },
       "response": {
         "body": {

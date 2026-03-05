@@ -29,7 +29,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/ci/tests/events?filter%5Bfrom%5D=2022-10-21T14%3A43%3A41.511Z&filter%5Bto%5D=2022-10-21T14%3A44%3A11.511Z&page%5Blimit%5D=2&page%5Bcursor%5D=eyJhZnRlciI6IkFRQUFBWVA3QUdFNG83ci1YQUFBQUFCQldWQTNRVWRGTkVGQlEyMHdjM0JYTFdOWVVEQjVaMU0ifQ"
+        "uri": "https://api.datadoghq.com/api/v2/ci/tests/events?filter%5Bfrom%5D=2022-10-21T14%3A43%3A41.511Z&filter%5Bto%5D=2022-10-21T14%3A44%3A11.511Z&page%5Bcursor%5D=eyJhZnRlciI6IkFRQUFBWVA3QUdFNG83ci1YQUFBQUFCQldWQTNRVWRGTkVGQlEyMHdjM0JYTFdOWVVEQjVaMU0ifQ&page%5Blimit%5D=2"
       },
       "response": {
         "body": {

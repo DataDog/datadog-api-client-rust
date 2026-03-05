@@ -59,7 +59,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions?page%5Bsize%5D=1&page%5Bnumber%5D=0&query=id%3Adgv-9mh-i77%20OR%20id%3A23j-s8c-mlt"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions?page%5Bnumber%5D=0&page%5Bsize%5D=1&query=id%3Adgv-9mh-i77+OR+id%3A23j-s8c-mlt"
       },
       "response": {
         "body": {

@@ -5,7 +5,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/seats/users?product_code=incident_response&page%5Blimit%5D=100"
+        "uri": "https://api.datadoghq.com/api/v2/seats/users?page%5Blimit%5D=100&product_code=incident_response"
       },
       "response": {
         "body": {

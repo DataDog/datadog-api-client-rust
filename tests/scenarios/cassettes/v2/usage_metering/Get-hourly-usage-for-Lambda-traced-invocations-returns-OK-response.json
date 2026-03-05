@@ -5,7 +5,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/usage/lambda_traced_invocations?start_hr=2024-01-19T20%3A54%3A39.781Z&end_hr=2024-01-21T20%3A54%3A39.781Z"
+        "uri": "https://api.datadoghq.com/api/v2/usage/lambda_traced_invocations?end_hr=2024-01-21T20%3A54%3A39.781Z&start_hr=2024-01-19T20%3A54%3A39.781Z"
       },
       "response": {
         "body": {

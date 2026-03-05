@@ -5,7 +5,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/team/2e06bf2c-193b-41d4-b3c2-afccc080458f/memberships?page%5Bsize%5D=2&page%5Bnumber%5D=0"
+        "uri": "https://api.datadoghq.com/api/v2/team/2e06bf2c-193b-41d4-b3c2-afccc080458f/memberships?page%5Bnumber%5D=0&page%5Bsize%5D=2"
       },
       "response": {
         "body": {
@@ -29,7 +29,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/team/2e06bf2c-193b-41d4-b3c2-afccc080458f/memberships?page%5Bsize%5D=2&page%5Bnumber%5D=1"
+        "uri": "https://api.datadoghq.com/api/v2/team/2e06bf2c-193b-41d4-b3c2-afccc080458f/memberships?page%5Bnumber%5D=1&page%5Bsize%5D=2"
       },
       "response": {
         "body": {

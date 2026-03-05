@@ -147,6 +147,7 @@ pub async fn before_scenario(
                 .with_mode(VCRMode::Record)
                 .with_modify_request(|req| {
                     req.headers.clear();
+                    sort_query_params(&mut req.uri);
                 })
                 .with_modify_response(|res| {
                     res.headers.remove_entry("content-security-policy");
@@ -167,6 +168,7 @@ pub async fn before_scenario(
                 .with_mode(VCRMode::Replay)
                 .with_modify_request(|req| {
                     req.headers.clear();
+                    sort_query_params(&mut req.uri);
                 })
                 .with_modify_response(|res| {
                     res.headers.remove_entry("content-security-policy");
@@ -678,6 +680,21 @@ fn response_is_bool(world: &mut DatadogWorld, path: String, expected: String) {
     assert_eq!(found, expected == "true");
 }
 
+
+fn sort_query_params(uri: &mut url::Url) {
+    let mut pairs: Vec<(String, String)> = uri.query_pairs().into_owned().collect();
+    if pairs.is_empty() {
+        return;
+    }
+    pairs.sort_by(|a, b| a.0.cmp(&b.0));
+    uri.set_query(None);
+    {
+        let mut query = uri.query_pairs_mut();
+        for (k, v) in pairs {
+            query.append_pair(&k, &v);
+        }
+    }
+}
 
 fn lookup(path: &String, object: &Value) -> Option<Value> {
     let mut json_pointer = format!("/{}", path).replace('.', "/");

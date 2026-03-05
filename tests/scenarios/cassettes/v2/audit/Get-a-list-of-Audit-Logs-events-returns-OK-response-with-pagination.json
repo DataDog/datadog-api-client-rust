@@ -29,7 +29,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/audit/events?page%5Blimit%5D=2&page%5Bcursor%5D=eyJhZnRlciI6IkFRQUFBWUFpUWhuWTNTSHVVUUFBQUFCQldVRnBVV2h4UmtGQlEwczJhSGMyTWtoNGNuUjNRVUUifQ"
+        "uri": "https://api.datadoghq.com/api/v2/audit/events?page%5Bcursor%5D=eyJhZnRlciI6IkFRQUFBWUFpUWhuWTNTSHVVUUFBQUFCQldVRnBVV2h4UmtGQlEwczJhSGMyTWtoNGNuUjNRVUUifQ&page%5Blimit%5D=2"
       },
       "response": {
         "body": {

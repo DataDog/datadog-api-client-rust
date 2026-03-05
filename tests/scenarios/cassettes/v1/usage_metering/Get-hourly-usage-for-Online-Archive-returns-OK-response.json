@@ -5,7 +5,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v1/usage/online-archive?start_hr=2022-03-03T15%3A58%3A32.586Z&end_hr=2022-03-05T15%3A58%3A32.586Z"
+        "uri": "https://api.datadoghq.com/api/v1/usage/online-archive?end_hr=2022-03-05T15%3A58%3A32.586Z&start_hr=2022-03-03T15%3A58%3A32.586Z"
       },
       "response": {
         "body": {

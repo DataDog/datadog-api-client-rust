@@ -5,7 +5,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v1/usage/fargate?start_hr=2022-03-27T00%3A41%3A23.206Z&end_hr=2022-03-29T00%3A41%3A23.206Z"
+        "uri": "https://api.datadoghq.com/api/v1/usage/fargate?end_hr=2022-03-29T00%3A41%3A23.206Z&start_hr=2022-03-27T00%3A41%3A23.206Z"
       },
       "response": {
         "body": {

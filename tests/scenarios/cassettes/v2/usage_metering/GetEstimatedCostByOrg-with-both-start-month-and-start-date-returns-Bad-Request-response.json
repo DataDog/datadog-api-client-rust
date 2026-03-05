@@ -5,7 +5,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/usage/estimated_cost?view=sub-org&start_month=2022-11-03T21%3A08%3A41.229Z&start_date=2022-10-31T21%3A08%3A41.229Z"
+        "uri": "https://api.datadoghq.com/api/v2/usage/estimated_cost?start_date=2022-10-31T21%3A08%3A41.229Z&start_month=2022-11-03T21%3A08%3A41.229Z&view=sub-org"
       },
       "response": {
         "body": {

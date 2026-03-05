@@ -5,7 +5,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/scorecard/outcomes?page%5Bsize%5D=2&fields%5Boutcome%5D=state&filter%5Boutcome%5D%5Bservice_name%5D=my-service"
+        "uri": "https://api.datadoghq.com/api/v2/scorecard/outcomes?fields%5Boutcome%5D=state&filter%5Boutcome%5D%5Bservice_name%5D=my-service&page%5Bsize%5D=2"
       },
       "response": {
         "body": {
@@ -29,7 +29,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/scorecard/outcomes?page%5Bsize%5D=2&page%5Boffset%5D=2&fields%5Boutcome%5D=state&filter%5Boutcome%5D%5Bservice_name%5D=my-service"
+        "uri": "https://api.datadoghq.com/api/v2/scorecard/outcomes?fields%5Boutcome%5D=state&filter%5Boutcome%5D%5Bservice_name%5D=my-service&page%5Boffset%5D=2&page%5Bsize%5D=2"
       },
       "response": {
         "body": {

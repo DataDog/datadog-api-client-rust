@@ -5,7 +5,7 @@
         "body": "",
         "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v1/usage/hosts?start_hr=2022-03-29T00%3A41%3A30.106Z&end_hr=2022-03-27T00%3A41%3A30.106Z"
+        "uri": "https://api.datadoghq.com/api/v1/usage/hosts?end_hr=2022-03-27T00%3A41%3A30.106Z&start_hr=2022-03-29T00%3A41%3A30.106Z"
       },
       "response": {
         "body": {
