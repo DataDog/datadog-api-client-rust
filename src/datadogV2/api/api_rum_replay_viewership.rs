@@ -252,20 +252,14 @@ impl RumReplayViewershipAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        for (key, value) in local_configuration.auth_headers() {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                reqwest::header::HeaderName::from_bytes(key.as_bytes())
+                    .expect("failed to parse auth header name"),
+                HeaderValue::from_str(value.as_str())
+                    .expect("failed to parse auth header value"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        }
 
         // build body parameters
         let output = Vec::new();
@@ -394,20 +388,14 @@ impl RumReplayViewershipAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        for (key, value) in local_configuration.auth_headers() {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                reqwest::header::HeaderName::from_bytes(key.as_bytes())
+                    .expect("failed to parse auth header name"),
+                HeaderValue::from_str(value.as_str())
+                    .expect("failed to parse auth header value"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -514,20 +502,14 @@ impl RumReplayViewershipAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        for (key, value) in local_configuration.auth_headers() {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                reqwest::header::HeaderName::from_bytes(key.as_bytes())
+                    .expect("failed to parse auth header name"),
+                HeaderValue::from_str(value.as_str())
+                    .expect("failed to parse auth header value"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -661,20 +643,14 @@ impl RumReplayViewershipAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        for (key, value) in local_configuration.auth_headers() {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                reqwest::header::HeaderName::from_bytes(key.as_bytes())
+                    .expect("failed to parse auth header name"),
+                HeaderValue::from_str(value.as_str())
+                    .expect("failed to parse auth header value"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
