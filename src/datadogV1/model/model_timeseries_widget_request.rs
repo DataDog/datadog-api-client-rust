@@ -60,9 +60,9 @@ pub struct TimeseriesWidgetRequest {
     /// The log query.
     #[serde(rename = "security_query")]
     pub security_query: Option<crate::datadogV1::model::LogQueryDefinition>,
-    /// Define request widget style.
+    /// Define request widget style for timeseries widgets.
     #[serde(rename = "style")]
-    pub style: Option<crate::datadogV1::model::WidgetRequestStyle>,
+    pub style: Option<crate::datadogV1::model::TimeseriesRequestStyle>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -205,7 +205,7 @@ impl TimeseriesWidgetRequest {
     }
 
     #[allow(deprecated)]
-    pub fn style(mut self, value: crate::datadogV1::model::WidgetRequestStyle) -> Self {
+    pub fn style(mut self, value: crate::datadogV1::model::TimeseriesRequestStyle) -> Self {
         self.style = Some(value);
         self
     }
@@ -266,7 +266,7 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetRequest {
                 > = None;
                 let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
-                let mut style: Option<crate::datadogV1::model::WidgetRequestStyle> = None;
+                let mut style: Option<crate::datadogV1::model::TimeseriesRequestStyle> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
