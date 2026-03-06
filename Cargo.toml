@@ -57,7 +57,7 @@ cucumber = "0.20.2"
 env_logger = "0.10.0"
 futures = "0.3.28"
 futures-util = "0.3.30"
-minijinja = "1.0.10"
+minijinja = "2.0.0"
 regex = "1.9.5"
 rvcr = { git = "https://github.com/nkzou/rvcr.git", rev = "cb6911dcd05300a95647ed915b94645679fd80eb" }
 sha256 = "1.4.0"
