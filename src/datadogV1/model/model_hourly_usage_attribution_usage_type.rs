@@ -17,6 +17,8 @@ pub enum HourlyUsageAttributionUsageType {
     ASM_SERVERLESS_TRACED_INVOCATIONS_PERCENTAGE,
     BITS_AI_INVESTIGATIONS_USAGE,
     BROWSER_USAGE,
+    CI_CODE_COVERAGE_COMMITTERS_PERCENTAGE,
+    CI_CODE_COVERAGE_COMMITTERS_USAGE,
     CI_PIPELINE_INDEXED_SPANS_USAGE,
     CI_TEST_INDEXED_SPANS_USAGE,
     CI_VISIBILITY_ITR_USAGE,
@@ -110,6 +112,12 @@ impl ToString for HourlyUsageAttributionUsageType {
             }
             Self::BITS_AI_INVESTIGATIONS_USAGE => String::from("bits_ai_investigations_usage"),
             Self::BROWSER_USAGE => String::from("browser_usage"),
+            Self::CI_CODE_COVERAGE_COMMITTERS_PERCENTAGE => {
+                String::from("ci_code_coverage_committers_percentage")
+            }
+            Self::CI_CODE_COVERAGE_COMMITTERS_USAGE => {
+                String::from("ci_code_coverage_committers_usage")
+            }
             Self::CI_PIPELINE_INDEXED_SPANS_USAGE => {
                 String::from("ci_pipeline_indexed_spans_usage")
             }
@@ -241,6 +249,10 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             }
             "bits_ai_investigations_usage" => Self::BITS_AI_INVESTIGATIONS_USAGE,
             "browser_usage" => Self::BROWSER_USAGE,
+            "ci_code_coverage_committers_percentage" => {
+                Self::CI_CODE_COVERAGE_COMMITTERS_PERCENTAGE
+            }
+            "ci_code_coverage_committers_usage" => Self::CI_CODE_COVERAGE_COMMITTERS_USAGE,
             "ci_pipeline_indexed_spans_usage" => Self::CI_PIPELINE_INDEXED_SPANS_USAGE,
             "ci_test_indexed_spans_usage" => Self::CI_TEST_INDEXED_SPANS_USAGE,
             "ci_visibility_itr_usage" => Self::CI_VISIBILITY_ITR_USAGE,

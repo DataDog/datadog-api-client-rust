@@ -65,6 +65,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The synthetic browser test usage by tag(s).
     #[serde(rename = "browser_usage")]
     pub browser_usage: Option<f64>,
+    /// The percentage of Code Coverage committers usage by tag(s).
+    #[serde(rename = "ci_code_coverage_committers_percentage")]
+    pub ci_code_coverage_committers_percentage: Option<f64>,
+    /// The total Code Coverage committers usage by tag(s).
+    #[serde(rename = "ci_code_coverage_committers_usage")]
+    pub ci_code_coverage_committers_usage: Option<f64>,
     /// The percentage of CI Pipeline Indexed Spans usage by tag(s).
     #[serde(rename = "ci_pipeline_indexed_spans_percentage")]
     pub ci_pipeline_indexed_spans_percentage: Option<f64>,
@@ -519,6 +525,8 @@ impl MonthlyUsageAttributionValues {
             bits_ai_investigations_usage: None,
             browser_percentage: None,
             browser_usage: None,
+            ci_code_coverage_committers_percentage: None,
+            ci_code_coverage_committers_usage: None,
             ci_pipeline_indexed_spans_percentage: None,
             ci_pipeline_indexed_spans_usage: None,
             ci_test_indexed_spans_percentage: None,
@@ -753,6 +761,16 @@ impl MonthlyUsageAttributionValues {
 
     pub fn browser_usage(mut self, value: f64) -> Self {
         self.browser_usage = Some(value);
+        self
+    }
+
+    pub fn ci_code_coverage_committers_percentage(mut self, value: f64) -> Self {
+        self.ci_code_coverage_committers_percentage = Some(value);
+        self
+    }
+
+    pub fn ci_code_coverage_committers_usage(mut self, value: f64) -> Self {
+        self.ci_code_coverage_committers_usage = Some(value);
         self
     }
 
@@ -1516,6 +1534,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut bits_ai_investigations_usage: Option<f64> = None;
                 let mut browser_percentage: Option<f64> = None;
                 let mut browser_usage: Option<f64> = None;
+                let mut ci_code_coverage_committers_percentage: Option<f64> = None;
+                let mut ci_code_coverage_committers_usage: Option<f64> = None;
                 let mut ci_pipeline_indexed_spans_percentage: Option<f64> = None;
                 let mut ci_pipeline_indexed_spans_usage: Option<f64> = None;
                 let mut ci_test_indexed_spans_percentage: Option<f64> = None;
@@ -1789,6 +1809,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                                 continue;
                             }
                             browser_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_code_coverage_committers_percentage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            ci_code_coverage_committers_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "ci_code_coverage_committers_usage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            ci_code_coverage_committers_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "ci_pipeline_indexed_spans_percentage" => {
@@ -2811,6 +2845,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     bits_ai_investigations_usage,
                     browser_percentage,
                     browser_usage,
+                    ci_code_coverage_committers_percentage,
+                    ci_code_coverage_committers_usage,
                     ci_pipeline_indexed_spans_percentage,
                     ci_pipeline_indexed_spans_usage,
                     ci_test_indexed_spans_percentage,
