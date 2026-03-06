@@ -67,6 +67,40 @@
         }
       },
       "recorded_at": "Wed, 13 Apr 2022 09:36:13 GMT"
+    },
+    {
+      "request": {
+        "body": {
+          "string": "{\"filter\":{\"from\":\"now-15m\",\"to\":\"now\"},\"options\":{\"timezone\":\"GMT\"},\"page\":{\"cursor\":\"eyJhZnRlciI6IkFRQUFBWUFpT2hnV2pkb1otUUFBQUFCQldVRnBUMmgzVFVGQlJHSkxUR1pvU1U1MFRrOW5RVUUifQ\",\"limit\":2},\"sort\":\"timestamp\"}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/audit/events/search"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 13 Apr 2022 09:36:13 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
