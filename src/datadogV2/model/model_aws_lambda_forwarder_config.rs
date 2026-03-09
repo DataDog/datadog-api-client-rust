@@ -21,7 +21,8 @@ pub struct AWSLambdaForwarderConfig {
     pub log_source_config: Option<crate::datadogV2::model::AWSLambdaForwarderConfigLogSourceConfig>,
     /// List of service IDs set to enable automatic log collection.
     /// Discover the list of available services with the
-    /// [Get list of AWS log ready services](<https://docs.datadoghq.com/api/latest/aws-logs-integration/#get-list-of-aws-log-ready-services>)
+    /// [Get list of AWS log ready
+    /// services](<https://docs.datadoghq.com/api/latest/aws-logs-integration/#get-list-of-aws-log-ready-services>)
     /// endpoint.
     #[serde(rename = "sources")]
     pub sources: Option<Vec<String>>,
