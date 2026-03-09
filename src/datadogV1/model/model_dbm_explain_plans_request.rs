@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object to send with the request to retrieve DBM explain plans.
+/// Request body for listing DBM explain plans.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DbmExplainPlansRequest {
-    /// Parameters for the DBM explain plans list query.
-    #[serde(rename = "list")]
-    pub list: crate::datadogV1::model::DbmExplainPlansRequestList,
+    /// Maximum number of results to return.
+    #[serde(rename = "limit")]
+    pub limit: i32,
+    /// Search query for filtering explain plans. The SDK automatically prepends `dbm_type:plan AND ` before sending the request.
+    #[serde(rename = "query")]
+    pub query: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,11 +25,10 @@ pub struct DbmExplainPlansRequest {
 }
 
 impl DbmExplainPlansRequest {
-    pub fn new(
-        list: crate::datadogV1::model::DbmExplainPlansRequestList,
-    ) -> DbmExplainPlansRequest {
+    pub fn new(limit: i32, query: String) -> DbmExplainPlansRequest {
         DbmExplainPlansRequest {
-            list,
+            limit,
+            query,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -58,7 +60,8 @@ impl<'de> Deserialize<'de> for DbmExplainPlansRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut list: Option<crate::datadogV1::model::DbmExplainPlansRequestList> = None;
+                let mut limit: Option<i32> = None;
+                let mut query: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -67,8 +70,11 @@ impl<'de> Deserialize<'de> for DbmExplainPlansRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "list" => {
-                            list = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "limit" => {
+                            limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "query" => {
+                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -77,10 +83,12 @@ impl<'de> Deserialize<'de> for DbmExplainPlansRequest {
                         }
                     }
                 }
-                let list = list.ok_or_else(|| M::Error::missing_field("list"))?;
+                let limit = limit.ok_or_else(|| M::Error::missing_field("limit"))?;
+                let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 
                 let content = DbmExplainPlansRequest {
-                    list,
+                    limit,
+                    query,
                     additional_properties,
                     _unparsed,
                 };

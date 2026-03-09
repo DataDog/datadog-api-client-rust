@@ -451,6 +451,23 @@ impl {{ structName }} {
 
         {%- if operation.requestBody is defined and not formParameter %}
         // build body parameters
+        {%- if operation.get('x-dbm-wrap-body') %}
+        {%- set body_var = operation.get("x-codegen-request-body-name", "body")|variable_name %}
+        {#- x-dbm-wrap-body / x-dbm-query-prefix: wraps the simplified DBM request (limit + query)
+            into the full wire format expected by the logs-analytics API:
+              {"list": {"indexes": ["databasequery"], "limit": N, "search": {"query": "<prefix> AND <user_query>"}}}
+            The x-alternate-path on the operation already bakes ?type=databasequery into the URL,
+            so no separate query parameter is needed. #}
+        let {{body_var}} = serde_json::json!({
+            "list": {
+                "indexes": ["databasequery"],
+                "limit": {{body_var}}.limit,
+                "search": {
+                    "query": format!("{} AND {}", "{{operation['x-dbm-query-prefix']}}", {{body_var}}.query)
+                }
+            }
+        });
+        {%- endif %}
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if {{operation.get("x-codegen-request-body-name", "body")|variable_name}}.serialize(&mut ser).is_ok() {

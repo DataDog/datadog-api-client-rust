@@ -12,31 +12,27 @@ Feature: Database Monitoring
   @generated @skip @team:DataDog/database-monitoring
   Scenario: List DBM explain plans returns "Bad Request" response
     Given new "ListDbmExplainPlans" request
-    And request contains "type" parameter with value "databasequery"
-    And body with value {"list": {"indexes": ["databasequery"], "limit": 5, "search": {"query": "dbm_type:plan"}}}
+    And body with value {"limit": 5, "query": "*"}
     When the request is sent
     Then the response status is 400 Bad Request
 
   @generated @skip @team:DataDog/database-monitoring
   Scenario: List DBM explain plans returns "OK" response
     Given new "ListDbmExplainPlans" request
-    And request contains "type" parameter with value "databasequery"
-    And body with value {"list": {"indexes": ["databasequery"], "limit": 5, "search": {"query": "dbm_type:plan"}}}
+    And body with value {"limit": 5, "query": "*"}
     When the request is sent
     Then the response status is 200 OK
 
   @generated @skip @team:DataDog/database-monitoring
   Scenario: List DBM query samples returns "Bad Request" response
     Given new "ListDbmQuerySamples" request
-    And request contains "type" parameter with value "databasequery"
-    And body with value {"list": {"indexes": ["databasequery"], "limit": 5, "search": {"query": "dbm_type:activity"}}}
+    And body with value {"limit": 5, "query": "*"}
     When the request is sent
     Then the response status is 400 Bad Request
 
   @generated @skip @team:DataDog/database-monitoring
   Scenario: List DBM query samples returns "OK" response
     Given new "ListDbmQuerySamples" request
-    And request contains "type" parameter with value "databasequery"
-    And body with value {"list": {"indexes": ["databasequery"], "limit": 5, "search": {"query": "dbm_type:activity"}}}
+    And body with value {"limit": 5, "query": "*"}
     When the request is sent
     Then the response status is 200 OK

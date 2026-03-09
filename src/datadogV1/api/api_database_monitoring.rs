@@ -1,6 +1,6 @@
-// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
-// This product includes software developed at Datadog (https://www.datadoghq.com/).
-// Copyright 2019-Present Datadog, Inc.
+// Unless explicitly stated otherwise all files in this repository are licensed
+// under the Apache-2.0 License. This product includes software developed at
+// Datadog (https://www.datadoghq.com/). Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
@@ -10,7 +10,8 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// ListDbmExplainPlansError is a struct for typed errors of method [`DatabaseMonitoringAPI::list_dbm_explain_plans`]
+/// ListDbmExplainPlansError is a struct for typed errors of method
+/// [`DatabaseMonitoringAPI::list_dbm_explain_plans`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListDbmExplainPlansError {
@@ -19,7 +20,8 @@ pub enum ListDbmExplainPlansError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListDbmQuerySamplesError is a struct for typed errors of method [`DatabaseMonitoringAPI::list_dbm_query_samples`]
+/// ListDbmQuerySamplesError is a struct for typed errors of method
+/// [`DatabaseMonitoringAPI::list_dbm_query_samples`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListDbmQuerySamplesError {
@@ -28,8 +30,9 @@ pub enum ListDbmQuerySamplesError {
     UnknownValue(serde_json::Value),
 }
 
-/// Query Database Monitoring (DBM) data including query explain plans.
-/// See the [Database Monitoring page](<https://docs.datadoghq.com/database_monitoring/>) for more information.
+/// Query Database Monitoring (DBM) data including query explain plans. See the
+/// [Database Monitoring page](https://docs.datadoghq.com/database_monitoring/) for
+/// more information.
 #[derive(Debug, Clone)]
 pub struct DatabaseMonitoringAPI {
     config: datadog::Configuration,
@@ -46,19 +49,18 @@ impl DatabaseMonitoringAPI {
     pub fn new() -> Self {
         Self::default()
     }
+
     pub fn with_config(config: datadog::Configuration) -> Self {
         let mut reqwest_client_builder = reqwest::Client::builder();
-
         if let Some(proxy_url) = &config.proxy_url {
             let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
             reqwest_client_builder = reqwest_client_builder.proxy(proxy);
         }
-
         let mut middleware_client_builder =
             reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
-
         if config.enable_retry {
             struct RetryableStatus;
+
             impl reqwest_retry::RetryableStrategy for RetryableStatus {
                 fn handle(
                     &self,
@@ -70,20 +72,17 @@ impl DatabaseMonitoringAPI {
                     }
                 }
             }
+
             let backoff_policy = reqwest_retry::policies::ExponentialBackoff::builder()
                 .build_with_max_retries(config.max_retries);
-
             let retry_middleware =
                 reqwest_retry::RetryTransientMiddleware::new_with_policy_and_strategy(
                     backoff_policy,
                     RetryableStatus,
                 );
-
             middleware_client_builder = middleware_client_builder.with(retry_middleware);
         }
-
         let client = middleware_client_builder.build();
-
         Self { config, client }
     }
 
@@ -94,19 +93,17 @@ impl DatabaseMonitoringAPI {
         Self { config, client }
     }
 
-    /// Retrieve query explain plans from Database Monitoring. Uses the logs-analytics endpoint with `type=databasequery` to fetch explain plans showing how the database engine executes SQL statements. Filter with `dbm_type:plan` in the search query to retrieve only explain plans.
+    /// Retrieve query explain plans from Database Monitoring. The SDK automatically
+    /// sets `type=databasequery` and prepends `dbm_type:plan AND ` to your search
+    /// query before sending the request.
     pub async fn list_dbm_explain_plans(
         &self,
-        type_: crate::datadogV1::model::DbmType,
         body: crate::datadogV1::model::DbmExplainPlansRequest,
     ) -> Result<
         crate::datadogV1::model::DbmExplainPlansResponse,
         datadog::Error<ListDbmExplainPlansError>,
     > {
-        match self
-            .list_dbm_explain_plans_with_http_info(type_, body)
-            .await
-        {
+        match self.list_dbm_explain_plans_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -120,10 +117,11 @@ impl DatabaseMonitoringAPI {
         }
     }
 
-    /// Retrieve query explain plans from Database Monitoring. Uses the logs-analytics endpoint with `type=databasequery` to fetch explain plans showing how the database engine executes SQL statements. Filter with `dbm_type:plan` in the search query to retrieve only explain plans.
+    /// Retrieve query explain plans from Database Monitoring. The SDK automatically
+    /// sets `type=databasequery` and prepends `dbm_type:plan AND ` to your search
+    /// query before sending the request.
     pub async fn list_dbm_explain_plans_with_http_info(
         &self,
-        type_: crate::datadogV1::model::DbmType,
         body: crate::datadogV1::model::DbmExplainPlansRequest,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::DbmExplainPlansResponse>,
@@ -131,17 +129,13 @@ impl DatabaseMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_dbm_explain_plans";
-
         let local_client = &self.client;
-
         let local_uri_str = format!(
-            "{}/api/v1/logs-analytics/list",
+            "{}/api/v1/logs-analytics/list?type=databasequery",
             local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
-
-        local_req_builder = local_req_builder.query(&[("type", &type_.to_string())]);
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -177,6 +171,15 @@ impl DatabaseMonitoringAPI {
         };
 
         // build body parameters
+        let body = serde_json::json!({
+            "list": {
+                "indexes":["databasequery"],
+                "limit": body.limit,
+                "search": {
+                    "query": format !("{} AND {}", "dbm_type:plan", body.query)
+                }
+            }
+        });
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
@@ -220,16 +223,13 @@ impl DatabaseMonitoringAPI {
                 local_req_builder = local_req_builder.body(ser.into_inner());
             }
         }
-
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
-
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
         log::debug!("response content: {}", local_content);
-
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::DbmExplainPlansResponse>(
                 &local_content,
@@ -255,19 +255,17 @@ impl DatabaseMonitoringAPI {
         }
     }
 
-    /// Retrieve query samples from Database Monitoring. Uses the logs-analytics endpoint with `type=databasequery` to fetch query samples showing active database statements. Filter with `dbm_type:activity` in the search query to retrieve only query samples.
+    /// Retrieve query samples from Database Monitoring. The SDK automatically sets
+    /// `type=databasequery` and prepends `dbm_type:activity AND ` to your search query
+    /// before sending the request.
     pub async fn list_dbm_query_samples(
         &self,
-        type_: crate::datadogV1::model::DbmType,
         body: crate::datadogV1::model::DbmQuerySamplesRequest,
     ) -> Result<
         crate::datadogV1::model::DbmQuerySamplesResponse,
         datadog::Error<ListDbmQuerySamplesError>,
     > {
-        match self
-            .list_dbm_query_samples_with_http_info(type_, body)
-            .await
-        {
+        match self.list_dbm_query_samples_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -281,10 +279,11 @@ impl DatabaseMonitoringAPI {
         }
     }
 
-    /// Retrieve query samples from Database Monitoring. Uses the logs-analytics endpoint with `type=databasequery` to fetch query samples showing active database statements. Filter with `dbm_type:activity` in the search query to retrieve only query samples.
+    /// Retrieve query samples from Database Monitoring. The SDK automatically sets
+    /// `type=databasequery` and prepends `dbm_type:activity AND ` to your search query
+    /// before sending the request.
     pub async fn list_dbm_query_samples_with_http_info(
         &self,
-        type_: crate::datadogV1::model::DbmType,
         body: crate::datadogV1::model::DbmQuerySamplesRequest,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV1::model::DbmQuerySamplesResponse>,
@@ -292,17 +291,13 @@ impl DatabaseMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v1.list_dbm_query_samples";
-
         let local_client = &self.client;
-
         let local_uri_str = format!(
-            "{}/api/v1/logs-analytics/list",
+            "{}/api/v1/logs-analytics/list?type=databasequery",
             local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
-
-        local_req_builder = local_req_builder.query(&[("type", &type_.to_string())]);
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -338,6 +333,15 @@ impl DatabaseMonitoringAPI {
         };
 
         // build body parameters
+        let body = serde_json::json!({
+            "list": {
+                "indexes":["databasequery"],
+                "limit": body.limit,
+                "search": {
+                    "query": format !("{} AND {}", "dbm_type:activity", body.query)
+                }
+            }
+        });
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
         if body.serialize(&mut ser).is_ok() {
@@ -381,16 +385,13 @@ impl DatabaseMonitoringAPI {
                 local_req_builder = local_req_builder.body(ser.into_inner());
             }
         }
-
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
         log::debug!("request content: {:?}", local_req.body());
         let local_resp = local_client.execute(local_req).await?;
-
         let local_status = local_resp.status();
         let local_content = local_resp.text().await?;
         log::debug!("response content: {}", local_content);
-
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::DbmQuerySamplesResponse>(
                 &local_content,

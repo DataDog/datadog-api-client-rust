@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object to send with the request to retrieve DBM query samples.
+/// Request body for listing DBM query samples.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DbmQuerySamplesRequest {
-    /// Parameters for the DBM query samples list query.
-    #[serde(rename = "list")]
-    pub list: crate::datadogV1::model::DbmQuerySamplesRequestList,
+    /// Maximum number of results to return.
+    #[serde(rename = "limit")]
+    pub limit: i32,
+    /// Search query for filtering query samples. The SDK automatically prepends `dbm_type:activity AND ` before sending the request.
+    #[serde(rename = "query")]
+    pub query: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,11 +25,10 @@ pub struct DbmQuerySamplesRequest {
 }
 
 impl DbmQuerySamplesRequest {
-    pub fn new(
-        list: crate::datadogV1::model::DbmQuerySamplesRequestList,
-    ) -> DbmQuerySamplesRequest {
+    pub fn new(limit: i32, query: String) -> DbmQuerySamplesRequest {
         DbmQuerySamplesRequest {
-            list,
+            limit,
+            query,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -58,7 +60,8 @@ impl<'de> Deserialize<'de> for DbmQuerySamplesRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut list: Option<crate::datadogV1::model::DbmQuerySamplesRequestList> = None;
+                let mut limit: Option<i32> = None;
+                let mut query: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -67,8 +70,11 @@ impl<'de> Deserialize<'de> for DbmQuerySamplesRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "list" => {
-                            list = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "limit" => {
+                            limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "query" => {
+                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -77,10 +83,12 @@ impl<'de> Deserialize<'de> for DbmQuerySamplesRequest {
                         }
                     }
                 }
-                let list = list.ok_or_else(|| M::Error::missing_field("list"))?;
+                let limit = limit.ok_or_else(|| M::Error::missing_field("limit"))?;
+                let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 
                 let content = DbmQuerySamplesRequest {
-                    list,
+                    limit,
+                    query,
                     additional_properties,
                     _unparsed,
                 };
