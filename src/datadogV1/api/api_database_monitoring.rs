@@ -176,7 +176,7 @@ impl DatabaseMonitoringAPI {
                 "indexes":["databasequery"],
                 "limit": body.limit,
                 "search": {
-                    "query": format !("{} AND {}", "dbm_type:plan", body.query)
+                    "query": format !("dbm_type:plan {}", body.query)
                 }
             }
         });
@@ -338,7 +338,7 @@ impl DatabaseMonitoringAPI {
                 "indexes":["databasequery"],
                 "limit": body.limit,
                 "search": {
-                    "query": format !("{} AND {}", "dbm_type:activity", body.query)
+                    "query": format !("dbm_type:activity {}", body.query)
                 }
             }
         });
