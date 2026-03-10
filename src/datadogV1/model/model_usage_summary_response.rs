@@ -345,9 +345,6 @@ pub struct UsageSummaryResponse {
     #[deprecated]
     #[serde(rename = "indexed_events_count_agg_sum")]
     pub indexed_events_count_agg_sum: Option<i64>,
-    /// Shows the 99th percentile of all Edge Devices Monitoring devices over all hours in the current month for all organizations.
-    #[serde(rename = "infra_edge_monitoring_devices_top99p_sum")]
-    pub infra_edge_monitoring_devices_top99p_sum: Option<i64>,
     /// Shows the 99th percentile of all distinct infrastructure hosts over all hours in the current month for all organizations.
     #[serde(rename = "infra_host_top99p_sum")]
     pub infra_host_top99p_sum: Option<i64>,
@@ -827,7 +824,6 @@ impl UsageSummaryResponse {
             incident_management_monthly_active_users_hwm_sum: None,
             incident_management_seats_hwm_sum: None,
             indexed_events_count_agg_sum: None,
-            infra_edge_monitoring_devices_top99p_sum: None,
             infra_host_top99p_sum: None,
             ingested_events_bytes_agg_sum: None,
             iot_device_agg_sum: None,
@@ -1608,12 +1604,6 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn indexed_events_count_agg_sum(mut self, value: i64) -> Self {
         self.indexed_events_count_agg_sum = Some(value);
-        self
-    }
-
-    #[allow(deprecated)]
-    pub fn infra_edge_monitoring_devices_top99p_sum(mut self, value: i64) -> Self {
-        self.infra_edge_monitoring_devices_top99p_sum = Some(value);
         self
     }
 
@@ -2499,7 +2489,6 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut incident_management_monthly_active_users_hwm_sum: Option<i64> = None;
                 let mut incident_management_seats_hwm_sum: Option<i64> = None;
                 let mut indexed_events_count_agg_sum: Option<i64> = None;
-                let mut infra_edge_monitoring_devices_top99p_sum: Option<i64> = None;
                 let mut infra_host_top99p_sum: Option<i64> = None;
                 let mut ingested_events_bytes_agg_sum: Option<i64> = None;
                 let mut iot_device_agg_sum: Option<i64> = None;
@@ -3296,12 +3285,6 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             indexed_events_count_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        },
-                        "infra_edge_monitoring_devices_top99p_sum" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            infra_edge_monitoring_devices_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "infra_host_top99p_sum" => {
                             if v.is_null() {
@@ -4113,7 +4096,6 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     incident_management_monthly_active_users_hwm_sum,
                     incident_management_seats_hwm_sum,
                     indexed_events_count_agg_sum,
-                    infra_edge_monitoring_devices_top99p_sum,
                     infra_host_top99p_sum,
                     ingested_events_bytes_agg_sum,
                     iot_device_agg_sum,
