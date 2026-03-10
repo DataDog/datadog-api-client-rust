@@ -55,6 +55,34 @@
         }
       },
       "recorded_at": "Tue, 12 Apr 2022 09:52:05 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/logs/events?page%5Blimit%5D=2&page%5Bcursor%5D=eyJhZnRlciI6IkFRQUFBWUFkTDlKNG1jT2g2QUFBQUFCQldVRmtUQzFPUzBGQlFucExkREpLZFZOYVlrTjNRVUkifQ"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Tue, 12 Apr 2022 09:52:05 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
