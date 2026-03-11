@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Due date synchronization configuration for Jira integration
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationJiraSyncDueDate {
+    /// The Jira field identifier used to store the due date
     #[serde(rename = "jira_field_id")]
     pub jira_field_id: Option<String>,
+    /// The type of synchronization to apply for the due date field
     #[serde(rename = "sync_type")]
     pub sync_type: Option<String>,
     #[serde(flatten)]
