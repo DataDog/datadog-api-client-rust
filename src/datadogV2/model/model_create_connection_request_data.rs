@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object containing the resource type and attributes for creating a new connection.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateConnectionRequestData {
+    /// Attributes defining the data source connection, including join configuration and custom fields.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateConnectionRequestDataAttributes>,
+    /// Unique identifier for the new connection resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Connection id resource type.

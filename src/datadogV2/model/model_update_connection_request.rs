@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request body for updating an existing data source connection by adding, modifying, or removing fields.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateConnectionRequest {
+    /// The data object containing the resource identifier and attributes for updating an existing connection.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::UpdateConnectionRequestData>,
     #[serde(flatten)]

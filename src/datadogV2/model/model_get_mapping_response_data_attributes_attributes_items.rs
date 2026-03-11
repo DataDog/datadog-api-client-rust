@@ -6,20 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Details of a single entity attribute including its mapping configuration and metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMappingResponseDataAttributesAttributesItems {
+    /// The attribute identifier as used in the entity data model.
     #[serde(rename = "attribute")]
     pub attribute: Option<String>,
+    /// Human-readable explanation of what the attribute represents.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// The human-readable label for the attribute shown in the UI.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
+    /// List of group labels used to categorize the attribute.
     #[serde(rename = "groups")]
     pub groups: Option<Vec<String>>,
+    /// Whether this attribute is a custom user-defined attribute rather than a built-in one.
     #[serde(rename = "is_custom")]
     pub is_custom: Option<bool>,
+    /// The data type of the attribute (for example, string or number).
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(flatten)]

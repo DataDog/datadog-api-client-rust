@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The numeric range of a facet attribute, representing the minimum and maximum observed values.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FacetInfoResponseDataAttributesResultRange {
+    /// The maximum observed value for the numeric facet attribute.
     #[serde(rename = "max")]
     pub max: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    /// The minimum observed value for the numeric facet attribute.
     #[serde(rename = "min")]
     pub min: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     #[serde(flatten)]

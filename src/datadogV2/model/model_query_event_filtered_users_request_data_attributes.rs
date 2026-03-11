@@ -6,19 +6,25 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes for filtering users by both user properties and event platform activity.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct QueryEventFilteredUsersRequestDataAttributes {
+    /// Event platform query used to filter users based on their event activity within a specified time window.
     #[serde(rename = "event_query")]
     pub event_query:
         Option<crate::datadogV2::model::QueryEventFilteredUsersRequestDataAttributesEventQuery>,
+    /// Whether to include the total count of matching users in the response.
     #[serde(rename = "include_row_count")]
     pub include_row_count: Option<bool>,
+    /// Maximum number of user records to return in the response.
     #[serde(rename = "limit")]
     pub limit: Option<i64>,
+    /// Filter expression using user attribute conditions to narrow results.
     #[serde(rename = "query")]
     pub query: Option<String>,
+    /// List of user attribute column names to include in the response.
     #[serde(rename = "select_columns")]
     pub select_columns: Option<Vec<String>>,
     #[serde(flatten)]
