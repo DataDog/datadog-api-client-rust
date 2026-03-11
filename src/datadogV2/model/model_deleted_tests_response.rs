@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response containing the list of deleted Synthetic tests.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeletedTestsResponse {
+    /// List of deleted Synthetic test data objects.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::DeletedTestResponseData>>,
     #[serde(flatten)]
