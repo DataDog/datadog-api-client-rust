@@ -421,6 +421,9 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all Network Device Monitoring wireless devices over all hours in the current month for all organizations.
     #[serde(rename = "network_device_wireless_top99p_sum")]
     pub network_device_wireless_top99p_sum: Option<i64>,
+    /// Shows the sum of all Network Path scheduled tests over all hours in the current month for all organizations.
+    #[serde(rename = "network_path_agg_sum")]
+    pub network_path_agg_sum: Option<i64>,
     /// Shows the 99th percentile of all distinct Cloud Network Monitoring hosts (formerly known as Network hosts) over all hours in the current month for all organizations.
     #[serde(rename = "npm_host_top99p_sum")]
     pub npm_host_top99p_sum: Option<i64>,
@@ -849,6 +852,7 @@ impl UsageSummaryResponse {
             ndm_netflow_events_agg_sum: None,
             netflow_indexed_events_count_agg_sum: None,
             network_device_wireless_top99p_sum: None,
+            network_path_agg_sum: None,
             npm_host_top99p_sum: None,
             observability_pipelines_bytes_processed_agg_sum: None,
             oci_host_agg_sum: None,
@@ -1744,6 +1748,12 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn network_path_agg_sum(mut self, value: i64) -> Self {
+        self.network_path_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn npm_host_top99p_sum(mut self, value: i64) -> Self {
         self.npm_host_top99p_sum = Some(value);
         self
@@ -2521,6 +2531,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut ndm_netflow_events_agg_sum: Option<i64> = None;
                 let mut netflow_indexed_events_count_agg_sum: Option<i64> = None;
                 let mut network_device_wireless_top99p_sum: Option<i64> = None;
+                let mut network_path_agg_sum: Option<i64> = None;
                 let mut npm_host_top99p_sum: Option<i64> = None;
                 let mut observability_pipelines_bytes_processed_agg_sum: Option<i64> = None;
                 let mut oci_host_agg_sum: Option<i64> = None;
@@ -3429,6 +3440,12 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             }
                             network_device_wireless_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "network_path_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            network_path_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "npm_host_top99p_sum" => {
                             if v.is_null() {
                                 continue;
@@ -4135,6 +4152,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     ndm_netflow_events_agg_sum,
                     netflow_indexed_events_count_agg_sum,
                     network_device_wireless_top99p_sum,
+                    network_path_agg_sum,
                     npm_host_top99p_sum,
                     observability_pipelines_bytes_processed_agg_sum,
                     oci_host_agg_sum,

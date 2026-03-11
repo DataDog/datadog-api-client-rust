@@ -398,6 +398,9 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all Network Device Monitoring wireless devices over all hours in the current date for all organizations.
     #[serde(rename = "network_device_wireless_top99p")]
     pub network_device_wireless_top99p: Option<i64>,
+    /// Shows the sum of all Network Path scheduled tests over all hours in the current date for all organizations.
+    #[serde(rename = "network_path_sum")]
+    pub network_path_sum: Option<i64>,
     /// Shows the 99th percentile of all distinct Cloud Network Monitoring hosts (formerly known as Network hosts) over all hours in the current date for all organizations.
     #[serde(rename = "npm_host_top99p")]
     pub npm_host_top99p: Option<i64>,
@@ -806,6 +809,7 @@ impl UsageSummaryDate {
             ndm_netflow_events_sum: None,
             netflow_indexed_events_count_sum: None,
             network_device_wireless_top99p: None,
+            network_path_sum: None,
             npm_host_top99p: None,
             observability_pipelines_bytes_processed_sum: None,
             oci_host_sum: None,
@@ -1655,6 +1659,12 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn network_path_sum(mut self, value: i64) -> Self {
+        self.network_path_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn npm_host_top99p(mut self, value: i64) -> Self {
         self.npm_host_top99p = Some(value);
         self
@@ -2379,6 +2389,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut ndm_netflow_events_sum: Option<i64> = None;
                 let mut netflow_indexed_events_count_sum: Option<i64> = None;
                 let mut network_device_wireless_top99p: Option<i64> = None;
+                let mut network_path_sum: Option<i64> = None;
                 let mut npm_host_top99p: Option<i64> = None;
                 let mut observability_pipelines_bytes_processed_sum: Option<i64> = None;
                 let mut oci_host_sum: Option<i64> = None;
@@ -3238,6 +3249,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             network_device_wireless_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "network_path_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            network_path_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "npm_host_top99p" => {
                             if v.is_null() {
                                 continue;
@@ -3913,6 +3930,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     ndm_netflow_events_sum,
                     netflow_indexed_events_count_sum,
                     network_device_wireless_top99p,
+                    network_path_sum,
                     npm_host_top99p,
                     observability_pipelines_bytes_processed_sum,
                     oci_host_sum,
