@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A collection of session identifiers used for bulk add or remove operations on a playlist.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SessionIdArray {
+    /// Array of session identifier data objects.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::SessionIdData>,
     #[serde(flatten)]

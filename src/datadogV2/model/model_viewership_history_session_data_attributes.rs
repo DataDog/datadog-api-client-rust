@@ -6,16 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of a viewership history session entry, capturing when it was last watched and the associated event data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ViewershipHistorySessionDataAttributes {
+    /// Unique identifier of the RUM event associated with the watched session.
     #[serde(rename = "event_id")]
     pub event_id: Option<String>,
+    /// Timestamp when the session was last watched by the user.
     #[serde(rename = "last_watched_at")]
     pub last_watched_at: chrono::DateTime<chrono::Utc>,
+    /// Raw event data associated with the replay session.
     #[serde(rename = "session_event")]
     pub session_event: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    /// Replay track identifier indicating which recording track the session belongs to.
     #[serde(rename = "track")]
     pub track: Option<String>,
     #[serde(flatten)]

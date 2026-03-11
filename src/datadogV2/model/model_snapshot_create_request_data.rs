@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a heatmap snapshot creation request, containing the resource type and attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SnapshotCreateRequestData {
+    /// Attributes for creating a heatmap snapshot, including the view, session, event, and device context.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::SnapshotCreateRequestDataAttributes>,
     /// Snapshots resource type.

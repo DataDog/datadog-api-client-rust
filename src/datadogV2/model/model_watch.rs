@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A single RUM replay session watch resource returned by create operations.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Watch {
+    /// Data object representing a session watch record, including its identifier, type, and attributes.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::WatchData,
     #[serde(flatten)]
