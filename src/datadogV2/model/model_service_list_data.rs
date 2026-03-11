@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A single data item in the service list response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ServiceListData {
+    /// Attributes of a service list entry, containing metadata and a list of service names.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ServiceListDataAttributes>,
+    /// The unique identifier of the service.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Services list resource type.
