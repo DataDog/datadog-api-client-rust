@@ -6,6 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object representing an incident handle in a response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -16,6 +17,7 @@ pub struct IncidentHandleDataResponse {
     /// The ID of the incident handle
     #[serde(rename = "id")]
     pub id: String,
+    /// Relationships associated with an incident handle response, including linked users and incident type.
     #[serde(
         rename = "relationships",
         default,

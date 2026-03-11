@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A component within a component group.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPagesComponentDataAttributesComponentsItems {
+    /// The ID of the component within the group.
     #[serde(rename = "id")]
     pub id: Option<uuid::Uuid>,
+    /// The name of the component within the group.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The zero-indexed position of the component within the group.
     #[serde(rename = "position")]
     pub position: Option<i64>,
     /// The status of the component.
