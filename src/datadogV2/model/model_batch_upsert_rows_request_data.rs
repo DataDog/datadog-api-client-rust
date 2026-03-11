@@ -14,6 +14,7 @@ pub struct BatchUpsertRowsRequestData {
     /// Attributes containing row data values for row creation or update operations.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::BatchUpsertRowsRequestDataAttributes>,
+    /// The primary key value that uniquely identifies the row to create or update.
     #[serde(rename = "id")]
     pub id: String,
     /// Row resource type.
