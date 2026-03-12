@@ -2582,6 +2582,8 @@ pub mod model_dora_deployment_object;
 pub use self::model_dora_deployment_object::DORADeploymentObject;
 pub mod model_dora_deployment_object_attributes;
 pub use self::model_dora_deployment_object_attributes::DORADeploymentObjectAttributes;
+pub mod model_dora_git_info_response;
+pub use self::model_dora_git_info_response::DORAGitInfoResponse;
 pub mod model_dora_deployment_fetch_response;
 pub use self::model_dora_deployment_fetch_response::DORADeploymentFetchResponse;
 pub mod model_dora_deployment_patch_request;
