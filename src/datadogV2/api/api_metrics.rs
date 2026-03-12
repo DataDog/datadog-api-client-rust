@@ -102,6 +102,8 @@ pub struct ListTagConfigurationsOptionalParams {
     pub filter_tags: Option<String>,
     /// (Preview) Filter metrics that are used in dashboards, monitors, notebooks, SLOs.
     pub filter_related_assets: Option<bool>,
+    /// Comma-separated list of additional data to include in the response. Allowed values: `metric_volumes`. When `metric_volumes` is specified, the response includes volume data for each custom metric in the `included` array, with a corresponding `relationships` link on each metric in `data`.
+    pub include: Option<crate::datadogV2::model::MetricVolumesInclude>,
     /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
     /// Default value is 3600 (1 hour), maximum value is 5,184,000 (60 days).
     pub window_seconds: Option<i64>,
@@ -162,6 +164,11 @@ impl ListTagConfigurationsOptionalParams {
     /// (Preview) Filter metrics that are used in dashboards, monitors, notebooks, SLOs.
     pub fn filter_related_assets(mut self, value: bool) -> Self {
         self.filter_related_assets = Some(value);
+        self
+    }
+    /// Comma-separated list of additional data to include in the response. Allowed values: `metric_volumes`. When `metric_volumes` is specified, the response includes volume data for each custom metric in the `included` array, with a corresponding `relationships` link on each metric in `data`.
+    pub fn include(mut self, value: crate::datadogV2::model::MetricVolumesInclude) -> Self {
+        self.include = Some(value);
         self
     }
     /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
@@ -1666,6 +1673,7 @@ impl MetricsAPI {
     /// Optionally, paginate by using the `page[cursor]` and/or `page[size]` query parameters.
     /// To fetch the first page, pass in a query parameter with either a valid `page[size]` or an empty cursor like `page[cursor]=`. To fetch the next page, pass in the `next_cursor` value from the response as the new `page[cursor]` value.
     /// Once the `meta.pagination.next_cursor` value is null, all pages have been retrieved.
+    /// Use the `include` query parameter to fetch additional data with the response. When `include=metric_volumes` is specified, the response includes volume data for each custom metric in the `included` array, with a corresponding `relationships` link on each metric in `data`. Volume data is only returned for custom metrics. All volume values represent a 1-hour timeframe.
     pub async fn list_tag_configurations(
         &self,
         params: ListTagConfigurationsOptionalParams,
@@ -1729,6 +1737,7 @@ impl MetricsAPI {
     /// Optionally, paginate by using the `page[cursor]` and/or `page[size]` query parameters.
     /// To fetch the first page, pass in a query parameter with either a valid `page[size]` or an empty cursor like `page[cursor]=`. To fetch the next page, pass in the `next_cursor` value from the response as the new `page[cursor]` value.
     /// Once the `meta.pagination.next_cursor` value is null, all pages have been retrieved.
+    /// Use the `include` query parameter to fetch additional data with the response. When `include=metric_volumes` is specified, the response includes volume data for each custom metric in the `included` array, with a corresponding `relationships` link on each metric in `data`. Volume data is only returned for custom metrics. All volume values represent a 1-hour timeframe.
     pub async fn list_tag_configurations_with_http_info(
         &self,
         params: ListTagConfigurationsOptionalParams,
@@ -1750,6 +1759,7 @@ impl MetricsAPI {
         let filter_queried_window_seconds = params.filter_queried_window_seconds;
         let filter_tags = params.filter_tags;
         let filter_related_assets = params.filter_related_assets;
+        let include = params.include;
         let window_seconds = params.window_seconds;
         let page_size = params.page_size;
         let page_cursor = params.page_cursor;
@@ -1798,6 +1808,10 @@ impl MetricsAPI {
         if let Some(ref local_query_param) = filter_related_assets {
             local_req_builder = local_req_builder
                 .query(&[("filter[related_assets]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = window_seconds {
             local_req_builder =

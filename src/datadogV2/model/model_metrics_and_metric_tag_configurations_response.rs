@@ -14,6 +14,9 @@ pub struct MetricsAndMetricTagConfigurationsResponse {
     /// Array of metrics and metric tag configurations.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::MetricsAndMetricTagConfigurations>>,
+    /// Array of included metric volume objects. Only present when `include=metric_volumes` is requested.
+    #[serde(rename = "included")]
+    pub included: Option<Vec<crate::datadogV2::model::MetricIngestedIndexedVolume>>,
     /// Pagination links. Only present if pagination query parameters were provided.
     #[serde(rename = "links")]
     pub links: Option<crate::datadogV2::model::MetricsListResponseLinks>,
@@ -31,6 +34,7 @@ impl MetricsAndMetricTagConfigurationsResponse {
     pub fn new() -> MetricsAndMetricTagConfigurationsResponse {
         MetricsAndMetricTagConfigurationsResponse {
             data: None,
+            included: None,
             links: None,
             meta: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -43,6 +47,14 @@ impl MetricsAndMetricTagConfigurationsResponse {
         value: Vec<crate::datadogV2::model::MetricsAndMetricTagConfigurations>,
     ) -> Self {
         self.data = Some(value);
+        self
+    }
+
+    pub fn included(
+        mut self,
+        value: Vec<crate::datadogV2::model::MetricIngestedIndexedVolume>,
+    ) -> Self {
+        self.included = Some(value);
         self
     }
 
@@ -91,6 +103,9 @@ impl<'de> Deserialize<'de> for MetricsAndMetricTagConfigurationsResponse {
                 let mut data: Option<
                     Vec<crate::datadogV2::model::MetricsAndMetricTagConfigurations>,
                 > = None;
+                let mut included: Option<
+                    Vec<crate::datadogV2::model::MetricIngestedIndexedVolume>,
+                > = None;
                 let mut links: Option<crate::datadogV2::model::MetricsListResponseLinks> = None;
                 let mut meta: Option<crate::datadogV2::model::MetricPaginationMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -106,6 +121,12 @@ impl<'de> Deserialize<'de> for MetricsAndMetricTagConfigurationsResponse {
                                 continue;
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "included" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "links" => {
                             if v.is_null() {
@@ -129,6 +150,7 @@ impl<'de> Deserialize<'de> for MetricsAndMetricTagConfigurationsResponse {
 
                 let content = MetricsAndMetricTagConfigurationsResponse {
                     data,
+                    included,
                     links,
                     meta,
                     additional_properties,
