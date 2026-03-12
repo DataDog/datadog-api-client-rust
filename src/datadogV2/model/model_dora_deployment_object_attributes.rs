@@ -24,9 +24,9 @@ pub struct DORADeploymentObjectAttributes {
     /// Unix timestamp when the deployment finished.
     #[serde(rename = "finished_at")]
     pub finished_at: i64,
-    /// Git info for DORA Metrics events.
+    /// Git info returned by DORA Metrics events.
     #[serde(rename = "git")]
-    pub git: Option<crate::datadogV2::model::DORAGitInfo>,
+    pub git: Option<crate::datadogV2::model::DORAGitInfoResponse>,
     /// Service name.
     #[serde(rename = "service")]
     pub service: String,
@@ -76,7 +76,7 @@ impl DORADeploymentObjectAttributes {
         self
     }
 
-    pub fn git(mut self, value: crate::datadogV2::model::DORAGitInfo) -> Self {
+    pub fn git(mut self, value: crate::datadogV2::model::DORAGitInfoResponse) -> Self {
         self.git = Some(value);
         self
     }
@@ -120,7 +120,7 @@ impl<'de> Deserialize<'de> for DORADeploymentObjectAttributes {
                 let mut custom_tags: Option<Option<Vec<String>>> = None;
                 let mut env: Option<String> = None;
                 let mut finished_at: Option<i64> = None;
-                let mut git: Option<crate::datadogV2::model::DORAGitInfo> = None;
+                let mut git: Option<crate::datadogV2::model::DORAGitInfoResponse> = None;
                 let mut service: Option<String> = None;
                 let mut started_at: Option<i64> = None;
                 let mut team: Option<String> = None;
