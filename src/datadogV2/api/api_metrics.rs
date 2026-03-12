@@ -95,14 +95,14 @@ pub struct ListTagConfigurationsOptionalParams {
     /// Must be sent with `filter[queried]` and is only applied when `filter[queried]=true`.
     /// If `filter[queried]=false`, this parameter is ignored and default queried-window behavior applies.
     /// If `filter[queried]` is not provided, sending this parameter returns a 400.
-    /// For example: `GET /api/v2/metrics?filter[queried]=true&filter[queried][window][seconds]=7776000`.
+    /// For example: `GET /api/v2/metrics?filter[queried]=true&filter[queried][window][seconds]=15552000`.
     pub filter_queried_window_seconds: Option<i64>,
     /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
     /// Can only be combined with the filter[queried] filter.
     pub filter_tags: Option<String>,
     /// (Preview) Filter metrics that are used in dashboards, monitors, notebooks, SLOs.
     pub filter_related_assets: Option<bool>,
-    /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
+    /// The number of seconds of look back (from now) to apply to a filter[tag] query.
     /// Default value is 3600 (1 hour), maximum value is 5,184,000 (60 days).
     pub window_seconds: Option<i64>,
     /// Maximum number of results returned.
@@ -148,7 +148,7 @@ impl ListTagConfigurationsOptionalParams {
     /// Must be sent with `filter[queried]` and is only applied when `filter[queried]=true`.
     /// If `filter[queried]=false`, this parameter is ignored and default queried-window behavior applies.
     /// If `filter[queried]` is not provided, sending this parameter returns a 400.
-    /// For example: `GET /api/v2/metrics?filter[queried]=true&filter[queried][window][seconds]=7776000`.
+    /// For example: `GET /api/v2/metrics?filter[queried]=true&filter[queried][window][seconds]=15552000`.
     pub fn filter_queried_window_seconds(mut self, value: i64) -> Self {
         self.filter_queried_window_seconds = Some(value);
         self
@@ -164,7 +164,7 @@ impl ListTagConfigurationsOptionalParams {
         self.filter_related_assets = Some(value);
         self
     }
-    /// The number of seconds of look back (from now) to apply to a filter[tag] or filter[queried] query.
+    /// The number of seconds of look back (from now) to apply to a filter[tag] query.
     /// Default value is 3600 (1 hour), maximum value is 5,184,000 (60 days).
     pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
