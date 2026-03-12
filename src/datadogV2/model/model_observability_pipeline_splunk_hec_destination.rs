@@ -33,6 +33,9 @@ pub struct ObservabilityPipelineSplunkHecDestination {
     /// Optional name of the Splunk index where logs are written.
     #[serde(rename = "index")]
     pub index: Option<String>,
+    /// List of log field names to send as indexed fields to Splunk HEC. Available only when `encoding` is `json`.
+    #[serde(rename = "indexed_fields")]
+    pub indexed_fields: Option<Vec<String>>,
     /// A list of component IDs whose output is used as the `input` for this component.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
@@ -65,6 +68,7 @@ impl ObservabilityPipelineSplunkHecDestination {
             endpoint_url_key: None,
             id,
             index: None,
+            indexed_fields: None,
             inputs,
             sourcetype: None,
             token_key: None,
@@ -102,6 +106,11 @@ impl ObservabilityPipelineSplunkHecDestination {
 
     pub fn index(mut self, value: String) -> Self {
         self.index = Some(value);
+        self
+    }
+
+    pub fn indexed_fields(mut self, value: Vec<String>) -> Self {
+        self.indexed_fields = Some(value);
         self
     }
 
@@ -151,6 +160,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                 let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut index: Option<String> = None;
+                let mut indexed_fields: Option<Vec<String>> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut sourcetype: Option<String> = None;
                 let mut token_key: Option<String> = None;
@@ -216,6 +226,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                             }
                             index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "indexed_fields" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            indexed_fields =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -260,6 +277,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                     endpoint_url_key,
                     id,
                     index,
+                    indexed_fields,
                     inputs,
                     sourcetype,
                     token_key,
