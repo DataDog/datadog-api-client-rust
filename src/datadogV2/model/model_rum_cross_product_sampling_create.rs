@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Configuration for cross-product sampling when creating a retention filter.
+/// The configuration for cross-product retention filters.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumCrossProductSamplingCreate {
-    /// Indicates whether trace cross-product sampling is enabled.
+    /// Whether the cross-product retention filter for APM traces is enabled.
     #[serde(rename = "trace_enabled")]
     pub trace_enabled: Option<bool>,
-    /// The percentage (0-100) of retained sessions with ingested traces whose traces are indexed.
+    /// The sample rate for the APM cross-product retention filter, between 0 and 100.
     #[serde(rename = "trace_sample_rate")]
     pub trace_sample_rate: f64,
     #[serde(flatten)]

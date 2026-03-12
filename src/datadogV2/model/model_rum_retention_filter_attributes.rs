@@ -11,9 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumRetentionFilterAttributes {
-    /// Configuration for additional APM trace data retention for sessions that match this retention filter.
-    /// When a session matches the filter and is retained (based on `sample_rate`), you can configure
-    /// the percentage of retained sessions with ingested traces whose traces are indexed.
+    /// The configuration for cross-product retention filters.
     #[serde(rename = "cross_product_sampling")]
     pub cross_product_sampling: Option<crate::datadogV2::model::RumCrossProductSampling>,
     /// Whether the retention filter is enabled.
