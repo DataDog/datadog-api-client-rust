@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumRetentionFilterUpdateAttributes {
-    /// Configuration for cross-product sampling when updating a retention filter. All fields are optional for partial updates.
+    /// The configuration for cross-product retention filters. All fields are optional for partial updates.
     #[serde(rename = "cross_product_sampling")]
     pub cross_product_sampling: Option<crate::datadogV2::model::RumCrossProductSamplingUpdate>,
     /// Whether the retention filter is enabled.

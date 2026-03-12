@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumRetentionFilterCreateAttributes {
-    /// Configuration for cross-product sampling when creating a retention filter.
+    /// The configuration for cross-product retention filters.
     #[serde(rename = "cross_product_sampling")]
     pub cross_product_sampling: Option<crate::datadogV2::model::RumCrossProductSamplingCreate>,
     /// Whether the retention filter is enabled.
