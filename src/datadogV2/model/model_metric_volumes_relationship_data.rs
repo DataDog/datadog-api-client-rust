@@ -6,20 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object for a single metric tag configuration.
+/// Relationship data for a metric's ingested and indexed volumes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct Metric {
+pub struct MetricVolumesRelationshipData {
     /// The metric name for this resource.
     #[serde(rename = "id")]
-    pub id: Option<String>,
-    /// Relationships to related metric objects.
-    #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::MetricRelationships>,
-    /// The metric resource type.
+    pub id: String,
+    /// The metric ingested and indexed volume type.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::MetricType>,
+    pub type_: crate::datadogV2::model::MetricIngestedIndexedVolumeType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,30 +24,17 @@ pub struct Metric {
     pub(crate) _unparsed: bool,
 }
 
-impl Metric {
-    pub fn new() -> Metric {
-        Metric {
-            id: None,
-            relationships: None,
-            type_: None,
+impl MetricVolumesRelationshipData {
+    pub fn new(
+        id: String,
+        type_: crate::datadogV2::model::MetricIngestedIndexedVolumeType,
+    ) -> MetricVolumesRelationshipData {
+        MetricVolumesRelationshipData {
+            id,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
-    pub fn relationships(mut self, value: crate::datadogV2::model::MetricRelationships) -> Self {
-        self.relationships = Some(value);
-        self
-    }
-
-    pub fn type_(mut self, value: crate::datadogV2::model::MetricType) -> Self {
-        self.type_ = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -62,20 +46,14 @@ impl Metric {
     }
 }
 
-impl Default for Metric {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for Metric {
+impl<'de> Deserialize<'de> for MetricVolumesRelationshipData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MetricVisitor;
-        impl<'a> Visitor<'a> for MetricVisitor {
-            type Value = Metric;
+        struct MetricVolumesRelationshipDataVisitor;
+        impl<'a> Visitor<'a> for MetricVolumesRelationshipDataVisitor {
+            type Value = MetricVolumesRelationshipData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -86,8 +64,8 @@ impl<'de> Deserialize<'de> for Metric {
                 M: MapAccess<'a>,
             {
                 let mut id: Option<String> = None;
-                let mut relationships: Option<crate::datadogV2::model::MetricRelationships> = None;
-                let mut type_: Option<crate::datadogV2::model::MetricType> = None;
+                let mut type_: Option<crate::datadogV2::model::MetricIngestedIndexedVolumeType> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -97,28 +75,15 @@ impl<'de> Deserialize<'de> for Metric {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "relationships" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            relationships =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::MetricType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::MetricIngestedIndexedVolumeType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
@@ -130,10 +95,11 @@ impl<'de> Deserialize<'de> for Metric {
                         }
                     }
                 }
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = Metric {
+                let content = MetricVolumesRelationshipData {
                     id,
-                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -143,6 +109,6 @@ impl<'de> Deserialize<'de> for Metric {
             }
         }
 
-        deserializer.deserialize_any(MetricVisitor)
+        deserializer.deserialize_any(MetricVolumesRelationshipDataVisitor)
     }
 }
