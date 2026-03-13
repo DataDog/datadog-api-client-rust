@@ -29,6 +29,9 @@ pub struct PermissionAttributes {
     /// Name of the permission.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// List of alias names for the permission.
+    #[serde(rename = "name_aliases")]
+    pub name_aliases: Option<Vec<String>>,
     /// Whether or not the permission is restricted.
     #[serde(rename = "restricted")]
     pub restricted: Option<bool>,
@@ -48,6 +51,7 @@ impl PermissionAttributes {
             display_type: None,
             group_name: None,
             name: None,
+            name_aliases: None,
             restricted: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -81,6 +85,11 @@ impl PermissionAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn name_aliases(mut self, value: Vec<String>) -> Self {
+        self.name_aliases = Some(value);
         self
     }
 
@@ -127,6 +136,7 @@ impl<'de> Deserialize<'de> for PermissionAttributes {
                 let mut display_type: Option<String> = None;
                 let mut group_name: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut name_aliases: Option<Vec<String>> = None;
                 let mut restricted: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -175,6 +185,13 @@ impl<'de> Deserialize<'de> for PermissionAttributes {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "name_aliases" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name_aliases =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "restricted" => {
                             if v.is_null() {
                                 continue;
@@ -196,6 +213,7 @@ impl<'de> Deserialize<'de> for PermissionAttributes {
                     display_type,
                     group_name,
                     name,
+                    name_aliases,
                     restricted,
                     additional_properties,
                     _unparsed,
