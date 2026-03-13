@@ -2,12 +2,12 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_reference_tables::ReferenceTablesAPI;
 use datadog_api_client::datadogV2::model::BatchDeleteRowsRequestArray;
-use datadog_api_client::datadogV2::model::BatchDeleteRowsRequestData;
 use datadog_api_client::datadogV2::model::TableRowResourceDataType;
+use datadog_api_client::datadogV2::model::TableRowResourceIdentifier;
 
 #[tokio::main]
 async fn main() {
-    let body = BatchDeleteRowsRequestArray::new(vec![BatchDeleteRowsRequestData::new(
+    let body = BatchDeleteRowsRequestArray::new(vec![TableRowResourceIdentifier::new(
         "primary_key_value".to_string(),
         TableRowResourceDataType::ROW,
     )]);

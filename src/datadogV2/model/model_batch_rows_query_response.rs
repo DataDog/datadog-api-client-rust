@@ -6,13 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The request body for deleting multiple rows from a reference table.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct BatchDeleteRowsRequestArray {
+pub struct BatchRowsQueryResponse {
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::TableRowResourceIdentifier>,
+    pub data: Option<crate::datadogV2::model::BatchRowsQueryResponseData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -20,15 +19,18 @@ pub struct BatchDeleteRowsRequestArray {
     pub(crate) _unparsed: bool,
 }
 
-impl BatchDeleteRowsRequestArray {
-    pub fn new(
-        data: Vec<crate::datadogV2::model::TableRowResourceIdentifier>,
-    ) -> BatchDeleteRowsRequestArray {
-        BatchDeleteRowsRequestArray {
-            data,
+impl BatchRowsQueryResponse {
+    pub fn new() -> BatchRowsQueryResponse {
+        BatchRowsQueryResponse {
+            data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn data(mut self, value: crate::datadogV2::model::BatchRowsQueryResponseData) -> Self {
+        self.data = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -40,14 +42,20 @@ impl BatchDeleteRowsRequestArray {
     }
 }
 
-impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
+impl Default for BatchRowsQueryResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for BatchRowsQueryResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BatchDeleteRowsRequestArrayVisitor;
-        impl<'a> Visitor<'a> for BatchDeleteRowsRequestArrayVisitor {
-            type Value = BatchDeleteRowsRequestArray;
+        struct BatchRowsQueryResponseVisitor;
+        impl<'a> Visitor<'a> for BatchRowsQueryResponseVisitor {
+            type Value = BatchRowsQueryResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -57,8 +65,7 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::TableRowResourceIdentifier>> =
-                    None;
+                let mut data: Option<crate::datadogV2::model::BatchRowsQueryResponseData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -68,6 +75,9 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -77,9 +87,8 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = BatchDeleteRowsRequestArray {
+                let content = BatchRowsQueryResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -89,6 +98,6 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
             }
         }
 
-        deserializer.deserialize_any(BatchDeleteRowsRequestArrayVisitor)
+        deserializer.deserialize_any(BatchRowsQueryResponseVisitor)
     }
 }
