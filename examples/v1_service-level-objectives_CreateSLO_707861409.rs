@@ -1,10 +1,10 @@
-// Create a new metric SLO object using sli_specification returns "OK" response
+// Create a new metric SLO object using bad events formula returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_service_level_objectives::ServiceLevelObjectivesAPI;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
 use datadog_api_client::datadogV1::model::SLOCountDefinition;
-use datadog_api_client::datadogV1::model::SLOCountDefinitionWithTotalEventsFormula;
+use datadog_api_client::datadogV1::model::SLOCountDefinitionWithBadEventsFormula;
 use datadog_api_client::datadogV1::model::SLOCountSpec;
 use datadog_api_client::datadogV1::model::SLODataSourceQueryDefinition;
 use datadog_api_client::datadogV1::model::SLOFormula;
@@ -26,8 +26,9 @@ async fn main() {
     )
     .description(Some("Metric SLO using sli_specification".to_string()))
     .sli_specification(SLOSliSpec::SLOCountSpec(Box::new(SLOCountSpec::new(
-        SLOCountDefinition::SLOCountDefinitionWithTotalEventsFormula(Box::new(
-            SLOCountDefinitionWithTotalEventsFormula::new(
+        SLOCountDefinition::SLOCountDefinitionWithBadEventsFormula(Box::new(
+            SLOCountDefinitionWithBadEventsFormula::new(
+                SLOFormula::new("query2".to_string()),
                 SLOFormula::new("query1 - query2".to_string()),
                 vec![
                     SLODataSourceQueryDefinition::FormulaAndFunctionMetricQueryDefinition(
@@ -45,7 +46,6 @@ async fn main() {
                         )),
                     ),
                 ],
-                SLOFormula::new("query1".to_string()),
             ),
         )),
     ))))
