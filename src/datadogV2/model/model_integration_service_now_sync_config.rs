@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Synchronization configuration for ServiceNow integration
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationServiceNowSyncConfig {
+    /// Whether ServiceNow synchronization is enabled
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// Field-level synchronization properties for ServiceNow integration
     #[serde(rename = "properties")]
     pub properties: Option<crate::datadogV2::model::IntegrationServiceNowSyncConfig139772721534496>,
     #[serde(flatten)]

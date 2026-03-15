@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Sort configuration for a project board column
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectColumnsConfigColumnsItemsSort {
+    /// Whether to sort in ascending order
     #[serde(rename = "ascending")]
     pub ascending: Option<bool>,
+    /// The sort priority order for this column
     #[serde(rename = "priority")]
     pub priority: Option<i64>,
     #[serde(flatten)]

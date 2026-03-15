@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The target recipient for an On-Call escalation query
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationOnCallEscalationQueriesItemsTarget {
+    /// Whether to use dynamic team paging for escalation
     #[serde(rename = "dynamic_team_paging")]
     pub dynamic_team_paging: Option<bool>,
+    /// The identifier of the team to escalate to
     #[serde(rename = "team_id")]
     pub team_id: Option<String>,
+    /// The identifier of the user to escalate to
     #[serde(rename = "user_id")]
     pub user_id: Option<String>,
     #[serde(flatten)]

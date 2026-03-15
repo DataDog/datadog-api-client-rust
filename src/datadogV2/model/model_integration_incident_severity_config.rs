@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Severity configuration for mapping incident priorities to case priorities
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationIncidentSeverityConfig {
+    /// Mapping of incident severity values to case priority values
     #[serde(rename = "priority_mapping")]
     pub priority_mapping: Option<std::collections::BTreeMap<String, String>>,
     #[serde(flatten)]

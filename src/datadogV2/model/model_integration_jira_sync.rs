@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Synchronization configuration for Jira integration
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationJiraSync {
+    /// Whether Jira field synchronization is enabled
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// Field synchronization properties for Jira integration
     #[serde(rename = "properties")]
     pub properties: Option<crate::datadogV2::model::IntegrationJiraSyncProperties>,
     #[serde(flatten)]

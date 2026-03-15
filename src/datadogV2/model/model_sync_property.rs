@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyncProperty {
+    /// The direction and type of synchronization for this property
     #[serde(rename = "sync_type")]
     pub sync_type: Option<String>,
     #[serde(flatten)]

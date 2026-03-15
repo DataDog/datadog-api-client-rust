@@ -6,6 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Field-level synchronization properties for ServiceNow integration
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -13,6 +14,7 @@ pub struct IntegrationServiceNowSyncConfig139772721534496 {
     /// Sync property configuration
     #[serde(rename = "comments")]
     pub comments: Option<crate::datadogV2::model::SyncProperty>,
+    /// Priority synchronization configuration for ServiceNow integration
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::IntegrationServiceNowSyncConfigPriority>,
     /// Sync property with mapping configuration

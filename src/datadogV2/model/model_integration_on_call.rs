@@ -17,6 +17,7 @@ pub struct IntegrationOnCall {
     /// Whether On-Call integration is enabled
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// List of escalation queries for routing cases to on-call responders
     #[serde(rename = "escalation_queries")]
     pub escalation_queries:
         Option<Vec<crate::datadogV2::model::IntegrationOnCallEscalationQueriesItems>>,
