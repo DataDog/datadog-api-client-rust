@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object containing the resource type and attributes for querying event-filtered users.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct QueryEventFilteredUsersRequestData {
+    /// Attributes for filtering users by both user properties and event platform activity.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::QueryEventFilteredUsersRequestDataAttributes>,
+    /// Unique identifier for the query event filtered users request resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Query event filtered users request resource type.

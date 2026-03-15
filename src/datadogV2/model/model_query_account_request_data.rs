@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object containing the resource type and attributes for querying accounts.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct QueryAccountRequestData {
+    /// Attributes for filtering and shaping the account query results.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::QueryAccountRequestDataAttributes>,
+    /// Unique identifier for the query account request resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Query account request resource type.

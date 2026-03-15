@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Query-based search configuration for filtering the audience context when retrieving facet values.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FacetInfoRequestDataAttributesSearch {
+    /// The filter expression used to scope the audience from which facet values are retrieved.
     #[serde(rename = "query")]
     pub query: Option<String>,
     #[serde(flatten)]

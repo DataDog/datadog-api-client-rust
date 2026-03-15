@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response containing the entity attribute mapping configuration including all available attributes and their properties.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMappingResponse {
+    /// The data object containing the resource type and attributes for the get mapping response.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::GetMappingResponseData>,
     #[serde(flatten)]

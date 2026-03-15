@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object containing the resource type and attributes for the facet info request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FacetInfoRequestData {
+    /// Attributes for the facet info request, specifying which facet to query and optional filters to apply.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::FacetInfoRequestDataAttributes>,
+    /// Unique identifier for the facet info request resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Users facet info request resource type.

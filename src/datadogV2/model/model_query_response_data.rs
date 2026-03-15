@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object containing the resource type and attributes of the query response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct QueryResponseData {
+    /// Attributes of the query response, containing the matched records and total count.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::QueryResponseDataAttributes>,
+    /// Unique identifier for the query response resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Query response resource type.
