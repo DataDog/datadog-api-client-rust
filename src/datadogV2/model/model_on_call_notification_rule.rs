@@ -14,6 +14,7 @@ pub struct OnCallNotificationRule {
     /// Data for an on-call notification rule
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::OnCallNotificationRuleData,
+    /// Array of related resources included in the response.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::OnCallNotificationRulesIncluded>>,
     #[serde(flatten)]
