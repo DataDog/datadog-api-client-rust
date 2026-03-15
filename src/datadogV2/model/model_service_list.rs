@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The response body for the service list endpoint.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ServiceList {
+    /// A single data item in the service list response.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::ServiceListData>,
     #[serde(flatten)]
