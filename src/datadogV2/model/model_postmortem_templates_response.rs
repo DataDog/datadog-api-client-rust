@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response containing a list of postmortem templates.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PostmortemTemplatesResponse {
+    /// An array of postmortem template data objects.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::PostmortemTemplateDataResponse>,
     #[serde(flatten)]

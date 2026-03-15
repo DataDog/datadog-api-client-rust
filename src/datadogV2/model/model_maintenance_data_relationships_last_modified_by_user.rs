@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The Datadog user who last modified the maintenance.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MaintenanceDataRelationshipsLastModifiedByUser {
+    /// The data object identifying the Datadog user who last modified the maintenance.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::MaintenanceDataRelationshipsLastModifiedByUserData,
     #[serde(flatten)]

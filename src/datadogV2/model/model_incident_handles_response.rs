@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response payload for a list of global incident handles, including handle data and related resources.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentHandlesResponse {
+    /// Array of incident handle data objects returned in a list response.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::IncidentHandleDataResponse>,
     /// Included related resources

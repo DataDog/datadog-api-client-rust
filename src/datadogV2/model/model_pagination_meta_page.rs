@@ -44,6 +44,7 @@ pub struct PaginationMetaPage {
     /// Integer representing the total number of elements available.
     #[serde(rename = "total", default, with = "::serde_with::rust::double_option")]
     pub total: Option<Option<i64>>,
+    /// The pagination type used for offset-based pagination.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::PaginationMetaPageType>,
     #[serde(flatten)]

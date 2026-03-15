@@ -14,6 +14,7 @@ pub struct Attachment {
     /// Attachment data from a response.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::AttachmentData>,
+    /// A list of related objects included in the response.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::AttachmentIncluded>>,
     #[serde(flatten)]

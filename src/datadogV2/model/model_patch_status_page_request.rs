@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request object for updating a status page.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PatchStatusPageRequest {
+    /// The data object for updating a status page.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::PatchStatusPageRequestData>,
     #[serde(flatten)]

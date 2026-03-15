@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPagesComponentGroupRelationshipsStatusPage {
+    /// The data object identifying the status page the component group belongs to.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::StatusPagesComponentGroupRelationshipsStatusPageData,
     #[serde(flatten)]

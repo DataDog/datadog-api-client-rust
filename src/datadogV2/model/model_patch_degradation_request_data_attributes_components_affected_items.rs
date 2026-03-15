@@ -6,6 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A component affected by a degradation.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -13,6 +14,7 @@ pub struct PatchDegradationRequestDataAttributesComponentsAffectedItems {
     /// The ID of the component. Must be a component of type `component`.
     #[serde(rename = "id")]
     pub id: uuid::Uuid,
+    /// The name of the component.
     #[serde(rename = "name")]
     pub name: Option<String>,
     /// The status of the component.

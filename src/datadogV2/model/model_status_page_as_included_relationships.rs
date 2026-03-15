@@ -11,9 +11,11 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPageAsIncludedRelationships {
+    /// The Datadog user who created the status page.
     #[serde(rename = "created_by_user")]
     pub created_by_user:
         Option<crate::datadogV2::model::StatusPageAsIncludedRelationshipsCreatedByUser>,
+    /// The Datadog user who last modified the status page.
     #[serde(rename = "last_modified_by_user")]
     pub last_modified_by_user:
         Option<crate::datadogV2::model::StatusPageAsIncludedRelationshipsLastModifiedByUser>,
