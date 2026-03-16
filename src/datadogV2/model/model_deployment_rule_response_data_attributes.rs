@@ -26,9 +26,9 @@ pub struct DeploymentRuleResponseDataAttributes {
     /// The name of the deployment rule.
     #[serde(rename = "name")]
     pub name: String,
-    /// Options for deployment rule response representing either faulty deployment detection or monitor options.
+    /// Options returned in deployment rule responses representing either faulty deployment detection or monitor options. Faulty deployment detection responses always include `excluded_resources`, making the two variants unambiguous.
     #[serde(rename = "options")]
-    pub options: crate::datadogV2::model::DeploymentRulesOptions,
+    pub options: crate::datadogV2::model::DeploymentRulesOptionsResponse,
     /// The type of the deployment rule.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::DeploymentRuleResponseDataAttributesType,
@@ -52,7 +52,7 @@ impl DeploymentRuleResponseDataAttributes {
         dry_run: bool,
         gate_id: String,
         name: String,
-        options: crate::datadogV2::model::DeploymentRulesOptions,
+        options: crate::datadogV2::model::DeploymentRulesOptionsResponse,
         type_: crate::datadogV2::model::DeploymentRuleResponseDataAttributesType,
     ) -> DeploymentRuleResponseDataAttributes {
         DeploymentRuleResponseDataAttributes {
@@ -116,7 +116,8 @@ impl<'de> Deserialize<'de> for DeploymentRuleResponseDataAttributes {
                 let mut dry_run: Option<bool> = None;
                 let mut gate_id: Option<String> = None;
                 let mut name: Option<String> = None;
-                let mut options: Option<crate::datadogV2::model::DeploymentRulesOptions> = None;
+                let mut options: Option<crate::datadogV2::model::DeploymentRulesOptionsResponse> =
+                    None;
                 let mut type_: Option<
                     crate::datadogV2::model::DeploymentRuleResponseDataAttributesType,
                 > = None;
@@ -151,7 +152,7 @@ impl<'de> Deserialize<'de> for DeploymentRuleResponseDataAttributes {
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _options) = options {
                                 match _options {
-                                    crate::datadogV2::model::DeploymentRulesOptions::UnparsedObject(_options) => {
+                                    crate::datadogV2::model::DeploymentRulesOptionsResponse::UnparsedObject(_options) => {
                                         _unparsed = true;
                                     },
                                     _ => {}

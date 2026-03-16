@@ -17,7 +17,7 @@ pub struct CreateDeploymentRuleParamsDataAttributes {
     /// The name of the deployment rule.
     #[serde(rename = "name")]
     pub name: String,
-    /// Options for deployment rule response representing either faulty deployment detection or monitor options.
+    /// Options for deployment rule requests representing either faulty deployment detection or monitor options.
     #[serde(rename = "options")]
     pub options: crate::datadogV2::model::DeploymentRulesOptions,
     /// The type of the deployment rule (faulty_deployment_detection or monitor).
