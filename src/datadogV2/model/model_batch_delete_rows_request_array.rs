@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BatchDeleteRowsRequestArray {
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::TableRowResourceIdentifier>,
+    pub data: Vec<crate::datadogV2::model::BatchDeleteRowsRequestData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,7 +22,7 @@ pub struct BatchDeleteRowsRequestArray {
 
 impl BatchDeleteRowsRequestArray {
     pub fn new(
-        data: Vec<crate::datadogV2::model::TableRowResourceIdentifier>,
+        data: Vec<crate::datadogV2::model::BatchDeleteRowsRequestData>,
     ) -> BatchDeleteRowsRequestArray {
         BatchDeleteRowsRequestArray {
             data,
@@ -57,7 +57,7 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::TableRowResourceIdentifier>> =
+                let mut data: Option<Vec<crate::datadogV2::model::BatchDeleteRowsRequestData>> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,

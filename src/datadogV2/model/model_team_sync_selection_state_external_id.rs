@@ -6,17 +6,22 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The external identifier for a team or organization in the source platform.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct BatchRowsQueryResponseData {
-    #[serde(rename = "id")]
-    pub id: Option<String>,
-    #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::BatchRowsQueryResponseDataRelationships>,
-    /// Resource type identifier for batch queries of reference table rows.
+pub struct TeamSyncSelectionStateExternalId {
+    /// The type of external identifier for the selection state item.
+    /// For GitHub synchronization, the allowed values are `team` and
+    /// `organization`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::BatchRowsQueryDataType,
+    pub type_: crate::datadogV2::model::TeamSyncSelectionStateExternalIdType,
+    /// The external identifier value from the source
+    /// platform. For GitHub, this is the string
+    /// representation of a GitHub organization ID or team
+    /// ID.
+    #[serde(rename = "value")]
+    pub value: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,30 +29,17 @@ pub struct BatchRowsQueryResponseData {
     pub(crate) _unparsed: bool,
 }
 
-impl BatchRowsQueryResponseData {
+impl TeamSyncSelectionStateExternalId {
     pub fn new(
-        type_: crate::datadogV2::model::BatchRowsQueryDataType,
-    ) -> BatchRowsQueryResponseData {
-        BatchRowsQueryResponseData {
-            id: None,
-            relationships: None,
+        type_: crate::datadogV2::model::TeamSyncSelectionStateExternalIdType,
+        value: String,
+    ) -> TeamSyncSelectionStateExternalId {
+        TeamSyncSelectionStateExternalId {
             type_,
+            value,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
-    pub fn relationships(
-        mut self,
-        value: crate::datadogV2::model::BatchRowsQueryResponseDataRelationships,
-    ) -> Self {
-        self.relationships = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -59,14 +51,14 @@ impl BatchRowsQueryResponseData {
     }
 }
 
-impl<'de> Deserialize<'de> for BatchRowsQueryResponseData {
+impl<'de> Deserialize<'de> for TeamSyncSelectionStateExternalId {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BatchRowsQueryResponseDataVisitor;
-        impl<'a> Visitor<'a> for BatchRowsQueryResponseDataVisitor {
-            type Value = BatchRowsQueryResponseData;
+        struct TeamSyncSelectionStateExternalIdVisitor;
+        impl<'a> Visitor<'a> for TeamSyncSelectionStateExternalIdVisitor {
+            type Value = TeamSyncSelectionStateExternalId;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,11 +68,10 @@ impl<'de> Deserialize<'de> for BatchRowsQueryResponseData {
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<String> = None;
-                let mut relationships: Option<
-                    crate::datadogV2::model::BatchRowsQueryResponseDataRelationships,
+                let mut type_: Option<
+                    crate::datadogV2::model::TeamSyncSelectionStateExternalIdType,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::BatchRowsQueryDataType> = None;
+                let mut value: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,29 +80,19 @@ impl<'de> Deserialize<'de> for BatchRowsQueryResponseData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "relationships" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            relationships =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::BatchRowsQueryDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::TeamSyncSelectionStateExternalIdType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
                                 }
                             }
+                        }
+                        "value" => {
+                            value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -121,11 +102,11 @@ impl<'de> Deserialize<'de> for BatchRowsQueryResponseData {
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
-                let content = BatchRowsQueryResponseData {
-                    id,
-                    relationships,
+                let content = TeamSyncSelectionStateExternalId {
                     type_,
+                    value,
                     additional_properties,
                     _unparsed,
                 };
@@ -134,6 +115,6 @@ impl<'de> Deserialize<'de> for BatchRowsQueryResponseData {
             }
         }
 
-        deserializer.deserialize_any(BatchRowsQueryResponseDataVisitor)
+        deserializer.deserialize_any(TeamSyncSelectionStateExternalIdVisitor)
     }
 }

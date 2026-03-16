@@ -4573,9 +4573,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.ListConnections".into(), test_v2_list_connections);
     world
         .function_mappings
-        .insert("v2.BatchRowsQuery".into(), test_v2_batch_rows_query);
-    world
-        .function_mappings
         .insert("v2.ListTables".into(), test_v2_list_tables);
     world.function_mappings.insert(
         "v2.CreateReferenceTable".into(),
@@ -34664,31 +34661,6 @@ fn test_v2_list_connections(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .expect("api instance not found");
     let entity = serde_json::from_value(_parameters.get("entity").unwrap().clone()).unwrap();
     let response = match block_on(api.list_connections_with_http_info(entity)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_batch_rows_query(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_reference_tables
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.batch_rows_query_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
