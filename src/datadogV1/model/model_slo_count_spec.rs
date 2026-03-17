@@ -11,8 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SLOCountSpec {
-    /// A count-based (metric) SLI specification, composed of three parts: the good events formula, the total events formula,
-    /// and the underlying queries.
+    /// A count-based (metric) SLI specification, composed of three parts: the good events formula,
+    /// the bad or total events formula, and the underlying queries.
+    /// Exactly one of `total_events_formula` or `bad_events_formula` must be provided.
     #[serde(rename = "count")]
     pub count: crate::datadogV1::model::SLOCountDefinition,
     #[serde(skip)]
@@ -53,6 +54,16 @@ impl<'de> Deserialize<'de> for SLOCountSpec {
                     match k.as_str() {
                         "count" => {
                             count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _count) = count {
+                                match _count {
+                                    crate::datadogV1::model::SLOCountDefinition::UnparsedObject(
+                                        _count,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             return Err(serde::de::Error::custom(
