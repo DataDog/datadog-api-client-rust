@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseManagementProject {
+    /// Data object representing a case management project.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseManagementProjectData,
     #[serde(flatten)]

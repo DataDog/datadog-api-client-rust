@@ -17,6 +17,7 @@ pub struct FindingCaseResponseDataAttributes {
     /// Relationship to user.
     #[serde(rename = "assigned_to")]
     pub assigned_to: Option<crate::datadogV2::model::RelationshipToUser>,
+    /// Custom attributes associated with the case as key-value pairs where values are string arrays.
     #[serde(rename = "attributes")]
     pub attributes: Option<std::collections::BTreeMap<String, Vec<String>>>,
     /// Timestamp of when the case was closed.
