@@ -21,9 +21,9 @@ pub struct MonitorFormulaAndFunctionAggregateFilteredQueryDefinition {
     /// Data source for aggregate filtered queries.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilteredDataSource,
-    /// Filter query for aggregate filtered queries. Can be an events query or a reference table query.
+    /// Sub-query for aggregate composite queries (augmented or filtered). Can be an events query or a reference table query.
     #[serde(rename = "filter_query")]
-    pub filter_query: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilterQuery,
+    pub filter_query: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateSubQuery,
     /// Filter conditions for the query.
     #[serde(rename = "filters")]
     pub filters: Vec<crate::datadogV1::model::MonitorFormulaAndFunctionAggregateQueryFilter>,
@@ -42,7 +42,7 @@ impl MonitorFormulaAndFunctionAggregateFilteredQueryDefinition {
     pub fn new(
         base_query: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateBaseQuery,
         data_source: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilteredDataSource,
-        filter_query: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilterQuery,
+        filter_query: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateSubQuery,
         filters: Vec<crate::datadogV1::model::MonitorFormulaAndFunctionAggregateQueryFilter>,
     ) -> MonitorFormulaAndFunctionAggregateFilteredQueryDefinition {
         MonitorFormulaAndFunctionAggregateFilteredQueryDefinition {
@@ -104,7 +104,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionAggregateFilteredQueryDe
                     crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilteredDataSource,
                 > = None;
                 let mut filter_query: Option<
-                    crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilterQuery,
+                    crate::datadogV1::model::MonitorFormulaAndFunctionAggregateSubQuery,
                 > = None;
                 let mut filters: Option<
                     Vec<crate::datadogV1::model::MonitorFormulaAndFunctionAggregateQueryFilter>,
@@ -151,7 +151,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionAggregateFilteredQueryDe
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _filter_query) = filter_query {
                                 match _filter_query {
-                                    crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilterQuery::UnparsedObject(_filter_query) => {
+                                    crate::datadogV1::model::MonitorFormulaAndFunctionAggregateSubQuery::UnparsedObject(_filter_query) => {
                                         _unparsed = true;
                                     },
                                     _ => {}

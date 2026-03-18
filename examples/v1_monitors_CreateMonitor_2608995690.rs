@@ -2,12 +2,12 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV1::model::Monitor;
-use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentQuery;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentedDataSource;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateBaseQuery;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateQueryJoinCondition;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateQueryJoinType;
+use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateSubQuery;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionEventAggregation;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinitionCompute;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionEventQueryGroupBy;
@@ -36,7 +36,7 @@ async fn main() {
                             ::MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition(
                                 Box::new(
                                     MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition::new(
-                                        MonitorFormulaAndFunctionAggregateAugmentQuery
+                                        MonitorFormulaAndFunctionAggregateSubQuery
                                         ::MonitorFormulaAndFunctionReferenceTableQueryDefinition(
                                             Box::new(
                                                 MonitorFormulaAndFunctionReferenceTableQueryDefinition::new(

@@ -3,10 +3,10 @@ use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV1::model::Monitor;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateBaseQuery;
-use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateFilterQuery;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateFilteredDataSource;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateFilteredQueryDefinition;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateQueryFilter;
+use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionAggregateSubQuery;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionMetricsDataSource;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionMetricsQueryDefinition;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionQueryDefinition;
@@ -42,7 +42,7 @@ async fn main() {
                                             ),
                                         ),
                                         MonitorFormulaAndFunctionAggregateFilteredDataSource::AGGREGATE_FILTERED_QUERY,
-                                        MonitorFormulaAndFunctionAggregateFilterQuery
+                                        MonitorFormulaAndFunctionAggregateSubQuery
                                         ::MonitorFormulaAndFunctionReferenceTableQueryDefinition(
                                             Box::new(
                                                 MonitorFormulaAndFunctionReferenceTableQueryDefinition::new(

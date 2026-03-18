@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition {
-    /// Augment query for aggregate augmented queries. Can be an events query or a reference table query.
+    /// Sub-query for aggregate composite queries (augmented or filtered). Can be an events query or a reference table query.
     #[serde(rename = "augment_query")]
-    pub augment_query: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentQuery,
+    pub augment_query: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateSubQuery,
     /// Base query for aggregate queries. Can be an events query or a metrics query.
     #[serde(rename = "base_query")]
     pub base_query: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateBaseQuery,
@@ -40,7 +40,7 @@ pub struct MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition {
 
 impl MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition {
     pub fn new(
-        augment_query: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentQuery,
+        augment_query: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateSubQuery,
         base_query: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateBaseQuery,
         compute: Vec<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinitionCompute>,
         data_source: crate::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentedDataSource,
@@ -83,7 +83,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionAggregateAugmentedQueryD
                 M: MapAccess<'a>,
             {
                 let mut augment_query: Option<
-                    crate::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentQuery,
+                    crate::datadogV1::model::MonitorFormulaAndFunctionAggregateSubQuery,
                 > = None;
                 let mut base_query: Option<
                     crate::datadogV1::model::MonitorFormulaAndFunctionAggregateBaseQuery,
@@ -108,7 +108,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionAggregateAugmentedQueryD
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _augment_query) = augment_query {
                                 match _augment_query {
-                                    crate::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentQuery::UnparsedObject(_augment_query) => {
+                                    crate::datadogV1::model::MonitorFormulaAndFunctionAggregateSubQuery::UnparsedObject(_augment_query) => {
                                         _unparsed = true;
                                     },
                                     _ => {}

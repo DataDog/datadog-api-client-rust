@@ -3,11 +3,11 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// Filter query for aggregate filtered queries. Can be an events query or a reference table query.
+/// Sub-query for aggregate composite queries (augmented or filtered). Can be an events query or a reference table query.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
-pub enum MonitorFormulaAndFunctionAggregateFilterQuery {
+pub enum MonitorFormulaAndFunctionAggregateSubQuery {
     MonitorFormulaAndFunctionEventQueryDefinition(
         Box<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinition>,
     ),
@@ -17,7 +17,7 @@ pub enum MonitorFormulaAndFunctionAggregateFilterQuery {
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionAggregateFilterQuery {
+impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionAggregateSubQuery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
@@ -28,7 +28,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionAggregateFilterQuery {
         >(value.clone())
         {
             if !_v._unparsed {
-                return Ok(MonitorFormulaAndFunctionAggregateFilterQuery::MonitorFormulaAndFunctionEventQueryDefinition(_v));
+                return Ok(MonitorFormulaAndFunctionAggregateSubQuery::MonitorFormulaAndFunctionEventQueryDefinition(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
@@ -36,14 +36,12 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionAggregateFilterQuery {
         >(value.clone())
         {
             if !_v._unparsed {
-                return Ok(MonitorFormulaAndFunctionAggregateFilterQuery::MonitorFormulaAndFunctionReferenceTableQueryDefinition(_v));
+                return Ok(MonitorFormulaAndFunctionAggregateSubQuery::MonitorFormulaAndFunctionReferenceTableQueryDefinition(_v));
             }
         }
 
-        return Ok(
-            MonitorFormulaAndFunctionAggregateFilterQuery::UnparsedObject(
-                crate::datadog::UnparsedObject { value },
-            ),
-        );
+        return Ok(MonitorFormulaAndFunctionAggregateSubQuery::UnparsedObject(
+            crate::datadog::UnparsedObject { value },
+        ));
     }
 }
