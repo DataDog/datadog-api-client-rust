@@ -25,6 +25,9 @@ pub struct ObservabilityPipelineOcsfMapperProcessor {
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
+    /// Whether to keep an event that does not match any of the mapping filters.
+    #[serde(rename = "keep_unmatched")]
+    pub keep_unmatched: Option<bool>,
     /// A list of mapping rules to convert events to the OCSF format.
     #[serde(rename = "mappings")]
     pub mappings: Vec<crate::datadogV2::model::ObservabilityPipelineOcsfMapperProcessorMapping>,
@@ -51,6 +54,7 @@ impl ObservabilityPipelineOcsfMapperProcessor {
             enabled,
             id,
             include,
+            keep_unmatched: None,
             mappings,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -60,6 +64,11 @@ impl ObservabilityPipelineOcsfMapperProcessor {
 
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
+        self
+    }
+
+    pub fn keep_unmatched(mut self, value: bool) -> Self {
+        self.keep_unmatched = Some(value);
         self
     }
 
@@ -93,6 +102,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOcsfMapperProcessor {
                 let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
+                let mut keep_unmatched: Option<bool> = None;
                 let mut mappings: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineOcsfMapperProcessorMapping>,
                 > = None;
@@ -122,6 +132,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOcsfMapperProcessor {
                         }
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "keep_unmatched" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            keep_unmatched =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "mappings" => {
                             mappings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -155,6 +172,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOcsfMapperProcessor {
                     enabled,
                     id,
                     include,
+                    keep_unmatched,
                     mappings,
                     type_,
                     additional_properties,
