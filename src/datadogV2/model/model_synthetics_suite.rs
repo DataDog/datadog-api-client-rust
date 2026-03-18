@@ -29,6 +29,7 @@ pub struct SyntheticsSuite {
     /// Array of tags attached to the suite.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
+    /// Array of Synthetic tests included in the suite.
     #[serde(rename = "tests")]
     pub tests: Vec<crate::datadogV2::model::SyntheticsSuiteTest>,
     /// Type of the Synthetic suite, `suite`.
