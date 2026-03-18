@@ -13664,6 +13664,7 @@ components:
           example:
           - ''
           items:
+            description: A tag string in `key:value` format.
             type: string
           type: array
       required:
@@ -45113,7 +45114,7 @@ components:
         Protocol (OTLP) over gRPC and HTTP.
 
 
-        **Supported pipeline types:** logs, metrics'
+        **Supported pipeline types:** logs'
       properties:
         grpc_address_key:
           description: Environment variable name containing the gRPC server address
@@ -45143,7 +45144,6 @@ components:
       type: object
       x-pipeline-types:
       - logs
-      - metrics
     ObservabilityPipelineOpentelemetrySourceType:
       default: opentelemetry
       description: The source type. The value should always be `opentelemetry`.
@@ -72677,6 +72677,7 @@ components:
         tags:
           description: Tags of the workflow.
           items:
+            description: A tag string in `key:value` format.
             type: string
           type: array
         updatedAt:
@@ -72750,6 +72751,7 @@ components:
         tags:
           description: Tags of the workflow.
           items:
+            description: A tag string in `key:value` format.
             type: string
           type: array
         updatedAt:
