@@ -19450,26 +19450,20 @@ fn test_v2_list_security_monitoring_critical_assets(
         .v2_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
-    let query = _parameters
-        .get("query")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_security_monitoring::ListSecurityMonitoringCriticalAssetsOptionalParams::default();
-    params.query = query;
-    let response =
-        match block_on(api.list_security_monitoring_critical_assets_with_http_info(params)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
+    let response = match block_on(api.list_security_monitoring_critical_assets_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
                     }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
