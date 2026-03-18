@@ -78,53 +78,43 @@ impl ListActiveMetricConfigurationsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListTagConfigurationsOptionalParams {
-    /// Filter custom metrics that have configured tags.
+    /// Only return custom metrics that have been configured with Metrics Without Limits.
     pub filter_configured: Option<bool>,
-    /// Filter tag configurations by configured tags.
+    /// Only return metrics that have the given tag key(s) in their Metrics Without Limits configuration (included or excluded).
     pub filter_tags_configured: Option<String>,
-    /// Filter metrics by metric type.
+    /// Only return metrics of the given metric type.
     pub filter_metric_type:
         Option<crate::datadogV2::model::MetricTagConfigurationMetricTypeCategory>,
-    /// Filter distributions with additional percentile
-    /// aggregations enabled or disabled.
+    /// Only return distribution metrics that have percentile aggregations enabled (true) or disabled (false).
     pub filter_include_percentiles: Option<bool>,
-    /// (Preview) Filter custom metrics that have or have not been queried in the specified window[seconds].
-    /// If no window is provided or the window is less than 2 hours, a default of 2 hours will be applied.
+    /// Only return metrics that have been queried (true) or not queried (false) in the look back window. Set the window with `filter[queried][window][seconds]`; if omitted, a default window is used.
     pub filter_queried: Option<bool>,
-    /// The number of seconds of look back (from now) used by the `filter[queried]` filter logic.
-    /// Must be sent with `filter[queried]` and is only applied when `filter[queried]=true`.
-    /// If `filter[queried]=false`, this parameter is ignored and default queried-window behavior applies.
-    /// If `filter[queried]` is not provided, sending this parameter returns a 400.
-    /// For example: `GET /api/v2/metrics?filter[queried]=true&filter[queried][window][seconds]=15552000`.
+    /// Only return metrics that have been queried or not queried in the specified window. Dependent on being sent with `filter[queried]`.
     pub filter_queried_window_seconds: Option<i64>,
-    /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
-    /// Can only be combined with the filter[queried] filter.
+    /// Only return metrics that were submitted with tags matching this expression. You can use AND, OR, IN, and wildcards (for example, service:web*).
     pub filter_tags: Option<String>,
-    /// (Preview) Filter metrics that are used in dashboards, monitors, notebooks, SLOs.
+    /// Only return metrics that are used in at least one dashboard, monitor, notebook, or SLO.
     pub filter_related_assets: Option<bool>,
-    /// The number of seconds of look back (from now) to apply to a filter[tag] query.
-    /// Default value is 3600 (1 hour), maximum value is 5,184,000 (60 days).
+    /// Only return metrics that have been actively reporting in the specified window.
     pub window_seconds: Option<i64>,
-    /// Maximum number of results returned.
+    /// Maximum number of results per page. Use with `page[cursor]` for pagination.
     pub page_size: Option<i32>,
-    /// String to query the next page of results.
-    /// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
-    /// Once the `meta.pagination.next_cursor` key is null, all pages have been retrieved.
+    /// Cursor for pagination. Use `page[size]` to opt-in to pagination and get the first page; for subsequent pages, use the value from `meta.pagination.next_cursor` in the response. Pagination is complete when `next_cursor` is null.
     pub page_cursor: Option<String>,
 }
 
 impl ListTagConfigurationsOptionalParams {
-    /// Filter custom metrics that have configured tags.
+    /// Only return custom metrics that have been configured with Metrics Without Limits.
     pub fn filter_configured(mut self, value: bool) -> Self {
         self.filter_configured = Some(value);
         self
     }
-    /// Filter tag configurations by configured tags.
+    /// Only return metrics that have the given tag key(s) in their Metrics Without Limits configuration (included or excluded).
     pub fn filter_tags_configured(mut self, value: String) -> Self {
         self.filter_tags_configured = Some(value);
         self
     }
-    /// Filter metrics by metric type.
+    /// Only return metrics of the given metric type.
     pub fn filter_metric_type(
         mut self,
         value: crate::datadogV2::model::MetricTagConfigurationMetricTypeCategory,
@@ -132,52 +122,42 @@ impl ListTagConfigurationsOptionalParams {
         self.filter_metric_type = Some(value);
         self
     }
-    /// Filter distributions with additional percentile
-    /// aggregations enabled or disabled.
+    /// Only return distribution metrics that have percentile aggregations enabled (true) or disabled (false).
     pub fn filter_include_percentiles(mut self, value: bool) -> Self {
         self.filter_include_percentiles = Some(value);
         self
     }
-    /// (Preview) Filter custom metrics that have or have not been queried in the specified window[seconds].
-    /// If no window is provided or the window is less than 2 hours, a default of 2 hours will be applied.
+    /// Only return metrics that have been queried (true) or not queried (false) in the look back window. Set the window with `filter[queried][window][seconds]`; if omitted, a default window is used.
     pub fn filter_queried(mut self, value: bool) -> Self {
         self.filter_queried = Some(value);
         self
     }
-    /// The number of seconds of look back (from now) used by the `filter[queried]` filter logic.
-    /// Must be sent with `filter[queried]` and is only applied when `filter[queried]=true`.
-    /// If `filter[queried]=false`, this parameter is ignored and default queried-window behavior applies.
-    /// If `filter[queried]` is not provided, sending this parameter returns a 400.
-    /// For example: `GET /api/v2/metrics?filter[queried]=true&filter[queried][window][seconds]=15552000`.
+    /// Only return metrics that have been queried or not queried in the specified window. Dependent on being sent with `filter[queried]`.
     pub fn filter_queried_window_seconds(mut self, value: i64) -> Self {
         self.filter_queried_window_seconds = Some(value);
         self
     }
-    /// Filter metrics that have been submitted with the given tags. Supports boolean and wildcard expressions.
-    /// Can only be combined with the filter[queried] filter.
+    /// Only return metrics that were submitted with tags matching this expression. You can use AND, OR, IN, and wildcards (for example, service:web*).
     pub fn filter_tags(mut self, value: String) -> Self {
         self.filter_tags = Some(value);
         self
     }
-    /// (Preview) Filter metrics that are used in dashboards, monitors, notebooks, SLOs.
+    /// Only return metrics that are used in at least one dashboard, monitor, notebook, or SLO.
     pub fn filter_related_assets(mut self, value: bool) -> Self {
         self.filter_related_assets = Some(value);
         self
     }
-    /// The number of seconds of look back (from now) to apply to a filter[tag] query.
-    /// Default value is 3600 (1 hour), maximum value is 5,184,000 (60 days).
+    /// Only return metrics that have been actively reporting in the specified window.
     pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
         self
     }
-    /// Maximum number of results returned.
+    /// Maximum number of results per page. Use with `page[cursor]` for pagination.
     pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
     }
-    /// String to query the next page of results.
-    /// This key is provided with each valid response from the API in `meta.pagination.next_cursor`.
-    /// Once the `meta.pagination.next_cursor` key is null, all pages have been retrieved.
+    /// Cursor for pagination. Use `page[size]` to opt-in to pagination and get the first page; for subsequent pages, use the value from `meta.pagination.next_cursor` in the response. Pagination is complete when `next_cursor` is null.
     pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
@@ -1662,10 +1642,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Returns all metrics for your organization that match the given filter parameters.
-    /// Optionally, paginate by using the `page[cursor]` and/or `page[size]` query parameters.
-    /// To fetch the first page, pass in a query parameter with either a valid `page[size]` or an empty cursor like `page[cursor]=`. To fetch the next page, pass in the `next_cursor` value from the response as the new `page[cursor]` value.
-    /// Once the `meta.pagination.next_cursor` value is null, all pages have been retrieved.
+    /// Get a list of actively reporting metrics for your organization. Pagination is optional using the `page[cursor]` and `page[size]` query parameters.
     pub async fn list_tag_configurations(
         &self,
         params: ListTagConfigurationsOptionalParams,
@@ -1725,10 +1702,7 @@ impl MetricsAPI {
         }
     }
 
-    /// Returns all metrics for your organization that match the given filter parameters.
-    /// Optionally, paginate by using the `page[cursor]` and/or `page[size]` query parameters.
-    /// To fetch the first page, pass in a query parameter with either a valid `page[size]` or an empty cursor like `page[cursor]=`. To fetch the next page, pass in the `next_cursor` value from the response as the new `page[cursor]` value.
-    /// Once the `meta.pagination.next_cursor` value is null, all pages have been retrieved.
+    /// Get a list of actively reporting metrics for your organization. Pagination is optional using the `page[cursor]` and `page[size]` query parameters.
     pub async fn list_tag_configurations_with_http_info(
         &self,
         params: ListTagConfigurationsOptionalParams,
