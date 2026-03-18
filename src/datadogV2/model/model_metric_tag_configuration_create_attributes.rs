@@ -23,7 +23,7 @@ pub struct MetricTagConfigurationCreateAttributes {
     /// Defaults to false. Can only be applied to metrics that have a `metric_type` of `distribution`.
     #[serde(rename = "include_percentiles")]
     pub include_percentiles: Option<bool>,
-    /// The metric's type.
+    /// The metric's type. Contact your Customer Success Manager (CSM) for instructions on how to use the histogram types.
     #[serde(rename = "metric_type")]
     pub metric_type: crate::datadogV2::model::MetricTagConfigurationMetricTypes,
     /// A list of tag keys that will be queryable for your metric.
