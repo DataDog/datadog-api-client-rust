@@ -14,9 +14,9 @@ pub struct MonitorFormulaAndFunctionCostQueryDefinition {
     /// Aggregation methods for metric queries.
     #[serde(rename = "aggregator")]
     pub aggregator: Option<crate::datadogV1::model::MonitorFormulaAndFunctionCostAggregator>,
-    /// Data source for cost queries.
+    /// Data source for metrics queries.
     #[serde(rename = "data_source")]
-    pub data_source: crate::datadogV1::model::MonitorFormulaAndFunctionCostDataSource,
+    pub data_source: crate::datadogV1::model::MonitorFormulaAndFunctionMetricsDataSource,
     /// Name of the query for use in formulas.
     #[serde(rename = "name")]
     pub name: String,
@@ -32,7 +32,7 @@ pub struct MonitorFormulaAndFunctionCostQueryDefinition {
 
 impl MonitorFormulaAndFunctionCostQueryDefinition {
     pub fn new(
-        data_source: crate::datadogV1::model::MonitorFormulaAndFunctionCostDataSource,
+        data_source: crate::datadogV1::model::MonitorFormulaAndFunctionMetricsDataSource,
         name: String,
         query: String,
     ) -> MonitorFormulaAndFunctionCostQueryDefinition {
@@ -84,7 +84,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionCostQueryDefinition {
                     crate::datadogV1::model::MonitorFormulaAndFunctionCostAggregator,
                 > = None;
                 let mut data_source: Option<
-                    crate::datadogV1::model::MonitorFormulaAndFunctionCostDataSource,
+                    crate::datadogV1::model::MonitorFormulaAndFunctionMetricsDataSource,
                 > = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
@@ -115,7 +115,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionCostQueryDefinition {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
-                                    crate::datadogV1::model::MonitorFormulaAndFunctionCostDataSource::UnparsedObject(_data_source) => {
+                                    crate::datadogV1::model::MonitorFormulaAndFunctionMetricsDataSource::UnparsedObject(_data_source) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
