@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum OrgConnectionTypeEnum {
     LOGS,
     METRICS,
+    AUDIT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for OrgConnectionTypeEnum {
         match self {
             Self::LOGS => String::from("logs"),
             Self::METRICS => String::from("metrics"),
+            Self::AUDIT => String::from("audit"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for OrgConnectionTypeEnum {
         Ok(match s.as_str() {
             "logs" => Self::LOGS,
             "metrics" => Self::METRICS,
+            "audit" => Self::AUDIT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
