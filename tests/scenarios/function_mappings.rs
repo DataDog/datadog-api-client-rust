@@ -32975,8 +32975,12 @@ fn test_v2_get_on_call_team_routing_rules(
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let use_policy_action = _parameters
+        .get("use_policy_action")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_on_call::GetOnCallTeamRoutingRulesOptionalParams::default();
     params.include = include;
+    params.use_policy_action = use_policy_action;
     let response =
         match block_on(api.get_on_call_team_routing_rules_with_http_info(team_id, params)) {
             Ok(response) => response,
@@ -33010,8 +33014,12 @@ fn test_v2_set_on_call_team_routing_rules(
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let use_policy_action = _parameters
+        .get("use_policy_action")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_on_call::SetOnCallTeamRoutingRulesOptionalParams::default();
     params.include = include;
+    params.use_policy_action = use_policy_action;
     let response =
         match block_on(api.set_on_call_team_routing_rules_with_http_info(team_id, body, params)) {
             Ok(response) => response,

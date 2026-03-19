@@ -80,12 +80,19 @@ impl GetOnCallScheduleOptionalParams {
 pub struct GetOnCallTeamRoutingRulesOptionalParams {
     /// Comma-separated list of included relationships to be returned. Allowed values: `rules`, `rules.policy`.
     pub include: Option<String>,
+    /// When set to `true`, escalation policies are returned as actions within routing rules rather than as a separate `policy_id` field.
+    pub use_policy_action: Option<bool>,
 }
 
 impl GetOnCallTeamRoutingRulesOptionalParams {
     /// Comma-separated list of included relationships to be returned. Allowed values: `rules`, `rules.policy`.
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
+        self
+    }
+    /// When set to `true`, escalation policies are returned as actions within routing rules rather than as a separate `policy_id` field.
+    pub fn use_policy_action(mut self, value: bool) -> Self {
+        self.use_policy_action = Some(value);
         self
     }
 }
@@ -167,12 +174,19 @@ impl ListUserNotificationRulesOptionalParams {
 pub struct SetOnCallTeamRoutingRulesOptionalParams {
     /// Comma-separated list of included relationships to be returned. Allowed values: `rules`, `rules.policy`.
     pub include: Option<String>,
+    /// When set to `true`, escalation policies are returned as actions within routing rules rather than as a separate `policy_id` field.
+    pub use_policy_action: Option<bool>,
 }
 
 impl SetOnCallTeamRoutingRulesOptionalParams {
     /// Comma-separated list of included relationships to be returned. Allowed values: `rules`, `rules.policy`.
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
+        self
+    }
+    /// When set to `true`, escalation policies are returned as actions within routing rules rather than as a separate `policy_id` field.
+    pub fn use_policy_action(mut self, value: bool) -> Self {
+        self.use_policy_action = Some(value);
         self
     }
 }
@@ -1757,6 +1771,7 @@ impl OnCallAPI {
 
         // unbox and build optional parameters
         let include = params.include;
+        let use_policy_action = params.use_policy_action;
 
         let local_client = &self.client;
 
@@ -1771,6 +1786,10 @@ impl OnCallAPI {
         if let Some(ref local_query_param) = include {
             local_req_builder =
                 local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = use_policy_action {
+            local_req_builder =
+                local_req_builder.query(&[("use_policy_action", &local_query_param.to_string())]);
         };
 
         // build headers
@@ -2598,6 +2617,7 @@ impl OnCallAPI {
 
         // unbox and build optional parameters
         let include = params.include;
+        let use_policy_action = params.use_policy_action;
 
         let local_client = &self.client;
 
@@ -2612,6 +2632,10 @@ impl OnCallAPI {
         if let Some(ref local_query_param) = include {
             local_req_builder =
                 local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = use_policy_action {
+            local_req_builder =
+                local_req_builder.query(&[("use_policy_action", &local_query_param.to_string())]);
         };
 
         // build headers
