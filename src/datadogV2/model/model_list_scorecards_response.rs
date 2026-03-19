@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Scorecard create rule request data.
+/// Response containing a list of scorecards.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct CreateRuleRequestData {
-    /// Attributes for creating or updating a rule. Server-managed fields (created_at, modified_at, custom) are excluded.
-    #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RuleAttributesRequest,
-    /// The JSON:API type for scorecard rules.
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RuleType,
+pub struct ListScorecardsResponse {
+    /// Array of scorecards.
+    #[serde(rename = "data")]
+    pub data: Vec<crate::datadogV2::model::ScorecardListResponseData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,14 +21,12 @@ pub struct CreateRuleRequestData {
     pub(crate) _unparsed: bool,
 }
 
-impl CreateRuleRequestData {
+impl ListScorecardsResponse {
     pub fn new(
-        attributes: crate::datadogV2::model::RuleAttributesRequest,
-        type_: crate::datadogV2::model::RuleType,
-    ) -> CreateRuleRequestData {
-        CreateRuleRequestData {
-            attributes,
-            type_,
+        data: Vec<crate::datadogV2::model::ScorecardListResponseData>,
+    ) -> ListScorecardsResponse {
+        ListScorecardsResponse {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -46,14 +41,14 @@ impl CreateRuleRequestData {
     }
 }
 
-impl<'de> Deserialize<'de> for CreateRuleRequestData {
+impl<'de> Deserialize<'de> for ListScorecardsResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct CreateRuleRequestDataVisitor;
-        impl<'a> Visitor<'a> for CreateRuleRequestDataVisitor {
-            type Value = CreateRuleRequestData;
+        struct ListScorecardsResponseVisitor;
+        impl<'a> Visitor<'a> for ListScorecardsResponseVisitor {
+            type Value = ListScorecardsResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,8 +58,8 @@ impl<'de> Deserialize<'de> for CreateRuleRequestData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RuleAttributesRequest> = None;
-                let mut type_: Option<crate::datadogV2::model::RuleType> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::ScorecardListResponseData>> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -73,19 +68,8 @@ impl<'de> Deserialize<'de> for CreateRuleRequestData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::RuleType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -94,12 +78,10 @@ impl<'de> Deserialize<'de> for CreateRuleRequestData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = CreateRuleRequestData {
-                    attributes,
-                    type_,
+                let content = ListScorecardsResponse {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -108,6 +90,6 @@ impl<'de> Deserialize<'de> for CreateRuleRequestData {
             }
         }
 
-        deserializer.deserialize_any(CreateRuleRequestDataVisitor)
+        deserializer.deserialize_any(ListScorecardsResponseVisitor)
     }
 }
