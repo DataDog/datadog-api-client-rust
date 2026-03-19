@@ -90,6 +90,8 @@ pub mod model_dashboard;
 pub use self::model_dashboard::Dashboard;
 pub mod model_dashboard_reflow_type;
 pub use self::model_dashboard_reflow_type::DashboardReflowType;
+pub mod model_dashboard_tab;
+pub use self::model_dashboard_tab::DashboardTab;
 pub mod model_dashboard_template_variable_preset;
 pub use self::model_dashboard_template_variable_preset::DashboardTemplateVariablePreset;
 pub mod model_dashboard_template_variable_preset_value;
