@@ -454,7 +454,7 @@ impl WebhooksIntegrationAPI {
         }
     }
 
-    /// Deletes the endpoint with the name `<WEBHOOK NAME>`.
+    /// Deletes the endpoint with the name `<WEBHOOK NAME>`. This action cannot be undone.
     pub async fn delete_webhooks_integration(
         &self,
         webhook_name: String,
@@ -468,7 +468,7 @@ impl WebhooksIntegrationAPI {
         }
     }
 
-    /// Deletes the endpoint with the name `<WEBHOOK NAME>`.
+    /// Deletes the endpoint with the name `<WEBHOOK NAME>`. This action cannot be undone.
     pub async fn delete_webhooks_integration_with_http_info(
         &self,
         webhook_name: String,
