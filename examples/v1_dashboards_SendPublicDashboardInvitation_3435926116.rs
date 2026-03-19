@@ -1,4 +1,4 @@
-// Send shared dashboard invitation email returns "OK" response
+// Send shared dashboard invitation email returns OK
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::DashboardInviteType;
@@ -9,18 +9,21 @@ use datadog_api_client::datadogV1::model::SharedDashboardInvitesDataObjectAttrib
 
 #[tokio::main]
 async fn main() {
-    let body =
-        SharedDashboardInvites::new(SharedDashboardInvitesData::SharedDashboardInvitesDataList(
-            vec![SharedDashboardInvitesDataObject::new(
+    // there is a valid "shared_dashboard" in the system
+    let shared_dashboard_token = std::env::var("SHARED_DASHBOARD_TOKEN").unwrap();
+    let body = SharedDashboardInvites::new(
+        SharedDashboardInvitesData::SharedDashboardInvitesDataObject(Box::new(
+            SharedDashboardInvitesDataObject::new(
                 SharedDashboardInvitesDataObjectAttributes::new()
-                    .email("test@datadoghq.com".to_string()),
+                    .email("exampledashboard@datadoghq.com".to_string()),
                 DashboardInviteType::PUBLIC_DASHBOARD_INVITATION,
-            )],
-        ));
+            ),
+        )),
+    );
     let configuration = datadog::Configuration::new();
     let api = DashboardsAPI::with_config(configuration);
     let resp = api
-        .send_public_dashboard_invitation("token".to_string(), body)
+        .send_public_dashboard_invitation(shared_dashboard_token.clone(), body)
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
