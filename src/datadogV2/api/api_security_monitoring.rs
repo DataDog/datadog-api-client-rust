@@ -452,6 +452,22 @@ impl ListSecurityFindingsOptionalParams {
     }
 }
 
+/// ListSecurityMonitoringCriticalAssetsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_critical_assets`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSecurityMonitoringCriticalAssetsOptionalParams {
+    /// Query string.
+    pub query: Option<String>,
+}
+
+impl ListSecurityMonitoringCriticalAssetsOptionalParams {
+    /// Query string.
+    pub fn query(mut self, value: String) -> Self {
+        self.query = Some(value);
+        self
+    }
+}
+
 /// ListSecurityMonitoringHistsignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_histsignals`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -9852,12 +9868,13 @@ impl SecurityMonitoringAPI {
     /// Get the list of all critical assets.
     pub async fn list_security_monitoring_critical_assets(
         &self,
+        params: ListSecurityMonitoringCriticalAssetsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::SecurityMonitoringCriticalAssetsResponse,
         datadog::Error<ListSecurityMonitoringCriticalAssetsError>,
     > {
         match self
-            .list_security_monitoring_critical_assets_with_http_info()
+            .list_security_monitoring_critical_assets_with_http_info(params)
             .await
         {
             Ok(response_content) => {
@@ -9876,12 +9893,16 @@ impl SecurityMonitoringAPI {
     /// Get the list of all critical assets.
     pub async fn list_security_monitoring_critical_assets_with_http_info(
         &self,
+        params: ListSecurityMonitoringCriticalAssetsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringCriticalAssetsResponse>,
         datadog::Error<ListSecurityMonitoringCriticalAssetsError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_security_monitoring_critical_assets";
+
+        // unbox and build optional parameters
+        let query = params.query;
 
         let local_client = &self.client;
 
@@ -9891,6 +9912,11 @@ impl SecurityMonitoringAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
