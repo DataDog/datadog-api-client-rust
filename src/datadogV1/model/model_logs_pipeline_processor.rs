@@ -15,6 +15,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LogsPipelineProcessor {
+    /// A description of the pipeline.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Filter for logs.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV1::model::LogsFilter>,
@@ -27,6 +30,9 @@ pub struct LogsPipelineProcessor {
     /// Ordered list of processors in this pipeline.
     #[serde(rename = "processors")]
     pub processors: Option<Vec<crate::datadogV1::model::LogsProcessor>>,
+    /// A list of tags associated with the pipeline.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     /// Type of logs pipeline processor.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::LogsPipelineProcessorType,
@@ -40,14 +46,21 @@ pub struct LogsPipelineProcessor {
 impl LogsPipelineProcessor {
     pub fn new(type_: crate::datadogV1::model::LogsPipelineProcessorType) -> LogsPipelineProcessor {
         LogsPipelineProcessor {
+            description: None,
             filter: None,
             is_enabled: None,
             name: None,
             processors: None,
+            tags: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn filter(mut self, value: crate::datadogV1::model::LogsFilter) -> Self {
@@ -67,6 +80,11 @@ impl LogsPipelineProcessor {
 
     pub fn processors(mut self, value: Vec<crate::datadogV1::model::LogsProcessor>) -> Self {
         self.processors = Some(value);
+        self
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
         self
     }
 
@@ -96,10 +114,12 @@ impl<'de> Deserialize<'de> for LogsPipelineProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut description: Option<String> = None;
                 let mut filter: Option<crate::datadogV1::model::LogsFilter> = None;
                 let mut is_enabled: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut processors: Option<Vec<crate::datadogV1::model::LogsProcessor>> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut type_: Option<crate::datadogV1::model::LogsPipelineProcessorType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -109,6 +129,13 @@ impl<'de> Deserialize<'de> for LogsPipelineProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "filter" => {
                             if v.is_null() {
                                 continue;
@@ -133,6 +160,12 @@ impl<'de> Deserialize<'de> for LogsPipelineProcessor {
                             }
                             processors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -154,10 +187,12 @@ impl<'de> Deserialize<'de> for LogsPipelineProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = LogsPipelineProcessor {
+                    description,
                     filter,
                     is_enabled,
                     name,
                     processors,
+                    tags,
                     type_,
                     additional_properties,
                     _unparsed,
