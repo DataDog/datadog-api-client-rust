@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineHttpClientDestinationCompression {
-    /// Compression algorithm.
+    /// The compression algorithm used for HTTP client destinations.
     #[serde(rename = "algorithm")]
     pub algorithm:
         crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompressionAlgorithm,
