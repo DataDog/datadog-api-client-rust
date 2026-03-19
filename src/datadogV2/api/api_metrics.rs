@@ -953,6 +953,7 @@ impl MetricsAPI {
 
     /// Deletes a metric's tag configuration. Can only be used with application
     /// keys from users with the `Manage Tags for Metrics` permission.
+    /// Note: This operation is irreversible.
     pub async fn delete_tag_configuration(
         &self,
         metric_name: String,
@@ -968,6 +969,7 @@ impl MetricsAPI {
 
     /// Deletes a metric's tag configuration. Can only be used with application
     /// keys from users with the `Manage Tags for Metrics` permission.
+    /// Note: This operation is irreversible.
     pub async fn delete_tag_configuration_with_http_info(
         &self,
         metric_name: String,
