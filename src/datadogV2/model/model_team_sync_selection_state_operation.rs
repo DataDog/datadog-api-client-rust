@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum BatchRowsQueryDataType {
-    REFERENCE_TABLES_BATCH_ROWS_QUERY,
+pub enum TeamSyncSelectionStateOperation {
+    INCLUDE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for BatchRowsQueryDataType {
+impl ToString for TeamSyncSelectionStateOperation {
     fn to_string(&self) -> String {
         match self {
-            Self::REFERENCE_TABLES_BATCH_ROWS_QUERY => {
-                String::from("reference-tables-batch-rows-query")
-            }
+            Self::INCLUDE => String::from("include"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for BatchRowsQueryDataType {
+impl Serialize for TeamSyncSelectionStateOperation {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,14 +32,14 @@ impl Serialize for BatchRowsQueryDataType {
     }
 }
 
-impl<'de> Deserialize<'de> for BatchRowsQueryDataType {
+impl<'de> Deserialize<'de> for TeamSyncSelectionStateOperation {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "reference-tables-batch-rows-query" => Self::REFERENCE_TABLES_BATCH_ROWS_QUERY,
+            "include" => Self::INCLUDE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
