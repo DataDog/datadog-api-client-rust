@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSensitiveDataScannerProcessorActionPartialRedactOptions {
-    /// The `ObservabilityPipelineSensitiveDataScannerProcessorActionPartialRedactOptions` `characters`.
+    /// Number of characters to leave visible from the start or end of the matched value; the rest are redacted.
     #[serde(rename = "characters")]
     pub characters: i64,
     /// Indicates whether to redact characters from the first or last part of the matched value.
