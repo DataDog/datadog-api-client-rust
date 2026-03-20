@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Create_workflow_webhook_handle_returns_CREATED_response-1748457950\",\"url\":\"https://example.logic.azure.com/workflows/123\"},\"type\":\"workflows-webhook-handle\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/integration/ms-teams/configuration/workflows-webhook-handles"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/6207c675-cdc3-4cd4-903a-e7a6a3fbac0d"
       },

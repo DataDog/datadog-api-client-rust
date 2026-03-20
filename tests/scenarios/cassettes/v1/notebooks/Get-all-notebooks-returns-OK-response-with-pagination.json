@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v1/notebooks?count=2"
       },
@@ -31,11 +27,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v1/notebooks?count=2&start=2"
       },

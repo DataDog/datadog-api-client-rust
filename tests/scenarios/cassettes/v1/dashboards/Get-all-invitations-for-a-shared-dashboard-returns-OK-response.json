@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"title\":\"Test-Get_all_invitations_for_a_shared_dashboard_returns_OK_response-1731699187 with Profile Metrics Query\",\"widgets\":[{\"definition\":{\"requests\":[{\"profile_metrics_query\":{\"compute\":{\"aggregation\":\"sum\",\"facet\":\"@prof_core_cpu_cores\"},\"group_by\":[{\"facet\":\"service\",\"limit\":10,\"sort\":{\"aggregation\":\"sum\",\"facet\":\"@prof_core_cpu_cores\",\"order\":\"desc\"}}],\"search\":{\"query\":\"runtime:jvm\"}}}],\"type\":\"timeseries\"}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -40,14 +33,7 @@
           "string": "{\"dashboard_id\":\"qnh-gkv-jbc\",\"dashboard_type\":\"custom_timeboard\",\"global_time\":{\"live_span\":\"1h\"},\"share_list\":[\"testgetallinvitationsforashareddashboardreturnsokresponse1731699187@datadoghq.com\"],\"share_type\":\"invite\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/public"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/public/fasjyydbcgwwc2uc-d7c9444d4bf13c445437741538d0ad29/invitation"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/public/fasjyydbcgwwc2uc-d7c9444d4bf13c445437741538d0ad29"
       },
@@ -127,11 +105,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/qnh-gkv-jbc"
       },

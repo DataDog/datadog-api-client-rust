@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"customer_impacted\":false,\"title\":\"Test-Delete_an_incident_todo_returns_OK_response-1678213638\"},\"type\":\"incidents\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"assignees\":[\"@test.user@test.com\",{\"icon\":\"https://a.slack-edge.com/80588/img/slackbot_48.png\",\"id\":\"USLACKBOT\",\"name\":\"Slackbot\",\"source\":\"slack\"}],\"content\":\"Follow up with customer about the impact they saw.\"},\"type\":\"incident_todos\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/8dc81d32-33b1-580a-97ab-00b84b2b2f4d/relationships/todos"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/8dc81d32-33b1-580a-97ab-00b84b2b2f4d/relationships/todos/dc9639d1-0203-5569-acfb-276574c04268"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/8dc81d32-33b1-580a-97ab-00b84b2b2f4d/relationships/todos/dc9639d1-0203-5569-acfb-276574c04268"
       },
@@ -127,11 +105,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/8dc81d32-33b1-580a-97ab-00b84b2b2f4d"
       },

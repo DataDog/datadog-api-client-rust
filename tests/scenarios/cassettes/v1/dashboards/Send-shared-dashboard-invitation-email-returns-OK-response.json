@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"title\":\"Test-Send_shared_dashboard_invitation_email_returns_OK_response-1731699189 with Profile Metrics Query\",\"widgets\":[{\"definition\":{\"requests\":[{\"profile_metrics_query\":{\"compute\":{\"aggregation\":\"sum\",\"facet\":\"@prof_core_cpu_cores\"},\"group_by\":[{\"facet\":\"service\",\"limit\":10,\"sort\":{\"aggregation\":\"sum\",\"facet\":\"@prof_core_cpu_cores\",\"order\":\"desc\"}}],\"search\":{\"query\":\"runtime:jvm\"}}}],\"type\":\"timeseries\"}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -40,14 +33,7 @@
           "string": "{\"dashboard_id\":\"yri-q6w-8gq\",\"dashboard_type\":\"custom_timeboard\",\"global_time\":{\"live_span\":\"1h\"},\"share_list\":[\"testsendshareddashboardinvitationemailreturnsokresponse1731699189@datadoghq.com\"],\"share_type\":\"invite\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/public"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"email\":\"testsendshareddashboardinvitationemailreturnsokresponse1731699189@datadoghq.com\"},\"type\":\"public_dashboard_invitation\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/public/fasjyydbcgwwc2uc-6b737747459631d184ade0ca119a8c2b/invitation"
       },
@@ -108,14 +87,7 @@
           "string": "{\"data\":{\"attributes\":{\"email\":\"testsendshareddashboardinvitationemailreturnsokresponse1731699189@datadoghq.com\"},\"type\":\"public_dashboard_invitation\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "*/*"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/public/fasjyydbcgwwc2uc-6b737747459631d184ade0ca119a8c2b/invitation"
       },
@@ -139,11 +111,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/public/fasjyydbcgwwc2uc-6b737747459631d184ade0ca119a8c2b"
       },
@@ -167,11 +135,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/yri-q6w-8gq"
       },

@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/signals?page%5Blimit%5D=2"
       },
@@ -31,13 +27,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/signals?page%5Blimit%5D=2&page%5Bcursor%5D=eyJhZnRlciI6IkFRQUFBWUFlZHdCbC1Wd21VZ0FBQUFCQldVRmxaSGRDYkVGQlFXRkpURGgxTlZNMFFtTlJRVUUifQ"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/signals?page%5Bcursor%5D=eyJhZnRlciI6IkFRQUFBWUFlZHdCbC1Wd21VZ0FBQUFCQldVRmxaSGRDYkVGQlFXRkpURGgxTlZNMFFtTlJRVUUifQ&page%5Blimit%5D=2"
       },
       "response": {
         "body": {

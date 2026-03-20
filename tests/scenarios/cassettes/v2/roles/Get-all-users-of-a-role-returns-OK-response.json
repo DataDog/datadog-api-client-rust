@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Get_all_users_of_a_role_returns_OK_response-1652349167\"},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"email\":\"Test-Get_all_users_of_a_role_returns_OK_response-1652349167@datadoghq.com\",\"title\":\"user title\"},\"type\":\"users\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/users"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"id\":\"4798bdaa-d1d9-11ec-ad3d-da7ad0900002\",\"type\":\"users\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles/474eac06-d1d9-11ec-ad3d-da7ad0900002/users"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/roles/474eac06-d1d9-11ec-ad3d-da7ad0900002/users"
       },
@@ -133,11 +108,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/users/4798bdaa-d1d9-11ec-ad3d-da7ad0900002"
       },
@@ -157,11 +128,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/roles/474eac06-d1d9-11ec-ad3d-da7ad0900002"
       },

@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"title\":\"Test-Create_a_new_dashboard_with_a_timeseries_widget_using_formulas_and_functions_metrics_query_with_nati-1765218758 with native semantic_mode\",\"widgets\":[{\"definition\":{\"requests\":[{\"display_type\":\"line\",\"formulas\":[{\"formula\":\"query1\"}],\"queries\":[{\"data_source\":\"metrics\",\"name\":\"query1\",\"query\":\"avg:system.cpu.user{*}\",\"semantic_mode\":\"native\"}],\"response_format\":\"timeseries\"}],\"type\":\"timeseries\"}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/ptr-h98-jx4"
       },

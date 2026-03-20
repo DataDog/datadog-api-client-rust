@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Security Audit Dataset\",\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"],\"product_filters\":[{\"filters\":[\"@application.id:ABCD\"],\"product\":\"metrics\"}]},\"type\":\"dataset\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/datasets"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Security Audit Dataset\",\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"],\"product_filters\":[{\"filters\":[\"@application.id:ABCD\"],\"product\":\"metrics\"}]},\"type\":\"dataset\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/datasets"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/datasets/7cbada94-7d01-4e73-8c74-ea70fb3b3088"
       },

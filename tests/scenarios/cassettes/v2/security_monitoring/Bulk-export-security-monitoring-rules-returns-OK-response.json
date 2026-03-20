@@ -6,14 +6,7 @@
           "string": "{\"cases\":[{\"condition\":\"a > 0\",\"name\":\"\",\"notifications\":[],\"status\":\"info\"}],\"filters\":[],\"isEnabled\":true,\"message\":\"Test rule\",\"name\":\"Test-Bulk_export_security_monitoring_rules_returns_OK_response-1768902892\",\"options\":{\"evaluationWindow\":900,\"keepAlive\":3600,\"maxSignalDuration\":86400},\"queries\":[{\"aggregation\":\"count\",\"distinctFields\":[],\"groupByFields\":[],\"metrics\":[],\"query\":\"@test:true\"}],\"tags\":[],\"type\":\"log_detection\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"ruleIds\":[\"ldv-a2n-sgu\"]},\"type\":\"security_monitoring_rules_bulk_export\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/zip, application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules/bulk_export"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules/ldv-a2n-sgu"
       },

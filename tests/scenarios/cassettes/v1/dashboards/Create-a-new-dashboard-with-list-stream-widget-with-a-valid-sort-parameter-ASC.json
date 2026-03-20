@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"title\":\"Test-Create_a_new_dashboard_with_list_stream_widget_with_a_valid_sort_parameter_ASC-1731699164 with list_stream widget\",\"widgets\":[{\"definition\":{\"requests\":[{\"columns\":[{\"field\":\"timestamp\",\"width\":\"auto\"}],\"query\":{\"data_source\":\"event_stream\",\"event_size\":\"l\",\"query_string\":\"\",\"sort\":{\"column\":\"timestamp\",\"order\":\"asc\"}},\"response_format\":\"event_list\"}],\"type\":\"list_stream\"}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/hmc-wyw-pru"
       },

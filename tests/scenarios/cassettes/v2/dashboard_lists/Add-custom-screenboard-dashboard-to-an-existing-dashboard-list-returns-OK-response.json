@@ -6,14 +6,7 @@
           "string": "{\"name\":\"Test-Add_custom_screenboard_dashboard_to_an_existing_dashboard_list_returns_OK_response-1647890202\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/lists/manual"
       },
@@ -40,14 +33,7 @@
           "string": "{\"layout_type\":\"free\",\"title\":\"Test-Add_custom_screenboard_dashboard_to_an_existing_dashboard_list_returns_OK_response-1647890202 with Profile Metrics Query\",\"widgets\":[{\"definition\":{\"requests\":[{\"profile_metrics_query\":{\"compute\":{\"aggregation\":\"sum\",\"facet\":\"@prof_core_cpu_cores\"},\"group_by\":[{\"facet\":\"service\",\"limit\":10,\"sort\":{\"aggregation\":\"sum\",\"facet\":\"@prof_core_cpu_cores\",\"order\":\"desc\"}}],\"search\":{\"query\":\"runtime:jvm\"}}}],\"type\":\"timeseries\"},\"layout\":{\"height\":10,\"width\":10,\"x\":10,\"y\":10}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -74,14 +60,7 @@
           "string": "{\"dashboards\":[{\"id\":\"sza-uj6-6p4\",\"type\":\"custom_screenboard\"}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/dashboard/lists/manual/284061/dashboards"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/sza-uj6-6p4"
       },
@@ -133,11 +108,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/lists/manual/284061"
       },

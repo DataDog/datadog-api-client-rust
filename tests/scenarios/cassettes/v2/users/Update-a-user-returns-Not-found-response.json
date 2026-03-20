@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"disabled\":true,\"name\":\"updated\"},\"id\":\"00000000-dead-beef-dead-ffffffffffff\",\"type\":\"users\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/users/00000000-dead-beef-dead-ffffffffffff"
       },

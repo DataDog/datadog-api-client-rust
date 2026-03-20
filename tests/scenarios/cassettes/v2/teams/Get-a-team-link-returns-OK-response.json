@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-94cf752f98fda23c\",\"name\":\"test-name-94cf752f98fda23c\"},\"type\":\"team\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"label\":\"Test-Get_a_team_link_returns_OK_response-1769166013\",\"position\":0,\"url\":\"https://example.com\"},\"type\":\"team_links\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team/35d819d9-918b-4d29-838d-ed8507398b21/links"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/team/35d819d9-918b-4d29-838d-ed8507398b21/links/b1c355f0-f84a-11f0-8d16-da7ad0900002"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team/35d819d9-918b-4d29-838d-ed8507398b21/links/b1c355f0-f84a-11f0-8d16-da7ad0900002"
       },
@@ -123,11 +101,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team/35d819d9-918b-4d29-838d-ed8507398b21"
       },

@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"conditions\":[{\"field\":\"severity\",\"values\":[\"SEV-1\",\"SEV-2\"]}],\"enabled\":true,\"handles\":[\"@test-email@company.com\"],\"trigger\":\"incident_created_trigger\",\"visibility\":\"organization\"},\"id\":\"00000000-0000-0000-0000-000000000001\",\"relationships\":{\"incident_type\":{\"data\":{\"id\":\"00000000-0000-0000-0000-000000000000\",\"type\":\"incident_types\"}}},\"type\":\"invalid_type\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/notification-rules/00000000-0000-0000-0000-000000000001"
       },

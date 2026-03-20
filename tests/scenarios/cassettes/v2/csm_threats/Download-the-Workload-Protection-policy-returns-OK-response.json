@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/zip, application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/remote_config/products/cws/policy/download"
       },

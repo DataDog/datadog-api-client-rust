@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Test-Get_all_suppression_rules_returns_OK_response_with_sort_descending-1769009707\",\"enabled\":true,\"name\":\"suppression 4668d111f32d9934\",\"rule_query\":\"source:cloudtrail\",\"suppression_query\":\"env:test\",\"tags\":[\"technique:T1110-brute-force\",\"source:cloudtrail\"]},\"type\":\"suppressions\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Test-Get_all_suppression_rules_returns_OK_response_with_sort_descending-1769009707\",\"enabled\":true,\"name\":\"suppression2 4668d111f32d9934\",\"rule_query\":\"source:cloudtrail\",\"suppression_query\":\"env:test\",\"tags\":[\"technique:T1110-brute-force\",\"source:cloudtrail\"]},\"type\":\"suppressions\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions"
       },
@@ -71,13 +57,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions?sort=-name&query=id%3Amru-avx-npf%20OR%20id%3Aqjl-xxu-vlo"
+        "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions?query=id%3Amru-avx-npf+OR+id%3Aqjl-xxu-vlo&sort=-name"
       },
       "response": {
         "body": {
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions/qjl-xxu-vlo"
       },
@@ -123,11 +101,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/configuration/suppressions/mru-avx-npf"
       },

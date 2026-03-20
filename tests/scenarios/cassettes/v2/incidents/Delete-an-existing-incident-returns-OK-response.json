@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"customer_impacted\":false,\"title\":\"Test-Delete_an_existing_incident_returns_OK_response-1771855596\"},\"type\":\"incidents\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/6248184c-3ce0-54e7-a9f3-8db44efede9d"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/6248184c-3ce0-54e7-a9f3-8db44efede9d"
       },

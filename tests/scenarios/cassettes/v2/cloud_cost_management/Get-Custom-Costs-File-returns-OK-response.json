@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/cost/custom_costs/9d055d22-a838-4e9f-bc34-a4f9ab66280c"
       },

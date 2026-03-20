@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"customer_impacted\":false,\"title\":\"Test-Get_a_list_of_an_incident_s_integration_metadata_returns_OK_response-1771855601\"},\"type\":\"incidents\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"incident_id\":\"6443dedf-4664-5a19-b321-8948ddc9d30c\",\"integration_type\":1,\"metadata\":{\"channels\":[{\"channel_id\":\"C0123456789\",\"channel_name\":\"#example-channel-name\",\"redirect_url\":\"https://slack.com/app_redirect?channel=C0123456789&team=T01234567\",\"team_id\":\"T01234567\"}]},\"status\":2},\"type\":\"incident_integrations\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/6443dedf-4664-5a19-b321-8948ddc9d30c/relationships/integrations"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/incidents/6443dedf-4664-5a19-b321-8948ddc9d30c/relationships/integrations"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/6443dedf-4664-5a19-b321-8948ddc9d30c/relationships/integrations/2d47ae0b-b4fb-5a92-b1d1-3ee1fb69445a"
       },
@@ -123,11 +101,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/6443dedf-4664-5a19-b321-8948ddc9d30c"
       },

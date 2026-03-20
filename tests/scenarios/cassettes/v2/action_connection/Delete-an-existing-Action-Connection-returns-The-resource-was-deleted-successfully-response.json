@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"integration\":{\"credentials\":{\"account_id\":\"123456789123\",\"role\":\"MyRole\",\"type\":\"AWSAssumeRole\"},\"type\":\"AWS\"},\"name\":\"Cassette Connection testdeleteanexistingactionconnectionreturnstheresourcewasdeletedsuccessfullyresponse1743020700\"},\"type\":\"action_connection\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/actions/connections"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/actions/connections/c3c3d83b-c495-4c1b-bb1d-592825d21db0"
       },
@@ -61,11 +50,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/actions/connections/c3c3d83b-c495-4c1b-bb1d-592825d21db0"
       },

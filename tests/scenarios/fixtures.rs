@@ -16,9 +16,10 @@ use regex::Regex;
 use reqwest_middleware::ClientBuilder;
 use rvcr::{VCRMiddleware, VCRMode};
 use serde_json::{json, Value};
+use vcr_cassette;
 use sha256::digest;
 use std::{
-    collections::{HashMap, HashSet},
+    collections::HashMap,
     env,
     fs::{create_dir_all, read_to_string, remove_file, File},
     io::Write,
@@ -28,6 +29,39 @@ use std::{
 };
 
 pub type TestCall = fn(&mut DatadogWorld, &HashMap<String, Value>);
+
+fn normalize_request(req: &mut vcr_cassette::Request) {
+    // Sort query parameters to handle ordering differences between clients
+    if req.uri.query().is_some() {
+        let mut pairs: Vec<(String, String)> = req
+            .uri
+            .query_pairs()
+            .map(|(k, v)| (k.into_owned(), v.into_owned()))
+            .collect();
+        pairs.sort();
+        req.uri.set_query(None);
+        {
+            let mut s = req.uri.query_pairs_mut();
+            for (k, v) in &pairs {
+                s.append_pair(k, v);
+            }
+        }
+    }
+    // Normalize JSON body: sort keys and compact formatting
+    // Also normalize JSON null to empty string (Rust sends "null" for missing optional body,
+    // but cassettes recorded by Ruby/Python use "" for empty body)
+    if !req.body.string.is_empty() {
+        match serde_json::from_str::<Value>(&req.body.string) {
+            Ok(Value::Null) => req.body.string = String::new(),
+            Ok(value) => {
+                if let Ok(normalized) = serde_json::to_string(&value) {
+                    req.body.string = normalized;
+                }
+            }
+            Err(_) => {}
+        }
+    }
+}
 
 #[derive(Debug, Default)]
 pub struct Response {
@@ -146,8 +180,8 @@ pub async fn before_scenario(
                 .expect("Failed to initialize rVCR middleware")
                 .with_mode(VCRMode::Record)
                 .with_modify_request(|req| {
-                    req.headers.remove_entry("dd-api-key");
-                    req.headers.remove_entry("dd-application-key");
+                    req.headers.clear();
+                    normalize_request(req);
                 })
                 .with_modify_response(|res| {
                     res.headers.remove_entry("content-security-policy");
@@ -166,14 +200,14 @@ pub async fn before_scenario(
             let middleware: VCRMiddleware = VCRMiddleware::try_from(cassette)
                 .expect("Failed to initialize rVCR middleware")
                 .with_mode(VCRMode::Replay)
+                .with_rich_diff(true)
                 .with_modify_request(|req| {
-                    req.headers.remove_entry("dd-api-key");
-                    req.headers.remove_entry("dd-application-key");
+                    req.headers.clear();
+                    normalize_request(req);
                 })
                 .with_modify_response(|res| {
                     res.headers.remove_entry("content-security-policy");
-                })
-                .with_request_matcher(|vcr_req, req| req_eq(vcr_req, req));
+                });
             vcr_client_builder.with(middleware)
         }
     };
@@ -679,70 +713,6 @@ fn response_is_bool(world: &mut DatadogWorld, path: String, expected: String) {
         .as_bool()
         .unwrap();
     assert_eq!(found, expected == "true");
-}
-
-fn req_eq(lhs: &vcr_cassette::Request, rhs: &vcr_cassette::Request) -> bool {
-    let mut lhs_query = urlencoding::decode(
-        lhs.uri
-            .query()
-            .unwrap_or_default()
-            .to_string()
-            .replace("+", "%20")
-            .as_str(),
-    )
-    .expect("UTF-8")
-    .to_string();
-
-    let mut rhs_query = urlencoding::decode(
-        rhs.uri
-            .query()
-            .unwrap_or_default()
-            .to_string()
-            .replace("+", "%20")
-            .as_str(),
-    )
-    .expect("UTF-8")
-    .to_string();
-
-    lhs_query = reformat_rfc3339_datetime(&lhs_query);
-    rhs_query = reformat_rfc3339_datetime(&rhs_query);
-
-    let lhs_queries: HashSet<_> = lhs_query.split("&").into_iter().collect();
-    let rhs_queries: HashSet<_> = rhs_query.split("&").into_iter().collect();
-
-    let lhs_body = lhs
-        .body
-        .string
-        .parse::<serde_json::Value>()
-        .unwrap_or_default();
-    let rhs_body = rhs
-        .body
-        .string
-        .parse::<serde_json::Value>()
-        .unwrap_or_default();
-
-    lhs.uri.scheme() == rhs.uri.scheme()
-        && lhs.uri.host() == rhs.uri.host()
-        && lhs.uri.port() == rhs.uri.port()
-        && lhs.uri.path() == rhs.uri.path()
-        && lhs_queries == rhs_queries
-        && lhs_body == rhs_body
-        && lhs.method == rhs.method
-}
-
-fn reformat_rfc3339_datetime(input: &str) -> String {
-    let re: Regex =
-        Regex::new(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})").unwrap();
-    let result = re.replace_all(input, |captures: &regex::Captures| {
-        let matched_date_time = &captures[0];
-        let parsed_date_time = DateTime::parse_from_rfc3339(matched_date_time)
-            .expect("Failed to parse datetime")
-            .with_timezone(&Utc);
-        let formatted_date_time =
-            parsed_date_time.to_rfc3339_opts(chrono::SecondsFormat::Millis, true);
-        formatted_date_time
-    });
-    result.to_string()
 }
 
 fn lookup(path: &String, object: &Value) -> Option<Value> {

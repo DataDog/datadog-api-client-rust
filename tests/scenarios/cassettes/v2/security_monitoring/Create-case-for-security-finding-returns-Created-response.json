@@ -6,14 +6,7 @@
           "string": "{\"data\":[{\"attributes\":{\"description\":\"A description\",\"title\":\"A title\"},\"relationships\":{\"findings\":{\"data\":[{\"id\":\"YjdhNDM3N2QyNTFjYmUwYTY3NDdhMTg0YTk2Yjg5MDl-ZjNmMzAwOTFkZDNhNGQzYzI0MzgxNTk4MjRjZmE2NzE=\",\"type\":\"findings\"}]},\"project\":{\"data\":{\"id\":\"959a6f71-bac8-4027-b1d3-2264f569296f\",\"type\":\"projects\"}}},\"type\":\"cases\"}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security/findings/cases"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"relationships\":{\"findings\":{\"data\":[{\"id\":\"YjdhNDM3N2QyNTFjYmUwYTY3NDdhMTg0YTk2Yjg5MDl-ZjNmMzAwOTFkZDNhNGQzYzI0MzgxNTk4MjRjZmE2NzE=\",\"type\":\"findings\"}]}},\"type\":\"cases\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "*/*"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security/findings/cases"
       },

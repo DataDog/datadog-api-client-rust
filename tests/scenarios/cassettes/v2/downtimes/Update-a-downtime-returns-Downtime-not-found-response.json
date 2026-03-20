@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"message\":\"test msg\"},\"id\":\"00000000-0000-1234-0000-000000000000\",\"type\":\"downtime\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/downtime/00000000-0000-1234-0000-000000000000"
       },

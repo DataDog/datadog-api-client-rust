@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"components\":[{\"components\":[{\"name\":\"Login\",\"position\":0,\"type\":\"component\"},{\"name\":\"Settings\",\"position\":1,\"type\":\"component\"}],\"name\":\"Application\",\"type\":\"group\"}],\"domain_prefix\":\"12fd9e2fcfbad77b\",\"enabled\":true,\"name\":\"A Status Page\",\"type\":\"internal\",\"visualization_type\":\"bars_and_uptime_percentage\"},\"type\":\"status_pages\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/statuspages"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"components_affected\":[{\"id\":\"c8bfec42-82a6-43cd-bf99-23de9c2f72a8\",\"status\":\"major_outage\"}],\"description\":\"Our API is experiencing elevated latency. We are investigating the issue.\",\"status\":\"investigating\",\"title\":\"Elevated API Latency\"},\"type\":\"degradations\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/statuspages/317cba21-cebc-4436-94df-09bbdf3d4cb6/degradations"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/statuspages/317cba21-cebc-4436-94df-09bbdf3d4cb6/degradations/3199b71f-e5a6-4651-8498-bb27cf7389f8"
       },
@@ -99,11 +81,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/statuspages/317cba21-cebc-4436-94df-09bbdf3d4cb6/degradations/3199b71f-e5a6-4651-8498-bb27cf7389f8"
       },
@@ -123,11 +101,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/statuspages/317cba21-cebc-4436-94df-09bbdf3d4cb6"
       },

@@ -6,14 +6,7 @@
           "string": "{\"dashboard_id\":\"abc-123-def\",\"dashboard_type\":\"custom_timeboard\",\"global_time\":{\"live_span\":\"1h\"},\"share_type\":\"open\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/public"
       },

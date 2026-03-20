@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"vuln_containers_os\":false},\"id\":\"api-spec-test\",\"type\":\"gcp_scan_options\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/agentless_scanning/accounts/gcp/api-spec-test"
       },

@@ -6,14 +6,7 @@
           "string": "{\"filter\":{\"from\":\"now-15m\",\"to\":\"now\"},\"options\":{\"timezone\":\"GMT\"},\"page\":{\"limit\":2},\"sort\":\"timestamp\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/audit/events/search"
       },
@@ -40,14 +33,7 @@
           "string": "{\"filter\":{\"from\":\"now-15m\",\"to\":\"now\"},\"options\":{\"timezone\":\"GMT\"},\"page\":{\"cursor\":\"eyJhZnRlciI6IkFRQUFBWUFpT2hZV1JxeFgzUUFBQUFCQldVRnBUMmh2VFVGQlFrczVOa2wwVFZKVFYycEJRVUUifQ\",\"limit\":2},\"sort\":\"timestamp\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/audit/events/search"
       },

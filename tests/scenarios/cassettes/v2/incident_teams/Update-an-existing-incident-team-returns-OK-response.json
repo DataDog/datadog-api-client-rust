@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Update_an_existing_incident_team_returns_OK_response-1699307975\"},\"type\":\"teams\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/teams"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Update_an_existing_incident_team_returns_OK_response-1699307975-updated\"},\"type\":\"teams\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/teams/90c4f5c8-5965-533e-8b56-cffad17e03bf"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/teams/90c4f5c8-5965-533e-8b56-cffad17e03bf"
       },

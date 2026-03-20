@@ -6,14 +6,7 @@
           "string": "{\"layout_type\":\"ordered\",\"title\":\"Test-Create_a_new_dashboard_with_timeseries_widget_without_order_by_for_backward_compatibility-1768952415 without order_by\",\"widgets\":[{\"definition\":{\"requests\":[{\"display_type\":\"line\",\"q\":\"avg:system.cpu.user{*} by {host}\",\"style\":{\"line_type\":\"solid\",\"line_width\":\"normal\",\"palette\":\"dog_classic\"}}],\"type\":\"timeseries\"}}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/dashboard"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/dashboard/6bg-rgq-fxc"
       },

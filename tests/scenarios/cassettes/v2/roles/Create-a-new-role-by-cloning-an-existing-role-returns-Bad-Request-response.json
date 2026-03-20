@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Create_a_new_role_by_cloning_an_existing_role_returns_Bad_Request_response-1652349157\"},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"    \"},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles/416935ae-d1d9-11ec-ad3d-da7ad0900002/clone"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/roles/416935ae-d1d9-11ec-ad3d-da7ad0900002"
       },

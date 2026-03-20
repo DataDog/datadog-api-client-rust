@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"handle\":\"test-handle-72b192d95e937252\",\"name\":\"test-name-72b192d95e937252\"},\"type\":\"team\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"email\":{\"enabled\":true},\"slack\":{\"channel\":\"aaa-omg-ops\",\"workspace\":\"Datadog\"}},\"type\":\"team_notification_rules\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/team/04eae0c8-e225-4f2c-97ec-39dab13dfc38/notification-rules"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/team/04eae0c8-e225-4f2c-97ec-39dab13dfc38"
       },

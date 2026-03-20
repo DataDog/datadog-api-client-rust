@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"filter\":{\"tags\":[\"app:test-update_a_monitor_notification_rule_returns_bad_request_response-1748486181\"]},\"name\":\"test rule\",\"recipients\":[\"slack-monitor-app\"]},\"type\":\"monitor-notification-rule\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/monitor/notification_rule"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"filter\":{\"tags\":[\"test:test-update_a_monitor_notification_rule_returns_bad_request_response-1748486181\",\"host:abc\"]},\"name\":\"updated rule\",\"recipients\":[\"@slack-test-channel\"]},\"id\":\"571a01f1-8f6f-4792-9f4a-0aa99f9b2365\",\"type\":\"monitor-notification-rule\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/monitor/notification_rule/571a01f1-8f6f-4792-9f4a-0aa99f9b2365"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/monitor/notification_rule/571a01f1-8f6f-4792-9f4a-0aa99f9b2365"
       },

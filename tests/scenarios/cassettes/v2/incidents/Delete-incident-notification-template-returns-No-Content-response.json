@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"Any incidents that harm (or have the potential to) the confidentiality, integrity, or availability of our data.\",\"is_default\":false,\"name\":\"Security Incident\"},\"type\":\"incident_types\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/types"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"category\":\"alert\",\"content\":\"Test notification template\",\"name\":\"Test Template Test-Delete_incident_notification_template_returns_No_Content_response-1771855600\",\"subject\":\"Test Subject\"},\"relationships\":{\"incident_type\":{\"data\":{\"id\":\"486b278d-6bd2-4eb4-950b-5985c3ed155f\",\"type\":\"incident_types\"}}},\"type\":\"notification_templates\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/notification-templates"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/notification-templates/4e29aefe-98c5-4cdf-a837-2a916bc79395"
       },
@@ -95,11 +77,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/notification-templates/4e29aefe-98c5-4cdf-a837-2a916bc79395"
       },
@@ -123,11 +101,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/incidents/config/types/486b278d-6bd2-4eb4-950b-5985c3ed155f"
       },

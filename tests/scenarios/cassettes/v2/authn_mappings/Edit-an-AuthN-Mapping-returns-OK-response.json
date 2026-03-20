@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Edit_an_AuthN_Mapping_returns_OK_response-1652349071\"},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"attribute_key\":\"testeditanauthnmappingreturnsokresponse1652349071\",\"attribute_value\":\"Test-Edit_an_AuthN_Mapping_returns_OK_response-1652349071\"},\"relationships\":{\"role\":{\"data\":{\"id\":\"0e6f2848-d1d9-11ec-ad3d-da7ad0900002\",\"type\":\"roles\"}}},\"type\":\"authn_mappings\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/authn_mappings"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"attributes\":{\"attribute_key\":\"member-of\",\"attribute_value\":\"Development\"},\"id\":\"0ece1b8c-d1d9-11ec-ad3d-da7ad0900002\",\"relationships\":{\"role\":{\"data\":{\"id\":\"0e6f2848-d1d9-11ec-ad3d-da7ad0900002\",\"type\":\"roles\"}}},\"type\":\"authn_mappings\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "patch",
         "uri": "https://api.datadoghq.com/api/v2/authn_mappings/0ece1b8c-d1d9-11ec-ad3d-da7ad0900002"
       },
@@ -105,11 +84,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/authn_mappings/0ece1b8c-d1d9-11ec-ad3d-da7ad0900002"
       },
@@ -129,11 +104,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/roles/0e6f2848-d1d9-11ec-ad3d-da7ad0900002"
       },

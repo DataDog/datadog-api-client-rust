@@ -3,13 +3,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/scorecard/rules?page%5Bsize%5D=2&fields%5Brule%5D=name&filter%5Brule%5D%5Bcustom%5D=true"
+        "uri": "https://api.datadoghq.com/api/v2/scorecard/rules?fields%5Brule%5D=name&filter%5Brule%5D%5Bcustom%5D=true&page%5Bsize%5D=2"
       },
       "response": {
         "body": {
@@ -31,13 +27,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/scorecard/rules?page%5Bsize%5D=2&page%5Boffset%5D=2&fields%5Brule%5D=name&filter%5Brule%5D%5Bcustom%5D=true"
+        "uri": "https://api.datadoghq.com/api/v2/scorecard/rules?fields%5Brule%5D=name&filter%5Brule%5D%5Bcustom%5D=true&page%5Boffset%5D=2&page%5Bsize%5D=2"
       },
       "response": {
         "body": {
@@ -59,13 +51,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/scorecard/rules?page%5Bsize%5D=2&page%5Boffset%5D=4&fields%5Brule%5D=name&filter%5Brule%5D%5Bcustom%5D=true"
+        "uri": "https://api.datadoghq.com/api/v2/scorecard/rules?fields%5Brule%5D=name&filter%5Brule%5D%5Bcustom%5D=true&page%5Boffset%5D=4&page%5Bsize%5D=2"
       },
       "response": {
         "body": {

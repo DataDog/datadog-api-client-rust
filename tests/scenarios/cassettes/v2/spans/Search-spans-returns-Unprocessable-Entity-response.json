@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"filter\":{\"from\":\"now\",\"query\":\"service:web* AND @http.status_code:[200 TO 299]\",\"to\":\"now-15m\"},\"options\":{\"timezone\":\"GMT\"},\"page\":{\"limit\":10},\"sort\":\"timestamp\"},\"type\":\"search_request\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/spans/events/search"
       },

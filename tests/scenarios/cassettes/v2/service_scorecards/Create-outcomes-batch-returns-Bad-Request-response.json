@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"enabled\":true,\"name\":\"Test-Create_outcomes_batch_returns_Bad_Request_response-1698959951\",\"owner\":\"Datadog\",\"scorecard_name\":\"OpenAPI Spec Test Best Practices\"},\"type\":\"rule\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/scorecard/rules"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"results\":[{\"remarks\":\"See: <a href=\\\"https://app.datadoghq.com/services\\\">Services</a>\",\"rule_id\":\"0451feb1-fb1b-463f-ba02-4568feb2795b\",\"service_name\":\"\",\"state\":\"pass\"}]},\"type\":\"batched-outcome\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/scorecard/outcomes/batch"
       },
@@ -71,11 +57,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/scorecard/rules/0451feb1-fb1b-463f-ba02-4568feb2795b"
       },

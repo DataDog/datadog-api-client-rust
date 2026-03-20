@@ -6,14 +6,7 @@
           "string": "{\"name\":\"Test-Get_an_SLO_s_details_returns_OK_response-1704322488\",\"query\":{\"denominator\":\"sum:httpservice.hits{!code:3xx}.as_count()\",\"numerator\":\"sum:httpservice.hits{code:2xx}.as_count()\"},\"thresholds\":[{\"target\":95,\"timeframe\":\"7d\",\"warning\":98}],\"type\":\"metric\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/slo"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v1/slo/ebf2e048f49a5134b61a586438c66505"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/slo/ebf2e048f49a5134b61a586438c66505"
       },

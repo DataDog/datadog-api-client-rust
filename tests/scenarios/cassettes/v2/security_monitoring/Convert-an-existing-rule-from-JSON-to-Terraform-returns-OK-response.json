@@ -6,14 +6,7 @@
           "string": "{\"cases\":[{\"condition\":\"a > 0\",\"name\":\"\",\"notifications\":[],\"status\":\"info\"}],\"filters\":[],\"isEnabled\":true,\"message\":\"Test rule\",\"name\":\"_1166a375f2500467\",\"options\":{\"evaluationWindow\":900,\"keepAlive\":3600,\"maxSignalDuration\":86400},\"queries\":[{\"aggregation\":\"count\",\"distinctFields\":[],\"groupByFields\":[],\"metrics\":[],\"query\":\"@test:true\"}],\"tags\":[],\"type\":\"log_detection\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules/shm-tx8-e8x/convert"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security_monitoring/rules/shm-tx8-e8x"
       },

@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"description\":\"\",\"name\":\"Test Datastore\",\"org_access\":\"contributor\",\"primary_column_name\":\"id\",\"primary_key_generation_strategy\":\"none\"},\"type\":\"datastores\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/actions-datastores"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/actions-datastores/8185f4a4-6cf6-4fde-a705-e248effe50fc"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/actions-datastores/8185f4a4-6cf6-4fde-a705-e248effe50fc"
       },

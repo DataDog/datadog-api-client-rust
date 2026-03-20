@@ -6,14 +6,7 @@
           "string": "{\"config\":{\"assertions\":[{\"operator\":\"is\",\"target\":1,\"type\":\"grpcHealthcheckStatus\"},{\"operator\":\"is\",\"target\":\"proto target\",\"type\":\"grpcProto\"},{\"operator\":\"is\",\"property\":\"property\",\"target\":\"123\",\"type\":\"grpcMetadata\"}],\"request\":{\"host\":\"localhost\",\"message\":\"\",\"metadata\":{},\"method\":\"GET\",\"port\":50051,\"service\":\"Hello\"}},\"locations\":[\"aws:us-east-2\"],\"message\":\"BDD test payload: synthetics_api_grpc_test_payload.json\",\"name\":\"Test-Create_an_API_GRPC_test_returns_OK_Returns_the_created_test_details_response-1733743075\",\"options\":{\"min_failure_duration\":0,\"min_location_failed\":1,\"monitor_name\":\"Test-Create_an_API_GRPC_test_returns_OK_Returns_the_created_test_details_response-1733743075\",\"monitor_options\":{\"renotify_interval\":0},\"tick_every\":60},\"subtype\":\"grpc\",\"tags\":[\"testing:api\"],\"type\":\"api\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/api"
       },
@@ -40,14 +33,7 @@
           "string": "{\"public_ids\":[\"ysc-nuq-x8y\"]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/synthetics/tests/delete"
       },

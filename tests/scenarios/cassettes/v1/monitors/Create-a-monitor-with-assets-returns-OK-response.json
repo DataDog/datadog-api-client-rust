@@ -6,14 +6,7 @@
           "string": "{\"assets\":[{\"category\":\"runbook\",\"name\":\"Monitor Runbook\",\"resource_key\":\"12345\",\"resource_type\":\"notebook\",\"url\":\"/notebooks/12345\"}],\"message\":\"some message Notify: @hipchat-channel\",\"name\":\"Test-Create_a_monitor_with_assets_returns_OK_response-1763751895\",\"options\":{\"scheduling_options\":{\"evaluation_window\":{\"day_starts\":\"04:00\",\"month_starts\":1}},\"thresholds\":{\"critical\":0.5}},\"query\":\"avg(current_1mo):avg:system.load.5{*} > 0.5\",\"type\":\"metric alert\"}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v1/monitor"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v1/monitor/238681257"
       },

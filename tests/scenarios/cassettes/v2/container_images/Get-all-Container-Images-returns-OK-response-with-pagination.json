@@ -3,11 +3,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/container_images?page%5Bsize%5D=2"
       },
@@ -31,13 +27,9 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/container_images?page%5Bsize%5D=2&page%5Bcursor%5D=bmFtZTowMTM5MTA3MzM1MTIuZGtyLmVjci51cy1lYXN0LTEuYW1hem9uYXdzLmNvbS9hcmdvfGlkOjAxMzkxMDczMzUxMi5ka3IuZWNyLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tL2FyZ29Ac2hhMjU2OjNlYWJjNzMwY2RiOTBiMWQ1N2QwNTkyNzJkZWQ3OWQ5NzZkNzk1ZTk0NzM0M2Q0NWFjMjA5MGViZjVmY2I2MTk%3D"
+        "uri": "https://api.datadoghq.com/api/v2/container_images?page%5Bcursor%5D=bmFtZTowMTM5MTA3MzM1MTIuZGtyLmVjci51cy1lYXN0LTEuYW1hem9uYXdzLmNvbS9hcmdvfGlkOjAxMzkxMDczMzUxMi5ka3IuZWNyLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tL2FyZ29Ac2hhMjU2OjNlYWJjNzMwY2RiOTBiMWQ1N2QwNTkyNzJkZWQ3OWQ5NzZkNzk1ZTk0NzM0M2Q0NWFjMjA5MGViZjVmY2I2MTk%3D&page%5Bsize%5D=2"
       },
       "response": {
         "body": {

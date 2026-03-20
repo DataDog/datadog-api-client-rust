@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"email\":\"Test-Get_user_memberships_returns_Represents_a_user_s_association_to_a_team_response-1692647090@datadoghq.com\",\"title\":\"user title\"},\"type\":\"users\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/users"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/users/30e03059-405b-11ee-9a91-1a2c4720b59d/memberships"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/users/30e03059-405b-11ee-9a91-1a2c4720b59d"
       },

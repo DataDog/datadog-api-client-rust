@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"dry_run\":true},\"id\":\"invalid-gate-id\",\"type\":\"deployment_gate\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/deployment_gates/invalid-gate-id"
       },

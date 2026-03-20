@@ -6,14 +6,7 @@
           "string": "[{\"BilledCost\":250,\"BillingCurrency\":\"USD\",\"ChargeDescription\":\"my_description\",\"ChargePeriodEnd\":\"2023-06-06\",\"ChargePeriodStart\":\"2023-05-06\",\"ProviderName\":\"my_provider\",\"Tags\":{\"key\":\"value\"}}]",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/cost/custom_costs"
       },

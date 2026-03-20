@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"product_code\":\"\",\"user_uuids\":[\"\"]},\"type\":\"seat-assignments\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "*/*"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/seats/users"
       },

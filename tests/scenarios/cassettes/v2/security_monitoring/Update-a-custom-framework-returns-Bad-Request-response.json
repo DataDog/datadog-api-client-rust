@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"handle\":\"\",\"name\":\"\",\"requirements\":[{\"controls\":[{\"name\":\"\",\"rules_id\":[\"\"]}],\"name\":\"\"}],\"version\":\"\"},\"type\":\"custom_framework\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "put",
         "uri": "https://api.datadoghq.com/api/v2/cloud_security_management/custom_frameworks/create-framework-new/10"
       },

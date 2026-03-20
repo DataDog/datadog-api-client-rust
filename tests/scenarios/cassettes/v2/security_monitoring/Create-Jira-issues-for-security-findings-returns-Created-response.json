@@ -6,14 +6,7 @@
           "string": "{\"data\":[{\"attributes\":{\"description\":\"A description\",\"title\":\"A title\"},\"relationships\":{\"findings\":{\"data\":[{\"id\":\"eWswLWJsdC1hZm5-aS0wMjRlYTgwMzVkZTU1MGIwYQ==\",\"type\":\"findings\"}]},\"project\":{\"data\":{\"id\":\"959a6f71-bac8-4027-b1d3-2264f569296f\",\"type\":\"projects\"}}},\"type\":\"jira_issues\"},{\"attributes\":{\"description\":\"A description\",\"title\":\"A title\"},\"relationships\":{\"findings\":{\"data\":[{\"id\":\"a3ZoLXNjbS14eXV-aS0wNWY5MGYwMGE4NDg2ODdlOA==\",\"type\":\"findings\"}]},\"project\":{\"data\":{\"id\":\"959a6f71-bac8-4027-b1d3-2264f569296f\",\"type\":\"projects\"}}},\"type\":\"jira_issues\"}]}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/security/findings/jira_issues"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"relationships\":{\"findings\":{\"data\":[{\"id\":\"eWswLWJsdC1hZm5-aS0wMjRlYTgwMzVkZTU1MGIwYQ==\",\"type\":\"findings\"}]}},\"type\":\"cases\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "*/*"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/security/findings/cases"
       },

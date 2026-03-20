@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"name\":\"Test-Update_a_restriction_policy_returns_Bad_Request_response-1676406317\"},\"type\":\"roles\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles"
       },
@@ -40,14 +33,7 @@
           "string": "{\"data\":{\"attributes\":{\"email\":\"Test-Update_a_restriction_policy_returns_Bad_Request_response-1676406317@datadoghq.com\",\"title\":\"user title\"},\"type\":\"users\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/users"
       },
@@ -74,14 +60,7 @@
           "string": "{\"data\":{\"id\":\"b2ca0a63-aca5-11ed-ad1d-9ae79f61138a\",\"type\":\"users\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/roles/b27c878a-aca5-11ed-bc84-da7ad0900002/users"
       },
@@ -108,14 +87,7 @@
           "string": "{\"data\":{\"attributes\":{\"bindings\":[{\"principals\":[\"org:4dee724d-00cc-11ea-a77b-570c9d03c6c5\"],\"relation\":\"editor\"}]},\"id\":\"dashboard:abc-def-ghi\",\"type\":\"restriction_policy\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/restriction_policy/malformed"
       },
@@ -139,11 +111,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/users/b2ca0a63-aca5-11ed-ad1d-9ae79f61138a"
       },
@@ -163,11 +131,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/roles/b27c878a-aca5-11ed-bc84-da7ad0900002"
       },

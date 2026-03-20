@@ -6,14 +6,7 @@
           "string": "{\"data\":{\"attributes\":{\"auth_method\":\"oauth\",\"client_id\":\"fakeclientid\",\"client_secret\":\"fakeclientsecret\",\"domain\":\"https://dev-test.okta.com/\",\"name\":\"testlistoktaaccountsreturnsokresponse1700585986\"},\"type\":\"okta-accounts\"}}",
           "encoding": null
         },
-        "headers": {
-          "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "post",
         "uri": "https://api.datadoghq.com/api/v2/integrations/okta/accounts"
       },
@@ -37,11 +30,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "application/json"
-          ]
-        },
+        "headers": {},
         "method": "get",
         "uri": "https://api.datadoghq.com/api/v2/integrations/okta/accounts"
       },
@@ -65,11 +54,7 @@
     {
       "request": {
         "body": "",
-        "headers": {
-          "Accept": [
-            "*/*"
-          ]
-        },
+        "headers": {},
         "method": "delete",
         "uri": "https://api.datadoghq.com/api/v2/integrations/okta/accounts/a5e9a04b-ac5b-4a5c-a4d5-c697deb232aa"
       },
