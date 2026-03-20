@@ -64,6 +64,22 @@ impl CreateIncidentImpactOptionalParams {
     }
 }
 
+/// CreateIncidentUserDefinedFieldOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::create_incident_user_defined_field`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct CreateIncidentUserDefinedFieldOptionalParams {
+    /// Comma-separated list of related resources to include. Supported values are "last_modified_by_user", "created_by_user", and "incident_type".
+    pub include: Option<String>,
+}
+
+impl CreateIncidentUserDefinedFieldOptionalParams {
+    /// Comma-separated list of related resources to include. Supported values are "last_modified_by_user", "created_by_user", and "incident_type".
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// DeleteIncidentNotificationRuleOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::delete_incident_notification_rule`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -144,6 +160,22 @@ impl GetIncidentNotificationTemplateOptionalParams {
     }
 }
 
+/// GetIncidentUserDefinedFieldOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::get_incident_user_defined_field`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetIncidentUserDefinedFieldOptionalParams {
+    /// Comma-separated list of related resources to include. Supported values are "last_modified_by_user", "created_by_user", and "incident_type".
+    pub include: Option<String>,
+}
+
+impl GetIncidentUserDefinedFieldOptionalParams {
+    /// Comma-separated list of related resources to include. Supported values are "last_modified_by_user", "created_by_user", and "incident_type".
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ImportIncidentOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::import_incident`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -159,6 +191,29 @@ impl ImportIncidentOptionalParams {
         value: Vec<crate::datadogV2::model::IncidentImportRelatedObject>,
     ) -> Self {
         self.include = Some(value);
+        self
+    }
+}
+
+/// ImportIncidentUserDefinedFieldValuesOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::import_incident_user_defined_field_values`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ImportIncidentUserDefinedFieldValuesOptionalParams {
+    /// A CSV file where each distinct value in the first column is imported as a valid value.
+    pub file: Option<Vec<u8>>,
+    /// When "true", "True", or "1", replaces all existing valid values with the imported values. Otherwise, appends the imported values to the existing list.
+    pub replace_values: Option<String>,
+}
+
+impl ImportIncidentUserDefinedFieldValuesOptionalParams {
+    /// A CSV file where each distinct value in the first column is imported as a valid value.
+    pub fn file(mut self, value: Vec<u8>) -> Self {
+        self.file = Some(value);
+        self
+    }
+    /// When "true", "True", or "1", replaces all existing valid values with the imported values. Otherwise, appends the imported values to the existing list.
+    pub fn replace_values(mut self, value: String) -> Self {
+        self.replace_values = Some(value);
         self
     }
 }
@@ -272,6 +327,50 @@ impl ListIncidentTypesOptionalParams {
     /// Include deleted incident types in the response.
     pub fn include_deleted(mut self, value: bool) -> Self {
         self.include_deleted = Some(value);
+        self
+    }
+}
+
+/// ListIncidentUserDefinedFieldsOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::list_incident_user_defined_fields`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListIncidentUserDefinedFieldsOptionalParams {
+    /// The number of results to return per page. Must be between 0 and 1000.
+    pub page_size: Option<i64>,
+    /// The page number to retrieve, starting at 0.
+    pub page_number: Option<i64>,
+    /// When true, include soft-deleted fields in the response.
+    pub include_deleted: Option<bool>,
+    /// Filter results to fields associated with the given incident type UUID.
+    pub filter_incident_type: Option<String>,
+    /// Comma-separated list of related resources to include. Supported values are "last_modified_by_user", "created_by_user", and "incident_type".
+    pub include: Option<String>,
+}
+
+impl ListIncidentUserDefinedFieldsOptionalParams {
+    /// The number of results to return per page. Must be between 0 and 1000.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// The page number to retrieve, starting at 0.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// When true, include soft-deleted fields in the response.
+    pub fn include_deleted(mut self, value: bool) -> Self {
+        self.include_deleted = Some(value);
+        self
+    }
+    /// Filter results to fields associated with the given incident type UUID.
+    pub fn filter_incident_type(mut self, value: String) -> Self {
+        self.filter_incident_type = Some(value);
+        self
+    }
+    /// Comma-separated list of related resources to include. Supported values are "last_modified_by_user", "created_by_user", and "incident_type".
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
         self
     }
 }
@@ -423,6 +522,22 @@ impl UpdateIncidentNotificationTemplateOptionalParams {
     }
 }
 
+/// UpdateIncidentUserDefinedFieldOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::update_incident_user_defined_field`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct UpdateIncidentUserDefinedFieldOptionalParams {
+    /// Comma-separated list of related resources to include. Supported values are "last_modified_by_user", "created_by_user", and "incident_type".
+    pub include: Option<String>,
+}
+
+impl UpdateIncidentUserDefinedFieldOptionalParams {
+    /// Comma-separated list of related resources to include. Supported values are "last_modified_by_user", "created_by_user", and "incident_type".
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// CreateGlobalIncidentHandleError is a struct for typed errors of method [`IncidentsAPI::create_global_incident_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -514,6 +629,15 @@ pub enum CreateIncidentTypeError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateIncidentUserDefinedFieldError is a struct for typed errors of method [`IncidentsAPI::create_incident_user_defined_field`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateIncidentUserDefinedFieldError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteGlobalIncidentHandleError is a struct for typed errors of method [`IncidentsAPI::delete_global_incident_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -596,6 +720,15 @@ pub enum DeleteIncidentTypeError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteIncidentUserDefinedFieldError is a struct for typed errors of method [`IncidentsAPI::delete_incident_user_defined_field`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteIncidentUserDefinedFieldError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetGlobalIncidentSettingsError is a struct for typed errors of method [`IncidentsAPI::get_global_incident_settings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -662,10 +795,28 @@ pub enum GetIncidentTypeError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetIncidentUserDefinedFieldError is a struct for typed errors of method [`IncidentsAPI::get_incident_user_defined_field`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetIncidentUserDefinedFieldError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ImportIncidentError is a struct for typed errors of method [`IncidentsAPI::import_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ImportIncidentError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ImportIncidentUserDefinedFieldValuesError is a struct for typed errors of method [`IncidentsAPI::import_incident_user_defined_field_values`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ImportIncidentUserDefinedFieldValuesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -740,6 +891,15 @@ pub enum ListIncidentTodosError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListIncidentTypesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListIncidentUserDefinedFieldsError is a struct for typed errors of method [`IncidentsAPI::list_incident_user_defined_fields`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListIncidentUserDefinedFieldsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -839,6 +999,15 @@ pub enum UpdateIncidentTodoError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateIncidentTypeError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateIncidentUserDefinedFieldError is a struct for typed errors of method [`IncidentsAPI::update_incident_user_defined_field`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateIncidentUserDefinedFieldError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2763,6 +2932,181 @@ impl IncidentsAPI {
         }
     }
 
+    /// Create an incident user-defined field.
+    pub async fn create_incident_user_defined_field(
+        &self,
+        body: crate::datadogV2::model::IncidentUserDefinedFieldCreateRequest,
+        params: CreateIncidentUserDefinedFieldOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::IncidentUserDefinedFieldResponse,
+        datadog::Error<CreateIncidentUserDefinedFieldError>,
+    > {
+        match self
+            .create_incident_user_defined_field_with_http_info(body, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create an incident user-defined field.
+    pub async fn create_incident_user_defined_field_with_http_info(
+        &self,
+        body: crate::datadogV2::model::IncidentUserDefinedFieldCreateRequest,
+        params: CreateIncidentUserDefinedFieldOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldResponse>,
+        datadog::Error<CreateIncidentUserDefinedFieldError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_incident_user_defined_field";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_incident_user_defined_field' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/incidents/config/user-defined-fields",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedFieldResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateIncidentUserDefinedFieldError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Delete a global incident handle.
     pub async fn delete_global_incident_handle(
         &self,
@@ -3772,6 +4116,106 @@ impl IncidentsAPI {
         }
     }
 
+    /// Delete an incident user-defined field.
+    pub async fn delete_incident_user_defined_field(
+        &self,
+        field_id: String,
+    ) -> Result<(), datadog::Error<DeleteIncidentUserDefinedFieldError>> {
+        match self
+            .delete_incident_user_defined_field_with_http_info(field_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete an incident user-defined field.
+    pub async fn delete_incident_user_defined_field_with_http_info(
+        &self,
+        field_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentUserDefinedFieldError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_incident_user_defined_field";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_incident_user_defined_field' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/incidents/config/user-defined-fields/{field_id}",
+            local_configuration.get_operation_host(operation_id),
+            field_id = datadog::urlencode(field_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteIncidentUserDefinedFieldError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Retrieve global incident settings for the organization.
     pub async fn get_global_incident_settings(
         &self,
@@ -4758,6 +5202,136 @@ impl IncidentsAPI {
         }
     }
 
+    /// Get details of an incident user-defined field.
+    pub async fn get_incident_user_defined_field(
+        &self,
+        field_id: String,
+        params: GetIncidentUserDefinedFieldOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::IncidentUserDefinedFieldResponse,
+        datadog::Error<GetIncidentUserDefinedFieldError>,
+    > {
+        match self
+            .get_incident_user_defined_field_with_http_info(field_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get details of an incident user-defined field.
+    pub async fn get_incident_user_defined_field_with_http_info(
+        &self,
+        field_id: String,
+        params: GetIncidentUserDefinedFieldOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldResponse>,
+        datadog::Error<GetIncidentUserDefinedFieldError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_incident_user_defined_field";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_incident_user_defined_field' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/incidents/config/user-defined-fields/{field_id}",
+            local_configuration.get_operation_host(operation_id),
+            field_id = datadog::urlencode(field_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedFieldResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetIncidentUserDefinedFieldError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Import an incident from an external system. This endpoint allows you to create incidents with
     /// historical data such as custom timestamps for detection, declaration, and resolution.
     /// Imported incidents do not execute integrations or notification rules.
@@ -4929,6 +5503,165 @@ impl IncidentsAPI {
             };
         } else {
             let local_entity: Option<ImportIncidentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Import valid values for an incident user-defined field from a CSV file. Only supported for dropdown, multiselect, and autocomplete field types.
+    pub async fn import_incident_user_defined_field_values(
+        &self,
+        field_id: String,
+        params: ImportIncidentUserDefinedFieldValuesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::IncidentUserDefinedFieldResponse,
+        datadog::Error<ImportIncidentUserDefinedFieldValuesError>,
+    > {
+        match self
+            .import_incident_user_defined_field_values_with_http_info(field_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Import valid values for an incident user-defined field from a CSV file. Only supported for dropdown, multiselect, and autocomplete field types.
+    pub async fn import_incident_user_defined_field_values_with_http_info(
+        &self,
+        field_id: String,
+        params: ImportIncidentUserDefinedFieldValuesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldResponse>,
+        datadog::Error<ImportIncidentUserDefinedFieldValuesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.import_incident_user_defined_field_values";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.import_incident_user_defined_field_values' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let file = params.file;
+        let replace_values = params.replace_values;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/incidents/config/fields/{field_id}/values/import",
+            local_configuration.get_operation_host(operation_id),
+            field_id = datadog::urlencode(field_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = replace_values {
+            local_req_builder =
+                local_req_builder.query(&[("replace_values", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Content-Type",
+            HeaderValue::from_static("multipart/form-data"),
+        );
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build form parameters
+        if let Some(file) = file {
+            let mut local_form = form_data_builder::FormData::new(Vec::new());
+            let cursor = std::io::Cursor::new(file);
+            if let Err(e) = local_form.write_file(
+                "file",
+                cursor,
+                Some("file".as_ref()),
+                "application/octet-stream",
+            ) {
+                return Err(crate::datadog::Error::Io(e));
+            };
+            headers.insert(
+                "Content-Type",
+                local_form.content_type_header().parse().unwrap(),
+            );
+            let form_result = local_form.finish();
+            match form_result {
+                Ok(form) => local_req_builder = local_req_builder.body(form),
+                Err(e) => return Err(crate::datadog::Error::Io(e)),
+            };
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedFieldResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ImportIncidentUserDefinedFieldValuesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -6057,6 +6790,154 @@ impl IncidentsAPI {
             };
         } else {
             let local_entity: Option<ListIncidentTypesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a list of all incident user-defined fields.
+    pub async fn list_incident_user_defined_fields(
+        &self,
+        params: ListIncidentUserDefinedFieldsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::IncidentUserDefinedFieldListResponse,
+        datadog::Error<ListIncidentUserDefinedFieldsError>,
+    > {
+        match self
+            .list_incident_user_defined_fields_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of all incident user-defined fields.
+    pub async fn list_incident_user_defined_fields_with_http_info(
+        &self,
+        params: ListIncidentUserDefinedFieldsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldListResponse>,
+        datadog::Error<ListIncidentUserDefinedFieldsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_incident_user_defined_fields";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_incident_user_defined_fields' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+        let include_deleted = params.include_deleted;
+        let filter_incident_type = params.filter_incident_type;
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/incidents/config/user-defined-fields",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_deleted {
+            local_req_builder =
+                local_req_builder.query(&[("include-deleted", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_incident_type {
+            local_req_builder = local_req_builder
+                .query(&[("filter[incident-type]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::IncidentUserDefinedFieldListResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListIncidentUserDefinedFieldsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -8145,6 +9026,184 @@ impl IncidentsAPI {
             };
         } else {
             let local_entity: Option<UpdateIncidentTypeError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update an incident user-defined field.
+    pub async fn update_incident_user_defined_field(
+        &self,
+        field_id: String,
+        body: crate::datadogV2::model::IncidentUserDefinedFieldUpdateRequest,
+        params: UpdateIncidentUserDefinedFieldOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::IncidentUserDefinedFieldResponse,
+        datadog::Error<UpdateIncidentUserDefinedFieldError>,
+    > {
+        match self
+            .update_incident_user_defined_field_with_http_info(field_id, body, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update an incident user-defined field.
+    pub async fn update_incident_user_defined_field_with_http_info(
+        &self,
+        field_id: String,
+        body: crate::datadogV2::model::IncidentUserDefinedFieldUpdateRequest,
+        params: UpdateIncidentUserDefinedFieldOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::IncidentUserDefinedFieldResponse>,
+        datadog::Error<UpdateIncidentUserDefinedFieldError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_incident_user_defined_field";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_incident_user_defined_field' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/incidents/config/user-defined-fields/{field_id}",
+            local_configuration.get_operation_host(operation_id),
+            field_id = datadog::urlencode(field_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::IncidentUserDefinedFieldResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateIncidentUserDefinedFieldError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
