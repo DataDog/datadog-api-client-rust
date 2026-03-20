@@ -15,6 +15,10 @@ pub struct LogsExclusionFilter {
     /// Scope down exclusion filter to only a subset of logs with a log query.
     #[serde(rename = "query")]
     pub query: Option<String>,
+    /// Sample attribute to use for the sampling of logs going through this exclusion filter.
+    /// When set, only the logs with the specified attribute are sampled.
+    #[serde(rename = "sample_attribute")]
+    pub sample_attribute: Option<String>,
     /// Sample rate to apply to logs going through this exclusion filter,
     /// a value of 1.0 excludes all logs matching the query.
     #[serde(rename = "sample_rate")]
@@ -30,6 +34,7 @@ impl LogsExclusionFilter {
     pub fn new(sample_rate: f64) -> LogsExclusionFilter {
         LogsExclusionFilter {
             query: None,
+            sample_attribute: None,
             sample_rate,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -38,6 +43,11 @@ impl LogsExclusionFilter {
 
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
+        self
+    }
+
+    pub fn sample_attribute(mut self, value: String) -> Self {
+        self.sample_attribute = Some(value);
         self
     }
 
@@ -68,6 +78,7 @@ impl<'de> Deserialize<'de> for LogsExclusionFilter {
                 M: MapAccess<'a>,
             {
                 let mut query: Option<String> = None;
+                let mut sample_attribute: Option<String> = None;
                 let mut sample_rate: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -82,6 +93,13 @@ impl<'de> Deserialize<'de> for LogsExclusionFilter {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sample_attribute" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sample_attribute =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "sample_rate" => {
                             sample_rate =
@@ -99,6 +117,7 @@ impl<'de> Deserialize<'de> for LogsExclusionFilter {
 
                 let content = LogsExclusionFilter {
                     query,
+                    sample_attribute,
                     sample_rate,
                     additional_properties,
                     _unparsed,
