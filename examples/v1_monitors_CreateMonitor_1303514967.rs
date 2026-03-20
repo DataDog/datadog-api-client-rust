@@ -3,8 +3,8 @@ use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_monitors::MonitorsAPI;
 use datadog_api_client::datadogV1::model::Monitor;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionCostAggregator;
+use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionCostDataSource;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionCostQueryDefinition;
-use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionMetricsDataSource;
 use datadog_api_client::datadogV1::model::MonitorFormulaAndFunctionQueryDefinition;
 use datadog_api_client::datadogV1::model::MonitorOptions;
 use datadog_api_client::datadogV1::model::MonitorThresholds;
@@ -28,7 +28,7 @@ async fn main() {
                             MonitorFormulaAndFunctionQueryDefinition::MonitorFormulaAndFunctionCostQueryDefinition(
                                 Box::new(
                                     MonitorFormulaAndFunctionCostQueryDefinition::new(
-                                        MonitorFormulaAndFunctionMetricsDataSource::CLOUD_COST,
+                                        MonitorFormulaAndFunctionCostDataSource::CLOUD_COST,
                                         "query1".to_string(),
                                         "sum:aws.cost.net.amortized.shared.resources.allocated{aws_product IN (amplify ,athena, backup, bedrock ) } by {aws_product}.rollup(sum, 86400)".to_string(),
                                     ).aggregator(MonitorFormulaAndFunctionCostAggregator::SUM),
