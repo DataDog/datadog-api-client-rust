@@ -202,7 +202,13 @@ impl Default for Configuration {
             ("v2.delete_deployment_rule".to_owned(), false),
             ("v2.get_deployment_gate".to_owned(), false),
             ("v2.get_deployment_gate_rules".to_owned(), false),
+            (
+                "v2.get_deployment_gates_evaluation_result".to_owned(),
+                false,
+            ),
             ("v2.get_deployment_rule".to_owned(), false),
+            ("v2.list_deployment_gates".to_owned(), false),
+            ("v2.trigger_deployment_gates_evaluation".to_owned(), false),
             ("v2.update_deployment_gate".to_owned(), false),
             ("v2.update_deployment_rule".to_owned(), false),
             ("v2.create_hamr_org_connection".to_owned(), false),

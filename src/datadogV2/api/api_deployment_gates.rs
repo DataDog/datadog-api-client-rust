@@ -11,6 +11,29 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// ListDeploymentGatesOptionalParams is a struct for passing parameters to the method [`DeploymentGatesAPI::list_deployment_gates`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListDeploymentGatesOptionalParams {
+    /// Cursor for pagination. Use the `meta.page.next_cursor` value from the previous response.
+    pub page_cursor: Option<String>,
+    /// Number of results per page. Defaults to 50. Must be between 1 and 1000.
+    pub page_size: Option<i64>,
+}
+
+impl ListDeploymentGatesOptionalParams {
+    /// Cursor for pagination. Use the `meta.page.next_cursor` value from the previous response.
+    pub fn page_cursor(mut self, value: String) -> Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Number of results per page. Defaults to 50. Must be between 1 and 1000.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+}
+
 /// CreateDeploymentGateError is a struct for typed errors of method [`DeploymentGatesAPI::create_deployment_gate`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -74,6 +97,17 @@ pub enum GetDeploymentGateRulesError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetDeploymentGatesEvaluationResultError is a struct for typed errors of method [`DeploymentGatesAPI::get_deployment_gates_evaluation_result`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetDeploymentGatesEvaluationResultError {
+    HTTPCDGatesBadRequestResponse(crate::datadogV2::model::HTTPCDGatesBadRequestResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    HTTPCDGatesNotFoundResponse(crate::datadogV2::model::HTTPCDGatesNotFoundResponse),
+    HTTPCIAppErrors(crate::datadogV2::model::HTTPCIAppErrors),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetDeploymentRuleError is a struct for typed errors of method [`DeploymentGatesAPI::get_deployment_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -81,6 +115,27 @@ pub enum GetDeploymentRuleError {
     HTTPCDGatesBadRequestResponse(crate::datadogV2::model::HTTPCDGatesBadRequestResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     HTTPCDRulesNotFoundResponse(crate::datadogV2::model::HTTPCDRulesNotFoundResponse),
+    HTTPCIAppErrors(crate::datadogV2::model::HTTPCIAppErrors),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListDeploymentGatesError is a struct for typed errors of method [`DeploymentGatesAPI::list_deployment_gates`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListDeploymentGatesError {
+    HTTPCDGatesBadRequestResponse(crate::datadogV2::model::HTTPCDGatesBadRequestResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    HTTPCIAppErrors(crate::datadogV2::model::HTTPCIAppErrors),
+    UnknownValue(serde_json::Value),
+}
+
+/// TriggerDeploymentGatesEvaluationError is a struct for typed errors of method [`DeploymentGatesAPI::trigger_deployment_gates_evaluation`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum TriggerDeploymentGatesEvaluationError {
+    HTTPCDGatesBadRequestResponse(crate::datadogV2::model::HTTPCDGatesBadRequestResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    HTTPCDGatesNotFoundResponse(crate::datadogV2::model::HTTPCDGatesNotFoundResponse),
     HTTPCIAppErrors(crate::datadogV2::model::HTTPCIAppErrors),
     UnknownValue(serde_json::Value),
 }
@@ -934,6 +989,136 @@ impl DeploymentGatesAPI {
         }
     }
 
+    /// Retrieves the result of a deployment gate evaluation by its evaluation ID.
+    /// If the evaluation is still in progress, `data.attributes.gate_status` will be `in_progress`;
+    /// continue polling until it returns `pass` or `fail`.
+    /// Polling every 10-20 seconds is recommended.
+    /// The endpoint may return a 404 if called too soon after triggering; retry after a few seconds.
+    pub async fn get_deployment_gates_evaluation_result(
+        &self,
+        id: uuid::Uuid,
+    ) -> Result<
+        crate::datadogV2::model::DeploymentGatesEvaluationResultResponse,
+        datadog::Error<GetDeploymentGatesEvaluationResultError>,
+    > {
+        match self
+            .get_deployment_gates_evaluation_result_with_http_info(id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieves the result of a deployment gate evaluation by its evaluation ID.
+    /// If the evaluation is still in progress, `data.attributes.gate_status` will be `in_progress`;
+    /// continue polling until it returns `pass` or `fail`.
+    /// Polling every 10-20 seconds is recommended.
+    /// The endpoint may return a 404 if called too soon after triggering; retry after a few seconds.
+    pub async fn get_deployment_gates_evaluation_result_with_http_info(
+        &self,
+        id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DeploymentGatesEvaluationResultResponse>,
+        datadog::Error<GetDeploymentGatesEvaluationResultError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_deployment_gates_evaluation_result";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_deployment_gates_evaluation_result' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/deployments/gates/evaluation/{id}",
+            local_configuration.get_operation_host(operation_id),
+            id = datadog::urlencode(id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::DeploymentGatesEvaluationResultResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetDeploymentGatesEvaluationResultError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Endpoint to get a deployment rule.
     pub async fn get_deployment_rule(
         &self,
@@ -1044,6 +1229,307 @@ impl DeploymentGatesAPI {
             };
         } else {
             let local_entity: Option<GetDeploymentRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Returns a paginated list of all deployment gates for the organization.
+    /// Use `page[cursor]` and `page[size]` query parameters to paginate through results.
+    pub async fn list_deployment_gates(
+        &self,
+        params: ListDeploymentGatesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::DeploymentGatesListResponse,
+        datadog::Error<ListDeploymentGatesError>,
+    > {
+        match self.list_deployment_gates_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Returns a paginated list of all deployment gates for the organization.
+    /// Use `page[cursor]` and `page[size]` query parameters to paginate through results.
+    pub async fn list_deployment_gates_with_http_info(
+        &self,
+        params: ListDeploymentGatesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DeploymentGatesListResponse>,
+        datadog::Error<ListDeploymentGatesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_deployment_gates";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_deployment_gates' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_cursor = params.page_cursor;
+        let page_size = params.page_size;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/deployment_gates",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DeploymentGatesListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListDeploymentGatesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Triggers an asynchronous deployment gate evaluation for the given service and environment.
+    /// Returns an evaluation ID that can be used to poll for the result via the
+    /// `GET /api/v2/deployments/gates/evaluation/{id}` endpoint.
+    pub async fn trigger_deployment_gates_evaluation(
+        &self,
+        body: crate::datadogV2::model::DeploymentGatesEvaluationRequest,
+    ) -> Result<
+        crate::datadogV2::model::DeploymentGatesEvaluationResponse,
+        datadog::Error<TriggerDeploymentGatesEvaluationError>,
+    > {
+        match self
+            .trigger_deployment_gates_evaluation_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Triggers an asynchronous deployment gate evaluation for the given service and environment.
+    /// Returns an evaluation ID that can be used to poll for the result via the
+    /// `GET /api/v2/deployments/gates/evaluation/{id}` endpoint.
+    pub async fn trigger_deployment_gates_evaluation_with_http_info(
+        &self,
+        body: crate::datadogV2::model::DeploymentGatesEvaluationRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DeploymentGatesEvaluationResponse>,
+        datadog::Error<TriggerDeploymentGatesEvaluationError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.trigger_deployment_gates_evaluation";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.trigger_deployment_gates_evaluation' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/deployments/gates/evaluation",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DeploymentGatesEvaluationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<TriggerDeploymentGatesEvaluationError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
