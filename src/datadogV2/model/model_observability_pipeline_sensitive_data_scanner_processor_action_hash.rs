@@ -15,7 +15,9 @@ pub struct ObservabilityPipelineSensitiveDataScannerProcessorActionHash {
     #[serde(rename = "action")]
     pub action:
         crate::datadogV2::model::ObservabilityPipelineSensitiveDataScannerProcessorActionHashAction,
-    /// The `ObservabilityPipelineSensitiveDataScannerProcessorActionHash` `options`.
+    /// Optional settings for the hash action. When omitted or empty, matched sensitive data is
+    /// replaced with a deterministic hashed value that preserves structure for analytics while
+    /// protecting the original content. Reserved for future hash configuration (for example, algorithm or salt).
     #[serde(rename = "options")]
     pub options: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     #[serde(flatten)]

@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSensitiveDataScannerProcessorScopeOptions {
-    /// The `ObservabilityPipelineSensitiveDataScannerProcessorScopeOptions` `fields`.
+    /// List of log attribute names (field paths) to which the scope applies. Only these fields are included in or excluded from pattern matching.
     #[serde(rename = "fields")]
     pub fields: Vec<String>,
     #[serde(flatten)]
