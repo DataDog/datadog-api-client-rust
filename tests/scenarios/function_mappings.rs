@@ -22799,6 +22799,9 @@ fn test_v2_get_estimated_cost_by_org(
     let end_date = _parameters
         .get("end_date")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let cost_aggregation = _parameters
+        .get("cost_aggregation")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let include_connected_accounts = _parameters
         .get("include_connected_accounts")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -22808,6 +22811,7 @@ fn test_v2_get_estimated_cost_by_org(
     params.end_month = end_month;
     params.start_date = start_date;
     params.end_date = end_date;
+    params.cost_aggregation = cost_aggregation;
     params.include_connected_accounts = include_connected_accounts;
     let response = match block_on(api.get_estimated_cost_by_org_with_http_info(params)) {
         Ok(response) => response,
