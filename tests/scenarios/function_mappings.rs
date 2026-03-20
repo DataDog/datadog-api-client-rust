@@ -95,6 +95,7 @@ pub struct ApiInstances {
     pub v2_api_downtimes: Option<datadogV2::api_downtimes::DowntimesAPI>,
     pub v2_api_error_tracking: Option<datadogV2::api_error_tracking::ErrorTrackingAPI>,
     pub v2_api_events: Option<datadogV2::api_events::EventsAPI>,
+    pub v2_api_feature_flags: Option<datadogV2::api_feature_flags::FeatureFlagsAPI>,
     pub v2_api_high_availability_multi_region:
         Option<datadogV2::api_high_availability_multi_region::HighAvailabilityMultiRegionAPI>,
     pub v2_api_incidents: Option<datadogV2::api_incidents::IncidentsAPI>,
@@ -745,6 +746,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "ErrorTracking" => {
             world.api_instances.v2_api_error_tracking = Some(
                 datadogV2::api_error_tracking::ErrorTrackingAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "FeatureFlags" => {
+            world.api_instances.v2_api_feature_flags = Some(
+                datadogV2::api_feature_flags::FeatureFlagsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -3362,6 +3371,53 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetEvent".into(), test_v2_get_event);
+    world
+        .function_mappings
+        .insert("v2.ListFeatureFlags".into(), test_v2_list_feature_flags);
+    world
+        .function_mappings
+        .insert("v2.CreateFeatureFlag".into(), test_v2_create_feature_flag);
+    world.function_mappings.insert(
+        "v2.ListFeatureFlagsEnvironments".into(),
+        test_v2_list_feature_flags_environments,
+    );
+    world.function_mappings.insert(
+        "v2.CreateFeatureFlagsEnvironment".into(),
+        test_v2_create_feature_flags_environment,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteFeatureFlagsEnvironment".into(),
+        test_v2_delete_feature_flags_environment,
+    );
+    world.function_mappings.insert(
+        "v2.GetFeatureFlagsEnvironment".into(),
+        test_v2_get_feature_flags_environment,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateFeatureFlagsEnvironment".into(),
+        test_v2_update_feature_flags_environment,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetFeatureFlag".into(), test_v2_get_feature_flag);
+    world
+        .function_mappings
+        .insert("v2.UpdateFeatureFlag".into(), test_v2_update_feature_flag);
+    world
+        .function_mappings
+        .insert("v2.ArchiveFeatureFlag".into(), test_v2_archive_feature_flag);
+    world.function_mappings.insert(
+        "v2.DisableFeatureFlagEnvironment".into(),
+        test_v2_disable_feature_flag_environment,
+    );
+    world.function_mappings.insert(
+        "v2.EnableFeatureFlagEnvironment".into(),
+        test_v2_enable_feature_flag_environment,
+    );
+    world.function_mappings.insert(
+        "v2.UnarchiveFeatureFlag".into(),
+        test_v2_unarchive_feature_flag,
+    );
     world.function_mappings.insert(
         "v2.GetHamrOrgConnection".into(),
         test_v2_get_hamr_org_connection,
@@ -24703,6 +24759,407 @@ fn test_v2_get_event(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
         .expect("api instance not found");
     let event_id = serde_json::from_value(_parameters.get("event_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_event_with_http_info(event_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_feature_flags(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let key = _parameters
+        .get("key")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let is_archived = _parameters
+        .get("is_archived")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let offset = _parameters
+        .get("offset")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_feature_flags::ListFeatureFlagsOptionalParams::default();
+    params.key = key;
+    params.is_archived = is_archived;
+    params.limit = limit;
+    params.offset = offset;
+    let response = match block_on(api.list_feature_flags_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_feature_flag(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_feature_flag_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_feature_flags_environments(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let name = _parameters
+        .get("name")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let key = _parameters
+        .get("key")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let offset = _parameters
+        .get("offset")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_feature_flags::ListFeatureFlagsEnvironmentsOptionalParams::default();
+    params.name = name;
+    params.key = key;
+    params.limit = limit;
+    params.offset = offset;
+    let response = match block_on(api.list_feature_flags_environments_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_feature_flags_environment(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_feature_flags_environment_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_feature_flags_environment(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let environment_id =
+        serde_json::from_value(_parameters.get("environment_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_feature_flags_environment_with_http_info(environment_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_feature_flags_environment(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let environment_id =
+        serde_json::from_value(_parameters.get("environment_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_feature_flags_environment_with_http_info(environment_id))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_feature_flags_environment(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let environment_id =
+        serde_json::from_value(_parameters.get("environment_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_feature_flags_environment_with_http_info(environment_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_feature_flag(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let feature_flag_id =
+        serde_json::from_value(_parameters.get("feature_flag_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_feature_flag_with_http_info(feature_flag_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_feature_flag(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let feature_flag_id =
+        serde_json::from_value(_parameters.get("feature_flag_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_feature_flag_with_http_info(feature_flag_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_archive_feature_flag(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let feature_flag_id =
+        serde_json::from_value(_parameters.get("feature_flag_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.archive_feature_flag_with_http_info(feature_flag_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_disable_feature_flag_environment(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let feature_flag_id =
+        serde_json::from_value(_parameters.get("feature_flag_id").unwrap().clone()).unwrap();
+    let environment_id =
+        serde_json::from_value(_parameters.get("environment_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.disable_feature_flag_environment_with_http_info(feature_flag_id, environment_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_enable_feature_flag_environment(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let feature_flag_id =
+        serde_json::from_value(_parameters.get("feature_flag_id").unwrap().clone()).unwrap();
+    let environment_id =
+        serde_json::from_value(_parameters.get("environment_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.enable_feature_flag_environment_with_http_info(feature_flag_id, environment_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_unarchive_feature_flag(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_feature_flags
+        .as_ref()
+        .expect("api instance not found");
+    let feature_flag_id =
+        serde_json::from_value(_parameters.get("feature_flag_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.unarchive_feature_flag_with_http_info(feature_flag_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
