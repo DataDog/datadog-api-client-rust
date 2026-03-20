@@ -8992,6 +8992,8 @@ pub mod model_chargeback_breakdown;
 pub use self::model_chargeback_breakdown::ChargebackBreakdown;
 pub mod model_cost_by_org_type;
 pub use self::model_cost_by_org_type::CostByOrgType;
+pub mod model_cost_aggregation_type;
+pub use self::model_cost_aggregation_type::CostAggregationType;
 pub mod model_hourly_usage_response;
 pub use self::model_hourly_usage_response::HourlyUsageResponse;
 pub mod model_hourly_usage;

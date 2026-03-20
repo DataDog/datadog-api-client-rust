@@ -58,6 +58,8 @@ pub struct GetEstimatedCostByOrgOptionalParams {
     pub start_date: Option<chrono::DateTime<chrono::Utc>>,
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost ending this day.
     pub end_date: Option<chrono::DateTime<chrono::Utc>>,
+    /// Controls how costs are aggregated when using `start_date`. The `cumulative` option returns month-to-date running totals.
+    pub cost_aggregation: Option<crate::datadogV2::model::CostAggregationType>,
     /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
     pub include_connected_accounts: Option<bool>,
 }
@@ -86,6 +88,11 @@ impl GetEstimatedCostByOrgOptionalParams {
     /// Datetime in ISO-8601 format, UTC, precise to day: `[YYYY-MM-DD]` for cost ending this day.
     pub fn end_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.end_date = Some(value);
+        self
+    }
+    /// Controls how costs are aggregated when using `start_date`. The `cumulative` option returns month-to-date running totals.
+    pub fn cost_aggregation(mut self, value: crate::datadogV2::model::CostAggregationType) -> Self {
+        self.cost_aggregation = Some(value);
         self
     }
     /// Boolean to specify whether to include accounts connected to the current account as partner customers in the Datadog partner network program. Defaults to `false`.
@@ -917,6 +924,7 @@ impl UsageMeteringAPI {
         let end_month = params.end_month;
         let start_date = params.start_date;
         let end_date = params.end_date;
+        let cost_aggregation = params.cost_aggregation;
         let include_connected_accounts = params.include_connected_accounts;
 
         let local_client = &self.client;
@@ -955,6 +963,10 @@ impl UsageMeteringAPI {
                 "end_date",
                 &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
             )]);
+        };
+        if let Some(ref local_query_param) = cost_aggregation {
+            local_req_builder =
+                local_req_builder.query(&[("cost_aggregation", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = include_connected_accounts {
             local_req_builder = local_req_builder
