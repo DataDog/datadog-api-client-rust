@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Monitor integration settings
+/// Monitor integration settings.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationMonitor {
-    /// Whether auto-resolve is enabled
+    /// Whether auto-resolve is enabled.
     #[serde(rename = "auto_resolve_enabled")]
     pub auto_resolve_enabled: Option<bool>,
-    /// Case type ID for monitor integration
+    /// Case type ID for monitor integration.
     #[serde(rename = "case_type_id")]
     pub case_type_id: Option<String>,
-    /// Whether monitor integration is enabled
+    /// Whether monitor integration is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
-    /// Monitor handle
+    /// Monitor handle.
     #[serde(rename = "handle")]
     pub handle: Option<String>,
     #[serde(flatten)]

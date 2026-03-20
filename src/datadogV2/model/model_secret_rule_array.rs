@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A collection of secret detection rules returned by the list endpoint.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecretRuleArray {
+    /// The list of secret detection rules.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::SecretRuleData>,
     #[serde(flatten)]

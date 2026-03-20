@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a bulk delete Synthetic tests request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeletedTestsRequestDelete {
+    /// Attributes for a bulk delete Synthetic tests request.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::DeletedTestsRequestDeleteAttributes,
+    /// An optional identifier for the delete request.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// Type for the bulk delete Synthetic tests request, `delete_tests_request`.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::DeletedTestsRequestType>,
     #[serde(flatten)]

@@ -11,10 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsSerie {
+    /// The group-by tag values that identify this series.
     #[serde(rename = "group_tags")]
     pub group_tags: Option<Vec<String>>,
+    /// The index of the query that produced this series.
     #[serde(rename = "query_index")]
     pub query_index: Option<i64>,
+    /// Unit definitions for the series values.
     #[serde(rename = "unit")]
     pub unit: Option<Vec<crate::datadogV2::model::ProductAnalyticsUnit>>,
     #[serde(flatten)]

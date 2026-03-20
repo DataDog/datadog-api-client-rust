@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request object for creating a component.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateComponentRequest {
+    /// The data object for creating a component.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::CreateComponentRequestData>,
     #[serde(flatten)]

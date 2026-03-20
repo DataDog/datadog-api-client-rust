@@ -6,27 +6,37 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The attributes of an SCA request, containing dependency graph data, vulnerability information, and repository context.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributes {
+    /// Metadata about the commit associated with the SCA scan, including author, committer, and branch information.
     #[serde(rename = "commit")]
     pub commit: Option<crate::datadogV2::model::ScaRequestDataAttributesCommit>,
+    /// The list of dependencies discovered in the repository.
     #[serde(rename = "dependencies")]
     pub dependencies:
         Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItems>>,
+    /// The environment context in which the SCA scan was performed (e.g., production, staging).
     #[serde(rename = "env")]
     pub env: Option<String>,
+    /// The list of dependency manifest files found in the repository.
     #[serde(rename = "files")]
     pub files: Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesFilesItems>>,
+    /// The dependency relations describing the inter-component dependency graph.
     #[serde(rename = "relations")]
     pub relations: Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesRelationsItems>>,
+    /// Information about the source code repository being analyzed.
     #[serde(rename = "repository")]
     pub repository: Option<crate::datadogV2::model::ScaRequestDataAttributesRepository>,
+    /// The name of the service or application being analyzed.
     #[serde(rename = "service")]
     pub service: Option<String>,
+    /// A map of key-value tags providing additional metadata for the SCA scan.
     #[serde(rename = "tags")]
     pub tags: Option<std::collections::BTreeMap<String, String>>,
+    /// The list of vulnerabilities identified in the dependency graph.
     #[serde(rename = "vulnerabilities")]
     pub vulnerabilities:
         Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesVulnerabilitiesItems>>,

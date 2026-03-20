@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object containing the resource identifier and attributes for updating an existing connection.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateConnectionRequestData {
+    /// Attributes specifying the field modifications to apply to an existing connection.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::UpdateConnectionRequestDataAttributes>,
+    /// The unique identifier of the connection to update.
     #[serde(rename = "id")]
     pub id: String,
     /// Connection id resource type.

@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FleetAgentVersion {
+    /// Attributes of an available Datadog Agent version.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::FleetAgentVersionAttributes>,
     /// Unique identifier for the Agent version (same as version).

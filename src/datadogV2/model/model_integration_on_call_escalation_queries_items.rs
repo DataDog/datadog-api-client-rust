@@ -6,16 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// An On-Call escalation query entry used to route cases to on-call responders.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationOnCallEscalationQueriesItems {
+    /// Whether this escalation query is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// Unique identifier of the escalation query.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// The query used to match cases for escalation.
     #[serde(rename = "query")]
     pub query: Option<String>,
+    /// The target recipient for an On-Call escalation query.
     #[serde(rename = "target")]
     pub target: Option<crate::datadogV2::model::IntegrationOnCallEscalationQueriesItemsTarget>,
     #[serde(flatten)]

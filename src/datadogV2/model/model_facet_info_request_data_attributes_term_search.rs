@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Term-level search configuration for filtering facet values by an exact or partial term match.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FacetInfoRequestDataAttributesTermSearch {
+    /// The term string to match against facet values.
     #[serde(rename = "value")]
     pub value: Option<String>,
     #[serde(flatten)]

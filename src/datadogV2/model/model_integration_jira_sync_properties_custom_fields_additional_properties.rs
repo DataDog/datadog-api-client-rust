@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Synchronization configuration for a Jira custom field.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationJiraSyncPropertiesCustomFieldsAdditionalProperties {
+    /// The type of synchronization to apply for this custom field.
     #[serde(rename = "sync_type")]
     pub sync_type: Option<String>,
     /// Represents any valid JSON value.

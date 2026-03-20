@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The request attributes for fetching multiple rulesets, specifying which rulesets to retrieve and what data to include.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsRequestDataAttributes {
+    /// When true, rules that are available in testing mode are included in the response.
     #[serde(rename = "include_testing_rules")]
     pub include_testing_rules: Option<bool>,
+    /// When true, test cases associated with each rule are included in the response.
     #[serde(rename = "include_tests")]
     pub include_tests: Option<bool>,
+    /// The list of ruleset names to retrieve.
     #[serde(rename = "rulesets")]
     pub rulesets: Option<Vec<String>>,
     #[serde(flatten)]

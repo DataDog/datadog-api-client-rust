@@ -11,14 +11,18 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPagesComponentDataRelationships {
+    /// The Datadog user who created the component.
     #[serde(rename = "created_by_user")]
     pub created_by_user:
         Option<crate::datadogV2::model::StatusPagesComponentDataRelationshipsCreatedByUser>,
+    /// The group the component belongs to.
     #[serde(rename = "group")]
     pub group: Option<crate::datadogV2::model::StatusPagesComponentDataRelationshipsGroup>,
+    /// The Datadog user who last modified the component.
     #[serde(rename = "last_modified_by_user")]
     pub last_modified_by_user:
         Option<crate::datadogV2::model::StatusPagesComponentDataRelationshipsLastModifiedByUser>,
+    /// The status page the component belongs to.
     #[serde(rename = "status_page")]
     pub status_page:
         Option<crate::datadogV2::model::StatusPagesComponentDataRelationshipsStatusPage>,

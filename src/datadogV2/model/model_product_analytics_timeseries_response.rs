@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsTimeseriesResponse {
+    /// Data object for a timeseries analytics response.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::ProductAnalyticsTimeseriesResponseData>,
     /// Metadata for a Product Analytics query response.

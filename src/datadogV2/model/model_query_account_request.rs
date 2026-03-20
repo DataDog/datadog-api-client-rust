@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request body for querying accounts with optional filtering, column selection, and sorting.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct QueryAccountRequest {
+    /// The data object containing the resource type and attributes for querying accounts.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::QueryAccountRequestData>,
     #[serde(flatten)]

@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of an OCI tenancy product resource, containing the list of available products and their enablement status.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TenancyProductsDataAttributes {
+    /// List of Datadog products and their enablement status for the tenancy.
     #[serde(rename = "products")]
     pub products: Option<Vec<crate::datadogV2::model::TenancyProductsDataAttributesProductsItems>>,
     #[serde(flatten)]

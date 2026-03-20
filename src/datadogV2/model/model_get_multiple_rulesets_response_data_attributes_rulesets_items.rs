@@ -6,18 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A ruleset returned in the response, containing its metadata and associated rules.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsResponseDataAttributesRulesetsItems {
+    /// The resource identifier and type for a ruleset.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsData,
+    /// A detailed description of the ruleset's purpose and the types of issues it targets.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// The unique name of the ruleset.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The list of static analysis rules included in this ruleset.
     #[serde(rename = "rules")]
     pub rules: Option<Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems>>,
+    /// A brief summary of the ruleset, suitable for display in listings.
     #[serde(rename = "short_description")]
     pub short_description: Option<String>,
     #[serde(flatten)]

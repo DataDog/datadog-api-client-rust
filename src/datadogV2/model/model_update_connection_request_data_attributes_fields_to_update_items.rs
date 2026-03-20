@@ -6,18 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Specification for updating an existing field in a connection, including which field to modify and the new values.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateConnectionRequestDataAttributesFieldsToUpdateItems {
+    /// The identifier of the existing field to update.
     #[serde(rename = "field_id")]
     pub field_id: String,
+    /// The new description to set for the field.
     #[serde(rename = "updated_description")]
     pub updated_description: Option<String>,
+    /// The new human-readable display name to set for the field.
     #[serde(rename = "updated_display_name")]
     pub updated_display_name: Option<String>,
+    /// The new identifier to assign to the field, if renaming it.
     #[serde(rename = "updated_field_id")]
     pub updated_field_id: Option<String>,
+    /// The updated list of group labels to associate with the field.
     #[serde(rename = "updated_groups")]
     pub updated_groups: Option<Vec<String>>,
     #[serde(flatten)]

@@ -6,16 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A range within a file defined by a start and end position, along with the file name.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition {
+    /// A specific position (line and column) within a source file.
     #[serde(rename = "end")]
     pub end: Option<
         crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition,
     >,
+    /// The name or path of the file containing this location.
     #[serde(rename = "file_name")]
     pub file_name: Option<String>,
+    /// A specific position (line and column) within a source file.
     #[serde(rename = "start")]
     pub start: Option<
         crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition,

@@ -6,16 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Relationships associated with an incident handle response, including linked users and incident type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentHandleRelationships {
+    /// A single relationship object for an incident handle, wrapping the related resource data.
     #[serde(rename = "commander_user")]
     pub commander_user: Option<crate::datadogV2::model::IncidentHandleRelationship>,
+    /// A single relationship object for an incident handle, wrapping the related resource data.
     #[serde(rename = "created_by_user")]
     pub created_by_user: crate::datadogV2::model::IncidentHandleRelationship,
+    /// A single relationship object for an incident handle, wrapping the related resource data.
     #[serde(rename = "incident_type")]
     pub incident_type: crate::datadogV2::model::IncidentHandleRelationship,
+    /// A single relationship object for an incident handle, wrapping the related resource data.
     #[serde(rename = "last_modified_by_user")]
     pub last_modified_by_user: crate::datadogV2::model::IncidentHandleRelationship,
     #[serde(flatten)]

@@ -6,18 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Jira integration settings
+/// Jira integration settings.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationJira {
+    /// Auto-creation settings for Jira issues from cases.
     #[serde(rename = "auto_creation")]
     pub auto_creation: Option<crate::datadogV2::model::IntegrationJiraAutoCreation>,
-    /// Whether Jira integration is enabled
+    /// Whether Jira integration is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// Metadata for connecting a case management project to a Jira project.
     #[serde(rename = "metadata")]
     pub metadata: Option<crate::datadogV2::model::IntegrationJiraMetadata>,
+    /// Synchronization configuration for Jira integration.
     #[serde(rename = "sync")]
     pub sync: Option<crate::datadogV2::model::IntegrationJiraSync>,
     #[serde(flatten)]

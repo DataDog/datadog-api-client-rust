@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The attributes of a request to resolve vulnerable symbols, containing the list of package PURLs to check.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ResolveVulnerableSymbolsRequestDataAttributes {
+    /// The list of Package URLs (PURLs) for which to resolve vulnerable symbols.
     #[serde(rename = "purls")]
     pub purls: Option<Vec<String>>,
     #[serde(flatten)]

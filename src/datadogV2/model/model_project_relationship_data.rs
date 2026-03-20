@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Relationship to project object
+/// Relationship to project object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectRelationshipData {
-    /// A unique identifier that represents the project
+    /// A unique identifier that represents the project.
     #[serde(rename = "id")]
     pub id: String,
-    /// Project resource type
+    /// Project resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ProjectResourceType,
     #[serde(flatten)]

@@ -6,58 +6,84 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A static analysis rule within a ruleset, including its definition, metadata, and associated test cases.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems {
+    /// The list of configurable arguments accepted by this rule.
     #[serde(rename = "arguments")]
     pub arguments: Option<Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsArgumentsItems>>,
+    /// The category classifying the type of issue this rule detects (e.g., security, style, performance).
     #[serde(rename = "category")]
     pub category: Option<String>,
+    /// A checksum of the rule definition used to detect changes.
     #[serde(rename = "checksum")]
     pub checksum: Option<String>,
+    /// The rule implementation code used by the static analysis engine.
     #[serde(rename = "code")]
     pub code: Option<String>,
+    /// The date and time when the rule was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// The identifier of the user or system that created the rule.
     #[serde(rename = "created_by")]
     pub created_by: Option<String>,
+    /// The CVE identifier associated with the vulnerability this rule detects, if applicable.
     #[serde(rename = "cve")]
     pub cve: Option<String>,
+    /// The CWE identifier associated with the weakness category this rule detects, if applicable.
     #[serde(rename = "cwe")]
     pub cwe: Option<String>,
+    /// The resource identifier and type for a static analysis rule.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsData,
+    /// A detailed explanation of what the rule detects and why it matters.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// A URL pointing to additional documentation for this rule.
     #[serde(rename = "documentation_url")]
     pub documentation_url: Option<String>,
+    /// The code entity type (e.g., function, class, variable) that this rule inspects.
     #[serde(rename = "entity_checked")]
     pub entity_checked: Option<String>,
+    /// Indicates whether the rule is publicly published and available to all users.
     #[serde(rename = "is_published")]
     pub is_published: Option<bool>,
+    /// Indicates whether the rule is in testing mode and not yet promoted to production.
     #[serde(rename = "is_testing")]
     pub is_testing: Option<bool>,
+    /// The programming language this rule applies to.
     #[serde(rename = "language")]
     pub language: Option<String>,
+    /// The date and time when the rule was last modified.
     #[serde(rename = "last_updated_at")]
     pub last_updated_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// The identifier of the user or system that last updated the rule.
     #[serde(rename = "last_updated_by")]
     pub last_updated_by: Option<String>,
+    /// The unique name identifying this rule within its ruleset.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// A regular expression pattern used by the rule for pattern-based detection.
     #[serde(rename = "regex")]
     pub regex: Option<String>,
+    /// The severity level of findings produced by this rule (e.g., ERROR, WARNING, NOTICE).
     #[serde(rename = "severity")]
     pub severity: Option<String>,
+    /// A brief summary of what the rule detects, suitable for display in listings.
     #[serde(rename = "short_description")]
     pub short_description: Option<String>,
+    /// Indicates whether an AI-generated fix suggestion should be offered for findings from this rule.
     #[serde(rename = "should_use_ai_fix")]
     pub should_use_ai_fix: Option<bool>,
+    /// The list of test cases used to validate the rule's behavior.
     #[serde(rename = "tests")]
     pub tests: Option<Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsTestsItems>>,
+    /// The Tree-sitter query expression used by the rule to match code patterns in the AST.
     #[serde(rename = "tree_sitter_query")]
     pub tree_sitter_query: Option<String>,
+    /// The rule type indicating the detection mechanism used (e.g., tree_sitter, regex).
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(flatten)]

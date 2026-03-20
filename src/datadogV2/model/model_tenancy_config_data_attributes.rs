@@ -6,34 +6,48 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of an OCI tenancy integration configuration, including authentication details, region settings, and collection options.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TenancyConfigDataAttributes {
+    /// The identifier of the billing plan associated with the OCI tenancy.
     #[serde(rename = "billing_plan_id")]
     pub billing_plan_id: Option<i32>,
+    /// Version number of the integration the tenancy is integrated with
     #[serde(rename = "config_version")]
     pub config_version: Option<i64>,
+    /// Whether cost data collection from OCI is enabled for the tenancy.
     #[serde(rename = "cost_collection_enabled")]
     pub cost_collection_enabled: Option<bool>,
+    /// The OCID of the OCI compartment used by the Datadog integration stack.
     #[serde(rename = "dd_compartment_id")]
     pub dd_compartment_id: Option<String>,
+    /// The OCID of the OCI Resource Manager stack used by the Datadog integration.
     #[serde(rename = "dd_stack_id")]
     pub dd_stack_id: Option<String>,
+    /// The home region of the OCI tenancy (for example, us-ashburn-1).
     #[serde(rename = "home_region")]
     pub home_region: Option<String>,
+    /// Log collection configuration for an OCI tenancy, indicating which compartments and services have log collection enabled.
     #[serde(rename = "logs_config")]
     pub logs_config: Option<crate::datadogV2::model::TenancyConfigDataAttributesLogsConfig>,
+    /// Metrics collection configuration for an OCI tenancy, indicating which compartments and services are included or excluded.
     #[serde(rename = "metrics_config")]
     pub metrics_config: Option<crate::datadogV2::model::TenancyConfigDataAttributesMetricsConfig>,
+    /// The name of the parent OCI tenancy, if applicable.
     #[serde(rename = "parent_tenancy_name")]
     pub parent_tenancy_name: Option<String>,
+    /// Region configuration for an OCI tenancy, indicating which regions are available, enabled, or disabled for data collection.
     #[serde(rename = "regions_config")]
     pub regions_config: Option<crate::datadogV2::model::TenancyConfigDataAttributesRegionsConfig>,
+    /// Whether resource collection from OCI is enabled for the tenancy.
     #[serde(rename = "resource_collection_enabled")]
     pub resource_collection_enabled: Option<bool>,
+    /// The human-readable name of the OCI tenancy.
     #[serde(rename = "tenancy_name")]
     pub tenancy_name: Option<String>,
+    /// The OCID of the OCI user used by the Datadog integration for authentication.
     #[serde(rename = "user_ocid")]
     pub user_ocid: Option<String>,
     #[serde(flatten)]

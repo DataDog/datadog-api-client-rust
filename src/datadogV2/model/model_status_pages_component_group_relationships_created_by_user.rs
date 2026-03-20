@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPagesComponentGroupRelationshipsCreatedByUser {
+    /// The data object identifying the Datadog user who created the component group.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::StatusPagesComponentGroupRelationshipsCreatedByUserData,
     #[serde(flatten)]

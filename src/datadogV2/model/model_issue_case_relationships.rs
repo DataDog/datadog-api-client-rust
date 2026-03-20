@@ -32,7 +32,7 @@ pub struct IssueCaseRelationships {
         with = "::serde_with::rust::double_option"
     )]
     pub modified_by: Option<Option<crate::datadogV2::model::NullableUserRelationship>>,
-    /// Relationship to project
+    /// Relationship to project.
     #[serde(rename = "project")]
     pub project: Option<crate::datadogV2::model::ProjectRelationship>,
     #[serde(flatten)]

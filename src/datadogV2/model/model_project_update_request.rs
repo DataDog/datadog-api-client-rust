@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project update request
+/// Project update request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectUpdateRequest {
-    /// Project update
+    /// Project update.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::ProjectUpdate,
     #[serde(flatten)]

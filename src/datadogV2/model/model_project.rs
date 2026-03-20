@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A Project
+/// A Project.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Project {
-    /// Project attributes
+    /// Project attributes.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::ProjectAttributes,
-    /// The Project's identifier
+    /// The Project's identifier.
     #[serde(rename = "id")]
     pub id: String,
-    /// Project relationships
+    /// Project relationships.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::ProjectRelationships>,
-    /// Project resource type
+    /// Project resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ProjectResourceType,
     #[serde(flatten)]

@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A test case associated with a static analysis rule, containing the source code and expected annotation count.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsTestsItems {
+    /// The expected number of annotations (findings) the rule should produce when run against the test code.
     #[serde(rename = "annotation_count")]
     pub annotation_count: Option<i64>,
+    /// The source code snippet used as input for the rule test.
     #[serde(rename = "code")]
     pub code: Option<String>,
+    /// The filename associated with the test code snippet.
     #[serde(rename = "filename")]
     pub filename: Option<String>,
     #[serde(flatten)]

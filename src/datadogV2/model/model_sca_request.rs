@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The top-level request object for submitting a Software Composition Analysis (SCA) scan result.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequest {
+    /// The data object in an SCA request, containing the dependency graph attributes and request type.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::ScaRequestData>,
     #[serde(flatten)]

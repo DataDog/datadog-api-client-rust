@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The facet query result containing discrete value counts or a numeric range for the requested facet.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FacetInfoResponseDataAttributesResult {
+    /// The numeric range of a facet attribute, representing the minimum and maximum observed values.
     #[serde(rename = "range")]
     pub range: Option<crate::datadogV2::model::FacetInfoResponseDataAttributesResultRange>,
+    /// List of discrete facet values with their occurrence counts.
     #[serde(rename = "values")]
     pub values:
         Option<Vec<crate::datadogV2::model::FacetInfoResponseDataAttributesResultValuesItems>>,

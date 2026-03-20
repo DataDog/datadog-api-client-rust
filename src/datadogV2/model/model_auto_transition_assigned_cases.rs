@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Auto-transition assigned cases settings
+/// Auto-transition assigned cases settings.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AutoTransitionAssignedCases {
-    /// Whether to auto-transition cases when self-assigned
+    /// Whether to auto-transition cases when self-assigned.
     #[serde(rename = "auto_transition_assigned_cases_on_self_assigned")]
     pub auto_transition_assigned_cases_on_self_assigned: Option<bool>,
     #[serde(flatten)]

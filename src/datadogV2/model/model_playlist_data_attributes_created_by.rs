@@ -6,18 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Information about the user who created the playlist.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PlaylistDataAttributesCreatedBy {
+    /// Email handle of the user who created the playlist.
     #[serde(rename = "handle")]
     pub handle: String,
+    /// URL or identifier of the user's avatar icon.
     #[serde(rename = "icon")]
     pub icon: Option<String>,
+    /// Unique identifier of the user who created the playlist.
     #[serde(rename = "id")]
     pub id: String,
+    /// Display name of the user who created the playlist.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// UUID of the user who created the playlist.
     #[serde(rename = "uuid")]
     pub uuid: String,
     #[serde(flatten)]

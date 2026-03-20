@@ -14,6 +14,7 @@ pub struct CreateAttachmentRequestData {
     /// The attributes for creating an attachment.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateAttachmentRequestDataAttributes>,
+    /// The unique identifier of the attachment.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// The incident attachment resource type.

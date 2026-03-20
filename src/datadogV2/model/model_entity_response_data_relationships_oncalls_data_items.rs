@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Oncall relationship data item containing the oncall resource identifier and type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityResponseDataRelationshipsOncallsDataItems {
+    /// Oncall resource unique identifier.
     #[serde(rename = "id")]
     pub id: String,
     /// Oncall resource type.

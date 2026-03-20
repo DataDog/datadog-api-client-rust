@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The attributes of the get-multiple-rulesets response, containing the list of requested rulesets.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsResponseDataAttributes {
+    /// The list of rulesets returned in response to the batch request.
     #[serde(rename = "rulesets")]
     pub rulesets: Option<
         Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItems>,

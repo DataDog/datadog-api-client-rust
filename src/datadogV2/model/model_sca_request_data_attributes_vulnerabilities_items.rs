@@ -6,16 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A vulnerability entry from the Software Bill of Materials (SBOM), describing a known security issue and the components it affects.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributesVulnerabilitiesItems {
+    /// The list of components affected by this vulnerability.
     #[serde(rename = "affects")]
     pub affects: Option<
         Vec<crate::datadogV2::model::ScaRequestDataAttributesVulnerabilitiesItemsAffectsItems>,
     >,
+    /// The unique BOM reference identifier for this vulnerability entry.
     #[serde(rename = "bom_ref")]
     pub bom_ref: Option<String>,
+    /// The vulnerability identifier (e.g., CVE ID or similar).
     #[serde(rename = "id")]
     pub id: Option<String>,
     #[serde(flatten)]

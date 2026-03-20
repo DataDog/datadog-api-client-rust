@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object representing a RUM replay playlist, including its identifier, type, and attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PlaylistData {
+    /// Attributes of a RUM replay playlist, including its name, description, session count, and audit timestamps.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::PlaylistDataAttributes>,
+    /// Unique identifier of the playlist.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Rum replay playlist resource type.

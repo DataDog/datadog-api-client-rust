@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response object for a single degradation.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Degradation {
+    /// The data object for a degradation.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::DegradationData>,
     /// The included related resources of a degradation. Client must explicitly request these resources by name in the `include` query parameter.

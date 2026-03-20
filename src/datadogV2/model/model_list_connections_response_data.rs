@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object containing the resource type and attributes for the list connections response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListConnectionsResponseData {
+    /// Attributes of the list connections response, containing the collection of data source connections.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ListConnectionsResponseDataAttributes>,
+    /// Unique identifier for the list connections response resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// List connections response resource type.

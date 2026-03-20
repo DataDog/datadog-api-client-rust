@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Relationships to associate with an incident handle in a create or update request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentHandleRelationshipsRequest {
+    /// A single relationship object for an incident handle, wrapping the related resource data.
     #[serde(rename = "commander_user")]
     pub commander_user: Option<crate::datadogV2::model::IncidentHandleRelationship>,
+    /// A single relationship object for an incident handle, wrapping the related resource data.
     #[serde(rename = "incident_type")]
     pub incident_type: crate::datadogV2::model::IncidentHandleRelationship,
     #[serde(flatten)]

@@ -6,30 +6,42 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The attributes of a budget including all its monthly entries.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BudgetWithEntriesDataAttributes {
+    /// The timestamp when the budget was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<i64>,
+    /// The ID of the user that created the budget.
     #[serde(rename = "created_by")]
     pub created_by: Option<String>,
+    /// The month when the budget ends, in YYYYMM format.
     #[serde(rename = "end_month")]
     pub end_month: Option<i64>,
+    /// The list of monthly budget entries.
     #[serde(rename = "entries")]
     pub entries: Option<Vec<crate::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItems>>,
+    /// The cost query used to track spending against the budget.
     #[serde(rename = "metrics_query")]
     pub metrics_query: Option<String>,
+    /// The name of the budget.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The ID of the organization the budget belongs to.
     #[serde(rename = "org_id")]
     pub org_id: Option<i64>,
+    /// The month when the budget starts, in YYYYMM format.
     #[serde(rename = "start_month")]
     pub start_month: Option<i64>,
+    /// The total budget amount across all entries.
     #[serde(rename = "total_amount")]
     pub total_amount: Option<f64>,
+    /// The timestamp when the budget was last updated.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<i64>,
+    /// The ID of the user that last updated the budget.
     #[serde(rename = "updated_by")]
     pub updated_by: Option<String>,
     #[serde(flatten)]

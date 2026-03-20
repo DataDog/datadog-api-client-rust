@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A key-value property describing a reachable symbol within a dependency.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributesDependenciesItemsReachableSymbolPropertiesItems {
+    /// The name of the reachable symbol property.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The value of the reachable symbol property.
     #[serde(rename = "value")]
     pub value: Option<String>,
     #[serde(flatten)]

@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object representing a session watcher, including their identifier, type, and attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct WatcherData {
+    /// Attributes of a user who has watched a RUM replay session, including contact information and watch statistics.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::WatcherDataAttributes>,
+    /// Unique identifier of the watcher user.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Rum replay watcher resource type.

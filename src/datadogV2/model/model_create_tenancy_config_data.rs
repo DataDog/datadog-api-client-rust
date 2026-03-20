@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object for creating a new OCI tenancy integration configuration, including the tenancy ID, type, and configuration attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateTenancyConfigData {
+    /// Attributes for creating a new OCI tenancy integration configuration, including credentials, region settings, and collection options.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateTenancyConfigDataAttributes>,
+    /// The OCID of the OCI tenancy to configure.
     #[serde(rename = "id")]
     pub id: String,
     /// OCI tenancy resource type.
