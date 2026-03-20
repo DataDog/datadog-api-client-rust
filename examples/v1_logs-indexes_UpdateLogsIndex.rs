@@ -18,8 +18,11 @@ async fn main() {
         )
         .daily_limit_warning_threshold_percentage(70.0 as f64)
         .disable_daily_limit(false)
-        .exclusion_filters(vec![LogsExclusion::new("payment".to_string())
-            .filter(LogsExclusionFilter::new(1.0).query("*".to_string()))])
+        .exclusion_filters(vec![LogsExclusion::new("payment".to_string()).filter(
+            LogsExclusionFilter::new(1.0)
+                .query("*".to_string())
+                .sample_attribute("@ci.job_id".to_string()),
+        )])
         .num_flex_logs_retention_days(360)
         .num_retention_days(15)
         .tags(vec![
