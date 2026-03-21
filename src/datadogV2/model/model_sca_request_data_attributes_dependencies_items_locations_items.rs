@@ -6,16 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The source code location where a dependency is declared, including block, name, namespace, and version positions within the file.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributesDependenciesItemsLocationsItems {
+    /// A range within a file defined by a start and end position, along with the file name.
     #[serde(rename = "block")]
     pub block: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition>,
+    /// A range within a file defined by a start and end position, along with the file name.
     #[serde(rename = "name")]
     pub name: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition>,
+    /// A range within a file defined by a start and end position, along with the file name.
     #[serde(rename = "namespace")]
     pub namespace: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition>,
+    /// A range within a file defined by a start and end position, along with the file name.
     #[serde(rename = "version")]
     pub version: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition>,
     #[serde(flatten)]

@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response containing a paginated list of custom rule revisions.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomRuleRevisionsResponse {
+    /// List of custom rule revisions.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::CustomRuleRevision>>,
     #[serde(flatten)]

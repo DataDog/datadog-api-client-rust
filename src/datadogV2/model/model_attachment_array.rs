@@ -11,8 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AttachmentArray {
+    /// An array of attachment data objects.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::AttachmentData>,
+    /// A list of related objects included in the response.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::AttachmentIncluded>>,
     #[serde(flatten)]

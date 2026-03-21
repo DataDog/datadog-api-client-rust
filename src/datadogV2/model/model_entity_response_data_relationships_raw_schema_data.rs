@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Raw schema relationship data containing the raw schema resource identifier and type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityResponseDataRelationshipsRawSchemaData {
+    /// Raw schema unique identifier.
     #[serde(rename = "id")]
     pub id: String,
     /// Raw schema resource type.

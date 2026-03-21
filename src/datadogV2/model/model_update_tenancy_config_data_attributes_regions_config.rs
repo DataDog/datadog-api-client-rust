@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Region configuration for updating an OCI tenancy, specifying which regions are available, enabled, or disabled for data collection.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateTenancyConfigDataAttributesRegionsConfig {
+    /// List of OCI regions available for data collection in the tenancy.
     #[serde(rename = "available")]
     pub available: Option<Vec<String>>,
+    /// List of OCI regions explicitly disabled for data collection.
     #[serde(rename = "disabled")]
     pub disabled: Option<Vec<String>>,
+    /// List of OCI regions enabled for data collection.
     #[serde(rename = "enabled")]
     pub enabled: Option<Vec<String>>,
     #[serde(flatten)]

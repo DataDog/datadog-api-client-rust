@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The resource identifier and type for a ruleset.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsResponseDataAttributesRulesetsItemsData {
+    /// The unique identifier of the ruleset resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Rulesets resource type.

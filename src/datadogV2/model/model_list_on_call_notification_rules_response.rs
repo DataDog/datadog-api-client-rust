@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListOnCallNotificationRulesResponse {
+    /// Array of notification rule data objects.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::OnCallNotificationRuleData>>,
     #[serde(rename = "included")]

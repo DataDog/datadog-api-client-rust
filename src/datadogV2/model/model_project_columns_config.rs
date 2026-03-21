@@ -6,11 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project columns configuration
+/// Project columns configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectColumnsConfig {
+    /// List of column configurations for the project board view.
     #[serde(rename = "columns")]
     pub columns: Option<Vec<crate::datadogV2::model::ProjectColumnsConfigColumnsItems>>,
     #[serde(flatten)]

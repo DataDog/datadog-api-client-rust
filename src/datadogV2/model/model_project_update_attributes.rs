@@ -6,24 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project update attributes
+/// Project update attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectUpdateAttributes {
-    /// Project columns configuration
+    /// Project columns configuration.
     #[serde(rename = "columns_config")]
     pub columns_config: Option<crate::datadogV2::model::ProjectColumnsConfig>,
-    /// List of enabled custom case type IDs
+    /// List of enabled custom case type IDs.
     #[serde(rename = "enabled_custom_case_types")]
     pub enabled_custom_case_types: Option<Vec<String>>,
-    /// Project name
+    /// Project name.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Project settings
+    /// Project settings.
     #[serde(rename = "settings")]
     pub settings: Option<crate::datadogV2::model::ProjectSettings>,
-    /// Team UUID to associate with the project
+    /// Team UUID to associate with the project.
     #[serde(rename = "team_uuid")]
     pub team_uuid: Option<String>,
     #[serde(flatten)]

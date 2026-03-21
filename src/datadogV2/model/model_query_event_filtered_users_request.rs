@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request body for querying users filtered by user properties combined with event platform activity.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct QueryEventFilteredUsersRequest {
+    /// The data object containing the resource type and attributes for querying event-filtered users.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::QueryEventFilteredUsersRequestData>,
     #[serde(flatten)]

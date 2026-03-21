@@ -11,8 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsSuiteSearchResponseDataAttributes {
+    /// List of Synthetic suites matching the search query.
     #[serde(rename = "suites")]
     pub suites: Option<Vec<crate::datadogV2::model::SyntheticsSuite>>,
+    /// Total number of Synthetic suites matching the search query.
     #[serde(rename = "total")]
     pub total: Option<i32>,
     #[serde(flatten)]

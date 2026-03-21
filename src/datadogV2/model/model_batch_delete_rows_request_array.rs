@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BatchDeleteRowsRequestArray {
+    /// List of row resources to delete from the reference table.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::TableRowResourceIdentifier>,
     #[serde(flatten)]

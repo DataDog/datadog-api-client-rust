@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Metadata associated with a scalar response column, including optional unit information.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsScalarColumnMeta {
+    /// Unit definitions for the column values, if applicable.
     #[serde(rename = "unit", default, with = "::serde_with::rust::double_option")]
     pub unit: Option<Option<Vec<crate::datadogV2::model::ProductAnalyticsUnit>>>,
     #[serde(flatten)]

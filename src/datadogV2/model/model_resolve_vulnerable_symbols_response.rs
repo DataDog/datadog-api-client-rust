@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The top-level response object returned when resolving vulnerable symbols for a set of packages.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ResolveVulnerableSymbolsResponse {
+    /// The data object in a response for resolving vulnerable symbols, containing the result attributes and response type.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::ResolveVulnerableSymbolsResponseData>,
     #[serde(flatten)]

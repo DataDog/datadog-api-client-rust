@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// An object containing metadata flags for a service, indicating whether it is traced by APM or monitored through Universal Service Monitoring.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ServiceListDataAttributesMetadataItems {
+    /// Indicates whether the service is traced by APM.
     #[serde(rename = "isTraced")]
     pub is_traced: Option<bool>,
+    /// Indicates whether the service uses Universal Service Monitoring.
     #[serde(rename = "isUsm")]
     pub is_usm: Option<bool>,
     #[serde(flatten)]

@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TableRowResourceIdentifier {
+    /// The primary key value that uniquely identifies the row to delete.
     #[serde(rename = "id")]
     pub id: String,
     /// Row resource type.

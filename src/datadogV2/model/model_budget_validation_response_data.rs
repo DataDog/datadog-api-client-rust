@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object for a budget validation response, containing the resource type, ID, and validation attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BudgetValidationResponseData {
+    /// The attributes of a budget validation response, including any validation errors and the validity status.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::BudgetValidationResponseDataAttributes>,
+    /// The unique identifier of the budget being validated.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Budget validation resource type.

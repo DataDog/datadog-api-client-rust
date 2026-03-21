@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A single RUM replay playlist resource returned by create, update, or get operations.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Playlist {
+    /// Data object representing a RUM replay playlist, including its identifier, type, and attributes.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::PlaylistData,
     #[serde(flatten)]

@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Sorting configuration specifying the field and direction for ordering user query results.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct QueryUsersRequestDataAttributesSort {
+    /// The user attribute field name to sort results by.
     #[serde(rename = "field")]
     pub field: Option<String>,
+    /// The sort direction, either ascending or descending.
     #[serde(rename = "order")]
     pub order: Option<String>,
     #[serde(flatten)]

@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The group the component belongs to.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPagesComponentDataRelationshipsGroup {
+    /// The data object identifying the group the component belongs to.
     #[serialize_always]
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::StatusPagesComponentDataRelationshipsGroupData>,

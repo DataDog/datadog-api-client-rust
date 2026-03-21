@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Related entities relationship containing a list of entity references related to this entity.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityResponseDataRelationshipsRelatedEntities {
+    /// List of related entity relationship data items.
     #[serde(rename = "data")]
     pub data: Option<
         Vec<crate::datadogV2::model::EntityResponseDataRelationshipsRelatedEntitiesDataItems>,

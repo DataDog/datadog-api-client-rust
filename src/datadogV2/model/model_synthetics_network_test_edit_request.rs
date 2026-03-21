@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsNetworkTestEditRequest {
+    /// Data object for creating or editing a Network Path test.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::SyntheticsNetworkTestEdit,
     #[serde(flatten)]

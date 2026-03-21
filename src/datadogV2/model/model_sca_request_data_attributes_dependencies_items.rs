@@ -6,30 +6,42 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A dependency found in the repository, including its identity, location, and reachability metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributesDependenciesItems {
+    /// A list of patterns or identifiers that should be excluded from analysis for this dependency.
     #[serde(rename = "exclusions")]
     pub exclusions: Option<Vec<String>>,
+    /// The group or organization namespace of the dependency (e.g., Maven group ID).
     #[serde(rename = "group")]
     pub group: Option<String>,
+    /// Indicates whether this is a development-only dependency not used in production.
     #[serde(rename = "is_dev")]
     pub is_dev: Option<bool>,
+    /// Indicates whether this is a direct dependency (as opposed to a transitive one).
     #[serde(rename = "is_direct")]
     pub is_direct: Option<bool>,
+    /// The programming language ecosystem of this dependency (e.g., java, python, javascript).
     #[serde(rename = "language")]
     pub language: Option<String>,
+    /// The list of source file locations where this dependency is declared.
     #[serde(rename = "locations")]
     pub locations: Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItems>>,
+    /// The name of the dependency package.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The package manager responsible for this dependency (e.g., maven, pip, npm).
     #[serde(rename = "package_manager")]
     pub package_manager: Option<String>,
+    /// The Package URL (PURL) uniquely identifying this dependency.
     #[serde(rename = "purl")]
     pub purl: Option<String>,
+    /// Properties describing symbols from this dependency that are reachable in the application code.
     #[serde(rename = "reachable_symbol_properties")]
     pub reachable_symbol_properties: Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsReachableSymbolPropertiesItems>>,
+    /// The version of the dependency.
     #[serde(rename = "version")]
     pub version: Option<String>,
     #[serde(flatten)]

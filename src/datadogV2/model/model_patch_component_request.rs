@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request object for updating a component.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PatchComponentRequest {
+    /// The data object for updating a component.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::PatchComponentRequestData>,
     #[serde(flatten)]

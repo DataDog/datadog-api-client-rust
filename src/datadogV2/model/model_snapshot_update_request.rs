@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request body for updating a heatmap snapshot.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SnapshotUpdateRequest {
+    /// Data object for a heatmap snapshot update request, containing the resource identifier, type, and attributes.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::SnapshotUpdateRequestData,
     #[serde(flatten)]

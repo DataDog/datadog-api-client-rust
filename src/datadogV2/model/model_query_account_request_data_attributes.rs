@@ -6,18 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes for filtering and shaping the account query results.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct QueryAccountRequestDataAttributes {
+    /// Maximum number of account records to return in the response.
     #[serde(rename = "limit")]
     pub limit: Option<i64>,
+    /// Filter expression using account attribute conditions to narrow results.
     #[serde(rename = "query")]
     pub query: Option<String>,
+    /// List of account attribute column names to include in the response.
     #[serde(rename = "select_columns")]
     pub select_columns: Option<Vec<String>>,
+    /// Sorting configuration specifying the field and direction for ordering query results.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::QueryAccountRequestDataAttributesSort>,
+    /// Free-text term used for wildcard search across account attribute values.
     #[serde(rename = "wildcard_search_term")]
     pub wildcard_search_term: Option<String>,
     #[serde(flatten)]

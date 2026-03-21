@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Configuration for a single column in a project board view.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectColumnsConfigColumnsItems {
+    /// Sort configuration for a project board column.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::ProjectColumnsConfigColumnsItemsSort>,
+    /// The field used to sort items in this column.
     #[serde(rename = "sort_field")]
     pub sort_field: Option<String>,
+    /// The type of column.
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(flatten)]

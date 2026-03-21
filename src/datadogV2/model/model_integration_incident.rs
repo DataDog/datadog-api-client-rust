@@ -6,25 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Incident integration settings
+/// Incident integration settings.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationIncident {
-    /// Query for auto-escalation
+    /// Query for auto-escalation.
     #[serde(rename = "auto_escalation_query")]
     pub auto_escalation_query: Option<String>,
-    /// Default incident commander
+    /// Default incident commander.
     #[serde(rename = "default_incident_commander")]
     pub default_incident_commander: Option<String>,
-    /// Whether incident integration is enabled
+    /// Whether incident integration is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// List of mappings between incident fields and case fields.
     #[serde(rename = "field_mappings")]
     pub field_mappings: Option<Vec<crate::datadogV2::model::IntegrationIncidentFieldMappingsItems>>,
-    /// Incident type
+    /// Incident type.
     #[serde(rename = "incident_type")]
     pub incident_type: Option<String>,
+    /// Severity configuration for mapping incident priorities to case priorities.
     #[serde(rename = "severity_config")]
     pub severity_config: Option<crate::datadogV2::model::IntegrationIncidentSeverityConfig>,
     #[serde(flatten)]

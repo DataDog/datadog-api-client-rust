@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A single monthly budget entry defining the allocated amount and optional tag filters for a specific month.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BudgetWithEntriesDataAttributesEntriesItems {
+    /// The budgeted amount for this entry.
     #[serde(rename = "amount")]
     pub amount: Option<f64>,
+    /// The month this budget entry applies to, in YYYYMM format.
     #[serde(rename = "month")]
     pub month: Option<i64>,
+    /// The list of tag filters that scope this budget entry to specific resources.
     #[serde(rename = "tag_filters")]
     pub tag_filters: Option<
         Vec<crate::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems>,

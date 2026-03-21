@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListDeploymentRuleResponseData {
+    /// Attributes of the response for listing deployment rules.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::ListDeploymentRulesResponseDataAttributes,
     /// Unique identifier of the deployment rule.

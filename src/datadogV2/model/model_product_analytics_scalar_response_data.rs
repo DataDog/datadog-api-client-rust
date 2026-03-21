@@ -11,10 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsScalarResponseData {
+    /// Attributes of a scalar analytics response, containing the result columns.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ProductAnalyticsScalarResponseAttributes>,
+    /// Unique identifier for this response data object.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// The resource type identifier for a scalar analytics response.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::ProductAnalyticsScalarResponseType>,
     #[serde(flatten)]

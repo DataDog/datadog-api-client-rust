@@ -6,34 +6,34 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project settings
+/// Project settings.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectSettings {
-    /// Auto-close inactive cases settings
+    /// Auto-close inactive cases settings.
     #[serde(rename = "auto_close_inactive_cases")]
     pub auto_close_inactive_cases: Option<crate::datadogV2::model::AutoCloseInactiveCases>,
-    /// Auto-transition assigned cases settings
+    /// Auto-transition assigned cases settings.
     #[serde(rename = "auto_transition_assigned_cases")]
     pub auto_transition_assigned_cases:
         Option<crate::datadogV2::model::AutoTransitionAssignedCases>,
-    /// Incident integration settings
+    /// Incident integration settings.
     #[serde(rename = "integration_incident")]
     pub integration_incident: Option<crate::datadogV2::model::IntegrationIncident>,
-    /// Jira integration settings
+    /// Jira integration settings.
     #[serde(rename = "integration_jira")]
     pub integration_jira: Option<crate::datadogV2::model::IntegrationJira>,
-    /// Monitor integration settings
+    /// Monitor integration settings.
     #[serde(rename = "integration_monitor")]
     pub integration_monitor: Option<crate::datadogV2::model::IntegrationMonitor>,
-    /// On-Call integration settings
+    /// On-Call integration settings.
     #[serde(rename = "integration_on_call")]
     pub integration_on_call: Option<crate::datadogV2::model::IntegrationOnCall>,
-    /// ServiceNow integration settings
+    /// ServiceNow integration settings.
     #[serde(rename = "integration_service_now")]
     pub integration_service_now: Option<crate::datadogV2::model::IntegrationServiceNow>,
-    /// Project notification settings
+    /// Project notification settings.
     #[serde(rename = "notification")]
     pub notification: Option<crate::datadogV2::model::ProjectNotificationSettings>,
     #[serde(flatten)]

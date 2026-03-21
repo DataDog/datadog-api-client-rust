@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request body for creating a new custom rule revision.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomRuleRevisionRequest {
+    /// Data object for a custom rule revision create request.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::CustomRuleRevisionRequestData>,
     #[serde(flatten)]

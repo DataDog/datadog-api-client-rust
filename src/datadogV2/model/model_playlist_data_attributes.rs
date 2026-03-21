@@ -6,20 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of a RUM replay playlist, including its name, description, session count, and audit timestamps.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PlaylistDataAttributes {
+    /// Timestamp when the playlist was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Information about the user who created the playlist.
     #[serde(rename = "created_by")]
     pub created_by: Option<crate::datadogV2::model::PlaylistDataAttributesCreatedBy>,
+    /// Optional human-readable description of the playlist's purpose or contents.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// Human-readable name of the playlist.
     #[serde(rename = "name")]
     pub name: String,
+    /// Number of replay sessions in the playlist.
     #[serde(rename = "session_count")]
     pub session_count: Option<i64>,
+    /// Timestamp when the playlist was last updated.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(flatten)]

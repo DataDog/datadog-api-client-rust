@@ -6,27 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project attributes
+/// Project attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectAttributes {
-    /// Project columns configuration
+    /// Project columns configuration.
     #[serde(rename = "columns_config")]
     pub columns_config: Option<crate::datadogV2::model::ProjectColumnsConfig>,
-    /// List of enabled custom case type IDs
+    /// List of enabled custom case type IDs.
     #[serde(rename = "enabled_custom_case_types")]
     pub enabled_custom_case_types: Option<Vec<String>>,
-    /// The project's key
+    /// The project's key.
     #[serde(rename = "key")]
     pub key: Option<String>,
-    /// Project's name
+    /// Project's name.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Whether the project is restricted
+    /// Whether the project is restricted.
     #[serde(rename = "restricted")]
     pub restricted: Option<bool>,
-    /// Project settings
+    /// Project settings.
     #[serde(rename = "settings")]
     pub settings: Option<crate::datadogV2::model::ProjectSettings>,
     #[serde(flatten)]

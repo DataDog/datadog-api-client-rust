@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a heatmap snapshot update request, containing the resource identifier, type, and attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SnapshotUpdateRequestData {
+    /// Attributes for updating a heatmap snapshot, including event, session, and view context.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::SnapshotUpdateRequestDataAttributes>,
+    /// Unique identifier of the heatmap snapshot to update.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Snapshots resource type.

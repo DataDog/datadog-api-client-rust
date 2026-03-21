@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A seat user resource object containing its ID, type, and associated attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SeatUserData {
+    /// Attributes of a user assigned to a seat, including their email, name, and assignment timestamp.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::SeatUserDataAttributes>,
     /// The ID of the seat user.

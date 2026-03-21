@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project create
+/// Project create.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectCreate {
-    /// Project creation attributes
+    /// Project creation attributes.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::ProjectCreateAttributes,
-    /// Project resource type
+    /// Project resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ProjectResourceType,
     #[serde(flatten)]

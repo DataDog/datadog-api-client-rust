@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of a scalar analytics response, containing the result columns.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsScalarResponseAttributes {
+    /// The list of result columns, each containing values and metadata.
     #[serde(rename = "columns")]
     pub columns: Option<Vec<crate::datadogV2::model::ProductAnalyticsScalarColumn>>,
     #[serde(flatten)]

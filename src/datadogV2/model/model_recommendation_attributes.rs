@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RecommendationAttributes {
+    /// The confidence level of the recommendation, expressed as a value between 0.0 (low confidence) and 1.0 (high confidence).
     #[serde(rename = "confidence_level")]
     pub confidence_level: Option<f64>,
     /// Resource recommendation for a single Spark component (driver or executor). Contains estimation data used to patch Spark job specs.

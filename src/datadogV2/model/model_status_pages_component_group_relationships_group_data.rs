@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object identifying the parent group of a component group.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPagesComponentGroupRelationshipsGroupData {
+    /// The ID of the parent group.
     #[serde(rename = "id")]
     pub id: uuid::Uuid,
     /// Components resource type.

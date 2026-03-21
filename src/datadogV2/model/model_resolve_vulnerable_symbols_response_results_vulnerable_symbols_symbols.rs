@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A symbol identified as vulnerable within a dependency, including its name, type, and value.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ResolveVulnerableSymbolsResponseResultsVulnerableSymbolsSymbols {
+    /// The name of the vulnerable symbol.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The type classification of the vulnerable symbol (e.g., function, class, variable).
     #[serde(rename = "type")]
     pub type_: Option<String>,
+    /// The value or identifier associated with the vulnerable symbol.
     #[serde(rename = "value")]
     pub value: Option<String>,
     #[serde(flatten)]

@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a HAMR organization connection response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct HamrOrgConnectionDataResponse {
+    /// Attributes of a HAMR organization connection response.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::HamrOrgConnectionAttributesResponse,
     /// The organization UUID for this HAMR connection.

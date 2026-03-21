@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of the list connections response, containing the collection of data source connections.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListConnectionsResponseDataAttributes {
+    /// The list of data source connections configured for the entity.
     #[serde(rename = "connections")]
     pub connections:
         Option<Vec<crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItems>>,

@@ -6,19 +6,25 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Entity relationships including incidents, oncalls, schemas, and related entities.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityResponseDataRelationships {
+    /// Incidents relationship containing a list of incident resources associated with this entity.
     #[serde(rename = "incidents")]
     pub incidents: Option<crate::datadogV2::model::EntityResponseDataRelationshipsIncidents>,
+    /// Oncalls relationship containing a list of oncall resources associated with this entity.
     #[serde(rename = "oncalls")]
     pub oncalls: Option<crate::datadogV2::model::EntityResponseDataRelationshipsOncalls>,
+    /// Raw schema relationship linking an entity to its raw schema resource.
     #[serde(rename = "rawSchema")]
     pub raw_schema: Option<crate::datadogV2::model::EntityResponseDataRelationshipsRawSchema>,
+    /// Related entities relationship containing a list of entity references related to this entity.
     #[serde(rename = "relatedEntities")]
     pub related_entities:
         Option<crate::datadogV2::model::EntityResponseDataRelationshipsRelatedEntities>,
+    /// Schema relationship linking an entity to its associated schema resource.
     #[serde(rename = "schema")]
     pub schema: Option<crate::datadogV2::model::EntityResponseDataRelationshipsSchema>,
     #[serde(flatten)]

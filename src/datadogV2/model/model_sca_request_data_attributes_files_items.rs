@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A file entry in the repository associated with a dependency manifest.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributesFilesItems {
+    /// The name or path of the file within the repository.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The Package URL (PURL) associated with the dependency declared in this file.
     #[serde(rename = "purl")]
     pub purl: Option<String>,
     #[serde(flatten)]

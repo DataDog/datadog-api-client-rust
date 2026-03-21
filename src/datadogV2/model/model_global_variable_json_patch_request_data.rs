@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a JSON Patch request on a Synthetic global variable.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GlobalVariableJsonPatchRequestData {
+    /// Attributes for a JSON Patch request on a Synthetic global variable.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::GlobalVariableJsonPatchRequestDataAttributes>,
     /// Global variable JSON Patch type.

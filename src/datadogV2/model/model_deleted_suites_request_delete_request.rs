@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request body for bulk deleting Synthetic test suites.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeletedSuitesRequestDeleteRequest {
+    /// Data object for a bulk delete Synthetic test suites request.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::DeletedSuitesRequestDelete,
     #[serde(flatten)]
