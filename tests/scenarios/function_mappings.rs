@@ -71,6 +71,7 @@ pub struct ApiInstances {
     pub v2_api_change_management: Option<datadogV2::api_change_management::ChangeManagementAPI>,
     pub v2_api_ci_visibility_pipelines:
         Option<datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI>,
+    pub v2_api_test_optimization: Option<datadogV2::api_test_optimization::TestOptimizationAPI>,
     pub v2_api_ci_visibility_tests:
         Option<datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI>,
     pub v2_api_cloud_authentication:
@@ -181,7 +182,6 @@ pub struct ApiInstances {
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
     pub v2_api_incident_teams: Option<datadogV2::api_incident_teams::IncidentTeamsAPI>,
-    pub v2_api_test_optimization: Option<datadogV2::api_test_optimization::TestOptimizationAPI>,
     pub v2_api_users: Option<datadogV2::api_users::UsersAPI>,
     pub v2_api_workflow_automation:
         Option<datadogV2::api_workflow_automation::WorkflowAutomationAPI>,
@@ -642,6 +642,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "TestOptimization" => {
+            world.api_instances.v2_api_test_optimization = Some(
+                datadogV2::api_test_optimization::TestOptimizationAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "CIVisibilityTests" => {
             world.api_instances.v2_api_ci_visibility_tests = Some(
@@ -1151,14 +1159,6 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "IncidentTeams" => {
             world.api_instances.v2_api_incident_teams = Some(
                 datadogV2::api_incident_teams::IncidentTeamsAPI::with_client_and_config(
-                    world.config.clone(),
-                    world.http_client.as_ref().unwrap().clone(),
-                ),
-            );
-        }
-        "TestOptimization" => {
-            world.api_instances.v2_api_test_optimization = Some(
-                datadogV2::api_test_optimization::TestOptimizationAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -2577,6 +2577,28 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.SearchCIAppPipelineEventsWithPagination".into(),
         test_v2_search_ci_app_pipeline_events_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteTestOptimizationServiceSettings".into(),
+        test_v2_delete_test_optimization_service_settings,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateTestOptimizationServiceSettings".into(),
+        test_v2_update_test_optimization_service_settings,
+    );
+    world.function_mappings.insert(
+        "v2.GetTestOptimizationServiceSettings".into(),
+        test_v2_get_test_optimization_service_settings,
+    );
+    world
+        .function_mappings
+        .insert("v2.UpdateFlakyTests".into(), test_v2_update_flaky_tests);
+    world
+        .function_mappings
+        .insert("v2.SearchFlakyTests".into(), test_v2_search_flaky_tests);
+    world.function_mappings.insert(
+        "v2.SearchFlakyTestsWithPagination".into(),
+        test_v2_search_flaky_tests_with_pagination,
     );
     world.function_mappings.insert(
         "v2.AggregateCIAppTestEvents".into(),
@@ -5410,16 +5432,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateIncidentTeam".into(), test_v2_update_incident_team);
-    world
-        .function_mappings
-        .insert("v2.UpdateFlakyTests".into(), test_v2_update_flaky_tests);
-    world
-        .function_mappings
-        .insert("v2.SearchFlakyTests".into(), test_v2_search_flaky_tests);
-    world.function_mappings.insert(
-        "v2.SearchFlakyTestsWithPagination".into(),
-        test_v2_search_flaky_tests_with_pagination,
-    );
     world
         .function_mappings
         .insert("v2.SendInvitations".into(), test_v2_send_invitations);
@@ -17718,6 +17730,187 @@ fn test_v2_search_ci_app_pipeline_events_with_pagination(
         datadogV2::api_ci_visibility_pipelines::SearchCIAppPipelineEventsOptionalParams::default();
     params.body = body;
     let response = api.search_ci_app_pipeline_events_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_delete_test_optimization_service_settings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_test_optimization
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_test_optimization_service_settings_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_test_optimization_service_settings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_test_optimization
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_test_optimization_service_settings_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_test_optimization_service_settings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_test_optimization
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_test_optimization_service_settings_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_flaky_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_test_optimization
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_flaky_tests_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_search_flaky_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_test_optimization
+        .as_ref()
+        .expect("api instance not found");
+    let body = _parameters
+        .get("body")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_test_optimization::SearchFlakyTestsOptionalParams::default();
+    params.body = body;
+    let response = match block_on(api.search_flaky_tests_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_search_flaky_tests_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_test_optimization
+        .as_ref()
+        .expect("api instance not found");
+    let body = _parameters
+        .get("body")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_test_optimization::SearchFlakyTestsOptionalParams::default();
+    params.body = body;
+    let response = api.search_flaky_tests_with_pagination(params);
     let mut result = Vec::new();
 
     block_on(async {
@@ -42114,101 +42307,6 @@ fn test_v2_update_incident_team(world: &mut DatadogWorld, _parameters: &HashMap<
     };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
-}
-
-fn test_v2_update_flaky_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_test_optimization
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_flaky_tests_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_search_flaky_tests(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_test_optimization
-        .as_ref()
-        .expect("api instance not found");
-    let body = _parameters
-        .get("body")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_test_optimization::SearchFlakyTestsOptionalParams::default();
-    params.body = body;
-    let response = match block_on(api.search_flaky_tests_with_http_info(params)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-fn test_v2_search_flaky_tests_with_pagination(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_test_optimization
-        .as_ref()
-        .expect("api instance not found");
-    let body = _parameters
-        .get("body")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_test_optimization::SearchFlakyTestsOptionalParams::default();
-    params.body = body;
-    let response = api.search_flaky_tests_with_pagination(params);
-    let mut result = Vec::new();
-
-    block_on(async {
-        pin_mut!(response);
-
-        while let Some(resp) = response.next().await {
-            match resp {
-                Ok(response) => {
-                    result.push(response);
-                }
-                Err(error) => {
-                    return match error {
-                        Error::ResponseError(e) => {
-                            if let Some(entity) = e.entity {
-                                world.response.object = serde_json::to_value(entity).unwrap();
-                            }
-                        }
-                        _ => panic!("error parsing response: {}", error),
-                    };
-                }
-            }
-        }
-    });
-    world.response.object = serde_json::to_value(result).unwrap();
-    world.response.code = 200;
 }
 
 fn test_v2_send_invitations(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
