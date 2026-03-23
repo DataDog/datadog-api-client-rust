@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A single OCI tenancy product resource object containing the tenancy ID, type, and product attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TenancyProductsData {
+    /// Attributes of an OCI tenancy product resource, containing the list of available products and their enablement status.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::TenancyProductsDataAttributes>,
+    /// The OCID of the OCI tenancy.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// OCI tenancy product resource type.

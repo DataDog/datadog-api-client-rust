@@ -6,26 +6,36 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Entity response attributes containing core entity metadata fields.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityResponseDataAttributes {
+    /// The API version of the entity schema.
     #[serde(rename = "apiVersion")]
     pub api_version: Option<String>,
+    /// A short description of the entity.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// The user-friendly display name of the entity.
     #[serde(rename = "displayName")]
     pub display_name: Option<String>,
+    /// The kind of the entity (e.g. service, datastore, queue).
     #[serde(rename = "kind")]
     pub kind: Option<String>,
+    /// The unique name of the entity within its kind and namespace.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The namespace the entity belongs to.
     #[serde(rename = "namespace")]
     pub namespace: Option<String>,
+    /// The owner of the entity, usually a team.
     #[serde(rename = "owner")]
     pub owner: Option<String>,
+    /// Additional custom properties for the entity.
     #[serde(rename = "properties")]
     pub properties: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    /// A set of custom tags assigned to the entity.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     #[serde(flatten)]

@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response containing a list of OCI tenancy integration configurations.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TenancyConfigList {
+    /// List of OCI tenancy integration configuration objects.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::TenancyConfigData>,
     #[serde(flatten)]

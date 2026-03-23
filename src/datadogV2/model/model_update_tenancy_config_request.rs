@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request body for updating an existing OCI tenancy integration configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateTenancyConfigRequest {
+    /// The data object for updating an existing OCI tenancy integration configuration, including the tenancy ID, type, and updated attributes.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::UpdateTenancyConfigData,
     #[serde(flatten)]

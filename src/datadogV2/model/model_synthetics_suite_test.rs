@@ -15,6 +15,7 @@ pub struct SyntheticsSuiteTest {
     #[serde(rename = "alerting_criticality")]
     pub alerting_criticality:
         Option<crate::datadogV2::model::SyntheticsSuiteTestAlertingCriticality>,
+    /// The public ID of the Synthetic test included in the suite.
     #[serde(rename = "public_id")]
     pub public_id: String,
     #[serde(flatten)]

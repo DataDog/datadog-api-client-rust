@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Related entity relationship data item containing the related entity resource identifier and type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityResponseDataRelationshipsRelatedEntitiesDataItems {
+    /// Related entity unique identifier.
     #[serde(rename = "id")]
     pub id: String,
     /// Related entity resource type.

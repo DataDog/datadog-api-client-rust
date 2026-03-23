@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of the query response, containing the matched records and total count.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct QueryResponseDataAttributes {
+    /// The list of matching records returned by the query, each as a map of attribute names to values.
     #[serde(rename = "hits")]
     pub hits: Option<Vec<serde_json::Value>>,
+    /// Total number of records matching the query, regardless of the limit applied.
     #[serde(rename = "total")]
     pub total: Option<i64>,
     #[serde(flatten)]

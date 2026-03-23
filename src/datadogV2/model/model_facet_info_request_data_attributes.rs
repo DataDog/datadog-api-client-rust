@@ -6,16 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes for the facet info request, specifying which facet to query and optional filters to apply.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FacetInfoRequestDataAttributes {
+    /// The identifier of the facet attribute to retrieve value information for.
     #[serde(rename = "facet_id")]
     pub facet_id: String,
+    /// Maximum number of facet values to return in the response.
     #[serde(rename = "limit")]
     pub limit: i64,
+    /// Query-based search configuration for filtering the audience context when retrieving facet values.
     #[serde(rename = "search")]
     pub search: Option<crate::datadogV2::model::FacetInfoRequestDataAttributesSearch>,
+    /// Term-level search configuration for filtering facet values by an exact or partial term match.
     #[serde(rename = "term_search")]
     pub term_search: Option<crate::datadogV2::model::FacetInfoRequestDataAttributesTermSearch>,
     #[serde(flatten)]

@@ -6,16 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes for recording a session watch event, including the application, event reference, and timestamp.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct WatchDataAttributes {
+    /// Unique identifier of the RUM application containing the session.
     #[serde(rename = "application_id")]
     pub application_id: String,
+    /// Data source type indicating the origin of the session data (e.g., rum or product_analytics).
     #[serde(rename = "data_source")]
     pub data_source: Option<String>,
+    /// Unique identifier of the RUM event that was watched.
     #[serde(rename = "event_id")]
     pub event_id: String,
+    /// Timestamp when the session was watched.
     #[serde(rename = "timestamp")]
     pub timestamp: chrono::DateTime<chrono::Utc>,
     #[serde(flatten)]

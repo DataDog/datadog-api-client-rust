@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of a service list entry, containing metadata and a list of service names.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ServiceListDataAttributes {
+    /// A list of metadata items associated with the service.
     #[serde(rename = "metadata")]
     pub metadata: Option<Vec<crate::datadogV2::model::ServiceListDataAttributesMetadataItems>>,
+    /// A list of service names.
     #[serde(rename = "services")]
     pub services: Option<Vec<String>>,
     #[serde(flatten)]

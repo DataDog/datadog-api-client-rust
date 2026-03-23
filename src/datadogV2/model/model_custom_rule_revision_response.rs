@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response containing a single custom rule revision.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomRuleRevisionResponse {
+    /// A specific revision of a custom static analysis rule.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CustomRuleRevision,
     #[serde(flatten)]

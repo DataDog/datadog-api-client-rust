@@ -20,6 +20,7 @@ pub struct BudgetAttributes {
     /// The month when the budget ends.
     #[serde(rename = "end_month")]
     pub end_month: Option<i64>,
+    /// The list of monthly budget entries.
     #[serde(rename = "entries")]
     pub entries: Option<Vec<crate::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItems>>,
     /// The cost query used to track against the budget.

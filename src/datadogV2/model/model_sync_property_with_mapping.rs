@@ -6,15 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Sync property with mapping configuration
+/// Sync property with mapping configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyncPropertyWithMapping {
+    /// Map of source values to destination values for synchronization.
     #[serde(rename = "mapping")]
     pub mapping: Option<std::collections::BTreeMap<String, String>>,
+    /// Map of source names to display names used during synchronization.
     #[serde(rename = "name_mapping")]
     pub name_mapping: Option<std::collections::BTreeMap<String, String>>,
+    /// The direction and type of synchronization for this property.
     #[serde(rename = "sync_type")]
     pub sync_type: Option<String>,
     #[serde(flatten)]

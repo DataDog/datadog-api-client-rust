@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The Datadog user who created the component.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPagesComponentDataRelationshipsCreatedByUser {
+    /// The data object identifying the Datadog user who created the component.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::StatusPagesComponentDataRelationshipsCreatedByUserData,
     #[serde(flatten)]

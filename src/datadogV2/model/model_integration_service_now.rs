@@ -6,22 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// ServiceNow integration settings
+/// ServiceNow integration settings.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationServiceNow {
-    /// Assignment group
+    /// Assignment group.
     #[serde(rename = "assignment_group")]
     pub assignment_group: Option<String>,
+    /// Auto-creation settings for ServiceNow incidents from cases.
     #[serde(rename = "auto_creation")]
     pub auto_creation: Option<crate::datadogV2::model::IntegrationServiceNowAutoCreation>,
-    /// Whether ServiceNow integration is enabled
+    /// Whether ServiceNow integration is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
-    /// ServiceNow instance name
+    /// ServiceNow instance name.
     #[serde(rename = "instance_name")]
     pub instance_name: Option<String>,
+    /// Synchronization configuration for ServiceNow integration.
     #[serde(rename = "sync_config")]
     pub sync_config: Option<crate::datadogV2::model::IntegrationServiceNowSyncConfig>,
     #[serde(flatten)]

@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes for a bulk delete Synthetic test suites request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeletedSuitesRequestDeleteAttributes {
+    /// Whether to force deletion of suites that have dependent resources.
     #[serde(rename = "force_delete_dependencies")]
     pub force_delete_dependencies: Option<bool>,
+    /// List of public IDs of the Synthetic test suites to delete.
     #[serde(rename = "public_ids")]
     pub public_ids: Vec<String>,
     #[serde(flatten)]

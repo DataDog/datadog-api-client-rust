@@ -6,6 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A paginated list of seat user resources with associated pagination metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -13,6 +14,7 @@ pub struct SeatUserDataArray {
     /// The list of seat users.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::SeatUserData>>,
+    /// Pagination metadata for the seat users list response.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::SeatUserMeta>,
     #[serde(flatten)]

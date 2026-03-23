@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request object for creating a degradation.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateDegradationRequest {
+    /// The data object for creating a degradation.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::CreateDegradationRequestData>,
     #[serde(flatten)]

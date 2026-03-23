@@ -6,17 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// On-Call integration settings
+/// On-Call integration settings.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationOnCall {
-    /// Whether to auto-assign on-call
+    /// Whether to auto-assign on-call.
     #[serde(rename = "auto_assign_on_call")]
     pub auto_assign_on_call: Option<bool>,
-    /// Whether On-Call integration is enabled
+    /// Whether On-Call integration is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// List of escalation queries for routing cases to on-call responders.
     #[serde(rename = "escalation_queries")]
     pub escalation_queries:
         Option<Vec<crate::datadogV2::model::IntegrationOnCallEscalationQueriesItems>>,

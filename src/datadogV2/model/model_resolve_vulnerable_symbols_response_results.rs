@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The result of resolving vulnerable symbols for a specific package, identified by its PURL.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ResolveVulnerableSymbolsResponseResults {
+    /// The Package URL (PURL) uniquely identifying the package for which vulnerable symbols are resolved.
     #[serde(rename = "purl")]
     pub purl: Option<String>,
+    /// The list of vulnerable symbol groups found in this package, organized by advisory.
     #[serde(rename = "vulnerable_symbols")]
     pub vulnerable_symbols: Option<
         Vec<crate::datadogV2::model::ResolveVulnerableSymbolsResponseResultsVulnerableSymbols>,

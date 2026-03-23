@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A key-value pair representing a tag associated with a Datadog Agent.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FleetAgentAttributesTagsItems {
+    /// The tag key.
     #[serde(rename = "key")]
     pub key: Option<String>,
+    /// The tag value.
     #[serde(rename = "value")]
     pub value: Option<String>,
     #[serde(flatten)]

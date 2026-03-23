@@ -6,18 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of a user who has watched a RUM replay session, including contact information and watch statistics.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct WatcherDataAttributes {
+    /// Email handle of the user who watched the session.
     #[serde(rename = "handle")]
     pub handle: String,
+    /// URL or identifier of the watcher's avatar icon.
     #[serde(rename = "icon")]
     pub icon: Option<String>,
+    /// Timestamp when the watcher last viewed the session.
     #[serde(rename = "last_watched_at")]
     pub last_watched_at: chrono::DateTime<chrono::Utc>,
+    /// Display name of the user who watched the session.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// Total number of times the user has watched the session.
     #[serde(rename = "watch_count")]
     pub watch_count: i32,
     #[serde(flatten)]

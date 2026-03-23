@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsScalarColumn {
+    /// Metadata associated with a scalar response column, including optional unit information.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::ProductAnalyticsScalarColumnMeta>,
     /// Column name (facet name for group-by, or "query").

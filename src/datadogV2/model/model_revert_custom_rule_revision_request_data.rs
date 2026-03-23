@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a request to revert a custom rule to a previous revision.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RevertCustomRuleRevisionRequestData {
+    /// Attributes specifying the current and target revision IDs for a revert operation.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::RevertCustomRuleRevisionRequestDataAttributes>,
     /// Request identifier

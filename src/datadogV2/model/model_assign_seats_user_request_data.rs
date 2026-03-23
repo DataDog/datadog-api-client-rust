@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The request data object containing attributes for assigning seats to users.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AssignSeatsUserRequestData {
+    /// Attributes specifying the product and users to whom seats will be assigned.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::AssignSeatsUserRequestDataAttributes,
     /// The ID of the assign seats user request.

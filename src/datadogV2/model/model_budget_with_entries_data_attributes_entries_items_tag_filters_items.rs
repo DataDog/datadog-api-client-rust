@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A tag filter used to scope a budget entry to specific resource tags.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems {
+    /// The tag key to filter on.
     #[serde(rename = "tag_key")]
     pub tag_key: Option<String>,
+    /// The tag value to filter on.
     #[serde(rename = "tag_value")]
     pub tag_value: Option<String>,
     #[serde(flatten)]

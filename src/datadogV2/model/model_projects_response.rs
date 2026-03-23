@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response with projects
+/// Response with projects.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectsResponse {
-    /// Projects response data
+    /// Projects response data.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::Project>>,
     #[serde(flatten)]

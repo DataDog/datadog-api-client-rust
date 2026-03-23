@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Event platform query used to filter users based on their event activity within a specified time window.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct QueryEventFilteredUsersRequestDataAttributesEventQuery {
+    /// The event platform query expression for filtering users by their event activity.
     #[serde(rename = "query")]
     pub query: Option<String>,
+    /// The time window defining the start and end of the event query period as Unix timestamps.
     #[serde(rename = "time_frame")]
     pub time_frame: Option<
         crate::datadogV2::model::QueryEventFilteredUsersRequestDataAttributesEventQueryTimeFrame,

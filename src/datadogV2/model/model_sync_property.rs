@@ -6,11 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Sync property configuration
+/// Sync property configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyncProperty {
+    /// The direction and type of synchronization for this property.
     #[serde(rename = "sync_type")]
     pub sync_type: Option<String>,
     #[serde(flatten)]

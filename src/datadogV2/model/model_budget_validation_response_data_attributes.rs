@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The attributes of a budget validation response, including any validation errors and the validity status.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BudgetValidationResponseDataAttributes {
+    /// A list of validation error messages for the budget.
     #[serde(rename = "errors")]
     pub errors: Option<Vec<String>>,
+    /// Whether the budget configuration is valid.
     #[serde(rename = "valid")]
     pub valid: Option<bool>,
     #[serde(flatten)]

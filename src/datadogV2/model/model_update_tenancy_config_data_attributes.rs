@@ -6,27 +6,36 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes for updating an existing OCI tenancy integration configuration, including optional credentials, region settings, and collection options.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateTenancyConfigDataAttributes {
+    /// OCI API signing key credentials used to update the Datadog integration's authentication with the OCI tenancy.
     #[serde(rename = "auth_credentials")]
     pub auth_credentials:
         Option<crate::datadogV2::model::UpdateTenancyConfigDataAttributesAuthCredentials>,
+    /// Whether cost data collection from OCI is enabled for the tenancy.
     #[serde(rename = "cost_collection_enabled")]
     pub cost_collection_enabled: Option<bool>,
+    /// The home region of the OCI tenancy (for example, us-ashburn-1).
     #[serde(rename = "home_region")]
     pub home_region: Option<String>,
+    /// Log collection configuration for updating an OCI tenancy, controlling which compartments and services have log collection enabled.
     #[serde(rename = "logs_config")]
     pub logs_config: Option<crate::datadogV2::model::UpdateTenancyConfigDataAttributesLogsConfig>,
+    /// Metrics collection configuration for updating an OCI tenancy, controlling which compartments and services are included or excluded.
     #[serde(rename = "metrics_config")]
     pub metrics_config:
         Option<crate::datadogV2::model::UpdateTenancyConfigDataAttributesMetricsConfig>,
+    /// Region configuration for updating an OCI tenancy, specifying which regions are available, enabled, or disabled for data collection.
     #[serde(rename = "regions_config")]
     pub regions_config:
         Option<crate::datadogV2::model::UpdateTenancyConfigDataAttributesRegionsConfig>,
+    /// Whether resource collection from OCI is enabled for the tenancy.
     #[serde(rename = "resource_collection_enabled")]
     pub resource_collection_enabled: Option<bool>,
+    /// The OCID of the OCI user used by the Datadog integration for authentication.
     #[serde(rename = "user_ocid")]
     pub user_ocid: Option<String>,
     #[serde(flatten)]

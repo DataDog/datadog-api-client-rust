@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GlobalVariableJsonPatchRequest {
+    /// Data object for a JSON Patch request on a Synthetic global variable.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::GlobalVariableJsonPatchRequestData,
     #[serde(flatten)]

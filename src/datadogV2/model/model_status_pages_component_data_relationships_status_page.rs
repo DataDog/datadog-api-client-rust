@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The status page the component belongs to.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPagesComponentDataRelationshipsStatusPage {
+    /// The data object identifying the status page the component belongs to.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::StatusPagesComponentDataRelationshipsStatusPageData,
     #[serde(flatten)]

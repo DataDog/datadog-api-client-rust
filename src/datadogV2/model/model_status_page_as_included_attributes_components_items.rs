@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A component displayed on an included status page.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPageAsIncludedAttributesComponentsItems {
+    /// If the component is of type `group`, the components within the group.
     #[serde(rename = "components")]
     pub components: Option<
         Vec<crate::datadogV2::model::StatusPageAsIncludedAttributesComponentsItemsComponentsItems>,

@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Information about the source code repository being analyzed.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributesRepository {
+    /// The URL of the repository.
     #[serde(rename = "url")]
     pub url: Option<String>,
     #[serde(flatten)]

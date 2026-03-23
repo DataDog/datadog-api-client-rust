@@ -6,38 +6,54 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of a heatmap snapshot, including view context, device information, and audit metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SnapshotDataAttributes {
+    /// Unique identifier of the RUM application.
     #[serde(rename = "application_id")]
     pub application_id: Option<String>,
+    /// Timestamp when the snapshot was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Display name of the user who created the snapshot.
     #[serde(rename = "created_by")]
     pub created_by: Option<String>,
+    /// Email handle of the user who created the snapshot.
     #[serde(rename = "created_by_handle")]
     pub created_by_handle: Option<String>,
+    /// Numeric identifier of the user who created the snapshot.
     #[serde(rename = "created_by_user_id")]
     pub created_by_user_id: Option<i64>,
+    /// Device type used when capturing the snapshot (e.g., desktop, mobile, tablet).
     #[serde(rename = "device_type")]
     pub device_type: Option<String>,
+    /// Unique identifier of the RUM event associated with the snapshot.
     #[serde(rename = "event_id")]
     pub event_id: Option<String>,
+    /// Indicates whether the device type was explicitly selected by the user rather than auto-detected.
     #[serde(rename = "is_device_type_selected_by_user")]
     pub is_device_type_selected_by_user: Option<bool>,
+    /// Timestamp when the snapshot was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Numeric identifier of the organization that owns the snapshot.
     #[serde(rename = "org_id")]
     pub org_id: Option<i64>,
+    /// Unique identifier of the RUM session associated with the snapshot.
     #[serde(rename = "session_id")]
     pub session_id: Option<String>,
+    /// Human-readable name for the snapshot.
     #[serde(rename = "snapshot_name")]
     pub snapshot_name: Option<String>,
+    /// Offset in milliseconds from the start of the session at which the snapshot was captured.
     #[serde(rename = "start")]
     pub start: Option<i64>,
+    /// Unique identifier of the RUM view associated with the snapshot.
     #[serde(rename = "view_id")]
     pub view_id: Option<String>,
+    /// URL path or name of the view where the snapshot was captured.
     #[serde(rename = "view_name")]
     pub view_name: Option<String>,
     #[serde(flatten)]

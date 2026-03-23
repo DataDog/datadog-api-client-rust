@@ -6,15 +6,19 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes specifying the field modifications to apply to an existing connection.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateConnectionRequestDataAttributes {
+    /// New fields to add to the connection from the data source.
     #[serde(rename = "fields_to_add")]
     pub fields_to_add:
         Option<Vec<crate::datadogV2::model::CreateConnectionRequestDataAttributesFieldsItems>>,
+    /// Identifiers of existing fields to remove from the connection.
     #[serde(rename = "fields_to_delete")]
     pub fields_to_delete: Option<Vec<String>>,
+    /// Existing fields with updated metadata to apply to the connection.
     #[serde(rename = "fields_to_update")]
     pub fields_to_update: Option<
         Vec<crate::datadogV2::model::UpdateConnectionRequestDataAttributesFieldsToUpdateItems>,

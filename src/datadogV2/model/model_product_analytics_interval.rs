@@ -11,12 +11,16 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsInterval {
+    /// The duration of each time bucket in milliseconds.
     #[serde(rename = "milliseconds")]
     pub milliseconds: Option<i64>,
+    /// The start of this interval as an epoch timestamp in milliseconds.
     #[serde(rename = "start_time")]
     pub start_time: Option<i64>,
+    /// Epoch timestamps (in milliseconds) for each bucket in this interval.
     #[serde(rename = "times")]
     pub times: Option<Vec<i64>>,
+    /// The interval type (e.g., fixed or auto-computed bucket size).
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(flatten)]

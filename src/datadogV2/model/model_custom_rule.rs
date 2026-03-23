@@ -6,6 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A custom static analysis rule within a ruleset.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -16,6 +17,7 @@ pub struct CustomRule {
     /// Creator identifier
     #[serde(rename = "created_by")]
     pub created_by: String,
+    /// A specific revision of a custom static analysis rule.
     #[serde(rename = "last_revision")]
     pub last_revision: crate::datadogV2::model::CustomRuleRevision,
     /// Rule name

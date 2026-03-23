@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object representing a secret detection rule, including its attributes and resource type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecretRuleData {
+    /// The attributes of a secret detection rule, including its pattern, priority, and validation configuration.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::SecretRuleDataAttributes>,
+    /// The unique identifier of the secret rule resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Secret rule resource type.

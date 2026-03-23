@@ -6,20 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Definition of a custom attribute field to import from a data source connection.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateConnectionRequestDataAttributesFieldsItems {
+    /// Human-readable explanation of what the field represents.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// The human-readable label for the field shown in the UI.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
+    /// List of group labels used to categorize the field.
     #[serde(rename = "groups")]
     pub groups: Option<Vec<String>>,
+    /// The unique identifier for the field within the connection.
     #[serde(rename = "id")]
     pub id: String,
+    /// The name of the column or attribute in the source data system that maps to this field.
     #[serde(rename = "source_name")]
     pub source_name: String,
+    /// The data type of the field (for example, string or number).
     #[serde(rename = "type")]
     pub type_: String,
     #[serde(flatten)]

@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of the get mapping response, containing the list of configured entity attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMappingResponseDataAttributes {
+    /// The list of entity attributes and their mapping configurations.
     #[serde(rename = "attributes")]
     pub attributes:
         Option<Vec<crate::datadogV2::model::GetMappingResponseDataAttributesAttributesItems>>,

@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The join configuration describing how the data source is linked to the entity.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListConnectionsResponseDataAttributesConnectionsItemsJoin {
+    /// The entity attribute used as the join key to link records from the data source.
     #[serde(rename = "attribute")]
     pub attribute: Option<String>,
+    /// The type of join key used (for example, email or user_id).
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(flatten)]

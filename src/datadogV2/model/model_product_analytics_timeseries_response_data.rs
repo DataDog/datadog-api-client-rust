@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a timeseries analytics response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsTimeseriesResponseData {
+    /// Attributes of a timeseries analytics response, containing series data, timestamps, and interval definitions.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ProductAnalyticsTimeseriesResponseAttributes>,
+    /// Unique identifier for this response data object.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// The resource type identifier for a timeseries analytics response.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::ProductAnalyticsTimeseriesResponseType>,
     #[serde(flatten)]

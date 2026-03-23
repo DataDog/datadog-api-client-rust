@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The data object in an SCA request, containing the dependency graph attributes and request type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestData {
+    /// The attributes of an SCA request, containing dependency graph data, vulnerability information, and repository context.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ScaRequestDataAttributes>,
+    /// An optional identifier for this SCA request data object.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// The type identifier for SCA dependency analysis requests.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ScaRequestDataType,
     #[serde(flatten)]

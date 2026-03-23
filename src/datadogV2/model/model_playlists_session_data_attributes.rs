@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of a session within a playlist, including the session event data and its replay track.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PlaylistsSessionDataAttributes {
+    /// Raw event data associated with the replay session.
     #[serde(rename = "session_event")]
     pub session_event: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    /// Replay track identifier indicating which recording track the session belongs to.
     #[serde(rename = "track")]
     pub track: Option<String>,
     #[serde(flatten)]

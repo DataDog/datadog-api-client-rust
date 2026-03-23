@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for creating or updating a postmortem template.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PostmortemTemplateDataRequest {
+    /// Attributes for creating or updating a postmortem template.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::PostmortemTemplateAttributesRequest,
     /// Postmortem template resource type

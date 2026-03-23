@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The attributes of a response containing resolved vulnerable symbols, organized by package.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ResolveVulnerableSymbolsResponseDataAttributes {
+    /// The list of resolved vulnerable symbol results, one entry per queried package.
     #[serde(rename = "results")]
     pub results: Option<Vec<crate::datadogV2::model::ResolveVulnerableSymbolsResponseResults>>,
     #[serde(flatten)]

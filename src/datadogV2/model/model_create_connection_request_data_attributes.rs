@@ -6,19 +6,25 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes defining the data source connection, including join configuration and custom fields.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateConnectionRequestDataAttributes {
+    /// List of custom attribute fields to import from the data source.
     #[serde(rename = "fields")]
     pub fields:
         Option<Vec<crate::datadogV2::model::CreateConnectionRequestDataAttributesFieldsItems>>,
+    /// The attribute in the data source used to join records with the entity.
     #[serde(rename = "join_attribute")]
     pub join_attribute: String,
+    /// The type of join key used to link the data source to the entity (for example, email or user_id).
     #[serde(rename = "join_type")]
     pub join_type: String,
+    /// Additional key-value metadata associated with the connection.
     #[serde(rename = "metadata")]
     pub metadata: Option<std::collections::BTreeMap<String, String>>,
+    /// The type of data source connection (for example, ref_table).
     #[serde(rename = "type")]
     pub type_: String,
     #[serde(flatten)]

@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A single facet value with its occurrence count in the dataset.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FacetInfoResponseDataAttributesResultValuesItems {
+    /// The number of records that have this facet value.
     #[serde(rename = "count")]
     pub count: Option<i64>,
+    /// The facet value (for example, a browser name or country code).
     #[serde(rename = "value")]
     pub value: Option<String>,
     #[serde(flatten)]

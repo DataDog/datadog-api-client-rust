@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a deleted Synthetic test suite.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeletedSuiteResponseData {
+    /// Attributes of a deleted Synthetic test suite, including deletion timestamp and public ID.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::DeletedSuiteResponseDataAttributes>,
+    /// The public ID of the deleted Synthetic test suite.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Type for the Synthetics suites responses, `suites`.

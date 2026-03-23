@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The request payload for retrieving rules for multiple rulesets in a single batch call.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsRequest {
+    /// The primary data object in the get-multiple-rulesets request, containing request attributes and resource type.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::GetMultipleRulesetsRequestData>,
     #[serde(flatten)]
