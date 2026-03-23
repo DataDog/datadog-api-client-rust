@@ -14,11 +14,6 @@ pub struct TeamSyncAttributes {
     /// How often the sync process should be run. Defaults to `once` when not provided.
     #[serde(rename = "frequency")]
     pub frequency: Option<crate::datadogV2::model::TeamSyncAttributesFrequency>,
-    /// Specifies which teams or organizations to sync. When
-    /// provided, synchronization is limited to the specified
-    /// items and their subtrees.
-    #[serde(rename = "selection_state")]
-    pub selection_state: Option<Vec<crate::datadogV2::model::TeamSyncSelectionStateItem>>,
     /// The external source platform for team synchronization. Only "github" is supported.
     #[serde(rename = "source")]
     pub source: crate::datadogV2::model::TeamSyncAttributesSource,
@@ -42,7 +37,6 @@ impl TeamSyncAttributes {
     ) -> TeamSyncAttributes {
         TeamSyncAttributes {
             frequency: None,
-            selection_state: None,
             source,
             sync_membership: None,
             type_,
@@ -56,14 +50,6 @@ impl TeamSyncAttributes {
         value: crate::datadogV2::model::TeamSyncAttributesFrequency,
     ) -> Self {
         self.frequency = Some(value);
-        self
-    }
-
-    pub fn selection_state(
-        mut self,
-        value: Vec<crate::datadogV2::model::TeamSyncSelectionStateItem>,
-    ) -> Self {
-        self.selection_state = Some(value);
         self
     }
 
@@ -100,9 +86,6 @@ impl<'de> Deserialize<'de> for TeamSyncAttributes {
             {
                 let mut frequency: Option<crate::datadogV2::model::TeamSyncAttributesFrequency> =
                     None;
-                let mut selection_state: Option<
-                    Vec<crate::datadogV2::model::TeamSyncSelectionStateItem>,
-                > = None;
                 let mut source: Option<crate::datadogV2::model::TeamSyncAttributesSource> = None;
                 let mut sync_membership: Option<bool> = None;
                 let mut type_: Option<crate::datadogV2::model::TeamSyncAttributesType> = None;
@@ -127,13 +110,6 @@ impl<'de> Deserialize<'de> for TeamSyncAttributes {
                                     _ => {}
                                 }
                             }
-                        }
-                        "selection_state" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            selection_state =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "source" => {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -176,7 +152,6 @@ impl<'de> Deserialize<'de> for TeamSyncAttributes {
 
                 let content = TeamSyncAttributes {
                     frequency,
-                    selection_state,
                     source,
                     sync_membership,
                     type_,
