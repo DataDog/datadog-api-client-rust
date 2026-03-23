@@ -14,7 +14,6 @@ pub enum SecurityMonitoringCriticalAssetSeverity {
     CRITICAL,
     INCREASE,
     DECREASE,
-    NO_OP,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -28,7 +27,6 @@ impl ToString for SecurityMonitoringCriticalAssetSeverity {
             Self::CRITICAL => String::from("critical"),
             Self::INCREASE => String::from("increase"),
             Self::DECREASE => String::from("decrease"),
-            Self::NO_OP => String::from("no-op"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -60,7 +58,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringCriticalAssetSeverity {
             "critical" => Self::CRITICAL,
             "increase" => Self::INCREASE,
             "decrease" => Self::DECREASE,
-            "no-op" => Self::NO_OP,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

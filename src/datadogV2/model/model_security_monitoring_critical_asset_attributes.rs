@@ -29,7 +29,7 @@ pub struct SecurityMonitoringCriticalAssetAttributes {
     /// The rule query of the critical asset, with the same syntax as the search bar for detection rules. This determines which rules this critical asset will apply to.
     #[serde(rename = "rule_query")]
     pub rule_query: Option<String>,
-    /// Severity associated with this critical asset. Either an explicit severity can be set, or the severity can be increased or decreased, or the severity can be left unchanged (no-op).
+    /// Severity associated with this critical asset. Either an explicit severity can be set, or the severity can be increased or decreased.
     #[serde(rename = "severity")]
     pub severity: Option<crate::datadogV2::model::SecurityMonitoringCriticalAssetSeverity>,
     /// List of tags associated with the critical asset.
