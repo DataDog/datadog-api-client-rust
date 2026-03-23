@@ -14,7 +14,7 @@ pub struct TopologyMapWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
-    /// One or more Topology requests.
+    /// One Topology request.
     #[serde(rename = "requests")]
     pub requests: Vec<crate::datadogV1::model::TopologyRequest>,
     /// Title of your widget.
