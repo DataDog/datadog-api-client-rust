@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"dry_run\":false,\"name\":\"My deployment rule\",\"options\":{\"duration\":3600,\"excluded_resources\":[\"resource1\",\"resource2\"]},\"type\":\"faulty_deployment_detection\"},\"type\":\"deployment_rule\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/deployment_gates/not-a-valid-id/rules"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"status\":\"400\",\"title\":\"Bad Request\",\"detail\":\"attribute \\\"gate_id\\\" Invalid id\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Tue, 17 Mar 2026 10:23:14 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
