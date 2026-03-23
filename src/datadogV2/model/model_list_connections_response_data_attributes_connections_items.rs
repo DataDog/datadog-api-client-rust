@@ -6,28 +6,38 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Details of a single data source connection, including its fields, join configuration, and audit metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListConnectionsResponseDataAttributesConnectionsItems {
+    /// Timestamp indicating when the connection was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Identifier of the user who created the connection.
     #[serde(rename = "created_by")]
     pub created_by: Option<String>,
+    /// List of custom attribute fields imported from the data source.
     #[serde(rename = "fields")]
     pub fields:
         Option<Vec<crate::datadogV2::model::CreateConnectionRequestDataAttributesFieldsItems>>,
+    /// Unique identifier of the connection.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// The join configuration describing how the data source is linked to the entity.
     #[serde(rename = "join")]
     pub join:
         Option<crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsJoin>,
+    /// Additional key-value metadata associated with the connection.
     #[serde(rename = "metadata")]
     pub metadata: Option<std::collections::BTreeMap<String, String>>,
+    /// The type of data source connection (for example, ref_table).
     #[serde(rename = "type")]
     pub type_: Option<String>,
+    /// Timestamp indicating when the connection was last updated.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Identifier of the user who last updated the connection.
     #[serde(rename = "updated_by")]
     pub updated_by: Option<String>,
     #[serde(flatten)]

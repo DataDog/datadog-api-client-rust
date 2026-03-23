@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response containing facet information for an attribute, including its distinct values and occurrence counts.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FacetInfoResponse {
+    /// The data object containing the resource type and attributes for the facet info response.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::FacetInfoResponseData>,
     #[serde(flatten)]

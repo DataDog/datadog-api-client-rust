@@ -6,6 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object representing an incident handle in a create or update request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -16,6 +17,7 @@ pub struct IncidentHandleDataRequest {
     /// The ID of the incident handle (required for PUT requests)
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// Relationships to associate with an incident handle in a create or update request.
     #[serde(
         rename = "relationships",
         default,

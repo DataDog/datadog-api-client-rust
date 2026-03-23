@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPagesComponentGroupRelationshipsGroup {
+    /// The data object identifying the parent group of a component group.
     #[serialize_always]
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::StatusPagesComponentGroupRelationshipsGroupData>,

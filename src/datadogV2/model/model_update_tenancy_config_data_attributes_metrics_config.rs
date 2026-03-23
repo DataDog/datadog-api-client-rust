@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Metrics collection configuration for updating an OCI tenancy, controlling which compartments and services are included or excluded.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateTenancyConfigDataAttributesMetricsConfig {
+    /// List of compartment tag filters to scope metrics collection to specific compartments.
     #[serde(rename = "compartment_tag_filters")]
     pub compartment_tag_filters: Option<Vec<String>>,
+    /// Whether metrics collection is enabled for the tenancy.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// List of OCI service names to exclude from metrics collection.
     #[serde(rename = "excluded_services")]
     pub excluded_services: Option<Vec<String>>,
     #[serde(flatten)]

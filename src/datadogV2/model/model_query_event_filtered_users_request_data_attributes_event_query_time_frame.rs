@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The time window defining the start and end of the event query period as Unix timestamps.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct QueryEventFilteredUsersRequestDataAttributesEventQueryTimeFrame {
+    /// End of the time frame as a Unix timestamp in seconds.
     #[serde(rename = "end")]
     pub end: Option<i64>,
+    /// Start of the time frame as a Unix timestamp in seconds.
     #[serde(rename = "start")]
     pub start: Option<i64>,
     #[serde(flatten)]

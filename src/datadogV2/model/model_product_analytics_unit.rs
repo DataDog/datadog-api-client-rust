@@ -11,16 +11,22 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsUnit {
+    /// The unit family (e.g., time, bytes).
     #[serde(rename = "family")]
     pub family: Option<String>,
+    /// Numeric identifier for the unit.
     #[serde(rename = "id")]
     pub id: Option<i64>,
+    /// The full name of the unit (e.g., nanosecond).
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// Plural form of the unit name (e.g., nanoseconds).
     #[serde(rename = "plural")]
     pub plural: Option<String>,
+    /// Conversion factor relative to the base unit of the family.
     #[serde(rename = "scale_factor")]
     pub scale_factor: Option<f64>,
+    /// Abbreviated unit name (e.g., ns).
     #[serde(rename = "short_name")]
     pub short_name: Option<String>,
     #[serde(flatten)]

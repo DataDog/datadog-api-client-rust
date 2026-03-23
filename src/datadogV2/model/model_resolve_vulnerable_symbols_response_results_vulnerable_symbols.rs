@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A collection of vulnerable symbols associated with a specific security advisory.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ResolveVulnerableSymbolsResponseResultsVulnerableSymbols {
+    /// The identifier of the security advisory that describes the vulnerability.
     #[serde(rename = "advisory_id")]
     pub advisory_id: Option<String>,
+    /// The list of symbols that are vulnerable according to this advisory.
     #[serde(rename = "symbols")]
     pub symbols: Option<Vec<crate::datadogV2::model::ResolveVulnerableSymbolsResponseResultsVulnerableSymbolsSymbols>>,
     #[serde(flatten)]

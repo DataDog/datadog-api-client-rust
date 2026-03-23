@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The request object for validating a budget configuration before creating or updating it.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BudgetValidationRequest {
+    /// The data object for a budget validation request, containing the resource type, ID, and budget attributes to validate.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::BudgetValidationRequestData>,
     #[serde(flatten)]

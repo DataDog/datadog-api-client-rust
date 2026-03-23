@@ -6,24 +6,33 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Configuration for validating whether a detected secret is active by making an HTTP request and inspecting the response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecretRuleDataAttributesMatchValidation {
+    /// The URL endpoint to call when validating a detected secret.
     #[serde(rename = "endpoint")]
     pub endpoint: Option<String>,
+    /// The list of hostnames to include when performing secret match validation.
     #[serde(rename = "hosts")]
     pub hosts: Option<Vec<String>>,
+    /// The HTTP method (e.g., GET, POST) to use when making the validation request.
     #[serde(rename = "http_method")]
     pub http_method: Option<String>,
+    /// The HTTP status code ranges that indicate the detected secret is invalid or inactive.
     #[serde(rename = "invalid_http_status_code")]
     pub invalid_http_status_code: Option<Vec<crate::datadogV2::model::SecretRuleDataAttributesMatchValidationInvalidHttpStatusCodeItems>>,
+    /// A map of HTTP header names to values to include in the validation request.
     #[serde(rename = "request_headers")]
     pub request_headers: Option<std::collections::BTreeMap<String, String>>,
+    /// The maximum number of seconds to wait for a response during validation before timing out.
     #[serde(rename = "timeout_seconds")]
     pub timeout_seconds: Option<i64>,
+    /// The type of match validation to perform (e.g., http).
     #[serde(rename = "type")]
     pub type_: Option<String>,
+    /// The HTTP status code ranges that indicate the detected secret is valid and active.
     #[serde(rename = "valid_http_status_code")]
     pub valid_http_status_code: Option<Vec<crate::datadogV2::model::SecretRuleDataAttributesMatchValidationValidHttpStatusCodeItems>>,
     #[serde(flatten)]

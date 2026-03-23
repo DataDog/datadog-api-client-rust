@@ -11,11 +11,14 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DegradationDataRelationships {
+    /// The Datadog user who created the degradation.
     #[serde(rename = "created_by_user")]
     pub created_by_user: Option<crate::datadogV2::model::DegradationDataRelationshipsCreatedByUser>,
+    /// The Datadog user who last modified the degradation.
     #[serde(rename = "last_modified_by_user")]
     pub last_modified_by_user:
         Option<crate::datadogV2::model::DegradationDataRelationshipsLastModifiedByUser>,
+    /// The status page the degradation belongs to.
     #[serde(rename = "status_page")]
     pub status_page: Option<crate::datadogV2::model::DegradationDataRelationshipsStatusPage>,
     #[serde(flatten)]

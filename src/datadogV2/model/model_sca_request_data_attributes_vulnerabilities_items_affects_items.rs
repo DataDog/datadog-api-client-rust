@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A reference to a component affected by a vulnerability.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributesVulnerabilitiesItemsAffectsItems {
+    /// The BOM reference identifying the affected component.
     #[serde(rename = "ref")]
     pub ref_: Option<String>,
     #[serde(flatten)]

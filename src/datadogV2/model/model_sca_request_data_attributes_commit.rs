@@ -6,22 +6,30 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Metadata about the commit associated with the SCA scan, including author, committer, and branch information.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributesCommit {
+    /// The date when the commit was authored.
     #[serde(rename = "author_date")]
     pub author_date: Option<String>,
+    /// The email address of the commit author.
     #[serde(rename = "author_email")]
     pub author_email: Option<String>,
+    /// The full name of the commit author.
     #[serde(rename = "author_name")]
     pub author_name: Option<String>,
+    /// The branch name on which the commit was made.
     #[serde(rename = "branch")]
     pub branch: Option<String>,
+    /// The email address of the person who committed the change.
     #[serde(rename = "committer_email")]
     pub committer_email: Option<String>,
+    /// The full name of the person who committed the change.
     #[serde(rename = "committer_name")]
     pub committer_name: Option<String>,
+    /// The SHA hash uniquely identifying the commit.
     #[serde(rename = "sha")]
     pub sha: Option<String>,
     #[serde(flatten)]

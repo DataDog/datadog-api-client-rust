@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The response payload for the get-multiple-rulesets endpoint, containing the requested rulesets and their rules.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsResponse {
+    /// The primary data object in the get-multiple-rulesets response, containing the response attributes and resource type.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::GetMultipleRulesetsResponseData>,
     #[serde(flatten)]

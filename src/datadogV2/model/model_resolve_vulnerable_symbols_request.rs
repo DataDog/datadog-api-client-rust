@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The top-level request object for resolving vulnerable symbols in a set of packages.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ResolveVulnerableSymbolsRequest {
+    /// The data object in a request to resolve vulnerable symbols, containing the package PURLs and request type.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::ResolveVulnerableSymbolsRequestData>,
     #[serde(flatten)]

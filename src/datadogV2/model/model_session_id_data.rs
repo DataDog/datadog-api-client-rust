@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A session identifier data object used for bulk playlist operations.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SessionIdData {
+    /// Unique identifier of the RUM replay session.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Rum replay session resource type.

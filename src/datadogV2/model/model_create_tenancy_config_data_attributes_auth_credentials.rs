@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// OCI API signing key credentials used to authenticate the Datadog integration with the OCI tenancy.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateTenancyConfigDataAttributesAuthCredentials {
+    /// The fingerprint of the OCI API signing key used for authentication.
     #[serde(rename = "fingerprint")]
     pub fingerprint: Option<String>,
+    /// The PEM-encoded private key corresponding to the OCI API signing key fingerprint.
     #[serde(rename = "private_key")]
     pub private_key: String,
     #[serde(flatten)]

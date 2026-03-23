@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of the facet info response, containing the facet result data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FacetInfoResponseDataAttributes {
+    /// The facet query result containing discrete value counts or a numeric range for the requested facet.
     #[serde(rename = "result")]
     pub result: Option<crate::datadogV2::model::FacetInfoResponseDataAttributesResult>,
     #[serde(flatten)]

@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FleetAgentsResponseData {
+    /// Attributes of the fleet agents response containing the list of agents.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::FleetAgentsResponseDataAttributes,
     /// Status identifier.

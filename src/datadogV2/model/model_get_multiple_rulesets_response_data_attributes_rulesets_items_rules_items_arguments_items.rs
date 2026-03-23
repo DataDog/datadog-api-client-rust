@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// An argument parameter for a static analysis rule, with a name and description.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsArgumentsItems {
+    /// A human-readable explanation of the argument's purpose and accepted values.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// The name of the rule argument.
     #[serde(rename = "name")]
     pub name: Option<String>,
     #[serde(flatten)]

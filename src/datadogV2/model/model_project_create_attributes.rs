@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Project creation attributes
+/// Project creation attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectCreateAttributes {
-    /// List of enabled custom case type IDs
+    /// List of enabled custom case type IDs.
     #[serde(rename = "enabled_custom_case_types")]
     pub enabled_custom_case_types: Option<Vec<String>>,
-    /// Project's key. Cannot be "CASE"
+    /// Project's key. Cannot be "CASE".
     #[serde(rename = "key")]
     pub key: String,
-    /// Project name
+    /// Project name.
     #[serde(rename = "name")]
     pub name: String,
-    /// Team UUID to associate with the project
+    /// Team UUID to associate with the project.
     #[serde(rename = "team_uuid")]
     pub team_uuid: Option<String>,
     #[serde(flatten)]

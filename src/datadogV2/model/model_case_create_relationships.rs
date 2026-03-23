@@ -18,7 +18,7 @@ pub struct CaseCreateRelationships {
         with = "::serde_with::rust::double_option"
     )]
     pub assignee: Option<Option<crate::datadogV2::model::NullableUserRelationship>>,
-    /// Relationship to project
+    /// Relationship to project.
     #[serde(rename = "project")]
     pub project: crate::datadogV2::model::ProjectRelationship,
     #[serde(flatten)]

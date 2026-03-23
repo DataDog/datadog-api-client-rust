@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateJiraIssueRequestArray {
+    /// Array of Jira issue creation request data objects.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::CreateJiraIssueRequestData>,
     #[serde(flatten)]

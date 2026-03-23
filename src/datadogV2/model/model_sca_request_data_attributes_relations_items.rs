@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A dependency relation describing which other components a given component depends on.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributesRelationsItems {
+    /// The list of BOM references that this component directly depends on.
     #[serde(rename = "depends_on")]
     pub depends_on: Option<Vec<String>>,
+    /// The BOM reference of the component that has dependencies.
     #[serde(rename = "ref")]
     pub ref_: Option<String>,
     #[serde(flatten)]

@@ -6,26 +6,36 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The attributes of a secret detection rule, including its pattern, priority, and validation configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecretRuleDataAttributes {
+    /// A list of keywords that are included by default when scanning for secrets matching this rule.
     #[serde(rename = "default_included_keywords")]
     pub default_included_keywords: Option<Vec<String>>,
+    /// A detailed explanation of what type of secret this rule detects.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// The license under which this secret rule is distributed.
     #[serde(rename = "license")]
     pub license: Option<String>,
+    /// Configuration for validating whether a detected secret is active by making an HTTP request and inspecting the response.
     #[serde(rename = "match_validation")]
     pub match_validation: Option<crate::datadogV2::model::SecretRuleDataAttributesMatchValidation>,
+    /// The unique name of the secret detection rule.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The regular expression pattern used to identify potential secrets in source code or configuration.
     #[serde(rename = "pattern")]
     pub pattern: Option<String>,
+    /// The priority level of this rule, used to rank findings when multiple rules match.
     #[serde(rename = "priority")]
     pub priority: Option<String>,
+    /// The identifier of the corresponding Sensitive Data Scanner rule, if one exists.
     #[serde(rename = "sds_id")]
     pub sds_id: Option<String>,
+    /// A list of validator identifiers used to further confirm a detected secret is genuine.
     #[serde(rename = "validators")]
     pub validators: Option<Vec<String>>,
     #[serde(flatten)]

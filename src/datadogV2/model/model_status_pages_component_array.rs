@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response object for a list of components.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct StatusPagesComponentArray {
+    /// A list of component data objects.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::StatusPagesComponentData>,
     /// The included related resources of a component. Client must explicitly request these resources by name in the `include` query parameter.

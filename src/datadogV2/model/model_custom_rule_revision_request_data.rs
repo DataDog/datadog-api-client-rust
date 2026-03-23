@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a custom rule revision create request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomRuleRevisionRequestData {
+    /// Input attributes for creating or updating a custom rule revision.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CustomRuleRevisionInputAttributes>,
     /// Revision identifier

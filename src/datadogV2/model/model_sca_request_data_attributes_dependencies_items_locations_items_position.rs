@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// A specific position (line and column) within a source file.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition {
+    /// The column number of the position within the line.
     #[serde(rename = "col")]
     pub col: Option<i32>,
+    /// The line number of the position within the file.
     #[serde(rename = "line")]
     pub line: Option<i32>,
     #[serde(flatten)]

@@ -11,8 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsResponseMeta {
+    /// Unique identifier for the request, used for multi-step query continuation.
     #[serde(rename = "request_id")]
     pub request_id: Option<String>,
+    /// The execution status of a Product Analytics query.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::ProductAnalyticsResponseMetaStatus>,
     #[serde(flatten)]

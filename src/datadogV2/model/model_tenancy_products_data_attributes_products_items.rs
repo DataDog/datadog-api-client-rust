@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// An individual Datadog product with its enablement status for a tenancy.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TenancyProductsDataAttributesProductsItems {
+    /// Indicates whether the product is enabled for the tenancy.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// The unique key identifying the Datadog product (for example, CLOUD_SECURITY_POSTURE_MANAGEMENT).
     #[serde(rename = "product_key")]
     pub product_key: Option<String>,
     #[serde(flatten)]

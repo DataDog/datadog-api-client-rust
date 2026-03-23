@@ -6,26 +6,36 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes for creating a heatmap snapshot, including the view, session, event, and device context.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SnapshotCreateRequestDataAttributes {
+    /// Unique identifier of the RUM application.
     #[serde(rename = "application_id")]
     pub application_id: String,
+    /// Device type used when capturing the snapshot (e.g., desktop, mobile, tablet).
     #[serde(rename = "device_type")]
     pub device_type: String,
+    /// Unique identifier of the RUM event associated with the snapshot.
     #[serde(rename = "event_id")]
     pub event_id: String,
+    /// Indicates whether the device type was explicitly selected by the user rather than auto-detected.
     #[serde(rename = "is_device_type_selected_by_user")]
     pub is_device_type_selected_by_user: bool,
+    /// Unique identifier of the RUM session associated with the snapshot.
     #[serde(rename = "session_id")]
     pub session_id: Option<String>,
+    /// Human-readable name for the snapshot.
     #[serde(rename = "snapshot_name")]
     pub snapshot_name: String,
+    /// Offset in milliseconds from the start of the session at which the snapshot was captured.
     #[serde(rename = "start")]
     pub start: i64,
+    /// Unique identifier of the RUM view associated with the snapshot.
     #[serde(rename = "view_id")]
     pub view_id: Option<String>,
+    /// URL path or name of the view where the snapshot was captured.
     #[serde(rename = "view_name")]
     pub view_name: String,
     #[serde(flatten)]

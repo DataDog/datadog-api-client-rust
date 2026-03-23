@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Raw schema relationship linking an entity to its raw schema resource.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EntityResponseDataRelationshipsRawSchema {
+    /// Raw schema relationship data containing the raw schema resource identifier and type.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::EntityResponseDataRelationshipsRawSchemaData,
     #[serde(flatten)]

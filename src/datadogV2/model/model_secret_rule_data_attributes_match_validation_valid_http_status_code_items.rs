@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// An HTTP status code range that indicates a valid (successful) secret match during validation.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecretRuleDataAttributesMatchValidationValidHttpStatusCodeItems {
+    /// The inclusive upper bound of the HTTP status code range.
     #[serde(rename = "end")]
     pub end: Option<i64>,
+    /// The inclusive lower bound of the HTTP status code range.
     #[serde(rename = "start")]
     pub start: Option<i64>,
     #[serde(flatten)]

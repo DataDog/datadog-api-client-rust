@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Auto-creation settings for Jira issues from cases.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationJiraAutoCreation {
+    /// Whether automatic Jira issue creation is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     #[serde(flatten)]

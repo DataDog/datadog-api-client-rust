@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The primary data object in the get-multiple-rulesets request, containing request attributes and resource type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsRequestData {
+    /// The request attributes for fetching multiple rulesets, specifying which rulesets to retrieve and what data to include.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::GetMultipleRulesetsRequestDataAttributes>,
+    /// An optional identifier for the get-multiple-rulesets request resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Get multiple rulesets request resource type.

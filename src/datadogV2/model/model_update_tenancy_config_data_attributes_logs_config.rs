@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Log collection configuration for updating an OCI tenancy, controlling which compartments and services have log collection enabled.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpdateTenancyConfigDataAttributesLogsConfig {
+    /// List of compartment tag filters to scope log collection to specific compartments.
     #[serde(rename = "compartment_tag_filters")]
     pub compartment_tag_filters: Option<Vec<String>>,
+    /// Whether log collection is enabled for the tenancy.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// List of OCI service names for which log collection is enabled.
     #[serde(rename = "enabled_services")]
     pub enabled_services: Option<Vec<String>>,
     #[serde(flatten)]

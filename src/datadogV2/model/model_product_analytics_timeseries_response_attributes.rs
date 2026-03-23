@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes of a timeseries analytics response, containing series data, timestamps, and interval definitions.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsTimeseriesResponseAttributes {
+    /// Interval definitions describing the time buckets used in the response.
     #[serde(rename = "intervals")]
     pub intervals: Option<Vec<crate::datadogV2::model::ProductAnalyticsInterval>>,
+    /// The list of series, each corresponding to a query or group-by combination.
     #[serde(rename = "series")]
     pub series: Option<Vec<crate::datadogV2::model::ProductAnalyticsSerie>>,
     /// Timestamps for each data point (epoch milliseconds).

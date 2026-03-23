@@ -6,16 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Field synchronization properties for Jira integration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationJiraSyncProperties {
-    /// Sync property configuration
+    /// Sync property configuration.
     #[serde(rename = "assignee")]
     pub assignee: Option<crate::datadogV2::model::SyncProperty>,
-    /// Sync property configuration
+    /// Sync property configuration.
     #[serde(rename = "comments")]
     pub comments: Option<crate::datadogV2::model::SyncProperty>,
+    /// Map of custom field identifiers to their sync configurations.
     #[serde(rename = "custom_fields")]
     pub custom_fields: Option<
         std::collections::BTreeMap<
@@ -23,18 +25,19 @@ pub struct IntegrationJiraSyncProperties {
             crate::datadogV2::model::IntegrationJiraSyncPropertiesCustomFieldsAdditionalProperties,
         >,
     >,
-    /// Sync property configuration
+    /// Sync property configuration.
     #[serde(rename = "description")]
     pub description: Option<crate::datadogV2::model::SyncProperty>,
+    /// Due date synchronization configuration for Jira integration.
     #[serde(rename = "due_date")]
     pub due_date: Option<crate::datadogV2::model::IntegrationJiraSyncDueDate>,
-    /// Sync property with mapping configuration
+    /// Sync property with mapping configuration.
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::SyncPropertyWithMapping>,
-    /// Sync property with mapping configuration
+    /// Sync property with mapping configuration.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::SyncPropertyWithMapping>,
-    /// Sync property configuration
+    /// Sync property configuration.
     #[serde(rename = "title")]
     pub title: Option<crate::datadogV2::model::SyncProperty>,
     #[serde(flatten)]

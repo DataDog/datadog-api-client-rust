@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response containing a single custom rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomRuleResponse {
+    /// Data object returned in a custom rule response, including its ID, type, and attributes.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CustomRuleResponseData,
     #[serde(flatten)]

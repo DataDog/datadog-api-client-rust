@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateComponentRequestDataRelationships {
+    /// The group to create the component within.
     #[serde(rename = "group")]
     pub group: Option<crate::datadogV2::model::CreateComponentRequestDataRelationshipsGroup>,
     #[serde(flatten)]

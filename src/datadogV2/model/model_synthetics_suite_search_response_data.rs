@@ -14,8 +14,10 @@ pub struct SyntheticsSuiteSearchResponseData {
     /// Synthetics suite search response data attributes
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::SyntheticsSuiteSearchResponseDataAttributes>,
+    /// The unique identifier of the suite search response data.
     #[serde(rename = "id")]
     pub id: Option<uuid::Uuid>,
+    /// Type for the Synthetics suites search response, `suites_search`.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::SuiteSearchResponseType>,
     #[serde(flatten)]

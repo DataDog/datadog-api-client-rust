@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object representing a session in the viewership history, including its identifier, type, and attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ViewershipHistorySessionData {
+    /// Attributes of a viewership history session entry, capturing when it was last watched and the associated event data.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ViewershipHistorySessionDataAttributes>,
+    /// Unique identifier of the RUM replay session.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Rum replay session resource type.

@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a postmortem template returned in a response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PostmortemTemplateDataResponse {
+    /// Attributes of a postmortem template returned in a response.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::PostmortemTemplateAttributesResponse,
     /// The ID of the template

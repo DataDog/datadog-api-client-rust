@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// The response body returned after successfully assigning seats to users.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AssignSeatsUserResponse {
+    /// The response data object containing attributes of the seat assignment result.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::AssignSeatsUserResponseData>,
     #[serde(flatten)]

@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Entity data returned in a preview response, including attributes, relationships, and type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PreviewEntityResponseData {
+    /// Entity response attributes containing core entity metadata fields.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::EntityResponseDataAttributes>,
+    /// Entity unique identifier.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// Entity relationships including incidents, oncalls, schemas, and related entities.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::EntityResponseDataRelationships>,
     /// Entity resource type.

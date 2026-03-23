@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Request body for creating or updating a custom rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomRuleRequest {
+    /// Data object for a custom rule create or update request.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::CustomRuleRequestData>,
     #[serde(flatten)]
