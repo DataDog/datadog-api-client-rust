@@ -14,6 +14,9 @@ pub struct TopologyMapWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// One or more Topology requests.
     #[serde(rename = "requests")]
     pub requests: Vec<crate::datadogV1::model::TopologyRequest>,
@@ -43,6 +46,7 @@ impl TopologyMapWidgetDefinition {
     ) -> TopologyMapWidgetDefinition {
         TopologyMapWidgetDefinition {
             custom_links: None,
+            description: None,
             requests,
             title: None,
             title_align: None,
@@ -55,6 +59,11 @@ impl TopologyMapWidgetDefinition {
 
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -100,6 +109,7 @@ impl<'de> Deserialize<'de> for TopologyMapWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut requests: Option<Vec<crate::datadogV1::model::TopologyRequest>> = None;
                 let mut title: Option<String> = None;
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
@@ -119,6 +129,13 @@ impl<'de> Deserialize<'de> for TopologyMapWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "requests" => {
@@ -176,6 +193,7 @@ impl<'de> Deserialize<'de> for TopologyMapWidgetDefinition {
 
                 let content = TopologyMapWidgetDefinition {
                     custom_links,
+                    description,
                     requests,
                     title,
                     title_align,

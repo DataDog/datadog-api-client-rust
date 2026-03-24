@@ -18,6 +18,9 @@ pub struct MonitorSummaryWidgetDefinition {
     #[deprecated]
     #[serde(rename = "count")]
     pub count: Option<i64>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// What to display on the widget.
     #[serde(rename = "display_format")]
     pub display_format: Option<crate::datadogV1::model::WidgetMonitorSummaryDisplayFormat>,
@@ -71,6 +74,7 @@ impl MonitorSummaryWidgetDefinition {
         MonitorSummaryWidgetDefinition {
             color_preference: None,
             count: None,
+            description: None,
             display_format: None,
             hide_zero_counts: None,
             query,
@@ -100,6 +104,12 @@ impl MonitorSummaryWidgetDefinition {
     #[allow(deprecated)]
     pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -195,6 +205,7 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                 let mut color_preference: Option<crate::datadogV1::model::WidgetColorPreference> =
                     None;
                 let mut count: Option<i64> = None;
+                let mut description: Option<String> = None;
                 let mut display_format: Option<
                     crate::datadogV1::model::WidgetMonitorSummaryDisplayFormat,
                 > = None;
@@ -238,6 +249,13 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                                 continue;
                             }
                             count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "display_format" => {
                             if v.is_null() {
@@ -369,6 +387,7 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                 let content = MonitorSummaryWidgetDefinition {
                     color_preference,
                     count,
+                    description,
                     display_format,
                     hide_zero_counts,
                     query,

@@ -14,6 +14,9 @@ pub struct GeomapWidgetDefinition {
     /// A list of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Array of request objects to display in the widget. May include an optional request for the region layer and/or an optional request for the points layer. Region layer requests must contain a `group-by` tag whose value is a country ISO code.
     /// See the [Request JSON schema documentation](<https://docs.datadoghq.com/dashboards/graphing_json/request_json>)
     /// for information about building the `REQUEST_SCHEMA`.
@@ -56,6 +59,7 @@ impl GeomapWidgetDefinition {
     ) -> GeomapWidgetDefinition {
         GeomapWidgetDefinition {
             custom_links: None,
+            description: None,
             requests,
             style,
             time: None,
@@ -71,6 +75,11 @@ impl GeomapWidgetDefinition {
 
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -121,6 +130,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut requests: Option<Vec<crate::datadogV1::model::GeomapWidgetRequest>> = None;
                 let mut style: Option<crate::datadogV1::model::GeomapWidgetDefinitionStyle> = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
@@ -142,6 +152,13 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "requests" => {
@@ -221,6 +238,7 @@ impl<'de> Deserialize<'de> for GeomapWidgetDefinition {
 
                 let content = GeomapWidgetDefinition {
                     custom_links,
+                    description,
                     requests,
                     style,
                     time,

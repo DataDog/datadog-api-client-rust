@@ -12,6 +12,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListStreamWidgetDefinition {
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Available legend sizes for a widget. Should be one of "0", "2", "4", "8", "16", or "auto".
     #[serde(rename = "legend_size")]
     pub legend_size: Option<String>,
@@ -49,6 +52,7 @@ impl ListStreamWidgetDefinition {
         type_: crate::datadogV1::model::ListStreamWidgetDefinitionType,
     ) -> ListStreamWidgetDefinition {
         ListStreamWidgetDefinition {
+            description: None,
             legend_size: None,
             requests,
             show_legend: None,
@@ -60,6 +64,11 @@ impl ListStreamWidgetDefinition {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn legend_size(mut self, value: String) -> Self {
@@ -118,6 +127,7 @@ impl<'de> Deserialize<'de> for ListStreamWidgetDefinition {
             where
                 M: MapAccess<'a>,
             {
+                let mut description: Option<String> = None;
                 let mut legend_size: Option<String> = None;
                 let mut requests: Option<Vec<crate::datadogV1::model::ListStreamWidgetRequest>> =
                     None;
@@ -136,6 +146,13 @@ impl<'de> Deserialize<'de> for ListStreamWidgetDefinition {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "legend_size" => {
                             if v.is_null() {
                                 continue;
@@ -218,6 +235,7 @@ impl<'de> Deserialize<'de> for ListStreamWidgetDefinition {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ListStreamWidgetDefinition {
+                    description,
                     legend_size,
                     requests,
                     show_legend,

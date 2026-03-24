@@ -14,6 +14,9 @@ pub struct HostMapWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// List of tag prefixes to group by.
     #[serde(rename = "group")]
     pub group: Option<Vec<String>>,
@@ -64,6 +67,7 @@ impl HostMapWidgetDefinition {
     ) -> HostMapWidgetDefinition {
         HostMapWidgetDefinition {
             custom_links: None,
+            description: None,
             group: None,
             no_group_hosts: None,
             no_metric_hosts: None,
@@ -83,6 +87,11 @@ impl HostMapWidgetDefinition {
 
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -163,6 +172,7 @@ impl<'de> Deserialize<'de> for HostMapWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut group: Option<Vec<String>> = None;
                 let mut no_group_hosts: Option<bool> = None;
                 let mut no_metric_hosts: Option<bool> = None;
@@ -189,6 +199,13 @@ impl<'de> Deserialize<'de> for HostMapWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "group" => {
@@ -300,6 +317,7 @@ impl<'de> Deserialize<'de> for HostMapWidgetDefinition {
 
                 let content = HostMapWidgetDefinition {
                     custom_links,
+                    description,
                     group,
                     no_group_hosts,
                     no_metric_hosts,

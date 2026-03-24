@@ -14,6 +14,9 @@ pub struct RunWorkflowWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Array of workflow inputs to map to dashboard template variables.
     #[serde(rename = "inputs")]
     pub inputs: Option<Vec<crate::datadogV1::model::RunWorkflowWidgetInput>>,
@@ -49,6 +52,7 @@ impl RunWorkflowWidgetDefinition {
     ) -> RunWorkflowWidgetDefinition {
         RunWorkflowWidgetDefinition {
             custom_links: None,
+            description: None,
             inputs: None,
             time: None,
             title: None,
@@ -63,6 +67,11 @@ impl RunWorkflowWidgetDefinition {
 
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -118,6 +127,7 @@ impl<'de> Deserialize<'de> for RunWorkflowWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut inputs: Option<Vec<crate::datadogV1::model::RunWorkflowWidgetInput>> = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
                 let mut title: Option<String> = None;
@@ -139,6 +149,13 @@ impl<'de> Deserialize<'de> for RunWorkflowWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
@@ -218,6 +235,7 @@ impl<'de> Deserialize<'de> for RunWorkflowWidgetDefinition {
 
                 let content = RunWorkflowWidgetDefinition {
                     custom_links,
+                    description,
                     inputs,
                     time,
                     title,

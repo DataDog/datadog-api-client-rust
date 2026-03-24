@@ -14,6 +14,9 @@ pub struct AlertValueWidgetDefinition {
     /// ID of the alert to use in the widget.
     #[serde(rename = "alert_id")]
     pub alert_id: String,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Number of decimal to show. If not defined, will use the raw value.
     #[serde(rename = "precision")]
     pub precision: Option<i64>,
@@ -49,6 +52,7 @@ impl AlertValueWidgetDefinition {
     ) -> AlertValueWidgetDefinition {
         AlertValueWidgetDefinition {
             alert_id,
+            description: None,
             precision: None,
             text_align: None,
             title: None,
@@ -59,6 +63,11 @@ impl AlertValueWidgetDefinition {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn precision(mut self, value: i64) -> Self {
@@ -118,6 +127,7 @@ impl<'de> Deserialize<'de> for AlertValueWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut alert_id: Option<String> = None;
+                let mut description: Option<String> = None;
                 let mut precision: Option<i64> = None;
                 let mut text_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title: Option<String> = None;
@@ -136,6 +146,13 @@ impl<'de> Deserialize<'de> for AlertValueWidgetDefinition {
                     match k.as_str() {
                         "alert_id" => {
                             alert_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "precision" => {
                             if v.is_null() {
@@ -217,6 +234,7 @@ impl<'de> Deserialize<'de> for AlertValueWidgetDefinition {
 
                 let content = AlertValueWidgetDefinition {
                     alert_id,
+                    description,
                     precision,
                     text_align,
                     title,

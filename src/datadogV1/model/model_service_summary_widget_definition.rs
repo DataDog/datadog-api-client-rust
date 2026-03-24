@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ServiceSummaryWidgetDefinition {
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Number of columns to display.
     #[serde(rename = "display_format")]
     pub display_format: Option<crate::datadogV1::model::WidgetServiceSummaryDisplayFormat>,
@@ -74,6 +77,7 @@ impl ServiceSummaryWidgetDefinition {
         type_: crate::datadogV1::model::ServiceSummaryWidgetDefinitionType,
     ) -> ServiceSummaryWidgetDefinition {
         ServiceSummaryWidgetDefinition {
+            description: None,
             display_format: None,
             env,
             service,
@@ -93,6 +97,11 @@ impl ServiceSummaryWidgetDefinition {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn display_format(
@@ -184,6 +193,7 @@ impl<'de> Deserialize<'de> for ServiceSummaryWidgetDefinition {
             where
                 M: MapAccess<'a>,
             {
+                let mut description: Option<String> = None;
                 let mut display_format: Option<
                     crate::datadogV1::model::WidgetServiceSummaryDisplayFormat,
                 > = None;
@@ -211,6 +221,13 @@ impl<'de> Deserialize<'de> for ServiceSummaryWidgetDefinition {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "display_format" => {
                             if v.is_null() {
                                 continue;
@@ -360,6 +377,7 @@ impl<'de> Deserialize<'de> for ServiceSummaryWidgetDefinition {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ServiceSummaryWidgetDefinition {
+                    description,
                     display_format,
                     env,
                     service,

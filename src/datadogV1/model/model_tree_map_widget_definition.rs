@@ -18,6 +18,9 @@ pub struct TreeMapWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// (deprecated) The attribute formerly used to group elements in the widget.
     #[deprecated]
     #[serde(rename = "group_by")]
@@ -54,6 +57,7 @@ impl TreeMapWidgetDefinition {
         TreeMapWidgetDefinition {
             color_by: None,
             custom_links: None,
+            description: None,
             group_by: None,
             requests,
             size_by: None,
@@ -74,6 +78,12 @@ impl TreeMapWidgetDefinition {
     #[allow(deprecated)]
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -129,6 +139,7 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
             {
                 let mut color_by: Option<crate::datadogV1::model::TreeMapColorBy> = None;
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut group_by: Option<crate::datadogV1::model::TreeMapGroupBy> = None;
                 let mut requests: Option<Vec<crate::datadogV1::model::TreeMapWidgetRequest>> = None;
                 let mut size_by: Option<crate::datadogV1::model::TreeMapSizeBy> = None;
@@ -164,6 +175,13 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "group_by" => {
@@ -246,6 +264,7 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                 let content = TreeMapWidgetDefinition {
                     color_by,
                     custom_links,
+                    description,
                     group_by,
                     requests,
                     size_by,

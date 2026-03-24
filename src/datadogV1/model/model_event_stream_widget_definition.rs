@@ -12,6 +12,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EventStreamWidgetDefinition {
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Size to use to display an event.
     #[serde(rename = "event_size")]
     pub event_size: Option<crate::datadogV1::model::WidgetEventSize>,
@@ -49,6 +52,7 @@ impl EventStreamWidgetDefinition {
         type_: crate::datadogV1::model::EventStreamWidgetDefinitionType,
     ) -> EventStreamWidgetDefinition {
         EventStreamWidgetDefinition {
+            description: None,
             event_size: None,
             query,
             tags_execution: None,
@@ -60,6 +64,11 @@ impl EventStreamWidgetDefinition {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn event_size(mut self, value: crate::datadogV1::model::WidgetEventSize) -> Self {
@@ -118,6 +127,7 @@ impl<'de> Deserialize<'de> for EventStreamWidgetDefinition {
             where
                 M: MapAccess<'a>,
             {
+                let mut description: Option<String> = None;
                 let mut event_size: Option<crate::datadogV1::model::WidgetEventSize> = None;
                 let mut query: Option<String> = None;
                 let mut tags_execution: Option<String> = None;
@@ -135,6 +145,13 @@ impl<'de> Deserialize<'de> for EventStreamWidgetDefinition {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "event_size" => {
                             if v.is_null() {
                                 continue;
@@ -226,6 +243,7 @@ impl<'de> Deserialize<'de> for EventStreamWidgetDefinition {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = EventStreamWidgetDefinition {
+                    description,
                     event_size,
                     query,
                     tags_execution,

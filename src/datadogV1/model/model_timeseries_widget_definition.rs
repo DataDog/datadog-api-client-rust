@@ -14,6 +14,9 @@ pub struct TimeseriesWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// List of widget events. Deprecated - Use `overlay` request type instead.
     #[deprecated]
     #[serde(rename = "events")]
@@ -72,6 +75,7 @@ impl TimeseriesWidgetDefinition {
         #[allow(deprecated)]
         TimeseriesWidgetDefinition {
             custom_links: None,
+            description: None,
             events: None,
             legend_columns: None,
             legend_layout: None,
@@ -94,6 +98,12 @@ impl TimeseriesWidgetDefinition {
     #[allow(deprecated)]
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -202,6 +212,7 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut events: Option<Vec<crate::datadogV1::model::WidgetEvent>> = None;
                 let mut legend_columns: Option<
                     Vec<crate::datadogV1::model::TimeseriesWidgetLegendColumn>,
@@ -235,6 +246,13 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "events" => {
@@ -368,6 +386,7 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
                 #[allow(deprecated)]
                 let content = TimeseriesWidgetDefinition {
                     custom_links,
+                    description,
                     events,
                     legend_columns,
                     legend_layout,

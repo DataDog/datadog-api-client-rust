@@ -20,6 +20,9 @@ pub struct QueryValueWidgetDefinition {
     /// Display a unit of your choice on the widget.
     #[serde(rename = "custom_unit")]
     pub custom_unit: Option<String>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Number of decimals to show. If not defined, the widget uses the raw value.
     #[serde(rename = "precision")]
     pub precision: Option<i64>,
@@ -63,6 +66,7 @@ impl QueryValueWidgetDefinition {
             autoscale: None,
             custom_links: None,
             custom_unit: None,
+            description: None,
             precision: None,
             requests,
             text_align: None,
@@ -89,6 +93,11 @@ impl QueryValueWidgetDefinition {
 
     pub fn custom_unit(mut self, value: String) -> Self {
         self.custom_unit = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -159,6 +168,7 @@ impl<'de> Deserialize<'de> for QueryValueWidgetDefinition {
                 let mut autoscale: Option<bool> = None;
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
                 let mut custom_unit: Option<String> = None;
+                let mut description: Option<String> = None;
                 let mut precision: Option<i64> = None;
                 let mut requests: Option<Vec<crate::datadogV1::model::QueryValueWidgetRequest>> =
                     None;
@@ -198,6 +208,13 @@ impl<'de> Deserialize<'de> for QueryValueWidgetDefinition {
                                 continue;
                             }
                             custom_unit =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "precision" => {
@@ -300,6 +317,7 @@ impl<'de> Deserialize<'de> for QueryValueWidgetDefinition {
                     autoscale,
                     custom_links,
                     custom_unit,
+                    description,
                     precision,
                     requests,
                     text_align,
