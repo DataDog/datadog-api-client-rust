@@ -11,7 +11,7 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// CreateDatasetError is a struct for typed errors of method [`DatasetsAPI::create_dataset`]
+/// CreateDatasetError is a struct for typed errors of method [`DataAccessControlsAPI::create_dataset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateDatasetError {
@@ -19,7 +19,7 @@ pub enum CreateDatasetError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteDatasetError is a struct for typed errors of method [`DatasetsAPI::delete_dataset`]
+/// DeleteDatasetError is a struct for typed errors of method [`DataAccessControlsAPI::delete_dataset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteDatasetError {
@@ -27,7 +27,7 @@ pub enum DeleteDatasetError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetAllDatasetsError is a struct for typed errors of method [`DatasetsAPI::get_all_datasets`]
+/// GetAllDatasetsError is a struct for typed errors of method [`DataAccessControlsAPI::get_all_datasets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAllDatasetsError {
@@ -35,7 +35,7 @@ pub enum GetAllDatasetsError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetDatasetError is a struct for typed errors of method [`DatasetsAPI::get_dataset`]
+/// GetDatasetError is a struct for typed errors of method [`DataAccessControlsAPI::get_dataset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetDatasetError {
@@ -43,7 +43,7 @@ pub enum GetDatasetError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateDatasetError is a struct for typed errors of method [`DatasetsAPI::update_dataset`]
+/// UpdateDatasetError is a struct for typed errors of method [`DataAccessControlsAPI::update_dataset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateDatasetError {
@@ -51,22 +51,25 @@ pub enum UpdateDatasetError {
     UnknownValue(serde_json::Value),
 }
 
-/// Data Access Controls in Datadog is a feature that allows administrators and access managers to regulate
+/// Manage [Data Access Controls](<https://docs.datadoghq.com/account_management/rbac/data_access/>)
+/// programmatically using Datasets.
+///
+/// Data Access Controls in Datadog allows administrators and access managers to regulate
 /// access to sensitive data. By defining Restricted Datasets, you can ensure that only specific teams or roles can
 /// view certain types of telemetry (for example, logs, traces, metrics, and RUM data).
 #[derive(Debug, Clone)]
-pub struct DatasetsAPI {
+pub struct DataAccessControlsAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for DatasetsAPI {
+impl Default for DataAccessControlsAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl DatasetsAPI {
+impl DataAccessControlsAPI {
     pub fn new() -> Self {
         Self::default()
     }
