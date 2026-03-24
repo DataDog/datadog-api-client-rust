@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EventTimelineWidgetDefinition {
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Query to filter the event timeline with.
     #[serde(rename = "query")]
     pub query: String,
@@ -45,6 +48,7 @@ impl EventTimelineWidgetDefinition {
         type_: crate::datadogV1::model::EventTimelineWidgetDefinitionType,
     ) -> EventTimelineWidgetDefinition {
         EventTimelineWidgetDefinition {
+            description: None,
             query,
             tags_execution: None,
             time: None,
@@ -55,6 +59,11 @@ impl EventTimelineWidgetDefinition {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn tags_execution(mut self, value: String) -> Self {
@@ -108,6 +117,7 @@ impl<'de> Deserialize<'de> for EventTimelineWidgetDefinition {
             where
                 M: MapAccess<'a>,
             {
+                let mut description: Option<String> = None;
                 let mut query: Option<String> = None;
                 let mut tags_execution: Option<String> = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
@@ -124,6 +134,13 @@ impl<'de> Deserialize<'de> for EventTimelineWidgetDefinition {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -199,6 +216,7 @@ impl<'de> Deserialize<'de> for EventTimelineWidgetDefinition {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = EventTimelineWidgetDefinition {
+                    description,
                     query,
                     tags_execution,
                     time,

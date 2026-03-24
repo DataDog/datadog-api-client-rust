@@ -14,6 +14,9 @@ pub struct LogStreamWidgetDefinition {
     /// Which columns to display on the widget.
     #[serde(rename = "columns")]
     pub columns: Option<Vec<String>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// An array of index names to query in the stream. Use [] to query all indexes at once.
     #[serde(rename = "indexes")]
     pub indexes: Option<Vec<String>>,
@@ -65,6 +68,7 @@ impl LogStreamWidgetDefinition {
         #[allow(deprecated)]
         LogStreamWidgetDefinition {
             columns: None,
+            description: None,
             indexes: None,
             logset: None,
             message_display: None,
@@ -85,6 +89,12 @@ impl LogStreamWidgetDefinition {
     #[allow(deprecated)]
     pub fn columns(mut self, value: Vec<String>) -> Self {
         self.columns = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -181,6 +191,7 @@ impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut columns: Option<Vec<String>> = None;
+                let mut description: Option<String> = None;
                 let mut indexes: Option<Vec<String>> = None;
                 let mut logset: Option<String> = None;
                 let mut message_display: Option<crate::datadogV1::model::WidgetMessageDisplay> =
@@ -208,6 +219,13 @@ impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
                                 continue;
                             }
                             columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "indexes" => {
                             if v.is_null() {
@@ -328,6 +346,7 @@ impl<'de> Deserialize<'de> for LogStreamWidgetDefinition {
                 #[allow(deprecated)]
                 let content = LogStreamWidgetDefinition {
                     columns,
+                    description,
                     indexes,
                     logset,
                     message_display,

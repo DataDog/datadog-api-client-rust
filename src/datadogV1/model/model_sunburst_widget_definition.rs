@@ -14,6 +14,9 @@ pub struct SunburstWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Show the total value in this widget.
     #[serde(rename = "hide_total")]
     pub hide_total: Option<bool>,
@@ -52,6 +55,7 @@ impl SunburstWidgetDefinition {
     ) -> SunburstWidgetDefinition {
         SunburstWidgetDefinition {
             custom_links: None,
+            description: None,
             hide_total: None,
             legend: None,
             requests,
@@ -67,6 +71,11 @@ impl SunburstWidgetDefinition {
 
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -127,6 +136,7 @@ impl<'de> Deserialize<'de> for SunburstWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut hide_total: Option<bool> = None;
                 let mut legend: Option<crate::datadogV1::model::SunburstWidgetLegend> = None;
                 let mut requests: Option<Vec<crate::datadogV1::model::SunburstWidgetRequest>> =
@@ -149,6 +159,13 @@ impl<'de> Deserialize<'de> for SunburstWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "hide_total" => {
@@ -240,6 +257,7 @@ impl<'de> Deserialize<'de> for SunburstWidgetDefinition {
 
                 let content = SunburstWidgetDefinition {
                     custom_links,
+                    description,
                     hide_total,
                     legend,
                     requests,

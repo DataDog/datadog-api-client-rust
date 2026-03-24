@@ -1,4 +1,4 @@
-// Create a new dashboard with query_value widget
+// Create a new dashboard with a query_value widget containing a description
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;

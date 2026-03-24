@@ -14,6 +14,9 @@ pub struct CheckStatusWidgetDefinition {
     /// Name of the check to use in the widget.
     #[serde(rename = "check")]
     pub check: String,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Group reporting a single check.
     #[serde(rename = "group")]
     pub group: Option<String>,
@@ -56,6 +59,7 @@ impl CheckStatusWidgetDefinition {
     ) -> CheckStatusWidgetDefinition {
         CheckStatusWidgetDefinition {
             check,
+            description: None,
             group: None,
             group_by: None,
             grouping,
@@ -68,6 +72,11 @@ impl CheckStatusWidgetDefinition {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn group(mut self, value: String) -> Self {
@@ -132,6 +141,7 @@ impl<'de> Deserialize<'de> for CheckStatusWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut check: Option<String> = None;
+                let mut description: Option<String> = None;
                 let mut group: Option<String> = None;
                 let mut group_by: Option<Vec<String>> = None;
                 let mut grouping: Option<crate::datadogV1::model::WidgetGrouping> = None;
@@ -152,6 +162,13 @@ impl<'de> Deserialize<'de> for CheckStatusWidgetDefinition {
                     match k.as_str() {
                         "check" => {
                             check = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "group" => {
                             if v.is_null() {
@@ -251,6 +268,7 @@ impl<'de> Deserialize<'de> for CheckStatusWidgetDefinition {
 
                 let content = CheckStatusWidgetDefinition {
                     check,
+                    description,
                     group,
                     group_by,
                     grouping,

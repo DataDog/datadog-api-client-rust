@@ -16,6 +16,9 @@ pub struct DistributionWidgetDefinition {
     /// A list of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// (Deprecated) The widget legend was replaced by a tooltip and sidebar.
     #[deprecated]
     #[serde(rename = "legend_size")]
@@ -69,6 +72,7 @@ impl DistributionWidgetDefinition {
         #[allow(deprecated)]
         DistributionWidgetDefinition {
             custom_links: None,
+            description: None,
             legend_size: None,
             markers: None,
             requests,
@@ -88,6 +92,12 @@ impl DistributionWidgetDefinition {
     #[allow(deprecated)]
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -172,6 +182,7 @@ impl<'de> Deserialize<'de> for DistributionWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut legend_size: Option<String> = None;
                 let mut markers: Option<Vec<crate::datadogV1::model::WidgetMarker>> = None;
                 let mut requests: Option<Vec<crate::datadogV1::model::DistributionWidgetRequest>> =
@@ -198,6 +209,13 @@ impl<'de> Deserialize<'de> for DistributionWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "legend_size" => {
@@ -302,6 +320,7 @@ impl<'de> Deserialize<'de> for DistributionWidgetDefinition {
                 #[allow(deprecated)]
                 let content = DistributionWidgetDefinition {
                     custom_links,
+                    description,
                     legend_size,
                     markers,
                     requests,

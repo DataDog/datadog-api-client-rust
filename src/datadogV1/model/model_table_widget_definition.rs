@@ -14,6 +14,9 @@ pub struct TableWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Controls the display of the search bar.
     #[serde(rename = "has_search_bar")]
     pub has_search_bar: Option<crate::datadogV1::model::TableWidgetHasSearchBar>,
@@ -49,6 +52,7 @@ impl TableWidgetDefinition {
     ) -> TableWidgetDefinition {
         TableWidgetDefinition {
             custom_links: None,
+            description: None,
             has_search_bar: None,
             requests,
             time: None,
@@ -63,6 +67,11 @@ impl TableWidgetDefinition {
 
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -121,6 +130,7 @@ impl<'de> Deserialize<'de> for TableWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut has_search_bar: Option<crate::datadogV1::model::TableWidgetHasSearchBar> =
                     None;
                 let mut requests: Option<Vec<crate::datadogV1::model::TableWidgetRequest>> = None;
@@ -142,6 +152,13 @@ impl<'de> Deserialize<'de> for TableWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "has_search_bar" => {
@@ -228,6 +245,7 @@ impl<'de> Deserialize<'de> for TableWidgetDefinition {
 
                 let content = TableWidgetDefinition {
                     custom_links,
+                    description,
                     has_search_bar,
                     requests,
                     time,

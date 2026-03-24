@@ -14,6 +14,9 @@ pub struct ChangeWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Array of one request object to display in the widget.
     ///
     /// See the dedicated [Request JSON schema documentation](<https://docs.datadoghq.com/dashboards/graphing_json/request_json>)
@@ -49,6 +52,7 @@ impl ChangeWidgetDefinition {
     ) -> ChangeWidgetDefinition {
         ChangeWidgetDefinition {
             custom_links: None,
+            description: None,
             requests,
             time: None,
             title: None,
@@ -62,6 +66,11 @@ impl ChangeWidgetDefinition {
 
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -112,6 +121,7 @@ impl<'de> Deserialize<'de> for ChangeWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut requests: Option<Vec<crate::datadogV1::model::ChangeWidgetRequest>> = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
                 let mut title: Option<String> = None;
@@ -131,6 +141,13 @@ impl<'de> Deserialize<'de> for ChangeWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "requests" => {
@@ -202,6 +219,7 @@ impl<'de> Deserialize<'de> for ChangeWidgetDefinition {
 
                 let content = ChangeWidgetDefinition {
                     custom_links,
+                    description,
                     requests,
                     time,
                     title,

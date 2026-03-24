@@ -14,6 +14,9 @@ pub struct BarChartWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// List of bar chart widget requests.
     #[serde(rename = "requests")]
     pub requests: Vec<crate::datadogV1::model::BarChartWidgetRequest>,
@@ -49,6 +52,7 @@ impl BarChartWidgetDefinition {
     ) -> BarChartWidgetDefinition {
         BarChartWidgetDefinition {
             custom_links: None,
+            description: None,
             requests,
             style: None,
             time: None,
@@ -63,6 +67,11 @@ impl BarChartWidgetDefinition {
 
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -118,6 +127,7 @@ impl<'de> Deserialize<'de> for BarChartWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut requests: Option<Vec<crate::datadogV1::model::BarChartWidgetRequest>> =
                     None;
                 let mut style: Option<crate::datadogV1::model::BarChartWidgetStyle> = None;
@@ -139,6 +149,13 @@ impl<'de> Deserialize<'de> for BarChartWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "requests" => {
@@ -216,6 +233,7 @@ impl<'de> Deserialize<'de> for BarChartWidgetDefinition {
 
                 let content = BarChartWidgetDefinition {
                     custom_links,
+                    description,
                     requests,
                     style,
                     time,

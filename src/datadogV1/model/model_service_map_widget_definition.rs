@@ -14,6 +14,9 @@ pub struct ServiceMapWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Your environment and primary tag (or * if enabled for your account).
     #[serde(rename = "filters")]
     pub filters: Vec<String>,
@@ -47,6 +50,7 @@ impl ServiceMapWidgetDefinition {
     ) -> ServiceMapWidgetDefinition {
         ServiceMapWidgetDefinition {
             custom_links: None,
+            description: None,
             filters,
             service,
             title: None,
@@ -60,6 +64,11 @@ impl ServiceMapWidgetDefinition {
 
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -105,6 +114,7 @@ impl<'de> Deserialize<'de> for ServiceMapWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut filters: Option<Vec<String>> = None;
                 let mut service: Option<String> = None;
                 let mut title: Option<String> = None;
@@ -125,6 +135,13 @@ impl<'de> Deserialize<'de> for ServiceMapWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "filters" => {
@@ -186,6 +203,7 @@ impl<'de> Deserialize<'de> for ServiceMapWidgetDefinition {
 
                 let content = ServiceMapWidgetDefinition {
                     custom_links,
+                    description,
                     filters,
                     service,
                     title,

@@ -85,6 +85,7 @@ async fn main() {
                                 ],
                                 TimeseriesWidgetDefinitionType::TIMESERIES,
                             )
+                                .description("Example widget description".to_string())
                                 .legend_layout(TimeseriesWidgetLegendLayout::AUTO)
                                 .show_legend(true)
                                 .time(WidgetTime::WidgetLegacyLiveSpan(Box::new(WidgetLegacyLiveSpan::new())))

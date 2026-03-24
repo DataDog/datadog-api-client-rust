@@ -14,6 +14,9 @@ pub struct SLOWidgetDefinition {
     /// Additional filters applied to the SLO query.
     #[serde(rename = "additional_query_filters")]
     pub additional_query_filters: Option<String>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Defined global time target.
     #[serde(rename = "global_time_target")]
     pub global_time_target: Option<String>,
@@ -58,6 +61,7 @@ impl SLOWidgetDefinition {
     ) -> SLOWidgetDefinition {
         SLOWidgetDefinition {
             additional_query_filters: None,
+            description: None,
             global_time_target: None,
             show_error_budget: None,
             slo_id: None,
@@ -75,6 +79,11 @@ impl SLOWidgetDefinition {
 
     pub fn additional_query_filters(mut self, value: String) -> Self {
         self.additional_query_filters = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -145,6 +154,7 @@ impl<'de> Deserialize<'de> for SLOWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut additional_query_filters: Option<String> = None;
+                let mut description: Option<String> = None;
                 let mut global_time_target: Option<String> = None;
                 let mut show_error_budget: Option<bool> = None;
                 let mut slo_id: Option<String> = None;
@@ -169,6 +179,13 @@ impl<'de> Deserialize<'de> for SLOWidgetDefinition {
                                 continue;
                             }
                             additional_query_filters =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "global_time_target" => {
@@ -269,6 +286,7 @@ impl<'de> Deserialize<'de> for SLOWidgetDefinition {
 
                 let content = SLOWidgetDefinition {
                     additional_query_filters,
+                    description,
                     global_time_target,
                     show_error_budget,
                     slo_id,

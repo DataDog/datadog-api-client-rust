@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SLOListWidgetDefinition {
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Array of one request object to display in the widget.
     #[serde(rename = "requests")]
     pub requests: Vec<crate::datadogV1::model::SLOListWidgetRequest>,
@@ -39,6 +42,7 @@ impl SLOListWidgetDefinition {
         type_: crate::datadogV1::model::SLOListWidgetDefinitionType,
     ) -> SLOListWidgetDefinition {
         SLOListWidgetDefinition {
+            description: None,
             requests,
             title: None,
             title_align: None,
@@ -47,6 +51,11 @@ impl SLOListWidgetDefinition {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn title(mut self, value: String) -> Self {
@@ -90,6 +99,7 @@ impl<'de> Deserialize<'de> for SLOListWidgetDefinition {
             where
                 M: MapAccess<'a>,
             {
+                let mut description: Option<String> = None;
                 let mut requests: Option<Vec<crate::datadogV1::model::SLOListWidgetRequest>> = None;
                 let mut title: Option<String> = None;
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
@@ -103,6 +113,13 @@ impl<'de> Deserialize<'de> for SLOListWidgetDefinition {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "requests" => {
                             requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -157,6 +174,7 @@ impl<'de> Deserialize<'de> for SLOListWidgetDefinition {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = SLOListWidgetDefinition {
+                    description,
                     requests,
                     title,
                     title_align,

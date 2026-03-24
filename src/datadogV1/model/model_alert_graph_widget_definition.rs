@@ -14,6 +14,9 @@ pub struct AlertGraphWidgetDefinition {
     /// ID of the alert to use in the widget.
     #[serde(rename = "alert_id")]
     pub alert_id: String,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Time setting for the widget.
     #[serde(rename = "time")]
     pub time: Option<crate::datadogV1::model::WidgetTime>,
@@ -47,6 +50,7 @@ impl AlertGraphWidgetDefinition {
     ) -> AlertGraphWidgetDefinition {
         AlertGraphWidgetDefinition {
             alert_id,
+            description: None,
             time: None,
             title: None,
             title_align: None,
@@ -56,6 +60,11 @@ impl AlertGraphWidgetDefinition {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
@@ -105,6 +114,7 @@ impl<'de> Deserialize<'de> for AlertGraphWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut alert_id: Option<String> = None;
+                let mut description: Option<String> = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
                 let mut title: Option<String> = None;
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
@@ -122,6 +132,13 @@ impl<'de> Deserialize<'de> for AlertGraphWidgetDefinition {
                     match k.as_str() {
                         "alert_id" => {
                             alert_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "time" => {
                             if v.is_null() {
@@ -203,6 +220,7 @@ impl<'de> Deserialize<'de> for AlertGraphWidgetDefinition {
 
                 let content = AlertGraphWidgetDefinition {
                     alert_id,
+                    description,
                     time,
                     title,
                     title_align,

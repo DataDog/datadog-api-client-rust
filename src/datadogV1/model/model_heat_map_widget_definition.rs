@@ -14,6 +14,9 @@ pub struct HeatMapWidgetDefinition {
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
+    /// The description of the widget.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// List of widget events. Deprecated - Use `overlay` request type instead.
     #[deprecated]
     #[serde(rename = "events")]
@@ -66,6 +69,7 @@ impl HeatMapWidgetDefinition {
         #[allow(deprecated)]
         HeatMapWidgetDefinition {
             custom_links: None,
+            description: None,
             events: None,
             legend_size: None,
             markers: None,
@@ -86,6 +90,12 @@ impl HeatMapWidgetDefinition {
     #[allow(deprecated)]
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -176,6 +186,7 @@ impl<'de> Deserialize<'de> for HeatMapWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
+                let mut description: Option<String> = None;
                 let mut events: Option<Vec<crate::datadogV1::model::WidgetEvent>> = None;
                 let mut legend_size: Option<String> = None;
                 let mut markers: Option<Vec<crate::datadogV1::model::WidgetMarker>> = None;
@@ -201,6 +212,13 @@ impl<'de> Deserialize<'de> for HeatMapWidgetDefinition {
                                 continue;
                             }
                             custom_links =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "events" => {
@@ -311,6 +329,7 @@ impl<'de> Deserialize<'de> for HeatMapWidgetDefinition {
                 #[allow(deprecated)]
                 let content = HeatMapWidgetDefinition {
                     custom_links,
+                    description,
                     events,
                     legend_size,
                     markers,
