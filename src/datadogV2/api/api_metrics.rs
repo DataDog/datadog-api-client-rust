@@ -89,15 +89,15 @@ pub struct ListTagConfigurationsOptionalParams {
     pub filter_include_percentiles: Option<bool>,
     /// Only return metrics that have been queried (true) or not queried (false) in the look back window. Set the window with `filter[queried][window][seconds]`; if omitted, a default window is used.
     pub filter_queried: Option<bool>,
-    /// Only return metrics that have been queried or not queried in the specified window. Dependent on being sent with `filter[queried]`.
+    /// Only return metrics that have been queried or not queried in the specified window. Dependent on being sent with `filter[queried]`. The default value is 2,592,000 seconds (30 days), the maximum value is 15,552,000 seconds (180 days), and the minimum value is 1 second.
     pub filter_queried_window_seconds: Option<i64>,
     /// Only return metrics that were submitted with tags matching this expression. You can use AND, OR, IN, and wildcards (for example, service:web*).
     pub filter_tags: Option<String>,
     /// Only return metrics that are used in at least one dashboard, monitor, notebook, or SLO.
     pub filter_related_assets: Option<bool>,
-    /// Only return metrics that have been actively reporting in the specified window.
+    /// Only return metrics that have been actively reporting in the specified window. The default value is 3600 seconds (1 hour), the maximum value is 2,592,000 seconds (30 days), and the minimum value is 1 second.
     pub window_seconds: Option<i64>,
-    /// Maximum number of results per page. Use with `page[cursor]` for pagination.
+    /// Maximum number of results per page. Use with `page[cursor]` for pagination. The default value is 10000, the maximum value is 10000, and the minimum value is 1.
     pub page_size: Option<i32>,
     /// Cursor for pagination. Use `page[size]` to opt-in to pagination and get the first page; for subsequent pages, use the value from `meta.pagination.next_cursor` in the response. Pagination is complete when `next_cursor` is null.
     pub page_cursor: Option<String>,
@@ -132,7 +132,7 @@ impl ListTagConfigurationsOptionalParams {
         self.filter_queried = Some(value);
         self
     }
-    /// Only return metrics that have been queried or not queried in the specified window. Dependent on being sent with `filter[queried]`.
+    /// Only return metrics that have been queried or not queried in the specified window. Dependent on being sent with `filter[queried]`. The default value is 2,592,000 seconds (30 days), the maximum value is 15,552,000 seconds (180 days), and the minimum value is 1 second.
     pub fn filter_queried_window_seconds(mut self, value: i64) -> Self {
         self.filter_queried_window_seconds = Some(value);
         self
@@ -147,12 +147,12 @@ impl ListTagConfigurationsOptionalParams {
         self.filter_related_assets = Some(value);
         self
     }
-    /// Only return metrics that have been actively reporting in the specified window.
+    /// Only return metrics that have been actively reporting in the specified window. The default value is 3600 seconds (1 hour), the maximum value is 2,592,000 seconds (30 days), and the minimum value is 1 second.
     pub fn window_seconds(mut self, value: i64) -> Self {
         self.window_seconds = Some(value);
         self
     }
-    /// Maximum number of results per page. Use with `page[cursor]` for pagination.
+    /// Maximum number of results per page. Use with `page[cursor]` for pagination. The default value is 10000, the maximum value is 10000, and the minimum value is 1.
     pub fn page_size(mut self, value: i32) -> Self {
         self.page_size = Some(value);
         self
