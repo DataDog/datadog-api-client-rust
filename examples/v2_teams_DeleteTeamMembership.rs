@@ -6,10 +6,13 @@ use datadog_api_client::datadogV2::api_teams::TeamsAPI;
 async fn main() {
     // there is a valid "dd_team" in the system
     let dd_team_data_id = std::env::var("DD_TEAM_DATA_ID").unwrap();
+
+    // there is a valid "user" in the system
+    let user_data_id = std::env::var("USER_DATA_ID").unwrap();
     let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api
-        .delete_team_membership(dd_team_data_id.clone(), "user_id".to_string())
+        .delete_team_membership(dd_team_data_id.clone(), user_data_id.clone())
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
