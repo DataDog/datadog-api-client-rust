@@ -4,8 +4,7 @@ use datadog_api_client::datadogV2::api_service_now_integration::ServiceNowIntegr
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListServiceNowInstances", true);
+    let configuration = datadog::Configuration::new();
     let api = ServiceNowIntegrationAPI::with_config(configuration);
     let resp = api.list_service_now_instances().await;
     if let Ok(value) = resp {

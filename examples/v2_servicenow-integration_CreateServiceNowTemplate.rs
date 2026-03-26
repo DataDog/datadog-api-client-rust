@@ -29,8 +29,7 @@ async fn main() {
         .user_id(Uuid::parse_str("65b3341b-0680-47f9-a6d4-134db45c603e").expect("invalid UUID")),
         ServiceNowTemplateType::SERVICENOW_TEMPLATES,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateServiceNowTemplate", true);
+    let configuration = datadog::Configuration::new();
     let api = ServiceNowIntegrationAPI::with_config(configuration);
     let resp = api.create_service_now_template(body).await;
     if let Ok(value) = resp {

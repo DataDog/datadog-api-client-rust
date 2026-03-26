@@ -6,7 +6,6 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -188,14 +187,6 @@ impl ServiceNowIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_service_now_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_service_now_template' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -339,14 +330,6 @@ impl ServiceNowIntegrationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteServiceNowTemplateError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_service_now_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_service_now_template' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -452,14 +435,6 @@ impl ServiceNowIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_service_now_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_service_now_template' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -572,14 +547,6 @@ impl ServiceNowIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_service_now_assignment_groups";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_service_now_assignment_groups' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -692,14 +659,6 @@ impl ServiceNowIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_service_now_business_services";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_service_now_business_services' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -807,14 +766,6 @@ impl ServiceNowIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_service_now_instances";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_service_now_instances' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -921,14 +872,6 @@ impl ServiceNowIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_service_now_templates";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_service_now_templates' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1040,14 +983,6 @@ impl ServiceNowIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_service_now_users";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_service_now_users' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1162,14 +1097,6 @@ impl ServiceNowIntegrationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_service_now_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_service_now_template' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
