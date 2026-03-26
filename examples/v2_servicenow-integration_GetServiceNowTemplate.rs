@@ -5,8 +5,7 @@ use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetServiceNowTemplate", true);
+    let configuration = datadog::Configuration::new();
     let api = ServiceNowIntegrationAPI::with_config(configuration);
     let resp = api
         .get_service_now_template(
