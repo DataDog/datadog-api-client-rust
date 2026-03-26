@@ -44,6 +44,7 @@ pub enum WidgetDefinition {
     ToplistWidgetDefinition(Box<crate::datadogV1::model::ToplistWidgetDefinition>),
     TopologyMapWidgetDefinition(Box<crate::datadogV1::model::TopologyMapWidgetDefinition>),
     TreeMapWidgetDefinition(Box<crate::datadogV1::model::TreeMapWidgetDefinition>),
+    WildcardWidgetDefinition(Box<crate::datadogV1::model::WildcardWidgetDefinition>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -329,6 +330,14 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         {
             if !_v._unparsed {
                 return Ok(WidgetDefinition::TreeMapWidgetDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::WildcardWidgetDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(WidgetDefinition::WildcardWidgetDefinition(_v));
             }
         }
 
