@@ -88,7 +88,8 @@ pub struct ApiInstances {
     pub v2_api_csm_coverage_analysis:
         Option<datadogV2::api_csm_coverage_analysis::CSMCoverageAnalysisAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
-    pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
+    pub v2_api_data_access_controls:
+        Option<datadogV2::api_data_access_controls::DataAccessControlsAPI>,
     pub v2_api_data_deletion: Option<datadogV2::api_data_deletion::DataDeletionAPI>,
     pub v2_api_deployment_gates: Option<datadogV2::api_deployment_gates::DeploymentGatesAPI>,
     pub v2_api_domain_allowlist: Option<datadogV2::api_domain_allowlist::DomainAllowlistAPI>,
@@ -711,9 +712,9 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.http_client.as_ref().unwrap().clone()
             ));
         }
-        "Datasets" => {
-            world.api_instances.v2_api_datasets = Some(
-                datadogV2::api_datasets::DatasetsAPI::with_client_and_config(
+        "DataAccessControls" => {
+            world.api_instances.v2_api_data_access_controls = Some(
+                datadogV2::api_data_access_controls::DataAccessControlsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -23568,7 +23569,7 @@ fn test_v2_update_dashboard_list_items(
 fn test_v2_get_all_datasets(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_datasets
+        .v2_api_data_access_controls
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.get_all_datasets_with_http_info()) {
@@ -23592,7 +23593,7 @@ fn test_v2_get_all_datasets(world: &mut DatadogWorld, _parameters: &HashMap<Stri
 fn test_v2_create_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_datasets
+        .v2_api_data_access_controls
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -23617,7 +23618,7 @@ fn test_v2_create_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String
 fn test_v2_delete_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_datasets
+        .v2_api_data_access_controls
         .as_ref()
         .expect("api instance not found");
     let dataset_id =
@@ -23643,7 +23644,7 @@ fn test_v2_delete_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String
 fn test_v2_get_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_datasets
+        .v2_api_data_access_controls
         .as_ref()
         .expect("api instance not found");
     let dataset_id =
@@ -23669,7 +23670,7 @@ fn test_v2_get_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, V
 fn test_v2_update_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_datasets
+        .v2_api_data_access_controls
         .as_ref()
         .expect("api instance not found");
     let dataset_id =
