@@ -9,7 +9,11 @@ use futures_util::stream::StreamExt;
 async fn main() {
     let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
-    let response = api.search_cases_with_pagination(SearchCasesOptionalParams::default());
+    let response = api.search_cases_with_pagination(
+        SearchCasesOptionalParams::default()
+            .page_size(2)
+            .filter("status:closed".to_string()),
+    );
     pin_mut!(response);
     while let Some(resp) = response.next().await {
         if let Ok(value) = resp {

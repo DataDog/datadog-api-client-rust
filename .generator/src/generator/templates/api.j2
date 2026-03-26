@@ -203,7 +203,7 @@ impl {{ structName }} {
         {%- if pagination.pageParam %}
             {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageParam) %}
             if {{ getter }}.is_none() {
-                {{ setter }} = {% if not required %}Some({% endif %}0{% if not required %}){% endif %};
+                {{ setter }} = {% if not required %}Some({% endif %}{{ pagination.pageStart | default(0) }}{% if not required %}){% endif %};
             }
         {%- endif %}
             loop {

@@ -3045,7 +3045,7 @@ impl CaseManagementAPI {
                 page_size = params.page_size.unwrap().clone();
             }
             if params.page_number.is_none() {
-                params.page_number = Some(0);
+                params.page_number = Some(1);
             }
             loop {
                 let resp = self.search_cases(params.clone()).await?;
