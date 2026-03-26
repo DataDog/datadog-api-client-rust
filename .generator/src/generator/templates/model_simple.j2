@@ -117,7 +117,7 @@ impl<'de> Deserialize<'de> for {{ name }} {
                 {%- endif %}
                 let mut _unparsed = false;
 
-                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                while let Some((k, map_value)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         {%- for attr, schema in model.get("properties", {}).items() %}
                         {%- set required = attr in model.required %}
@@ -126,15 +126,15 @@ impl<'de> Deserialize<'de> for {{ name }} {
                         {%- set dataType = get_type(schema, alternative_name=name + propertyName, render_option=false, version=version) %}
                         "{{ attr }}" => {
                             {%- if not nullable and not required %}
-                            if v.is_null(){% if schema.get("type") == "number" %} || v.as_str() == Some(""){% endif %} {
+                            if map_value.is_null(){% if schema.get("type") == "number" %} || map_value.as_str() == Some(""){% endif %} {
                                 continue;
                             }
                             {%- elif nullable and schema.get("type") == "number" %}
-                            if v.as_str() == Some("") {
+                            if map_value.as_str() == Some("") {
                                 continue;
                             }
                             {%- endif %}
-                            {{ propertyName }} = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            {{ propertyName }} = Some(serde_json::from_value(map_value).map_err(M::Error::custom)?);
                             {%- if schema.enum or schema.oneOf %}
                             if let Some(ref _{{ propertyName }}) = {{ propertyName }} {
                                 match _{{ propertyName }} {
@@ -149,7 +149,7 @@ impl<'de> Deserialize<'de> for {{ name }} {
                         {%- endfor %}
                         &_ => {
                             {%- if additionalProperties != false %}
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                            if let Ok(value) = serde_json::from_value(map_value.clone()) {
                                 additional_properties.insert(k, value);
                             }
                             {%- else %}
