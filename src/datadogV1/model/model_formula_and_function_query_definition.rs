@@ -23,6 +23,9 @@ pub enum FormulaAndFunctionQueryDefinition {
     FormulaAndFunctionApmResourceStatsQueryDefinition(
         Box<crate::datadogV1::model::FormulaAndFunctionApmResourceStatsQueryDefinition>,
     ),
+    FormulaAndFunctionApmMetricsQueryDefinition(
+        Box<crate::datadogV1::model::FormulaAndFunctionApmMetricsQueryDefinition>,
+    ),
     FormulaAndFunctionSLOQueryDefinition(
         Box<crate::datadogV1::model::FormulaAndFunctionSLOQueryDefinition>,
     ),
@@ -82,6 +85,18 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionQueryDefinition {
         {
             if !_v._unparsed {
                 return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionApmResourceStatsQueryDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::FormulaAndFunctionApmMetricsQueryDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    FormulaAndFunctionQueryDefinition::FormulaAndFunctionApmMetricsQueryDefinition(
+                        _v,
+                    ),
+                );
             }
         }
         if let Ok(_v) = serde_json::from_value::<
