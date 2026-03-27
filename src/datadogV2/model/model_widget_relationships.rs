@@ -6,29 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Search filter settings.
+/// Relationships of the widget resource.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FlakyTestsSearchFilter {
-    /// Whether to include the status change history for each flaky test in the response.
-    /// When set to true, each test will include a 'history' array with chronological status changes.
-    /// Defaults to false.
-    #[serde(rename = "include_history")]
-    pub include_history: Option<bool>,
-    /// Search query following log syntax used to filter flaky tests, same as on Flaky Tests Management UI. The supported search keys are:
-    /// - `flaky_test_state`
-    /// - `flaky_test_category`
-    /// - `@test.name`
-    /// - `@test.suite`
-    /// - `@test.module`
-    /// - `@test.service`
-    /// - `@git.repository.id_v2`
-    /// - `@git.branch`
-    /// - `@test.codeowners`
-    /// - `env`
-    #[serde(rename = "query")]
-    pub query: Option<String>,
+pub struct WidgetRelationships {
+    /// A JSON:API relationship to a user.
+    #[serde(rename = "created_by")]
+    pub created_by: Option<crate::datadogV2::model::WidgetRelationshipItem>,
+    /// A JSON:API relationship to a user.
+    #[serde(rename = "modified_by")]
+    pub modified_by: Option<crate::datadogV2::model::WidgetRelationshipItem>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -36,23 +24,23 @@ pub struct FlakyTestsSearchFilter {
     pub(crate) _unparsed: bool,
 }
 
-impl FlakyTestsSearchFilter {
-    pub fn new() -> FlakyTestsSearchFilter {
-        FlakyTestsSearchFilter {
-            include_history: None,
-            query: None,
+impl WidgetRelationships {
+    pub fn new() -> WidgetRelationships {
+        WidgetRelationships {
+            created_by: None,
+            modified_by: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn include_history(mut self, value: bool) -> Self {
-        self.include_history = Some(value);
+    pub fn created_by(mut self, value: crate::datadogV2::model::WidgetRelationshipItem) -> Self {
+        self.created_by = Some(value);
         self
     }
 
-    pub fn query(mut self, value: String) -> Self {
-        self.query = Some(value);
+    pub fn modified_by(mut self, value: crate::datadogV2::model::WidgetRelationshipItem) -> Self {
+        self.modified_by = Some(value);
         self
     }
 
@@ -65,20 +53,20 @@ impl FlakyTestsSearchFilter {
     }
 }
 
-impl Default for FlakyTestsSearchFilter {
+impl Default for WidgetRelationships {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
+impl<'de> Deserialize<'de> for WidgetRelationships {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FlakyTestsSearchFilterVisitor;
-        impl<'a> Visitor<'a> for FlakyTestsSearchFilterVisitor {
-            type Value = FlakyTestsSearchFilter;
+        struct WidgetRelationshipsVisitor;
+        impl<'a> Visitor<'a> for WidgetRelationshipsVisitor {
+            type Value = WidgetRelationships;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -88,8 +76,8 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
             where
                 M: MapAccess<'a>,
             {
-                let mut include_history: Option<bool> = None;
-                let mut query: Option<String> = None;
+                let mut created_by: Option<crate::datadogV2::model::WidgetRelationshipItem> = None;
+                let mut modified_by: Option<crate::datadogV2::model::WidgetRelationshipItem> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -98,18 +86,18 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "include_history" => {
+                        "created_by" => {
                             if v.is_null() {
                                 continue;
                             }
-                            include_history =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "query" => {
+                        "modified_by" => {
                             if v.is_null() {
                                 continue;
                             }
-                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            modified_by =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -119,9 +107,9 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
                     }
                 }
 
-                let content = FlakyTestsSearchFilter {
-                    include_history,
-                    query,
+                let content = WidgetRelationships {
+                    created_by,
+                    modified_by,
                     additional_properties,
                     _unparsed,
                 };
@@ -130,6 +118,6 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
             }
         }
 
-        deserializer.deserialize_any(FlakyTestsSearchFilterVisitor)
+        deserializer.deserialize_any(WidgetRelationshipsVisitor)
     }
 }

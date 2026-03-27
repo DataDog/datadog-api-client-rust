@@ -6,29 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Search filter settings.
+/// Response containing a single widget.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FlakyTestsSearchFilter {
-    /// Whether to include the status change history for each flaky test in the response.
-    /// When set to true, each test will include a 'history' array with chronological status changes.
-    /// Defaults to false.
-    #[serde(rename = "include_history")]
-    pub include_history: Option<bool>,
-    /// Search query following log syntax used to filter flaky tests, same as on Flaky Tests Management UI. The supported search keys are:
-    /// - `flaky_test_state`
-    /// - `flaky_test_category`
-    /// - `@test.name`
-    /// - `@test.suite`
-    /// - `@test.module`
-    /// - `@test.service`
-    /// - `@git.repository.id_v2`
-    /// - `@git.branch`
-    /// - `@test.codeowners`
-    /// - `env`
-    #[serde(rename = "query")]
-    pub query: Option<String>,
+pub struct WidgetResponse {
+    /// A widget resource object.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::WidgetData,
+    /// Array of user resources related to the widget.
+    #[serde(rename = "included")]
+    pub included: Option<Vec<crate::datadogV2::model::WidgetIncludedUser>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -36,23 +24,18 @@ pub struct FlakyTestsSearchFilter {
     pub(crate) _unparsed: bool,
 }
 
-impl FlakyTestsSearchFilter {
-    pub fn new() -> FlakyTestsSearchFilter {
-        FlakyTestsSearchFilter {
-            include_history: None,
-            query: None,
+impl WidgetResponse {
+    pub fn new(data: crate::datadogV2::model::WidgetData) -> WidgetResponse {
+        WidgetResponse {
+            data,
+            included: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn include_history(mut self, value: bool) -> Self {
-        self.include_history = Some(value);
-        self
-    }
-
-    pub fn query(mut self, value: String) -> Self {
-        self.query = Some(value);
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::WidgetIncludedUser>) -> Self {
+        self.included = Some(value);
         self
     }
 
@@ -65,20 +48,14 @@ impl FlakyTestsSearchFilter {
     }
 }
 
-impl Default for FlakyTestsSearchFilter {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
+impl<'de> Deserialize<'de> for WidgetResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FlakyTestsSearchFilterVisitor;
-        impl<'a> Visitor<'a> for FlakyTestsSearchFilterVisitor {
-            type Value = FlakyTestsSearchFilter;
+        struct WidgetResponseVisitor;
+        impl<'a> Visitor<'a> for WidgetResponseVisitor {
+            type Value = WidgetResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -88,8 +65,8 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
             where
                 M: MapAccess<'a>,
             {
-                let mut include_history: Option<bool> = None;
-                let mut query: Option<String> = None;
+                let mut data: Option<crate::datadogV2::model::WidgetData> = None;
+                let mut included: Option<Vec<crate::datadogV2::model::WidgetIncludedUser>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -98,18 +75,14 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "include_history" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            include_history =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "query" => {
+                        "included" => {
                             if v.is_null() {
                                 continue;
                             }
-                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -118,10 +91,11 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = FlakyTestsSearchFilter {
-                    include_history,
-                    query,
+                let content = WidgetResponse {
+                    data,
+                    included,
                     additional_properties,
                     _unparsed,
                 };
@@ -130,6 +104,6 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
             }
         }
 
-        deserializer.deserialize_any(FlakyTestsSearchFilterVisitor)
+        deserializer.deserialize_any(WidgetResponseVisitor)
     }
 }
