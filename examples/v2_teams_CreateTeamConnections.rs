@@ -36,8 +36,7 @@ async fn main() {
                 TeamRefDataType::TEAM,
             ))),
     )]);
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateTeamConnections", true);
+    let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api.create_team_connections(body).await;
     if let Ok(value) = resp {

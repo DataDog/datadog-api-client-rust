@@ -8,7 +8,7 @@ async fn main() {
     let configuration = datadog::Configuration::new();
     let api = TeamsAPI::with_config(configuration);
     let resp = api
-        .list_team_connections(ListTeamConnectionsOptionalParams::default())
+        .list_team_connections(ListTeamConnectionsOptionalParams::default().page_size(10))
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
