@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The groups widget allows you to keep similar graphs together on your timeboard. Each group has a custom header, can hold one to many graphs, and is collapsible.
+/// The group widget allows you to keep similar graphs together on your dashboard. Each group has a custom header, can hold one to many graphs, and is collapsible.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GroupWidgetDefinition {
-    /// Background color of the group title.
+    /// Background color of the widget. Supported values are `white`, `blue`, `purple`, `pink`, `orange`, `yellow`, `green`, `gray`, `vivid_blue`, `vivid_purple`, `vivid_pink`, `vivid_orange`, `vivid_yellow`, `vivid_green`, and `transparent`.
     #[serde(rename = "background_color")]
     pub background_color: Option<String>,
     /// URL of image to display as a banner for the group.

@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The table visualization is available on timeboards and screenboards. It displays columns of metrics grouped by tag key.
+/// The table visualization is available on dashboards. It displays columns of metrics grouped by tag key.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The iframe widget allows you to embed a portion of any other web page on your dashboard. Only available on FREE layout dashboards.
+/// The iframe widget allows you to embed a portion of any other web page on your dashboard.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
