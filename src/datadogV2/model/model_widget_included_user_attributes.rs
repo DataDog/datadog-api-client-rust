@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data for the request to update a scorecard rule.
+/// Attributes of an included user resource.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct UpdateRuleRequestData {
-    /// Attributes for creating or updating a rule. Server-managed fields (created_at, modified_at, custom) are excluded.
-    #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::RuleAttributesRequest>,
-    /// The JSON:API type for scorecard rules.
-    #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::RuleType>,
+pub struct WidgetIncludedUserAttributes {
+    /// The email handle of the user.
+    #[serde(rename = "handle")]
+    pub handle: Option<String>,
+    /// The display name of the user.
+    #[serde(rename = "name", default, with = "::serde_with::rust::double_option")]
+    pub name: Option<Option<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +24,23 @@ pub struct UpdateRuleRequestData {
     pub(crate) _unparsed: bool,
 }
 
-impl UpdateRuleRequestData {
-    pub fn new() -> UpdateRuleRequestData {
-        UpdateRuleRequestData {
-            attributes: None,
-            type_: None,
+impl WidgetIncludedUserAttributes {
+    pub fn new() -> WidgetIncludedUserAttributes {
+        WidgetIncludedUserAttributes {
+            handle: None,
+            name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn attributes(mut self, value: crate::datadogV2::model::RuleAttributesRequest) -> Self {
-        self.attributes = Some(value);
+    pub fn handle(mut self, value: String) -> Self {
+        self.handle = Some(value);
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV2::model::RuleType) -> Self {
-        self.type_ = Some(value);
+    pub fn name(mut self, value: Option<String>) -> Self {
+        self.name = Some(value);
         self
     }
 
@@ -53,20 +53,20 @@ impl UpdateRuleRequestData {
     }
 }
 
-impl Default for UpdateRuleRequestData {
+impl Default for WidgetIncludedUserAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for UpdateRuleRequestData {
+impl<'de> Deserialize<'de> for WidgetIncludedUserAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct UpdateRuleRequestDataVisitor;
-        impl<'a> Visitor<'a> for UpdateRuleRequestDataVisitor {
-            type Value = UpdateRuleRequestData;
+        struct WidgetIncludedUserAttributesVisitor;
+        impl<'a> Visitor<'a> for WidgetIncludedUserAttributesVisitor {
+            type Value = WidgetIncludedUserAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +76,8 @@ impl<'de> Deserialize<'de> for UpdateRuleRequestData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RuleAttributesRequest> = None;
-                let mut type_: Option<crate::datadogV2::model::RuleType> = None;
+                let mut handle: Option<String> = None;
+                let mut name: Option<Option<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,25 +86,14 @@ impl<'de> Deserialize<'de> for UpdateRuleRequestData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
+                        "handle" => {
                             if v.is_null() {
                                 continue;
                             }
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::RuleType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -114,9 +103,9 @@ impl<'de> Deserialize<'de> for UpdateRuleRequestData {
                     }
                 }
 
-                let content = UpdateRuleRequestData {
-                    attributes,
-                    type_,
+                let content = WidgetIncludedUserAttributes {
+                    handle,
+                    name,
                     additional_properties,
                     _unparsed,
                 };
@@ -125,6 +114,6 @@ impl<'de> Deserialize<'de> for UpdateRuleRequestData {
             }
         }
 
-        deserializer.deserialize_any(UpdateRuleRequestDataVisitor)
+        deserializer.deserialize_any(WidgetIncludedUserAttributesVisitor)
     }
 }
