@@ -348,6 +348,7 @@ impl RestrictionPoliciesAPI {
     /// - On-Call Team Routing Rules: `on-call-team-routing-rules`
     /// - Logs Pipelines: `logs-pipeline`
     /// - Case Management Projects: `case-management-project`
+    /// - Monitor Notification Rules: `monitor-notification-rule`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -376,6 +377,7 @@ impl RestrictionPoliciesAPI {
     /// On-Call Team Routing Rules  | `viewer`, `editor`
     /// Logs Pipelines              | `viewer`, `processors_editor`, `editor`
     /// Case Management Projects    | `viewer`, `contributor`, `manager`
+    /// Monitor Notification Rules  | `viewer`, `editor`
     pub async fn update_restriction_policy(
         &self,
         resource_id: String,
@@ -430,6 +432,7 @@ impl RestrictionPoliciesAPI {
     /// - On-Call Team Routing Rules: `on-call-team-routing-rules`
     /// - Logs Pipelines: `logs-pipeline`
     /// - Case Management Projects: `case-management-project`
+    /// - Monitor Notification Rules: `monitor-notification-rule`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -458,6 +461,7 @@ impl RestrictionPoliciesAPI {
     /// On-Call Team Routing Rules  | `viewer`, `editor`
     /// Logs Pipelines              | `viewer`, `processors_editor`, `editor`
     /// Case Management Projects    | `viewer`, `contributor`, `manager`
+    /// Monitor Notification Rules  | `viewer`, `editor`
     pub async fn update_restriction_policy_with_http_info(
         &self,
         resource_id: String,
