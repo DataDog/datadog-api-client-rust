@@ -7,8 +7,10 @@ use datadog_api_client::datadogV2::model::TeamConnectionType;
 
 #[tokio::main]
 async fn main() {
+    // there is a valid "team_connection" in the system
+    let team_connection_id = std::env::var("TEAM_CONNECTION_ID").unwrap();
     let body = TeamConnectionDeleteRequest::new(vec![TeamConnectionDeleteRequestDataItem::new(
-        "12345678-1234-5678-9abc-123456789012".to_string(),
+        team_connection_id.clone(),
         TeamConnectionType::TEAM_CONNECTION,
     )]);
     let configuration = datadog::Configuration::new();
