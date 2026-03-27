@@ -6,11 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Free text is a widget that allows you to add headings to your screenboard. Commonly used to state the overall purpose of the dashboard. Only available on FREE layout dashboards.
+/// Free text is a widget that allows you to add headings to your dashboard. Commonly used to state the overall purpose of the dashboard.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FreeTextWidgetDefinition {
+    /// Background color of the widget. Supported values are `white`, `blue`, `purple`, `pink`, `orange`, `yellow`, `green`, `gray`, `vivid_blue`, `vivid_purple`, `vivid_pink`, `vivid_orange`, `vivid_yellow`, `vivid_green`, and `transparent`.
+    #[serde(rename = "background_color")]
+    pub background_color: Option<String>,
     /// Color of the text.
     #[serde(rename = "color")]
     pub color: Option<String>,
@@ -39,6 +42,7 @@ impl FreeTextWidgetDefinition {
         type_: crate::datadogV1::model::FreeTextWidgetDefinitionType,
     ) -> FreeTextWidgetDefinition {
         FreeTextWidgetDefinition {
+            background_color: None,
             color: None,
             font_size: None,
             text,
@@ -47,6 +51,11 @@ impl FreeTextWidgetDefinition {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn background_color(mut self, value: String) -> Self {
+        self.background_color = Some(value);
+        self
     }
 
     pub fn color(mut self, value: String) -> Self {
@@ -90,6 +99,7 @@ impl<'de> Deserialize<'de> for FreeTextWidgetDefinition {
             where
                 M: MapAccess<'a>,
             {
+                let mut background_color: Option<String> = None;
                 let mut color: Option<String> = None;
                 let mut font_size: Option<String> = None;
                 let mut text: Option<String> = None;
@@ -103,6 +113,13 @@ impl<'de> Deserialize<'de> for FreeTextWidgetDefinition {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "background_color" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            background_color =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "color" => {
                             if v.is_null() {
                                 continue;
@@ -156,6 +173,7 @@ impl<'de> Deserialize<'de> for FreeTextWidgetDefinition {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = FreeTextWidgetDefinition {
+                    background_color,
                     color,
                     font_size,
                     text,

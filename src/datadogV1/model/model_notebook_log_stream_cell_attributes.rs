@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct NotebookLogStreamCellAttributes {
-    /// The Log Stream displays a log flow matching the defined query. Only available on FREE layout dashboards.
+    /// The Log Stream displays a log flow matching the defined query.
     #[serde(rename = "definition")]
     pub definition: crate::datadogV1::model::LogStreamWidgetDefinition,
     /// The size of the graph.

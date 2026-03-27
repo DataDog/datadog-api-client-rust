@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The service summary displays the graphs of a chosen service in your screenboard. Only available on FREE layout dashboards.
+/// The service summary displays the graphs of a chosen service in your dashboard.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
