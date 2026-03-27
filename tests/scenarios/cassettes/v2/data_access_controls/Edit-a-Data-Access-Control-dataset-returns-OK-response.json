@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"name\":\"Security Audit Dataset\",\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"],\"product_filters\":[{\"filters\":[\"@application.id:ABCD\"],\"product\":\"metrics\"}]},\"type\":\"dataset\"}}",
+          "string": "{\"data\":{\"attributes\":{\"name\":\"Security Audit DAC\",\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"],\"product_filters\":[{\"filters\":[\"@application.id:ABCD\"],\"product\":\"logs\"}]},\"type\":\"dataset\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"type\":\"dataset\",\"id\":\"2bf848a1-b18a-4602-8348-814a53862c52\",\"attributes\":{\"name\":\"Security Audit Dataset\",\"product_filters\":[{\"product\":\"metrics\",\"filters\":[\"@application.id:ABCD\"]}],\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"]}}}\n",
+          "string": "{\"data\":{\"type\":\"dataset\",\"id\":\"be869093-c62b-4ed1-87e8-7fb047e65f3d\",\"attributes\":{\"name\":\"Security Audit DAC\",\"product_filters\":[{\"product\":\"logs\",\"filters\":[\"@application.id:ABCD\"]}],\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"]}}}\n",
           "encoding": null
         },
         "headers": {
@@ -32,12 +32,12 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 29 Jul 2025 20:35:59 GMT"
+      "recorded_at": "Thu, 26 Mar 2026 21:30:11 GMT"
     },
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"name\":\"Security Audit Dataset\",\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"],\"product_filters\":[{\"filters\":[\"@application.id:1234\"],\"product\":\"metrics\"}]},\"type\":\"dataset\"}}",
+          "string": "{\"data\":{\"attributes\":{\"name\":\"Security Audit DAC\",\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"],\"product_filters\":[{\"filters\":[\"@application.id:1234\"],\"product\":\"logs\"}]},\"type\":\"dataset\"}}",
           "encoding": null
         },
         "headers": {
@@ -49,11 +49,11 @@
           ]
         },
         "method": "put",
-        "uri": "https://api.datadoghq.com/api/v2/datasets/2bf848a1-b18a-4602-8348-814a53862c52"
+        "uri": "https://api.datadoghq.com/api/v2/datasets/be869093-c62b-4ed1-87e8-7fb047e65f3d"
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"type\":\"dataset\",\"id\":\"2bf848a1-b18a-4602-8348-814a53862c52\",\"attributes\":{\"name\":\"Security Audit Dataset\",\"product_filters\":[{\"product\":\"metrics\",\"filters\":[\"@application.id:1234\"]}],\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"]}}}\n",
+          "string": "{\"data\":{\"type\":\"dataset\",\"id\":\"be869093-c62b-4ed1-87e8-7fb047e65f3d\",\"attributes\":{\"name\":\"Security Audit DAC\",\"product_filters\":[{\"product\":\"logs\",\"filters\":[\"@application.id:1234\"]}],\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"]}}}\n",
           "encoding": null
         },
         "headers": {
@@ -66,7 +66,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 29 Jul 2025 20:35:59 GMT"
+      "recorded_at": "Thu, 26 Mar 2026 21:30:11 GMT"
     },
     {
       "request": {
@@ -77,7 +77,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/datasets/2bf848a1-b18a-4602-8348-814a53862c52"
+        "uri": "https://api.datadoghq.com/api/v2/datasets/be869093-c62b-4ed1-87e8-7fb047e65f3d"
       },
       "response": {
         "body": {
@@ -94,7 +94,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Tue, 29 Jul 2025 20:35:59 GMT"
+      "recorded_at": "Thu, 26 Mar 2026 21:30:11 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

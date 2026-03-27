@@ -5,18 +5,15 @@
         "body": "",
         "headers": {
           "Accept": [
-            "application/json"
-          ],
-          "Content-Type": [
-            "application/json"
+            "*/*"
           ]
         },
-        "method": "put",
-        "uri": "https://api.datadoghq.com/api/v2/datasets/malformed_id"
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v2/datasets/00000000-0000-0000-0000-000000000000"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[\"Invalid request: Request body contains invalid json\"]}",
+          "string": "{\"errors\":[\"Invalid request: [DatasetNotFound] failed to fetch dataset \\\"00000000-0000-0000-0000-000000000000\\\"\"]}\n",
           "encoding": null
         },
         "headers": {
@@ -25,11 +22,11 @@
           ]
         },
         "status": {
-          "code": 400,
-          "message": "Bad Request"
+          "code": 404,
+          "message": "Not Found"
         }
       },
-      "recorded_at": "Tue, 29 Jul 2025 20:35:59 GMT"
+      "recorded_at": "Thu, 26 Mar 2026 21:30:10 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"name\":\"Security Audit Dataset\",\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"],\"product_filters\":[{\"filters\":[\"@application.id:ABCD\"],\"product\":\"metrics\"}]},\"type\":\"dataset\"}}",
+          "string": "{\"data\":{\"attributes\":{\"name\":\"Security Audit DAC\",\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"],\"product_filters\":[{\"filters\":[\"@application.id:ABCD\"],\"product\":\"logs\"}]},\"type\":\"dataset\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"type\":\"dataset\",\"id\":\"86f67664-8b7b-49ae-b671-919ebe11886c\",\"attributes\":{\"name\":\"Security Audit Dataset\",\"product_filters\":[{\"product\":\"metrics\",\"filters\":[\"@application.id:ABCD\"]}],\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"]}}}\n",
+          "string": "{\"data\":{\"type\":\"dataset\",\"id\":\"badc1f6e-ad2e-46f3-91bb-63af60d40b43\",\"attributes\":{\"name\":\"Security Audit DAC\",\"product_filters\":[{\"product\":\"logs\",\"filters\":[\"@application.id:ABCD\"]}],\"principals\":[\"role:94172442-be03-11e9-a77a-3b7612558ac1\"]}}}\n",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "OK"
         }
       },
-      "recorded_at": "Tue, 29 Jul 2025 20:35:57 GMT"
+      "recorded_at": "Thu, 26 Mar 2026 21:30:09 GMT"
     },
     {
       "request": {
@@ -43,7 +43,7 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/datasets/86f67664-8b7b-49ae-b671-919ebe11886c"
+        "uri": "https://api.datadoghq.com/api/v2/datasets/badc1f6e-ad2e-46f3-91bb-63af60d40b43"
       },
       "response": {
         "body": {
@@ -60,7 +60,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Tue, 29 Jul 2025 20:35:57 GMT"
+      "recorded_at": "Thu, 26 Mar 2026 21:30:09 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
