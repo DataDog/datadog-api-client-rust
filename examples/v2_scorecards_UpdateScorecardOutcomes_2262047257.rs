@@ -1,6 +1,6 @@
 // Update Scorecard outcomes asynchronously returns "Accepted" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_service_scorecards::ServiceScorecardsAPI;
+use datadog_api_client::datadogV2::api_scorecards::ScorecardsAPI;
 use datadog_api_client::datadogV2::model::State;
 use datadog_api_client::datadogV2::model::UpdateOutcomesAsyncAttributes;
 use datadog_api_client::datadogV2::model::UpdateOutcomesAsyncRequest;
@@ -27,10 +27,9 @@ async fn main() {
                 ]))
             .type_(UpdateOutcomesAsyncType::BATCHED_OUTCOME),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateScorecardOutcomesAsync", true);
-    let api = ServiceScorecardsAPI::with_config(configuration);
-    let resp = api.update_scorecard_outcomes_async(body).await;
+    let configuration = datadog::Configuration::new();
+    let api = ScorecardsAPI::with_config(configuration);
+    let resp = api.update_scorecard_outcomes(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
