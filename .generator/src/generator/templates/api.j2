@@ -384,19 +384,14 @@ impl {{ structName }} {
         };
         
         // build auth
-        {%- set authMethods = operation.security if "security" in operation else openapi.security %}
-        {%- if authMethods %}
-        {%- for authMethod in authMethods %}
-        {%- for name in authMethod %}
-        {%- set schema = openapi.components.securitySchemes[name] %}
-        {%- if schema.type == "apiKey" and schema.in != "cookie" %}
-        if let Some(local_key) = local_configuration.auth_keys.get("{{ name }}") {
-            headers.insert("{{schema.name}}", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse {{schema.name}} header"));
-        };
-        {%- endif %}
-        {%- endfor %}
-        {%- endfor %}
-        {%- endif %}
+        for (key, value) in local_configuration.auth_headers() {
+            headers.insert(
+                reqwest::header::HeaderName::from_bytes(key.as_bytes())
+                    .expect("failed to parse auth header name"),
+                HeaderValue::from_str(value.as_str())
+                    .expect("failed to parse auth header value"),
+            );
+        }
 
         {% if formParameter %}
         // build form parameters
