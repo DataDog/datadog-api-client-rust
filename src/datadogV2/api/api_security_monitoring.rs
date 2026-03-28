@@ -1852,16 +1852,20 @@ impl SecurityMonitoringAPI {
         Self::default()
     }
     pub fn with_config(config: datadog::Configuration) -> Self {
+        #[allow(unused_mut)]
         let mut reqwest_client_builder = reqwest::Client::builder();
 
+        #[cfg(not(target_arch = "wasm32"))]
         if let Some(proxy_url) = &config.proxy_url {
             let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
             reqwest_client_builder = reqwest_client_builder.proxy(proxy);
         }
 
+        #[allow(unused_mut)]
         let mut middleware_client_builder =
             reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
 
+        #[cfg(feature = "retry")]
         if config.enable_retry {
             struct RetryableStatus;
             impl reqwest_retry::RetryableStrategy for RetryableStatus {
@@ -2105,6 +2109,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -2258,6 +2263,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -2416,6 +2422,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -2778,6 +2785,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -2940,6 +2948,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -3095,6 +3104,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -3248,6 +3258,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -3404,6 +3415,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -3564,6 +3576,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -3721,6 +3734,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -3879,6 +3893,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -4036,6 +4051,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -4194,6 +4210,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -4351,6 +4368,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -5362,6 +5380,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -5516,6 +5535,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -5679,6 +5699,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -5842,6 +5863,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -8164,6 +8186,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -9269,6 +9292,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -11621,6 +11645,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -11780,6 +11805,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -11940,6 +11966,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -12100,6 +12127,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -12312,6 +12340,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -12481,6 +12510,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -12690,6 +12720,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -12851,6 +12882,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -13008,6 +13040,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -13171,6 +13204,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -13328,6 +13362,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -13491,6 +13526,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -13651,6 +13687,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -13818,6 +13855,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -13978,6 +14016,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -14123,6 +14162,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -14262,6 +14302,7 @@ impl SecurityMonitoringAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
