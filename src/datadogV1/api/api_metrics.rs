@@ -164,7 +164,6 @@ impl MetricsAPI {
     }
     pub fn with_config(config: datadog::Configuration) -> Self {
         #[allow(unused_mut)]
-
         let mut reqwest_client_builder = reqwest::Client::builder();
 
         #[cfg(not(target_arch = "wasm32"))]
@@ -174,8 +173,6 @@ impl MetricsAPI {
         }
 
         #[allow(unused_mut)]
-
-
         let mut middleware_client_builder =
             reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
 
