@@ -455,6 +455,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The total Sensitive Data Scanner usage by tag(s).
     #[serde(rename = "sds_scanned_bytes_usage")]
     pub sds_scanned_bytes_usage: Option<f64>,
+    /// The percentage of Serverless Apps APM usage by tag(s).
+    #[serde(rename = "serverless_apps_apm_percentage")]
+    pub serverless_apps_apm_percentage: Option<f64>,
+    /// The total Serverless Apps APM usage by tag(s).
+    #[serde(rename = "serverless_apps_apm_usage")]
+    pub serverless_apps_apm_usage: Option<f64>,
     /// The percentage of Serverless Apps usage by tag(s).
     #[serde(rename = "serverless_apps_percentage")]
     pub serverless_apps_percentage: Option<f64>,
@@ -655,6 +661,8 @@ impl MonthlyUsageAttributionValues {
             sca_fargate_usage: None,
             sds_scanned_bytes_percentage: None,
             sds_scanned_bytes_usage: None,
+            serverless_apps_apm_percentage: None,
+            serverless_apps_apm_usage: None,
             serverless_apps_percentage: None,
             serverless_apps_usage: None,
             siem_analyzed_logs_add_on_percentage: None,
@@ -1414,6 +1422,16 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn serverless_apps_apm_percentage(mut self, value: f64) -> Self {
+        self.serverless_apps_apm_percentage = Some(value);
+        self
+    }
+
+    pub fn serverless_apps_apm_usage(mut self, value: f64) -> Self {
+        self.serverless_apps_apm_usage = Some(value);
+        self
+    }
+
     pub fn serverless_apps_percentage(mut self, value: f64) -> Self {
         self.serverless_apps_percentage = Some(value);
         self
@@ -1664,6 +1682,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut sca_fargate_usage: Option<f64> = None;
                 let mut sds_scanned_bytes_percentage: Option<f64> = None;
                 let mut sds_scanned_bytes_usage: Option<f64> = None;
+                let mut serverless_apps_apm_percentage: Option<f64> = None;
+                let mut serverless_apps_apm_usage: Option<f64> = None;
                 let mut serverless_apps_percentage: Option<f64> = None;
                 let mut serverless_apps_usage: Option<f64> = None;
                 let mut siem_analyzed_logs_add_on_percentage: Option<f64> = None;
@@ -2721,6 +2741,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             sds_scanned_bytes_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "serverless_apps_apm_percentage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            serverless_apps_apm_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "serverless_apps_apm_usage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            serverless_apps_apm_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "serverless_apps_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
@@ -2975,6 +3009,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     sca_fargate_usage,
                     sds_scanned_bytes_percentage,
                     sds_scanned_bytes_usage,
+                    serverless_apps_apm_percentage,
+                    serverless_apps_apm_usage,
                     serverless_apps_percentage,
                     serverless_apps_usage,
                     siem_analyzed_logs_add_on_percentage,
