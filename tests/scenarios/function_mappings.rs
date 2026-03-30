@@ -5310,6 +5310,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_synthetics_network_test,
     );
     world.function_mappings.insert(
+        "v2.GetTestFileDownloadUrl".into(),
+        test_v2_get_test_file_download_url,
+    );
+    world.function_mappings.insert(
+        "v2.GetTestFileMultipartPresignedUrls".into(),
+        test_v2_get_test_file_multipart_presigned_urls,
+    );
+    world.function_mappings.insert(
+        "v2.AbortTestFileMultipartUpload".into(),
+        test_v2_abort_test_file_multipart_upload,
+    );
+    world.function_mappings.insert(
+        "v2.CompleteTestFileMultipartUpload".into(),
+        test_v2_complete_test_file_multipart_upload,
+    );
+    world.function_mappings.insert(
         "v2.GetTestParentSuites".into(),
         test_v2_get_test_parent_suites,
     );
@@ -41095,6 +41111,126 @@ fn test_v2_update_synthetics_network_test(
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response =
         match block_on(api.update_synthetics_network_test_with_http_info(public_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_test_file_download_url(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_synthetics
+        .as_ref()
+        .expect("api instance not found");
+    let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_test_file_download_url_with_http_info(public_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_test_file_multipart_presigned_urls(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_synthetics
+        .as_ref()
+        .expect("api instance not found");
+    let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_test_file_multipart_presigned_urls_with_http_info(public_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_abort_test_file_multipart_upload(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_synthetics
+        .as_ref()
+        .expect("api instance not found");
+    let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.abort_test_file_multipart_upload_with_http_info(public_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_complete_test_file_multipart_upload(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_synthetics
+        .as_ref()
+        .expect("api instance not found");
+    let public_id = serde_json::from_value(_parameters.get("public_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.complete_test_file_multipart_upload_with_http_info(public_id, body)) {
             Ok(response) => response,
             Err(error) => {
                 return match error {
