@@ -255,40 +255,50 @@ impl MonitorsAPI {
         Self::default()
     }
     pub fn with_config(config: datadog::Configuration) -> Self {
-        let mut reqwest_client_builder = reqwest::Client::builder();
+        let reqwest_client_builder = {
+            let builder = reqwest::Client::builder();
+            #[cfg(not(target_arch = "wasm32"))]
+            let builder = if let Some(proxy_url) = &config.proxy_url {
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+            } else {
+                builder
+            };
+            builder
+        };
 
-        if let Some(proxy_url) = &config.proxy_url {
-            let proxy = reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL");
-            reqwest_client_builder = reqwest_client_builder.proxy(proxy);
-        }
-
-        let mut middleware_client_builder =
-            reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
-
-        if config.enable_retry {
-            struct RetryableStatus;
-            impl reqwest_retry::RetryableStrategy for RetryableStatus {
-                fn handle(
-                    &self,
-                    res: &Result<reqwest::Response, reqwest_middleware::Error>,
-                ) -> Option<reqwest_retry::Retryable> {
-                    match res {
-                        Ok(success) => reqwest_retry::default_on_request_success(success),
-                        Err(_) => None,
+        let middleware_client_builder = {
+            let builder =
+                reqwest_middleware::ClientBuilder::new(reqwest_client_builder.build().unwrap());
+            #[cfg(feature = "retry")]
+            let builder = if config.enable_retry {
+                struct RetryableStatus;
+                impl reqwest_retry::RetryableStrategy for RetryableStatus {
+                    fn handle(
+                        &self,
+                        res: &Result<reqwest::Response, reqwest_middleware::Error>,
+                    ) -> Option<reqwest_retry::Retryable> {
+                        match res {
+                            Ok(success) => reqwest_retry::default_on_request_success(success),
+                            Err(_) => None,
+                        }
                     }
                 }
-            }
-            let backoff_policy = reqwest_retry::policies::ExponentialBackoff::builder()
-                .build_with_max_retries(config.max_retries);
+                let backoff_policy = reqwest_retry::policies::ExponentialBackoff::builder()
+                    .build_with_max_retries(config.max_retries);
 
-            let retry_middleware =
-                reqwest_retry::RetryTransientMiddleware::new_with_policy_and_strategy(
-                    backoff_policy,
-                    RetryableStatus,
-                );
+                let retry_middleware =
+                    reqwest_retry::RetryTransientMiddleware::new_with_policy_and_strategy(
+                        backoff_policy,
+                        RetryableStatus,
+                    );
 
-            middleware_client_builder = middleware_client_builder.with(retry_middleware);
-        }
+                builder.with(retry_middleware)
+            } else {
+                builder
+            };
+            builder
+        };
 
         let client = middleware_client_builder.build();
 
@@ -403,6 +413,7 @@ impl MonitorsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -560,6 +571,7 @@ impl MonitorsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -722,6 +734,7 @@ impl MonitorsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -1887,6 +1900,7 @@ impl MonitorsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -2047,6 +2061,7 @@ impl MonitorsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -2215,6 +2230,7 @@ impl MonitorsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -2373,6 +2389,7 @@ impl MonitorsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -2518,6 +2535,7 @@ impl MonitorsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
