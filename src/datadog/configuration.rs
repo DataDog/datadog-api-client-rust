@@ -46,6 +46,7 @@ pub struct Configuration {
     pub(crate) user_agent: String,
     pub(crate) unstable_operations: HashMap<String, bool>,
     pub(crate) auth_keys: HashMap<String, APIKey>,
+    pub(crate) access_token: Option<String>,
     pub server_index: usize,
     pub server_variables: HashMap<String, String>,
     pub server_operation_index: HashMap<String, usize>,
@@ -107,6 +108,13 @@ impl Configuration {
 
     pub fn set_auth_key(&mut self, operation_str: &str, api_key: APIKey) {
         self.auth_keys.insert(operation_str.to_string(), api_key);
+    }
+
+    /// Set an OAuth2 access token for bearer authentication.
+    /// When set, endpoints that support the AuthZ security scheme will send
+    /// an `Authorization: Bearer <token>` header.
+    pub fn set_access_token(&mut self, token: String) {
+        self.access_token = Some(token);
     }
 
     pub fn set_proxy_url(&mut self, proxy_url: Option<String>) {
@@ -397,6 +405,7 @@ impl Default for Configuration {
             user_agent: DEFAULT_USER_AGENT.clone(),
             unstable_operations,
             auth_keys,
+            access_token: None,
             server_index: 0,
             server_variables: HashMap::from([(
                 "site".into(),

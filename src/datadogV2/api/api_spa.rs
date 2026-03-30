@@ -76,8 +76,7 @@ impl SpaAPI {
             let builder = reqwest::Client::builder();
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder
-                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -210,6 +209,14 @@ impl SpaAPI {
         };
 
         // build auth
+        if let Some(ref access_token) = local_configuration.access_token {
+            headers.insert(
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
+            );
+        } else {
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -329,6 +336,14 @@ impl SpaAPI {
         };
 
         // build auth
+        if let Some(ref access_token) = local_configuration.access_token {
+            headers.insert(
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
+            );
+        } else {
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;

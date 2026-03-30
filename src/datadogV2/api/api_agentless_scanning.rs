@@ -180,8 +180,7 @@ impl AgentlessScanningAPI {
             let builder = reqwest::Client::builder();
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder
-                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -293,20 +292,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         // build body parameters
         let output = Vec::new();
@@ -448,20 +455,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         // build body parameters
         let output = Vec::new();
@@ -603,20 +618,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         // build body parameters
         let output = Vec::new();
@@ -755,20 +778,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         // build body parameters
         let output = Vec::new();
@@ -897,20 +928,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -988,20 +1027,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1079,20 +1126,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1179,20 +1234,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1288,20 +1351,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1398,20 +1469,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1504,20 +1583,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1608,20 +1695,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1714,20 +1809,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1820,20 +1923,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1924,20 +2035,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2025,20 +2144,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         // build body parameters
         let output = Vec::new();
@@ -2179,20 +2306,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         // build body parameters
         let output = Vec::new();
@@ -2337,20 +2472,28 @@ impl AgentlessScanningAPI {
         };
 
         // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+        if let Some(ref access_token) = local_configuration.access_token {
             headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
+                "Authorization",
+                HeaderValue::from_str(format!("Bearer {}", access_token).as_str())
+                    .expect("failed to parse Authorization header"),
             );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
+        } else {
+            if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+                headers.insert(
+                    "DD-API-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-API-KEY header"),
+                );
+            };
+            if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+                headers.insert(
+                    "DD-APPLICATION-KEY",
+                    HeaderValue::from_str(local_key.key.as_str())
+                        .expect("failed to parse DD-APPLICATION-KEY header"),
+                );
+            };
+        }
 
         // build body parameters
         let output = Vec::new();
