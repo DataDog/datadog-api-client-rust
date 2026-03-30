@@ -9,11 +9,11 @@
           ]
         },
         "method": "delete",
-        "uri": "https://api.datadoghq.com/api/v2/datasets/00000000-0000-0000-0000-000000000000"
+        "uri": "https://api.datadoghq.com/api/v2/datasets/malformed_id"
       },
       "response": {
         "body": {
-          "string": "{\"errors\":[\"Invalid request: [DatasetNotFound] dataset \\\"00000000-0000-0000-0000-000000000000\\\" not found\"]}\n",
+          "string": "{\"errors\":[\"Invalid request: [UUIDInvalidValue] \\\"malformed_id\\\" is not a valid UUID: invalid UUID length: 12\"]}\n",
           "encoding": null
         },
         "headers": {
@@ -22,11 +22,11 @@
           ]
         },
         "status": {
-          "code": 404,
-          "message": "Not Found"
+          "code": 400,
+          "message": "Bad Request"
         }
       },
-      "recorded_at": "Tue, 29 Jul 2025 20:35:58 GMT"
+      "recorded_at": "Thu, 26 Mar 2026 21:30:09 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"
