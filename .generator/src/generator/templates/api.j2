@@ -395,6 +395,20 @@ impl {{ structName }} {
         // build auth
         {%- set authMethods = operation.security if "security" in operation else openapi.security %}
         {%- if authMethods %}
+        {%- set ns = namespace(hasOAuth2=false) %}
+        {%- for authMethod in authMethods %}
+        {%- for name in authMethod %}
+        {%- set schema = openapi.components.securitySchemes[name] %}
+        {%- if schema.type == "oauth2" %}
+        {%- set ns.hasOAuth2 = true %}
+        {%- endif %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- if ns.hasOAuth2 %}
+        if let Some(ref access_token) = local_configuration.access_token {
+            headers.insert("Authorization", HeaderValue::from_str(format!("Bearer {}", access_token).as_str()).expect("failed to parse Authorization header"));
+        } else {
+        {%- endif %}
         {%- for authMethod in authMethods %}
         {%- for name in authMethod %}
         {%- set schema = openapi.components.securitySchemes[name] %}
@@ -405,6 +419,9 @@ impl {{ structName }} {
         {%- endif %}
         {%- endfor %}
         {%- endfor %}
+        {%- if ns.hasOAuth2 %}
+        }
+        {%- endif %}
         {%- endif %}
 
         {% if formParameter %}
