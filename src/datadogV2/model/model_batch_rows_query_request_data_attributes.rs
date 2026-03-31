@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Attributes for a batch rows query request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BatchRowsQueryRequestDataAttributes {
+    /// List of row identifiers to query from the reference table.
     #[serde(rename = "row_ids")]
     pub row_ids: Vec<String>,
+    /// Unique identifier of the reference table to query.
     #[serde(rename = "table_id")]
     pub table_id: String,
     #[serde(flatten)]

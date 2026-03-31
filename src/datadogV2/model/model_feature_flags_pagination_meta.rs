@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FeatureFlagsPaginationMeta {
+    /// Pagination metadata for feature flags list responses.
     #[serde(rename = "page")]
     pub page: Option<crate::datadogV2::model::FeatureFlagsPaginationMetaPage>,
     #[serde(flatten)]

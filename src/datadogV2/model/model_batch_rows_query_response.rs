@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Response object for a batch rows query against a reference table.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BatchRowsQueryResponse {
+    /// Data object for a batch rows query response.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::BatchRowsQueryResponseData>,
     #[serde(flatten)]

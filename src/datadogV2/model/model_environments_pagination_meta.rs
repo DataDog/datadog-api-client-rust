@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EnvironmentsPaginationMeta {
+    /// Pagination metadata for environments list responses.
     #[serde(rename = "page")]
     pub page: Option<crate::datadogV2::model::EnvironmentsPaginationMetaPage>,
     #[serde(flatten)]
