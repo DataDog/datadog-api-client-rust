@@ -314,8 +314,7 @@ impl SyntheticsAPI {
             let builder = reqwest::Client::builder();
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder
-                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -463,6 +462,7 @@ impl SyntheticsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -605,6 +605,7 @@ impl SyntheticsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -2329,6 +2330,7 @@ impl SyntheticsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());
@@ -2493,6 +2495,7 @@ impl SyntheticsAPI {
                             Err(e) => return Err(datadog::Error::Io(e)),
                         }
                     }
+                    #[cfg(feature = "zstd")]
                     "zstd1" => {
                         let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
                         let _ = enc.write_all(ser.into_inner().as_slice());

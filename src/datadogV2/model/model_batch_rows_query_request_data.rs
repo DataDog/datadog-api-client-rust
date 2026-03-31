@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a batch rows query request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BatchRowsQueryRequestData {
+    /// Attributes for a batch rows query request.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::BatchRowsQueryRequestDataAttributes>,
     /// Resource type identifier for batch queries of reference table rows.

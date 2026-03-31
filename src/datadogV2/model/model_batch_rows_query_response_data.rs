@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Data object for a batch rows query response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BatchRowsQueryResponseData {
+    /// Unique identifier of the batch query.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// Relationships of the batch rows query response data.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::BatchRowsQueryResponseDataRelationships>,
     /// Resource type identifier for batch queries of reference table rows.

@@ -6,10 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Relationships of the batch rows query response data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BatchRowsQueryResponseDataRelationships {
+    /// Relationship data containing the list of matching rows.
     #[serde(rename = "rows")]
     pub rows: Option<crate::datadogV2::model::BatchRowsQueryResponseDataRelationshipsRows>,
     #[serde(flatten)]
