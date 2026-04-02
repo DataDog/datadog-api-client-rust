@@ -183,6 +183,34 @@ impl {{ structName }} {
     {%- set limitParam = operation|parameters|selectattr('0', 'equalto', pagination.limitParam)|list|last|last %}
     {%- set limitParamParts = pagination.limitParam.split(".") %}
 
+    /// Returns pagination metadata for the `{{operation.operationId | snake_case}}` endpoint.
+    pub fn {{operation.operationId | snake_case}}_pagination_info() -> datadog::PaginationInfo {
+        datadog::PaginationInfo {
+            {%- if pagination.cursorParam is defined %}
+            kind: "cursor",
+            cursor_param: "{{ pagination.cursorParam }}",
+            cursor_path: "{{ pagination.cursorPath }}",
+            offset_param: "",
+            page_param: "",
+            {%- elif pagination.pageOffsetParam is defined %}
+            kind: "offset",
+            cursor_param: "",
+            cursor_path: "",
+            offset_param: "{{ pagination.pageOffsetParam }}",
+            page_param: "",
+            {%- else %}
+            kind: "page_number",
+            cursor_param: "",
+            cursor_path: "",
+            offset_param: "",
+            page_param: "{{ pagination.pageParam }}",
+            {%- endif %}
+            limit_param: "{{ pagination.limitParam }}",
+            results_path: "{{ pagination.resultsPath | default('') }}",
+            page_start: {{ pagination.pageStart | default(0) }},
+        }
+    }
+
     pub fn {{operation.operationId | snake_case}}_with_pagination(
         &self{% for name, parameter in requiredParams %}, {% if limitParamParts[0] == name|variable_name %}mut {% endif %} {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, mut params: {{operation.operationId}}OptionalParams{% endif %}
     ) -> impl Stream<Item = Result<{{ itemType }}, datadog::Error<{{ operation.operationId }}Error>>> + '_

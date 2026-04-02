@@ -80,6 +80,30 @@ impl<T> From<std::io::Error> for Error<T> {
     }
 }
 
+/// Describes how a paginated API endpoint handles pagination.
+///
+/// Generated from the `x-pagination` OpenAPI extension. Consumers can use this
+/// to drive their own pagination loops generically.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PaginationInfo {
+    /// Pagination strategy: `"cursor"`, `"offset"`, or `"page_number"`.
+    pub kind: &'static str,
+    /// API parameter that controls page size.
+    pub limit_param: &'static str,
+    /// JSON path to the results array in the response.
+    pub results_path: &'static str,
+    /// For cursor pagination: the API parameter to set the cursor.
+    pub cursor_param: &'static str,
+    /// For cursor pagination: JSON path to the next cursor in the response.
+    pub cursor_path: &'static str,
+    /// For offset pagination: the API parameter for the offset.
+    pub offset_param: &'static str,
+    /// For page-number pagination: the API parameter for the page number.
+    pub page_param: &'static str,
+    /// Starting page number (only relevant for page-number pagination).
+    pub page_start: i64,
+}
+
 pub(crate) fn urlencode<T: AsRef<str>>(s: T) -> String {
     ::url::form_urlencoded::byte_serialize(s.as_ref().as_bytes()).collect()
 }
