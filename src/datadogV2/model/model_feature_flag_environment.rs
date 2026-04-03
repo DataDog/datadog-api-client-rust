@@ -34,6 +34,9 @@ pub struct FeatureFlagEnvironment {
     /// The name of the environment.
     #[serde(rename = "environment_name")]
     pub environment_name: Option<String>,
+    /// Queries that target this environment.
+    #[serde(rename = "environment_queries")]
+    pub environment_queries: Option<Vec<String>>,
     /// Indicates whether the environment is production.
     #[serde(rename = "is_production")]
     pub is_production: Option<bool>,
@@ -84,6 +87,7 @@ impl FeatureFlagEnvironment {
             default_variant_id: None,
             environment_id,
             environment_name: None,
+            environment_queries: None,
             is_production: None,
             override_allocation_key: None,
             override_variant_id: None,
@@ -117,6 +121,11 @@ impl FeatureFlagEnvironment {
 
     pub fn environment_name(mut self, value: String) -> Self {
         self.environment_name = Some(value);
+        self
+    }
+
+    pub fn environment_queries(mut self, value: Vec<String>) -> Self {
+        self.environment_queries = Some(value);
         self
     }
 
@@ -191,6 +200,7 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironment {
                 let mut default_variant_id: Option<Option<String>> = None;
                 let mut environment_id: Option<uuid::Uuid> = None;
                 let mut environment_name: Option<String> = None;
+                let mut environment_queries: Option<Vec<String>> = None;
                 let mut is_production: Option<bool> = None;
                 let mut override_allocation_key: Option<String> = None;
                 let mut override_variant_id: Option<Option<String>> = None;
@@ -232,6 +242,13 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironment {
                                 continue;
                             }
                             environment_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "environment_queries" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            environment_queries =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "is_production" => {
@@ -306,6 +323,7 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironment {
                     default_variant_id,
                     environment_id,
                     environment_name,
+                    environment_queries,
                     is_production,
                     override_allocation_key,
                     override_variant_id,
