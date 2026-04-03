@@ -15,6 +15,17 @@ pub struct CustomDestinationResponseForwardDestinationSplunk {
     /// Must have HTTPS scheme and forwarding back to Datadog is not allowed.
     #[serde(rename = "endpoint")]
     pub endpoint: String,
+    /// The Splunk sourcetype for the events sent to this Splunk destination.
+    ///
+    /// If absent, the default sourcetype `_json` is used. If set to null, the `sourcetype`
+    /// field is omitted from the Splunk HEC payload entirely. Otherwise, the provided string
+    /// value is used as the sourcetype.
+    #[serde(
+        rename = "sourcetype",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub sourcetype: Option<Option<String>>,
     /// Type of the Splunk HTTP Event Collector (HEC) destination.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CustomDestinationResponseForwardDestinationSplunkType,
@@ -32,10 +43,16 @@ impl CustomDestinationResponseForwardDestinationSplunk {
     ) -> CustomDestinationResponseForwardDestinationSplunk {
         CustomDestinationResponseForwardDestinationSplunk {
             endpoint,
+            sourcetype: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn sourcetype(mut self, value: Option<String>) -> Self {
+        self.sourcetype = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -65,6 +82,7 @@ impl<'de> Deserialize<'de> for CustomDestinationResponseForwardDestinationSplunk
                 M: MapAccess<'a>,
             {
                 let mut endpoint: Option<String> = None;
+                let mut sourcetype: Option<Option<String>> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::CustomDestinationResponseForwardDestinationSplunkType,
                 > = None;
@@ -78,6 +96,9 @@ impl<'de> Deserialize<'de> for CustomDestinationResponseForwardDestinationSplunk
                     match k.as_str() {
                         "endpoint" => {
                             endpoint = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sourcetype" => {
+                            sourcetype = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -102,6 +123,7 @@ impl<'de> Deserialize<'de> for CustomDestinationResponseForwardDestinationSplunk
 
                 let content = CustomDestinationResponseForwardDestinationSplunk {
                     endpoint,
+                    sourcetype,
                     type_,
                     additional_properties,
                     _unparsed,
