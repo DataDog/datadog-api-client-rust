@@ -52,6 +52,9 @@ pub struct FeatureFlagAttributes {
     /// Indicates whether this feature flag requires approval for changes.
     #[serde(rename = "require_approval")]
     pub require_approval: Option<bool>,
+    /// Tags associated with the feature flag.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     /// The timestamp when the feature flag was last updated.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -88,6 +91,7 @@ impl FeatureFlagAttributes {
             last_updated_by: None,
             name,
             require_approval: None,
+            tags: None,
             updated_at: None,
             value_type,
             variants,
@@ -139,6 +143,11 @@ impl FeatureFlagAttributes {
         self
     }
 
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
+        self
+    }
+
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
@@ -183,6 +192,7 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                 let mut last_updated_by: Option<uuid::Uuid> = None;
                 let mut name: Option<String> = None;
                 let mut require_approval: Option<bool> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut value_type: Option<crate::datadogV2::model::ValueType> = None;
                 let mut variants: Option<Vec<crate::datadogV2::model::Variant>> = None;
@@ -252,6 +262,12 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                             require_approval =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
@@ -300,6 +316,7 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                     last_updated_by,
                     name,
                     require_approval,
+                    tags,
                     updated_at,
                     value_type,
                     variants,
