@@ -3734,6 +3734,114 @@ components:
           description: The `markdownTextAnnotation` `text`.
           type: string
       type: object
+    AnonymizeUserError:
+      description: Error encountered when anonymizing a specific user.
+      properties:
+        error:
+          description: Error message describing why anonymization failed.
+          example: ""
+          type: string
+        user_id:
+          description: UUID of the user that failed to be anonymized.
+          example: "00000000-0000-0000-0000-000000000000"
+          type: string
+      required:
+        - user_id
+        - error
+      type: object
+    AnonymizeUsersRequest:
+      description: Request body for anonymizing users.
+      properties:
+        data:
+          $ref: "#/components/schemas/AnonymizeUsersRequestData"
+      required:
+        - data
+      type: object
+    AnonymizeUsersRequestAttributes:
+      description: Attributes of an anonymize users request.
+      properties:
+        user_ids:
+          description: List of user IDs (UUIDs) to anonymize.
+          example:
+            - "00000000-0000-0000-0000-000000000000"
+          items:
+            example: "00000000-0000-0000-0000-000000000000"
+            type: string
+          type: array
+      required:
+        - user_ids
+      type: object
+    AnonymizeUsersRequestData:
+      description: Object to anonymize a list of users.
+      properties:
+        attributes:
+          $ref: "#/components/schemas/AnonymizeUsersRequestAttributes"
+        id:
+          description: Unique identifier for the request. Not used server-side.
+          example: "00000000-0000-0000-0000-000000000000"
+          type: string
+        type:
+          $ref: "#/components/schemas/AnonymizeUsersRequestType"
+      required:
+        - type
+        - attributes
+      type: object
+    AnonymizeUsersRequestType:
+      default: anonymize_users_request
+      description: Type of the anonymize users request.
+      enum:
+        - anonymize_users_request
+      example: anonymize_users_request
+      type: string
+      x-enum-varnames:
+        - ANONYMIZE_USERS_REQUEST
+    AnonymizeUsersResponse:
+      description: Response containing the result of an anonymize users request.
+      properties:
+        data:
+          $ref: "#/components/schemas/AnonymizeUsersResponseData"
+      type: object
+    AnonymizeUsersResponseAttributes:
+      description: Attributes of an anonymize users response.
+      properties:
+        anonymize_errors:
+          description: List of errors encountered during anonymization, one entry per failed user.
+          items:
+            $ref: "#/components/schemas/AnonymizeUserError"
+          type: array
+        anonymized_user_ids:
+          description: List of user IDs (UUIDs) that were successfully anonymized.
+          example:
+            - "00000000-0000-0000-0000-000000000000"
+          items:
+            example: "00000000-0000-0000-0000-000000000000"
+            type: string
+          type: array
+      required:
+        - anonymized_user_ids
+        - anonymize_errors
+      type: object
+    AnonymizeUsersResponseData:
+      description: Response data for anonymizing users.
+      properties:
+        attributes:
+          $ref: "#/components/schemas/AnonymizeUsersResponseAttributes"
+        id:
+          description: Unique identifier of the response.
+          example: "00000000-0000-0000-0000-000000000000"
+          type: string
+        type:
+          $ref: "#/components/schemas/AnonymizeUsersResponseType"
+      type: object
+    AnonymizeUsersResponseType:
+      default: anonymize_users_response
+      description: Type of the anonymize users response.
+      enum:
+        - anonymize_users_response
+      example: anonymize_users_response
+      type: string
+      x-enum-varnames:
+        - ANONYMIZE_USERS_RESPONSE
     AnthropicAPIKey:
       description: The definition of the `AnthropicAPIKey` object.
       properties:
@@ -76578,6 +76686,53 @@ paths:
         operator: OR
         permissions:
           - security_monitoring_findings_read
+  /api/v2/anonymize_users:
+    put:
+      description: |-
+        Anonymize a list of users, removing their personal data. This operation is irreversible.
+        Requires the `user_access_manage` permission.
+      operationId: AnonymizeUsers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnonymizeUsersRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnonymizeUsersResponse"
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIErrorResponse"
+          description: Bad Request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIErrorResponse"
+          description: Authentication error
+        "429":
+          $ref: "#/components/responses/TooManyRequestsResponse"
+      security:
+        - apiKeyAuth: []
+          appKeyAuth: []
+        - AuthZ:
+            - user_access_manage
+      summary: Anonymize users
+      tags:
+        - Users
+      x-codegen-request-body-name: body
+      x-permission:
+        operator: OR
+        permissions:
+          - user_access_manage
+      x-unstable: "**Note**: This endpoint is in Preview and may be subject to changes."
   /api/v2/api_keys:
     get:
       description: List all API keys available for your account.
