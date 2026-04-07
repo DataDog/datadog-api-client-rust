@@ -11,15 +11,21 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineElasticsearchDestinationDataStream {
-    /// The data stream dataset for your logs. This groups logs by their source or application.
+    /// When `true`, automatically routes events to the appropriate data stream based on the event content.
+    #[serde(rename = "auto_routing")]
+    pub auto_routing: Option<bool>,
+    /// The data stream dataset. This groups events by their source or application.
     #[serde(rename = "dataset")]
     pub dataset: Option<String>,
-    /// The data stream type for your logs. This determines how logs are categorized within the data stream.
+    /// The data stream type. This determines how events are categorized within the data stream.
     #[serde(rename = "dtype")]
     pub dtype: Option<String>,
-    /// The data stream namespace for your logs. This separates logs into different environments or domains.
+    /// The data stream namespace. This separates events into different environments or domains.
     #[serde(rename = "namespace")]
     pub namespace: Option<String>,
+    /// When `true`, synchronizes data stream fields with the Elasticsearch index mapping.
+    #[serde(rename = "sync_fields")]
+    pub sync_fields: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,12 +36,19 @@ pub struct ObservabilityPipelineElasticsearchDestinationDataStream {
 impl ObservabilityPipelineElasticsearchDestinationDataStream {
     pub fn new() -> ObservabilityPipelineElasticsearchDestinationDataStream {
         ObservabilityPipelineElasticsearchDestinationDataStream {
+            auto_routing: None,
             dataset: None,
             dtype: None,
             namespace: None,
+            sync_fields: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn auto_routing(mut self, value: bool) -> Self {
+        self.auto_routing = Some(value);
+        self
     }
 
     pub fn dataset(mut self, value: String) -> Self {
@@ -50,6 +63,11 @@ impl ObservabilityPipelineElasticsearchDestinationDataStream {
 
     pub fn namespace(mut self, value: String) -> Self {
         self.namespace = Some(value);
+        self
+    }
+
+    pub fn sync_fields(mut self, value: bool) -> Self {
+        self.sync_fields = Some(value);
         self
     }
 
@@ -85,9 +103,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestinationData
             where
                 M: MapAccess<'a>,
             {
+                let mut auto_routing: Option<bool> = None;
                 let mut dataset: Option<String> = None;
                 let mut dtype: Option<String> = None;
                 let mut namespace: Option<String> = None;
+                let mut sync_fields: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -96,6 +116,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestinationData
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "auto_routing" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            auto_routing =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "dataset" => {
                             if v.is_null() {
                                 continue;
@@ -114,6 +141,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestinationData
                             }
                             namespace = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "sync_fields" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sync_fields =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -123,9 +157,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestinationData
                 }
 
                 let content = ObservabilityPipelineElasticsearchDestinationDataStream {
+                    auto_routing,
                     dataset,
                     dtype,
                     namespace,
+                    sync_fields,
                     additional_properties,
                     _unparsed,
                 };
