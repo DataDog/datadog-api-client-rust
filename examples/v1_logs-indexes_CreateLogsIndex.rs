@@ -25,7 +25,7 @@ async fn main() {
             .query("*".to_string())
             .sample_attribute("@ci.job_id".to_string()),
     )])
-    .num_flex_logs_retention_days(360)
+    .num_flex_logs_retention_days(Some(360))
     .num_retention_days(15)
     .tags(vec![
         "team:backend".to_string(),
