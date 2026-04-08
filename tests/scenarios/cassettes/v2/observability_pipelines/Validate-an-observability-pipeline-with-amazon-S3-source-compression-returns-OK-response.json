@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"config\":{\"destinations\":[{\"id\":\"datadog-logs-destination\",\"inputs\":[\"my-processor-group\"],\"type\":\"datadog_logs\"}],\"processor_groups\":[{\"enabled\":true,\"id\":\"my-processor-group\",\"include\":\"service:my-service\",\"inputs\":[\"amazon-s3-source\"],\"processors\":[{\"enabled\":true,\"id\":\"filter-processor\",\"include\":\"service:my-service\",\"type\":\"filter\"}]}],\"sources\":[{\"compression\":\"gzip\",\"id\":\"amazon-s3-source\",\"region\":\"us-east-1\",\"type\":\"amazon_s3\"}]},\"name\":\"Pipeline with S3 Source Compression\"},\"type\":\"pipelines\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/obs-pipelines/pipelines/validate"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[]}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 08 Apr 2026 12:44:25 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
