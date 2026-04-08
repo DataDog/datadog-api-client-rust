@@ -7,7 +7,7 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The `amazon_s3` source ingests logs from an Amazon S3 bucket.
-/// It supports AWS authentication and TLS encryption.
+/// It supports AWS authentication, TLS encryption, and configurable compression.
 ///
 /// **Supported pipeline types:** logs
 #[non_exhaustive]
@@ -18,6 +18,10 @@ pub struct ObservabilityPipelineAmazonS3Source {
     /// If omitted, the system’s default credentials are used (for example, the IAM role and environment variables).
     #[serde(rename = "auth")]
     pub auth: Option<crate::datadogV2::model::ObservabilityPipelineAwsAuth>,
+    /// Compression format for objects retrieved from the S3 bucket. Use `auto` to detect compression from the object's Content-Encoding header or file extension.
+    #[serde(rename = "compression")]
+    pub compression:
+        Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3SourceCompression>,
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
@@ -48,6 +52,7 @@ impl ObservabilityPipelineAmazonS3Source {
     ) -> ObservabilityPipelineAmazonS3Source {
         ObservabilityPipelineAmazonS3Source {
             auth: None,
+            compression: None,
             id,
             region,
             tls: None,
@@ -60,6 +65,14 @@ impl ObservabilityPipelineAmazonS3Source {
 
     pub fn auth(mut self, value: crate::datadogV2::model::ObservabilityPipelineAwsAuth) -> Self {
         self.auth = Some(value);
+        self
+    }
+
+    pub fn compression(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineAmazonS3SourceCompression,
+    ) -> Self {
+        self.compression = Some(value);
         self
     }
 
@@ -100,6 +113,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3Source {
                 M: MapAccess<'a>,
             {
                 let mut auth: Option<crate::datadogV2::model::ObservabilityPipelineAwsAuth> = None;
+                let mut compression: Option<
+                    crate::datadogV2::model::ObservabilityPipelineAmazonS3SourceCompression,
+                > = None;
                 let mut id: Option<String> = None;
                 let mut region: Option<String> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
@@ -120,6 +136,21 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3Source {
                                 continue;
                             }
                             auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "compression" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            compression =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _compression) = compression {
+                                match _compression {
+                                    crate::datadogV2::model::ObservabilityPipelineAmazonS3SourceCompression::UnparsedObject(_compression) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -163,6 +194,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3Source {
 
                 let content = ObservabilityPipelineAmazonS3Source {
                     auth,
+                    compression,
                     id,
                     region,
                     tls,
