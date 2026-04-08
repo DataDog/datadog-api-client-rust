@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data for the request to update a scorecard rule.
+/// Data for creating a new campaign.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct UpdateRuleRequestData {
-    /// Attributes for creating or updating a rule. Server-managed fields (created_at, modified_at, custom) are excluded.
+pub struct CreateCampaignRequestData {
+    /// Attributes for creating a new campaign.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::RuleAttributesRequest>,
-    /// The JSON:API type for scorecard rules.
+    pub attributes: crate::datadogV2::model::CreateCampaignRequestAttributes,
+    /// The JSON:API type for campaigns.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::RuleType>,
+    pub type_: crate::datadogV2::model::CampaignType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,24 +24,17 @@ pub struct UpdateRuleRequestData {
     pub(crate) _unparsed: bool,
 }
 
-impl UpdateRuleRequestData {
-    pub fn new() -> UpdateRuleRequestData {
-        UpdateRuleRequestData {
-            attributes: None,
-            type_: None,
+impl CreateCampaignRequestData {
+    pub fn new(
+        attributes: crate::datadogV2::model::CreateCampaignRequestAttributes,
+        type_: crate::datadogV2::model::CampaignType,
+    ) -> CreateCampaignRequestData {
+        CreateCampaignRequestData {
+            attributes,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn attributes(mut self, value: crate::datadogV2::model::RuleAttributesRequest) -> Self {
-        self.attributes = Some(value);
-        self
-    }
-
-    pub fn type_(mut self, value: crate::datadogV2::model::RuleType) -> Self {
-        self.type_ = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -53,20 +46,14 @@ impl UpdateRuleRequestData {
     }
 }
 
-impl Default for UpdateRuleRequestData {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for UpdateRuleRequestData {
+impl<'de> Deserialize<'de> for CreateCampaignRequestData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct UpdateRuleRequestDataVisitor;
-        impl<'a> Visitor<'a> for UpdateRuleRequestDataVisitor {
-            type Value = UpdateRuleRequestData;
+        struct CreateCampaignRequestDataVisitor;
+        impl<'a> Visitor<'a> for CreateCampaignRequestDataVisitor {
+            type Value = CreateCampaignRequestData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +63,10 @@ impl<'de> Deserialize<'de> for UpdateRuleRequestData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RuleAttributesRequest> = None;
-                let mut type_: Option<crate::datadogV2::model::RuleType> = None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::CreateCampaignRequestAttributes,
+                > = None;
+                let mut type_: Option<crate::datadogV2::model::CampaignType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -87,19 +76,15 @@ impl<'de> Deserialize<'de> for UpdateRuleRequestData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RuleType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::CampaignType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
                                     }
                                     _ => {}
@@ -113,8 +98,10 @@ impl<'de> Deserialize<'de> for UpdateRuleRequestData {
                         }
                     }
                 }
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = UpdateRuleRequestData {
+                let content = CreateCampaignRequestData {
                     attributes,
                     type_,
                     additional_properties,
@@ -125,6 +112,6 @@ impl<'de> Deserialize<'de> for UpdateRuleRequestData {
             }
         }
 
-        deserializer.deserialize_any(UpdateRuleRequestDataVisitor)
+        deserializer.deserialize_any(CreateCampaignRequestDataVisitor)
     }
 }

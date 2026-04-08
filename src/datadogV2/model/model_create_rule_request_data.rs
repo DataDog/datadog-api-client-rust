@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateRuleRequestData {
-    /// Details of a rule.
+    /// Attributes for creating or updating a rule. Server-managed fields (created_at, modified_at, custom) are excluded.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::RuleAttributes>,
+    pub attributes: Option<crate::datadogV2::model::RuleAttributesRequest>,
     /// The JSON:API type for scorecard rules.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::RuleType>,
@@ -34,7 +34,7 @@ impl CreateRuleRequestData {
         }
     }
 
-    pub fn attributes(mut self, value: crate::datadogV2::model::RuleAttributes) -> Self {
+    pub fn attributes(mut self, value: crate::datadogV2::model::RuleAttributesRequest) -> Self {
         self.attributes = Some(value);
         self
     }
@@ -76,7 +76,7 @@ impl<'de> Deserialize<'de> for CreateRuleRequestData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RuleAttributes> = None;
+                let mut attributes: Option<crate::datadogV2::model::RuleAttributesRequest> = None;
                 let mut type_: Option<crate::datadogV2::model::RuleType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,

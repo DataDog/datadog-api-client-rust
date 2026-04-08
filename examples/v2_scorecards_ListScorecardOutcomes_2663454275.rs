@@ -1,15 +1,14 @@
 // List all rule outcomes returns "OK" response with pagination
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_service_scorecards::ListScorecardOutcomesOptionalParams;
-use datadog_api_client::datadogV2::api_service_scorecards::ServiceScorecardsAPI;
+use datadog_api_client::datadogV2::api_scorecards::ListScorecardOutcomesOptionalParams;
+use datadog_api_client::datadogV2::api_scorecards::ScorecardsAPI;
 use futures_util::pin_mut;
 use futures_util::stream::StreamExt;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListScorecardOutcomes", true);
-    let api = ServiceScorecardsAPI::with_config(configuration);
+    let configuration = datadog::Configuration::new();
+    let api = ScorecardsAPI::with_config(configuration);
     let response = api.list_scorecard_outcomes_with_pagination(
         ListScorecardOutcomesOptionalParams::default()
             .page_size(2)

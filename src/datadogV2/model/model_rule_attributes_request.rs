@@ -6,21 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Details of a rule.
+/// Attributes for creating or updating a rule. Server-managed fields (created_at, modified_at, custom) are excluded.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RuleAttributes {
-    /// The scorecard name to which this rule must belong.
-    #[deprecated]
-    #[serde(rename = "category")]
-    pub category: Option<String>,
-    /// Creation time of the rule outcome.
-    #[serde(rename = "created_at")]
-    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// Defines if the rule is a custom rule.
-    #[serde(rename = "custom")]
-    pub custom: Option<bool>,
+pub struct RuleAttributesRequest {
     /// Explanation of the rule.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -30,9 +20,6 @@ pub struct RuleAttributes {
     /// The maturity level of the rule (1, 2, or 3).
     #[serde(rename = "level")]
     pub level: Option<i32>,
-    /// Time of the last rule outcome modification.
-    #[serde(rename = "modified_at")]
-    pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Name of the rule.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -52,17 +39,12 @@ pub struct RuleAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RuleAttributes {
-    pub fn new() -> RuleAttributes {
-        #[allow(deprecated)]
-        RuleAttributes {
-            category: None,
-            created_at: None,
-            custom: None,
+impl RuleAttributesRequest {
+    pub fn new() -> RuleAttributesRequest {
+        RuleAttributesRequest {
             description: None,
             enabled: None,
             level: None,
-            modified_at: None,
             name: None,
             owner: None,
             scope_query: None,
@@ -72,67 +54,36 @@ impl RuleAttributes {
         }
     }
 
-    #[allow(deprecated)]
-    pub fn category(mut self, value: String) -> Self {
-        self.category = Some(value);
-        self
-    }
-
-    #[allow(deprecated)]
-    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
-        self.created_at = Some(value);
-        self
-    }
-
-    #[allow(deprecated)]
-    pub fn custom(mut self, value: bool) -> Self {
-        self.custom = Some(value);
-        self
-    }
-
-    #[allow(deprecated)]
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
-    #[allow(deprecated)]
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
 
-    #[allow(deprecated)]
     pub fn level(mut self, value: i32) -> Self {
         self.level = Some(value);
         self
     }
 
-    #[allow(deprecated)]
-    pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
-        self.modified_at = Some(value);
-        self
-    }
-
-    #[allow(deprecated)]
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
-    #[allow(deprecated)]
     pub fn owner(mut self, value: String) -> Self {
         self.owner = Some(value);
         self
     }
 
-    #[allow(deprecated)]
     pub fn scope_query(mut self, value: String) -> Self {
         self.scope_query = Some(value);
         self
     }
 
-    #[allow(deprecated)]
     pub fn scorecard_name(mut self, value: String) -> Self {
         self.scorecard_name = Some(value);
         self
@@ -147,20 +98,20 @@ impl RuleAttributes {
     }
 }
 
-impl Default for RuleAttributes {
+impl Default for RuleAttributesRequest {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RuleAttributes {
+impl<'de> Deserialize<'de> for RuleAttributesRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RuleAttributesVisitor;
-        impl<'a> Visitor<'a> for RuleAttributesVisitor {
-            type Value = RuleAttributes;
+        struct RuleAttributesRequestVisitor;
+        impl<'a> Visitor<'a> for RuleAttributesRequestVisitor {
+            type Value = RuleAttributesRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -170,13 +121,9 @@ impl<'de> Deserialize<'de> for RuleAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut category: Option<String> = None;
-                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut custom: Option<bool> = None;
                 let mut description: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut level: Option<i32> = None;
-                let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut owner: Option<String> = None;
                 let mut scope_query: Option<String> = None;
@@ -189,24 +136,6 @@ impl<'de> Deserialize<'de> for RuleAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "category" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "created_at" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "custom" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            custom = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "description" => {
                             if v.is_null() {
                                 continue;
@@ -225,13 +154,6 @@ impl<'de> Deserialize<'de> for RuleAttributes {
                                 continue;
                             }
                             level = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "modified_at" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             if v.is_null() {
@@ -267,15 +189,10 @@ impl<'de> Deserialize<'de> for RuleAttributes {
                     }
                 }
 
-                #[allow(deprecated)]
-                let content = RuleAttributes {
-                    category,
-                    created_at,
-                    custom,
+                let content = RuleAttributesRequest {
                     description,
                     enabled,
                     level,
-                    modified_at,
                     name,
                     owner,
                     scope_query,
@@ -288,6 +205,6 @@ impl<'de> Deserialize<'de> for RuleAttributes {
             }
         }
 
-        deserializer.deserialize_any(RuleAttributesVisitor)
+        deserializer.deserialize_any(RuleAttributesRequestVisitor)
     }
 }
