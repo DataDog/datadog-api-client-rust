@@ -13,6 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ProductAnalyticsAudienceFilters {
     #[serde(rename = "accounts")]
     pub accounts: Option<Vec<crate::datadogV1::model::ProductAnalyticsAudienceAccountSubquery>>,
+    /// An optional filter condition applied to the audience subquery.
     #[serde(rename = "filter_condition")]
     pub filter_condition: Option<String>,
     #[serde(rename = "segments")]

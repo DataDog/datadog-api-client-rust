@@ -29,6 +29,7 @@ pub struct SankeyRumQuery {
     /// Number of steps.
     #[serde(rename = "number_of_steps")]
     pub number_of_steps: Option<i64>,
+    /// Filter applied to occurrence counts when building a Product Analytics audience.
     #[serde(rename = "occurrences")]
     pub occurrences: Option<crate::datadogV1::model::ProductAnalyticsAudienceOccurrenceFilter>,
     /// Query string.

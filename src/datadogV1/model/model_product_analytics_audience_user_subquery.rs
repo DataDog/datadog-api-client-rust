@@ -11,8 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsAudienceUserSubquery {
+    /// The name of the user subquery.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The query string for the user subquery.
     #[serde(rename = "query")]
     pub query: Option<String>,
     #[serde(flatten)]
