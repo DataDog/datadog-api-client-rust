@@ -39547,6 +39547,74 @@ components:
         - type
         - id
       type: object
+    ManagedOrgsData:
+      description: The managed organizations resource.
+      properties:
+        id:
+          description: The UUID of the current organization.
+          example: "4dee724d-00cc-11ea-a77b-570c9d03c6c5"
+          format: uuid
+          type: string
+        relationships:
+          $ref: "#/components/schemas/ManagedOrgsRelationships"
+        type:
+          $ref: "#/components/schemas/ManagedOrgsType"
+      required:
+        - id
+        - type
+        - relationships
+      type: object
+    ManagedOrgsRelationshipToOrg:
+      description: Relationship to the current organization.
+      properties:
+        data:
+          $ref: "#/components/schemas/OrgRelationshipData"
+      required:
+        - data
+      type: object
+    ManagedOrgsRelationshipToOrgs:
+      description: Relationship to the managed organizations.
+      properties:
+        data:
+          description: List of managed organization references.
+          items:
+            $ref: "#/components/schemas/OrgRelationshipData"
+          type: array
+      required:
+        - data
+      type: object
+    ManagedOrgsRelationships:
+      description: Relationships of the managed organizations resource.
+      properties:
+        current_org:
+          $ref: "#/components/schemas/ManagedOrgsRelationshipToOrg"
+        managed_orgs:
+          $ref: "#/components/schemas/ManagedOrgsRelationshipToOrgs"
+      required:
+        - current_org
+        - managed_orgs
+      type: object
+    ManagedOrgsResponse:
+      description: Response containing the current organization and its managed organizations.
+      properties:
+        data:
+          $ref: "#/components/schemas/ManagedOrgsData"
+        included:
+          description: Included organization resources.
+          items:
+            $ref: "#/components/schemas/OrgData"
+          type: array
+      required:
+        - data
+        - included
+      type: object
+    ManagedOrgsType:
+      description: The resource type for managed organizations.
+      enum: [managed_orgs]
+      example: "managed_orgs"
+      type: string
+      x-enum-varnames:
+        - MANAGED_ORGS
     MemberTeam:
       description: A member team
       properties:
@@ -48114,6 +48182,53 @@ components:
       x-enum-varnames:
         - ASC
         - DESC
+    OrgAttributes:
+      description: Attributes of an organization.
+      properties:
+        created_at:
+          description: The creation timestamp of the organization.
+          example: "2019-09-26T17:28:28Z"
+          format: date-time
+          type: string
+        description:
+          description: A description of the organization.
+          example: "Production organization."
+          type: string
+        disabled:
+          description: Whether the organization is disabled.
+          example: false
+          type: boolean
+        modified_at:
+          description: The last modification timestamp of the organization.
+          example: "2024-01-15T10:30:00Z"
+          format: date-time
+          type: string
+        name:
+          description: The name of the organization.
+          example: "My Organization"
+          type: string
+        public_id:
+          description: The public identifier of the organization.
+          example: "abcdef12345"
+          type: string
+        sharing:
+          description: The sharing setting of the organization.
+          example: "none"
+          type: string
+        url:
+          description: The URL of the organization.
+          example: "https://app.datadoghq.com/account/my-org"
+          type: string
+      required:
+        - public_id
+        - name
+        - description
+        - sharing
+        - url
+        - disabled
+        - created_at
+        - modified_at
+      type: object
     OrgConfigGetResponse:
       description: A response with a single Org Config.
       properties:
@@ -48415,6 +48530,44 @@ components:
       type: string
       x-enum-varnames:
         - USERS
+    OrgData:
+      description: An organization resource.
+      properties:
+        attributes:
+          $ref: "#/components/schemas/OrgAttributes"
+        id:
+          description: The UUID of the organization.
+          example: "4dee724d-00cc-11ea-a77b-570c9d03c6c5"
+          format: uuid
+          type: string
+        type:
+          $ref: "#/components/schemas/OrgResourceType"
+      required:
+        - id
+        - type
+        - attributes
+      type: object
+    OrgRelationshipData:
+      description: Reference to an organization resource.
+      properties:
+        id:
+          description: The UUID of the organization.
+          example: "4dee724d-00cc-11ea-a77b-570c9d03c6c5"
+          format: uuid
+          type: string
+        type:
+          $ref: "#/components/schemas/OrgResourceType"
+      required:
+        - id
+        - type
+      type: object
+    OrgResourceType:
+      description: The resource type for organizations.
+      enum: [orgs]
+      example: "orgs"
+      type: string
+      x-enum-varnames:
+        - ORGS
     Organization:
       description: Organization object.
       properties:
@@ -98143,6 +98296,83 @@ paths:
         operator: OR
         permissions:
           - on_call_read
+  /api/v2/org:
+    get:
+      description: Returns the current organization and its managed organizations in JSON:API format.
+      operationId: ListOrgsV2
+      parameters:
+        - description: Filter managed organizations by name.
+          example: "My Child Org"
+          in: query
+          name: "filter[name]"
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    data:
+                      id: "4dee724d-00cc-11ea-a77b-570c9d03c6c5"
+                      relationships:
+                        current_org:
+                          data:
+                            id: "4dee724d-00cc-11ea-a77b-570c9d03c6c5"
+                            type: "orgs"
+                        managed_orgs:
+                          data:
+                            - id: "a1b2c3d4-00cc-11ea-a77b-570c9d03c6c5"
+                              type: "orgs"
+                      type: "managed_orgs"
+                    included:
+                      - attributes:
+                          created_at: "2019-09-26T17:28:28Z"
+                          description: "Production organization."
+                          disabled: false
+                          modified_at: "2024-01-15T10:30:00Z"
+                          name: "My Organization"
+                          public_id: "abcdef12345"
+                          sharing: "none"
+                          url: "https://app.datadoghq.com/account/my-org"
+                        id: "4dee724d-00cc-11ea-a77b-570c9d03c6c5"
+                        type: "orgs"
+                      - attributes:
+                          created_at: "2020-05-10T12:00:00Z"
+                          description: "Child organization."
+                          disabled: false
+                          modified_at: "2024-06-20T08:15:00Z"
+                          name: "My Child Org"
+                          public_id: "ghijkl67890"
+                          sharing: "none"
+                          url: "https://app.datadoghq.com/account/my-child-org"
+                        id: "a1b2c3d4-00cc-11ea-a77b-570c9d03c6c5"
+                        type: "orgs"
+              schema:
+                $ref: "#/components/schemas/ManagedOrgsResponse"
+          description: OK
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequestsResponse"
+      security:
+        - apiKeyAuth: []
+          appKeyAuth: []
+        - AuthZ:
+            - org_management
+            - org_connections_write
+      summary: List your managed organizations
+      tags:
+        - Organizations
+      "x-permission":
+        operator: OR
+        permissions:
+          - org_management
+          - org_connections_write
   /api/v2/org_configs:
     get:
       description: Returns all Org Configs (name, description, and value).
@@ -114716,6 +114946,50 @@ paths:
         permissions:
           - user_access_manage
           - service_account_write
+  /api/v2/users/{user_id}/invitations:
+    delete:
+      description: |-
+        Cancel all pending invitations for a specified user.
+        Requires the `user_access_invite` permission.
+      operationId: DeleteUserInvitations
+      parameters:
+        - description: The UUID of the user whose pending invitations should be canceled.
+          in: path
+          name: user_id
+          required: true
+          schema:
+            example: "4dee724d-00cc-11ea-a77b-570c9d03c6c5"
+            format: uuid
+            type: string
+      responses:
+        "200":
+          description: OK
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIErrorResponse"
+          description: Authentication error
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIErrorResponse"
+          description: Not found
+        "429":
+          $ref: "#/components/responses/TooManyRequestsResponse"
+      security:
+        - apiKeyAuth: []
+          appKeyAuth: []
+        - AuthZ:
+            - user_access_invite
+      summary: Delete a pending user's invitations
+      tags:
+        - Users
+      "x-permission":
+        operator: OR
+        permissions:
+          - user_access_invite
   /api/v2/users/{user_id}/orgs:
     get:
       description: |-

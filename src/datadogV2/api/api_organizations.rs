@@ -10,6 +10,22 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// ListOrgsV2OptionalParams is a struct for passing parameters to the method [`OrganizationsAPI::list_orgs_v2`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListOrgsV2OptionalParams {
+    /// Filter managed organizations by name.
+    pub filter_name: Option<String>,
+}
+
+impl ListOrgsV2OptionalParams {
+    /// Filter managed organizations by name.
+    pub fn filter_name(mut self, value: String) -> Self {
+        self.filter_name = Some(value);
+        self
+    }
+}
+
 /// UploadIdPMetadataOptionalParams is a struct for passing parameters to the method [`OrganizationsAPI::upload_idp_metadata`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -38,6 +54,14 @@ pub enum GetOrgConfigError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListOrgConfigsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListOrgsV2Error is a struct for typed errors of method [`OrganizationsAPI::list_orgs_v2`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListOrgsV2Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -333,6 +357,118 @@ impl OrganizationsAPI {
         } else {
             let local_entity: Option<ListOrgConfigsError> =
                 serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Returns the current organization and its managed organizations in JSON:API format.
+    pub async fn list_orgs_v2(
+        &self,
+        params: ListOrgsV2OptionalParams,
+    ) -> Result<crate::datadogV2::model::ManagedOrgsResponse, datadog::Error<ListOrgsV2Error>> {
+        match self.list_orgs_v2_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Returns the current organization and its managed organizations in JSON:API format.
+    pub async fn list_orgs_v2_with_http_info(
+        &self,
+        params: ListOrgsV2OptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ManagedOrgsResponse>,
+        datadog::Error<ListOrgsV2Error>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_orgs_v2";
+
+        // unbox and build optional parameters
+        let filter_name = params.filter_name;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/org",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_name {
+            local_req_builder =
+                local_req_builder.query(&[("filter[name]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ManagedOrgsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListOrgsV2Error> = serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
