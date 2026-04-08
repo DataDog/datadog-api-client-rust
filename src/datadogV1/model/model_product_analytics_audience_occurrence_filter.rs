@@ -6,12 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
+/// Filter applied to occurrence counts when building a Product Analytics audience.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsAudienceOccurrenceFilter {
+    /// The comparison operator used for the occurrence filter (for example: `gt`, `lt`, `eq`).
     #[serde(rename = "operator")]
     pub operator: Option<String>,
+    /// The threshold value to compare occurrence counts against.
     #[serde(rename = "value")]
     pub value: Option<String>,
     #[serde(flatten)]
