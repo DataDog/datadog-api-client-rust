@@ -39,8 +39,12 @@ pub struct LogsIndex {
     /// If Standard Tier is enabled on this index, logs are first retained in Standard Tier for the number of days specified through `num_retention_days`,
     /// and then stored in Flex Tier until the number of days specified in `num_flex_logs_retention_days` is reached.
     /// The available values depend on retention plans specified in your organization's contract/subscriptions.
-    #[serde(rename = "num_flex_logs_retention_days")]
-    pub num_flex_logs_retention_days: Option<i64>,
+    #[serde(
+        rename = "num_flex_logs_retention_days",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub num_flex_logs_retention_days: Option<Option<i64>>,
     /// The number of days logs are stored in Standard Tier before aging into the Flex Tier or being deleted from the index.
     /// The available values depend on retention plans specified in your organization's contract/subscriptions.
     #[serde(rename = "num_retention_days")]
@@ -101,7 +105,7 @@ impl LogsIndex {
         self
     }
 
-    pub fn num_flex_logs_retention_days(mut self, value: i64) -> Self {
+    pub fn num_flex_logs_retention_days(mut self, value: Option<i64>) -> Self {
         self.num_flex_logs_retention_days = Some(value);
         self
     }
@@ -151,7 +155,7 @@ impl<'de> Deserialize<'de> for LogsIndex {
                 let mut filter: Option<crate::datadogV1::model::LogsFilter> = None;
                 let mut is_rate_limited: Option<bool> = None;
                 let mut name: Option<String> = None;
-                let mut num_flex_logs_retention_days: Option<i64> = None;
+                let mut num_flex_logs_retention_days: Option<Option<i64>> = None;
                 let mut num_retention_days: Option<i64> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -204,9 +208,6 @@ impl<'de> Deserialize<'de> for LogsIndex {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "num_flex_logs_retention_days" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             num_flex_logs_retention_days =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
