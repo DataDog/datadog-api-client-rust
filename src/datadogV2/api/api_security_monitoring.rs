@@ -1445,6 +1445,14 @@ pub enum GetFindingError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetInvestigationLogQueriesMatchingSignalError is a struct for typed errors of method [`SecurityMonitoringAPI::get_investigation_log_queries_matching_signal`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetInvestigationLogQueriesMatchingSignalError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetResourceEvaluationFiltersError is a struct for typed errors of method [`SecurityMonitoringAPI::get_resource_evaluation_filters`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1546,6 +1554,14 @@ pub enum GetSignalNotificationRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSignalNotificationRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetSuggestedActionsMatchingSignalError is a struct for typed errors of method [`SecurityMonitoringAPI::get_suggested_actions_matching_signal`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSuggestedActionsMatchingSignalError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -6739,6 +6755,121 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get the list of investigation log queries available for a given security signal.
+    pub async fn get_investigation_log_queries_matching_signal(
+        &self,
+        signal_id: String,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringSignalSuggestedActionsResponse,
+        datadog::Error<GetInvestigationLogQueriesMatchingSignalError>,
+    > {
+        match self
+            .get_investigation_log_queries_matching_signal_with_http_info(signal_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the list of investigation log queries available for a given security signal.
+    pub async fn get_investigation_log_queries_matching_signal_with_http_info(
+        &self,
+        signal_id: String,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringSignalSuggestedActionsResponse,
+        >,
+        datadog::Error<GetInvestigationLogQueriesMatchingSignalError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_investigation_log_queries_matching_signal";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/signals/{signal_id}/investigation_queries",
+            local_configuration.get_operation_host(operation_id),
+            signal_id = datadog::urlencode(signal_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringSignalSuggestedActionsResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetInvestigationLogQueriesMatchingSignalError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// List resource filters.
     pub async fn get_resource_evaluation_filters(
         &self,
@@ -8293,6 +8424,121 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<GetSignalNotificationRulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the list of suggested actions for a given security signal.
+    pub async fn get_suggested_actions_matching_signal(
+        &self,
+        signal_id: String,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringSignalSuggestedActionsResponse,
+        datadog::Error<GetSuggestedActionsMatchingSignalError>,
+    > {
+        match self
+            .get_suggested_actions_matching_signal_with_http_info(signal_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the list of suggested actions for a given security signal.
+    pub async fn get_suggested_actions_matching_signal_with_http_info(
+        &self,
+        signal_id: String,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringSignalSuggestedActionsResponse,
+        >,
+        datadog::Error<GetSuggestedActionsMatchingSignalError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_suggested_actions_matching_signal";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/signals/{signal_id}/suggested_actions",
+            local_configuration.get_operation_host(operation_id),
+            signal_id = datadog::urlencode(signal_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringSignalSuggestedActionsResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSuggestedActionsMatchingSignalError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
