@@ -3598,7 +3598,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case attributes
+    /// Update case attributes. This replaces all attributes with the provided payload. To update a single attribute (e.g., team), include all existing attributes in the request to avoid overwriting them.
     pub async fn update_attributes(
         &self,
         case_id: String,
@@ -3618,7 +3618,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case attributes
+    /// Update case attributes. This replaces all attributes with the provided payload. To update a single attribute (e.g., team), include all existing attributes in the request to avoid overwriting them.
     pub async fn update_attributes_with_http_info(
         &self,
         case_id: String,
