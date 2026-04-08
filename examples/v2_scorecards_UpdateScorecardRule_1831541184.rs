@@ -1,7 +1,8 @@
 // Update an existing rule returns "Rule updated successfully" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_service_scorecards::ServiceScorecardsAPI;
-use datadog_api_client::datadogV2::model::RuleAttributes;
+use datadog_api_client::datadogV2::api_scorecards::ScorecardsAPI;
+use datadog_api_client::datadogV2::model::RuleAttributesRequest;
+use datadog_api_client::datadogV2::model::RuleType;
 use datadog_api_client::datadogV2::model::UpdateRuleRequest;
 use datadog_api_client::datadogV2::model::UpdateRuleRequestData;
 
@@ -14,17 +15,18 @@ async fn main() {
         std::env::var("CREATE_SCORECARD_RULE_DATA_ATTRIBUTES_SCORECARD_NAME").unwrap();
     let create_scorecard_rule_data_id = std::env::var("CREATE_SCORECARD_RULE_DATA_ID").unwrap();
     let body = UpdateRuleRequest::new().data(
-        UpdateRuleRequestData::new().attributes(
-            RuleAttributes::new()
-                .description("Updated description via test".to_string())
-                .enabled(true)
-                .name(create_scorecard_rule_data_attributes_name.clone())
-                .scorecard_name(create_scorecard_rule_data_attributes_scorecard_name.clone()),
-        ),
+        UpdateRuleRequestData::new()
+            .attributes(
+                RuleAttributesRequest::new()
+                    .description("Updated description via test".to_string())
+                    .enabled(true)
+                    .name(create_scorecard_rule_data_attributes_name.clone())
+                    .scorecard_name(create_scorecard_rule_data_attributes_scorecard_name.clone()),
+            )
+            .type_(RuleType::RULE),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateScorecardRule", true);
-    let api = ServiceScorecardsAPI::with_config(configuration);
+    let configuration = datadog::Configuration::new();
+    let api = ScorecardsAPI::with_config(configuration);
     let resp = api
         .update_scorecard_rule(create_scorecard_rule_data_id.clone(), body)
         .await;
