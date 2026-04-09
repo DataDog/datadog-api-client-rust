@@ -21,12 +21,12 @@ async fn main() {
                 .attributes(
                     FlakyTestsSearchRequestAttributes::new()
                         .filter(
-                            FlakyTestsSearchFilter
-                            ::new().query(
-                                r#"flaky_test_state:active @git.repository.id_v2:"github.com/datadog/shopist""#.to_string(),
-                            ),
+                            FlakyTestsSearchFilter::new()
+                                .include_history(true)
+                                .query(
+                                    r#"flaky_test_state:active @git.repository.id_v2:"github.com/datadog/shopist""#.to_string(),
+                                ),
                         )
-                        .include_history(true)
                         .page(
                             FlakyTestsSearchPageOptions::new()
                                 .cursor(

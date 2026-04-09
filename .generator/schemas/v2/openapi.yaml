@@ -26401,9 +26401,18 @@ components:
             Includes state transitions like new -> quarantined -> fixed, along with the associated commit SHA when available.
           example:
             - commit_sha: abc123def456
+              policy_id: ftm_policy.quarantine.failure_rate
+              policy_meta:
+                config:
+                  failure_rate: 0.1
+                  required_runs: 100
+                failure_rate: 0.25
+                total_runs: 200
               status: quarantined
               timestamp: 1704067200000
             - commit_sha: ""
+              policy_id: unknown
+              policy_meta:
               status: new
               timestamp: 1703980800000
           items:
@@ -26473,6 +26482,11 @@ components:
           description: The commit SHA associated with this status change. Will be an empty string if the commit SHA is not available.
           example: abc123def456
           type: string
+        policy_id:
+          $ref: "#/components/schemas/FlakyTestHistoryPolicyId"
+        policy_meta:
+          $ref: "#/components/schemas/FlakyTestHistoryPolicyMeta"
+          nullable: true
         status:
           description: The test status at this point in history.
           example: quarantined
@@ -26486,6 +26500,131 @@ components:
         - status
         - commit_sha
         - timestamp
+      type: object
+    FlakyTestHistoryPolicyId:
+      description: The policy that triggered this status change.
+      enum:
+        - ftm_policy.manual
+        - ftm_policy.fixed
+        - ftm_policy.disable.failure_rate
+        - ftm_policy.disable.branch_flake
+        - ftm_policy.disable.days_active
+        - ftm_policy.quarantine.failure_rate
+        - ftm_policy.quarantine.branch_flake
+        - ftm_policy.quarantine.days_active
+        - unknown
+      example: ftm_policy.quarantine.failure_rate
+      nullable: false
+      type: string
+      x-enum-varnames:
+        - MANUAL
+        - FIXED
+        - DISABLE_FAILURE_RATE
+        - DISABLE_BRANCH_FLAKE
+        - DISABLE_DAYS_ACTIVE
+        - QUARANTINE_FAILURE_RATE
+        - QUARANTINE_BRANCH_FLAKE
+        - QUARANTINE_DAYS_ACTIVE
+        - UNKNOWN
+    FlakyTestHistoryPolicyMeta:
+      description: Metadata about the policy that triggered this status change.
+      properties:
+        branches:
+          description: Branches where the test was flaky at the time of the status change.
+          example: ["main", "develop"]
+          items:
+            type: string
+          nullable: true
+          type: array
+        config:
+          $ref: "#/components/schemas/FlakyTestHistoryPolicyMetaConfig"
+          nullable: true
+        days_active:
+          description: The number of days the test has been active at the time of the status change.
+          example: 15
+          format: int32
+          maximum: 2147483647
+          nullable: true
+          type: integer
+        days_without_flake:
+          description: The number of days since the test last exhibited flakiness.
+          example: 30
+          format: int32
+          maximum: 2147483647
+          nullable: true
+          type: integer
+        failure_rate:
+          description: The failure rate of the test at the time of the status change.
+          example: 0.25
+          format: double
+          maximum: 1
+          minimum: 0
+          nullable: true
+          type: number
+        state:
+          description: The previous state of the test.
+          example: quarantined
+          nullable: true
+          type: string
+        total_runs:
+          description: The total number of test runs at the time of the status change.
+          example: 200
+          format: int32
+          maximum: 2147483647
+          nullable: true
+          type: integer
+      type: object
+    FlakyTestHistoryPolicyMetaConfig:
+      description: Configuration parameters of the policy that triggered this status change.
+      properties:
+        branches:
+          description: The branches considered by the policy.
+          example: ["main"]
+          items:
+            type: string
+          nullable: true
+          type: array
+        days_active:
+          description: The number of days a test must have been active for the policy to trigger.
+          example: 30
+          format: int32
+          maximum: 2147483647
+          nullable: true
+          type: integer
+        failure_rate:
+          description: The failure rate threshold for the policy to trigger.
+          example: 0.7
+          format: double
+          maximum: 1
+          minimum: 0
+          nullable: true
+          type: number
+        forget_branches:
+          description: Branches excluded from the policy evaluation.
+          example: ["release"]
+          items:
+            type: string
+          nullable: true
+          type: array
+        required_runs:
+          description: The minimum number of test runs required for the policy to trigger.
+          example: 100
+          format: int32
+          maximum: 2147483647
+          nullable: true
+          type: integer
+        state:
+          description: The target state the policy transitions the test from.
+          example: quarantined
+          nullable: true
+          type: string
+        test_services:
+          description: Test services excluded from the policy evaluation.
+          example: ["my-service"]
+          items:
+            type: string
+          nullable: true
+          type: array
       type: object
     FlakyTestPipelineStats:
       description: CI pipeline related statistics for the flaky test. This information is only available if test runs are associated with CI pipeline events from CI Visibility.
@@ -26566,6 +26705,14 @@ components:
     FlakyTestsSearchFilter:
       description: Search filter settings.
       properties:
+        include_history:
+          default: false
+          description: |-
+            Whether to include the status change history for each flaky test in the response.
+            When set to true, each test will include a `history` array with chronological status changes.
+            Defaults to false.
+          example: true
+          type: boolean
         query:
           default: "*"
           description: |-
@@ -26611,14 +26758,6 @@ components:
       properties:
         filter:
           $ref: "#/components/schemas/FlakyTestsSearchFilter"
-        include_history:
-          default: false
-          description: |-
-            Whether to include the status change history for each flaky test in the response.
-            When set to true, each test will include a `history` array with chronological status changes.
-            Defaults to false.
-          example: true
-          type: boolean
         page:
           $ref: "#/components/schemas/FlakyTestsSearchPageOptions"
         sort:
