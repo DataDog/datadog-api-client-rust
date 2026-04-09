@@ -32,6 +32,7 @@ pub mod api_csm_agents;
 pub mod api_csm_coverage_analysis;
 pub mod api_csm_threats;
 pub mod api_dashboard_lists;
+pub mod api_dashboard_secure_embed;
 pub mod api_data_deletion;
 pub mod api_datasets;
 pub mod api_deployment_gates;
