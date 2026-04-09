@@ -10,6 +10,7 @@ use datadog_api_client::datadogV2::model::ApplicationSecurityWafCustomRuleCondit
 use datadog_api_client::datadogV2::model::ApplicationSecurityWafCustomRuleConditionOperator;
 use datadog_api_client::datadogV2::model::ApplicationSecurityWafCustomRuleConditionOptions;
 use datadog_api_client::datadogV2::model::ApplicationSecurityWafCustomRuleConditionParameters;
+use datadog_api_client::datadogV2::model::ApplicationSecurityWafCustomRuleConditionParametersType;
 use datadog_api_client::datadogV2::model::ApplicationSecurityWafCustomRuleCreateAttributes;
 use datadog_api_client::datadogV2::model::ApplicationSecurityWafCustomRuleCreateData;
 use datadog_api_client::datadogV2::model::ApplicationSecurityWafCustomRuleCreateRequest;
@@ -44,6 +45,7 @@ async fn main() {
                                         .min_length(0),
                                 )
                                 .regex("path.*".to_string())
+                                .type_(ApplicationSecurityWafCustomRuleConditionParametersType::STRING)
                                 .value("custom_tag".to_string()),
                         )
                     ],
