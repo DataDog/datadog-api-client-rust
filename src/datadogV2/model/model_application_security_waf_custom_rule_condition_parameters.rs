@@ -27,6 +27,10 @@ pub struct ApplicationSecurityWafCustomRuleConditionParameters {
     /// Regex to use with the condition. Only used with match_regex and !match_regex operator.
     #[serde(rename = "regex")]
     pub regex: Option<String>,
+    /// The type of the value to compare against. Only used with the equals and !equals operator.
+    #[serde(rename = "type")]
+    pub type_:
+        Option<crate::datadogV2::model::ApplicationSecurityWafCustomRuleConditionParametersType>,
     /// Store the captured value in the specified tag name. Only used with the capture_data operator.
     #[serde(rename = "value")]
     pub value: Option<String>,
@@ -47,6 +51,7 @@ impl ApplicationSecurityWafCustomRuleConditionParameters {
             list: None,
             options: None,
             regex: None,
+            type_: None,
             value: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -73,6 +78,14 @@ impl ApplicationSecurityWafCustomRuleConditionParameters {
 
     pub fn regex(mut self, value: String) -> Self {
         self.regex = Some(value);
+        self
+    }
+
+    pub fn type_(
+        mut self,
+        value: crate::datadogV2::model::ApplicationSecurityWafCustomRuleConditionParametersType,
+    ) -> Self {
+        self.type_ = Some(value);
         self
     }
 
@@ -116,6 +129,7 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafCustomRuleConditionParamete
                     crate::datadogV2::model::ApplicationSecurityWafCustomRuleConditionOptions,
                 > = None;
                 let mut regex: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::ApplicationSecurityWafCustomRuleConditionParametersType> = None;
                 let mut value: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -152,6 +166,20 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafCustomRuleConditionParamete
                             }
                             regex = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::ApplicationSecurityWafCustomRuleConditionParametersType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "value" => {
                             if v.is_null() {
                                 continue;
@@ -173,6 +201,7 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafCustomRuleConditionParamete
                     list,
                     options,
                     regex,
+                    type_,
                     value,
                     additional_properties,
                     _unparsed,
