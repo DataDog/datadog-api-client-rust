@@ -4101,6 +4101,34 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.UpdateIPAllowlist".into(), test_v2_update_ip_allowlist);
     world.function_mappings.insert(
+        "v2.ListLLMObsAnnotationQueues".into(),
+        test_v2_list_llm_obs_annotation_queues,
+    );
+    world.function_mappings.insert(
+        "v2.CreateLLMObsAnnotationQueue".into(),
+        test_v2_create_llm_obs_annotation_queue,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteLLMObsAnnotationQueue".into(),
+        test_v2_delete_llm_obs_annotation_queue,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateLLMObsAnnotationQueue".into(),
+        test_v2_update_llm_obs_annotation_queue,
+    );
+    world.function_mappings.insert(
+        "v2.GetLLMObsAnnotatedInteractions".into(),
+        test_v2_get_llm_obs_annotated_interactions,
+    );
+    world.function_mappings.insert(
+        "v2.CreateLLMObsAnnotationQueueInteractions".into(),
+        test_v2_create_llm_obs_annotation_queue_interactions,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteLLMObsAnnotationQueueInteractions".into(),
+        test_v2_delete_llm_obs_annotation_queue_interactions,
+    );
+    world.function_mappings.insert(
         "v2.ListLLMObsExperiments".into(),
         test_v2_list_llm_obs_experiments,
     );
@@ -30655,6 +30683,219 @@ fn test_v2_update_ip_allowlist(world: &mut DatadogWorld, _parameters: &HashMap<S
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_ip_allowlist_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_annotation_queues(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let project_id = _parameters
+        .get("projectId")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let queue_ids = _parameters
+        .get("queueIds")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_llm_observability::ListLLMObsAnnotationQueuesOptionalParams::default();
+    params.project_id = project_id;
+    params.queue_ids = queue_ids;
+    let response = match block_on(api.list_llm_obs_annotation_queues_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_llm_obs_annotation_queue(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_llm_obs_annotation_queue_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_llm_obs_annotation_queue(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_llm_obs_annotation_queue_with_http_info(queue_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_llm_obs_annotation_queue(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_llm_obs_annotation_queue_with_http_info(queue_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_llm_obs_annotated_interactions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_llm_obs_annotated_interactions_with_http_info(queue_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_llm_obs_annotation_queue_interactions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.create_llm_obs_annotation_queue_interactions_with_http_info(queue_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_llm_obs_annotation_queue_interactions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_llm_obs_annotation_queue_interactions_with_http_info(queue_id, body),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {
