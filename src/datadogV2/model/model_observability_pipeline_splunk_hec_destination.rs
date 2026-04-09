@@ -45,6 +45,10 @@ pub struct ObservabilityPipelineSplunkHecDestination {
     /// Name of the environment variable or secret that holds the Splunk HEC token.
     #[serde(rename = "token_key")]
     pub token_key: Option<String>,
+    /// Controls how the Splunk HEC token is supplied. Use `custom` to provide a token with `token_key`, or `from_source` to forward the token received from an upstream Splunk HEC source.
+    #[serde(rename = "token_strategy")]
+    pub token_strategy:
+        Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationTokenStrategy>,
     /// The destination type. Always `splunk_hec`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationType,
@@ -72,6 +76,7 @@ impl ObservabilityPipelineSplunkHecDestination {
             inputs,
             sourcetype: None,
             token_key: None,
+            token_strategy: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -124,6 +129,14 @@ impl ObservabilityPipelineSplunkHecDestination {
         self
     }
 
+    pub fn token_strategy(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationTokenStrategy,
+    ) -> Self {
+        self.token_strategy = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -164,6 +177,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                 let mut inputs: Option<Vec<String>> = None;
                 let mut sourcetype: Option<String> = None;
                 let mut token_key: Option<String> = None;
+                let mut token_strategy: Option<
+                    crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationTokenStrategy,
+                > = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationType,
                 > = None;
@@ -248,6 +264,21 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                             }
                             token_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "token_strategy" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            token_strategy =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _token_strategy) = token_strategy {
+                                match _token_strategy {
+                                    crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationTokenStrategy::UnparsedObject(_token_strategy) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -281,6 +312,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                     inputs,
                     sourcetype,
                     token_key,
+                    token_strategy,
                     type_,
                     additional_properties,
                     _unparsed,
