@@ -8,6 +8,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ObservabilityPipelineConfigDestinationItem {
+    ObservabilityPipelineElasticsearchDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestination>,
+    ),
     ObservabilityPipelineHttpClientDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineHttpClientDestination>,
     ),
@@ -32,9 +35,6 @@ pub enum ObservabilityPipelineConfigDestinationItem {
     ),
     ObservabilityPipelineDatadogLogsDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogLogsDestination>,
-    ),
-    ObservabilityPipelineElasticsearchDestination(
-        Box<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestination>,
     ),
     ObservabilityPipelineGoogleChronicleDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineGoogleChronicleDestination>,
@@ -85,6 +85,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineElasticsearchDestination(_v));
+            }
+        }
         if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV2::model::ObservabilityPipelineHttpClientDestination>,
         >(value.clone())
@@ -155,14 +163,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineDatadogLogsDestination(_v));
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestination>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineElasticsearchDestination(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<

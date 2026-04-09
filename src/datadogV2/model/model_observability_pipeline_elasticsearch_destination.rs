@@ -6,9 +6,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `elasticsearch` destination writes logs to an Elasticsearch cluster.
+/// The `elasticsearch` destination writes logs or metrics to an Elasticsearch cluster.
 ///
-/// **Supported pipeline types:** logs
+/// **Supported pipeline types:** logs, metrics
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -24,9 +24,13 @@ pub struct ObservabilityPipelineElasticsearchDestination {
     /// Configuration for buffer settings on destination components.
     #[serde(rename = "buffer")]
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
-    /// The index to write logs to in Elasticsearch.
+    /// The name of the index to write events to in Elasticsearch.
     #[serde(rename = "bulk_index")]
     pub bulk_index: Option<String>,
+    /// Compression configuration for the Elasticsearch destination.
+    #[serde(rename = "compression")]
+    pub compression:
+        Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationCompression>,
     /// Configuration options for writing to Elasticsearch Data Streams instead of a fixed index.
     #[serde(rename = "data_stream")]
     pub data_stream:
@@ -37,9 +41,21 @@ pub struct ObservabilityPipelineElasticsearchDestination {
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
+    /// The name of the field used as the document ID in Elasticsearch.
+    #[serde(rename = "id_key")]
+    pub id_key: Option<String>,
     /// A list of component IDs whose output is used as the `input` for this component.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
+    /// The name of an Elasticsearch ingest pipeline to apply to events before indexing.
+    #[serde(rename = "pipeline")]
+    pub pipeline: Option<String>,
+    /// When `true`, retries failed partial bulk requests when some events in a batch fail while others succeed.
+    #[serde(rename = "request_retry_partial")]
+    pub request_retry_partial: Option<bool>,
+    /// Configuration for enabling TLS encryption between the pipeline component and external services.
+    #[serde(rename = "tls")]
+    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
     /// The destination type. The value should always be `elasticsearch`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationType,
@@ -61,10 +77,15 @@ impl ObservabilityPipelineElasticsearchDestination {
             auth: None,
             buffer: None,
             bulk_index: None,
+            compression: None,
             data_stream: None,
             endpoint_url_key: None,
             id,
+            id_key: None,
             inputs,
+            pipeline: None,
+            request_retry_partial: None,
+            tls: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -100,6 +121,14 @@ impl ObservabilityPipelineElasticsearchDestination {
         self
     }
 
+    pub fn compression(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationCompression,
+    ) -> Self {
+        self.compression = Some(value);
+        self
+    }
+
     pub fn data_stream(
         mut self,
         value: crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream,
@@ -110,6 +139,26 @@ impl ObservabilityPipelineElasticsearchDestination {
 
     pub fn endpoint_url_key(mut self, value: String) -> Self {
         self.endpoint_url_key = Some(value);
+        self
+    }
+
+    pub fn id_key(mut self, value: String) -> Self {
+        self.id_key = Some(value);
+        self
+    }
+
+    pub fn pipeline(mut self, value: String) -> Self {
+        self.pipeline = Some(value);
+        self
+    }
+
+    pub fn request_retry_partial(mut self, value: bool) -> Self {
+        self.request_retry_partial = Some(value);
+        self
+    }
+
+    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
+        self.tls = Some(value);
         self
     }
 
@@ -147,10 +196,15 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                     crate::datadogV2::model::ObservabilityPipelineBufferOptions,
                 > = None;
                 let mut bulk_index: Option<String> = None;
+                let mut compression: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationCompression> = None;
                 let mut data_stream: Option<crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationDataStream> = None;
                 let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
+                let mut id_key: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
+                let mut pipeline: Option<String> = None;
+                let mut request_retry_partial: Option<bool> = None;
+                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineElasticsearchDestinationType,
                 > = None;
@@ -203,6 +257,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                             }
                             bulk_index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "compression" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            compression =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "data_stream" => {
                             if v.is_null() {
                                 continue;
@@ -220,8 +281,33 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "id_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "pipeline" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            pipeline = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "request_retry_partial" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            request_retry_partial =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tls" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -250,10 +336,15 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineElasticsearchDestination {
                     auth,
                     buffer,
                     bulk_index,
+                    compression,
                     data_stream,
                     endpoint_url_key,
                     id,
+                    id_key,
                     inputs,
+                    pipeline,
+                    request_retry_partial,
+                    tls,
                     type_,
                     additional_properties,
                     _unparsed,
