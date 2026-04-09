@@ -283,7 +283,7 @@ impl DashboardListsAPI {
     pub async fn delete_dashboard_list_items(
         &self,
         dashboard_list_id: i64,
-        body: crate::datadogV2::model::DashboardListDeleteItemsRequest,
+        body: crate::datadogV2::model::DashboardListRemoveItemsRequest,
     ) -> Result<
         crate::datadogV2::model::DashboardListDeleteItemsResponse,
         datadog::Error<DeleteDashboardListItemsError>,
@@ -309,7 +309,7 @@ impl DashboardListsAPI {
     pub async fn delete_dashboard_list_items_with_http_info(
         &self,
         dashboard_list_id: i64,
-        body: crate::datadogV2::model::DashboardListDeleteItemsRequest,
+        body: crate::datadogV2::model::DashboardListRemoveItemsRequest,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::DashboardListDeleteItemsResponse>,
         datadog::Error<DeleteDashboardListItemsError>,

@@ -6,11 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request containing a list of dashboards to delete.
+/// Request containing a list of dashboards to remove.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DashboardListDeleteItemsRequest {
+pub struct DashboardListRemoveItemsRequest {
     /// List of dashboards to delete from the dashboard list.
     #[serde(rename = "dashboards")]
     pub dashboards: Option<Vec<crate::datadogV2::model::DashboardListItemRequest>>,
@@ -21,9 +21,9 @@ pub struct DashboardListDeleteItemsRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl DashboardListDeleteItemsRequest {
-    pub fn new() -> DashboardListDeleteItemsRequest {
-        DashboardListDeleteItemsRequest {
+impl DashboardListRemoveItemsRequest {
+    pub fn new() -> DashboardListRemoveItemsRequest {
+        DashboardListRemoveItemsRequest {
             dashboards: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -47,20 +47,20 @@ impl DashboardListDeleteItemsRequest {
     }
 }
 
-impl Default for DashboardListDeleteItemsRequest {
+impl Default for DashboardListRemoveItemsRequest {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for DashboardListDeleteItemsRequest {
+impl<'de> Deserialize<'de> for DashboardListRemoveItemsRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DashboardListDeleteItemsRequestVisitor;
-        impl<'a> Visitor<'a> for DashboardListDeleteItemsRequestVisitor {
-            type Value = DashboardListDeleteItemsRequest;
+        struct DashboardListRemoveItemsRequestVisitor;
+        impl<'a> Visitor<'a> for DashboardListRemoveItemsRequestVisitor {
+            type Value = DashboardListRemoveItemsRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -94,7 +94,7 @@ impl<'de> Deserialize<'de> for DashboardListDeleteItemsRequest {
                     }
                 }
 
-                let content = DashboardListDeleteItemsRequest {
+                let content = DashboardListRemoveItemsRequest {
                     dashboards,
                     additional_properties,
                     _unparsed,
@@ -104,6 +104,6 @@ impl<'de> Deserialize<'de> for DashboardListDeleteItemsRequest {
             }
         }
 
-        deserializer.deserialize_any(DashboardListDeleteItemsRequestVisitor)
+        deserializer.deserialize_any(DashboardListRemoveItemsRequestVisitor)
     }
 }

@@ -2,8 +2,8 @@
 // response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_dashboard_lists::DashboardListsAPI;
-use datadog_api_client::datadogV2::model::DashboardListDeleteItemsRequest;
 use datadog_api_client::datadogV2::model::DashboardListItemRequest;
+use datadog_api_client::datadogV2::model::DashboardListRemoveItemsRequest;
 use datadog_api_client::datadogV2::model::DashboardType;
 
 #[tokio::main]
@@ -14,7 +14,7 @@ async fn main() {
     // there is a valid "dashboard" in the system
     let dashboard_id = std::env::var("DASHBOARD_ID").unwrap();
     let body =
-        DashboardListDeleteItemsRequest::new().dashboards(vec![DashboardListItemRequest::new(
+        DashboardListRemoveItemsRequest::new().dashboards(vec![DashboardListItemRequest::new(
             dashboard_id.clone(),
             DashboardType::CUSTOM_TIMEBOARD,
         )]);
