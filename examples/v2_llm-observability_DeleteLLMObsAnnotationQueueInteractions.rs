@@ -1,0 +1,32 @@
+// Delete annotation queue interactions returns "No Content" response
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
+use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueInteractionsType;
+use datadog_api_client::datadogV2::model::LLMObsDeleteAnnotationQueueInteractionsDataAttributesRequest;
+use datadog_api_client::datadogV2::model::LLMObsDeleteAnnotationQueueInteractionsDataRequest;
+use datadog_api_client::datadogV2::model::LLMObsDeleteAnnotationQueueInteractionsRequest;
+
+#[tokio::main]
+async fn main() {
+    let body = LLMObsDeleteAnnotationQueueInteractionsRequest::new(
+        LLMObsDeleteAnnotationQueueInteractionsDataRequest::new(
+            LLMObsDeleteAnnotationQueueInteractionsDataAttributesRequest::new(vec![
+                "00000000-0000-0000-0000-000000000000".to_string(),
+                "00000000-0000-0000-0000-000000000001".to_string(),
+            ]),
+            LLMObsAnnotationQueueInteractionsType::INTERACTIONS,
+        ),
+    );
+    let mut configuration = datadog::Configuration::new();
+    configuration
+        .set_unstable_operation_enabled("v2.DeleteLLMObsAnnotationQueueInteractions", true);
+    let api = LLMObservabilityAPI::with_config(configuration);
+    let resp = api
+        .delete_llm_obs_annotation_queue_interactions("queue_id".to_string(), body)
+        .await;
+    if let Ok(value) = resp {
+        println!("{:#?}", value);
+    } else {
+        println!("{:#?}", resp.unwrap_err());
+    }
+}
