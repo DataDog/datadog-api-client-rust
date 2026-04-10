@@ -236,6 +236,15 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all ephemeral infrastructure hosts on Azure over all hours in the current month for all organizations.
     #[serde(rename = "eph_infra_host_azure_agg_sum")]
     pub eph_infra_host_azure_agg_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts for Basic over all hours in the current month for all organizations.
+    #[serde(rename = "eph_infra_host_basic_agg_sum")]
+    pub eph_infra_host_basic_agg_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts for Basic with the Datadog Agent over all hours in the current month for all organizations.
+    #[serde(rename = "eph_infra_host_basic_infra_basic_agent_agg_sum")]
+    pub eph_infra_host_basic_infra_basic_agent_agg_sum: Option<i64>,
+    /// Shows the sum of all ephemeral infrastructure hosts for Basic on vSphere over all hours in the current month for all organizations.
+    #[serde(rename = "eph_infra_host_basic_infra_basic_vsphere_agg_sum")]
+    pub eph_infra_host_basic_infra_basic_vsphere_agg_sum: Option<i64>,
     /// Shows the sum of all ephemeral infrastructure hosts for Enterprise over all hours in the current month for all organizations.
     #[serde(rename = "eph_infra_host_ent_agg_sum")]
     pub eph_infra_host_ent_agg_sum: Option<i64>,
@@ -348,6 +357,15 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all Edge Devices Monitoring devices over all hours in the current month for all organizations.
     #[serde(rename = "infra_edge_monitoring_devices_top99p_sum")]
     pub infra_edge_monitoring_devices_top99p_sum: Option<i64>,
+    /// Shows the 99th percentile of all distinct infrastructure hosts for Basic with the Datadog Agent over all hours in the current month for all organizations.
+    #[serde(rename = "infra_host_basic_infra_basic_agent_top99p_sum")]
+    pub infra_host_basic_infra_basic_agent_top99p_sum: Option<i64>,
+    /// Shows the 99th percentile of all distinct infrastructure hosts for Basic on vSphere over all hours in the current month for all organizations.
+    #[serde(rename = "infra_host_basic_infra_basic_vsphere_top99p_sum")]
+    pub infra_host_basic_infra_basic_vsphere_top99p_sum: Option<i64>,
+    /// Shows the 99th percentile of all distinct infrastructure hosts for Basic over all hours in the current month for all organizations.
+    #[serde(rename = "infra_host_basic_top99p_sum")]
+    pub infra_host_basic_top99p_sum: Option<i64>,
     /// Shows the 99th percentile of all distinct infrastructure hosts over all hours in the current month for all organizations.
     #[serde(rename = "infra_host_top99p_sum")]
     pub infra_host_top99p_sum: Option<i64>,
@@ -794,6 +812,9 @@ impl UsageSummaryResponse {
             eph_infra_host_alibaba_agg_sum: None,
             eph_infra_host_aws_agg_sum: None,
             eph_infra_host_azure_agg_sum: None,
+            eph_infra_host_basic_agg_sum: None,
+            eph_infra_host_basic_infra_basic_agent_agg_sum: None,
+            eph_infra_host_basic_infra_basic_vsphere_agg_sum: None,
             eph_infra_host_ent_agg_sum: None,
             eph_infra_host_gcp_agg_sum: None,
             eph_infra_host_heroku_agg_sum: None,
@@ -831,6 +852,9 @@ impl UsageSummaryResponse {
             incident_management_seats_hwm_sum: None,
             indexed_events_count_agg_sum: None,
             infra_edge_monitoring_devices_top99p_sum: None,
+            infra_host_basic_infra_basic_agent_top99p_sum: None,
+            infra_host_basic_infra_basic_vsphere_top99p_sum: None,
+            infra_host_basic_top99p_sum: None,
             infra_host_top99p_sum: None,
             ingested_events_bytes_agg_sum: None,
             iot_device_agg_sum: None,
@@ -1397,6 +1421,24 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn eph_infra_host_basic_agg_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_basic_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_basic_infra_basic_agent_agg_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_basic_infra_basic_agent_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn eph_infra_host_basic_infra_basic_vsphere_agg_sum(mut self, value: i64) -> Self {
+        self.eph_infra_host_basic_infra_basic_vsphere_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn eph_infra_host_ent_agg_sum(mut self, value: i64) -> Self {
         self.eph_infra_host_ent_agg_sum = Some(value);
         self
@@ -1618,6 +1660,24 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn infra_edge_monitoring_devices_top99p_sum(mut self, value: i64) -> Self {
         self.infra_edge_monitoring_devices_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_host_basic_infra_basic_agent_top99p_sum(mut self, value: i64) -> Self {
+        self.infra_host_basic_infra_basic_agent_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_host_basic_infra_basic_vsphere_top99p_sum(mut self, value: i64) -> Self {
+        self.infra_host_basic_infra_basic_vsphere_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_host_basic_top99p_sum(mut self, value: i64) -> Self {
+        self.infra_host_basic_top99p_sum = Some(value);
         self
     }
 
@@ -2470,6 +2530,9 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut eph_infra_host_alibaba_agg_sum: Option<i64> = None;
                 let mut eph_infra_host_aws_agg_sum: Option<i64> = None;
                 let mut eph_infra_host_azure_agg_sum: Option<i64> = None;
+                let mut eph_infra_host_basic_agg_sum: Option<i64> = None;
+                let mut eph_infra_host_basic_infra_basic_agent_agg_sum: Option<i64> = None;
+                let mut eph_infra_host_basic_infra_basic_vsphere_agg_sum: Option<i64> = None;
                 let mut eph_infra_host_ent_agg_sum: Option<i64> = None;
                 let mut eph_infra_host_gcp_agg_sum: Option<i64> = None;
                 let mut eph_infra_host_heroku_agg_sum: Option<i64> = None;
@@ -2510,6 +2573,9 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut incident_management_seats_hwm_sum: Option<i64> = None;
                 let mut indexed_events_count_agg_sum: Option<i64> = None;
                 let mut infra_edge_monitoring_devices_top99p_sum: Option<i64> = None;
+                let mut infra_host_basic_infra_basic_agent_top99p_sum: Option<i64> = None;
+                let mut infra_host_basic_infra_basic_vsphere_top99p_sum: Option<i64> = None;
+                let mut infra_host_basic_top99p_sum: Option<i64> = None;
                 let mut infra_host_top99p_sum: Option<i64> = None;
                 let mut ingested_events_bytes_agg_sum: Option<i64> = None;
                 let mut iot_device_agg_sum: Option<i64> = None;
@@ -3092,6 +3158,24 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             }
                             eph_infra_host_azure_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "eph_infra_host_basic_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_basic_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "eph_infra_host_basic_infra_basic_agent_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_basic_infra_basic_agent_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "eph_infra_host_basic_infra_basic_vsphere_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            eph_infra_host_basic_infra_basic_vsphere_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eph_infra_host_ent_agg_sum" => {
                             if v.is_null() {
                                 continue;
@@ -3313,6 +3397,24 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             infra_edge_monitoring_devices_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_host_basic_infra_basic_agent_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_host_basic_infra_basic_agent_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_host_basic_infra_basic_vsphere_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_host_basic_infra_basic_vsphere_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_host_basic_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_host_basic_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "infra_host_top99p_sum" => {
                             if v.is_null() {
@@ -4094,6 +4196,9 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     eph_infra_host_alibaba_agg_sum,
                     eph_infra_host_aws_agg_sum,
                     eph_infra_host_azure_agg_sum,
+                    eph_infra_host_basic_agg_sum,
+                    eph_infra_host_basic_infra_basic_agent_agg_sum,
+                    eph_infra_host_basic_infra_basic_vsphere_agg_sum,
                     eph_infra_host_ent_agg_sum,
                     eph_infra_host_gcp_agg_sum,
                     eph_infra_host_heroku_agg_sum,
@@ -4131,6 +4236,9 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     incident_management_seats_hwm_sum,
                     indexed_events_count_agg_sum,
                     infra_edge_monitoring_devices_top99p_sum,
+                    infra_host_basic_infra_basic_agent_top99p_sum,
+                    infra_host_basic_infra_basic_vsphere_top99p_sum,
+                    infra_host_basic_top99p_sum,
                     infra_host_top99p_sum,
                     ingested_events_bytes_agg_sum,
                     iot_device_agg_sum,
