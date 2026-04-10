@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IssuesSearchRequestDataAttributes {
+    /// Filter issues by assignee IDs. Multiple values are combined with OR logic.
+    #[serde(rename = "assignee_ids")]
+    pub assignee_ids: Option<Vec<uuid::Uuid>>,
     /// Start date (inclusive) of the query in milliseconds since the Unix epoch.
     #[serde(rename = "from")]
     pub from: i64,
@@ -23,6 +26,9 @@ pub struct IssuesSearchRequestDataAttributes {
     /// Search query following the event search syntax.
     #[serde(rename = "query")]
     pub query: String,
+    /// Filter issues by team IDs. Multiple values are combined with OR logic.
+    #[serde(rename = "team_ids")]
+    pub team_ids: Option<Vec<uuid::Uuid>>,
     /// End date (exclusive) of the query in milliseconds since the Unix epoch.
     #[serde(rename = "to")]
     pub to: i64,
@@ -39,15 +45,22 @@ pub struct IssuesSearchRequestDataAttributes {
 impl IssuesSearchRequestDataAttributes {
     pub fn new(from: i64, query: String, to: i64) -> IssuesSearchRequestDataAttributes {
         IssuesSearchRequestDataAttributes {
+            assignee_ids: None,
             from,
             order_by: None,
             persona: None,
             query,
+            team_ids: None,
             to,
             track: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn assignee_ids(mut self, value: Vec<uuid::Uuid>) -> Self {
+        self.assignee_ids = Some(value);
+        self
     }
 
     pub fn order_by(
@@ -63,6 +76,11 @@ impl IssuesSearchRequestDataAttributes {
         value: crate::datadogV2::model::IssuesSearchRequestDataAttributesPersona,
     ) -> Self {
         self.persona = Some(value);
+        self
+    }
+
+    pub fn team_ids(mut self, value: Vec<uuid::Uuid>) -> Self {
+        self.team_ids = Some(value);
         self
     }
 
@@ -100,6 +118,7 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut assignee_ids: Option<Vec<uuid::Uuid>> = None;
                 let mut from: Option<i64> = None;
                 let mut order_by: Option<
                     crate::datadogV2::model::IssuesSearchRequestDataAttributesOrderBy,
@@ -108,6 +127,7 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
                     crate::datadogV2::model::IssuesSearchRequestDataAttributesPersona,
                 > = None;
                 let mut query: Option<String> = None;
+                let mut team_ids: Option<Vec<uuid::Uuid>> = None;
                 let mut to: Option<i64> = None;
                 let mut track: Option<
                     crate::datadogV2::model::IssuesSearchRequestDataAttributesTrack,
@@ -120,6 +140,13 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "assignee_ids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            assignee_ids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "from" => {
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -154,6 +181,12 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "team_ids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            team_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "to" => {
                             to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -183,10 +216,12 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
                 let to = to.ok_or_else(|| M::Error::missing_field("to"))?;
 
                 let content = IssuesSearchRequestDataAttributes {
+                    assignee_ids,
                     from,
                     order_by,
                     persona,
                     query,
+                    team_ids,
                     to,
                     track,
                     additional_properties,
