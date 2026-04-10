@@ -6,68 +6,56 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The funnel visualization displays a funnel of user sessions that maps a sequence of view navigation and user interaction in your application.
+/// The cohort widget visualizes user retention over time.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FunnelWidgetDefinition {
+pub struct CohortWidgetDefinition {
     /// The description of the widget.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// Display mode for grouped funnel results.
-    #[serde(rename = "grouped_display")]
-    pub grouped_display: Option<crate::datadogV1::model::FunnelGroupedDisplay>,
-    /// Request payload used to query items.
+    /// List of Cohort widget requests.
     #[serde(rename = "requests")]
-    pub requests: Vec<crate::datadogV1::model::FunnelWidgetRequest>,
+    pub requests: Vec<crate::datadogV1::model::RetentionGridRequest>,
     /// Time setting for the widget.
     #[serde(rename = "time")]
     pub time: Option<crate::datadogV1::model::WidgetTime>,
-    /// The title of the widget.
+    /// Title of your widget.
     #[serde(rename = "title")]
     pub title: Option<String>,
     /// How to align the text on the widget.
     #[serde(rename = "title_align")]
     pub title_align: Option<crate::datadogV1::model::WidgetTextAlign>,
-    /// The size of the title.
+    /// Size of the title.
     #[serde(rename = "title_size")]
     pub title_size: Option<String>,
-    /// Type of funnel widget.
+    /// Type of the Cohort widget.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV1::model::FunnelWidgetDefinitionType,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    pub type_: crate::datadogV1::model::CohortWidgetDefinitionType,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
-impl FunnelWidgetDefinition {
+impl CohortWidgetDefinition {
     pub fn new(
-        requests: Vec<crate::datadogV1::model::FunnelWidgetRequest>,
-        type_: crate::datadogV1::model::FunnelWidgetDefinitionType,
-    ) -> FunnelWidgetDefinition {
-        FunnelWidgetDefinition {
+        requests: Vec<crate::datadogV1::model::RetentionGridRequest>,
+        type_: crate::datadogV1::model::CohortWidgetDefinitionType,
+    ) -> CohortWidgetDefinition {
+        CohortWidgetDefinition {
             description: None,
-            grouped_display: None,
             requests,
             time: None,
             title: None,
             title_align: None,
             title_size: None,
             type_,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
-        self
-    }
-
-    pub fn grouped_display(mut self, value: crate::datadogV1::model::FunnelGroupedDisplay) -> Self {
-        self.grouped_display = Some(value);
         self
     }
 
@@ -90,24 +78,16 @@ impl FunnelWidgetDefinition {
         self.title_size = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
-    }
 }
 
-impl<'de> Deserialize<'de> for FunnelWidgetDefinition {
+impl<'de> Deserialize<'de> for CohortWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FunnelWidgetDefinitionVisitor;
-        impl<'a> Visitor<'a> for FunnelWidgetDefinitionVisitor {
-            type Value = FunnelWidgetDefinition;
+        struct CohortWidgetDefinitionVisitor;
+        impl<'a> Visitor<'a> for CohortWidgetDefinitionVisitor {
+            type Value = CohortWidgetDefinition;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -118,18 +98,12 @@ impl<'de> Deserialize<'de> for FunnelWidgetDefinition {
                 M: MapAccess<'a>,
             {
                 let mut description: Option<String> = None;
-                let mut grouped_display: Option<crate::datadogV1::model::FunnelGroupedDisplay> =
-                    None;
-                let mut requests: Option<Vec<crate::datadogV1::model::FunnelWidgetRequest>> = None;
+                let mut requests: Option<Vec<crate::datadogV1::model::RetentionGridRequest>> = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
                 let mut title: Option<String> = None;
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title_size: Option<String> = None;
-                let mut type_: Option<crate::datadogV1::model::FunnelWidgetDefinitionType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV1::model::CohortWidgetDefinitionType> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -140,21 +114,6 @@ impl<'de> Deserialize<'de> for FunnelWidgetDefinition {
                             }
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "grouped_display" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            grouped_display =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _grouped_display) = grouped_display {
-                                match _grouped_display {
-                                    crate::datadogV1::model::FunnelGroupedDisplay::UnparsedObject(_grouped_display) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
                         }
                         "requests" => {
                             requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -206,7 +165,7 @@ impl<'de> Deserialize<'de> for FunnelWidgetDefinition {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV1::model::FunnelWidgetDefinitionType::UnparsedObject(_type_) => {
+                                    crate::datadogV1::model::CohortWidgetDefinitionType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -214,25 +173,23 @@ impl<'de> Deserialize<'de> for FunnelWidgetDefinition {
                             }
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = FunnelWidgetDefinition {
+                let content = CohortWidgetDefinition {
                     description,
-                    grouped_display,
                     requests,
                     time,
                     title,
                     title_align,
                     title_size,
                     type_,
-                    additional_properties,
                     _unparsed,
                 };
 
@@ -240,6 +197,6 @@ impl<'de> Deserialize<'de> for FunnelWidgetDefinition {
             }
         }
 
-        deserializer.deserialize_any(FunnelWidgetDefinitionVisitor)
+        deserializer.deserialize_any(CohortWidgetDefinitionVisitor)
     }
 }
