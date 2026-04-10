@@ -14,6 +14,7 @@ pub mod api_audit;
 pub mod api_authn_mappings;
 pub mod api_aws_integration;
 pub mod api_aws_logs_integration;
+pub mod api_bits_ai;
 pub mod api_case_management;
 pub mod api_case_management_attribute;
 pub mod api_case_management_type;

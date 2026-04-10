@@ -6,20 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for get Flaky Tests Management policies request.
+/// Data for the get investigation response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TestOptimizationFlakyTestsManagementPoliciesGetRequestData {
-    /// Attributes for requesting Flaky Tests Management policies.
+pub struct GetInvestigationResponseData {
+    /// Attributes of the investigation.
     #[serde(rename = "attributes")]
-    pub attributes:
-        crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes,
-    /// JSON:API type for get Flaky Tests Management policies request.
-    /// The value must always be `test_optimization_get_flaky_tests_management_policies_request`.
+    pub attributes: crate::datadogV2::model::GetInvestigationResponseDataAttributes,
+    /// The unique identifier of the investigation.
+    #[serde(rename = "id")]
+    pub id: String,
+    /// The resource type for investigations.
     #[serde(rename = "type")]
-    pub type_:
-        crate::datadogV2::model::TestOptimizationGetFlakyTestsManagementPoliciesRequestDataType,
+    pub type_: crate::datadogV2::model::InvestigationType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,15 @@ pub struct TestOptimizationFlakyTestsManagementPoliciesGetRequestData {
     pub(crate) _unparsed: bool,
 }
 
-impl TestOptimizationFlakyTestsManagementPoliciesGetRequestData {
+impl GetInvestigationResponseData {
     pub fn new(
-        attributes: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes,
-        type_: crate::datadogV2::model::TestOptimizationGetFlakyTestsManagementPoliciesRequestDataType,
-    ) -> TestOptimizationFlakyTestsManagementPoliciesGetRequestData {
-        TestOptimizationFlakyTestsManagementPoliciesGetRequestData {
+        attributes: crate::datadogV2::model::GetInvestigationResponseDataAttributes,
+        id: String,
+        type_: crate::datadogV2::model::InvestigationType,
+    ) -> GetInvestigationResponseData {
+        GetInvestigationResponseData {
             attributes,
+            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -49,14 +51,14 @@ impl TestOptimizationFlakyTestsManagementPoliciesGetRequestData {
     }
 }
 
-impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesGetRequestData {
+impl<'de> Deserialize<'de> for GetInvestigationResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TestOptimizationFlakyTestsManagementPoliciesGetRequestDataVisitor;
-        impl<'a> Visitor<'a> for TestOptimizationFlakyTestsManagementPoliciesGetRequestDataVisitor {
-            type Value = TestOptimizationFlakyTestsManagementPoliciesGetRequestData;
+        struct GetInvestigationResponseDataVisitor;
+        impl<'a> Visitor<'a> for GetInvestigationResponseDataVisitor {
+            type Value = GetInvestigationResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -66,8 +68,11 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesGetRe
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes> = None;
-                let mut type_: Option<crate::datadogV2::model::TestOptimizationGetFlakyTestsManagementPoliciesRequestDataType> = None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::GetInvestigationResponseDataAttributes,
+                > = None;
+                let mut id: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::InvestigationType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,13 +84,18 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesGetRe
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::TestOptimizationGetFlakyTestsManagementPoliciesRequestDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::InvestigationType::UnparsedObject(
+                                        _type_,
+                                    ) => {
                                         _unparsed = true;
-                                    },
+                                    }
                                     _ => {}
                                 }
                             }
@@ -98,10 +108,12 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesGetRe
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = TestOptimizationFlakyTestsManagementPoliciesGetRequestData {
+                let content = GetInvestigationResponseData {
                     attributes,
+                    id,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -111,7 +123,6 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesGetRe
             }
         }
 
-        deserializer
-            .deserialize_any(TestOptimizationFlakyTestsManagementPoliciesGetRequestDataVisitor)
+        deserializer.deserialize_any(GetInvestigationResponseDataVisitor)
     }
 }

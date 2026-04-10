@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Configuration for the attempt-to-fix Flaky Tests Management policy.
+/// Attributes for the trigger investigation request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TestOptimizationFlakyTestsManagementPoliciesAttemptToFix {
-    /// Number of retries when attempting to fix a flaky test. Must be greater than 0.
-    #[serde(rename = "retries")]
-    pub retries: Option<i64>,
+pub struct TriggerInvestigationRequestDataAttributes {
+    /// The trigger definition for starting an investigation.
+    #[serde(rename = "trigger")]
+    pub trigger: crate::datadogV2::model::TriggerAttributes,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,18 +21,15 @@ pub struct TestOptimizationFlakyTestsManagementPoliciesAttemptToFix {
     pub(crate) _unparsed: bool,
 }
 
-impl TestOptimizationFlakyTestsManagementPoliciesAttemptToFix {
-    pub fn new() -> TestOptimizationFlakyTestsManagementPoliciesAttemptToFix {
-        TestOptimizationFlakyTestsManagementPoliciesAttemptToFix {
-            retries: None,
+impl TriggerInvestigationRequestDataAttributes {
+    pub fn new(
+        trigger: crate::datadogV2::model::TriggerAttributes,
+    ) -> TriggerInvestigationRequestDataAttributes {
+        TriggerInvestigationRequestDataAttributes {
+            trigger,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn retries(mut self, value: i64) -> Self {
-        self.retries = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -44,20 +41,14 @@ impl TestOptimizationFlakyTestsManagementPoliciesAttemptToFix {
     }
 }
 
-impl Default for TestOptimizationFlakyTestsManagementPoliciesAttemptToFix {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesAttemptToFix {
+impl<'de> Deserialize<'de> for TriggerInvestigationRequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TestOptimizationFlakyTestsManagementPoliciesAttemptToFixVisitor;
-        impl<'a> Visitor<'a> for TestOptimizationFlakyTestsManagementPoliciesAttemptToFixVisitor {
-            type Value = TestOptimizationFlakyTestsManagementPoliciesAttemptToFix;
+        struct TriggerInvestigationRequestDataAttributesVisitor;
+        impl<'a> Visitor<'a> for TriggerInvestigationRequestDataAttributesVisitor {
+            type Value = TriggerInvestigationRequestDataAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +58,7 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesAttem
             where
                 M: MapAccess<'a>,
             {
-                let mut retries: Option<i64> = None;
+                let mut trigger: Option<crate::datadogV2::model::TriggerAttributes> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,11 +67,8 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesAttem
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "retries" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            retries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "trigger" => {
+                            trigger = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -89,9 +77,10 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesAttem
                         }
                     }
                 }
+                let trigger = trigger.ok_or_else(|| M::Error::missing_field("trigger"))?;
 
-                let content = TestOptimizationFlakyTestsManagementPoliciesAttemptToFix {
-                    retries,
+                let content = TriggerInvestigationRequestDataAttributes {
+                    trigger,
                     additional_properties,
                     _unparsed,
                 };
@@ -100,7 +89,6 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesAttem
             }
         }
 
-        deserializer
-            .deserialize_any(TestOptimizationFlakyTestsManagementPoliciesAttemptToFixVisitor)
+        deserializer.deserialize_any(TriggerInvestigationRequestDataAttributesVisitor)
     }
 }

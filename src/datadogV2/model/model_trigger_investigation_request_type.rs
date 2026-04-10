@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TestOptimizationFlakyTestsManagementPoliciesDisabledStatus {
-    ACTIVE,
-    QUARANTINED,
+pub enum TriggerInvestigationRequestType {
+    TRIGGER_INVESTIGATION_REQUEST,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TestOptimizationFlakyTestsManagementPoliciesDisabledStatus {
+impl ToString for TriggerInvestigationRequestType {
     fn to_string(&self) -> String {
         match self {
-            Self::ACTIVE => String::from("active"),
-            Self::QUARANTINED => String::from("quarantined"),
+            Self::TRIGGER_INVESTIGATION_REQUEST => String::from("trigger_investigation_request"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TestOptimizationFlakyTestsManagementPoliciesDisabledStatus {
+impl Serialize for TriggerInvestigationRequestType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,15 +32,14 @@ impl Serialize for TestOptimizationFlakyTestsManagementPoliciesDisabledStatus {
     }
 }
 
-impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesDisabledStatus {
+impl<'de> Deserialize<'de> for TriggerInvestigationRequestType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "active" => Self::ACTIVE,
-            "quarantined" => Self::QUARANTINED,
+            "trigger_investigation_request" => Self::TRIGGER_INVESTIGATION_REQUEST,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

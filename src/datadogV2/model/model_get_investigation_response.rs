@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for requesting Flaky Tests Management policies.
+/// Response for a single Bits AI investigation.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes {
-    /// The repository identifier.
-    #[serde(rename = "repository_id")]
-    pub repository_id: String,
+pub struct GetInvestigationResponse {
+    /// Data for the get investigation response.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::GetInvestigationResponseData,
+    /// Links related to the investigation.
+    #[serde(rename = "links")]
+    pub links: crate::datadogV2::model::GetInvestigationResponseLinks,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,12 +24,14 @@ pub struct TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes {
+impl GetInvestigationResponse {
     pub fn new(
-        repository_id: String,
-    ) -> TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes {
-        TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes {
-            repository_id,
+        data: crate::datadogV2::model::GetInvestigationResponseData,
+        links: crate::datadogV2::model::GetInvestigationResponseLinks,
+    ) -> GetInvestigationResponse {
+        GetInvestigationResponse {
+            data,
+            links,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -41,14 +46,14 @@ impl TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes {
+impl<'de> Deserialize<'de> for GetInvestigationResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributesVisitor;
-        impl<'a> Visitor<'a> for TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributesVisitor {
-            type Value = TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes;
+        struct GetInvestigationResponseVisitor;
+        impl<'a> Visitor<'a> for GetInvestigationResponseVisitor {
+            type Value = GetInvestigationResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +63,9 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesGetRe
             where
                 M: MapAccess<'a>,
             {
-                let mut repository_id: Option<String> = None;
+                let mut data: Option<crate::datadogV2::model::GetInvestigationResponseData> = None;
+                let mut links: Option<crate::datadogV2::model::GetInvestigationResponseLinks> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -67,9 +74,11 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesGetRe
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "repository_id" => {
-                            repository_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "links" => {
+                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -78,11 +87,12 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesGetRe
                         }
                     }
                 }
-                let repository_id =
-                    repository_id.ok_or_else(|| M::Error::missing_field("repository_id"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
+                let links = links.ok_or_else(|| M::Error::missing_field("links"))?;
 
-                let content = TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributes {
-                    repository_id,
+                let content = GetInvestigationResponse {
+                    data,
+                    links,
                     additional_properties,
                     _unparsed,
                 };
@@ -91,8 +101,6 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesGetRe
             }
         }
 
-        deserializer.deserialize_any(
-            TestOptimizationFlakyTestsManagementPoliciesGetRequestAttributesVisitor,
-        )
+        deserializer.deserialize_any(GetInvestigationResponseVisitor)
     }
 }

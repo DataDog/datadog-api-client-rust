@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TestOptimizationFlakyTestsManagementPoliciesType {
-    TEST_OPTIMIZATION_FLAKY_TESTS_MANAGEMENT_POLICIES,
+pub enum TriggerType {
+    MONITOR_ALERT_TRIGGER,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TestOptimizationFlakyTestsManagementPoliciesType {
+impl ToString for TriggerType {
     fn to_string(&self) -> String {
         match self {
-            Self::TEST_OPTIMIZATION_FLAKY_TESTS_MANAGEMENT_POLICIES => {
-                String::from("test_optimization_flaky_tests_management_policies")
-            }
+            Self::MONITOR_ALERT_TRIGGER => String::from("monitor_alert_trigger"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TestOptimizationFlakyTestsManagementPoliciesType {
+impl Serialize for TriggerType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,16 +32,14 @@ impl Serialize for TestOptimizationFlakyTestsManagementPoliciesType {
     }
 }
 
-impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesType {
+impl<'de> Deserialize<'de> for TriggerType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "test_optimization_flaky_tests_management_policies" => {
-                Self::TEST_OPTIMIZATION_FLAKY_TESTS_MANAGEMENT_POLICIES
-            }
+            "monitor_alert_trigger" => Self::MONITOR_ALERT_TRIGGER,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
