@@ -2609,6 +2609,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_search_ci_app_pipeline_events_with_pagination,
     );
     world.function_mappings.insert(
+        "v2.UpdateFlakyTestsManagementPolicies".into(),
+        test_v2_update_flaky_tests_management_policies,
+    );
+    world.function_mappings.insert(
+        "v2.GetFlakyTestsManagementPolicies".into(),
+        test_v2_get_flaky_tests_management_policies,
+    );
+    world.function_mappings.insert(
         "v2.DeleteTestOptimizationServiceSettings".into(),
         test_v2_delete_test_optimization_service_settings,
     );
@@ -18109,6 +18117,62 @@ fn test_v2_search_ci_app_pipeline_events_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_update_flaky_tests_management_policies(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_test_optimization
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_flaky_tests_management_policies_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_flaky_tests_management_policies(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_test_optimization
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_flaky_tests_management_policies_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_delete_test_optimization_service_settings(
