@@ -6,32 +6,30 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for update Flaky Tests Management policies request.
+/// Data for the trigger investigation request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TestOptimizationFlakyTestsManagementPoliciesUpdateRequestData {
-    /// Attributes for updating Flaky Tests Management policies.
-/// Only provided policy blocks are updated; omitted blocks are left unchanged.
+pub struct TriggerInvestigationRequestData {
+    /// Attributes for the trigger investigation request.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesUpdateRequestAttributes,
-    /// JSON:API type for update Flaky Tests Management policies request.
-/// The value must always be `test_optimization_update_flaky_tests_management_policies_request`.
+    pub attributes: crate::datadogV2::model::TriggerInvestigationRequestDataAttributes,
+    /// The resource type for trigger investigation requests.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::TestOptimizationUpdateFlakyTestsManagementPoliciesRequestDataType,
+    pub type_: crate::datadogV2::model::TriggerInvestigationRequestType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
-impl TestOptimizationFlakyTestsManagementPoliciesUpdateRequestData {
+impl TriggerInvestigationRequestData {
     pub fn new(
-        attributes: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesUpdateRequestAttributes,
-        type_: crate::datadogV2::model::TestOptimizationUpdateFlakyTestsManagementPoliciesRequestDataType,
-    ) -> TestOptimizationFlakyTestsManagementPoliciesUpdateRequestData {
-        TestOptimizationFlakyTestsManagementPoliciesUpdateRequestData {
+        attributes: crate::datadogV2::model::TriggerInvestigationRequestDataAttributes,
+        type_: crate::datadogV2::model::TriggerInvestigationRequestType,
+    ) -> TriggerInvestigationRequestData {
+        TriggerInvestigationRequestData {
             attributes,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -48,14 +46,14 @@ impl TestOptimizationFlakyTestsManagementPoliciesUpdateRequestData {
     }
 }
 
-impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesUpdateRequestData {
+impl<'de> Deserialize<'de> for TriggerInvestigationRequestData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TestOptimizationFlakyTestsManagementPoliciesUpdateRequestDataVisitor;
-        impl<'a> Visitor<'a> for TestOptimizationFlakyTestsManagementPoliciesUpdateRequestDataVisitor {
-            type Value = TestOptimizationFlakyTestsManagementPoliciesUpdateRequestData;
+        struct TriggerInvestigationRequestDataVisitor;
+        impl<'a> Visitor<'a> for TriggerInvestigationRequestDataVisitor {
+            type Value = TriggerInvestigationRequestData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -65,8 +63,11 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesUpdat
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesUpdateRequestAttributes> = None;
-                let mut type_: Option<crate::datadogV2::model::TestOptimizationUpdateFlakyTestsManagementPoliciesRequestDataType> = None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::TriggerInvestigationRequestDataAttributes,
+                > = None;
+                let mut type_: Option<crate::datadogV2::model::TriggerInvestigationRequestType> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,7 +83,7 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesUpdat
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::TestOptimizationUpdateFlakyTestsManagementPoliciesRequestDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::TriggerInvestigationRequestType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -99,7 +100,7 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesUpdat
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = TestOptimizationFlakyTestsManagementPoliciesUpdateRequestData {
+                let content = TriggerInvestigationRequestData {
                     attributes,
                     type_,
                     additional_properties,
@@ -110,7 +111,6 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesUpdat
             }
         }
 
-        deserializer
-            .deserialize_any(TestOptimizationFlakyTestsManagementPoliciesUpdateRequestDataVisitor)
+        deserializer.deserialize_any(TriggerInvestigationRequestDataVisitor)
     }
 }

@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TestOptimizationGetFlakyTestsManagementPoliciesRequestDataType {
-    TEST_OPTIMIZATION_GET_FLAKY_TESTS_MANAGEMENT_POLICIES_REQUEST,
+pub enum TriggerInvestigationResponseType {
+    TRIGGER_INVESTIGATION_RESPONSE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TestOptimizationGetFlakyTestsManagementPoliciesRequestDataType {
+impl ToString for TriggerInvestigationResponseType {
     fn to_string(&self) -> String {
         match self {
-            Self::TEST_OPTIMIZATION_GET_FLAKY_TESTS_MANAGEMENT_POLICIES_REQUEST => {
-                String::from("test_optimization_get_flaky_tests_management_policies_request")
-            }
+            Self::TRIGGER_INVESTIGATION_RESPONSE => String::from("trigger_investigation_response"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TestOptimizationGetFlakyTestsManagementPoliciesRequestDataType {
+impl Serialize for TriggerInvestigationResponseType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,16 +32,14 @@ impl Serialize for TestOptimizationGetFlakyTestsManagementPoliciesRequestDataTyp
     }
 }
 
-impl<'de> Deserialize<'de> for TestOptimizationGetFlakyTestsManagementPoliciesRequestDataType {
+impl<'de> Deserialize<'de> for TriggerInvestigationResponseType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "test_optimization_get_flaky_tests_management_policies_request" => {
-                Self::TEST_OPTIMIZATION_GET_FLAKY_TESTS_MANAGEMENT_POLICIES_REQUEST
-            }
+            "trigger_investigation_response" => Self::TRIGGER_INVESTIGATION_RESPONSE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

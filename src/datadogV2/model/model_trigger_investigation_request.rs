@@ -6,15 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request object for updating Flaky Tests Management policies.
+/// Request to trigger a new investigation.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TestOptimizationFlakyTestsManagementPoliciesUpdateRequest {
-    /// Data object for update Flaky Tests Management policies request.
+pub struct TriggerInvestigationRequest {
+    /// Data for the trigger investigation request.
     #[serde(rename = "data")]
-    pub data:
-        crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesUpdateRequestData,
+    pub data: crate::datadogV2::model::TriggerInvestigationRequestData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,11 +21,11 @@ pub struct TestOptimizationFlakyTestsManagementPoliciesUpdateRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl TestOptimizationFlakyTestsManagementPoliciesUpdateRequest {
+impl TriggerInvestigationRequest {
     pub fn new(
-        data: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesUpdateRequestData,
-    ) -> TestOptimizationFlakyTestsManagementPoliciesUpdateRequest {
-        TestOptimizationFlakyTestsManagementPoliciesUpdateRequest {
+        data: crate::datadogV2::model::TriggerInvestigationRequestData,
+    ) -> TriggerInvestigationRequest {
+        TriggerInvestigationRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -42,14 +41,14 @@ impl TestOptimizationFlakyTestsManagementPoliciesUpdateRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesUpdateRequest {
+impl<'de> Deserialize<'de> for TriggerInvestigationRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TestOptimizationFlakyTestsManagementPoliciesUpdateRequestVisitor;
-        impl<'a> Visitor<'a> for TestOptimizationFlakyTestsManagementPoliciesUpdateRequestVisitor {
-            type Value = TestOptimizationFlakyTestsManagementPoliciesUpdateRequest;
+        struct TriggerInvestigationRequestVisitor;
+        impl<'a> Visitor<'a> for TriggerInvestigationRequestVisitor {
+            type Value = TriggerInvestigationRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -59,7 +58,8 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesUpdat
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesUpdateRequestData> = None;
+                let mut data: Option<crate::datadogV2::model::TriggerInvestigationRequestData> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -80,7 +80,7 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesUpdat
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = TestOptimizationFlakyTestsManagementPoliciesUpdateRequest {
+                let content = TriggerInvestigationRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -90,7 +90,6 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesUpdat
             }
         }
 
-        deserializer
-            .deserialize_any(TestOptimizationFlakyTestsManagementPoliciesUpdateRequestVisitor)
+        deserializer.deserialize_any(TriggerInvestigationRequestVisitor)
     }
 }

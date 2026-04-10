@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TestOptimizationUpdateFlakyTestsManagementPoliciesRequestDataType {
-    TEST_OPTIMIZATION_UPDATE_FLAKY_TESTS_MANAGEMENT_POLICIES_REQUEST,
+pub enum InvestigationType {
+    INVESTIGATION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TestOptimizationUpdateFlakyTestsManagementPoliciesRequestDataType {
+impl ToString for InvestigationType {
     fn to_string(&self) -> String {
         match self {
-            Self::TEST_OPTIMIZATION_UPDATE_FLAKY_TESTS_MANAGEMENT_POLICIES_REQUEST => {
-                String::from("test_optimization_update_flaky_tests_management_policies_request")
-            }
+            Self::INVESTIGATION => String::from("investigation"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TestOptimizationUpdateFlakyTestsManagementPoliciesRequestDataType {
+impl Serialize for InvestigationType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,16 +32,14 @@ impl Serialize for TestOptimizationUpdateFlakyTestsManagementPoliciesRequestData
     }
 }
 
-impl<'de> Deserialize<'de> for TestOptimizationUpdateFlakyTestsManagementPoliciesRequestDataType {
+impl<'de> Deserialize<'de> for InvestigationType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "test_optimization_update_flaky_tests_management_policies_request" => {
-                Self::TEST_OPTIMIZATION_UPDATE_FLAKY_TESTS_MANAGEMENT_POLICIES_REQUEST
-            }
+            "investigation" => Self::INVESTIGATION,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

@@ -141,6 +141,9 @@ impl Default for Configuration {
             ("v2.get_open_api".to_owned(), false),
             ("v2.list_apis".to_owned(), false),
             ("v2.update_open_api".to_owned(), false),
+            ("v2.get_investigation".to_owned(), false),
+            ("v2.list_investigations".to_owned(), false),
+            ("v2.trigger_investigation".to_owned(), false),
             ("v2.create_case_jira_issue".to_owned(), false),
             ("v2.create_case_notebook".to_owned(), false),
             ("v2.create_case_service_now_ticket".to_owned(), false),
@@ -158,17 +161,12 @@ impl Default for Configuration {
                 "v2.delete_test_optimization_service_settings".to_owned(),
                 false,
             ),
-            ("v2.get_flaky_tests_management_policies".to_owned(), false),
             (
                 "v2.get_test_optimization_service_settings".to_owned(),
                 false,
             ),
             ("v2.search_flaky_tests".to_owned(), false),
             ("v2.update_flaky_tests".to_owned(), false),
-            (
-                "v2.update_flaky_tests_management_policies".to_owned(),
-                false,
-            ),
             (
                 "v2.update_test_optimization_service_settings".to_owned(),
                 false,
