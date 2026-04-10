@@ -19,6 +19,10 @@ pub struct ObservabilityPipelineSplunkHecSource {
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
+    /// When `true`, the Splunk HEC token from the incoming request is stored in the event metadata.
+    /// This allows downstream components to forward the token to other Splunk HEC destinations.
+    #[serde(rename = "store_hec_token")]
+    pub store_hec_token: Option<bool>,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
@@ -40,6 +44,7 @@ impl ObservabilityPipelineSplunkHecSource {
         ObservabilityPipelineSplunkHecSource {
             address_key: None,
             id,
+            store_hec_token: None,
             tls: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -49,6 +54,11 @@ impl ObservabilityPipelineSplunkHecSource {
 
     pub fn address_key(mut self, value: String) -> Self {
         self.address_key = Some(value);
+        self
+    }
+
+    pub fn store_hec_token(mut self, value: bool) -> Self {
+        self.store_hec_token = Some(value);
         self
     }
 
@@ -85,6 +95,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecSource {
             {
                 let mut address_key: Option<String> = None;
                 let mut id: Option<String> = None;
+                let mut store_hec_token: Option<bool> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineSplunkHecSourceType,
@@ -106,6 +117,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecSource {
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "store_hec_token" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            store_hec_token =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tls" => {
                             if v.is_null() {
@@ -137,6 +155,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecSource {
                 let content = ObservabilityPipelineSplunkHecSource {
                     address_key,
                     id,
+                    store_hec_token,
                     tls,
                     type_,
                     additional_properties,

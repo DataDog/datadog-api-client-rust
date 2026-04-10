@@ -18,9 +18,10 @@ pub struct ObservabilityPipelineEnrichmentTableFileKeyItems {
     #[serde(rename = "comparison")]
     pub comparison:
         crate::datadogV2::model::ObservabilityPipelineEnrichmentTableFileKeyItemsComparison,
-    /// The `items` `field`.
+    /// Specifies the source of the key value used for enrichment table lookups.
+    /// Can be a plain field path string or an object specifying `event`, `vrl`, or `secret`.
     #[serde(rename = "field")]
-    pub field: String,
+    pub field: crate::datadogV2::model::ObservabilityPipelineEnrichmentTableFileKeyItemField,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -32,7 +33,7 @@ impl ObservabilityPipelineEnrichmentTableFileKeyItems {
     pub fn new(
         column: String,
         comparison: crate::datadogV2::model::ObservabilityPipelineEnrichmentTableFileKeyItemsComparison,
-        field: String,
+        field: crate::datadogV2::model::ObservabilityPipelineEnrichmentTableFileKeyItemField,
     ) -> ObservabilityPipelineEnrichmentTableFileKeyItems {
         ObservabilityPipelineEnrichmentTableFileKeyItems {
             column,
@@ -71,7 +72,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableFileKeyItems 
             {
                 let mut column: Option<String> = None;
                 let mut comparison: Option<crate::datadogV2::model::ObservabilityPipelineEnrichmentTableFileKeyItemsComparison> = None;
-                let mut field: Option<String> = None;
+                let mut field: Option<
+                    crate::datadogV2::model::ObservabilityPipelineEnrichmentTableFileKeyItemField,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -96,6 +99,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineEnrichmentTableFileKeyItems 
                         }
                         "field" => {
                             field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _field) = field {
+                                match _field {
+                                    crate::datadogV2::model::ObservabilityPipelineEnrichmentTableFileKeyItemField::UnparsedObject(_field) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
