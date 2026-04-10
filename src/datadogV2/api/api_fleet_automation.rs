@@ -34,6 +34,43 @@ impl GetFleetDeploymentOptionalParams {
     }
 }
 
+/// ListFleetAgentTracersOptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::list_fleet_agent_tracers`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListFleetAgentTracersOptionalParams {
+    /// Page number for pagination (starts at 0).
+    pub page_number: Option<i64>,
+    /// Number of results per page (must be greater than 0 and less than or equal to 100).
+    pub page_size: Option<i64>,
+    /// Attribute to sort by.
+    pub sort_attribute: Option<String>,
+    /// Sort order (true for descending, false for ascending).
+    pub sort_descending: Option<bool>,
+}
+
+impl ListFleetAgentTracersOptionalParams {
+    /// Page number for pagination (starts at 0).
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Number of results per page (must be greater than 0 and less than or equal to 100).
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Attribute to sort by.
+    pub fn sort_attribute(mut self, value: String) -> Self {
+        self.sort_attribute = Some(value);
+        self
+    }
+    /// Sort order (true for descending, false for ascending).
+    pub fn sort_descending(mut self, value: bool) -> Self {
+        self.sort_descending = Some(value);
+        self
+    }
+}
+
 /// ListFleetAgentsOptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::list_fleet_agents`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -85,6 +122,57 @@ impl ListFleetAgentsOptionalParams {
     }
 }
 
+/// ListFleetClustersOptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::list_fleet_clusters`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListFleetClustersOptionalParams {
+    /// Page number for pagination (starts at 0).
+    pub page_number: Option<i64>,
+    /// Number of results per page (must be greater than 0 and less than or equal to 100).
+    pub page_size: Option<i64>,
+    /// Attribute to sort by.
+    pub sort_attribute: Option<String>,
+    /// Sort order (true for descending, false for ascending).
+    pub sort_descending: Option<bool>,
+    /// Filter string for narrowing down cluster results.
+    pub filter: Option<String>,
+    /// Comma-separated list of tags to filter clusters.
+    pub tags: Option<String>,
+}
+
+impl ListFleetClustersOptionalParams {
+    /// Page number for pagination (starts at 0).
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Number of results per page (must be greater than 0 and less than or equal to 100).
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Attribute to sort by.
+    pub fn sort_attribute(mut self, value: String) -> Self {
+        self.sort_attribute = Some(value);
+        self
+    }
+    /// Sort order (true for descending, false for ascending).
+    pub fn sort_descending(mut self, value: bool) -> Self {
+        self.sort_descending = Some(value);
+        self
+    }
+    /// Filter string for narrowing down cluster results.
+    pub fn filter(mut self, value: String) -> Self {
+        self.filter = Some(value);
+        self
+    }
+    /// Comma-separated list of tags to filter clusters.
+    pub fn tags(mut self, value: String) -> Self {
+        self.tags = Some(value);
+        self
+    }
+}
+
 /// ListFleetDeploymentsOptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::list_fleet_deployments`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -104,6 +192,50 @@ impl ListFleetDeploymentsOptionalParams {
     /// Index of the first deployment to return. Use this with `page_size` to paginate through results.
     pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
+        self
+    }
+}
+
+/// ListFleetTracersOptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::list_fleet_tracers`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListFleetTracersOptionalParams {
+    /// Page number for pagination (starts at 0).
+    pub page_number: Option<i64>,
+    /// Number of results per page (must be greater than 0 and less than or equal to 100).
+    pub page_size: Option<i64>,
+    /// Attribute to sort by.
+    pub sort_attribute: Option<String>,
+    /// Sort order (true for descending, false for ascending).
+    pub sort_descending: Option<bool>,
+    /// Filter string for narrowing down tracer results.
+    pub filter: Option<String>,
+}
+
+impl ListFleetTracersOptionalParams {
+    /// Page number for pagination (starts at 0).
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Number of results per page (must be greater than 0 and less than or equal to 100).
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Attribute to sort by.
+    pub fn sort_attribute(mut self, value: String) -> Self {
+        self.sort_attribute = Some(value);
+        self
+    }
+    /// Sort order (true for descending, false for ascending).
+    pub fn sort_descending(mut self, value: bool) -> Self {
+        self.sort_descending = Some(value);
+        self
+    }
+    /// Filter string for narrowing down tracer results.
+    pub fn filter(mut self, value: String) -> Self {
+        self.filter = Some(value);
         self
     }
 }
@@ -172,6 +304,14 @@ pub enum GetFleetScheduleError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListFleetAgentTracersError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_agent_tracers`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListFleetAgentTracersError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListFleetAgentVersionsError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_agent_versions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -188,6 +328,14 @@ pub enum ListFleetAgentsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListFleetClustersError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_clusters`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListFleetClustersError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListFleetDeploymentsError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_deployments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -196,10 +344,26 @@ pub enum ListFleetDeploymentsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListFleetInstrumentedPodsError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_instrumented_pods`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListFleetInstrumentedPodsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListFleetSchedulesError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_schedules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListFleetSchedulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListFleetTracersError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_tracers`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListFleetTracersError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1510,6 +1674,157 @@ impl FleetAutomationAPI {
         }
     }
 
+    /// Retrieve a paginated list of tracers for a specific agent.
+    ///
+    /// This endpoint returns tracers associated with a given agent key, identified by the
+    /// agent's hostname. Use this to discover telemetry-derived service names for a particular host.
+    pub async fn list_fleet_agent_tracers(
+        &self,
+        agent_key: String,
+        params: ListFleetAgentTracersOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::FleetTracersResponse,
+        datadog::Error<ListFleetAgentTracersError>,
+    > {
+        match self
+            .list_fleet_agent_tracers_with_http_info(agent_key, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieve a paginated list of tracers for a specific agent.
+    ///
+    /// This endpoint returns tracers associated with a given agent key, identified by the
+    /// agent's hostname. Use this to discover telemetry-derived service names for a particular host.
+    pub async fn list_fleet_agent_tracers_with_http_info(
+        &self,
+        agent_key: String,
+        params: ListFleetAgentTracersOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FleetTracersResponse>,
+        datadog::Error<ListFleetAgentTracersError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_fleet_agent_tracers";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_fleet_agent_tracers' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_number = params.page_number;
+        let page_size = params.page_size;
+        let sort_attribute = params.sort_attribute;
+        let sort_descending = params.sort_descending;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/unstable/fleet/agents/{agent_key}/tracers",
+            local_configuration.get_operation_host(operation_id),
+            agent_key = datadog::urlencode(agent_key)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page_number", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_attribute {
+            local_req_builder =
+                local_req_builder.query(&[("sort_attribute", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_descending {
+            local_req_builder =
+                local_req_builder.query(&[("sort_descending", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FleetTracersResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListFleetAgentTracersError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Retrieve a list of all available Datadog Agent versions.
     ///
     /// This endpoint returns the available Agent versions that can be deployed to your fleet.
@@ -1783,6 +2098,163 @@ impl FleetAutomationAPI {
         }
     }
 
+    /// Retrieve a paginated list of Kubernetes clusters in the fleet.
+    ///
+    /// This endpoint returns clusters with metadata including node counts, agent versions,
+    /// enabled products, and associated services. Use the `page_number` and `page_size`
+    /// query parameters to paginate through results.
+    pub async fn list_fleet_clusters(
+        &self,
+        params: ListFleetClustersOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::FleetClustersResponse,
+        datadog::Error<ListFleetClustersError>,
+    > {
+        match self.list_fleet_clusters_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieve a paginated list of Kubernetes clusters in the fleet.
+    ///
+    /// This endpoint returns clusters with metadata including node counts, agent versions,
+    /// enabled products, and associated services. Use the `page_number` and `page_size`
+    /// query parameters to paginate through results.
+    pub async fn list_fleet_clusters_with_http_info(
+        &self,
+        params: ListFleetClustersOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FleetClustersResponse>,
+        datadog::Error<ListFleetClustersError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_fleet_clusters";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_fleet_clusters' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_number = params.page_number;
+        let page_size = params.page_size;
+        let sort_attribute = params.sort_attribute;
+        let sort_descending = params.sort_descending;
+        let filter = params.filter;
+        let tags = params.tags;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/unstable/fleet/clusters",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page_number", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_attribute {
+            local_req_builder =
+                local_req_builder.query(&[("sort_attribute", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_descending {
+            local_req_builder =
+                local_req_builder.query(&[("sort_descending", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = tags {
+            local_req_builder =
+                local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FleetClustersResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListFleetClustersError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Retrieve a list of all deployments for fleet automation.
     /// Use the `page_size` and `page_offset` parameters to paginate results.
     pub async fn list_fleet_deployments(
@@ -1914,6 +2386,136 @@ impl FleetAutomationAPI {
         }
     }
 
+    /// Retrieve the list of pods targeted for Single Step Instrumentation (SSI) injection
+    /// in a specific Kubernetes cluster.
+    ///
+    /// This endpoint returns pod groups organized by owner reference (deployment, statefulset, etc.)
+    /// with their injection annotations and applied targets. Use the clusters list endpoint
+    /// to discover available cluster names.
+    pub async fn list_fleet_instrumented_pods(
+        &self,
+        cluster_name: String,
+    ) -> Result<
+        crate::datadogV2::model::FleetInstrumentedPodsResponse,
+        datadog::Error<ListFleetInstrumentedPodsError>,
+    > {
+        match self
+            .list_fleet_instrumented_pods_with_http_info(cluster_name)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieve the list of pods targeted for Single Step Instrumentation (SSI) injection
+    /// in a specific Kubernetes cluster.
+    ///
+    /// This endpoint returns pod groups organized by owner reference (deployment, statefulset, etc.)
+    /// with their injection annotations and applied targets. Use the clusters list endpoint
+    /// to discover available cluster names.
+    pub async fn list_fleet_instrumented_pods_with_http_info(
+        &self,
+        cluster_name: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FleetInstrumentedPodsResponse>,
+        datadog::Error<ListFleetInstrumentedPodsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_fleet_instrumented_pods";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_fleet_instrumented_pods' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/unstable/fleet/clusters/{cluster_name}/instrumented_pods",
+            local_configuration.get_operation_host(operation_id),
+            cluster_name = datadog::urlencode(cluster_name)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FleetInstrumentedPodsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListFleetInstrumentedPodsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Retrieve a list of all schedules for automated fleet deployments.
     ///
     /// Schedules allow you to automate package upgrades by defining maintenance windows
@@ -2026,6 +2628,158 @@ impl FleetAutomationAPI {
             };
         } else {
             let local_entity: Option<ListFleetSchedulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieve a paginated list of all fleet tracers.
+    ///
+    /// This endpoint returns telemetry-derived service names from the SDK telemetry pipeline.
+    /// These names may differ from span-derived names in APM and are useful for querying
+    /// service library configurations.
+    /// Use the `page_number` and `page_size` query parameters to paginate through results.
+    pub async fn list_fleet_tracers(
+        &self,
+        params: ListFleetTracersOptionalParams,
+    ) -> Result<crate::datadogV2::model::FleetTracersResponse, datadog::Error<ListFleetTracersError>>
+    {
+        match self.list_fleet_tracers_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieve a paginated list of all fleet tracers.
+    ///
+    /// This endpoint returns telemetry-derived service names from the SDK telemetry pipeline.
+    /// These names may differ from span-derived names in APM and are useful for querying
+    /// service library configurations.
+    /// Use the `page_number` and `page_size` query parameters to paginate through results.
+    pub async fn list_fleet_tracers_with_http_info(
+        &self,
+        params: ListFleetTracersOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FleetTracersResponse>,
+        datadog::Error<ListFleetTracersError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_fleet_tracers";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_fleet_tracers' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_number = params.page_number;
+        let page_size = params.page_size;
+        let sort_attribute = params.sort_attribute;
+        let sort_descending = params.sort_descending;
+        let filter = params.filter;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/unstable/fleet/tracers",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page_number", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_attribute {
+            local_req_builder =
+                local_req_builder.query(&[("sort_attribute", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_descending {
+            local_req_builder =
+                local_req_builder.query(&[("sort_descending", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FleetTracersResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListFleetTracersError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

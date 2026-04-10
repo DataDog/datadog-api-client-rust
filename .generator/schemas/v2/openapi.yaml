@@ -27071,6 +27071,155 @@ components:
           format: int64
           type: integer
       type: object
+    FleetClusterAttributes:
+      description: Attributes of a Kubernetes cluster in the fleet.
+      properties:
+        agent_versions:
+          description: Datadog Agent versions running in the cluster.
+          items:
+            description: A Datadog Agent version string.
+            type: string
+          type: array
+        api_key_names:
+          description: API key names used by agents in the cluster.
+          items:
+            description: An API key name.
+            type: string
+          type: array
+        api_key_uuids:
+          description: API key UUIDs used by agents in the cluster.
+          items:
+            description: An API key UUID.
+            type: string
+          type: array
+        cloud_providers:
+          description: Cloud providers hosting the cluster.
+          items:
+            description: A cloud provider name.
+            type: string
+          type: array
+        cluster_name:
+          description: The name of the Kubernetes cluster.
+          example: "production-us-east-1"
+          type: string
+        enabled_products:
+          description: Datadog products enabled in the cluster.
+          items:
+            description: A Datadog product name.
+            type: string
+          type: array
+        envs:
+          description: Environments associated with the cluster.
+          items:
+            description: An environment name.
+            type: string
+          type: array
+        first_seen_at:
+          description: Timestamp when the cluster was first seen.
+          format: int64
+          type: integer
+        install_method_tool:
+          description: The tool used to install agents in the cluster.
+          example: "helm"
+          type: string
+        node_count:
+          description: Total number of nodes in the cluster.
+          example: 25
+          format: int64
+          type: integer
+        node_count_by_status:
+          $ref: "#/components/schemas/FleetClusterNodeCountByStatus"
+        operating_systems:
+          description: Operating systems of nodes in the cluster.
+          items:
+            description: An operating system name.
+            type: string
+          type: array
+        otel_collector_distributions:
+          description: OpenTelemetry collector distributions in the cluster.
+          items:
+            description: An OpenTelemetry collector distribution name.
+            type: string
+          type: array
+        otel_collector_versions:
+          description: OpenTelemetry collector versions in the cluster.
+          items:
+            description: An OpenTelemetry collector version string.
+            type: string
+          type: array
+        pod_count_by_state:
+          $ref: "#/components/schemas/FleetClusterPodCountByState"
+        services:
+          description: Services running in the cluster.
+          items:
+            description: A service name.
+            type: string
+          type: array
+        teams:
+          description: Teams associated with the cluster.
+          items:
+            description: A team name.
+            type: string
+          type: array
+      type: object
+    FleetClusterNodeCountByStatus:
+      additionalProperties:
+        format: int64
+        type: integer
+      description: Node counts grouped by status.
+      type: object
+    FleetClusterPodCountByState:
+      additionalProperties:
+        format: int64
+        type: integer
+      description: Pod counts grouped by state.
+      type: object
+    FleetClustersResponse:
+      description: Response containing a paginated list of fleet clusters.
+      properties:
+        data:
+          $ref: "#/components/schemas/FleetClustersResponseData"
+        meta:
+          $ref: "#/components/schemas/FleetClustersResponseMeta"
+      required:
+        - data
+      type: object
+    FleetClustersResponseData:
+      description: The response data containing status and clusters array.
+      properties:
+        attributes:
+          $ref: "#/components/schemas/FleetClustersResponseDataAttributes"
+        id:
+          description: Status identifier.
+          example: "done"
+          type: string
+        type:
+          description: Resource type.
+          example: "status"
+          type: string
+      required:
+        - id
+        - type
+        - attributes
+      type: object
+    FleetClustersResponseDataAttributes:
+      description: Attributes of the fleet clusters response containing the list of clusters.
+      properties:
+        clusters:
+          description: Array of clusters matching the query criteria.
+          items:
+            $ref: "#/components/schemas/FleetClusterAttributes"
+          type: array
+      type: object
+    FleetClustersResponseMeta:
+      description: Metadata for the list of clusters response.
+      properties:
+        total_filtered_count:
+          description: Total number of clusters matching the filter criteria across all pages.
+          example: 12
+          format: int64
+          type: integer
+      type: object
     FleetConfigurationFile:
       description: A configuration file for an integration.
       properties:
@@ -27420,6 +27569,93 @@ components:
           example: "postgres"
           type: string
       type: object
+    FleetInstrumentedPodGroupAttributes:
+      description: Attributes of a group of instrumented pods targeted for SSI injection.
+      properties:
+        applied_target:
+          additionalProperties: {}
+          description: The SSI injection target configuration applied to the pod group.
+          type: object
+        applied_target_name:
+          description: The name of the applied SSI injection target.
+          example: "my-injection-target"
+          type: string
+        injected_tags:
+          description: Tags injected into the pods by the Admission Controller.
+          items:
+            description: An injected tag string.
+            type: string
+          type: array
+        kube_ownerref_kind:
+          description: The kind of the Kubernetes owner reference.
+          example: "Deployment"
+          type: string
+        kube_ownerref_name:
+          description: The name of the Kubernetes owner reference (deployment, statefulset, etc.).
+          example: "inventory-service"
+          type: string
+        lib_injection_annotations:
+          description: Library injection annotations on the pod group.
+          items:
+            description: A library injection annotation string.
+            type: string
+          type: array
+        namespace:
+          description: The Kubernetes namespace of the pod group.
+          example: "default"
+          type: string
+        pod_count:
+          description: Total number of pods in the group.
+          example: 3
+          format: int64
+          type: integer
+        pod_names:
+          description: Names of the individual pods in the group.
+          items:
+            description: A Kubernetes pod name.
+            type: string
+          type: array
+        tags:
+          additionalProperties:
+            type: string
+          description: Additional tags associated with the pod group.
+          type: object
+      type: object
+    FleetInstrumentedPodsResponse:
+      description: Response containing instrumented pods for a Kubernetes cluster.
+      properties:
+        data:
+          $ref: "#/components/schemas/FleetInstrumentedPodsResponseData"
+      required:
+        - data
+      type: object
+    FleetInstrumentedPodsResponseData:
+      description: The response data containing the cluster name and instrumented pod groups.
+      properties:
+        attributes:
+          $ref: "#/components/schemas/FleetInstrumentedPodsResponseDataAttributes"
+        id:
+          description: The cluster name identifier.
+          example: "production-us-east-1"
+          type: string
+        type:
+          description: Resource type.
+          example: "cluster_name"
+          type: string
+      required:
+        - id
+        - type
+        - attributes
+      type: object
+    FleetInstrumentedPodsResponseDataAttributes:
+      description: Attributes of the instrumented pods response containing the list of pod groups.
+      properties:
+        groups:
+          description: Array of instrumented pod groups in the cluster.
+          items:
+            $ref: "#/components/schemas/FleetInstrumentedPodGroupAttributes"
+          type: array
+      type: object
     FleetIntegrationDetails:
       description: Detailed information about a single integration.
       properties:
@@ -27728,6 +27964,98 @@ components:
           type: array
       required:
         - data
+      type: object
+    FleetTracerAttributes:
+      description: Attributes of a fleet tracer representing a service instance reporting telemetry.
+      properties:
+        env:
+          description: The environment the tracer is reporting from.
+          example: "production"
+          type: string
+        hostname:
+          description: The hostname where the tracer is running.
+          example: "my-hostname"
+          type: string
+        language:
+          description: The programming language of the traced application.
+          example: "java"
+          type: string
+        language_version:
+          description: The version of the programming language runtime.
+          example: "17.0.1"
+          type: string
+        remote_config_status:
+          description: The remote configuration status of the tracer.
+          example: "connected"
+          type: string
+        runtime_ids:
+          description: Runtime identifiers for the tracer instances.
+          items:
+            description: A runtime identifier for a tracer instance.
+            type: string
+          type: array
+        service:
+          description: The telemetry-derived service name reported by the tracer.
+          example: "inventory-service"
+          type: string
+        service_hostname:
+          description: The service hostname reported by the tracer.
+          example: "my-service-host"
+          type: string
+        service_version:
+          description: The version of the traced service.
+          example: "2.1.0"
+          type: string
+        tracer_version:
+          description: The version of the Datadog tracer library.
+          example: "1.32.0"
+          type: string
+      type: object
+    FleetTracersResponse:
+      description: Response containing a paginated list of fleet tracers.
+      properties:
+        data:
+          $ref: "#/components/schemas/FleetTracersResponseData"
+        meta:
+          $ref: "#/components/schemas/FleetTracersResponseMeta"
+      required:
+        - data
+      type: object
+    FleetTracersResponseData:
+      description: The response data containing status and tracers array.
+      properties:
+        attributes:
+          $ref: "#/components/schemas/FleetTracersResponseDataAttributes"
+        id:
+          description: Status identifier.
+          example: "done"
+          type: string
+        type:
+          description: Resource type.
+          example: "status"
+          type: string
+      required:
+        - id
+        - type
+        - attributes
+      type: object
+    FleetTracersResponseDataAttributes:
+      description: Attributes of the fleet tracers response containing the list of tracers.
+      properties:
+        tracers:
+          description: Array of tracers matching the query criteria.
+          items:
+            $ref: "#/components/schemas/FleetTracerAttributes"
+          type: array
+      type: object
+    FleetTracersResponseMeta:
+      description: Metadata for the list of tracers response.
+      properties:
+        total_filtered_count:
+          description: Total number of tracers matching the filter criteria across all pages.
+          example: 42
+          format: int64
+          type: integer
       type: object
     FormTrigger:
       description: "Trigger a workflow from a Form."
@@ -75614,6 +75942,214 @@ paths:
       x-unstable: |-
         This endpoint is in Preview and may introduce breaking changes.
         If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/).
+  /api/unstable/fleet/agents/{agent_key}/tracers:
+    get:
+      description: |-
+        Retrieve a paginated list of tracers for a specific agent.
+
+        This endpoint returns tracers associated with a given agent key, identified by the
+        agent's hostname. Use this to discover telemetry-derived service names for a particular host.
+      operationId: ListFleetAgentTracers
+      parameters:
+        - description: The unique identifier (agent key) for the Datadog Agent.
+          in: path
+          name: agent_key
+          required: true
+          schema:
+            type: string
+        - description: Page number for pagination (starts at 0).
+          in: query
+          name: page_number
+          required: false
+          schema:
+            default: 0
+            format: int64
+            minimum: 0
+            type: integer
+        - description: Number of results per page (must be greater than 0 and less than or equal to 100).
+          in: query
+          name: page_size
+          required: false
+          schema:
+            default: 10
+            format: int64
+            maximum: 100
+            minimum: 1
+            type: integer
+        - description: Attribute to sort by.
+          in: query
+          name: sort_attribute
+          required: false
+          schema:
+            type: string
+        - description: Sort order (true for descending, false for ascending).
+          in: query
+          name: sort_descending
+          required: false
+          schema:
+            default: true
+            type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FleetTracersResponse"
+          description: OK
+        "400":
+          $ref: "#/components/responses/BadRequestResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequestsResponse"
+      security:
+        - apiKeyAuth: []
+          appKeyAuth: []
+      summary: List tracers for a specific agent
+      tags:
+        - Fleet Automation
+      "x-permission":
+        operator: AND
+        permissions:
+          - hosts_read
+      x-unstable: |-
+        This endpoint is in Preview and may introduce breaking changes.
+        If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/).
+  /api/unstable/fleet/clusters:
+    get:
+      description: |-
+        Retrieve a paginated list of Kubernetes clusters in the fleet.
+
+        This endpoint returns clusters with metadata including node counts, agent versions,
+        enabled products, and associated services. Use the `page_number` and `page_size`
+        query parameters to paginate through results.
+      operationId: ListFleetClusters
+      parameters:
+        - description: Page number for pagination (starts at 0).
+          in: query
+          name: page_number
+          required: false
+          schema:
+            default: 0
+            format: int64
+            minimum: 0
+            type: integer
+        - description: Number of results per page (must be greater than 0 and less than or equal to 100).
+          in: query
+          name: page_size
+          required: false
+          schema:
+            default: 10
+            format: int64
+            maximum: 100
+            minimum: 1
+            type: integer
+        - description: Attribute to sort by.
+          in: query
+          name: sort_attribute
+          required: false
+          schema:
+            type: string
+        - description: Sort order (true for descending, false for ascending).
+          in: query
+          name: sort_descending
+          required: false
+          schema:
+            type: boolean
+        - description: Filter string for narrowing down cluster results.
+          example: "cluster_name:production"
+          in: query
+          name: filter
+          required: false
+          schema:
+            type: string
+        - description: Comma-separated list of tags to filter clusters.
+          in: query
+          name: tags
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FleetClustersResponse"
+          description: OK
+        "400":
+          $ref: "#/components/responses/BadRequestResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequestsResponse"
+      security:
+        - apiKeyAuth: []
+          appKeyAuth: []
+      summary: List all fleet clusters
+      tags:
+        - Fleet Automation
+      "x-permission":
+        operator: AND
+        permissions:
+          - hosts_read
+      x-unstable: |-
+        This endpoint is in Preview and may introduce breaking changes.
+        If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/).
+  /api/unstable/fleet/clusters/{cluster_name}/instrumented_pods:
+    get:
+      description: |-
+        Retrieve the list of pods targeted for Single Step Instrumentation (SSI) injection
+        in a specific Kubernetes cluster.
+
+        This endpoint returns pod groups organized by owner reference (deployment, statefulset, etc.)
+        with their injection annotations and applied targets. Use the clusters list endpoint
+        to discover available cluster names.
+      operationId: ListFleetInstrumentedPods
+      parameters:
+        - description: The name of the Kubernetes cluster.
+          in: path
+          name: cluster_name
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FleetInstrumentedPodsResponse"
+          description: OK
+        "400":
+          $ref: "#/components/responses/BadRequestResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequestsResponse"
+      security:
+        - apiKeyAuth: []
+          appKeyAuth: []
+      summary: List instrumented pods for a cluster
+      tags:
+        - Fleet Automation
+      "x-permission":
+        operator: AND
+        permissions:
+          - hosts_read
+      x-unstable: |-
+        This endpoint is in Preview and may introduce breaking changes.
+        If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/).
   /api/unstable/fleet/deployments:
     get:
       description: |-
@@ -76403,6 +76939,86 @@ paths:
         operator: AND
         permissions:
           - agent_upgrade_write
+      x-unstable: |-
+        This endpoint is in Preview and may introduce breaking changes.
+        If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/).
+  /api/unstable/fleet/tracers:
+    get:
+      description: |-
+        Retrieve a paginated list of all fleet tracers.
+
+        This endpoint returns telemetry-derived service names from the SDK telemetry pipeline.
+        These names may differ from span-derived names in APM and are useful for querying
+        service library configurations.
+        Use the `page_number` and `page_size` query parameters to paginate through results.
+      operationId: ListFleetTracers
+      parameters:
+        - description: Page number for pagination (starts at 0).
+          in: query
+          name: page_number
+          required: false
+          schema:
+            default: 0
+            format: int64
+            minimum: 0
+            type: integer
+        - description: Number of results per page (must be greater than 0 and less than or equal to 100).
+          in: query
+          name: page_size
+          required: false
+          schema:
+            default: 10
+            format: int64
+            maximum: 100
+            minimum: 1
+            type: integer
+        - description: Attribute to sort by.
+          in: query
+          name: sort_attribute
+          required: false
+          schema:
+            type: string
+        - description: Sort order (true for descending, false for ascending).
+          in: query
+          name: sort_descending
+          required: false
+          schema:
+            default: true
+            type: boolean
+        - description: Filter string for narrowing down tracer results.
+          example: "hostname:my-host OR env:prod"
+          in: query
+          name: filter
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FleetTracersResponse"
+          description: OK
+        "400":
+          $ref: "#/components/responses/BadRequestResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequestsResponse"
+      security:
+        - apiKeyAuth: []
+          appKeyAuth: []
+      summary: List all fleet tracers
+      tags:
+        - Fleet Automation
+      "x-permission":
+        operator: AND
+        permissions:
+          - hosts_read
       x-unstable: |-
         This endpoint is in Preview and may introduce breaking changes.
         If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/).
