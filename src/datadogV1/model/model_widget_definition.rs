@@ -13,11 +13,15 @@ pub enum WidgetDefinition {
     BarChartWidgetDefinition(Box<crate::datadogV1::model::BarChartWidgetDefinition>),
     ChangeWidgetDefinition(Box<crate::datadogV1::model::ChangeWidgetDefinition>),
     CheckStatusWidgetDefinition(Box<crate::datadogV1::model::CheckStatusWidgetDefinition>),
+    CohortWidgetDefinition(Box<crate::datadogV1::model::CohortWidgetDefinition>),
     DistributionWidgetDefinition(Box<crate::datadogV1::model::DistributionWidgetDefinition>),
     EventStreamWidgetDefinition(Box<crate::datadogV1::model::EventStreamWidgetDefinition>),
     EventTimelineWidgetDefinition(Box<crate::datadogV1::model::EventTimelineWidgetDefinition>),
     FreeTextWidgetDefinition(Box<crate::datadogV1::model::FreeTextWidgetDefinition>),
     FunnelWidgetDefinition(Box<crate::datadogV1::model::FunnelWidgetDefinition>),
+    ProductAnalyticsFunnelWidgetDefinition(
+        Box<crate::datadogV1::model::ProductAnalyticsFunnelWidgetDefinition>,
+    ),
     GeomapWidgetDefinition(Box<crate::datadogV1::model::GeomapWidgetDefinition>),
     GroupWidgetDefinition(Box<crate::datadogV1::model::GroupWidgetDefinition>),
     HeatMapWidgetDefinition(Box<crate::datadogV1::model::HeatMapWidgetDefinition>),
@@ -30,6 +34,7 @@ pub enum WidgetDefinition {
     NoteWidgetDefinition(Box<crate::datadogV1::model::NoteWidgetDefinition>),
     PowerpackWidgetDefinition(Box<crate::datadogV1::model::PowerpackWidgetDefinition>),
     QueryValueWidgetDefinition(Box<crate::datadogV1::model::QueryValueWidgetDefinition>),
+    RetentionCurveWidgetDefinition(Box<crate::datadogV1::model::RetentionCurveWidgetDefinition>),
     RunWorkflowWidgetDefinition(Box<crate::datadogV1::model::RunWorkflowWidgetDefinition>),
     SLOListWidgetDefinition(Box<crate::datadogV1::model::SLOListWidgetDefinition>),
     SLOWidgetDefinition(Box<crate::datadogV1::model::SLOWidgetDefinition>),
@@ -93,6 +98,13 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
                 return Ok(WidgetDefinition::CheckStatusWidgetDefinition(_v));
             }
         }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::CohortWidgetDefinition>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(WidgetDefinition::CohortWidgetDefinition(_v));
+            }
+        }
         if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV1::model::DistributionWidgetDefinition>,
         >(value.clone())
@@ -130,6 +142,14 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         ) {
             if !_v._unparsed {
                 return Ok(WidgetDefinition::FunnelWidgetDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::ProductAnalyticsFunnelWidgetDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(WidgetDefinition::ProductAnalyticsFunnelWidgetDefinition(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::GeomapWidgetDefinition>>(
@@ -221,6 +241,14 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         {
             if !_v._unparsed {
                 return Ok(WidgetDefinition::QueryValueWidgetDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::RetentionCurveWidgetDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(WidgetDefinition::RetentionCurveWidgetDefinition(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<

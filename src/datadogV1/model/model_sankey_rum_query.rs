@@ -32,7 +32,7 @@ pub struct SankeyRumQuery {
     /// Filter applied to occurrence counts when building a Product Analytics audience.
     #[serde(rename = "occurrences")]
     pub occurrences: Option<crate::datadogV1::model::ProductAnalyticsAudienceOccurrenceFilter>,
-    /// Query string.
+    /// RUM event search query used to filter views or actions.
     #[serde(rename = "query_string")]
     pub query_string: String,
     /// Source.

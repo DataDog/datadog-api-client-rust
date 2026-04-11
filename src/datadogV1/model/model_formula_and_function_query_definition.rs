@@ -32,6 +32,15 @@ pub enum FormulaAndFunctionQueryDefinition {
     FormulaAndFunctionCloudCostQueryDefinition(
         Box<crate::datadogV1::model::FormulaAndFunctionCloudCostQueryDefinition>,
     ),
+    FormulaAndFunctionProductAnalyticsExtendedQueryDefinition(
+        Box<crate::datadogV1::model::FormulaAndFunctionProductAnalyticsExtendedQueryDefinition>,
+    ),
+    FormulaAndFunctionUserJourneyQueryDefinition(
+        Box<crate::datadogV1::model::FormulaAndFunctionUserJourneyQueryDefinition>,
+    ),
+    FormulaAndFunctionRetentionQueryDefinition(
+        Box<crate::datadogV1::model::FormulaAndFunctionRetentionQueryDefinition>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -116,6 +125,38 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionQueryDefinition {
             if !_v._unparsed {
                 return Ok(
                     FormulaAndFunctionQueryDefinition::FormulaAndFunctionCloudCostQueryDefinition(
+                        _v,
+                    ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::FormulaAndFunctionProductAnalyticsExtendedQueryDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(FormulaAndFunctionQueryDefinition::FormulaAndFunctionProductAnalyticsExtendedQueryDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::FormulaAndFunctionUserJourneyQueryDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    FormulaAndFunctionQueryDefinition::FormulaAndFunctionUserJourneyQueryDefinition(
+                        _v,
+                    ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::FormulaAndFunctionRetentionQueryDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    FormulaAndFunctionQueryDefinition::FormulaAndFunctionRetentionQueryDefinition(
                         _v,
                     ),
                 );
