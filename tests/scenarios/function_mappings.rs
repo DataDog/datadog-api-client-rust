@@ -2038,6 +2038,17 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.GetFleetAgentInfo".into(), test_v2_get_fleet_agent_info);
     world.function_mappings.insert(
+        "v2.ListFleetAgentTracers".into(),
+        test_v2_list_fleet_agent_tracers,
+    );
+    world
+        .function_mappings
+        .insert("v2.ListFleetClusters".into(), test_v2_list_fleet_clusters);
+    world.function_mappings.insert(
+        "v2.ListFleetInstrumentedPods".into(),
+        test_v2_list_fleet_instrumented_pods,
+    );
+    world.function_mappings.insert(
         "v2.ListFleetDeployments".into(),
         test_v2_list_fleet_deployments,
     );
@@ -2078,6 +2089,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.TriggerFleetSchedule".into(),
         test_v2_trigger_fleet_schedule,
     );
+    world
+        .function_mappings
+        .insert("v2.ListFleetTracers".into(), test_v2_list_fleet_tracers);
     world
         .function_mappings
         .insert("v2.ListDatastores".into(), test_v2_list_datastores);
@@ -13084,6 +13098,130 @@ fn test_v2_get_fleet_agent_info(world: &mut DatadogWorld, _parameters: &HashMap<
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_fleet_agent_tracers(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let agent_key = serde_json::from_value(_parameters.get("agent_key").unwrap().clone()).unwrap();
+    let page_number = _parameters
+        .get("page_number")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page_size")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort_attribute = _parameters
+        .get("sort_attribute")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort_descending = _parameters
+        .get("sort_descending")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_fleet_automation::ListFleetAgentTracersOptionalParams::default();
+    params.page_number = page_number;
+    params.page_size = page_size;
+    params.sort_attribute = sort_attribute;
+    params.sort_descending = sort_descending;
+    let response = match block_on(api.list_fleet_agent_tracers_with_http_info(agent_key, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_fleet_clusters(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let page_number = _parameters
+        .get("page_number")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page_size")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort_attribute = _parameters
+        .get("sort_attribute")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort_descending = _parameters
+        .get("sort_descending")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let tags = _parameters
+        .get("tags")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_fleet_automation::ListFleetClustersOptionalParams::default();
+    params.page_number = page_number;
+    params.page_size = page_size;
+    params.sort_attribute = sort_attribute;
+    params.sort_descending = sort_descending;
+    params.filter = filter;
+    params.tags = tags;
+    let response = match block_on(api.list_fleet_clusters_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_fleet_instrumented_pods(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let cluster_name =
+        serde_json::from_value(_parameters.get("cluster_name").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_fleet_instrumented_pods_with_http_info(cluster_name)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_fleet_deployments(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -13367,6 +13505,51 @@ fn test_v2_trigger_fleet_schedule(world: &mut DatadogWorld, _parameters: &HashMa
         .expect("api instance not found");
     let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
     let response = match block_on(api.trigger_fleet_schedule_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_fleet_tracers(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_fleet_automation
+        .as_ref()
+        .expect("api instance not found");
+    let page_number = _parameters
+        .get("page_number")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page_size")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort_attribute = _parameters
+        .get("sort_attribute")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort_descending = _parameters
+        .get("sort_descending")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_fleet_automation::ListFleetTracersOptionalParams::default();
+    params.page_number = page_number;
+    params.page_size = page_size;
+    params.sort_attribute = sort_attribute;
+    params.sort_descending = sort_descending;
+    params.filter = filter;
+    let response = match block_on(api.list_fleet_tracers_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
