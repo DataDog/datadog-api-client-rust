@@ -8,7 +8,18 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum EventsDataSource {
     LOGS,
+    SPANS,
+    NETWORK,
     RUM,
+    SECURITY_SIGNALS,
+    PROFILES,
+    AUDIT,
+    EVENTS,
+    CI_TESTS,
+    CI_PIPELINES,
+    INCIDENT_ANALYTICS,
+    PRODUCT_ANALYTICS,
+    ON_CALL_EVENTS,
     DORA,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -17,7 +28,18 @@ impl ToString for EventsDataSource {
     fn to_string(&self) -> String {
         match self {
             Self::LOGS => String::from("logs"),
+            Self::SPANS => String::from("spans"),
+            Self::NETWORK => String::from("network"),
             Self::RUM => String::from("rum"),
+            Self::SECURITY_SIGNALS => String::from("security_signals"),
+            Self::PROFILES => String::from("profiles"),
+            Self::AUDIT => String::from("audit"),
+            Self::EVENTS => String::from("events"),
+            Self::CI_TESTS => String::from("ci_tests"),
+            Self::CI_PIPELINES => String::from("ci_pipelines"),
+            Self::INCIDENT_ANALYTICS => String::from("incident_analytics"),
+            Self::PRODUCT_ANALYTICS => String::from("product_analytics"),
+            Self::ON_CALL_EVENTS => String::from("on_call_events"),
             Self::DORA => String::from("dora"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -44,7 +66,18 @@ impl<'de> Deserialize<'de> for EventsDataSource {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "logs" => Self::LOGS,
+            "spans" => Self::SPANS,
+            "network" => Self::NETWORK,
             "rum" => Self::RUM,
+            "security_signals" => Self::SECURITY_SIGNALS,
+            "profiles" => Self::PROFILES,
+            "audit" => Self::AUDIT,
+            "events" => Self::EVENTS,
+            "ci_tests" => Self::CI_TESTS,
+            "ci_pipelines" => Self::CI_PIPELINES,
+            "incident_analytics" => Self::INCIDENT_ANALYTICS,
+            "product_analytics" => Self::PRODUCT_ANALYTICS,
+            "on_call_events" => Self::ON_CALL_EVENTS,
             "dora" => Self::DORA,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),

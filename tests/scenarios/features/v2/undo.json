@@ -650,24 +650,6 @@
       "type": "idempotent"
     }
   },
-  "ListInvestigations": {
-    "tag": "Bits AI",
-    "undo": {
-      "type": "safe"
-    }
-  },
-  "TriggerInvestigation": {
-    "tag": "Bits AI",
-    "undo": {
-      "type": "unsafe"
-    }
-  },
-  "GetInvestigation": {
-    "tag": "Bits AI",
-    "undo": {
-      "type": "safe"
-    }
-  },
   "SearchCases": {
     "tag": "Case Management",
     "undo": {
