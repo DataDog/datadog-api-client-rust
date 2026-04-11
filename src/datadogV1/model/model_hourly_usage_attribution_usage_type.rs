@@ -49,6 +49,7 @@ pub enum HourlyUsageAttributionUsageType {
     INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_USAGE,
     INDEXED_SPANS_USAGE,
     INFRA_HOST_USAGE,
+    INFRA_HOST_BASIC_USAGE,
     INGESTED_LOGS_BYTES_USAGE,
     INGESTED_SPANS_BYTES_USAGE,
     INVOCATIONS_USAGE,
@@ -155,6 +156,7 @@ impl ToString for HourlyUsageAttributionUsageType {
             }
             Self::INDEXED_SPANS_USAGE => String::from("indexed_spans_usage"),
             Self::INFRA_HOST_USAGE => String::from("infra_host_usage"),
+            Self::INFRA_HOST_BASIC_USAGE => String::from("infra_host_basic_usage"),
             Self::INGESTED_LOGS_BYTES_USAGE => String::from("ingested_logs_bytes_usage"),
             Self::INGESTED_SPANS_BYTES_USAGE => String::from("ingested_spans_bytes_usage"),
             Self::INVOCATIONS_USAGE => String::from("invocations_usage"),
@@ -287,6 +289,7 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             }
             "indexed_spans_usage" => Self::INDEXED_SPANS_USAGE,
             "infra_host_usage" => Self::INFRA_HOST_USAGE,
+            "infra_host_basic_usage" => Self::INFRA_HOST_BASIC_USAGE,
             "ingested_logs_bytes_usage" => Self::INGESTED_LOGS_BYTES_USAGE,
             "ingested_spans_bytes_usage" => Self::INGESTED_SPANS_BYTES_USAGE,
             "invocations_usage" => Self::INVOCATIONS_USAGE,
