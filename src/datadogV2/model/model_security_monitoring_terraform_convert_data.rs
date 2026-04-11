@@ -6,20 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data for an investigation list item.
+/// The convert request data object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ListInvestigationsResponseData {
-    /// Attributes of an investigation list item.
+pub struct SecurityMonitoringTerraformConvertData {
+    /// Attributes for the convert request.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::ListInvestigationsResponseDataAttributes,
-    /// The unique identifier of the investigation.
+    pub attributes: crate::datadogV2::model::SecurityMonitoringTerraformConvertAttributes,
+    /// The ID of the resource being converted.
     #[serde(rename = "id")]
     pub id: String,
-    /// The resource type for investigations.
+    /// The JSON:API type. Always `convert_resource`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::InvestigationType,
+    pub type_: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct ListInvestigationsResponseData {
     pub(crate) _unparsed: bool,
 }
 
-impl ListInvestigationsResponseData {
+impl SecurityMonitoringTerraformConvertData {
     pub fn new(
-        attributes: crate::datadogV2::model::ListInvestigationsResponseDataAttributes,
+        attributes: crate::datadogV2::model::SecurityMonitoringTerraformConvertAttributes,
         id: String,
-        type_: crate::datadogV2::model::InvestigationType,
-    ) -> ListInvestigationsResponseData {
-        ListInvestigationsResponseData {
+        type_: String,
+    ) -> SecurityMonitoringTerraformConvertData {
+        SecurityMonitoringTerraformConvertData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl ListInvestigationsResponseData {
     }
 }
 
-impl<'de> Deserialize<'de> for ListInvestigationsResponseData {
+impl<'de> Deserialize<'de> for SecurityMonitoringTerraformConvertData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ListInvestigationsResponseDataVisitor;
-        impl<'a> Visitor<'a> for ListInvestigationsResponseDataVisitor {
-            type Value = ListInvestigationsResponseData;
+        struct SecurityMonitoringTerraformConvertDataVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringTerraformConvertDataVisitor {
+            type Value = SecurityMonitoringTerraformConvertData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -69,10 +69,10 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::ListInvestigationsResponseDataAttributes,
+                    crate::datadogV2::model::SecurityMonitoringTerraformConvertAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::InvestigationType> = None;
+                let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,16 +89,6 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseData {
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::InvestigationType::UnparsedObject(
-                                        _type_,
-                                    ) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -111,7 +101,7 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ListInvestigationsResponseData {
+                let content = SecurityMonitoringTerraformConvertData {
                     attributes,
                     id,
                     type_,
@@ -123,6 +113,6 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseData {
             }
         }
 
-        deserializer.deserialize_any(ListInvestigationsResponseDataVisitor)
+        deserializer.deserialize_any(SecurityMonitoringTerraformConvertDataVisitor)
     }
 }

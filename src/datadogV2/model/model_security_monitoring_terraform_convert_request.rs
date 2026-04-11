@@ -6,20 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response for listing investigations.
+/// Request body for converting a security monitoring resource JSON to Terraform.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ListInvestigationsResponse {
-    /// List of investigations.
+pub struct SecurityMonitoringTerraformConvertRequest {
+    /// The convert request data object.
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::ListInvestigationsResponseData>,
-    /// Pagination links for the list investigations response.
-    #[serde(rename = "links")]
-    pub links: crate::datadogV2::model::ListInvestigationsResponseLinks,
-    /// Metadata for the list investigations response.
-    #[serde(rename = "meta")]
-    pub meta: crate::datadogV2::model::ListInvestigationsResponseMeta,
+    pub data: crate::datadogV2::model::SecurityMonitoringTerraformConvertData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,16 +21,12 @@ pub struct ListInvestigationsResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl ListInvestigationsResponse {
+impl SecurityMonitoringTerraformConvertRequest {
     pub fn new(
-        data: Vec<crate::datadogV2::model::ListInvestigationsResponseData>,
-        links: crate::datadogV2::model::ListInvestigationsResponseLinks,
-        meta: crate::datadogV2::model::ListInvestigationsResponseMeta,
-    ) -> ListInvestigationsResponse {
-        ListInvestigationsResponse {
+        data: crate::datadogV2::model::SecurityMonitoringTerraformConvertData,
+    ) -> SecurityMonitoringTerraformConvertRequest {
+        SecurityMonitoringTerraformConvertRequest {
             data,
-            links,
-            meta,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -51,14 +41,14 @@ impl ListInvestigationsResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for ListInvestigationsResponse {
+impl<'de> Deserialize<'de> for SecurityMonitoringTerraformConvertRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ListInvestigationsResponseVisitor;
-        impl<'a> Visitor<'a> for ListInvestigationsResponseVisitor {
-            type Value = ListInvestigationsResponse;
+        struct SecurityMonitoringTerraformConvertRequestVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringTerraformConvertRequestVisitor {
+            type Value = SecurityMonitoringTerraformConvertRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,12 +58,9 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::ListInvestigationsResponseData>> =
-                    None;
-                let mut links: Option<crate::datadogV2::model::ListInvestigationsResponseLinks> =
-                    None;
-                let mut meta: Option<crate::datadogV2::model::ListInvestigationsResponseMeta> =
-                    None;
+                let mut data: Option<
+                    crate::datadogV2::model::SecurityMonitoringTerraformConvertData,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -85,12 +72,6 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponse {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "links" => {
-                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "meta" => {
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -99,13 +80,9 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponse {
                     }
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
-                let links = links.ok_or_else(|| M::Error::missing_field("links"))?;
-                let meta = meta.ok_or_else(|| M::Error::missing_field("meta"))?;
 
-                let content = ListInvestigationsResponse {
+                let content = SecurityMonitoringTerraformConvertRequest {
                     data,
-                    links,
-                    meta,
                     additional_properties,
                     _unparsed,
                 };
@@ -114,6 +91,6 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponse {
             }
         }
 
-        deserializer.deserialize_any(ListInvestigationsResponseVisitor)
+        deserializer.deserialize_any(SecurityMonitoringTerraformConvertRequestVisitor)
     }
 }

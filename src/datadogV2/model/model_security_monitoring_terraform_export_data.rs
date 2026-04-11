@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data for the trigger investigation request.
+/// The Terraform export data object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TriggerInvestigationRequestData {
-    /// Attributes for the trigger investigation request.
+pub struct SecurityMonitoringTerraformExportData {
+    /// Attributes of the Terraform export response.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::TriggerInvestigationRequestDataAttributes,
-    /// The resource type for trigger investigation requests.
+    pub attributes: crate::datadogV2::model::SecurityMonitoringTerraformExportAttributes,
+    /// The resource identifier composed of the Terraform type name and the resource ID separated by `|`.
+    #[serde(rename = "id")]
+    pub id: String,
+    /// The JSON:API type. Always `format_resource`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::TriggerInvestigationRequestType,
+    pub type_: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,13 +27,15 @@ pub struct TriggerInvestigationRequestData {
     pub(crate) _unparsed: bool,
 }
 
-impl TriggerInvestigationRequestData {
+impl SecurityMonitoringTerraformExportData {
     pub fn new(
-        attributes: crate::datadogV2::model::TriggerInvestigationRequestDataAttributes,
-        type_: crate::datadogV2::model::TriggerInvestigationRequestType,
-    ) -> TriggerInvestigationRequestData {
-        TriggerInvestigationRequestData {
+        attributes: crate::datadogV2::model::SecurityMonitoringTerraformExportAttributes,
+        id: String,
+        type_: String,
+    ) -> SecurityMonitoringTerraformExportData {
+        SecurityMonitoringTerraformExportData {
             attributes,
+            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -46,14 +51,14 @@ impl TriggerInvestigationRequestData {
     }
 }
 
-impl<'de> Deserialize<'de> for TriggerInvestigationRequestData {
+impl<'de> Deserialize<'de> for SecurityMonitoringTerraformExportData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TriggerInvestigationRequestDataVisitor;
-        impl<'a> Visitor<'a> for TriggerInvestigationRequestDataVisitor {
-            type Value = TriggerInvestigationRequestData;
+        struct SecurityMonitoringTerraformExportDataVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringTerraformExportDataVisitor {
+            type Value = SecurityMonitoringTerraformExportData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -64,10 +69,10 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequestData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::TriggerInvestigationRequestDataAttributes,
+                    crate::datadogV2::model::SecurityMonitoringTerraformExportAttributes,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::TriggerInvestigationRequestType> =
-                    None;
+                let mut id: Option<String> = None;
+                let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,16 +84,11 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequestData {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::TriggerInvestigationRequestType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -98,10 +98,12 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequestData {
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = TriggerInvestigationRequestData {
+                let content = SecurityMonitoringTerraformExportData {
                     attributes,
+                    id,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -111,6 +113,6 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequestData {
             }
         }
 
-        deserializer.deserialize_any(TriggerInvestigationRequestDataVisitor)
+        deserializer.deserialize_any(SecurityMonitoringTerraformExportDataVisitor)
     }
 }

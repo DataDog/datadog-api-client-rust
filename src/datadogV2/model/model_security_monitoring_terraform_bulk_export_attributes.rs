@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of an investigation list item.
+/// Attributes for the bulk export request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ListInvestigationsResponseDataAttributes {
-    /// The current status of the investigation.
-    #[serde(rename = "status")]
-    pub status: String,
-    /// The title of the investigation.
-    #[serde(rename = "title")]
-    pub title: String,
+pub struct SecurityMonitoringTerraformBulkExportAttributes {
+    /// The list of resource IDs to export. Maximum 1000 items.
+    #[serde(rename = "resource_ids")]
+    pub resource_ids: Vec<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,11 +21,10 @@ pub struct ListInvestigationsResponseDataAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl ListInvestigationsResponseDataAttributes {
-    pub fn new(status: String, title: String) -> ListInvestigationsResponseDataAttributes {
-        ListInvestigationsResponseDataAttributes {
-            status,
-            title,
+impl SecurityMonitoringTerraformBulkExportAttributes {
+    pub fn new(resource_ids: Vec<String>) -> SecurityMonitoringTerraformBulkExportAttributes {
+        SecurityMonitoringTerraformBulkExportAttributes {
+            resource_ids,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -43,14 +39,14 @@ impl ListInvestigationsResponseDataAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for ListInvestigationsResponseDataAttributes {
+impl<'de> Deserialize<'de> for SecurityMonitoringTerraformBulkExportAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ListInvestigationsResponseDataAttributesVisitor;
-        impl<'a> Visitor<'a> for ListInvestigationsResponseDataAttributesVisitor {
-            type Value = ListInvestigationsResponseDataAttributes;
+        struct SecurityMonitoringTerraformBulkExportAttributesVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringTerraformBulkExportAttributesVisitor {
+            type Value = SecurityMonitoringTerraformBulkExportAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -60,8 +56,7 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut status: Option<String> = None;
-                let mut title: Option<String> = None;
+                let mut resource_ids: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -70,11 +65,9 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "status" => {
-                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "title" => {
-                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "resource_ids" => {
+                            resource_ids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -83,12 +76,11 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseDataAttributes {
                         }
                     }
                 }
-                let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
-                let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
+                let resource_ids =
+                    resource_ids.ok_or_else(|| M::Error::missing_field("resource_ids"))?;
 
-                let content = ListInvestigationsResponseDataAttributes {
-                    status,
-                    title,
+                let content = SecurityMonitoringTerraformBulkExportAttributes {
+                    resource_ids,
                     additional_properties,
                     _unparsed,
                 };
@@ -97,6 +89,6 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseDataAttributes {
             }
         }
 
-        deserializer.deserialize_any(ListInvestigationsResponseDataAttributesVisitor)
+        deserializer.deserialize_any(SecurityMonitoringTerraformBulkExportAttributesVisitor)
     }
 }

@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Metadata for the list investigations response.
+/// Request body for bulk exporting security monitoring resources to Terraform.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ListInvestigationsResponseMeta {
-    /// Pagination metadata.
-    #[serde(rename = "page")]
-    pub page: crate::datadogV2::model::ListInvestigationsResponseMetaPage,
+pub struct SecurityMonitoringTerraformBulkExportRequest {
+    /// The bulk export request data object.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::SecurityMonitoringTerraformBulkExportData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,12 +21,12 @@ pub struct ListInvestigationsResponseMeta {
     pub(crate) _unparsed: bool,
 }
 
-impl ListInvestigationsResponseMeta {
+impl SecurityMonitoringTerraformBulkExportRequest {
     pub fn new(
-        page: crate::datadogV2::model::ListInvestigationsResponseMetaPage,
-    ) -> ListInvestigationsResponseMeta {
-        ListInvestigationsResponseMeta {
-            page,
+        data: crate::datadogV2::model::SecurityMonitoringTerraformBulkExportData,
+    ) -> SecurityMonitoringTerraformBulkExportRequest {
+        SecurityMonitoringTerraformBulkExportRequest {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -41,14 +41,14 @@ impl ListInvestigationsResponseMeta {
     }
 }
 
-impl<'de> Deserialize<'de> for ListInvestigationsResponseMeta {
+impl<'de> Deserialize<'de> for SecurityMonitoringTerraformBulkExportRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ListInvestigationsResponseMetaVisitor;
-        impl<'a> Visitor<'a> for ListInvestigationsResponseMetaVisitor {
-            type Value = ListInvestigationsResponseMeta;
+        struct SecurityMonitoringTerraformBulkExportRequestVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringTerraformBulkExportRequestVisitor {
+            type Value = SecurityMonitoringTerraformBulkExportRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,8 +58,9 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseMeta {
             where
                 M: MapAccess<'a>,
             {
-                let mut page: Option<crate::datadogV2::model::ListInvestigationsResponseMetaPage> =
-                    None;
+                let mut data: Option<
+                    crate::datadogV2::model::SecurityMonitoringTerraformBulkExportData,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -68,8 +69,8 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseMeta {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "page" => {
-                            page = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -78,10 +79,10 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseMeta {
                         }
                     }
                 }
-                let page = page.ok_or_else(|| M::Error::missing_field("page"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = ListInvestigationsResponseMeta {
-                    page,
+                let content = SecurityMonitoringTerraformBulkExportRequest {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -90,6 +91,6 @@ impl<'de> Deserialize<'de> for ListInvestigationsResponseMeta {
             }
         }
 
-        deserializer.deserialize_any(ListInvestigationsResponseMetaVisitor)
+        deserializer.deserialize_any(SecurityMonitoringTerraformBulkExportRequestVisitor)
     }
 }

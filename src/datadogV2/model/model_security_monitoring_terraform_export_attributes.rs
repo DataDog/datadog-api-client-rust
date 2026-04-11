@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The trigger definition for starting an investigation.
+/// Attributes of the Terraform export response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TriggerAttributes {
-    /// Attributes for a monitor alert trigger.
-    #[serde(rename = "monitor_alert_trigger")]
-    pub monitor_alert_trigger: crate::datadogV2::model::MonitorAlertTriggerAttributes,
-    /// The type of trigger for the investigation.
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::TriggerType,
+pub struct SecurityMonitoringTerraformExportAttributes {
+    /// The Terraform configuration for the resource.
+    #[serde(rename = "output")]
+    pub output: Option<String>,
+    /// The ID of the exported resource.
+    #[serde(rename = "resource_id")]
+    pub resource_id: String,
+    /// The Terraform resource type name.
+    #[serde(rename = "type_name")]
+    pub type_name: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,17 +27,23 @@ pub struct TriggerAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl TriggerAttributes {
+impl SecurityMonitoringTerraformExportAttributes {
     pub fn new(
-        monitor_alert_trigger: crate::datadogV2::model::MonitorAlertTriggerAttributes,
-        type_: crate::datadogV2::model::TriggerType,
-    ) -> TriggerAttributes {
-        TriggerAttributes {
-            monitor_alert_trigger,
-            type_,
+        resource_id: String,
+        type_name: String,
+    ) -> SecurityMonitoringTerraformExportAttributes {
+        SecurityMonitoringTerraformExportAttributes {
+            output: None,
+            resource_id,
+            type_name,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn output(mut self, value: String) -> Self {
+        self.output = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -46,14 +55,14 @@ impl TriggerAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for TriggerAttributes {
+impl<'de> Deserialize<'de> for SecurityMonitoringTerraformExportAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TriggerAttributesVisitor;
-        impl<'a> Visitor<'a> for TriggerAttributesVisitor {
-            type Value = TriggerAttributes;
+        struct SecurityMonitoringTerraformExportAttributesVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringTerraformExportAttributesVisitor {
+            type Value = SecurityMonitoringTerraformExportAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,10 +72,9 @@ impl<'de> Deserialize<'de> for TriggerAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut monitor_alert_trigger: Option<
-                    crate::datadogV2::model::MonitorAlertTriggerAttributes,
-                > = None;
-                let mut type_: Option<crate::datadogV2::model::TriggerType> = None;
+                let mut output: Option<String> = None;
+                let mut resource_id: Option<String> = None;
+                let mut type_name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -75,22 +83,18 @@ impl<'de> Deserialize<'de> for TriggerAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "monitor_alert_trigger" => {
-                            monitor_alert_trigger =
+                        "output" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            output = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "resource_id" => {
+                            resource_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::TriggerType::UnparsedObject(
-                                        _type_,
-                                    ) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
+                        "type_name" => {
+                            type_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -99,13 +103,14 @@ impl<'de> Deserialize<'de> for TriggerAttributes {
                         }
                     }
                 }
-                let monitor_alert_trigger = monitor_alert_trigger
-                    .ok_or_else(|| M::Error::missing_field("monitor_alert_trigger"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let resource_id =
+                    resource_id.ok_or_else(|| M::Error::missing_field("resource_id"))?;
+                let type_name = type_name.ok_or_else(|| M::Error::missing_field("type_name"))?;
 
-                let content = TriggerAttributes {
-                    monitor_alert_trigger,
-                    type_,
+                let content = SecurityMonitoringTerraformExportAttributes {
+                    output,
+                    resource_id,
+                    type_name,
                     additional_properties,
                     _unparsed,
                 };
@@ -114,6 +119,6 @@ impl<'de> Deserialize<'de> for TriggerAttributes {
             }
         }
 
-        deserializer.deserialize_any(TriggerAttributesVisitor)
+        deserializer.deserialize_any(SecurityMonitoringTerraformExportAttributesVisitor)
     }
 }

@@ -1179,6 +1179,20 @@ components:
       required: true
       schema:
         type: string
+    SecurityMonitoringTerraformResourceId:
+      description: The ID of the security monitoring resource to export.
+      in: path
+      name: resource_id
+      required: true
+      schema:
+        type: string
+    SecurityMonitoringTerraformResourceType:
+      description: The type of security monitoring resource to export.
+      in: path
+      name: resource_type
+      required: true
+      schema:
+        $ref: "#/components/schemas/SecurityMonitoringTerraformResourceType"
     SensitiveDataScannerGroupID:
       description: The ID of a group of rules.
       in: path
@@ -29047,64 +29061,6 @@ components:
             $ref: "#/components/schemas/GetInterfacesData"
           type: array
       type: object
-    GetInvestigationResponse:
-      description: Response for a single Bits AI investigation.
-      properties:
-        data:
-          $ref: "#/components/schemas/GetInvestigationResponseData"
-        links:
-          $ref: "#/components/schemas/GetInvestigationResponseLinks"
-      required:
-        - data
-        - links
-      type: object
-    GetInvestigationResponseData:
-      description: Data for the get investigation response.
-      properties:
-        attributes:
-          $ref: "#/components/schemas/GetInvestigationResponseDataAttributes"
-        id:
-          description: The unique identifier of the investigation.
-          example: "a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
-          type: string
-        type:
-          $ref: "#/components/schemas/InvestigationType"
-      required:
-        - id
-        - type
-        - attributes
-      type: object
-    GetInvestigationResponseDataAttributes:
-      description: Attributes of the investigation.
-      properties:
-        conclusions:
-          description: The conclusions drawn from the investigation.
-          items:
-            $ref: "#/components/schemas/InvestigationConclusion"
-          type: array
-        status:
-          description: The current status of the investigation.
-          example: "conclusive"
-          type: string
-        title:
-          description: The title of the investigation.
-          example: "Monitor alert investigation for web-server-01"
-          type: string
-      required:
-        - title
-        - status
-        - conclusions
-      type: object
-    GetInvestigationResponseLinks:
-      description: Links related to the investigation.
-      properties:
-        self:
-          description: The URL to the investigation in the Datadog app.
-          example: "https://app.datadoghq.com/bits-ai/investigations/a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
-          type: string
-      required:
-        - self
-      type: object
     GetIssueIncludeQueryParameterItem:
       description: Relationship object that should be included in the response.
       enum:
@@ -34568,34 +34524,6 @@ components:
         - DOWN
         - WARNING
         - "OFF"
-    InvestigationConclusion:
-      description: A full explanation of the finding, including root cause analysis and supporting evidence.
-      properties:
-        description:
-          description: A full explanation of the finding, including root cause analysis and supporting evidence.
-          example: "The investigation found that a memory leak in payments-service caused CPU usage to spike above 95% starting at 14:32 UTC."
-          type: string
-        summary:
-          description: A summary of the finding, including affected components and timeframe.
-          example: "CPU usage exceeded 95% for over 10 minutes on web-server-01."
-          type: string
-        title:
-          description: The title of the conclusion.
-          example: "High CPU usage detected on web-server-01"
-          type: string
-      required:
-        - title
-        - summary
-        - description
-      type: object
-    InvestigationType:
-      description: The resource type for investigations.
-      enum:
-        - investigation
-      example: investigation
-      type: string
-      x-enum-varnames:
-        - INVESTIGATION
     Issue:
       description: The issue matching the request.
       properties:
@@ -38442,113 +38370,6 @@ components:
           description: The type of the resource. The value should always be tags.
           type: string
       type: object
-    ListInvestigationsResponse:
-      description: Response for listing investigations.
-      properties:
-        data:
-          description: List of investigations.
-          items:
-            $ref: "#/components/schemas/ListInvestigationsResponseData"
-          type: array
-        links:
-          $ref: "#/components/schemas/ListInvestigationsResponseLinks"
-        meta:
-          $ref: "#/components/schemas/ListInvestigationsResponseMeta"
-      required:
-        - data
-        - meta
-        - links
-      type: object
-    ListInvestigationsResponseData:
-      description: Data for an investigation list item.
-      properties:
-        attributes:
-          $ref: "#/components/schemas/ListInvestigationsResponseDataAttributes"
-        id:
-          description: The unique identifier of the investigation.
-          example: "a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
-          type: string
-        type:
-          $ref: "#/components/schemas/InvestigationType"
-      required:
-        - id
-        - type
-        - attributes
-      type: object
-    ListInvestigationsResponseDataAttributes:
-      description: Attributes of an investigation list item.
-      properties:
-        status:
-          description: The current status of the investigation.
-          example: "conclusive"
-          type: string
-        title:
-          description: The title of the investigation.
-          example: "Monitor alert investigation for web-server-01"
-          type: string
-      required:
-        - status
-        - title
-      type: object
-    ListInvestigationsResponseLinks:
-      description: Pagination links for the list investigations response.
-      properties:
-        first:
-          description: Link to the first page.
-          example: "https://api.datadoghq.com/api/v2/bits-ai/investigations?page[offset]=0&page[limit]=10"
-          type: string
-        last:
-          description: Link to the last page.
-          nullable: true
-          type: string
-        next:
-          description: Link to the next page.
-          example: "https://api.datadoghq.com/api/v2/bits-ai/investigations?page[offset]=10&page[limit]=10"
-          type: string
-        prev:
-          description: Link to the previous page.
-          nullable: true
-          type: string
-        self:
-          description: Link to the current page.
-          example: "https://api.datadoghq.com/api/v2/bits-ai/investigations?page[offset]=0&page[limit]=10"
-          type: string
-      required:
-        - first
-        - next
-        - self
-      type: object
-    ListInvestigationsResponseMeta:
-      description: Metadata for the list investigations response.
-      properties:
-        page:
-          $ref: "#/components/schemas/ListInvestigationsResponseMetaPage"
-      required:
-        - page
-      type: object
-    ListInvestigationsResponseMetaPage:
-      description: Pagination metadata.
-      properties:
-        limit:
-          description: Maximum number of results per page.
-          example: 10
-          format: int64
-          type: integer
-        offset:
-          description: Offset of the current page.
-          example: 0
-          format: int64
-          type: integer
-        total:
-          description: Total number of investigations.
-          example: 50
-          format: int64
-          type: integer
-      required:
-        - total
-        - limit
-        - offset
-      type: object
     ListKindCatalogResponse:
       description: List kind response.
       properties:
@@ -41919,28 +41740,6 @@ components:
           example: "fake-handle-name"
           maxLength: 255
           type: string
-      type: object
-    MonitorAlertTriggerAttributes:
-      description: Attributes for a monitor alert trigger.
-      properties:
-        event_id:
-          description: The event ID associated with the monitor alert.
-          example: "1234567890123456789"
-          type: string
-        event_ts:
-          description: The timestamp of the event in Unix milliseconds.
-          example: 1700000000000
-          format: int64
-          type: integer
-        monitor_id:
-          description: The monitor ID that triggered the alert.
-          example: 12345678
-          format: int64
-          type: integer
-      required:
-        - monitor_id
-        - event_id
-        - event_ts
       type: object
     MonitorConfigPolicyAttributeCreateRequest:
       description: Policy and policy type for a monitor configuration policy.
@@ -61746,6 +61545,134 @@ components:
             $ref: "#/components/schemas/SecurityMonitoringSuppression"
           type: array
       type: object
+    SecurityMonitoringTerraformBulkExportAttributes:
+      description: Attributes for the bulk export request.
+      properties:
+        resource_ids:
+          description: The list of resource IDs to export. Maximum 1000 items.
+          example:
+            - ""
+          items:
+            description: The ID of the resource to export.
+            type: string
+          maxItems: 1000
+          type: array
+      required:
+        - resource_ids
+      type: object
+    SecurityMonitoringTerraformBulkExportData:
+      description: The bulk export request data object.
+      properties:
+        attributes:
+          $ref: "#/components/schemas/SecurityMonitoringTerraformBulkExportAttributes"
+        type:
+          description: The JSON:API type. Always `bulk_export_resources`.
+          example: bulk_export_resources
+          type: string
+      required:
+        - type
+        - attributes
+      type: object
+    SecurityMonitoringTerraformBulkExportRequest:
+      description: Request body for bulk exporting security monitoring resources to Terraform.
+      properties:
+        data:
+          $ref: "#/components/schemas/SecurityMonitoringTerraformBulkExportData"
+      required:
+        - data
+      type: object
+    SecurityMonitoringTerraformConvertAttributes:
+      description: Attributes for the convert request.
+      properties:
+        resource_json:
+          additionalProperties: {}
+          description: The resource attributes as a JSON object, matching the structure returned by the corresponding Datadog API (for example, the attributes of a suppression rule).
+          example:
+            enabled: true
+            name: Custom suppression
+            rule_query: type:log_detection source:cloudtrail
+            suppression_query: env:staging status:low
+          type: object
+      required:
+        - resource_json
+      type: object
+    SecurityMonitoringTerraformConvertData:
+      description: The convert request data object.
+      properties:
+        attributes:
+          $ref: "#/components/schemas/SecurityMonitoringTerraformConvertAttributes"
+        id:
+          description: The ID of the resource being converted.
+          example: abc-123
+          type: string
+        type:
+          description: The JSON:API type. Always `convert_resource`.
+          example: convert_resource
+          type: string
+      required:
+        - type
+        - id
+        - attributes
+      type: object
+    SecurityMonitoringTerraformConvertRequest:
+      description: Request body for converting a security monitoring resource JSON to Terraform.
+      properties:
+        data:
+          $ref: "#/components/schemas/SecurityMonitoringTerraformConvertData"
+      required:
+        - data
+      type: object
+    SecurityMonitoringTerraformExportAttributes:
+      description: Attributes of the Terraform export response.
+      properties:
+        output:
+          description: The Terraform configuration for the resource.
+          type: string
+        resource_id:
+          description: The ID of the exported resource.
+          example: abc-123
+          type: string
+        type_name:
+          description: The Terraform resource type name.
+          example: datadog_security_monitoring_suppression
+          type: string
+      required:
+        - type_name
+        - resource_id
+      type: object
+    SecurityMonitoringTerraformExportData:
+      description: The Terraform export data object.
+      properties:
+        attributes:
+          $ref: "#/components/schemas/SecurityMonitoringTerraformExportAttributes"
+        id:
+          description: The resource identifier composed of the Terraform type name and the resource ID separated by `|`.
+          example: datadog_security_monitoring_suppression|abc-123
+          type: string
+        type:
+          description: The JSON:API type. Always `format_resource`.
+          example: format_resource
+          type: string
+      required:
+        - type
+        - id
+        - attributes
+      type: object
+    SecurityMonitoringTerraformExportResponse:
+      description: Response containing the Terraform configuration for a security monitoring resource.
+      properties:
+        data:
+          $ref: "#/components/schemas/SecurityMonitoringTerraformExportData"
+      type: object
+    SecurityMonitoringTerraformResourceType:
+      description: The type of security monitoring resource to export to Terraform.
+      enum:
+        - suppressions
+        - critical_assets
+      type: string
+      x-enum-varnames:
+        - SUPPRESSIONS
+        - CRITICAL_ASSETS
     SecurityMonitoringThirdPartyRootQuery:
       description: A query to be combined with the third party case query.
       properties:
@@ -71951,94 +71878,6 @@ components:
         - $ref: "#/components/schemas/SlackTriggerWrapper"
         - $ref: "#/components/schemas/SoftwareCatalogTriggerWrapper"
         - $ref: "#/components/schemas/WorkflowTriggerWrapper"
-    TriggerAttributes:
-      description: The trigger definition for starting an investigation.
-      properties:
-        monitor_alert_trigger:
-          $ref: "#/components/schemas/MonitorAlertTriggerAttributes"
-        type:
-          $ref: "#/components/schemas/TriggerType"
-      required:
-        - type
-        - monitor_alert_trigger
-      type: object
-    TriggerInvestigationRequest:
-      description: Request to trigger a new investigation.
-      properties:
-        data:
-          $ref: "#/components/schemas/TriggerInvestigationRequestData"
-      required:
-        - data
-      type: object
-    TriggerInvestigationRequestData:
-      description: Data for the trigger investigation request.
-      properties:
-        attributes:
-          $ref: "#/components/schemas/TriggerInvestigationRequestDataAttributes"
-        type:
-          $ref: "#/components/schemas/TriggerInvestigationRequestType"
-      required:
-        - type
-        - attributes
-      type: object
-    TriggerInvestigationRequestDataAttributes:
-      description: Attributes for the trigger investigation request.
-      properties:
-        trigger:
-          $ref: "#/components/schemas/TriggerAttributes"
-      required:
-        - trigger
-      type: object
-    TriggerInvestigationRequestType:
-      description: The resource type for trigger investigation requests.
-      enum:
-        - trigger_investigation_request
-      example: trigger_investigation_request
-      type: string
-      x-enum-varnames:
-        - TRIGGER_INVESTIGATION_REQUEST
-    TriggerInvestigationResponse:
-      description: Response after triggering an investigation.
-      properties:
-        data:
-          $ref: "#/components/schemas/TriggerInvestigationResponseData"
-      required:
-        - data
-      type: object
-    TriggerInvestigationResponseData:
-      description: Data for the trigger investigation response.
-      properties:
-        attributes:
-          $ref: "#/components/schemas/TriggerInvestigationResponseDataAttributes"
-        id:
-          description: Unique identifier for the trigger response.
-          example: "f5e6a7b8-c9d0-1e2f-3a4b-5c6d7e8f9a0b"
-          type: string
-        type:
-          $ref: "#/components/schemas/TriggerInvestigationResponseType"
-      required:
-        - id
-        - type
-        - attributes
-      type: object
-    TriggerInvestigationResponseDataAttributes:
-      description: Attributes for the trigger investigation response.
-      properties:
-        investigation_id:
-          description: The ID of the investigation that was created.
-          example: "a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
-          type: string
-      required:
-        - investigation_id
-      type: object
-    TriggerInvestigationResponseType:
-      description: The resource type for trigger investigation responses.
-      enum:
-        - trigger_investigation_response
-      example: trigger_investigation_response
-      type: string
-      x-enum-varnames:
-        - TRIGGER_INVESTIGATION_RESPONSE
     TriggerRateLimit:
       description: Defines a rate limit for a trigger.
       properties:
@@ -72062,14 +71901,6 @@ components:
       x-enum-varnames:
         - SECURITY_FINDINGS
         - SECURITY_SIGNALS
-    TriggerType:
-      description: The type of trigger for the investigation.
-      enum:
-        - monitor_alert_trigger
-      example: monitor_alert_trigger
-      type: string
-      x-enum-varnames:
-        - MONITOR_ALERT_TRIGGER
     UCConfigPair:
       description: The definition of `UCConfigPair` object.
       example:
@@ -75947,8 +75778,6 @@ components:
             apm_service_catalog_write: Add, modify, and delete service catalog definitions when those definitions are maintained by Datadog.
             appsec_vm_read: View infrastructure, application code, and library vulnerability findings.
             billing_read: View your organization's billing information.
-            bits_investigations_read: View Bits AI investigations.
-            bits_investigations_write: Create and manage Bits AI investigations.
             cases_read: View Cases.
             cases_write: Create and update cases.
             ci_visibility_pipelines_write: Create CI Visibility pipeline spans using the API.
@@ -80039,213 +79868,6 @@ paths:
         operator: OR
         permissions:
           - user_access_manage
-  /api/v2/bits-ai/investigations:
-    get:
-      description: List all Bits AI investigations for the organization.
-      operationId: ListInvestigations
-      parameters:
-        - description: Offset for pagination.
-          example: 0
-          in: query
-          name: page[offset]
-          required: false
-          schema:
-            format: int64
-            type: integer
-        - description: Maximum number of investigations to return.
-          example: 25
-          in: query
-          name: page[limit]
-          required: false
-          schema:
-            default: 25
-            format: int64
-            maximum: 100
-            type: integer
-        - description: Filter investigations by monitor ID.
-          example: 12345678
-          in: query
-          name: filter[monitor_id]
-          required: false
-          schema:
-            format: int64
-            type: integer
-      responses:
-        "200":
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    data:
-                      - attributes:
-                          status: "conclusive"
-                          title: "Monitor alert investigation for web-server-01"
-                        id: "a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
-                        type: investigation
-                    links:
-                      first: "https://api.datadoghq.com/api/v2/bits-ai/investigations?page[offset]=0&page[limit]=10"
-                      next: "https://api.datadoghq.com/api/v2/bits-ai/investigations?page[offset]=10&page[limit]=10"
-                      self: "https://api.datadoghq.com/api/v2/bits-ai/investigations?page[offset]=0&page[limit]=10"
-                    meta:
-                      page:
-                        limit: 10
-                        offset: 0
-                        total: 50
-              schema:
-                $ref: "#/components/schemas/ListInvestigationsResponse"
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/JSONAPIErrorResponse"
-          description: Bad Request
-        "429":
-          $ref: "#/components/responses/TooManyRequestsResponse"
-      security:
-        - apiKeyAuth: []
-          appKeyAuth: []
-        - AuthZ:
-            - bits_investigations_read
-      summary: List Bits AI investigations
-      tags:
-        - Bits AI
-      x-pagination:
-        limitParam: page[limit]
-        pageOffsetParam: page[offset]
-        resultsPath: data
-      "x-permission":
-        operator: OR
-        permissions:
-          - bits_investigations_read
-      x-unstable: |-
-        **Note**: This endpoint is in preview and is subject to change.
-        If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/).
-    post:
-      description: Trigger a new Bits AI investigation based on a monitor alert.
-      operationId: TriggerInvestigation
-      requestBody:
-        content:
-          application/json:
-            examples:
-              default:
-                value:
-                  data:
-                    attributes:
-                      trigger:
-                        monitor_alert_trigger:
-                          event_id: "1234567890123456789"
-                          event_ts: 1700000000000
-                          monitor_id: 12345678
-                        type: monitor_alert_trigger
-                    type: trigger_investigation_request
-            schema:
-              $ref: "#/components/schemas/TriggerInvestigationRequest"
-        description: Trigger investigation request body.
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    data:
-                      attributes:
-                        investigation_id: "a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
-                      id: "f5e6a7b8-c9d0-1e2f-3a4b-5c6d7e8f9a0b"
-                      type: trigger_investigation_response
-              schema:
-                $ref: "#/components/schemas/TriggerInvestigationResponse"
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/JSONAPIErrorResponse"
-          description: Bad Request
-        "429":
-          $ref: "#/components/responses/TooManyRequestsResponse"
-      security:
-        - apiKeyAuth: []
-          appKeyAuth: []
-        - AuthZ:
-            - bits_investigations_write
-      summary: Trigger a Bits AI investigation
-      tags:
-        - Bits AI
-      x-codegen-request-body-name: body
-      "x-permission":
-        operator: OR
-        permissions:
-          - bits_investigations_write
-      x-unstable: |-
-        **Note**: This endpoint is in preview and is subject to change.
-        If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/).
-  /api/v2/bits-ai/investigations/{id}:
-    get:
-      description: Get a specific Bits AI investigation by ID.
-      operationId: GetInvestigation
-      parameters:
-        - description: The ID of the investigation.
-          example: "a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
-          in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    data:
-                      attributes:
-                        conclusions:
-                          - description: "The investigation found that a memory leak in payments-service caused CPU usage to spike above 95% starting at 14:32 UTC."
-                            summary: "CPU usage exceeded 95% for over 10 minutes on web-server-01."
-                            title: "High CPU usage detected on web-server-01"
-                        status: "conclusive"
-                        title: "Monitor alert investigation for web-server-01"
-                      id: "a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
-                      type: investigation
-                    links:
-                      self: "https://app.datadoghq.com/bits-ai/investigations/a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
-              schema:
-                $ref: "#/components/schemas/GetInvestigationResponse"
-          description: OK
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/JSONAPIErrorResponse"
-          description: Bad Request
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/JSONAPIErrorResponse"
-          description: Not Found
-        "429":
-          $ref: "#/components/responses/TooManyRequestsResponse"
-      security:
-        - apiKeyAuth: []
-          appKeyAuth: []
-        - AuthZ:
-            - bits_investigations_read
-      summary: Get a Bits AI investigation
-      tags:
-        - Bits AI
-      "x-permission":
-        operator: OR
-        permissions:
-          - bits_investigations_read
-      x-unstable: |-
-        **Note**: This endpoint is in preview and is subject to change.
-        If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/).
   /api/v2/cases:
     get:
       description: >-
@@ -108964,6 +108586,135 @@ paths:
         permissions:
           - security_monitoring_rules_read
           - security_monitoring_signals_read
+  /api/v2/security_monitoring/terraform/{resource_type}/bulk:
+    post:
+      description: |-
+        Export multiple security monitoring resources to Terraform, packaged as a zip archive.
+        The `resource_type` path parameter specifies the type of resources to export
+        and must be one of `suppressions` or `critical_assets`.
+        A maximum of 1000 resources can be exported in a single request.
+      operationId: BulkExportSecurityMonitoringTerraformResources
+      parameters:
+        - $ref: "#/components/parameters/SecurityMonitoringTerraformResourceType"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SecurityMonitoringTerraformBulkExportRequest"
+        description: The resource IDs to export.
+        required: true
+      responses:
+        "200":
+          content:
+            application/zip:
+              schema:
+                format: binary
+                type: string
+          description: OK
+        "400":
+          $ref: "#/components/responses/BadRequestResponse"
+        "403":
+          $ref: "#/components/responses/NotAuthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequestsResponse"
+      security:
+        - apiKeyAuth: []
+          appKeyAuth: []
+        - AuthZ:
+            - security_monitoring_suppressions_read
+      summary: Export security monitoring resources to Terraform
+      tags:
+        - Security Monitoring
+      x-codegen-request-body-name: body
+      "x-permission":
+        operator: OR
+        permissions:
+          - security_monitoring_suppressions_read
+          - security_monitoring_rules_read
+      x-unstable: "**Note**: This endpoint is in Preview. If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/)."
+  /api/v2/security_monitoring/terraform/{resource_type}/convert:
+    post:
+      description: |-
+        Convert a security monitoring resource that doesn't (yet) exist from JSON to Terraform.
+        The `resource_type` path parameter specifies the type of resource to convert
+        and must be one of `suppressions` or `critical_assets`.
+      operationId: ConvertSecurityMonitoringTerraformResource
+      parameters:
+        - $ref: "#/components/parameters/SecurityMonitoringTerraformResourceType"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SecurityMonitoringTerraformConvertRequest"
+        description: The resource JSON to convert.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SecurityMonitoringTerraformExportResponse"
+          description: OK
+        "400":
+          $ref: "#/components/responses/BadRequestResponse"
+        "403":
+          $ref: "#/components/responses/NotAuthorizedResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequestsResponse"
+      security:
+        - apiKeyAuth: []
+          appKeyAuth: []
+        - AuthZ:
+            - security_monitoring_suppressions_read
+      summary: Convert security monitoring resource to Terraform
+      tags:
+        - Security Monitoring
+      x-codegen-request-body-name: body
+      "x-permission":
+        operator: OR
+        permissions:
+          - security_monitoring_suppressions_read
+          - security_monitoring_rules_read
+      x-unstable: "**Note**: This endpoint is in Preview. If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/)."
+  /api/v2/security_monitoring/terraform/{resource_type}/{resource_id}:
+    get:
+      description: |-
+        Export a security monitoring resource to a Terraform configuration.
+        The `resource_type` path parameter specifies the type of resource to export
+        and must be one of `suppressions` or `critical_assets`.
+      operationId: ExportSecurityMonitoringTerraformResource
+      parameters:
+        - $ref: "#/components/parameters/SecurityMonitoringTerraformResourceType"
+        - $ref: "#/components/parameters/SecurityMonitoringTerraformResourceId"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SecurityMonitoringTerraformExportResponse"
+          description: OK
+        "403":
+          $ref: "#/components/responses/NotAuthorizedResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequestsResponse"
+      security:
+        - apiKeyAuth: []
+          appKeyAuth: []
+        - AuthZ:
+            - security_monitoring_suppressions_read
+      summary: Export security monitoring resource to Terraform
+      tags:
+        - Security Monitoring
+      "x-permission":
+        operator: OR
+        permissions:
+          - security_monitoring_suppressions_read
+          - security_monitoring_rules_read
+      x-unstable: "**Note**: This endpoint is in Preview. If you have any feedback, contact [Datadog support](https://docs.datadoghq.com/help/)."
   /api/v2/sensitive-data-scanner/config:
     get:
       description: List all the Scanning groups in your organization.
@@ -117347,9 +117098,6 @@ tags:
       is used to automatically map groups of users to roles in Datadog using attributes
       sent from Identity Providers. Use these endpoints to manage your AuthN Mappings.
     name: AuthN Mappings
-  - description: |-
-      Use the Bits AI endpoints to retrieve AI-powered investigations.
-    name: Bits AI
   - description: |-
       Search or aggregate your CI Visibility pipeline events and send them to your Datadog site over HTTP. See the [CI Pipeline Visibility in Datadog page](https://docs.datadoghq.com/continuous_integration/pipelines/) for more information.
     name: CI Visibility Pipelines

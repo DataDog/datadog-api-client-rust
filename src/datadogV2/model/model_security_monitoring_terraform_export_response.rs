@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request to trigger a new investigation.
+/// Response containing the Terraform configuration for a security monitoring resource.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TriggerInvestigationRequest {
-    /// Data for the trigger investigation request.
+pub struct SecurityMonitoringTerraformExportResponse {
+    /// The Terraform export data object.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::TriggerInvestigationRequestData,
+    pub data: Option<crate::datadogV2::model::SecurityMonitoringTerraformExportData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,15 +21,21 @@ pub struct TriggerInvestigationRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl TriggerInvestigationRequest {
-    pub fn new(
-        data: crate::datadogV2::model::TriggerInvestigationRequestData,
-    ) -> TriggerInvestigationRequest {
-        TriggerInvestigationRequest {
-            data,
+impl SecurityMonitoringTerraformExportResponse {
+    pub fn new() -> SecurityMonitoringTerraformExportResponse {
+        SecurityMonitoringTerraformExportResponse {
+            data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn data(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringTerraformExportData,
+    ) -> Self {
+        self.data = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -41,14 +47,20 @@ impl TriggerInvestigationRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for TriggerInvestigationRequest {
+impl Default for SecurityMonitoringTerraformExportResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SecurityMonitoringTerraformExportResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TriggerInvestigationRequestVisitor;
-        impl<'a> Visitor<'a> for TriggerInvestigationRequestVisitor {
-            type Value = TriggerInvestigationRequest;
+        struct SecurityMonitoringTerraformExportResponseVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringTerraformExportResponseVisitor {
+            type Value = SecurityMonitoringTerraformExportResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,8 +70,9 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TriggerInvestigationRequestData> =
-                    None;
+                let mut data: Option<
+                    crate::datadogV2::model::SecurityMonitoringTerraformExportData,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -69,6 +82,9 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequest {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -78,9 +94,8 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequest {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = TriggerInvestigationRequest {
+                let content = SecurityMonitoringTerraformExportResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -90,6 +105,6 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequest {
             }
         }
 
-        deserializer.deserialize_any(TriggerInvestigationRequestVisitor)
+        deserializer.deserialize_any(SecurityMonitoringTerraformExportResponseVisitor)
     }
 }

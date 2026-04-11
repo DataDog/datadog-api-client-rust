@@ -6,21 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum InvestigationType {
-    INVESTIGATION,
+pub enum SecurityMonitoringTerraformResourceType {
+    SUPPRESSIONS,
+    CRITICAL_ASSETS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for InvestigationType {
+impl ToString for SecurityMonitoringTerraformResourceType {
     fn to_string(&self) -> String {
         match self {
-            Self::INVESTIGATION => String::from("investigation"),
+            Self::SUPPRESSIONS => String::from("suppressions"),
+            Self::CRITICAL_ASSETS => String::from("critical_assets"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for InvestigationType {
+impl Serialize for SecurityMonitoringTerraformResourceType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,14 +34,15 @@ impl Serialize for InvestigationType {
     }
 }
 
-impl<'de> Deserialize<'de> for InvestigationType {
+impl<'de> Deserialize<'de> for SecurityMonitoringTerraformResourceType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "investigation" => Self::INVESTIGATION,
+            "suppressions" => Self::SUPPRESSIONS,
+            "critical_assets" => Self::CRITICAL_ASSETS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

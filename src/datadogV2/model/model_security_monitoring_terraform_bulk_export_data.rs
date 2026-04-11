@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for the trigger investigation request.
+/// The bulk export request data object.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TriggerInvestigationRequestDataAttributes {
-    /// The trigger definition for starting an investigation.
-    #[serde(rename = "trigger")]
-    pub trigger: crate::datadogV2::model::TriggerAttributes,
+pub struct SecurityMonitoringTerraformBulkExportData {
+    /// Attributes for the bulk export request.
+    #[serde(rename = "attributes")]
+    pub attributes: crate::datadogV2::model::SecurityMonitoringTerraformBulkExportAttributes,
+    /// The JSON:API type. Always `bulk_export_resources`.
+    #[serde(rename = "type")]
+    pub type_: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,12 +24,14 @@ pub struct TriggerInvestigationRequestDataAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl TriggerInvestigationRequestDataAttributes {
+impl SecurityMonitoringTerraformBulkExportData {
     pub fn new(
-        trigger: crate::datadogV2::model::TriggerAttributes,
-    ) -> TriggerInvestigationRequestDataAttributes {
-        TriggerInvestigationRequestDataAttributes {
-            trigger,
+        attributes: crate::datadogV2::model::SecurityMonitoringTerraformBulkExportAttributes,
+        type_: String,
+    ) -> SecurityMonitoringTerraformBulkExportData {
+        SecurityMonitoringTerraformBulkExportData {
+            attributes,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -41,14 +46,14 @@ impl TriggerInvestigationRequestDataAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for TriggerInvestigationRequestDataAttributes {
+impl<'de> Deserialize<'de> for SecurityMonitoringTerraformBulkExportData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TriggerInvestigationRequestDataAttributesVisitor;
-        impl<'a> Visitor<'a> for TriggerInvestigationRequestDataAttributesVisitor {
-            type Value = TriggerInvestigationRequestDataAttributes;
+        struct SecurityMonitoringTerraformBulkExportDataVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringTerraformBulkExportDataVisitor {
+            type Value = SecurityMonitoringTerraformBulkExportData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +63,10 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequestDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut trigger: Option<crate::datadogV2::model::TriggerAttributes> = None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::SecurityMonitoringTerraformBulkExportAttributes,
+                > = None;
+                let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -67,8 +75,11 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequestDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "trigger" => {
-                            trigger = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "attributes" => {
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -77,10 +88,12 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequestDataAttributes {
                         }
                     }
                 }
-                let trigger = trigger.ok_or_else(|| M::Error::missing_field("trigger"))?;
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = TriggerInvestigationRequestDataAttributes {
-                    trigger,
+                let content = SecurityMonitoringTerraformBulkExportData {
+                    attributes,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -89,6 +102,6 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequestDataAttributes {
             }
         }
 
-        deserializer.deserialize_any(TriggerInvestigationRequestDataAttributesVisitor)
+        deserializer.deserialize_any(SecurityMonitoringTerraformBulkExportDataVisitor)
     }
 }
