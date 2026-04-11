@@ -35189,6 +35189,15 @@ components:
     IssuesSearchRequestDataAttributes:
       description: Object describing a search issue request.
       properties:
+        assignee_ids:
+          description: Filter issues by assignee IDs. Multiple values are combined with OR logic.
+          example:
+            - "00000000-0000-0000-0000-000000000001"
+          items:
+            format: uuid
+            type: string
+          maxItems: 50
+          type: array
         from:
           description: Start date (inclusive) of the query in milliseconds since the Unix epoch.
           example: 1671612804000
@@ -35202,6 +35211,15 @@ components:
           description: Search query following the event search syntax.
           example: "service:orders-* AND @language:go"
           type: string
+        team_ids:
+          description: Filter issues by team IDs. Multiple values are combined with OR logic.
+          example:
+            - "00000000-0000-0000-0000-000000000002"
+          items:
+            format: uuid
+            type: string
+          maxItems: 50
+          type: array
         to:
           description: End date (exclusive) of the query in milliseconds since the Unix epoch.
           example: 1671620004000
