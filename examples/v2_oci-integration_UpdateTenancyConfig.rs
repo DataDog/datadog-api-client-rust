@@ -53,7 +53,7 @@ mcwMY5r/WZ2qjFlPjeAqbL62aPDLidGjoaVo2iIoBPK/gjxQ/5f0MS4N/YQ0zWoYBueSQ0DGs
                             "env:prod".to_string(),
                         ])
                         .enabled(true)
-                        .enabled_services(vec!["service_1".to_string(), "service_1".to_string()]),
+                        .enabled_services(vec!["service_1".to_string(), "service_2".to_string()]),
                 )
                 .metrics_config(
                     UpdateTenancyConfigDataAttributesMetricsConfig::new()
@@ -62,7 +62,7 @@ mcwMY5r/WZ2qjFlPjeAqbL62aPDLidGjoaVo2iIoBPK/gjxQ/5f0MS4N/YQ0zWoYBueSQ0DGs
                             "env:prod".to_string(),
                         ])
                         .enabled(true)
-                        .excluded_services(vec!["service_1".to_string(), "service_1".to_string()]),
+                        .excluded_services(vec!["service_1".to_string(), "service_2".to_string()]),
                 )
                 .regions_config(
                     UpdateTenancyConfigDataAttributesRegionsConfig::new()

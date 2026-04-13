@@ -10,7 +10,7 @@ use datadog_api_client::datadogV2::model::DeletedTestsRequestType;
 async fn main() {
     let body = DeletedTestsRequestDeleteRequest::new(
         DeletedTestsRequestDelete::new(DeletedTestsRequestDeleteAttributes::new(vec![
-            "".to_string()
+            "abc-def-123".to_string(),
         ]))
         .type_(DeletedTestsRequestType::DELETE_TESTS_REQUEST),
     );
