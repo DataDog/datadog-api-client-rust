@@ -17,7 +17,7 @@ pub struct ObservabilityPipelineParseGrokProcessorRule {
     #[serde(rename = "match_rules")]
     pub match_rules:
         Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleMatchRule>,
-    /// The value of the source field in log events to be processed by the Grok rules.
+    /// The name of the field in the log event to apply the Grok rules to.
     #[serde(rename = "source")]
     pub source: String,
     /// A list of Grok helper rules that can be referenced by the parsing rules.

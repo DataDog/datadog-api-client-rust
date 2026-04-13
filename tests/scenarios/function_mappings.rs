@@ -89,6 +89,8 @@ pub struct ApiInstances {
     pub v2_api_csm_coverage_analysis:
         Option<datadogV2::api_csm_coverage_analysis::CSMCoverageAnalysisAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
+    pub v2_api_dashboard_secure_embed:
+        Option<datadogV2::api_dashboard_secure_embed::DashboardSecureEmbedAPI>,
     pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
     pub v2_api_data_deletion: Option<datadogV2::api_data_deletion::DataDeletionAPI>,
     pub v2_api_deployment_gates: Option<datadogV2::api_deployment_gates::DeploymentGatesAPI>,
@@ -717,6 +719,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         }
         "CSMCoverageAnalysis" => {
             world.api_instances.v2_api_csm_coverage_analysis = Some(datadogV2::api_csm_coverage_analysis::CSMCoverageAnalysisAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
+        }
+        "DashboardSecureEmbed" => {
+            world.api_instances.v2_api_dashboard_secure_embed = Some(datadogV2::api_dashboard_secure_embed::DashboardSecureEmbedAPI::with_client_and_config(
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
@@ -3289,6 +3297,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateDashboardListItems".into(),
         test_v2_update_dashboard_list_items,
+    );
+    world.function_mappings.insert(
+        "v2.CreateDashboardSecureEmbed".into(),
+        test_v2_create_dashboard_secure_embed,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteDashboardSecureEmbed".into(),
+        test_v2_delete_dashboard_secure_embed,
+    );
+    world.function_mappings.insert(
+        "v2.GetDashboardSecureEmbed".into(),
+        test_v2_get_dashboard_secure_embed,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateDashboardSecureEmbed".into(),
+        test_v2_update_dashboard_secure_embed,
     );
     world
         .function_mappings
@@ -24143,6 +24167,132 @@ fn test_v2_update_dashboard_list_items(
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response =
         match block_on(api.update_dashboard_list_items_with_http_info(dashboard_list_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_dashboard_secure_embed(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_dashboard_secure_embed
+        .as_ref()
+        .expect("api instance not found");
+    let dashboard_id =
+        serde_json::from_value(_parameters.get("dashboard_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_dashboard_secure_embed_with_http_info(dashboard_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_dashboard_secure_embed(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_dashboard_secure_embed
+        .as_ref()
+        .expect("api instance not found");
+    let dashboard_id =
+        serde_json::from_value(_parameters.get("dashboard_id").unwrap().clone()).unwrap();
+    let token = serde_json::from_value(_parameters.get("token").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_dashboard_secure_embed_with_http_info(dashboard_id, token)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_dashboard_secure_embed(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_dashboard_secure_embed
+        .as_ref()
+        .expect("api instance not found");
+    let dashboard_id =
+        serde_json::from_value(_parameters.get("dashboard_id").unwrap().clone()).unwrap();
+    let token = serde_json::from_value(_parameters.get("token").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_dashboard_secure_embed_with_http_info(dashboard_id, token)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_dashboard_secure_embed(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_dashboard_secure_embed
+        .as_ref()
+        .expect("api instance not found");
+    let dashboard_id =
+        serde_json::from_value(_parameters.get("dashboard_id").unwrap().clone()).unwrap();
+    let token = serde_json::from_value(_parameters.get("token").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_dashboard_secure_embed_with_http_info(dashboard_id, token, body))
+        {
             Ok(response) => response,
             Err(error) => {
                 return match error {
