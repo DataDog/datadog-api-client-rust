@@ -17,7 +17,7 @@ pub struct SecurityMonitoringStandardRuleQuery {
     /// Query extension to append to the logs query.
     #[serde(rename = "customQueryExtension")]
     pub custom_query_extension: Option<String>,
-    /// Source of events, either logs, audit trail, security signals, or Datadog events. `app_sec_spans` is deprecated in favor of `spans`.
+    /// Source of events, either logs, audit trail, or Datadog events. `app_sec_spans` is deprecated in favor of `spans`.
     #[serde(rename = "dataSource")]
     pub data_source: Option<crate::datadogV2::model::SecurityMonitoringStandardDataSource>,
     /// Field for which the cardinality is measured. Sent as an array.
