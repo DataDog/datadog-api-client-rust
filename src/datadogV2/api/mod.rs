@@ -72,6 +72,7 @@ pub mod api_on_call;
 pub mod api_on_call_paging;
 pub mod api_opsgenie_integration;
 pub mod api_org_connections;
+pub mod api_org_groups;
 pub mod api_organizations;
 pub mod api_powerpack;
 pub mod api_processes;
