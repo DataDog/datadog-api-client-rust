@@ -73,6 +73,7 @@ pub use self::api::api_on_call;
 pub use self::api::api_on_call_paging;
 pub use self::api::api_opsgenie_integration;
 pub use self::api::api_org_connections;
+pub use self::api::api_org_groups;
 pub use self::api::api_organizations;
 pub use self::api::api_powerpack;
 pub use self::api::api_processes;
