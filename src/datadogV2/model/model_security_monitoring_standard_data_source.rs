@@ -14,6 +14,7 @@ pub enum SecurityMonitoringStandardDataSource {
     SECURITY_RUNTIME,
     NETWORK,
     EVENTS,
+    SECURITY_SIGNALS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -27,6 +28,7 @@ impl ToString for SecurityMonitoringStandardDataSource {
             Self::SECURITY_RUNTIME => String::from("security_runtime"),
             Self::NETWORK => String::from("network"),
             Self::EVENTS => String::from("events"),
+            Self::SECURITY_SIGNALS => String::from("security_signals"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -58,6 +60,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardDataSource {
             "security_runtime" => Self::SECURITY_RUNTIME,
             "network" => Self::NETWORK,
             "events" => Self::EVENTS,
+            "security_signals" => Self::SECURITY_SIGNALS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
