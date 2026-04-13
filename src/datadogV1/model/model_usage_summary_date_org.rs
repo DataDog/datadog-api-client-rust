@@ -83,12 +83,54 @@ pub struct UsageSummaryDateOrg {
     #[deprecated]
     #[serde(rename = "browser_rum_units_sum")]
     pub browser_rum_units_sum: Option<i64>,
+    /// Shows the last value of Anthropic cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_anthropic_spend_last")]
+    pub ccm_anthropic_spend_last: Option<i64>,
+    /// Shows the last value of AWS cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_aws_spend_last")]
+    pub ccm_aws_spend_last: Option<i64>,
+    /// Shows the last value of Azure cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_azure_spend_last")]
+    pub ccm_azure_spend_last: Option<i64>,
+    /// Shows the last value of Confluent cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_confluent_spend_last")]
+    pub ccm_confluent_spend_last: Option<i64>,
+    /// Shows the last value of Databricks cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_databricks_spend_last")]
+    pub ccm_databricks_spend_last: Option<i64>,
+    /// Shows the last value of Elastic cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_elastic_spend_last")]
+    pub ccm_elastic_spend_last: Option<i64>,
+    /// Shows the last value of Fastly cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_fastly_spend_last")]
+    pub ccm_fastly_spend_last: Option<i64>,
+    /// Shows the last value of GCP cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_gcp_spend_last")]
+    pub ccm_gcp_spend_last: Option<i64>,
+    /// Shows the last value of GitHub cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_github_spend_last")]
+    pub ccm_github_spend_last: Option<i64>,
+    /// Shows the last value of MongoDB cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_mongodb_spend_last")]
+    pub ccm_mongodb_spend_last: Option<i64>,
+    /// Shows the last value of OCI cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_oci_spend_last")]
+    pub ccm_oci_spend_last: Option<i64>,
+    /// Shows the last value of OpenAI cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_openai_spend_last")]
+    pub ccm_openai_spend_last: Option<i64>,
+    /// Shows the last value of Snowflake cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_snowflake_spend_last")]
+    pub ccm_snowflake_spend_last: Option<i64>,
     /// Shows the last value of the amount of cloud spend monitored for Enterprise over all hours in the current date for the given org.
     #[serde(rename = "ccm_spend_monitored_ent_last")]
     pub ccm_spend_monitored_ent_last: Option<i64>,
     /// Shows the last value of the amount of cloud spend monitored for Pro over all hours in the current date for the given org.
     #[serde(rename = "ccm_spend_monitored_pro_last")]
     pub ccm_spend_monitored_pro_last: Option<i64>,
+    /// Shows the last value of Twilio cloud spend monitored over all hours in the current date for the given org.
+    #[serde(rename = "ccm_twilio_spend_last")]
+    pub ccm_twilio_spend_last: Option<i64>,
     /// Shows the sum of all CI pipeline indexed spans over all hours in the current date for the given org.
     #[serde(rename = "ci_pipeline_indexed_spans_sum")]
     pub ci_pipeline_indexed_spans_sum: Option<i64>,
@@ -726,8 +768,22 @@ impl UsageSummaryDateOrg {
             browser_rum_lite_session_count_sum: None,
             browser_rum_replay_session_count_sum: None,
             browser_rum_units_sum: None,
+            ccm_anthropic_spend_last: None,
+            ccm_aws_spend_last: None,
+            ccm_azure_spend_last: None,
+            ccm_confluent_spend_last: None,
+            ccm_databricks_spend_last: None,
+            ccm_elastic_spend_last: None,
+            ccm_fastly_spend_last: None,
+            ccm_gcp_spend_last: None,
+            ccm_github_spend_last: None,
+            ccm_mongodb_spend_last: None,
+            ccm_oci_spend_last: None,
+            ccm_openai_spend_last: None,
+            ccm_snowflake_spend_last: None,
             ccm_spend_monitored_ent_last: None,
             ccm_spend_monitored_pro_last: None,
+            ccm_twilio_spend_last: None,
             ci_pipeline_indexed_spans_sum: None,
             ci_test_indexed_spans_sum: None,
             ci_visibility_itr_committers_hwm: None,
@@ -1069,6 +1125,84 @@ impl UsageSummaryDateOrg {
     }
 
     #[allow(deprecated)]
+    pub fn ccm_anthropic_spend_last(mut self, value: i64) -> Self {
+        self.ccm_anthropic_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_aws_spend_last(mut self, value: i64) -> Self {
+        self.ccm_aws_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_azure_spend_last(mut self, value: i64) -> Self {
+        self.ccm_azure_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_confluent_spend_last(mut self, value: i64) -> Self {
+        self.ccm_confluent_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_databricks_spend_last(mut self, value: i64) -> Self {
+        self.ccm_databricks_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_elastic_spend_last(mut self, value: i64) -> Self {
+        self.ccm_elastic_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_fastly_spend_last(mut self, value: i64) -> Self {
+        self.ccm_fastly_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_gcp_spend_last(mut self, value: i64) -> Self {
+        self.ccm_gcp_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_github_spend_last(mut self, value: i64) -> Self {
+        self.ccm_github_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_mongodb_spend_last(mut self, value: i64) -> Self {
+        self.ccm_mongodb_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_oci_spend_last(mut self, value: i64) -> Self {
+        self.ccm_oci_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_openai_spend_last(mut self, value: i64) -> Self {
+        self.ccm_openai_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_snowflake_spend_last(mut self, value: i64) -> Self {
+        self.ccm_snowflake_spend_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn ccm_spend_monitored_ent_last(mut self, value: i64) -> Self {
         self.ccm_spend_monitored_ent_last = Some(value);
         self
@@ -1077,6 +1211,12 @@ impl UsageSummaryDateOrg {
     #[allow(deprecated)]
     pub fn ccm_spend_monitored_pro_last(mut self, value: i64) -> Self {
         self.ccm_spend_monitored_pro_last = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ccm_twilio_spend_last(mut self, value: i64) -> Self {
+        self.ccm_twilio_spend_last = Some(value);
         self
     }
 
@@ -2347,8 +2487,22 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut browser_rum_lite_session_count_sum: Option<i64> = None;
                 let mut browser_rum_replay_session_count_sum: Option<i64> = None;
                 let mut browser_rum_units_sum: Option<i64> = None;
+                let mut ccm_anthropic_spend_last: Option<i64> = None;
+                let mut ccm_aws_spend_last: Option<i64> = None;
+                let mut ccm_azure_spend_last: Option<i64> = None;
+                let mut ccm_confluent_spend_last: Option<i64> = None;
+                let mut ccm_databricks_spend_last: Option<i64> = None;
+                let mut ccm_elastic_spend_last: Option<i64> = None;
+                let mut ccm_fastly_spend_last: Option<i64> = None;
+                let mut ccm_gcp_spend_last: Option<i64> = None;
+                let mut ccm_github_spend_last: Option<i64> = None;
+                let mut ccm_mongodb_spend_last: Option<i64> = None;
+                let mut ccm_oci_spend_last: Option<i64> = None;
+                let mut ccm_openai_spend_last: Option<i64> = None;
+                let mut ccm_snowflake_spend_last: Option<i64> = None;
                 let mut ccm_spend_monitored_ent_last: Option<i64> = None;
                 let mut ccm_spend_monitored_pro_last: Option<i64> = None;
+                let mut ccm_twilio_spend_last: Option<i64> = None;
                 let mut ci_pipeline_indexed_spans_sum: Option<i64> = None;
                 let mut ci_test_indexed_spans_sum: Option<i64> = None;
                 let mut ci_visibility_itr_committers_hwm: Option<i64> = None;
@@ -2704,6 +2858,84 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                             }
                             browser_rum_units_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "ccm_anthropic_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_anthropic_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_aws_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_aws_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_azure_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_azure_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_confluent_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_confluent_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_databricks_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_databricks_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_elastic_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_elastic_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_fastly_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_fastly_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_gcp_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_gcp_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_github_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_github_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_mongodb_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_mongodb_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_oci_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_oci_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_openai_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_openai_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_snowflake_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_snowflake_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ccm_spend_monitored_ent_last" => {
                             if v.is_null() {
                                 continue;
@@ -2715,6 +2947,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                                 continue;
                             }
                             ccm_spend_monitored_pro_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ccm_twilio_spend_last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ccm_twilio_spend_last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "ci_pipeline_indexed_spans_sum" => {
                             if v.is_null() {
@@ -3931,8 +4169,22 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     browser_rum_lite_session_count_sum,
                     browser_rum_replay_session_count_sum,
                     browser_rum_units_sum,
+                    ccm_anthropic_spend_last,
+                    ccm_aws_spend_last,
+                    ccm_azure_spend_last,
+                    ccm_confluent_spend_last,
+                    ccm_databricks_spend_last,
+                    ccm_elastic_spend_last,
+                    ccm_fastly_spend_last,
+                    ccm_gcp_spend_last,
+                    ccm_github_spend_last,
+                    ccm_mongodb_spend_last,
+                    ccm_oci_spend_last,
+                    ccm_openai_spend_last,
+                    ccm_snowflake_spend_last,
                     ccm_spend_monitored_ent_last,
                     ccm_spend_monitored_pro_last,
+                    ccm_twilio_spend_last,
                     ci_pipeline_indexed_spans_sum,
                     ci_test_indexed_spans_sum,
                     ci_visibility_itr_committers_hwm,
