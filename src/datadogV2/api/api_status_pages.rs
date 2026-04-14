@@ -278,6 +278,8 @@ pub struct ListStatusPagesOptionalParams {
     pub page_offset: Option<i32>,
     /// The number of status pages to return per page.
     pub page_limit: Option<i32>,
+    /// Filter status pages by exact domain prefix match. Returns at most one result.
+    pub filter_domain_prefix: Option<String>,
     /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user.
     pub include: Option<String>,
 }
@@ -291,6 +293,11 @@ impl ListStatusPagesOptionalParams {
     /// The number of status pages to return per page.
     pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
+        self
+    }
+    /// Filter status pages by exact domain prefix match. Returns at most one result.
+    pub fn filter_domain_prefix(mut self, value: String) -> Self {
+        self.filter_domain_prefix = Some(value);
         self
     }
     /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user.
@@ -2479,6 +2486,7 @@ impl StatusPagesAPI {
         // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
+        let filter_domain_prefix = params.filter_domain_prefix;
         let include = params.include;
 
         let local_client = &self.client;
@@ -2497,6 +2505,10 @@ impl StatusPagesAPI {
         if let Some(ref local_query_param) = page_limit {
             local_req_builder =
                 local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_domain_prefix {
+            local_req_builder = local_req_builder
+                .query(&[("filter[domain_prefix]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = include {
             local_req_builder =
