@@ -18,6 +18,10 @@ pub enum ApplicationSecurityWafCustomRuleConditionOperator {
     IP_MATCH,
     NOT_IP_MATCH,
     CAPTURE_DATA,
+    EXISTS,
+    NOT_EXISTS,
+    EQUALS,
+    NOT_EQUALS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -35,6 +39,10 @@ impl ToString for ApplicationSecurityWafCustomRuleConditionOperator {
             Self::IP_MATCH => String::from("ip_match"),
             Self::NOT_IP_MATCH => String::from("!ip_match"),
             Self::CAPTURE_DATA => String::from("capture_data"),
+            Self::EXISTS => String::from("exists"),
+            Self::NOT_EXISTS => String::from("!exists"),
+            Self::EQUALS => String::from("equals"),
+            Self::NOT_EQUALS => String::from("!equals"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -70,6 +78,10 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafCustomRuleConditionOperator
             "ip_match" => Self::IP_MATCH,
             "!ip_match" => Self::NOT_IP_MATCH,
             "capture_data" => Self::CAPTURE_DATA,
+            "exists" => Self::EXISTS,
+            "!exists" => Self::NOT_EXISTS,
+            "equals" => Self::EQUALS,
+            "!equals" => Self::NOT_EQUALS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
