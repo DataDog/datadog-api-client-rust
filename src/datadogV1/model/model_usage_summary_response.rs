@@ -341,6 +341,9 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of the high-water marks of all Fargate tasks over all hours in the current month for all organizations.
     #[serde(rename = "fargate_tasks_count_hwm_sum")]
     pub fargate_tasks_count_hwm_sum: Option<i64>,
+    /// Shows the sum of all Feature Flags Client-Side SDK config requests over all hours in the current month for all organizations.
+    #[serde(rename = "feature_flags_config_requests_agg_sum")]
+    pub feature_flags_config_requests_agg_sum: Option<i64>,
     /// Shows the average number of Flex Logs Compute Large Instances over all hours in the current months for all organizations.
     #[serde(rename = "flex_logs_compute_large_avg_sum")]
     pub flex_logs_compute_large_avg_sum: Option<i64>,
@@ -871,6 +874,7 @@ impl UsageSummaryResponse {
             fargate_container_profiler_profiling_fargate_eks_avg_sum: None,
             fargate_tasks_count_avg_sum: None,
             fargate_tasks_count_hwm_sum: None,
+            feature_flags_config_requests_agg_sum: None,
             flex_logs_compute_large_avg_sum: None,
             flex_logs_compute_medium_avg_sum: None,
             flex_logs_compute_small_avg_sum: None,
@@ -1662,6 +1666,12 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn fargate_tasks_count_hwm_sum(mut self, value: i64) -> Self {
         self.fargate_tasks_count_hwm_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn feature_flags_config_requests_agg_sum(mut self, value: i64) -> Self {
+        self.feature_flags_config_requests_agg_sum = Some(value);
         self
     }
 
@@ -2648,6 +2658,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     None;
                 let mut fargate_tasks_count_avg_sum: Option<i64> = None;
                 let mut fargate_tasks_count_hwm_sum: Option<i64> = None;
+                let mut feature_flags_config_requests_agg_sum: Option<i64> = None;
                 let mut flex_logs_compute_large_avg_sum: Option<i64> = None;
                 let mut flex_logs_compute_medium_avg_sum: Option<i64> = None;
                 let mut flex_logs_compute_small_avg_sum: Option<i64> = None;
@@ -3455,6 +3466,12 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             fargate_tasks_count_hwm_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "feature_flags_config_requests_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            feature_flags_config_requests_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "flex_logs_compute_large_avg_sum" => {
                             if v.is_null() {
@@ -4367,6 +4384,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     fargate_container_profiler_profiling_fargate_eks_avg_sum,
                     fargate_tasks_count_avg_sum,
                     fargate_tasks_count_hwm_sum,
+                    feature_flags_config_requests_agg_sum,
                     flex_logs_compute_large_avg_sum,
                     flex_logs_compute_medium_avg_sum,
                     flex_logs_compute_small_avg_sum,
