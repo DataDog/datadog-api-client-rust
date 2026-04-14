@@ -652,6 +652,9 @@ impl SyntheticsAPI {
         }
     }
 
+    /// Create a Network Path test.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site.
     pub async fn create_synthetics_network_test(
         &self,
         body: crate::datadogV2::model::SyntheticsNetworkTestEditRequest,
@@ -676,6 +679,9 @@ impl SyntheticsAPI {
         }
     }
 
+    /// Create a Network Path test.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site.
     pub async fn create_synthetics_network_test_with_http_info(
         &self,
         body: crate::datadogV2::model::SyntheticsNetworkTestEditRequest,
@@ -1874,6 +1880,9 @@ impl SyntheticsAPI {
         }
     }
 
+    /// Get a Network Path test.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site.
     pub async fn get_synthetics_network_test(
         &self,
         public_id: String,
@@ -1898,6 +1907,9 @@ impl SyntheticsAPI {
         }
     }
 
+    /// Get a Network Path test.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site.
     pub async fn get_synthetics_network_test_with_http_info(
         &self,
         public_id: String,
@@ -3423,6 +3435,9 @@ impl SyntheticsAPI {
         }
     }
 
+    /// Edit a Network Path test.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site.
     pub async fn update_synthetics_network_test(
         &self,
         public_id: String,
@@ -3448,6 +3463,9 @@ impl SyntheticsAPI {
         }
     }
 
+    /// Edit a Network Path test.
+    ///
+    /// **Note**: This endpoint is not available for the Government (US1-FED) site.
     pub async fn update_synthetics_network_test_with_http_info(
         &self,
         public_id: String,
