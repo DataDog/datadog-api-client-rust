@@ -22959,6 +22959,12 @@ fn test_v2_list_custom_costs_files(world: &mut DatadogWorld, _parameters: &HashM
     let filter_status = _parameters
         .get("filter[status]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_name = _parameters
+        .get("filter[name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_provider = _parameters
+        .get("filter[provider]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let sort = _parameters
         .get("sort")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -22967,6 +22973,8 @@ fn test_v2_list_custom_costs_files(world: &mut DatadogWorld, _parameters: &HashM
     params.page_number = page_number;
     params.page_size = page_size;
     params.filter_status = filter_status;
+    params.filter_name = filter_name;
+    params.filter_provider = filter_provider;
     params.sort = sort;
     let response = match block_on(api.list_custom_costs_files_with_http_info(params)) {
         Ok(response) => response,

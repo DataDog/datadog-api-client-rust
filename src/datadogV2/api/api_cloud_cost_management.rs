@@ -20,6 +20,10 @@ pub struct ListCustomCostsFilesOptionalParams {
     pub page_size: Option<i64>,
     /// Filter by file status
     pub filter_status: Option<String>,
+    /// Filter files by name with case-insensitive substring matching.
+    pub filter_name: Option<String>,
+    /// Filter by provider.
+    pub filter_provider: Option<Vec<String>>,
     /// Sort key with optional descending prefix
     pub sort: Option<String>,
 }
@@ -38,6 +42,16 @@ impl ListCustomCostsFilesOptionalParams {
     /// Filter by file status
     pub fn filter_status(mut self, value: String) -> Self {
         self.filter_status = Some(value);
+        self
+    }
+    /// Filter files by name with case-insensitive substring matching.
+    pub fn filter_name(mut self, value: String) -> Self {
+        self.filter_name = Some(value);
+        self
+    }
+    /// Filter by provider.
+    pub fn filter_provider(mut self, value: Vec<String>) -> Self {
+        self.filter_provider = Some(value);
         self
     }
     /// Sort key with optional descending prefix
@@ -3183,6 +3197,8 @@ impl CloudCostManagementAPI {
         let page_number = params.page_number;
         let page_size = params.page_size;
         let filter_status = params.filter_status;
+        let filter_name = params.filter_name;
+        let filter_provider = params.filter_provider;
         let sort = params.sort;
 
         let local_client = &self.client;
@@ -3205,6 +3221,16 @@ impl CloudCostManagementAPI {
         if let Some(ref local_query_param) = filter_status {
             local_req_builder =
                 local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_name {
+            local_req_builder =
+                local_req_builder.query(&[("filter[name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = filter_provider {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[provider]", &param.to_string())]);
+            }
         };
         if let Some(ref local_query_param) = sort {
             local_req_builder =
