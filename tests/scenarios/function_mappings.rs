@@ -42504,12 +42504,16 @@ fn test_v2_list_status_pages(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_domain_prefix = _parameters
+        .get("filter[domain_prefix]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_status_pages::ListStatusPagesOptionalParams::default();
     params.page_offset = page_offset;
     params.page_limit = page_limit;
+    params.filter_domain_prefix = filter_domain_prefix;
     params.include = include;
     let response = match block_on(api.list_status_pages_with_http_info(params)) {
         Ok(response) => response,
