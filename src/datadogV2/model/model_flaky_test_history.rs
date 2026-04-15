@@ -14,6 +14,12 @@ pub struct FlakyTestHistory {
     /// The commit SHA associated with this status change. Will be an empty string if the commit SHA is not available.
     #[serde(rename = "commit_sha")]
     pub commit_sha: String,
+    /// The policy that triggered this status change.
+    #[serde(rename = "policy_id")]
+    pub policy_id: Option<crate::datadogV2::model::FlakyTestHistoryPolicyId>,
+    /// Metadata about the policy that triggered this status change.
+    #[serde(rename = "policy_meta")]
+    pub policy_meta: Option<crate::datadogV2::model::FlakyTestHistoryPolicyMeta>,
     /// The test status at this point in history.
     #[serde(rename = "status")]
     pub status: String,
@@ -31,11 +37,26 @@ impl FlakyTestHistory {
     pub fn new(commit_sha: String, status: String, timestamp: i64) -> FlakyTestHistory {
         FlakyTestHistory {
             commit_sha,
+            policy_id: None,
+            policy_meta: None,
             status,
             timestamp,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn policy_id(mut self, value: crate::datadogV2::model::FlakyTestHistoryPolicyId) -> Self {
+        self.policy_id = Some(value);
+        self
+    }
+
+    pub fn policy_meta(
+        mut self,
+        value: crate::datadogV2::model::FlakyTestHistoryPolicyMeta,
+    ) -> Self {
+        self.policy_meta = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -65,6 +86,9 @@ impl<'de> Deserialize<'de> for FlakyTestHistory {
                 M: MapAccess<'a>,
             {
                 let mut commit_sha: Option<String> = None;
+                let mut policy_id: Option<crate::datadogV2::model::FlakyTestHistoryPolicyId> = None;
+                let mut policy_meta: Option<crate::datadogV2::model::FlakyTestHistoryPolicyMeta> =
+                    None;
                 let mut status: Option<String> = None;
                 let mut timestamp: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -77,6 +101,27 @@ impl<'de> Deserialize<'de> for FlakyTestHistory {
                     match k.as_str() {
                         "commit_sha" => {
                             commit_sha = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "policy_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            policy_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _policy_id) = policy_id {
+                                match _policy_id {
+                                    crate::datadogV2::model::FlakyTestHistoryPolicyId::UnparsedObject(_policy_id) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "policy_meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            policy_meta =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -97,6 +142,8 @@ impl<'de> Deserialize<'de> for FlakyTestHistory {
 
                 let content = FlakyTestHistory {
                     commit_sha,
+                    policy_id,
+                    policy_meta,
                     status,
                     timestamp,
                     additional_properties,
