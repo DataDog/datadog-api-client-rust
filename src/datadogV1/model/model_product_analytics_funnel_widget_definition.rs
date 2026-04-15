@@ -6,11 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The funnel visualization displays a funnel of user sessions that maps a sequence of view navigation and user interaction in your application.
+/// The user journey funnel visualization displays conversion funnels based on user journey data from Product Analytics.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FunnelWidgetDefinition {
+pub struct ProductAnalyticsFunnelWidgetDefinition {
     /// The description of the widget.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -19,7 +19,7 @@ pub struct FunnelWidgetDefinition {
     pub grouped_display: Option<crate::datadogV1::model::FunnelGroupedDisplay>,
     /// Request payload used to query items.
     #[serde(rename = "requests")]
-    pub requests: Vec<crate::datadogV1::model::FunnelWidgetRequest>,
+    pub requests: Vec<crate::datadogV1::model::ProductAnalyticsFunnelRequest>,
     /// Time setting for the widget.
     #[serde(rename = "time")]
     pub time: Option<crate::datadogV1::model::WidgetTime>,
@@ -35,19 +35,17 @@ pub struct FunnelWidgetDefinition {
     /// Type of funnel widget.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::FunnelWidgetDefinitionType,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
-impl FunnelWidgetDefinition {
+impl ProductAnalyticsFunnelWidgetDefinition {
     pub fn new(
-        requests: Vec<crate::datadogV1::model::FunnelWidgetRequest>,
+        requests: Vec<crate::datadogV1::model::ProductAnalyticsFunnelRequest>,
         type_: crate::datadogV1::model::FunnelWidgetDefinitionType,
-    ) -> FunnelWidgetDefinition {
-        FunnelWidgetDefinition {
+    ) -> ProductAnalyticsFunnelWidgetDefinition {
+        ProductAnalyticsFunnelWidgetDefinition {
             description: None,
             grouped_display: None,
             requests,
@@ -56,7 +54,6 @@ impl FunnelWidgetDefinition {
             title_align: None,
             title_size: None,
             type_,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -90,24 +87,16 @@ impl FunnelWidgetDefinition {
         self.title_size = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
-    }
 }
 
-impl<'de> Deserialize<'de> for FunnelWidgetDefinition {
+impl<'de> Deserialize<'de> for ProductAnalyticsFunnelWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FunnelWidgetDefinitionVisitor;
-        impl<'a> Visitor<'a> for FunnelWidgetDefinitionVisitor {
-            type Value = FunnelWidgetDefinition;
+        struct ProductAnalyticsFunnelWidgetDefinitionVisitor;
+        impl<'a> Visitor<'a> for ProductAnalyticsFunnelWidgetDefinitionVisitor {
+            type Value = ProductAnalyticsFunnelWidgetDefinition;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -120,16 +109,14 @@ impl<'de> Deserialize<'de> for FunnelWidgetDefinition {
                 let mut description: Option<String> = None;
                 let mut grouped_display: Option<crate::datadogV1::model::FunnelGroupedDisplay> =
                     None;
-                let mut requests: Option<Vec<crate::datadogV1::model::FunnelWidgetRequest>> = None;
+                let mut requests: Option<
+                    Vec<crate::datadogV1::model::ProductAnalyticsFunnelRequest>,
+                > = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
                 let mut title: Option<String> = None;
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title_size: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::FunnelWidgetDefinitionType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -214,16 +201,16 @@ impl<'de> Deserialize<'de> for FunnelWidgetDefinition {
                             }
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = FunnelWidgetDefinition {
+                let content = ProductAnalyticsFunnelWidgetDefinition {
                     description,
                     grouped_display,
                     requests,
@@ -232,7 +219,6 @@ impl<'de> Deserialize<'de> for FunnelWidgetDefinition {
                     title_align,
                     title_size,
                     type_,
-                    additional_properties,
                     _unparsed,
                 };
 
@@ -240,6 +226,6 @@ impl<'de> Deserialize<'de> for FunnelWidgetDefinition {
             }
         }
 
-        deserializer.deserialize_any(FunnelWidgetDefinitionVisitor)
+        deserializer.deserialize_any(ProductAnalyticsFunnelWidgetDefinitionVisitor)
     }
 }
