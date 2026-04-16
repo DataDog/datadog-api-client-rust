@@ -364,6 +364,50 @@ impl ListFindingsOptionalParams {
     }
 }
 
+/// ListIndicatorsOfCompromiseOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_indicators_of_compromise`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListIndicatorsOfCompromiseOptionalParams {
+    /// Number of results per page.
+    pub limit: Option<i32>,
+    /// Pagination offset.
+    pub offset: Option<i32>,
+    /// Search/filter query (supports field:value syntax).
+    pub query: Option<String>,
+    /// Sort column: score, first_seen_ts_epoch, last_seen_ts_epoch, indicator, indicator_type, signal_count, log_count, category, as_type.
+    pub sort_column: Option<String>,
+    /// Sort order: asc or desc.
+    pub sort_order: Option<String>,
+}
+
+impl ListIndicatorsOfCompromiseOptionalParams {
+    /// Number of results per page.
+    pub fn limit(mut self, value: i32) -> Self {
+        self.limit = Some(value);
+        self
+    }
+    /// Pagination offset.
+    pub fn offset(mut self, value: i32) -> Self {
+        self.offset = Some(value);
+        self
+    }
+    /// Search/filter query (supports field:value syntax).
+    pub fn query(mut self, value: String) -> Self {
+        self.query = Some(value);
+        self
+    }
+    /// Sort column: score, first_seen_ts_epoch, last_seen_ts_epoch, indicator, indicator_type, signal_count, log_count, category, as_type.
+    pub fn sort_column(mut self, value: String) -> Self {
+        self.sort_column = Some(value);
+        self
+    }
+    /// Sort order: asc or desc.
+    pub fn sort_order(mut self, value: String) -> Self {
+        self.sort_order = Some(value);
+        self
+    }
+}
+
 /// ListScannedAssetsMetadataOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_scanned_assets_metadata`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -1445,6 +1489,14 @@ pub enum GetFindingError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetIndicatorOfCompromiseError is a struct for typed errors of method [`SecurityMonitoringAPI::get_indicator_of_compromise`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetIndicatorOfCompromiseError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetInvestigationLogQueriesMatchingSignalError is a struct for typed errors of method [`SecurityMonitoringAPI::get_investigation_log_queries_matching_signal`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1628,6 +1680,14 @@ pub enum ListAssetsSBOMsError {
 #[serde(untagged)]
 pub enum ListFindingsError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListIndicatorsOfCompromiseError is a struct for typed errors of method [`SecurityMonitoringAPI::list_indicators_of_compromise`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListIndicatorsOfCompromiseError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -6755,6 +6815,127 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get detailed information about a specific indicator of compromise (IoC).
+    pub async fn get_indicator_of_compromise(
+        &self,
+        indicator: String,
+    ) -> Result<
+        crate::datadogV2::model::GetIoCIndicatorResponse,
+        datadog::Error<GetIndicatorOfCompromiseError>,
+    > {
+        match self
+            .get_indicator_of_compromise_with_http_info(indicator)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get detailed information about a specific indicator of compromise (IoC).
+    pub async fn get_indicator_of_compromise_with_http_info(
+        &self,
+        indicator: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GetIoCIndicatorResponse>,
+        datadog::Error<GetIndicatorOfCompromiseError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_indicator_of_compromise";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_indicator_of_compromise' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/siem/ioc-explorer/indicator",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("indicator", &indicator.to_string())]);
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::GetIoCIndicatorResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetIndicatorOfCompromiseError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get the list of investigation log queries available for a given security signal.
     pub async fn get_investigation_log_queries_matching_signal(
         &self,
@@ -9769,6 +9950,153 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<ListFindingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a list of indicators of compromise (IoCs) matching the specified filters.
+    pub async fn list_indicators_of_compromise(
+        &self,
+        params: ListIndicatorsOfCompromiseOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::IoCExplorerListResponse,
+        datadog::Error<ListIndicatorsOfCompromiseError>,
+    > {
+        match self
+            .list_indicators_of_compromise_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of indicators of compromise (IoCs) matching the specified filters.
+    pub async fn list_indicators_of_compromise_with_http_info(
+        &self,
+        params: ListIndicatorsOfCompromiseOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::IoCExplorerListResponse>,
+        datadog::Error<ListIndicatorsOfCompromiseError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_indicators_of_compromise";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_indicators_of_compromise' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let limit = params.limit;
+        let offset = params.offset;
+        let query = params.query;
+        let sort_column = params.sort_column;
+        let sort_order = params.sort_order;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/siem/ioc-explorer",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = offset {
+            local_req_builder =
+                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_column {
+            local_req_builder =
+                local_req_builder.query(&[("sort[column]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort_order {
+            local_req_builder =
+                local_req_builder.query(&[("sort[order]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::IoCExplorerListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListIndicatorsOfCompromiseError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
