@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// An individual timeseries events query.
+/// An individual timeseries query for logs, RUM, traces, CI pipelines, security signals, and other event-based data sources. Use this query type for any data source powered by the Events Platform. See the data_source field for the full list of supported sources.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
