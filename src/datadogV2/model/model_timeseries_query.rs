@@ -10,6 +10,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum TimeseriesQuery {
     MetricsTimeseriesQuery(Box<crate::datadogV2::model::MetricsTimeseriesQuery>),
     EventsTimeseriesQuery(Box<crate::datadogV2::model::EventsTimeseriesQuery>),
+    ApmResourceStatsQuery(Box<crate::datadogV2::model::ApmResourceStatsQuery>),
+    ApmMetricsQuery(Box<crate::datadogV2::model::ApmMetricsQuery>),
+    ApmDependencyStatsQuery(Box<crate::datadogV2::model::ApmDependencyStatsQuery>),
+    SloQuery(Box<crate::datadogV2::model::SloQuery>),
+    ProcessTimeseriesQuery(Box<crate::datadogV2::model::ProcessTimeseriesQuery>),
+    ContainerTimeseriesQuery(Box<crate::datadogV2::model::ContainerTimeseriesQuery>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -31,6 +37,50 @@ impl<'de> Deserialize<'de> for TimeseriesQuery {
         ) {
             if !_v._unparsed {
                 return Ok(TimeseriesQuery::EventsTimeseriesQuery(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ApmResourceStatsQuery>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(TimeseriesQuery::ApmResourceStatsQuery(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::ApmMetricsQuery>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(TimeseriesQuery::ApmMetricsQuery(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ApmDependencyStatsQuery>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(TimeseriesQuery::ApmDependencyStatsQuery(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::SloQuery>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(TimeseriesQuery::SloQuery(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ProcessTimeseriesQuery>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(TimeseriesQuery::ProcessTimeseriesQuery(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ContainerTimeseriesQuery>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(TimeseriesQuery::ContainerTimeseriesQuery(_v));
             }
         }
 
