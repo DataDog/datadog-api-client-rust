@@ -3069,29 +3069,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.GetSecurityMonitoringHistsignal".into(),
         test_v2_get_security_monitoring_histsignal,
     );
-    world.function_mappings.insert(
-        "v2.ListThreatHuntingJobs".into(),
-        test_v2_list_threat_hunting_jobs,
-    );
-    world.function_mappings.insert(
-        "v2.RunThreatHuntingJob".into(),
-        test_v2_run_threat_hunting_job,
-    );
+    world
+        .function_mappings
+        .insert("v2.ListHistoricalJobs".into(), test_v2_list_historical_jobs);
+    world
+        .function_mappings
+        .insert("v2.RunHistoricalJob".into(), test_v2_run_historical_job);
     world.function_mappings.insert(
         "v2.ConvertJobResultToSignal".into(),
         test_v2_convert_job_result_to_signal,
     );
     world.function_mappings.insert(
-        "v2.DeleteThreatHuntingJob".into(),
-        test_v2_delete_threat_hunting_job,
+        "v2.DeleteHistoricalJob".into(),
+        test_v2_delete_historical_job,
     );
+    world
+        .function_mappings
+        .insert("v2.GetHistoricalJob".into(), test_v2_get_historical_job);
     world.function_mappings.insert(
-        "v2.GetThreatHuntingJob".into(),
-        test_v2_get_threat_hunting_job,
-    );
-    world.function_mappings.insert(
-        "v2.CancelThreatHuntingJob".into(),
-        test_v2_cancel_threat_hunting_job,
+        "v2.CancelHistoricalJob".into(),
+        test_v2_cancel_historical_job,
     );
     world.function_mappings.insert(
         "v2.GetSecurityMonitoringHistsignalsByJobId".into(),
@@ -22381,10 +22378,7 @@ fn test_v2_get_security_monitoring_histsignal(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_list_threat_hunting_jobs(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
+fn test_v2_list_historical_jobs(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v2_api_security_monitoring
@@ -22403,12 +22397,12 @@ fn test_v2_list_threat_hunting_jobs(
         .get("filter[query]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_security_monitoring::ListThreatHuntingJobsOptionalParams::default();
+        datadogV2::api_security_monitoring::ListHistoricalJobsOptionalParams::default();
     params.page_size = page_size;
     params.page_number = page_number;
     params.sort = sort;
     params.filter_query = filter_query;
-    let response = match block_on(api.list_threat_hunting_jobs_with_http_info(params)) {
+    let response = match block_on(api.list_historical_jobs_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -22426,14 +22420,14 @@ fn test_v2_list_threat_hunting_jobs(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_run_threat_hunting_job(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_run_historical_job(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v2_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.run_threat_hunting_job_with_http_info(body)) {
+    let response = match block_on(api.run_historical_job_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -22479,17 +22473,14 @@ fn test_v2_convert_job_result_to_signal(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_delete_threat_hunting_job(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
+fn test_v2_delete_historical_job(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v2_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
     let job_id = serde_json::from_value(_parameters.get("job_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_threat_hunting_job_with_http_info(job_id)) {
+    let response = match block_on(api.delete_historical_job_with_http_info(job_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -22507,14 +22498,14 @@ fn test_v2_delete_threat_hunting_job(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_get_threat_hunting_job(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_get_historical_job(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v2_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
     let job_id = serde_json::from_value(_parameters.get("job_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_threat_hunting_job_with_http_info(job_id)) {
+    let response = match block_on(api.get_historical_job_with_http_info(job_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -22532,17 +22523,14 @@ fn test_v2_get_threat_hunting_job(world: &mut DatadogWorld, _parameters: &HashMa
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_cancel_threat_hunting_job(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
+fn test_v2_cancel_historical_job(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
         .v2_api_security_monitoring
         .as_ref()
         .expect("api instance not found");
     let job_id = serde_json::from_value(_parameters.get("job_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.cancel_threat_hunting_job_with_http_info(job_id)) {
+    let response = match block_on(api.cancel_historical_job_with_http_info(job_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

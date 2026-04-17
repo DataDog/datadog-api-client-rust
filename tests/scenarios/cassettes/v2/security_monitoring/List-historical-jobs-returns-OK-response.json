@@ -15,7 +15,7 @@
           ]
         },
         "method": "post",
-        "uri": "https://api.datadoghq.com/api/v2/siem-threat-hunting/jobs"
+        "uri": "https://api.datadoghq.com/api/v2/siem-historical-detections/jobs"
       },
       "response": {
         "body": {
@@ -43,7 +43,7 @@
           ]
         },
         "method": "get",
-        "uri": "https://api.datadoghq.com/api/v2/siem-threat-hunting/jobs?filter%5Bquery%5D=id%3Ac3564eed-ff70-43e1-ab6f-593de95bd21f"
+        "uri": "https://api.datadoghq.com/api/v2/siem-historical-detections/jobs?filter%5Bquery%5D=id%3Ac3564eed-ff70-43e1-ab6f-593de95bd21f"
       },
       "response": {
         "body": {
