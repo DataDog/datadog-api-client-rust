@@ -17,9 +17,9 @@ pub struct SyntheticsFastTestResultData {
     /// The UUID of the fast test, used as the result identifier.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// JSON:API type for a fast test result.
+    /// Type of the Synthetic test result resource, `result`.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::SyntheticsFastTestResultType>,
+    pub type_: Option<crate::datadogV2::model::SyntheticsTestResultType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -51,7 +51,7 @@ impl SyntheticsFastTestResultData {
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV2::model::SyntheticsFastTestResultType) -> Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::SyntheticsTestResultType) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -92,7 +92,7 @@ impl<'de> Deserialize<'de> for SyntheticsFastTestResultData {
                     crate::datadogV2::model::SyntheticsFastTestResultAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::SyntheticsFastTestResultType> = None;
+                let mut type_: Option<crate::datadogV2::model::SyntheticsTestResultType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -120,7 +120,7 @@ impl<'de> Deserialize<'de> for SyntheticsFastTestResultData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::SyntheticsFastTestResultType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::SyntheticsTestResultType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
