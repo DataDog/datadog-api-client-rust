@@ -11,12 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsFastTestResultAttributes {
-    /// Device information for browser-based fast tests.
+    /// Device information for the test result (browser and mobile tests).
     #[serde(rename = "device")]
-    pub device: Option<crate::datadogV2::model::SyntheticsFastTestResultDevice>,
-    /// Location from which the fast test was executed.
+    pub device: Option<crate::datadogV2::model::SyntheticsTestResultDevice>,
+    /// Location information for a Synthetic test result.
     #[serde(rename = "location")]
-    pub location: Option<crate::datadogV2::model::SyntheticsFastTestResultLocation>,
+    pub location: Option<crate::datadogV2::model::SyntheticsTestResultLocation>,
     /// Detailed result data for the fast test run. The exact shape of nested fields
     /// (`request`, `response`, `assertions`, etc.) depends on the test subtype.
     #[serde(rename = "result")]
@@ -51,17 +51,14 @@ impl SyntheticsFastTestResultAttributes {
         }
     }
 
-    pub fn device(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsFastTestResultDevice,
-    ) -> Self {
+    pub fn device(mut self, value: crate::datadogV2::model::SyntheticsTestResultDevice) -> Self {
         self.device = Some(value);
         self
     }
 
     pub fn location(
         mut self,
-        value: crate::datadogV2::model::SyntheticsFastTestResultLocation,
+        value: crate::datadogV2::model::SyntheticsTestResultLocation,
     ) -> Self {
         self.location = Some(value);
         self
@@ -125,11 +122,9 @@ impl<'de> Deserialize<'de> for SyntheticsFastTestResultAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut device: Option<crate::datadogV2::model::SyntheticsFastTestResultDevice> =
+                let mut device: Option<crate::datadogV2::model::SyntheticsTestResultDevice> = None;
+                let mut location: Option<crate::datadogV2::model::SyntheticsTestResultLocation> =
                     None;
-                let mut location: Option<
-                    crate::datadogV2::model::SyntheticsFastTestResultLocation,
-                > = None;
                 let mut result: Option<crate::datadogV2::model::SyntheticsFastTestResultDetail> =
                     None;
                 let mut test_sub_type: Option<crate::datadogV2::model::SyntheticsFastTestSubType> =
