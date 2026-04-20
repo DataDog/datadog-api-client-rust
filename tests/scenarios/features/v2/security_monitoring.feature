@@ -121,6 +121,20 @@ Feature: Security Monitoring
     When the request is sent
     Then the response status is 200 OK
 
+  @generated @skip @team:DataDog/k9-cloud-siem
+  Scenario: Bulk update security signals returns "Bad Request" response
+    Given new "BulkEditSecurityMonitoringSignals" request
+    And body with value {"data": [{"attributes": {"archive_reason": "none", "assignee": {"name": null, "uuid": "773b045d-ccf8-4808-bd3b-955ef6a8c940"}, "state": "open"}, "id": "AAAAAWgN8Xwgr1vKDQAAAABBV2dOOFh3ZzZobm1mWXJFYTR0OA", "type": "signal"}]}
+    When the request is sent
+    Then the response status is 400 Bad Request
+
+  @generated @skip @team:DataDog/k9-cloud-siem
+  Scenario: Bulk update security signals returns "OK" response
+    Given new "BulkEditSecurityMonitoringSignals" request
+    And body with value {"data": [{"attributes": {"archive_reason": "none", "assignee": {"name": null, "uuid": "773b045d-ccf8-4808-bd3b-955ef6a8c940"}, "state": "open"}, "id": "AAAAAWgN8Xwgr1vKDQAAAABBV2dOOFh3ZzZobm1mWXJFYTR0OA", "type": "signal"}]}
+    When the request is sent
+    Then the response status is 200 OK
+
   @skip @team:DataDog/k9-cloud-siem
   Scenario: Bulk update triage assignee of security signals returns "Bad Request" response
     Given operation "BulkEditSecurityMonitoringSignalsAssignee" enabled
@@ -2231,6 +2245,30 @@ Feature: Security Monitoring
     And body with value {"data": {"attributes": {"cloud_provider": {"aws": {"aws_account_id": ["tag1:v1"]}}}, "id": "csm_resource_filter", "type": "csm_resource_filter"}}
     When the request is sent
     Then the response status is 201 OK
+
+  @generated @skip @team:DataDog/k9-cloud-siem
+  Scenario: Update security signal triage state or assignee returns "Bad Request" response
+    Given new "EditSecurityMonitoringSignal" request
+    And request contains "signal_id" parameter from "REPLACE.ME"
+    And body with value {"data": {"attributes": {"archive_reason": "none", "assignee": {"name": null, "uuid": "773b045d-ccf8-4808-bd3b-955ef6a8c940"}, "state": "open"}, "type": "signal_metadata"}}
+    When the request is sent
+    Then the response status is 400 Bad Request
+
+  @generated @skip @team:DataDog/k9-cloud-siem
+  Scenario: Update security signal triage state or assignee returns "Not Found" response
+    Given new "EditSecurityMonitoringSignal" request
+    And request contains "signal_id" parameter from "REPLACE.ME"
+    And body with value {"data": {"attributes": {"archive_reason": "none", "assignee": {"name": null, "uuid": "773b045d-ccf8-4808-bd3b-955ef6a8c940"}, "state": "open"}, "type": "signal_metadata"}}
+    When the request is sent
+    Then the response status is 404 Not Found
+
+  @generated @skip @team:DataDog/k9-cloud-siem
+  Scenario: Update security signal triage state or assignee returns "OK" response
+    Given new "EditSecurityMonitoringSignal" request
+    And request contains "signal_id" parameter from "REPLACE.ME"
+    And body with value {"data": {"attributes": {"archive_reason": "none", "assignee": {"name": null, "uuid": "773b045d-ccf8-4808-bd3b-955ef6a8c940"}, "state": "open"}, "type": "signal_metadata"}}
+    When the request is sent
+    Then the response status is 200 OK
 
   @skip-go @skip-java @skip-python @skip-ruby @skip-rust @skip-typescript @skip-validation @team:DataDog/k9-cloud-siem
   Scenario: Validate a detection rule returns "Bad Request" response
