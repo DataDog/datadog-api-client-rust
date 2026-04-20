@@ -173,6 +173,7 @@ impl Default for Configuration {
             ("v2.update_llm_obs_dataset_records".to_owned(), false),
             ("v2.update_llm_obs_experiment".to_owned(), false),
             ("v2.update_llm_obs_project".to_owned(), false),
+            ("v2.anonymize_users".to_owned(), false),
             ("v2.create_open_api".to_owned(), false),
             ("v2.delete_open_api".to_owned(), false),
             ("v2.get_open_api".to_owned(), false),
