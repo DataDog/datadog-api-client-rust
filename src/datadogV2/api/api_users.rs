@@ -81,6 +81,14 @@ pub enum CreateUserError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteUserInvitationsError is a struct for typed errors of method [`UsersAPI::delete_user_invitations`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteUserInvitationsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DisableUserError is a struct for typed errors of method [`UsersAPI::disable_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -359,6 +367,96 @@ impl UsersAPI {
             };
         } else {
             let local_entity: Option<CreateUserError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Cancel all pending invitations for a specified user.
+    /// Requires the `user_access_invite` permission.
+    pub async fn delete_user_invitations(
+        &self,
+        user_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<DeleteUserInvitationsError>> {
+        match self.delete_user_invitations_with_http_info(user_id).await {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Cancel all pending invitations for a specified user.
+    /// Requires the `user_access_invite` permission.
+    pub async fn delete_user_invitations_with_http_info(
+        &self,
+        user_id: uuid::Uuid,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserInvitationsError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_user_invitations";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/users/{user_id}/invitations",
+            local_configuration.get_operation_host(operation_id),
+            user_id = datadog::urlencode(user_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteUserInvitationsError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
