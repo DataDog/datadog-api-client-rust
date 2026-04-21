@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsAnnotationQueueInteractionItem {
-    /// Identifier of the content (such as trace ID) for this interaction.
+    /// Identifier of the content (trace ID or session ID) for this interaction.
     #[serde(rename = "content_id")]
     pub content_id: String,
     /// Type of interaction in an annotation queue.

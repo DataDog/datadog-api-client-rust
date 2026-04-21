@@ -14,24 +14,23 @@ pub struct SecurityMonitoringContentPackStateAttributes {
     /// Whether the cloud SIEM index configuration is incorrect (only applies to certain pricing models)
     #[serde(rename = "cloud_siem_index_incorrect")]
     pub cloud_siem_index_incorrect: bool,
-    /// The activation status of a content pack.
+    /// The activation status of a content pack
     #[serde(rename = "cp_activation")]
     pub cp_activation: crate::datadogV2::model::SecurityMonitoringContentPackActivation,
-    /// Whether filters (Security Filters or Index Query depending on the pricing model) are
-    /// present and correctly configured to route logs into Cloud SIEM.
+    /// Whether filters (Security Filters or Index Query depending on the pricing model) are configured for logs
     #[serde(rename = "filters_configured_for_logs")]
     pub filters_configured_for_logs: bool,
-    /// The installation status of the related integration.
+    /// The installation status of the related integration
     #[serde(rename = "integration_installed_status")]
     pub integration_installed_status:
         Option<crate::datadogV2::model::SecurityMonitoringContentPackIntegrationStatus>,
-    /// Timestamp bucket indicating when logs were last collected.
+    /// Timestamp bucket indicating when logs were last collected
     #[serde(rename = "logs_last_collected")]
     pub logs_last_collected: crate::datadogV2::model::SecurityMonitoringContentPackTimestampBucket,
-    /// Whether logs for this content pack have been seen in any Datadog index within the last 72 hours.
+    /// Whether logs have been seen from any index
     #[serde(rename = "logs_seen_from_any_index")]
     pub logs_seen_from_any_index: bool,
-    /// The current operational status of a content pack.
+    /// The current status of a content pack
     #[serde(rename = "state")]
     pub state: crate::datadogV2::model::SecurityMonitoringContentPackStatus,
     #[serde(flatten)]
