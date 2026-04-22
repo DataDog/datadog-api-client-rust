@@ -14,7 +14,7 @@ pub struct SecurityMonitoringContentPackStateMeta {
     /// Whether the cloud SIEM index configuration is incorrect at the organization level
     #[serde(rename = "cloud_siem_index_incorrect")]
     pub cloud_siem_index_incorrect: bool,
-    /// The Cloud SIEM pricing model (SKU) for the organization.
+    /// The SIEM pricing model (SKU) for the organization
     #[serde(rename = "sku")]
     pub sku: crate::datadogV2::model::SecurityMonitoringSKU,
     #[serde(flatten)]
