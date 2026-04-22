@@ -16,7 +16,7 @@ use uuid::Uuid;
 async fn main() {
     let body = OrgGroupMembershipBulkUpdateRequest::new(OrgGroupMembershipBulkUpdateData::new(
         OrgGroupMembershipBulkUpdateAttributes::new(vec![GlobalOrgIdentifier::new(
-            "us1".to_string(),
+            "datadoghq.com".to_string(),
             Uuid::parse_str("c3d4e5f6-a7b8-9012-cdef-012345678901").expect("invalid UUID"),
         )]),
         OrgGroupMembershipBulkUpdateRelationships::new(

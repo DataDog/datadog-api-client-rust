@@ -4839,9 +4839,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.DeleteOrgGroupPolicy".into(),
         test_v2_delete_org_group_policy,
     );
-    world
-        .function_mappings
-        .insert("v2.GetOrgGroupPolicy".into(), test_v2_get_org_group_policy);
     world.function_mappings.insert(
         "v2.UpdateOrgGroupPolicy".into(),
         test_v2_update_org_group_policy,
@@ -4861,10 +4858,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.DeleteOrgGroupPolicyOverride".into(),
         test_v2_delete_org_group_policy_override,
-    );
-    world.function_mappings.insert(
-        "v2.GetOrgGroupPolicyOverride".into(),
-        test_v2_get_org_group_policy_override,
     );
     world.function_mappings.insert(
         "v2.UpdateOrgGroupPolicyOverride".into(),
@@ -16524,8 +16517,8 @@ fn test_v2_revoke_personal_access_token(
         .v2_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.revoke_personal_access_token_with_http_info(pat_id)) {
+    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
+    let response = match block_on(api.revoke_personal_access_token_with_http_info(pat_uuid)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -16552,8 +16545,8 @@ fn test_v2_get_personal_access_token(
         .v2_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_personal_access_token_with_http_info(pat_id)) {
+    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_personal_access_token_with_http_info(pat_uuid)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -16580,9 +16573,9 @@ fn test_v2_update_personal_access_token(
         .v2_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
+    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_personal_access_token_with_http_info(pat_id, body)) {
+    let response = match block_on(api.update_personal_access_token_with_http_info(pat_uuid, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -37059,32 +37052,6 @@ fn test_v2_delete_org_group_policy(world: &mut DatadogWorld, _parameters: &HashM
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_get_org_group_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_org_groups
-        .as_ref()
-        .expect("api instance not found");
-    let org_group_policy_id =
-        serde_json::from_value(_parameters.get("org_group_policy_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_org_group_policy_with_http_info(org_group_policy_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
 fn test_v2_update_org_group_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -37235,42 +37202,6 @@ fn test_v2_delete_org_group_policy_override(
     .unwrap();
     let response = match block_on(
         api.delete_org_group_policy_override_with_http_info(org_group_policy_override_id),
-    ) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_get_org_group_policy_override(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_org_groups
-        .as_ref()
-        .expect("api instance not found");
-    let org_group_policy_override_id = serde_json::from_value(
-        _parameters
-            .get("org_group_policy_override_id")
-            .unwrap()
-            .clone(),
-    )
-    .unwrap();
-    let response = match block_on(
-        api.get_org_group_policy_override_with_http_info(org_group_policy_override_id),
     ) {
         Ok(response) => response,
         Err(error) => {
@@ -42049,9 +41980,9 @@ fn test_v2_revoke_service_account_access_token(
         .expect("api instance not found");
     let service_account_id =
         serde_json::from_value(_parameters.get("service_account_id").unwrap().clone()).unwrap();
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
+    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
     let response = match block_on(
-        api.revoke_service_account_access_token_with_http_info(service_account_id, pat_id),
+        api.revoke_service_account_access_token_with_http_info(service_account_id, pat_uuid),
     ) {
         Ok(response) => response,
         Err(error) => {
@@ -42081,9 +42012,9 @@ fn test_v2_get_service_account_access_token(
         .expect("api instance not found");
     let service_account_id =
         serde_json::from_value(_parameters.get("service_account_id").unwrap().clone()).unwrap();
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
+    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
     let response = match block_on(
-        api.get_service_account_access_token_with_http_info(service_account_id, pat_id),
+        api.get_service_account_access_token_with_http_info(service_account_id, pat_uuid),
     ) {
         Ok(response) => response,
         Err(error) => {
@@ -42113,11 +42044,11 @@ fn test_v2_update_service_account_access_token(
         .expect("api instance not found");
     let service_account_id =
         serde_json::from_value(_parameters.get("service_account_id").unwrap().clone()).unwrap();
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
+    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_service_account_access_token_with_http_info(
         service_account_id,
-        pat_id,
+        pat_uuid,
         body,
     )) {
         Ok(response) => response,

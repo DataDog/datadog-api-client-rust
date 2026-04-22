@@ -51,9 +51,6 @@ pub struct UserAttributes {
     /// Title of the user.
     #[serde(rename = "title", default, with = "::serde_with::rust::double_option")]
     pub title: Option<Option<String>>,
-    /// UUID of the user.
-    #[serde(rename = "uuid")]
-    pub uuid: Option<String>,
     /// Whether the user is verified.
     #[serde(rename = "verified")]
     pub verified: Option<bool>,
@@ -79,7 +76,6 @@ impl UserAttributes {
             service_account: None,
             status: None,
             title: None,
-            uuid: None,
             verified: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -146,11 +142,6 @@ impl UserAttributes {
         self
     }
 
-    pub fn uuid(mut self, value: String) -> Self {
-        self.uuid = Some(value);
-        self
-    }
-
     pub fn verified(mut self, value: bool) -> Self {
         self.verified = Some(value);
         self
@@ -200,7 +191,6 @@ impl<'de> Deserialize<'de> for UserAttributes {
                 let mut service_account: Option<bool> = None;
                 let mut status: Option<String> = None;
                 let mut title: Option<Option<String>> = None;
-                let mut uuid: Option<String> = None;
                 let mut verified: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -277,12 +267,6 @@ impl<'de> Deserialize<'de> for UserAttributes {
                         "title" => {
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "uuid" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "verified" => {
                             if v.is_null() {
                                 continue;
@@ -310,7 +294,6 @@ impl<'de> Deserialize<'de> for UserAttributes {
                     service_account,
                     status,
                     title,
-                    uuid,
                     verified,
                     additional_properties,
                     _unparsed,
