@@ -5,8 +5,6 @@ use datadog_api_client::datadogV2::model::OrgGroupPolicyCreateAttributes;
 use datadog_api_client::datadogV2::model::OrgGroupPolicyCreateData;
 use datadog_api_client::datadogV2::model::OrgGroupPolicyCreateRelationships;
 use datadog_api_client::datadogV2::model::OrgGroupPolicyCreateRequest;
-use datadog_api_client::datadogV2::model::OrgGroupPolicyEnforcementTier;
-use datadog_api_client::datadogV2::model::OrgGroupPolicyPolicyType;
 use datadog_api_client::datadogV2::model::OrgGroupPolicyType;
 use datadog_api_client::datadogV2::model::OrgGroupRelationshipToOne;
 use datadog_api_client::datadogV2::model::OrgGroupRelationshipToOneData;
@@ -21,9 +19,7 @@ async fn main() {
         OrgGroupPolicyCreateAttributes::new(
             BTreeMap::from([("value".to_string(), Value::from("UTC"))]),
             "monitor_timezone".to_string(),
-        )
-        .enforcement_tier(OrgGroupPolicyEnforcementTier::DEFAULT)
-        .policy_type(OrgGroupPolicyPolicyType::ORG_CONFIG),
+        ),
         OrgGroupPolicyCreateRelationships::new(OrgGroupRelationshipToOne::new(
             OrgGroupRelationshipToOneData::new(
                 Uuid::parse_str("a1b2c3d4-e5f6-7890-abcd-ef0123456789").expect("invalid UUID"),

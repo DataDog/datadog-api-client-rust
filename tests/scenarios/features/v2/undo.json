@@ -4125,6 +4125,12 @@
       "type": "safe"
     }
   },
+  "ListOrgs": {
+    "tag": "Organizations",
+    "undo": {
+      "type": "safe"
+    }
+  },
   "ListOrgConfigs": {
     "tag": "Organizations",
     "undo": {
@@ -4222,12 +4228,6 @@
       "type": "unsafe"
     }
   },
-  "GetOrgGroupPolicy": {
-    "tag": "Org Groups",
-    "undo": {
-      "type": "safe"
-    }
-  },
   "UpdateOrgGroupPolicy": {
     "tag": "Org Groups",
     "undo": {
@@ -4262,12 +4262,6 @@
     "tag": "Org Groups",
     "undo": {
       "type": "unsafe"
-    }
-  },
-  "GetOrgGroupPolicyOverride": {
-    "tag": "Org Groups",
-    "undo": {
-      "type": "safe"
     }
   },
   "UpdateOrgGroupPolicyOverride": {
@@ -4330,7 +4324,7 @@
       "operationId": "RevokePersonalAccessToken",
       "parameters": [
         {
-          "name": "pat_id",
+          "name": "pat_uuid",
           "source": "data.id"
         }
       ],
@@ -5895,7 +5889,7 @@
           "source": "data.relationships.owned_by.data.id"
         },
         {
-          "name": "pat_id",
+          "name": "pat_uuid",
           "source": "data.id"
         }
       ],
@@ -6973,6 +6967,12 @@
     "tag": "Users",
     "undo": {
       "type": "idempotent"
+    }
+  },
+  "DeleteUserInvitations": {
+    "tag": "Users",
+    "undo": {
+      "type": "safe"
     }
   },
   "ListUserOrganizations": {
