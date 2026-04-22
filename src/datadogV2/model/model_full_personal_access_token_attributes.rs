@@ -11,9 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FullPersonalAccessTokenAttributes {
-    /// The alias (short identifier) of the personal access token.
-    #[serde(rename = "alias")]
-    pub alias: Option<String>,
     /// Creation date of the personal access token.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -46,7 +43,6 @@ pub struct FullPersonalAccessTokenAttributes {
 impl FullPersonalAccessTokenAttributes {
     pub fn new() -> FullPersonalAccessTokenAttributes {
         FullPersonalAccessTokenAttributes {
-            alias: None,
             created_at: None,
             expires_at: None,
             key: None,
@@ -56,11 +52,6 @@ impl FullPersonalAccessTokenAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn alias(mut self, value: String) -> Self {
-        self.alias = Some(value);
-        self
     }
 
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
@@ -125,7 +116,6 @@ impl<'de> Deserialize<'de> for FullPersonalAccessTokenAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut alias: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut expires_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut key: Option<String> = None;
@@ -140,12 +130,6 @@ impl<'de> Deserialize<'de> for FullPersonalAccessTokenAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "alias" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            alias = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "created_at" => {
                             if v.is_null() {
                                 continue;
@@ -189,7 +173,6 @@ impl<'de> Deserialize<'de> for FullPersonalAccessTokenAttributes {
                 }
 
                 let content = FullPersonalAccessTokenAttributes {
-                    alias,
                     created_at,
                     expires_at,
                     key,
