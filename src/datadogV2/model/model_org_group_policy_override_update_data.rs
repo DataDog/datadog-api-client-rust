@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct OrgGroupPolicyOverrideUpdateData {
-    /// Attributes for updating a policy override.
+    /// Attributes for updating a policy override. The `org_uuid` and `org_site` fields must match the existing override and cannot be changed.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::OrgGroupPolicyOverrideUpdateAttributes,
     /// The ID of the policy override.
