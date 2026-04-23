@@ -14,7 +14,7 @@ pub struct LLMObsAnnotatedInteractionItem {
     /// List of annotations for this interaction.
     #[serde(rename = "annotations")]
     pub annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItem>,
-    /// Identifier of the content for this interaction.
+    /// Identifier of the content (trace ID or session ID) for this interaction.
     #[serde(rename = "content_id")]
     pub content_id: String,
     /// Unique identifier of the interaction.

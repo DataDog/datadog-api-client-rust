@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum LLMObsInteractionType {
     TRACE,
     EXPERIMENT_TRACE,
+    SESSION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for LLMObsInteractionType {
         match self {
             Self::TRACE => String::from("trace"),
             Self::EXPERIMENT_TRACE => String::from("experiment_trace"),
+            Self::SESSION => String::from("session"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for LLMObsInteractionType {
         Ok(match s.as_str() {
             "trace" => Self::TRACE,
             "experiment_trace" => Self::EXPERIMENT_TRACE,
+            "session" => Self::SESSION,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

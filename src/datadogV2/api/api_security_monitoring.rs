@@ -2044,7 +2044,7 @@ impl SecurityMonitoringAPI {
         Self { config, client }
     }
 
-    /// Activate a Cloud SIEM content pack. This operation configures the necessary
+    /// Activate a security monitoring content pack. This operation configures the necessary
     /// log filters or security filters depending on the pricing model and updates the content
     /// pack activation state.
     pub async fn activate_content_pack(
@@ -2060,7 +2060,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Activate a Cloud SIEM content pack. This operation configures the necessary
+    /// Activate a security monitoring content pack. This operation configures the necessary
     /// log filters or security filters depending on the pricing model and updates the content
     /// pack activation state.
     pub async fn activate_content_pack_with_http_info(
@@ -5394,7 +5394,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Deactivate a Cloud SIEM content pack. This operation removes the content pack's
+    /// Deactivate a security monitoring content pack. This operation removes the content pack's
     /// configuration from log filters or security filters and updates the content pack activation state.
     pub async fn deactivate_content_pack(
         &self,
@@ -5409,7 +5409,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Deactivate a Cloud SIEM content pack. This operation removes the content pack's
+    /// Deactivate a security monitoring content pack. This operation removes the content pack's
     /// configuration from log filters or security filters and updates the content pack activation state.
     pub async fn deactivate_content_pack_with_http_info(
         &self,
@@ -7188,8 +7188,9 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get the activation state, integration status, and log collection status
-    /// for all Cloud SIEM content packs.
+    /// Get the activation and configuration states for all security monitoring content packs.
+    /// This endpoint returns status information about each content pack including activation state,
+    /// integration status, and log collection status.
     pub async fn get_content_packs_states(
         &self,
     ) -> Result<
@@ -7210,8 +7211,9 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get the activation state, integration status, and log collection status
-    /// for all Cloud SIEM content packs.
+    /// Get the activation and configuration states for all security monitoring content packs.
+    /// This endpoint returns status information about each content pack including activation state,
+    /// integration status, and log collection status.
     pub async fn get_content_packs_states_with_http_info(
         &self,
     ) -> Result<

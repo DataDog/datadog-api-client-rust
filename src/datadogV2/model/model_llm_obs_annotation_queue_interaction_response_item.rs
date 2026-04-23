@@ -14,7 +14,7 @@ pub struct LLMObsAnnotationQueueInteractionResponseItem {
     /// Whether this interaction already existed in the queue.
     #[serde(rename = "already_existed")]
     pub already_existed: bool,
-    /// Identifier of the content for this interaction.
+    /// Identifier of the content (trace ID or session ID) for this interaction.
     #[serde(rename = "content_id")]
     pub content_id: String,
     /// Unique identifier of the interaction.
