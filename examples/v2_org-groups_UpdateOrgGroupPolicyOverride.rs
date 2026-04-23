@@ -11,7 +11,7 @@ use uuid::Uuid;
 async fn main() {
     let body = OrgGroupPolicyOverrideUpdateRequest::new(OrgGroupPolicyOverrideUpdateData::new(
         OrgGroupPolicyOverrideUpdateAttributes::new(
-            "datadoghq.com".to_string(),
+            "us1".to_string(),
             Uuid::parse_str("c3d4e5f6-a7b8-9012-cdef-012345678901").expect("invalid UUID"),
         ),
         Uuid::parse_str("9f8e7d6c-5b4a-3210-fedc-ba0987654321").expect("invalid UUID"),

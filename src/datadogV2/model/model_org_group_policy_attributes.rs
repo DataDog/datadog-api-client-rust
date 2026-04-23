@@ -14,15 +14,18 @@ pub struct OrgGroupPolicyAttributes {
     /// The policy content as key-value pairs.
     #[serde(rename = "content")]
     pub content: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// Timestamp when the policy was enforced.
-    #[serde(rename = "enforced_at")]
-    pub enforced_at: chrono::DateTime<chrono::Utc>,
+    /// The enforcement tier of the policy. `DEFAULT` means the policy is set but member orgs may mutate it. `ENFORCE` means the policy is strictly controlled and mutations are blocked for affected orgs. `DELEGATE` means each member org controls its own value.
+    #[serde(rename = "enforcement_tier")]
+    pub enforcement_tier: crate::datadogV2::model::OrgGroupPolicyEnforcementTier,
     /// Timestamp when the policy was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: chrono::DateTime<chrono::Utc>,
     /// The name of the policy.
     #[serde(rename = "policy_name")]
     pub policy_name: String,
+    /// The type of the policy. Only `org_config` is supported, indicating a policy backed by an organization configuration setting.
+    #[serde(rename = "policy_type")]
+    pub policy_type: crate::datadogV2::model::OrgGroupPolicyPolicyType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -32,15 +35,17 @@ pub struct OrgGroupPolicyAttributes {
 
 impl OrgGroupPolicyAttributes {
     pub fn new(
-        enforced_at: chrono::DateTime<chrono::Utc>,
+        enforcement_tier: crate::datadogV2::model::OrgGroupPolicyEnforcementTier,
         modified_at: chrono::DateTime<chrono::Utc>,
         policy_name: String,
+        policy_type: crate::datadogV2::model::OrgGroupPolicyPolicyType,
     ) -> OrgGroupPolicyAttributes {
         OrgGroupPolicyAttributes {
             content: None,
-            enforced_at,
+            enforcement_tier,
             modified_at,
             policy_name,
+            policy_type,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -79,9 +84,13 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyAttributes {
             {
                 let mut content: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
-                let mut enforced_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut enforcement_tier: Option<
+                    crate::datadogV2::model::OrgGroupPolicyEnforcementTier,
+                > = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut policy_name: Option<String> = None;
+                let mut policy_type: Option<crate::datadogV2::model::OrgGroupPolicyPolicyType> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -96,9 +105,17 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyAttributes {
                             }
                             content = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "enforced_at" => {
-                            enforced_at =
+                        "enforcement_tier" => {
+                            enforcement_tier =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _enforcement_tier) = enforcement_tier {
+                                match _enforcement_tier {
+                                    crate::datadogV2::model::OrgGroupPolicyEnforcementTier::UnparsedObject(_enforcement_tier) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "modified_at" => {
                             modified_at =
@@ -108,6 +125,18 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyAttributes {
                             policy_name =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "policy_type" => {
+                            policy_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _policy_type) = policy_type {
+                                match _policy_type {
+                                    crate::datadogV2::model::OrgGroupPolicyPolicyType::UnparsedObject(_policy_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -115,18 +144,21 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyAttributes {
                         }
                     }
                 }
-                let enforced_at =
-                    enforced_at.ok_or_else(|| M::Error::missing_field("enforced_at"))?;
+                let enforcement_tier =
+                    enforcement_tier.ok_or_else(|| M::Error::missing_field("enforcement_tier"))?;
                 let modified_at =
                     modified_at.ok_or_else(|| M::Error::missing_field("modified_at"))?;
                 let policy_name =
                     policy_name.ok_or_else(|| M::Error::missing_field("policy_name"))?;
+                let policy_type =
+                    policy_type.ok_or_else(|| M::Error::missing_field("policy_type"))?;
 
                 let content = OrgGroupPolicyAttributes {
                     content,
-                    enforced_at,
+                    enforcement_tier,
                     modified_at,
                     policy_name,
+                    policy_type,
                     additional_properties,
                     _unparsed,
                 };
