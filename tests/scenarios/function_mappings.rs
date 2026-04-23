@@ -16517,8 +16517,8 @@ fn test_v2_revoke_personal_access_token(
         .v2_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
-    let response = match block_on(api.revoke_personal_access_token_with_http_info(pat_uuid)) {
+    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.revoke_personal_access_token_with_http_info(pat_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -16545,8 +16545,8 @@ fn test_v2_get_personal_access_token(
         .v2_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_personal_access_token_with_http_info(pat_uuid)) {
+    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_personal_access_token_with_http_info(pat_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -16573,9 +16573,9 @@ fn test_v2_update_personal_access_token(
         .v2_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
+    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_personal_access_token_with_http_info(pat_uuid, body)) {
+    let response = match block_on(api.update_personal_access_token_with_http_info(pat_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -41980,9 +41980,9 @@ fn test_v2_revoke_service_account_access_token(
         .expect("api instance not found");
     let service_account_id =
         serde_json::from_value(_parameters.get("service_account_id").unwrap().clone()).unwrap();
-    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
+    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
     let response = match block_on(
-        api.revoke_service_account_access_token_with_http_info(service_account_id, pat_uuid),
+        api.revoke_service_account_access_token_with_http_info(service_account_id, pat_id),
     ) {
         Ok(response) => response,
         Err(error) => {
@@ -42012,9 +42012,9 @@ fn test_v2_get_service_account_access_token(
         .expect("api instance not found");
     let service_account_id =
         serde_json::from_value(_parameters.get("service_account_id").unwrap().clone()).unwrap();
-    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
+    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
     let response = match block_on(
-        api.get_service_account_access_token_with_http_info(service_account_id, pat_uuid),
+        api.get_service_account_access_token_with_http_info(service_account_id, pat_id),
     ) {
         Ok(response) => response,
         Err(error) => {
@@ -42044,11 +42044,11 @@ fn test_v2_update_service_account_access_token(
         .expect("api instance not found");
     let service_account_id =
         serde_json::from_value(_parameters.get("service_account_id").unwrap().clone()).unwrap();
-    let pat_uuid = serde_json::from_value(_parameters.get("pat_uuid").unwrap().clone()).unwrap();
+    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_service_account_access_token_with_http_info(
         service_account_id,
-        pat_uuid,
+        pat_id,
         body,
     )) {
         Ok(response) => response,
