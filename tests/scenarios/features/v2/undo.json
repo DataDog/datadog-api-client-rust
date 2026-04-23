@@ -5290,6 +5290,12 @@
       "type": "unsafe"
     }
   },
+  "MuteSecurityFindings": {
+    "tag": "Security Monitoring",
+    "undo": {
+      "type": "idempotent"
+    }
+  },
   "SearchSecurityFindings": {
     "tag": "Security Monitoring",
     "undo": {

@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"mute\":{\"description\":\"Resolved.\",\"muted\":false,\"reason\":\"NO_PENDING_FIX\"}},\"relationships\":{\"findings\":{\"data\":[{\"id\":\"ZGVmLTAwcC1pZXJ-aS0wZjhjNjMyZDNmMzRlZTgzNw==\",\"type\":\"findings\"}]}},\"type\":\"mute\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/security/findings/mute"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"93bfeb70-af47-424d-908a-948d3f08e37f\",\"type\":\"mute\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 202,
+          "message": "Accepted"
+        }
+      },
+      "recorded_at": "Thu, 23 Apr 2026 10:45:08 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
