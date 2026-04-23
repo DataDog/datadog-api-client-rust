@@ -387,8 +387,6 @@ impl Default for Configuration {
             ("v2.delete_org_group_policy_override".to_owned(), false),
             ("v2.get_org_group".to_owned(), false),
             ("v2.get_org_group_membership".to_owned(), false),
-            ("v2.get_org_group_policy".to_owned(), false),
-            ("v2.get_org_group_policy_override".to_owned(), false),
             ("v2.list_org_group_memberships".to_owned(), false),
             ("v2.list_org_group_policies".to_owned(), false),
             ("v2.list_org_group_policy_configs".to_owned(), false),

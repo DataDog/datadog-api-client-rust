@@ -1617,12 +1617,15 @@ impl KeyManagementAPI {
     /// Get a specific personal access token by its UUID.
     pub async fn get_personal_access_token(
         &self,
-        pat_id: String,
+        pat_uuid: String,
     ) -> Result<
         crate::datadogV2::model::PersonalAccessTokenResponse,
         datadog::Error<GetPersonalAccessTokenError>,
     > {
-        match self.get_personal_access_token_with_http_info(pat_id).await {
+        match self
+            .get_personal_access_token_with_http_info(pat_uuid)
+            .await
+        {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -1639,7 +1642,7 @@ impl KeyManagementAPI {
     /// Get a specific personal access token by its UUID.
     pub async fn get_personal_access_token_with_http_info(
         &self,
-        pat_id: String,
+        pat_uuid: String,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenResponse>,
         datadog::Error<GetPersonalAccessTokenError>,
@@ -1650,9 +1653,9 @@ impl KeyManagementAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/personal_access_tokens/{pat_id}",
+            "{}/api/v2/personal_access_tokens/{pat_uuid}",
             local_configuration.get_operation_host(operation_id),
-            pat_id = datadog::urlencode(pat_id)
+            pat_uuid = datadog::urlencode(pat_uuid)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2324,10 +2327,10 @@ impl KeyManagementAPI {
     /// Revoke a specific personal access token.
     pub async fn revoke_personal_access_token(
         &self,
-        pat_id: String,
+        pat_uuid: String,
     ) -> Result<(), datadog::Error<RevokePersonalAccessTokenError>> {
         match self
-            .revoke_personal_access_token_with_http_info(pat_id)
+            .revoke_personal_access_token_with_http_info(pat_uuid)
             .await
         {
             Ok(_) => Ok(()),
@@ -2338,7 +2341,7 @@ impl KeyManagementAPI {
     /// Revoke a specific personal access token.
     pub async fn revoke_personal_access_token_with_http_info(
         &self,
-        pat_id: String,
+        pat_uuid: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RevokePersonalAccessTokenError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.revoke_personal_access_token";
@@ -2346,9 +2349,9 @@ impl KeyManagementAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/personal_access_tokens/{pat_id}",
+            "{}/api/v2/personal_access_tokens/{pat_uuid}",
             local_configuration.get_operation_host(operation_id),
-            pat_id = datadog::urlencode(pat_id)
+            pat_uuid = datadog::urlencode(pat_uuid)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -2891,14 +2894,14 @@ impl KeyManagementAPI {
     /// Update a specific personal access token.
     pub async fn update_personal_access_token(
         &self,
-        pat_id: String,
+        pat_uuid: String,
         body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::PersonalAccessTokenResponse,
         datadog::Error<UpdatePersonalAccessTokenError>,
     > {
         match self
-            .update_personal_access_token_with_http_info(pat_id, body)
+            .update_personal_access_token_with_http_info(pat_uuid, body)
             .await
         {
             Ok(response_content) => {
@@ -2917,7 +2920,7 @@ impl KeyManagementAPI {
     /// Update a specific personal access token.
     pub async fn update_personal_access_token_with_http_info(
         &self,
-        pat_id: String,
+        pat_uuid: String,
         body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenResponse>,
@@ -2929,9 +2932,9 @@ impl KeyManagementAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/personal_access_tokens/{pat_id}",
+            "{}/api/v2/personal_access_tokens/{pat_uuid}",
             local_configuration.get_operation_host(operation_id),
-            pat_id = datadog::urlencode(pat_id)
+            pat_uuid = datadog::urlencode(pat_uuid)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
