@@ -60,12 +60,6 @@ pub struct FeatureFlagEnvironment {
     /// Indicates whether feature flag changes require approval in this environment.
     #[serde(rename = "require_feature_flag_approval")]
     pub require_feature_flag_approval: Option<bool>,
-    /// Rollout percentage for this environment.
-    #[serde(rename = "rollout_percentage")]
-    pub rollout_percentage: Option<i64>,
-    /// Environment targeting rules for this feature flag.
-    #[serde(rename = "rules")]
-    pub rules: Option<Vec<std::collections::BTreeMap<String, serde_json::Value>>>,
     /// The status of a feature flag in an environment.
     #[serde(rename = "status")]
     pub status: crate::datadogV2::model::FeatureFlagStatus,
@@ -93,8 +87,6 @@ impl FeatureFlagEnvironment {
             override_variant_id: None,
             pending_suggestion_id: None,
             require_feature_flag_approval: None,
-            rollout_percentage: None,
-            rules: None,
             status,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -154,19 +146,6 @@ impl FeatureFlagEnvironment {
         self
     }
 
-    pub fn rollout_percentage(mut self, value: i64) -> Self {
-        self.rollout_percentage = Some(value);
-        self
-    }
-
-    pub fn rules(
-        mut self,
-        value: Vec<std::collections::BTreeMap<String, serde_json::Value>>,
-    ) -> Self {
-        self.rules = Some(value);
-        self
-    }
-
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -206,9 +185,6 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironment {
                 let mut override_variant_id: Option<Option<String>> = None;
                 let mut pending_suggestion_id: Option<Option<String>> = None;
                 let mut require_feature_flag_approval: Option<bool> = None;
-                let mut rollout_percentage: Option<i64> = None;
-                let mut rules: Option<Vec<std::collections::BTreeMap<String, serde_json::Value>>> =
-                    None;
                 let mut status: Option<crate::datadogV2::model::FeatureFlagStatus> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -280,19 +256,6 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironment {
                             require_feature_flag_approval =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "rollout_percentage" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            rollout_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "rules" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
@@ -329,8 +292,6 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironment {
                     override_variant_id,
                     pending_suggestion_id,
                     require_feature_flag_approval,
-                    rollout_percentage,
-                    rules,
                     status,
                     additional_properties,
                     _unparsed,
