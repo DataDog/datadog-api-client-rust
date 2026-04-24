@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Reference to the parent test of a sub-step.
+/// Failure details if the fast test did not pass.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsTestResultParentTest {
-    /// Identifier of the parent test.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
+pub struct SyntheticsFastTestResultFailure {
+    /// Error code identifying the failure type.
+    #[serde(rename = "code")]
+    pub code: Option<String>,
+    /// Human-readable description of the failure.
+    #[serde(rename = "message")]
+    pub message: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,17 +24,23 @@ pub struct SyntheticsTestResultParentTest {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsTestResultParentTest {
-    pub fn new() -> SyntheticsTestResultParentTest {
-        SyntheticsTestResultParentTest {
-            id: None,
+impl SyntheticsFastTestResultFailure {
+    pub fn new() -> SyntheticsFastTestResultFailure {
+        SyntheticsFastTestResultFailure {
+            code: None,
+            message: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
+    pub fn code(mut self, value: String) -> Self {
+        self.code = Some(value);
+        self
+    }
+
+    pub fn message(mut self, value: String) -> Self {
+        self.message = Some(value);
         self
     }
 
@@ -44,20 +53,20 @@ impl SyntheticsTestResultParentTest {
     }
 }
 
-impl Default for SyntheticsTestResultParentTest {
+impl Default for SyntheticsFastTestResultFailure {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsTestResultParentTest {
+impl<'de> Deserialize<'de> for SyntheticsFastTestResultFailure {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsTestResultParentTestVisitor;
-        impl<'a> Visitor<'a> for SyntheticsTestResultParentTestVisitor {
-            type Value = SyntheticsTestResultParentTest;
+        struct SyntheticsFastTestResultFailureVisitor;
+        impl<'a> Visitor<'a> for SyntheticsFastTestResultFailureVisitor {
+            type Value = SyntheticsFastTestResultFailure;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +76,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultParentTest {
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<String> = None;
+                let mut code: Option<String> = None;
+                let mut message: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,11 +86,17 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultParentTest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "id" => {
+                        "code" => {
                             if v.is_null() {
                                 continue;
                             }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "message" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -90,8 +106,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultParentTest {
                     }
                 }
 
-                let content = SyntheticsTestResultParentTest {
-                    id,
+                let content = SyntheticsFastTestResultFailure {
+                    code,
+                    message,
                     additional_properties,
                     _unparsed,
                 };
@@ -100,6 +117,6 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultParentTest {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsTestResultParentTestVisitor)
+        deserializer.deserialize_any(SyntheticsFastTestResultFailureVisitor)
     }
 }
