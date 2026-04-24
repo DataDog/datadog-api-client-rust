@@ -14,19 +14,19 @@ use std::fmt::{self, Formatter};
 pub struct SyntheticsFastTestResultDetail {
     /// Results of each assertion evaluated during the test.
     #[serde(rename = "assertions")]
-    pub assertions: Option<Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>>,
+    pub assertions: Option<Vec<std::collections::BTreeMap<String, serde_json::Value>>>,
     /// gRPC call type (for example, `unary`, `healthCheck`, or `reflection`).
     #[serde(rename = "call_type")]
     pub call_type: Option<String>,
-    /// SSL/TLS certificate information returned from an SSL test.
+    /// TLS certificate details, present for SSL tests.
     #[serde(rename = "cert")]
-    pub cert: Option<crate::datadogV2::model::SyntheticsTestResultCertificate>,
+    pub cert: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Total duration of the test in milliseconds.
     #[serde(rename = "duration")]
     pub duration: Option<f64>,
-    /// Details about the failure of a Synthetic test.
+    /// Failure details if the fast test did not pass.
     #[serde(rename = "failure")]
-    pub failure: Option<crate::datadogV2::model::SyntheticsTestResultFailure>,
+    pub failure: Option<crate::datadogV2::model::SyntheticsFastTestResultFailure>,
     /// Unix timestamp (ms) of when the test finished.
     #[serde(rename = "finished_at")]
     pub finished_at: Option<i64>,
@@ -36,18 +36,18 @@ pub struct SyntheticsFastTestResultDetail {
     /// Whether this result is from an automatic fast retry.
     #[serde(rename = "is_fast_retry")]
     pub is_fast_retry: Option<bool>,
-    /// Details of the outgoing request made during the test execution.
+    /// Details of the outgoing request made during the test.
     #[serde(rename = "request")]
-    pub request: Option<crate::datadogV2::model::SyntheticsTestResultRequestInfo>,
+    pub request: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// IP address resolved for the target host.
     #[serde(rename = "resolved_ip")]
     pub resolved_ip: Option<String>,
-    /// Details of the response received during the test execution.
+    /// Details of the response received during the test.
     #[serde(rename = "response")]
-    pub response: Option<crate::datadogV2::model::SyntheticsTestResultResponseInfo>,
-    /// The type of run for a Synthetic test result.
+    pub response: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    /// Run type indicating how this test was triggered (for example, `fast`).
     #[serde(rename = "run_type")]
-    pub run_type: Option<crate::datadogV2::model::SyntheticsTestResultRunType>,
+    pub run_type: Option<String>,
     /// Unix timestamp (ms) of when the test started.
     #[serde(rename = "started_at")]
     pub started_at: Option<i64>,
@@ -56,13 +56,13 @@ pub struct SyntheticsFastTestResultDetail {
     pub status: Option<String>,
     /// Step results for multistep API tests.
     #[serde(rename = "steps")]
-    pub steps: Option<Vec<crate::datadogV2::model::SyntheticsTestResultStep>>,
+    pub steps: Option<Vec<std::collections::BTreeMap<String, serde_json::Value>>>,
     /// Timing breakdown of the test request phases (for example, DNS, TCP, TLS, first byte).
     #[serde(rename = "timings")]
     pub timings: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Traceroute hop results, present for ICMP and TCP tests.
     #[serde(rename = "traceroute")]
-    pub traceroute: Option<Vec<crate::datadogV2::model::SyntheticsTestResultTracerouteHop>>,
+    pub traceroute: Option<Vec<std::collections::BTreeMap<String, serde_json::Value>>>,
     /// Unix timestamp (ms) of when the test was triggered.
     #[serde(rename = "triggered_at")]
     pub triggered_at: Option<i64>,
@@ -105,7 +105,7 @@ impl SyntheticsFastTestResultDetail {
 
     pub fn assertions(
         mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>,
+        value: Vec<std::collections::BTreeMap<String, serde_json::Value>>,
     ) -> Self {
         self.assertions = Some(value);
         self
@@ -116,7 +116,7 @@ impl SyntheticsFastTestResultDetail {
         self
     }
 
-    pub fn cert(mut self, value: crate::datadogV2::model::SyntheticsTestResultCertificate) -> Self {
+    pub fn cert(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.cert = Some(value);
         self
     }
@@ -126,7 +126,10 @@ impl SyntheticsFastTestResultDetail {
         self
     }
 
-    pub fn failure(mut self, value: crate::datadogV2::model::SyntheticsTestResultFailure) -> Self {
+    pub fn failure(
+        mut self,
+        value: crate::datadogV2::model::SyntheticsFastTestResultFailure,
+    ) -> Self {
         self.failure = Some(value);
         self
     }
@@ -146,10 +149,7 @@ impl SyntheticsFastTestResultDetail {
         self
     }
 
-    pub fn request(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultRequestInfo,
-    ) -> Self {
+    pub fn request(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.request = Some(value);
         self
     }
@@ -161,13 +161,13 @@ impl SyntheticsFastTestResultDetail {
 
     pub fn response(
         mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultResponseInfo,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> Self {
         self.response = Some(value);
         self
     }
 
-    pub fn run_type(mut self, value: crate::datadogV2::model::SyntheticsTestResultRunType) -> Self {
+    pub fn run_type(mut self, value: String) -> Self {
         self.run_type = Some(value);
         self
     }
@@ -182,7 +182,10 @@ impl SyntheticsFastTestResultDetail {
         self
     }
 
-    pub fn steps(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultStep>) -> Self {
+    pub fn steps(
+        mut self,
+        value: Vec<std::collections::BTreeMap<String, serde_json::Value>>,
+    ) -> Self {
         self.steps = Some(value);
         self
     }
@@ -194,7 +197,7 @@ impl SyntheticsFastTestResultDetail {
 
     pub fn traceroute(
         mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultTracerouteHop>,
+        value: Vec<std::collections::BTreeMap<String, serde_json::Value>>,
     ) -> Self {
         self.traceroute = Some(value);
         self
@@ -243,33 +246,30 @@ impl<'de> Deserialize<'de> for SyntheticsFastTestResultDetail {
                 M: MapAccess<'a>,
             {
                 let mut assertions: Option<
-                    Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>,
+                    Vec<std::collections::BTreeMap<String, serde_json::Value>>,
                 > = None;
                 let mut call_type: Option<String> = None;
-                let mut cert: Option<crate::datadogV2::model::SyntheticsTestResultCertificate> =
-                    None;
+                let mut cert: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut duration: Option<f64> = None;
-                let mut failure: Option<crate::datadogV2::model::SyntheticsTestResultFailure> =
+                let mut failure: Option<crate::datadogV2::model::SyntheticsFastTestResultFailure> =
                     None;
                 let mut finished_at: Option<i64> = None;
                 let mut id: Option<String> = None;
                 let mut is_fast_retry: Option<bool> = None;
-                let mut request: Option<crate::datadogV2::model::SyntheticsTestResultRequestInfo> =
+                let mut request: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
                 let mut resolved_ip: Option<String> = None;
-                let mut response: Option<
-                    crate::datadogV2::model::SyntheticsTestResultResponseInfo,
-                > = None;
-                let mut run_type: Option<crate::datadogV2::model::SyntheticsTestResultRunType> =
+                let mut response: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
+                let mut run_type: Option<String> = None;
                 let mut started_at: Option<i64> = None;
                 let mut status: Option<String> = None;
-                let mut steps: Option<Vec<crate::datadogV2::model::SyntheticsTestResultStep>> =
+                let mut steps: Option<Vec<std::collections::BTreeMap<String, serde_json::Value>>> =
                     None;
                 let mut timings: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
                 let mut traceroute: Option<
-                    Vec<crate::datadogV2::model::SyntheticsTestResultTracerouteHop>,
+                    Vec<std::collections::BTreeMap<String, serde_json::Value>>,
                 > = None;
                 let mut triggered_at: Option<i64> = None;
                 let mut tunnel: Option<bool> = None;
@@ -355,14 +355,6 @@ impl<'de> Deserialize<'de> for SyntheticsFastTestResultDetail {
                                 continue;
                             }
                             run_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _run_type) = run_type {
-                                match _run_type {
-                                    crate::datadogV2::model::SyntheticsTestResultRunType::UnparsedObject(_run_type) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
                         }
                         "started_at" => {
                             if v.is_null() {

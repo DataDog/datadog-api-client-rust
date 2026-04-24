@@ -11,12 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsFastTestResultAttributes {
-    /// Device information for the test result (browser and mobile tests).
+    /// Device information for browser-based fast tests.
     #[serde(rename = "device")]
-    pub device: Option<crate::datadogV2::model::SyntheticsTestResultDevice>,
-    /// Location information for a Synthetic test result.
+    pub device: Option<crate::datadogV2::model::SyntheticsFastTestResultDevice>,
+    /// Location from which the fast test was executed.
     #[serde(rename = "location")]
-    pub location: Option<crate::datadogV2::model::SyntheticsTestResultLocation>,
+    pub location: Option<crate::datadogV2::model::SyntheticsFastTestResultLocation>,
     /// Detailed result data for the fast test run. The exact shape of nested fields
     /// (`request`, `response`, `assertions`, etc.) depends on the test subtype.
     #[serde(rename = "result")]
@@ -24,9 +24,9 @@ pub struct SyntheticsFastTestResultAttributes {
     /// Subtype of the Synthetic test that produced this result.
     #[serde(rename = "test_sub_type")]
     pub test_sub_type: Option<crate::datadogV2::model::SyntheticsFastTestSubType>,
-    /// Type of the Synthetic fast test that produced this result.
+    /// The type of the Synthetic test that produced this result (for example, `api` or `browser`).
     #[serde(rename = "test_type")]
-    pub test_type: Option<crate::datadogV2::model::SyntheticsFastTestType>,
+    pub test_type: Option<String>,
     /// Version of the test at the time the fast test was triggered.
     #[serde(rename = "test_version")]
     pub test_version: Option<i64>,
@@ -51,14 +51,17 @@ impl SyntheticsFastTestResultAttributes {
         }
     }
 
-    pub fn device(mut self, value: crate::datadogV2::model::SyntheticsTestResultDevice) -> Self {
+    pub fn device(
+        mut self,
+        value: crate::datadogV2::model::SyntheticsFastTestResultDevice,
+    ) -> Self {
         self.device = Some(value);
         self
     }
 
     pub fn location(
         mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultLocation,
+        value: crate::datadogV2::model::SyntheticsFastTestResultLocation,
     ) -> Self {
         self.location = Some(value);
         self
@@ -80,7 +83,7 @@ impl SyntheticsFastTestResultAttributes {
         self
     }
 
-    pub fn test_type(mut self, value: crate::datadogV2::model::SyntheticsFastTestType) -> Self {
+    pub fn test_type(mut self, value: String) -> Self {
         self.test_type = Some(value);
         self
     }
@@ -122,14 +125,16 @@ impl<'de> Deserialize<'de> for SyntheticsFastTestResultAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut device: Option<crate::datadogV2::model::SyntheticsTestResultDevice> = None;
-                let mut location: Option<crate::datadogV2::model::SyntheticsTestResultLocation> =
+                let mut device: Option<crate::datadogV2::model::SyntheticsFastTestResultDevice> =
                     None;
+                let mut location: Option<
+                    crate::datadogV2::model::SyntheticsFastTestResultLocation,
+                > = None;
                 let mut result: Option<crate::datadogV2::model::SyntheticsFastTestResultDetail> =
                     None;
                 let mut test_sub_type: Option<crate::datadogV2::model::SyntheticsFastTestSubType> =
                     None;
-                let mut test_type: Option<crate::datadogV2::model::SyntheticsFastTestType> = None;
+                let mut test_type: Option<String> = None;
                 let mut test_version: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -177,14 +182,6 @@ impl<'de> Deserialize<'de> for SyntheticsFastTestResultAttributes {
                                 continue;
                             }
                             test_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _test_type) = test_type {
-                                match _test_type {
-                                    crate::datadogV2::model::SyntheticsFastTestType::UnparsedObject(_test_type) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
                         }
                         "test_version" => {
                             if v.is_null() {
