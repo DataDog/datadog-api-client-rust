@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Validity window of a certificate.
+/// Device information for browser-based fast tests.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsTestResultCertificateValidity {
-    /// Unix timestamp (ms) of when the certificate became valid.
-    #[serde(rename = "from")]
-    pub from: Option<i64>,
-    /// Unix timestamp (ms) of when the certificate expires.
-    #[serde(rename = "to")]
-    pub to: Option<i64>,
+pub struct SyntheticsFastTestResultDevice {
+    /// Device identifier.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
+    /// Display name of the device.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +24,23 @@ pub struct SyntheticsTestResultCertificateValidity {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsTestResultCertificateValidity {
-    pub fn new() -> SyntheticsTestResultCertificateValidity {
-        SyntheticsTestResultCertificateValidity {
-            from: None,
-            to: None,
+impl SyntheticsFastTestResultDevice {
+    pub fn new() -> SyntheticsFastTestResultDevice {
+        SyntheticsFastTestResultDevice {
+            id: None,
+            name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn from(mut self, value: i64) -> Self {
-        self.from = Some(value);
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
         self
     }
 
-    pub fn to(mut self, value: i64) -> Self {
-        self.to = Some(value);
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
@@ -53,20 +53,20 @@ impl SyntheticsTestResultCertificateValidity {
     }
 }
 
-impl Default for SyntheticsTestResultCertificateValidity {
+impl Default for SyntheticsFastTestResultDevice {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsTestResultCertificateValidity {
+impl<'de> Deserialize<'de> for SyntheticsFastTestResultDevice {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsTestResultCertificateValidityVisitor;
-        impl<'a> Visitor<'a> for SyntheticsTestResultCertificateValidityVisitor {
-            type Value = SyntheticsTestResultCertificateValidity;
+        struct SyntheticsFastTestResultDeviceVisitor;
+        impl<'a> Visitor<'a> for SyntheticsFastTestResultDeviceVisitor {
+            type Value = SyntheticsFastTestResultDevice;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +76,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultCertificateValidity {
             where
                 M: MapAccess<'a>,
             {
-                let mut from: Option<i64> = None;
-                let mut to: Option<i64> = None;
+                let mut id: Option<String> = None;
+                let mut name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +86,17 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultCertificateValidity {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "from" => {
+                        "id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "to" => {
+                        "name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,9 +106,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultCertificateValidity {
                     }
                 }
 
-                let content = SyntheticsTestResultCertificateValidity {
-                    from,
-                    to,
+                let content = SyntheticsFastTestResultDevice {
+                    id,
+                    name,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +117,6 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultCertificateValidity {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsTestResultCertificateValidityVisitor)
+        deserializer.deserialize_any(SyntheticsFastTestResultDeviceVisitor)
     }
 }

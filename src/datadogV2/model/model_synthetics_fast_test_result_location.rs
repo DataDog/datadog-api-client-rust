@@ -6,23 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Details about the failure of a Synthetic test.
+/// Location from which the fast test was executed.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SyntheticsTestResultFailure {
-    /// Error code for the failure.
-    #[serde(rename = "code")]
-    pub code: Option<String>,
-    /// Internal error code used for debugging.
-    #[serde(rename = "internal_code")]
-    pub internal_code: Option<String>,
-    /// Internal error message used for debugging.
-    #[serde(rename = "internal_message")]
-    pub internal_message: Option<String>,
-    /// Error message for the failure.
-    #[serde(rename = "message")]
-    pub message: Option<String>,
+pub struct SyntheticsFastTestResultLocation {
+    /// ID of the location.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
+    /// Display name of the location.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
+    /// Agent version running at this location.
+    #[serde(rename = "version")]
+    pub version: Option<String>,
+    /// Identifier of the specific worker that ran the test.
+    #[serde(rename = "worker_id")]
+    pub worker_id: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,35 +30,35 @@ pub struct SyntheticsTestResultFailure {
     pub(crate) _unparsed: bool,
 }
 
-impl SyntheticsTestResultFailure {
-    pub fn new() -> SyntheticsTestResultFailure {
-        SyntheticsTestResultFailure {
-            code: None,
-            internal_code: None,
-            internal_message: None,
-            message: None,
+impl SyntheticsFastTestResultLocation {
+    pub fn new() -> SyntheticsFastTestResultLocation {
+        SyntheticsFastTestResultLocation {
+            id: None,
+            name: None,
+            version: None,
+            worker_id: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn code(mut self, value: String) -> Self {
-        self.code = Some(value);
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
         self
     }
 
-    pub fn internal_code(mut self, value: String) -> Self {
-        self.internal_code = Some(value);
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
-    pub fn internal_message(mut self, value: String) -> Self {
-        self.internal_message = Some(value);
+    pub fn version(mut self, value: String) -> Self {
+        self.version = Some(value);
         self
     }
 
-    pub fn message(mut self, value: String) -> Self {
-        self.message = Some(value);
+    pub fn worker_id(mut self, value: String) -> Self {
+        self.worker_id = Some(value);
         self
     }
 
@@ -71,20 +71,20 @@ impl SyntheticsTestResultFailure {
     }
 }
 
-impl Default for SyntheticsTestResultFailure {
+impl Default for SyntheticsFastTestResultLocation {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsTestResultFailure {
+impl<'de> Deserialize<'de> for SyntheticsFastTestResultLocation {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SyntheticsTestResultFailureVisitor;
-        impl<'a> Visitor<'a> for SyntheticsTestResultFailureVisitor {
-            type Value = SyntheticsTestResultFailure;
+        struct SyntheticsFastTestResultLocationVisitor;
+        impl<'a> Visitor<'a> for SyntheticsFastTestResultLocationVisitor {
+            type Value = SyntheticsFastTestResultLocation;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -94,10 +94,10 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultFailure {
             where
                 M: MapAccess<'a>,
             {
-                let mut code: Option<String> = None;
-                let mut internal_code: Option<String> = None;
-                let mut internal_message: Option<String> = None;
-                let mut message: Option<String> = None;
+                let mut id: Option<String> = None;
+                let mut name: Option<String> = None;
+                let mut version: Option<String> = None;
+                let mut worker_id: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -106,31 +106,29 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultFailure {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "code" => {
+                        "id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "internal_code" => {
+                        "name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            internal_code =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "internal_message" => {
+                        "version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            internal_message =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "message" => {
+                        "worker_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            worker_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -140,11 +138,11 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultFailure {
                     }
                 }
 
-                let content = SyntheticsTestResultFailure {
-                    code,
-                    internal_code,
-                    internal_message,
-                    message,
+                let content = SyntheticsFastTestResultLocation {
+                    id,
+                    name,
+                    version,
+                    worker_id,
                     additional_properties,
                     _unparsed,
                 };
@@ -153,6 +151,6 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultFailure {
             }
         }
 
-        deserializer.deserialize_any(SyntheticsTestResultFailureVisitor)
+        deserializer.deserialize_any(SyntheticsFastTestResultLocationVisitor)
     }
 }
