@@ -13,23 +13,23 @@ use std::fmt::{self, Formatter};
 pub struct CreateMaintenanceRequestDataAttributes {
     /// Timestamp of when the maintenance was completed.
     #[serde(rename = "completed_date")]
-    pub completed_date: Option<chrono::DateTime<chrono::Utc>>,
+    pub completed_date: chrono::DateTime<chrono::Utc>,
     /// The description shown when the maintenance is completed.
     #[serde(rename = "completed_description")]
-    pub completed_description: Option<String>,
+    pub completed_description: String,
     /// The components affected by the maintenance.
     #[serde(rename = "components_affected")]
     pub components_affected:
         Vec<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems>,
     /// The description shown while the maintenance is in progress.
     #[serde(rename = "in_progress_description")]
-    pub in_progress_description: Option<String>,
+    pub in_progress_description: String,
     /// The description shown when the maintenance is scheduled.
     #[serde(rename = "scheduled_description")]
-    pub scheduled_description: Option<String>,
+    pub scheduled_description: String,
     /// Timestamp of when the maintenance is scheduled to start.
     #[serde(rename = "start_date")]
-    pub start_date: Option<chrono::DateTime<chrono::Utc>>,
+    pub start_date: chrono::DateTime<chrono::Utc>,
     /// The title of the maintenance.
     #[serde(rename = "title")]
     pub title: String,
@@ -42,47 +42,27 @@ pub struct CreateMaintenanceRequestDataAttributes {
 
 impl CreateMaintenanceRequestDataAttributes {
     pub fn new(
+        completed_date: chrono::DateTime<chrono::Utc>,
+        completed_description: String,
         components_affected: Vec<
             crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems,
         >,
+        in_progress_description: String,
+        scheduled_description: String,
+        start_date: chrono::DateTime<chrono::Utc>,
         title: String,
     ) -> CreateMaintenanceRequestDataAttributes {
         CreateMaintenanceRequestDataAttributes {
-            completed_date: None,
-            completed_description: None,
+            completed_date,
+            completed_description,
             components_affected,
-            in_progress_description: None,
-            scheduled_description: None,
-            start_date: None,
+            in_progress_description,
+            scheduled_description,
+            start_date,
             title,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn completed_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
-        self.completed_date = Some(value);
-        self
-    }
-
-    pub fn completed_description(mut self, value: String) -> Self {
-        self.completed_description = Some(value);
-        self
-    }
-
-    pub fn in_progress_description(mut self, value: String) -> Self {
-        self.in_progress_description = Some(value);
-        self
-    }
-
-    pub fn scheduled_description(mut self, value: String) -> Self {
-        self.scheduled_description = Some(value);
-        self
-    }
-
-    pub fn start_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
-        self.start_date = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -127,16 +107,10 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestDataAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "completed_date" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             completed_date =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "completed_description" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             completed_description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -145,23 +119,14 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestDataAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "in_progress_description" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             in_progress_description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "scheduled_description" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             scheduled_description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "start_date" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "title" => {
@@ -174,8 +139,17 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestDataAttributes {
                         }
                     }
                 }
+                let completed_date =
+                    completed_date.ok_or_else(|| M::Error::missing_field("completed_date"))?;
+                let completed_description = completed_description
+                    .ok_or_else(|| M::Error::missing_field("completed_description"))?;
                 let components_affected = components_affected
                     .ok_or_else(|| M::Error::missing_field("components_affected"))?;
+                let in_progress_description = in_progress_description
+                    .ok_or_else(|| M::Error::missing_field("in_progress_description"))?;
+                let scheduled_description = scheduled_description
+                    .ok_or_else(|| M::Error::missing_field("scheduled_description"))?;
+                let start_date = start_date.ok_or_else(|| M::Error::missing_field("start_date"))?;
                 let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
 
                 let content = CreateMaintenanceRequestDataAttributes {

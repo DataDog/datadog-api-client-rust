@@ -15,33 +15,23 @@ use uuid::Uuid;
 async fn main() {
     let body = CreateMaintenanceRequest::new().data(CreateMaintenanceRequestData::new(
         CreateMaintenanceRequestDataAttributes::new(
+            DateTime::parse_from_rfc3339("2026-02-18T19:51:13.332360+00:00")
+                .expect("Failed to parse datetime")
+                .with_timezone(&Utc),
+            "We have completed maintenance on the API to improve performance.".to_string(),
             vec![
                 CreateMaintenanceRequestDataAttributesComponentsAffectedItems::new(
                     Uuid::parse_str("1234abcd-12ab-34cd-56ef-123456abcdef").expect("invalid UUID"),
                     PatchMaintenanceRequestDataAttributesComponentsAffectedItemsStatus::OPERATIONAL,
                 ),
             ],
-            "API Maintenance".to_string(),
-        )
-        .completed_date(
-            DateTime::parse_from_rfc3339("2026-02-18T19:51:13.332360+00:00")
-                .expect("Failed to parse datetime")
-                .with_timezone(&Utc),
-        )
-        .completed_description(
-            "We have completed maintenance on the API to improve performance.".to_string(),
-        )
-        .in_progress_description(
             "We are currently performing maintenance on the API to improve performance."
                 .to_string(),
-        )
-        .scheduled_description(
             "We will be performing maintenance on the API to improve performance.".to_string(),
-        )
-        .start_date(
             DateTime::parse_from_rfc3339("2026-02-18T19:21:13.332360+00:00")
                 .expect("Failed to parse datetime")
                 .with_timezone(&Utc),
+            "API Maintenance".to_string(),
         ),
         PatchMaintenanceRequestDataType::MAINTENANCES,
     ));
