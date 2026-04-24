@@ -1,5 +1,57 @@
 # CHANGELOG
 
+## 0.30.0/2026-04-24
+
+### Changed
+* Add GET OrgGroupPolicy and OrgGroupPolicyOverride, Add policy_type/enforcement_tier fields, Remove enforced_at field [#1521](https://github.com/DataDog/datadog-api-client-rust/pull/1521)
+* Rename pat_uuid to pat_id and remove alias field from PAT spec [#1517](https://github.com/DataDog/datadog-api-client-rust/pull/1517)
+* Add GET OrgGroupPolicy and OrgGroupPolicyOverride, Add policy_type/enforcement_tier fields, Remove enforced_at field [#1498](https://github.com/DataDog/datadog-api-client-rust/pull/1498)
+* Rename pat_uuid to pat_id and remove alias field from PAT spec [#1495](https://github.com/DataDog/datadog-api-client-rust/pull/1495)
+* Security Monitoring - Revert rename of historical job API endpoints to threat hunting [#1483](https://github.com/DataDog/datadog-api-client-rust/pull/1483)
+* Update SearchFlakyTests endpoint documentation [#1457](https://github.com/DataDog/datadog-api-client-rust/pull/1457)
+* Upgrade all dependencies [#1446](https://github.com/DataDog/datadog-api-client-rust/pull/1446)
+
+### Removed
+* Remove unsupported operators from CCM Custom Allocation Rules feature [#1511](https://github.com/DataDog/datadog-api-client-rust/pull/1511)
+
+### Added
+* Add us2.ddog-gov.com. [#1508](https://github.com/DataDog/datadog-api-client-rust/pull/1508)
+* Add OpenAPI documentation for LLM Observability eval config CRUD endpoints [#1504](https://github.com/DataDog/datadog-api-client-rust/pull/1504)
+* Add OpenAPI spec for v2 Synthetics test result endpoints [#1503](https://github.com/DataDog/datadog-api-client-rust/pull/1503)
+* Document signals triage update endpoints [#1502](https://github.com/DataDog/datadog-api-client-rust/pull/1502)
+* Security notifications - Add SAST and secret rule types [#1496](https://github.com/DataDog/datadog-api-client-rust/pull/1496)
+* Add OpenAPI documentation for list and get indicators of compromise endpoints [#1493](https://github.com/DataDog/datadog-api-client-rust/pull/1493)
+* Cloud SIEM - Document content packs SIEM endpoints [#1491](https://github.com/DataDog/datadog-api-client-rust/pull/1491)
+* Add domain prefix filter query parameter to list status pages API [#1487](https://github.com/DataDog/datadog-api-client-rust/pull/1487)
+* Add OpenAPI spec for Bits AI SRE investigations [#1482](https://github.com/DataDog/datadog-api-client-rust/pull/1482)
+* Add API spec for security monitoring terraform export endpoints [#1481](https://github.com/DataDog/datadog-api-client-rust/pull/1481)
+* Add team and assignee filters for Search Error Tracking Issues API [#1480](https://github.com/DataDog/datadog-api-client-rust/pull/1480)
+* Add missing params to ListCustomCostsFiles [#1478](https://github.com/DataDog/datadog-api-client-rust/pull/1478)
+* Add Product Analytics widget definitions [#1477](https://github.com/DataDog/datadog-api-client-rust/pull/1477)
+* Add OpenAPI spec for Dashboard Secure Embed endpoints [#1476](https://github.com/DataDog/datadog-api-client-rust/pull/1476)
+* Add fleet tracers, clusters, and instrumented pods endpoints [#1475](https://github.com/DataDog/datadog-api-client-rust/pull/1475)
+* Add public POST/PATCH endpoints for Flaky Tests Management policies [#1474](https://github.com/DataDog/datadog-api-client-rust/pull/1474)
+* Add CCM spend usage type breakdown fields [#1473](https://github.com/DataDog/datadog-api-client-rust/pull/1473)
+* Adding all Observability Pipeline new hec_token related features into the api [#1471](https://github.com/DataDog/datadog-api-client-rust/pull/1471)
+* Adding compression optional field to Amazon S3 source [#1467](https://github.com/DataDog/datadog-api-client-rust/pull/1467)
+* Add Annotations endpoints [#1464](https://github.com/DataDog/datadog-api-client-rust/pull/1464)
+* Add Org Groups API specification [#1463](https://github.com/DataDog/datadog-api-client-rust/pull/1463)
+* Add unstable PUT /api/v2/anonymize_users endpoint [#1462](https://github.com/DataDog/datadog-api-client-rust/pull/1462)
+* Add Obs Pipelines Elasticsearch metrics destination and new fields [#1456](https://github.com/DataDog/datadog-api-client-rust/pull/1456)
+* Add OpenAPI spec for Bits AI SRE investigations [#1455](https://github.com/DataDog/datadog-api-client-rust/pull/1455)
+* Add PAT/SAT management API endpoints [#1452](https://github.com/DataDog/datadog-api-client-rust/pull/1452)
+* Add query type schemas for timeseries-query data sources [#1449](https://github.com/DataDog/datadog-api-client-rust/pull/1449)
+* Add OpenAPI documentation for signal investigation queries and suggested actions endpoints [#1448](https://github.com/DataDog/datadog-api-client-rust/pull/1448)
+* add api spec for feature flags allocations and exposure schedules endpoints [#1442](https://github.com/DataDog/datadog-api-client-rust/pull/1442)
+* Add Publish and Unpublish API documentation for Status Pages [#1440](https://github.com/DataDog/datadog-api-client-rust/pull/1440)
+* feat: add drag and drop as new synthetics browser step type  [#1436](https://github.com/DataDog/datadog-api-client-rust/pull/1436)
+* Allow monitor notification rule on restriction policy [#1431](https://github.com/DataDog/datadog-api-client-rust/pull/1431)
+* Add support for configuring Splunk sourcetype in Custom Destinations [#1419](https://github.com/DataDog/datadog-api-client-rust/pull/1419)
+* Add OpenAPI documentation for scorecards endpoints [#1231](https://github.com/DataDog/datadog-api-client-rust/pull/1231)
+
+### Fixed
+* Add security_signals to SecurityMonitoringStandardDataSource [#1465](https://github.com/DataDog/datadog-api-client-rust/pull/1465)
+
 ## 0.29.0/2026-04-01
 
 ### Changed
