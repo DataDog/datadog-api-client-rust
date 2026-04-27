@@ -85,6 +85,7 @@ pub use self::api::api_roles;
 pub use self::api::api_rum;
 pub use self::api::api_rum_audience_management;
 pub use self::api::api_rum_metrics;
+pub use self::api::api_rum_permanent_retention_filters;
 pub use self::api::api_rum_replay_heatmaps;
 pub use self::api::api_rum_replay_playlists;
 pub use self::api::api_rum_replay_sessions;
