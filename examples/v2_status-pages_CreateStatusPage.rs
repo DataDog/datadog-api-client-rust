@@ -16,7 +16,6 @@ async fn main() {
     let body = CreateStatusPageRequest::new().data(CreateStatusPageRequestData::new(
         CreateStatusPageRequestDataAttributes::new(
             "5e2fd69be33e79aa".to_string(),
-            true,
             "A Status Page".to_string(),
             CreateStatusPageRequestDataAttributesType::INTERNAL,
             CreateStatusPageRequestDataAttributesVisualizationType::BARS_AND_UPTIME_PERCENTAGE,
