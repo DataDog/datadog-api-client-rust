@@ -233,6 +233,12 @@ pub struct MonthlyUsageAttributionValues {
     /// The total APM Indexed Spans usage by tag(s).
     #[serde(rename = "indexed_spans_usage")]
     pub indexed_spans_usage: Option<f64>,
+    /// The percentage of infrastructure host Basic tier usage by tag(s).
+    #[serde(rename = "infra_host_basic_percentage")]
+    pub infra_host_basic_percentage: Option<f64>,
+    /// The infrastructure host Basic tier usage by tag(s).
+    #[serde(rename = "infra_host_basic_usage")]
+    pub infra_host_basic_usage: Option<f64>,
     /// The percentage of infrastructure host usage by tag(s).
     #[serde(rename = "infra_host_percentage")]
     pub infra_host_percentage: Option<f64>,
@@ -587,6 +593,8 @@ impl MonthlyUsageAttributionValues {
             incident_management_monthly_active_users_usage: None,
             indexed_spans_percentage: None,
             indexed_spans_usage: None,
+            infra_host_basic_percentage: None,
+            infra_host_basic_usage: None,
             infra_host_percentage: None,
             infra_host_usage: None,
             ingested_logs_bytes_percentage: None,
@@ -1049,6 +1057,16 @@ impl MonthlyUsageAttributionValues {
 
     pub fn indexed_spans_usage(mut self, value: f64) -> Self {
         self.indexed_spans_usage = Some(value);
+        self
+    }
+
+    pub fn infra_host_basic_percentage(mut self, value: f64) -> Self {
+        self.infra_host_basic_percentage = Some(value);
+        self
+    }
+
+    pub fn infra_host_basic_usage(mut self, value: f64) -> Self {
+        self.infra_host_basic_usage = Some(value);
         self
     }
 
@@ -1608,6 +1626,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut incident_management_monthly_active_users_usage: Option<f64> = None;
                 let mut indexed_spans_percentage: Option<f64> = None;
                 let mut indexed_spans_usage: Option<f64> = None;
+                let mut infra_host_basic_percentage: Option<f64> = None;
+                let mut infra_host_basic_usage: Option<f64> = None;
                 let mut infra_host_percentage: Option<f64> = None;
                 let mut infra_host_usage: Option<f64> = None;
                 let mut ingested_logs_bytes_percentage: Option<f64> = None;
@@ -2221,6 +2241,20 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                                 continue;
                             }
                             indexed_spans_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "infra_host_basic_percentage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            infra_host_basic_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "infra_host_basic_usage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            infra_host_basic_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "infra_host_percentage" => {
@@ -2935,6 +2969,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     incident_management_monthly_active_users_usage,
                     indexed_spans_percentage,
                     indexed_spans_usage,
+                    infra_host_basic_percentage,
+                    infra_host_basic_usage,
                     infra_host_percentage,
                     infra_host_usage,
                     ingested_logs_bytes_percentage,
