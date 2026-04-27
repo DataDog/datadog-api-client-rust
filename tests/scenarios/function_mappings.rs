@@ -64,7 +64,7 @@ pub struct ApiInstances {
     pub v2_api_app_builder: Option<datadogV2::api_app_builder::AppBuilderAPI>,
     pub v2_api_audit: Option<datadogV2::api_audit::AuditAPI>,
     pub v2_api_authn_mappings: Option<datadogV2::api_authn_mappings::AuthNMappingsAPI>,
-    pub v2_api_bits_ai: Option<datadogV2::api_bits_ai::BitsAIAPI>,
+    pub v2_api_bits_ai_sre: Option<datadogV2::api_bits_ai_sre::BitsAISREAPI>,
     pub v2_api_case_management: Option<datadogV2::api_case_management::CaseManagementAPI>,
     pub v2_api_case_management_type:
         Option<datadogV2::api_case_management_type::CaseManagementTypeAPI>,
@@ -612,12 +612,13 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "BitsAI" => {
-            world.api_instances.v2_api_bits_ai =
-                Some(datadogV2::api_bits_ai::BitsAIAPI::with_client_and_config(
+        "BitsAISRE" => {
+            world.api_instances.v2_api_bits_ai_sre = Some(
+                datadogV2::api_bits_ai_sre::BitsAISREAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
-                ));
+                ),
+            );
         }
         "CaseManagement" => {
             world.api_instances.v2_api_case_management = Some(
@@ -17677,7 +17678,7 @@ fn test_v2_update_authn_mapping(world: &mut DatadogWorld, _parameters: &HashMap<
 fn test_v2_list_investigations(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_bits_ai
+        .v2_api_bits_ai_sre
         .as_ref()
         .expect("api instance not found");
     let page_offset = _parameters
@@ -17689,7 +17690,7 @@ fn test_v2_list_investigations(world: &mut DatadogWorld, _parameters: &HashMap<S
     let filter_monitor_id = _parameters
         .get("filter[monitor_id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_bits_ai::ListInvestigationsOptionalParams::default();
+    let mut params = datadogV2::api_bits_ai_sre::ListInvestigationsOptionalParams::default();
     params.page_offset = page_offset;
     params.page_limit = page_limit;
     params.filter_monitor_id = filter_monitor_id;
@@ -17716,7 +17717,7 @@ fn test_v2_list_investigations_with_pagination(
 ) {
     let api = world
         .api_instances
-        .v2_api_bits_ai
+        .v2_api_bits_ai_sre
         .as_ref()
         .expect("api instance not found");
     let page_offset = _parameters
@@ -17728,7 +17729,7 @@ fn test_v2_list_investigations_with_pagination(
     let filter_monitor_id = _parameters
         .get("filter[monitor_id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_bits_ai::ListInvestigationsOptionalParams::default();
+    let mut params = datadogV2::api_bits_ai_sre::ListInvestigationsOptionalParams::default();
     params.page_offset = page_offset;
     params.page_limit = page_limit;
     params.filter_monitor_id = filter_monitor_id;
@@ -17763,7 +17764,7 @@ fn test_v2_list_investigations_with_pagination(
 fn test_v2_trigger_investigation(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_bits_ai
+        .v2_api_bits_ai_sre
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -17788,7 +17789,7 @@ fn test_v2_trigger_investigation(world: &mut DatadogWorld, _parameters: &HashMap
 fn test_v2_get_investigation(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_bits_ai
+        .v2_api_bits_ai_sre
         .as_ref()
         .expect("api instance not found");
     let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
