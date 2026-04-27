@@ -2380,6 +2380,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.UpdateUser".into(), test_v2_update_user);
     world.function_mappings.insert(
+        "v2.DeleteUserInvitations".into(),
+        test_v2_delete_user_invitations,
+    );
+    world.function_mappings.insert(
         "v2.ListUserOrganizations".into(),
         test_v2_list_user_organizations,
     );
@@ -4784,6 +4788,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.ResolveOnCallPage".into(), test_v2_resolve_on_call_page);
+    world
+        .function_mappings
+        .insert("v2.ListOrgs".into(), test_v2_list_orgs);
     world
         .function_mappings
         .insert("v2.ListOrgConfigs".into(), test_v2_list_org_configs);
@@ -15901,6 +15908,31 @@ fn test_v2_update_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     let user_id = serde_json::from_value(_parameters.get("user_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_user_with_http_info(user_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_user_invitations(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_users
+        .as_ref()
+        .expect("api instance not found");
+    let user_id = serde_json::from_value(_parameters.get("user_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_user_invitations_with_http_info(user_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -36597,6 +36629,35 @@ fn test_v2_resolve_on_call_page(world: &mut DatadogWorld, _parameters: &HashMap<
         .expect("api instance not found");
     let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
     let response = match block_on(api.resolve_on_call_page_with_http_info(page_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_orgs(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_organizations
+        .as_ref()
+        .expect("api instance not found");
+    let filter_name = _parameters
+        .get("filter[name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_organizations::ListOrgsOptionalParams::default();
+    params.filter_name = filter_name;
+    let response = match block_on(api.list_orgs_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
