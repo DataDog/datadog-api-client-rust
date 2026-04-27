@@ -24,9 +24,6 @@ pub struct CreateStatusPageRequestDataAttributes {
     /// Base64-encoded image data included in email notifications sent to status page subscribers.
     #[serde(rename = "email_header_image")]
     pub email_header_image: Option<String>,
-    /// Whether the status page is enabled.
-    #[serde(rename = "enabled")]
-    pub enabled: bool,
     /// Base64-encoded image data displayed in the browser tab.
     #[serde(rename = "favicon")]
     pub favicon: Option<String>,
@@ -53,7 +50,6 @@ pub struct CreateStatusPageRequestDataAttributes {
 impl CreateStatusPageRequestDataAttributes {
     pub fn new(
         domain_prefix: String,
-        enabled: bool,
         name: String,
         type_: crate::datadogV2::model::CreateStatusPageRequestDataAttributesType,
         visualization_type: crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationType,
@@ -63,7 +59,6 @@ impl CreateStatusPageRequestDataAttributes {
             components: None,
             domain_prefix,
             email_header_image: None,
-            enabled,
             favicon: None,
             name,
             subscriptions_enabled: None,
@@ -132,7 +127,6 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                 let mut components: Option<Vec<crate::datadogV2::model::CreateStatusPageRequestDataAttributesComponentsItems>> = None;
                 let mut domain_prefix: Option<String> = None;
                 let mut email_header_image: Option<String> = None;
-                let mut enabled: Option<bool> = None;
                 let mut favicon: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut subscriptions_enabled: Option<bool> = None;
@@ -173,9 +167,6 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                             }
                             email_header_image =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "enabled" => {
-                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "favicon" => {
                             if v.is_null() {
@@ -225,7 +216,6 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                 }
                 let domain_prefix =
                     domain_prefix.ok_or_else(|| M::Error::missing_field("domain_prefix"))?;
-                let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
                 let visualization_type = visualization_type
@@ -236,7 +226,6 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                     components,
                     domain_prefix,
                     email_header_image,
-                    enabled,
                     favicon,
                     name,
                     subscriptions_enabled,
