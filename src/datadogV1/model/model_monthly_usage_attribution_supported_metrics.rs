@@ -75,6 +75,8 @@ pub enum MonthlyUsageAttributionSupportedMetrics {
     INCIDENT_MANAGEMENT_MONTHLY_ACTIVE_USERS_PERCENTAGE,
     INFRA_HOST_USAGE,
     INFRA_HOST_PERCENTAGE,
+    INFRA_HOST_BASIC_USAGE,
+    INFRA_HOST_BASIC_PERCENTAGE,
     INVOCATIONS_USAGE,
     INVOCATIONS_PERCENTAGE,
     LAMBDA_TRACED_INVOCATIONS_USAGE,
@@ -270,6 +272,8 @@ impl ToString for MonthlyUsageAttributionSupportedMetrics {
             }
             Self::INFRA_HOST_USAGE => String::from("infra_host_usage"),
             Self::INFRA_HOST_PERCENTAGE => String::from("infra_host_percentage"),
+            Self::INFRA_HOST_BASIC_USAGE => String::from("infra_host_basic_usage"),
+            Self::INFRA_HOST_BASIC_PERCENTAGE => String::from("infra_host_basic_percentage"),
             Self::INVOCATIONS_USAGE => String::from("invocations_usage"),
             Self::INVOCATIONS_PERCENTAGE => String::from("invocations_percentage"),
             Self::LAMBDA_TRACED_INVOCATIONS_USAGE => {
@@ -507,6 +511,8 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionSupportedMetrics {
             }
             "infra_host_usage" => Self::INFRA_HOST_USAGE,
             "infra_host_percentage" => Self::INFRA_HOST_PERCENTAGE,
+            "infra_host_basic_usage" => Self::INFRA_HOST_BASIC_USAGE,
+            "infra_host_basic_percentage" => Self::INFRA_HOST_BASIC_PERCENTAGE,
             "invocations_usage" => Self::INVOCATIONS_USAGE,
             "invocations_percentage" => Self::INVOCATIONS_PERCENTAGE,
             "lambda_traced_invocations_usage" => Self::LAMBDA_TRACED_INVOCATIONS_USAGE,
