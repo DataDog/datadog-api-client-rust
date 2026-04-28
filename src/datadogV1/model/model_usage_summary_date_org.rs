@@ -414,6 +414,9 @@ pub struct UsageSummaryDateOrg {
     /// Shows the 99th percentile of all distinct infrastructure hosts over all hours in the current date for the given org.
     #[serde(rename = "infra_host_top99p")]
     pub infra_host_top99p: Option<i64>,
+    /// Shows the average number of storage management objects over all hours in the current date for the given org.
+    #[serde(rename = "infra_storage_mgmt_objects_count_avg")]
+    pub infra_storage_mgmt_objects_count_avg: Option<i64>,
     /// Shows the sum of all log bytes ingested over all hours in the current date for the given org.
     #[serde(rename = "ingested_events_bytes_sum")]
     pub ingested_events_bytes_sum: Option<i64>,
@@ -896,6 +899,7 @@ impl UsageSummaryDateOrg {
             infra_host_basic_infra_basic_vsphere_top99p: None,
             infra_host_basic_top99p: None,
             infra_host_top99p: None,
+            infra_storage_mgmt_objects_count_avg: None,
             ingested_events_bytes_sum: None,
             iot_device_agg_sum: None,
             iot_device_top99p_sum: None,
@@ -1812,6 +1816,12 @@ impl UsageSummaryDateOrg {
     }
 
     #[allow(deprecated)]
+    pub fn infra_storage_mgmt_objects_count_avg(mut self, value: i64) -> Self {
+        self.infra_storage_mgmt_objects_count_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn ingested_events_bytes_sum(mut self, value: i64) -> Self {
         self.ingested_events_bytes_sum = Some(value);
         self
@@ -2658,6 +2668,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                 let mut infra_host_basic_infra_basic_vsphere_top99p: Option<i64> = None;
                 let mut infra_host_basic_top99p: Option<i64> = None;
                 let mut infra_host_top99p: Option<i64> = None;
+                let mut infra_storage_mgmt_objects_count_avg: Option<i64> = None;
                 let mut ingested_events_bytes_sum: Option<i64> = None;
                 let mut iot_device_agg_sum: Option<i64> = None;
                 let mut iot_device_top99p_sum: Option<i64> = None;
@@ -3584,6 +3595,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                             }
                             infra_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "infra_storage_mgmt_objects_count_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_storage_mgmt_objects_count_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ingested_events_bytes_sum" => {
                             if v.is_null() {
                                 continue;
@@ -4381,6 +4398,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDateOrg {
                     infra_host_basic_infra_basic_vsphere_top99p,
                     infra_host_basic_top99p,
                     infra_host_top99p,
+                    infra_storage_mgmt_objects_count_avg,
                     ingested_events_bytes_sum,
                     iot_device_agg_sum,
                     iot_device_top99p_sum,
