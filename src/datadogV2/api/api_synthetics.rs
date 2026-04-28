@@ -132,6 +132,29 @@ impl ListSyntheticsBrowserTestLatestResultsOptionalParams {
     }
 }
 
+/// ListSyntheticsDowntimesOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::list_synthetics_downtimes`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSyntheticsDowntimesOptionalParams {
+    /// Comma-separated list of Synthetics test public IDs to filter downtimes by.
+    pub filter_test_ids: Option<String>,
+    /// If set to `true`, return only downtimes that are currently active.
+    pub filter_active: Option<String>,
+}
+
+impl ListSyntheticsDowntimesOptionalParams {
+    /// Comma-separated list of Synthetics test public IDs to filter downtimes by.
+    pub fn filter_test_ids(mut self, value: String) -> Self {
+        self.filter_test_ids = Some(value);
+        self
+    }
+    /// If set to `true`, return only downtimes that are currently active.
+    pub fn filter_active(mut self, value: String) -> Self {
+        self.filter_active = Some(value);
+        self
+    }
+}
+
 /// ListSyntheticsTestLatestResultsOptionalParams is a struct for passing parameters to the method [`SyntheticsAPI::list_synthetics_test_latest_results`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -258,10 +281,28 @@ pub enum AbortTestFileMultipartUploadError {
     UnknownValue(serde_json::Value),
 }
 
+/// AddTestToSyntheticsDowntimeError is a struct for typed errors of method [`SyntheticsAPI::add_test_to_synthetics_downtime`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AddTestToSyntheticsDowntimeError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CompleteTestFileMultipartUploadError is a struct for typed errors of method [`SyntheticsAPI::complete_test_file_multipart_upload`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CompleteTestFileMultipartUploadError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// CreateSyntheticsDowntimeError is a struct for typed errors of method [`SyntheticsAPI::create_synthetics_downtime`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateSyntheticsDowntimeError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -278,6 +319,15 @@ pub enum CreateSyntheticsNetworkTestError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSyntheticsSuiteError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteSyntheticsDowntimeError is a struct for typed errors of method [`SyntheticsAPI::delete_synthetics_downtime`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteSyntheticsDowntimeError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -334,6 +384,15 @@ pub enum GetOnDemandConcurrencyCapError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSyntheticsBrowserTestResultError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetSyntheticsDowntimeError is a struct for typed errors of method [`SyntheticsAPI::get_synthetics_downtime`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSyntheticsDowntimeError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -410,6 +469,15 @@ pub enum ListSyntheticsBrowserTestLatestResultsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListSyntheticsDowntimesError is a struct for typed errors of method [`SyntheticsAPI::list_synthetics_downtimes`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSyntheticsDowntimesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListSyntheticsTestLatestResultsError is a struct for typed errors of method [`SyntheticsAPI::list_synthetics_test_latest_results`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -450,6 +518,15 @@ pub enum PollSyntheticsTestResultsError {
     UnknownValue(serde_json::Value),
 }
 
+/// RemoveTestFromSyntheticsDowntimeError is a struct for typed errors of method [`SyntheticsAPI::remove_test_from_synthetics_downtime`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum RemoveTestFromSyntheticsDowntimeError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// SearchSuitesError is a struct for typed errors of method [`SyntheticsAPI::search_suites`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -462,6 +539,15 @@ pub enum SearchSuitesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetOnDemandConcurrencyCapError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateSyntheticsDowntimeError is a struct for typed errors of method [`SyntheticsAPI::update_synthetics_downtime`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateSyntheticsDowntimeError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -697,6 +783,121 @@ impl SyntheticsAPI {
         }
     }
 
+    /// Associate a Synthetics test with a downtime.
+    pub async fn add_test_to_synthetics_downtime(
+        &self,
+        downtime_id: String,
+        test_id: String,
+    ) -> Result<
+        crate::datadogV2::model::SyntheticsDowntimeResponse,
+        datadog::Error<AddTestToSyntheticsDowntimeError>,
+    > {
+        match self
+            .add_test_to_synthetics_downtime_with_http_info(downtime_id, test_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Associate a Synthetics test with a downtime.
+    pub async fn add_test_to_synthetics_downtime_with_http_info(
+        &self,
+        downtime_id: String,
+        test_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SyntheticsDowntimeResponse>,
+        datadog::Error<AddTestToSyntheticsDowntimeError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.add_test_to_synthetics_downtime";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/synthetics/downtimes/{downtime_id}/tests/{test_id}",
+            local_configuration.get_operation_host(operation_id),
+            downtime_id = datadog::urlencode(downtime_id),
+            test_id = datadog::urlencode(test_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SyntheticsDowntimeResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<AddTestToSyntheticsDowntimeError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Complete a multipart file upload for a Synthetic test. Call this endpoint after all parts
     /// have been uploaded using the presigned URLs obtained from the multipart presigned URLs endpoint.
     pub async fn complete_test_file_multipart_upload(
@@ -830,6 +1031,161 @@ impl SyntheticsAPI {
             })
         } else {
             let local_entity: Option<CompleteTestFileMultipartUploadError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Create a new Synthetics downtime.
+    pub async fn create_synthetics_downtime(
+        &self,
+        body: crate::datadogV2::model::SyntheticsDowntimeRequest,
+    ) -> Result<
+        crate::datadogV2::model::SyntheticsDowntimeResponse,
+        datadog::Error<CreateSyntheticsDowntimeError>,
+    > {
+        match self.create_synthetics_downtime_with_http_info(body).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create a new Synthetics downtime.
+    pub async fn create_synthetics_downtime_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SyntheticsDowntimeRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SyntheticsDowntimeResponse>,
+        datadog::Error<CreateSyntheticsDowntimeError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_synthetics_downtime";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/synthetics/downtimes",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SyntheticsDowntimeResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateSyntheticsDowntimeError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1139,6 +1495,97 @@ impl SyntheticsAPI {
             };
         } else {
             let local_entity: Option<CreateSyntheticsSuiteError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete a Synthetics downtime by its ID.
+    pub async fn delete_synthetics_downtime(
+        &self,
+        downtime_id: String,
+    ) -> Result<(), datadog::Error<DeleteSyntheticsDowntimeError>> {
+        match self
+            .delete_synthetics_downtime_with_http_info(downtime_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete a Synthetics downtime by its ID.
+    pub async fn delete_synthetics_downtime_with_http_info(
+        &self,
+        downtime_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSyntheticsDowntimeError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_synthetics_downtime";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/synthetics/downtimes/{downtime_id}",
+            local_configuration.get_operation_host(operation_id),
+            downtime_id = datadog::urlencode(downtime_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteSyntheticsDowntimeError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -2072,6 +2519,118 @@ impl SyntheticsAPI {
             };
         } else {
             let local_entity: Option<GetSyntheticsBrowserTestResultError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a Synthetics downtime by its ID.
+    pub async fn get_synthetics_downtime(
+        &self,
+        downtime_id: String,
+    ) -> Result<
+        crate::datadogV2::model::SyntheticsDowntimeResponse,
+        datadog::Error<GetSyntheticsDowntimeError>,
+    > {
+        match self
+            .get_synthetics_downtime_with_http_info(downtime_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a Synthetics downtime by its ID.
+    pub async fn get_synthetics_downtime_with_http_info(
+        &self,
+        downtime_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SyntheticsDowntimeResponse>,
+        datadog::Error<GetSyntheticsDowntimeError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_synthetics_downtime";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/synthetics/downtimes/{downtime_id}",
+            local_configuration.get_operation_host(operation_id),
+            downtime_id = datadog::urlencode(downtime_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SyntheticsDowntimeResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSyntheticsDowntimeError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -3256,6 +3815,127 @@ impl SyntheticsAPI {
         }
     }
 
+    /// Get a list of all Synthetics downtimes for your organization.
+    pub async fn list_synthetics_downtimes(
+        &self,
+        params: ListSyntheticsDowntimesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SyntheticsDowntimesResponse,
+        datadog::Error<ListSyntheticsDowntimesError>,
+    > {
+        match self.list_synthetics_downtimes_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of all Synthetics downtimes for your organization.
+    pub async fn list_synthetics_downtimes_with_http_info(
+        &self,
+        params: ListSyntheticsDowntimesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SyntheticsDowntimesResponse>,
+        datadog::Error<ListSyntheticsDowntimesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_synthetics_downtimes";
+
+        // unbox and build optional parameters
+        let filter_test_ids = params.filter_test_ids;
+        let filter_active = params.filter_active;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/synthetics/downtimes",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_test_ids {
+            local_req_builder =
+                local_req_builder.query(&[("filter[test_ids]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_active {
+            local_req_builder =
+                local_req_builder.query(&[("filter[active]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SyntheticsDowntimesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSyntheticsDowntimesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get the latest result summaries for a given Synthetic test.
     pub async fn list_synthetics_test_latest_results(
         &self,
@@ -3991,6 +4671,121 @@ impl SyntheticsAPI {
         }
     }
 
+    /// Disassociate a Synthetics test from a downtime.
+    pub async fn remove_test_from_synthetics_downtime(
+        &self,
+        downtime_id: String,
+        test_id: String,
+    ) -> Result<
+        crate::datadogV2::model::SyntheticsDowntimeResponse,
+        datadog::Error<RemoveTestFromSyntheticsDowntimeError>,
+    > {
+        match self
+            .remove_test_from_synthetics_downtime_with_http_info(downtime_id, test_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Disassociate a Synthetics test from a downtime.
+    pub async fn remove_test_from_synthetics_downtime_with_http_info(
+        &self,
+        downtime_id: String,
+        test_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SyntheticsDowntimeResponse>,
+        datadog::Error<RemoveTestFromSyntheticsDowntimeError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.remove_test_from_synthetics_downtime";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/synthetics/downtimes/{downtime_id}/tests/{test_id}",
+            local_configuration.get_operation_host(operation_id),
+            downtime_id = datadog::urlencode(downtime_id),
+            test_id = datadog::urlencode(test_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SyntheticsDowntimeResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<RemoveTestFromSyntheticsDowntimeError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Search for test suites.
     pub async fn search_suites(
         &self,
@@ -4274,6 +5069,167 @@ impl SyntheticsAPI {
             };
         } else {
             let local_entity: Option<SetOnDemandConcurrencyCapError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update a Synthetics downtime by its ID.
+    pub async fn update_synthetics_downtime(
+        &self,
+        downtime_id: String,
+        body: crate::datadogV2::model::SyntheticsDowntimeRequest,
+    ) -> Result<
+        crate::datadogV2::model::SyntheticsDowntimeResponse,
+        datadog::Error<UpdateSyntheticsDowntimeError>,
+    > {
+        match self
+            .update_synthetics_downtime_with_http_info(downtime_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update a Synthetics downtime by its ID.
+    pub async fn update_synthetics_downtime_with_http_info(
+        &self,
+        downtime_id: String,
+        body: crate::datadogV2::model::SyntheticsDowntimeRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SyntheticsDowntimeResponse>,
+        datadog::Error<UpdateSyntheticsDowntimeError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_synthetics_downtime";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/synthetics/downtimes/{downtime_id}",
+            local_configuration.get_operation_host(operation_id),
+            downtime_id = datadog::urlencode(downtime_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SyntheticsDowntimeResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateSyntheticsDowntimeError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
