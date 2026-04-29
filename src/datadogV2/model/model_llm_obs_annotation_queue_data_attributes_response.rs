@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsAnnotationQueueDataAttributesResponse {
+    /// Schema defining the labels for an annotation queue.
+    #[serde(rename = "annotation_schema")]
+    pub annotation_schema: Option<crate::datadogV2::model::LLMObsAnnotationSchema>,
     /// Timestamp when the queue was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
@@ -54,6 +57,7 @@ impl LLMObsAnnotationQueueDataAttributesResponse {
         project_id: String,
     ) -> LLMObsAnnotationQueueDataAttributesResponse {
         LLMObsAnnotationQueueDataAttributesResponse {
+            annotation_schema: None,
             created_at,
             created_by,
             description,
@@ -65,6 +69,14 @@ impl LLMObsAnnotationQueueDataAttributesResponse {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn annotation_schema(
+        mut self,
+        value: crate::datadogV2::model::LLMObsAnnotationSchema,
+    ) -> Self {
+        self.annotation_schema = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -93,6 +105,8 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesResponse {
             where
                 M: MapAccess<'a>,
             {
+                let mut annotation_schema: Option<crate::datadogV2::model::LLMObsAnnotationSchema> =
+                    None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut description: Option<String> = None;
@@ -109,6 +123,13 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "annotation_schema" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            annotation_schema =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -156,6 +177,7 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesResponse {
                 let project_id = project_id.ok_or_else(|| M::Error::missing_field("project_id"))?;
 
                 let content = LLMObsAnnotationQueueDataAttributesResponse {
+                    annotation_schema,
                     created_at,
                     created_by,
                     description,

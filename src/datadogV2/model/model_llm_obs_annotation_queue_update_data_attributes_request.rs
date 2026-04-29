@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsAnnotationQueueUpdateDataAttributesRequest {
+    /// Schema defining the labels for an annotation queue.
+    #[serde(rename = "annotation_schema")]
+    pub annotation_schema: Option<crate::datadogV2::model::LLMObsAnnotationSchema>,
     /// Updated description of the annotation queue.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -27,11 +30,20 @@ pub struct LLMObsAnnotationQueueUpdateDataAttributesRequest {
 impl LLMObsAnnotationQueueUpdateDataAttributesRequest {
     pub fn new() -> LLMObsAnnotationQueueUpdateDataAttributesRequest {
         LLMObsAnnotationQueueUpdateDataAttributesRequest {
+            annotation_schema: None,
             description: None,
             name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn annotation_schema(
+        mut self,
+        value: crate::datadogV2::model::LLMObsAnnotationSchema,
+    ) -> Self {
+        self.annotation_schema = Some(value);
+        self
     }
 
     pub fn description(mut self, value: String) -> Self {
@@ -76,6 +88,8 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueUpdateDataAttributesRequest 
             where
                 M: MapAccess<'a>,
             {
+                let mut annotation_schema: Option<crate::datadogV2::model::LLMObsAnnotationSchema> =
+                    None;
                 let mut description: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -86,6 +100,13 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueUpdateDataAttributesRequest 
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "annotation_schema" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            annotation_schema =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "description" => {
                             if v.is_null() {
                                 continue;
@@ -108,6 +129,7 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueUpdateDataAttributesRequest 
                 }
 
                 let content = LLMObsAnnotationQueueUpdateDataAttributesRequest {
+                    annotation_schema,
                     description,
                     name,
                     additional_properties,
