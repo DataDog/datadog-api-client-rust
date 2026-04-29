@@ -73,6 +73,9 @@ pub enum ObservabilityPipelineConfigDestinationItem {
     ObservabilityPipelineSyslogNgDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgDestination>,
     ),
+    ObservabilityPipelineDatabricksZerobusDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestination>,
+    ),
     ObservabilityPipelineDatadogMetricsDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogMetricsDestination>,
     ),
@@ -269,6 +272,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineSyslogNgDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineDatabricksZerobusDestination(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
