@@ -38,8 +38,7 @@ async fn main() {
                 )
                 .type_(FlakyTestsSearchRequestDataType::SEARCH_FLAKY_TESTS_REQUEST),
         );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.SearchFlakyTests", true);
+    let configuration = datadog::Configuration::new();
     let api = TestOptimizationAPI::with_config(configuration);
     let response = api
         .search_flaky_tests_with_pagination(SearchFlakyTestsOptionalParams::default().body(body));

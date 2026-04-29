@@ -19,8 +19,7 @@ async fn main() {
                 ::TEST_OPTIMIZATION_DELETE_SERVICE_SETTINGS_REQUEST,
             ),
         );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteTestOptimizationServiceSettings", true);
+    let configuration = datadog::Configuration::new();
     let api = TestOptimizationAPI::with_config(configuration);
     let resp = api.delete_test_optimization_service_settings(body).await;
     if let Ok(value) = resp {

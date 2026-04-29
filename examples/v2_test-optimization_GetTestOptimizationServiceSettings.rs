@@ -18,8 +18,7 @@ async fn main() {
                 TestOptimizationGetServiceSettingsRequestDataType::TEST_OPTIMIZATION_GET_SERVICE_SETTINGS_REQUEST,
             ),
         );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetTestOptimizationServiceSettings", true);
+    let configuration = datadog::Configuration::new();
     let api = TestOptimizationAPI::with_config(configuration);
     let resp = api.get_test_optimization_service_settings(body).await;
     if let Ok(value) = resp {

@@ -17,8 +17,7 @@ async fn main() {
         )]),
         UpdateFlakyTestsRequestDataType::UPDATE_FLAKY_TEST_STATE_REQUEST,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateFlakyTests", true);
+    let configuration = datadog::Configuration::new();
     let api = TestOptimizationAPI::with_config(configuration);
     let resp = api.update_flaky_tests(body).await;
     if let Ok(value) = resp {

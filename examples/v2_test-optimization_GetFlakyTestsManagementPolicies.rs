@@ -18,8 +18,7 @@ async fn main() {
                 ::TEST_OPTIMIZATION_GET_FLAKY_TESTS_MANAGEMENT_POLICIES_REQUEST,
             ),
         );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetFlakyTestsManagementPolicies", true);
+    let configuration = datadog::Configuration::new();
     let api = TestOptimizationAPI::with_config(configuration);
     let resp = api.get_flaky_tests_management_policies(body).await;
     if let Ok(value) = resp {

@@ -195,25 +195,6 @@ impl Default for Configuration {
             ("v2.get_change_request".to_owned(), false),
             ("v2.update_change_request".to_owned(), false),
             ("v2.update_change_request_decision".to_owned(), false),
-            (
-                "v2.delete_test_optimization_service_settings".to_owned(),
-                false,
-            ),
-            ("v2.get_flaky_tests_management_policies".to_owned(), false),
-            (
-                "v2.get_test_optimization_service_settings".to_owned(),
-                false,
-            ),
-            ("v2.search_flaky_tests".to_owned(), false),
-            ("v2.update_flaky_tests".to_owned(), false),
-            (
-                "v2.update_flaky_tests_management_policies".to_owned(),
-                false,
-            ),
-            (
-                "v2.update_test_optimization_service_settings".to_owned(),
-                false,
-            ),
             ("v2.create_aws_cloud_auth_persona_mapping".to_owned(), false),
             ("v2.delete_aws_cloud_auth_persona_mapping".to_owned(), false),
             ("v2.get_aws_cloud_auth_persona_mapping".to_owned(), false),
