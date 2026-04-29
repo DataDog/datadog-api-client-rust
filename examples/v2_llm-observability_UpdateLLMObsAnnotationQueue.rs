@@ -5,12 +5,33 @@ use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueType;
 use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueUpdateDataAttributesRequest;
 use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueUpdateDataRequest;
 use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueUpdateRequest;
+use datadog_api_client::datadogV2::model::LLMObsAnnotationSchema;
+use datadog_api_client::datadogV2::model::LLMObsLabelSchema;
+use datadog_api_client::datadogV2::model::LLMObsLabelSchemaType;
 
 #[tokio::main]
 async fn main() {
     let body =
         LLMObsAnnotationQueueUpdateRequest::new(LLMObsAnnotationQueueUpdateDataRequest::new(
             LLMObsAnnotationQueueUpdateDataAttributesRequest::new()
+                .annotation_schema(LLMObsAnnotationSchema::new(vec![LLMObsLabelSchema::new(
+                    "quality".to_string(),
+                    LLMObsLabelSchemaType::SCORE,
+                )
+                .description("Rating of the response quality.".to_string())
+                .has_assessment(false)
+                .has_reasoning(false)
+                .id("ab12cd34".to_string())
+                .is_assessment(false)
+                .is_integer(false)
+                .is_required(true)
+                .max(5.0 as f64)
+                .min(0.0 as f64)
+                .values(vec![
+                    "good".to_string(),
+                    "bad".to_string(),
+                    "neutral".to_string(),
+                ])]))
                 .description("Updated description".to_string())
                 .name("Updated queue name".to_string()),
             LLMObsAnnotationQueueType::QUEUES,

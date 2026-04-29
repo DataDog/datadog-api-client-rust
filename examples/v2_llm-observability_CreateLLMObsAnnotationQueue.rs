@@ -5,6 +5,9 @@ use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueDataAttributesReq
 use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueDataRequest;
 use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueRequest;
 use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueType;
+use datadog_api_client::datadogV2::model::LLMObsAnnotationSchema;
+use datadog_api_client::datadogV2::model::LLMObsLabelSchema;
+use datadog_api_client::datadogV2::model::LLMObsLabelSchemaType;
 
 #[tokio::main]
 async fn main() {
@@ -13,6 +16,24 @@ async fn main() {
             "My annotation queue".to_string(),
             "a33671aa-24fd-4dcd-9b33-a8ec7dde7751".to_string(),
         )
+        .annotation_schema(LLMObsAnnotationSchema::new(vec![LLMObsLabelSchema::new(
+            "quality".to_string(),
+            LLMObsLabelSchemaType::SCORE,
+        )
+        .description("Rating of the response quality.".to_string())
+        .has_assessment(false)
+        .has_reasoning(false)
+        .id("ab12cd34".to_string())
+        .is_assessment(false)
+        .is_integer(false)
+        .is_required(true)
+        .max(5.0 as f64)
+        .min(0.0 as f64)
+        .values(vec![
+            "good".to_string(),
+            "bad".to_string(),
+            "neutral".to_string(),
+        ])]))
         .description("Queue for annotating customer support traces".to_string()),
         LLMObsAnnotationQueueType::QUEUES,
     ));
