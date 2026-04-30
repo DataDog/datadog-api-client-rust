@@ -8,8 +8,6 @@ use datadog_api_client::datadogV2::model::SecurityMonitoringRuleEvaluationWindow
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleKeepAlive;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleMaxSignalDuration;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleNewValueOptions;
-use datadog_api_client::datadogV2::model::SecurityMonitoringRuleNewValueOptionsForgetAfter;
-use datadog_api_client::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningDuration;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningMethod;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold;
 use datadog_api_client::datadogV2::model::SecurityMonitoringRuleOptions;
@@ -42,9 +40,9 @@ async fn main() {
                         .max_signal_duration(SecurityMonitoringRuleMaxSignalDuration::TEN_MINUTES)
                         .new_value_options(
                             SecurityMonitoringRuleNewValueOptions::new()
-                                .forget_after(SecurityMonitoringRuleNewValueOptionsForgetAfter::ONE_WEEK)
+                                .forget_after(7)
                                 .instantaneous_baseline(true)
-                                .learning_duration(SecurityMonitoringRuleNewValueOptionsLearningDuration::ONE_DAY)
+                                .learning_duration(1)
                                 .learning_method(SecurityMonitoringRuleNewValueOptionsLearningMethod::DURATION)
                                 .learning_threshold(
                                     SecurityMonitoringRuleNewValueOptionsLearningThreshold::ZERO_OCCURRENCES,
