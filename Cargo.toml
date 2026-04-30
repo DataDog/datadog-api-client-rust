@@ -33,7 +33,7 @@ version = "0.30.0"
 async-stream = "0.3.6"
 chrono = {version = "0.4.44", features = ["serde"] }
 # Activates JS crypto API for getrandom on wasm32-unknown-unknown (browser); harmless on other targets
-getrandom = { version = "0.2", features = ["js"] }
+getrandom = { version = "0.4", features = ["js"] }
 flate2 = "1.1.9"
 form-data-builder = "1.0.1"
 futures-core = "0.3.32"
