@@ -33,6 +33,7 @@ pub enum WidgetDefinition {
     MonitorSummaryWidgetDefinition(Box<crate::datadogV1::model::MonitorSummaryWidgetDefinition>),
     NoteWidgetDefinition(Box<crate::datadogV1::model::NoteWidgetDefinition>),
     PowerpackWidgetDefinition(Box<crate::datadogV1::model::PowerpackWidgetDefinition>),
+    PointPlotWidgetDefinition(Box<crate::datadogV1::model::PointPlotWidgetDefinition>),
     QueryValueWidgetDefinition(Box<crate::datadogV1::model::QueryValueWidgetDefinition>),
     RetentionCurveWidgetDefinition(Box<crate::datadogV1::model::RetentionCurveWidgetDefinition>),
     RunWorkflowWidgetDefinition(Box<crate::datadogV1::model::RunWorkflowWidgetDefinition>),
@@ -233,6 +234,14 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         {
             if !_v._unparsed {
                 return Ok(WidgetDefinition::PowerpackWidgetDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::PointPlotWidgetDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(WidgetDefinition::PointPlotWidgetDefinition(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
