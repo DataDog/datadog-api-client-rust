@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"cross_product_sampling\":{\"trace_sample_rate\":100}},\"id\":\"default_replays\",\"type\":\"permanent_retention_filters\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "patch",
+        "uri": "https://api.datadoghq.com/api/v2/rum/applications/a33671aa-24fd-4dcd-ba4b-5bbdbafe7690/permanent_retention_filters/default_replays"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"default_replays\",\"type\":\"permanent_retention_filters\",\"attributes\":{\"name\":\"Default Replays\",\"event_type\":\"session\",\"query\":\"@has_replay:true\",\"sample_rate\":100,\"enabled\":true,\"cross_product_sampling\":{\"trace_sample_rate\":100},\"cross_product_sampling_editability\":{\"trace_sample_rate\":true}}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Wed, 29 Apr 2026 17:04:30 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
