@@ -8,7 +8,6 @@ use flate2::{
     Compression,
 };
 use futures_core::stream::Stream;
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -181,15 +180,6 @@ impl TestOptimizationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_test_optimization_service_settings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_test_optimization_service_settings' is not enabled"
-                    .to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -343,15 +333,6 @@ impl TestOptimizationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_flaky_tests_management_policies";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_flaky_tests_management_policies' is not enabled"
-                    .to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -511,15 +492,6 @@ impl TestOptimizationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_test_optimization_service_settings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_test_optimization_service_settings' is not enabled"
-                    .to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -749,14 +721,6 @@ impl TestOptimizationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.search_flaky_tests";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.search_flaky_tests' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let body = params.body;
@@ -915,14 +879,6 @@ impl TestOptimizationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_flaky_tests";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_flaky_tests' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1085,15 +1041,6 @@ impl TestOptimizationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_flaky_tests_management_policies";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_flaky_tests_management_policies' is not enabled"
-                    .to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1255,15 +1202,6 @@ impl TestOptimizationAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_test_optimization_service_settings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_test_optimization_service_settings' is not enabled"
-                    .to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
