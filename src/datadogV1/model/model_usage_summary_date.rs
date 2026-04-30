@@ -248,6 +248,9 @@ pub struct UsageSummaryDate {
     /// Shows the sum of all Data Jobs Monitoring hosts over all hours in the current date for the given org.
     #[serde(rename = "data_jobs_monitoring_host_hr_sum")]
     pub data_jobs_monitoring_host_hr_sum: Option<i64>,
+    /// Shows the average of all Data Observability Quality Monitoring usage over all hours in the current date for all organizations.
+    #[serde(rename = "data_observability_quality_monitoring_avg")]
+    pub data_observability_quality_monitoring_avg: Option<i64>,
     /// The date for the usage.
     #[serde(rename = "date")]
     pub date: Option<chrono::DateTime<chrono::Utc>>,
@@ -825,6 +828,7 @@ impl UsageSummaryDate {
             cws_fargate_task_avg: None,
             cws_host_top99p: None,
             data_jobs_monitoring_host_hr_sum: None,
+            data_observability_quality_monitoring_avg: None,
             date: None,
             dbm_host_top99p: None,
             dbm_queries_count_avg: None,
@@ -1454,6 +1458,12 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn data_jobs_monitoring_host_hr_sum(mut self, value: i64) -> Self {
         self.data_jobs_monitoring_host_hr_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn data_observability_quality_monitoring_avg(mut self, value: i64) -> Self {
+        self.data_observability_quality_monitoring_avg = Some(value);
         self
     }
 
@@ -2551,6 +2561,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut cws_fargate_task_avg: Option<i64> = None;
                 let mut cws_host_top99p: Option<i64> = None;
                 let mut data_jobs_monitoring_host_hr_sum: Option<i64> = None;
+                let mut data_observability_quality_monitoring_avg: Option<i64> = None;
                 let mut date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut dbm_host_top99p: Option<i64> = None;
                 let mut dbm_queries_count_avg: Option<i64> = None;
@@ -3197,6 +3208,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             data_jobs_monitoring_host_hr_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "data_observability_quality_monitoring_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_observability_quality_monitoring_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "date" => {
                             if v.is_null() {
@@ -4240,6 +4257,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     cws_fargate_task_avg,
                     cws_host_top99p,
                     data_jobs_monitoring_host_hr_sum,
+                    data_observability_quality_monitoring_avg,
                     date,
                     dbm_host_top99p,
                     dbm_queries_count_avg,
