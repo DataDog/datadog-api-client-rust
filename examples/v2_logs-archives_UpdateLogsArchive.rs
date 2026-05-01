@@ -1,6 +1,7 @@
 // Update an archive returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_logs_archives::LogsArchivesAPI;
+use datadog_api_client::datadogV2::model::LogsArchiveAttributesCompressionMethod;
 use datadog_api_client::datadogV2::model::LogsArchiveCreateRequest;
 use datadog_api_client::datadogV2::model::LogsArchiveCreateRequestAttributes;
 use datadog_api_client::datadogV2::model::LogsArchiveCreateRequestDefinition;
@@ -28,6 +29,7 @@ async fn main() {
                 "Nginx Archive".to_string(),
                 "source:nginx".to_string(),
             )
+            .compression_method(LogsArchiveAttributesCompressionMethod::GZIP)
             .include_tags(false)
             .rehydration_max_scan_size_in_gb(Some(100))
             .rehydration_tags(vec!["team:intake".to_string(), "team:app".to_string()]),

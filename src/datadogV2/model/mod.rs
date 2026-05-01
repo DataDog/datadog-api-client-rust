@@ -4748,6 +4748,8 @@ pub mod model_logs_archive_definition;
 pub use self::model_logs_archive_definition::LogsArchiveDefinition;
 pub mod model_logs_archive_attributes;
 pub use self::model_logs_archive_attributes::LogsArchiveAttributes;
+pub mod model_logs_archive_attributes_compression_method;
+pub use self::model_logs_archive_attributes_compression_method::LogsArchiveAttributesCompressionMethod;
 pub mod model_logs_archive_destination_azure;
 pub use self::model_logs_archive_destination_azure::LogsArchiveDestinationAzure;
 pub mod model_logs_archive_integration_azure;
