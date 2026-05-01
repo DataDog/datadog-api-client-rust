@@ -23,6 +23,7 @@ pub mod api_ci_visibility_pipelines;
 pub mod api_ci_visibility_tests;
 pub mod api_cloud_authentication;
 pub mod api_cloud_cost_management;
+pub mod api_cloud_inventory_sync_configs;
 pub mod api_cloud_network_monitoring;
 pub mod api_cloudflare_integration;
 pub mod api_code_coverage;

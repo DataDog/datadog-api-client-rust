@@ -24,6 +24,7 @@ pub use self::api::api_ci_visibility_pipelines;
 pub use self::api::api_ci_visibility_tests;
 pub use self::api::api_cloud_authentication;
 pub use self::api::api_cloud_cost_management;
+pub use self::api::api_cloud_inventory_sync_configs;
 pub use self::api::api_cloud_network_monitoring;
 pub use self::api::api_cloudflare_integration;
 pub use self::api::api_code_coverage;

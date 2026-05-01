@@ -250,6 +250,7 @@ impl Default for Configuration {
                 "v2.search_security_monitoring_histsignals".to_owned(),
                 false,
             ),
+            ("v2.upsert_sync_config".to_owned(), false),
             ("v2.get_code_coverage_branch_summary".to_owned(), false),
             ("v2.get_code_coverage_commit_summary".to_owned(), false),
             ("v2.create_dashboard_secure_embed".to_owned(), false),
