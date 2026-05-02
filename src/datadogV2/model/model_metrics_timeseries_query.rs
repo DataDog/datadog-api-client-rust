@@ -20,6 +20,9 @@ pub struct MetricsTimeseriesQuery {
     /// A classic metrics query string.
     #[serde(rename = "query")]
     pub query: String,
+    /// The name of the BYOC cluster to route this query to. When set, the query is executed against the customer's BYOC cluster instead of Datadog SaaS.
+    #[serde(rename = "byoc_cluster")]
+    pub byoc_cluster: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -36,6 +39,7 @@ impl MetricsTimeseriesQuery {
             data_source,
             name: None,
             query,
+            byoc_cluster: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -43,6 +47,11 @@ impl MetricsTimeseriesQuery {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn byoc_cluster(mut self, value: String) -> Self {
+        self.byoc_cluster = Some(value);
         self
     }
 
@@ -75,6 +84,7 @@ impl<'de> Deserialize<'de> for MetricsTimeseriesQuery {
                 let mut data_source: Option<crate::datadogV2::model::MetricsDataSource> = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
+                let mut byoc_cluster: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -106,6 +116,13 @@ impl<'de> Deserialize<'de> for MetricsTimeseriesQuery {
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "byoc_cluster" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            byoc_cluster =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -121,6 +138,7 @@ impl<'de> Deserialize<'de> for MetricsTimeseriesQuery {
                     data_source,
                     name,
                     query,
+                    byoc_cluster,
                     additional_properties,
                     _unparsed,
                 };
