@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AwsScanOptionsCreateAttributes {
+    /// Indicates whether host compliance scanning is enabled.
+    #[serde(rename = "compliance_host")]
+    pub compliance_host: bool,
     /// Indicates if scanning of Lambda functions is enabled.
     #[serde(rename = "lambda")]
     pub lambda: bool,
@@ -32,12 +35,14 @@ pub struct AwsScanOptionsCreateAttributes {
 
 impl AwsScanOptionsCreateAttributes {
     pub fn new(
+        compliance_host: bool,
         lambda: bool,
         sensitive_data: bool,
         vuln_containers_os: bool,
         vuln_host_os: bool,
     ) -> AwsScanOptionsCreateAttributes {
         AwsScanOptionsCreateAttributes {
+            compliance_host,
             lambda,
             sensitive_data,
             vuln_containers_os,
@@ -73,6 +78,7 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut compliance_host: Option<bool> = None;
                 let mut lambda: Option<bool> = None;
                 let mut sensitive_data: Option<bool> = None;
                 let mut vuln_containers_os: Option<bool> = None;
@@ -85,6 +91,10 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "compliance_host" => {
+                            compliance_host =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "lambda" => {
                             lambda = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -107,6 +117,8 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateAttributes {
                         }
                     }
                 }
+                let compliance_host =
+                    compliance_host.ok_or_else(|| M::Error::missing_field("compliance_host"))?;
                 let lambda = lambda.ok_or_else(|| M::Error::missing_field("lambda"))?;
                 let sensitive_data =
                     sensitive_data.ok_or_else(|| M::Error::missing_field("sensitive_data"))?;
@@ -116,6 +128,7 @@ impl<'de> Deserialize<'de> for AwsScanOptionsCreateAttributes {
                     vuln_host_os.ok_or_else(|| M::Error::missing_field("vuln_host_os"))?;
 
                 let content = AwsScanOptionsCreateAttributes {
+                    compliance_host,
                     lambda,
                     sensitive_data,
                     vuln_containers_os,
