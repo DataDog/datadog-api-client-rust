@@ -5643,6 +5643,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.CreateDegradation".into(), test_v2_create_degradation);
+    world.function_mappings.insert(
+        "v2.CreateBackfilledDegradation".into(),
+        test_v2_create_backfilled_degradation,
+    );
     world
         .function_mappings
         .insert("v2.DeleteDegradation".into(), test_v2_delete_degradation);
@@ -5655,6 +5659,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.CreateMaintenance".into(), test_v2_create_maintenance);
+    world.function_mappings.insert(
+        "v2.CreateBackfilledMaintenance".into(),
+        test_v2_create_backfilled_maintenance,
+    );
     world
         .function_mappings
         .insert("v2.GetMaintenance".into(), test_v2_get_maintenance);
@@ -44159,6 +44167,42 @@ fn test_v2_create_degradation(world: &mut DatadogWorld, _parameters: &HashMap<St
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_create_backfilled_degradation(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_status_pages::CreateBackfilledDegradationOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.create_backfilled_degradation_with_http_info(page_id, body, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_delete_degradation(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -44292,6 +44336,42 @@ fn test_v2_create_maintenance(world: &mut DatadogWorld, _parameters: &HashMap<St
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_backfilled_maintenance(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_status_pages::CreateBackfilledMaintenanceOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.create_backfilled_maintenance_with_http_info(page_id, body, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
