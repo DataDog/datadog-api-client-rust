@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// JSON:API data object for a sync configuration.
+/// Storage Management configuration data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudInventorySyncConfigResponseData {
-    /// Attributes for a cloud inventory sync configuration. Values beyond `id` may be omitted immediately after upsert.
+    /// Attributes for a Storage Management configuration. Fields other than id may be empty in the response immediately after a create or update; subsequent reads return the full configuration.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CloudInventorySyncConfigAttributes,
-    /// Unique identifier for the recurring sync configuration.
+    /// Unique identifier for this Storage Management configuration.
     #[serde(rename = "id")]
     pub id: String,
-    /// JSON:API type for sync configuration resources.
+    /// Always sync_configs.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CloudInventorySyncConfigResourceType,
     #[serde(flatten)]

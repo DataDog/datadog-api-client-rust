@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Provider-specific configuration. Include the object that matches `data.id` (`aws`, `gcp`, or `azure`).
+/// Settings for the cloud provider specified in data.id. Include only the matching provider object (aws, gcp, or azure).
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpsertCloudInventorySyncConfigRequestAttributes {
-    /// AWS settings for the customer bucket that stores inventory reports.
+    /// AWS settings for the S3 bucket Storage Management reads inventory reports from.
     #[serde(rename = "aws")]
     pub aws: Option<crate::datadogV2::model::CloudInventorySyncConfigAWSRequestAttributes>,
     /// Azure settings for the storage account and container with inventory data.

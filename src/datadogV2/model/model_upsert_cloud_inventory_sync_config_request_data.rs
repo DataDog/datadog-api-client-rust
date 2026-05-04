@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// JSON:API data envelope for an upsert sync configuration request.
+/// Storage Management configuration data for the create or update request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpsertCloudInventorySyncConfigRequestData {
-    /// Provider-specific configuration. Include the object that matches `data.id` (`aws`, `gcp`, or `azure`).
+    /// Settings for the cloud provider specified in data.id. Include only the matching provider object (aws, gcp, or azure).
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::UpsertCloudInventorySyncConfigRequestAttributes,
     /// Cloud provider for this sync configuration (`aws`, `gcp`, or `azure`). For requests, must match the provider block supplied under `attributes`.
     #[serde(rename = "id")]
     pub id: crate::datadogV2::model::CloudInventoryCloudProviderId,
-    /// JSON:API type for upsert sync configuration requests.
+    /// Always cloud_provider.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CloudInventoryCloudProviderRequestType,
     #[serde(flatten)]

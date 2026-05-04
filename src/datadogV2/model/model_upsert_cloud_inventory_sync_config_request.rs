@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UpsertCloudInventorySyncConfigRequest {
-    /// JSON:API data envelope for an upsert sync configuration request.
+    /// Storage Management configuration data for the create or update request.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::UpsertCloudInventorySyncConfigRequestData,
     #[serde(flatten)]

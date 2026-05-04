@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS settings for the customer bucket that stores inventory reports.
+/// AWS settings for the S3 bucket Storage Management reads inventory reports from.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -20,7 +20,7 @@ pub struct CloudInventorySyncConfigAWSRequestAttributes {
     /// AWS Region of the inventory bucket.
     #[serde(rename = "destination_bucket_region")]
     pub destination_bucket_region: String,
-    /// Optional object key prefix for inventory files. Use `/` or omit for the entire bucket.
+    /// Object key prefix where inventory reports are written. Omit or set to / when reports are written at the bucket root.
     #[serde(rename = "destination_prefix")]
     pub destination_prefix: Option<String>,
     #[serde(flatten)]
