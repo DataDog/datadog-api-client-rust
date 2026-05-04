@@ -3422,6 +3422,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_cost_gcp_usage_cost_config,
     );
     world.function_mappings.insert(
+        "v2.ListCostOCIConfigs".into(),
+        test_v2_list_cost_oci_configs,
+    );
+    world.function_mappings.insert(
         "v2.ListTagPipelinesRulesets".into(),
         test_v2_list_tag_pipelines_rulesets,
     );
@@ -25273,6 +25277,30 @@ fn test_v2_update_cost_gcp_usage_cost_config(
     let response = match block_on(
         api.update_cost_gcp_usage_cost_config_with_http_info(cloud_account_id, body),
     ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_cost_oci_configs(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_cost_oci_configs_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {
