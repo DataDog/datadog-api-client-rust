@@ -18,6 +18,7 @@ async fn main() {
         .new_client_id("".to_string())
         .new_tenant_name("".to_string())
         .resource_collection_enabled(true)
+        .secretless_auth_enabled(true)
         .tenant_name("".to_string());
     let configuration = datadog::Configuration::new();
     let api = AzureIntegrationAPI::with_config(configuration);
