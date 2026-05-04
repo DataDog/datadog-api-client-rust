@@ -425,6 +425,8 @@ impl Default for Configuration {
             ("v2.list_custom_rule_revisions".to_owned(), false),
             ("v2.revert_custom_rule_revision".to_owned(), false),
             ("v2.update_custom_ruleset".to_owned(), false),
+            ("v2.create_backfilled_degradation".to_owned(), false),
+            ("v2.create_backfilled_maintenance".to_owned(), false),
             ("v2.add_member_team".to_owned(), false),
             ("v2.list_member_teams".to_owned(), false),
             ("v2.remove_member_team".to_owned(), false),

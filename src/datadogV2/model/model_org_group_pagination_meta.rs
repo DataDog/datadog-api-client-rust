@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Pagination metadata for org group list responses.
+/// Pagination metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct OrgGroupPaginationMeta {
-    /// Page-based pagination details for org group list responses.
+    /// Page-based pagination details.
     #[serde(rename = "page")]
-    pub page: Option<crate::datadogV2::model::OrgGroupPaginationMetaPage>,
+    pub page: crate::datadogV2::model::OrgGroupPaginationMetaPage,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,17 +22,14 @@ pub struct OrgGroupPaginationMeta {
 }
 
 impl OrgGroupPaginationMeta {
-    pub fn new() -> OrgGroupPaginationMeta {
+    pub fn new(
+        page: crate::datadogV2::model::OrgGroupPaginationMetaPage,
+    ) -> OrgGroupPaginationMeta {
         OrgGroupPaginationMeta {
-            page: None,
+            page,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn page(mut self, value: crate::datadogV2::model::OrgGroupPaginationMetaPage) -> Self {
-        self.page = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -41,12 +38,6 @@ impl OrgGroupPaginationMeta {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for OrgGroupPaginationMeta {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -77,9 +68,6 @@ impl<'de> Deserialize<'de> for OrgGroupPaginationMeta {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "page" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             page = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -89,6 +77,7 @@ impl<'de> Deserialize<'de> for OrgGroupPaginationMeta {
                         }
                     }
                 }
+                let page = page.ok_or_else(|| M::Error::missing_field("page"))?;
 
                 let content = OrgGroupPaginationMeta {
                     page,

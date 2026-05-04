@@ -6,47 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Page-based pagination details for org group list responses.
+/// Page-based pagination details.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct OrgGroupPaginationMetaPage {
-    /// First page number.
-    #[serde(rename = "first_number")]
-    pub first_number: Option<i64>,
-    /// Last page number.
-    #[serde(
-        rename = "last_number",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub last_number: Option<Option<i64>>,
-    /// Next page number.
-    #[serde(
-        rename = "next_number",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub next_number: Option<Option<i64>>,
-    /// Page number.
-    #[serde(rename = "number")]
-    pub number: Option<i64>,
-    /// Previous page number.
-    #[serde(
-        rename = "prev_number",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub prev_number: Option<Option<i64>>,
-    /// Page size.
-    #[serde(rename = "size")]
-    pub size: Option<i64>,
-    /// Total number of results.
-    #[serde(rename = "total")]
-    pub total: Option<i64>,
-    /// Pagination type.
-    #[serde(rename = "type")]
-    pub type_: Option<String>,
+    /// The total number of items.
+    #[serde(rename = "total_count")]
+    pub total_count: i64,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -55,59 +22,12 @@ pub struct OrgGroupPaginationMetaPage {
 }
 
 impl OrgGroupPaginationMetaPage {
-    pub fn new() -> OrgGroupPaginationMetaPage {
+    pub fn new(total_count: i64) -> OrgGroupPaginationMetaPage {
         OrgGroupPaginationMetaPage {
-            first_number: None,
-            last_number: None,
-            next_number: None,
-            number: None,
-            prev_number: None,
-            size: None,
-            total: None,
-            type_: None,
+            total_count,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn first_number(mut self, value: i64) -> Self {
-        self.first_number = Some(value);
-        self
-    }
-
-    pub fn last_number(mut self, value: Option<i64>) -> Self {
-        self.last_number = Some(value);
-        self
-    }
-
-    pub fn next_number(mut self, value: Option<i64>) -> Self {
-        self.next_number = Some(value);
-        self
-    }
-
-    pub fn number(mut self, value: i64) -> Self {
-        self.number = Some(value);
-        self
-    }
-
-    pub fn prev_number(mut self, value: Option<i64>) -> Self {
-        self.prev_number = Some(value);
-        self
-    }
-
-    pub fn size(mut self, value: i64) -> Self {
-        self.size = Some(value);
-        self
-    }
-
-    pub fn total(mut self, value: i64) -> Self {
-        self.total = Some(value);
-        self
-    }
-
-    pub fn type_(mut self, value: String) -> Self {
-        self.type_ = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -116,12 +36,6 @@ impl OrgGroupPaginationMetaPage {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for OrgGroupPaginationMetaPage {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -142,14 +56,7 @@ impl<'de> Deserialize<'de> for OrgGroupPaginationMetaPage {
             where
                 M: MapAccess<'a>,
             {
-                let mut first_number: Option<i64> = None;
-                let mut last_number: Option<Option<i64>> = None;
-                let mut next_number: Option<Option<i64>> = None;
-                let mut number: Option<i64> = None;
-                let mut prev_number: Option<Option<i64>> = None;
-                let mut size: Option<i64> = None;
-                let mut total: Option<i64> = None;
-                let mut type_: Option<String> = None;
+                let mut total_count: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -158,48 +65,9 @@ impl<'de> Deserialize<'de> for OrgGroupPaginationMetaPage {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "first_number" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            first_number =
+                        "total_count" => {
+                            total_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "last_number" => {
-                            last_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "next_number" => {
-                            next_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "number" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            number = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "prev_number" => {
-                            prev_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "size" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "total" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            total = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -208,16 +76,11 @@ impl<'de> Deserialize<'de> for OrgGroupPaginationMetaPage {
                         }
                     }
                 }
+                let total_count =
+                    total_count.ok_or_else(|| M::Error::missing_field("total_count"))?;
 
                 let content = OrgGroupPaginationMetaPage {
-                    first_number,
-                    last_number,
-                    next_number,
-                    number,
-                    prev_number,
-                    size,
-                    total,
-                    type_,
+                    total_count,
                     additional_properties,
                     _unparsed,
                 };
