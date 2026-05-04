@@ -60,6 +60,9 @@ pub struct AzureAccount {
     /// Configuration settings applied to resources from the specified Azure resource providers.
     #[serde(rename = "resource_provider_configs")]
     pub resource_provider_configs: Option<Vec<crate::datadogV1::model::ResourceProviderConfig>>,
+    /// When enabled, Datadog authenticates with this app registration using federated workload identity credentials instead of a client secret.
+    #[serde(rename = "secretless_auth_enabled")]
+    pub secretless_auth_enabled: Option<bool>,
     /// Your Azure Active Directory ID.
     #[serde(rename = "tenant_name")]
     pub tenant_name: Option<String>,
@@ -91,6 +94,7 @@ impl AzureAccount {
             new_tenant_name: None,
             resource_collection_enabled: None,
             resource_provider_configs: None,
+            secretless_auth_enabled: None,
             tenant_name: None,
             usage_metrics_enabled: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -176,6 +180,11 @@ impl AzureAccount {
         self
     }
 
+    pub fn secretless_auth_enabled(mut self, value: bool) -> Self {
+        self.secretless_auth_enabled = Some(value);
+        self
+    }
+
     pub fn tenant_name(mut self, value: String) -> Self {
         self.tenant_name = Some(value);
         self
@@ -235,6 +244,7 @@ impl<'de> Deserialize<'de> for AzureAccount {
                 let mut resource_provider_configs: Option<
                     Vec<crate::datadogV1::model::ResourceProviderConfig>,
                 > = None;
+                let mut secretless_auth_enabled: Option<bool> = None;
                 let mut tenant_name: Option<String> = None;
                 let mut usage_metrics_enabled: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -347,6 +357,13 @@ impl<'de> Deserialize<'de> for AzureAccount {
                             resource_provider_configs =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "secretless_auth_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            secretless_auth_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tenant_name" => {
                             if v.is_null() {
                                 continue;
@@ -385,6 +402,7 @@ impl<'de> Deserialize<'de> for AzureAccount {
                     new_tenant_name,
                     resource_collection_enabled,
                     resource_provider_configs,
+                    secretless_auth_enabled,
                     tenant_name,
                     usage_metrics_enabled,
                     additional_properties,
