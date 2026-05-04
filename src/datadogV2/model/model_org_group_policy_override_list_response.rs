@@ -14,7 +14,10 @@ pub struct OrgGroupPolicyOverrideListResponse {
     /// An array of org group policy overrides.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::OrgGroupPolicyOverrideData>,
-    /// Pagination metadata.
+    /// Pagination links for navigating between pages of an org group list response.
+    #[serde(rename = "links")]
+    pub links: Option<crate::datadogV2::model::OrgGroupPaginationLinks>,
+    /// Pagination metadata for org group list responses.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::OrgGroupPaginationMeta>,
     #[serde(flatten)]
@@ -30,10 +33,16 @@ impl OrgGroupPolicyOverrideListResponse {
     ) -> OrgGroupPolicyOverrideListResponse {
         OrgGroupPolicyOverrideListResponse {
             data,
+            links: None,
             meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn links(mut self, value: crate::datadogV2::model::OrgGroupPaginationLinks) -> Self {
+        self.links = Some(value);
+        self
     }
 
     pub fn meta(mut self, value: crate::datadogV2::model::OrgGroupPaginationMeta) -> Self {
@@ -69,6 +78,7 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyOverrideListResponse {
             {
                 let mut data: Option<Vec<crate::datadogV2::model::OrgGroupPolicyOverrideData>> =
                     None;
+                let mut links: Option<crate::datadogV2::model::OrgGroupPaginationLinks> = None;
                 let mut meta: Option<crate::datadogV2::model::OrgGroupPaginationMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -80,6 +90,12 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyOverrideListResponse {
                     match k.as_str() {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "links" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "meta" => {
                             if v.is_null() {
@@ -98,6 +114,7 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyOverrideListResponse {
 
                 let content = OrgGroupPolicyOverrideListResponse {
                     data,
+                    links,
                     meta,
                     additional_properties,
                     _unparsed,

@@ -6412,6 +6412,8 @@ pub mod model_org_group_type;
 pub use self::model_org_group_type::OrgGroupType;
 pub mod model_org_group_membership_type;
 pub use self::model_org_group_membership_type::OrgGroupMembershipType;
+pub mod model_org_group_pagination_links;
+pub use self::model_org_group_pagination_links::OrgGroupPaginationLinks;
 pub mod model_org_group_pagination_meta;
 pub use self::model_org_group_pagination_meta::OrgGroupPaginationMeta;
 pub mod model_org_group_pagination_meta_page;
