@@ -51,6 +51,9 @@ pub struct SunburstWidgetRequest {
     /// The log query.
     #[serde(rename = "security_query")]
     pub security_query: Option<crate::datadogV1::model::LogQueryDefinition>,
+    /// The controls for sorting the widget.
+    #[serde(rename = "sort")]
+    pub sort: Option<crate::datadogV1::model::WidgetSortBy>,
     /// Widget style definition.
     #[serde(rename = "style")]
     pub style: Option<crate::datadogV1::model::WidgetStyle>,
@@ -78,6 +81,7 @@ impl SunburstWidgetRequest {
             response_format: None,
             rum_query: None,
             security_query: None,
+            sort: None,
             style: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -172,6 +176,12 @@ impl SunburstWidgetRequest {
     }
 
     #[allow(deprecated)]
+    pub fn sort(mut self, value: crate::datadogV1::model::WidgetSortBy) -> Self {
+        self.sort = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn style(mut self, value: crate::datadogV1::model::WidgetStyle) -> Self {
         self.style = Some(value);
         self
@@ -228,6 +238,7 @@ impl<'de> Deserialize<'de> for SunburstWidgetRequest {
                 > = None;
                 let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut sort: Option<crate::datadogV1::model::WidgetSortBy> = None;
                 let mut style: Option<crate::datadogV1::model::WidgetStyle> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -330,6 +341,12 @@ impl<'de> Deserialize<'de> for SunburstWidgetRequest {
                             security_query =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "sort" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "style" => {
                             if v.is_null() {
                                 continue;
@@ -359,6 +376,7 @@ impl<'de> Deserialize<'de> for SunburstWidgetRequest {
                     response_format,
                     rum_query,
                     security_query,
+                    sort,
                     style,
                     additional_properties,
                     _unparsed,
