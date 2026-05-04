@@ -1,4 +1,4 @@
-// Create or update a sync configuration returns "OK" response
+// Enable Storage Management for a bucket returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_cloud_inventory_sync_configs::CloudInventorySyncConfigsAPI;
 use datadog_api_client::datadogV2::model::CloudInventoryCloudProviderId;

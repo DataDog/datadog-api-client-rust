@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for a cloud inventory sync configuration. Values beyond `id` may be omitted immediately after upsert.
+/// Attributes for a Storage Management configuration. Fields other than id may be empty in the response immediately after a create or update; subsequent reads return the full configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -50,7 +50,7 @@ pub struct CloudInventorySyncConfigAttributes {
     /// Service account email for bucket access.
     #[serde(rename = "gcp_service_account_email")]
     pub gcp_service_account_email: String,
-    /// Object key prefix or `/` when the entire bucket is synced.
+    /// Object key prefix where inventory reports are written. Returns / when reports are written at the bucket root.
     #[serde(rename = "prefix")]
     pub prefix: String,
     #[serde(flatten)]

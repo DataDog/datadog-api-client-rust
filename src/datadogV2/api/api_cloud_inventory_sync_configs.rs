@@ -20,7 +20,7 @@ pub enum UpsertSyncConfigError {
     UnknownValue(serde_json::Value),
 }
 
-/// Configure cloud inventory file synchronization from your cloud storage to Datadog.
+/// Enable Storage Management for S3 buckets, GCS buckets, and Azure containers. Each configuration registers the destination that holds inventory reports for the storage being monitored.
 #[derive(Debug, Clone)]
 pub struct CloudInventorySyncConfigsAPI {
     config: datadog::Configuration,
@@ -94,8 +94,7 @@ impl CloudInventorySyncConfigsAPI {
         Self { config, client }
     }
 
-    /// Create or update a cloud inventory sync configuration. Specify the cloud provider in `data.id`
-    /// and provider-specific settings under `data.attributes`. This endpoint uses an upsert model.
+    /// Enable Storage Management for an S3 bucket, GCS bucket, or Azure container by registering the destination that holds its inventory reports. Set data.id to the cloud provider (aws, gcp, or azure) and provide the matching settings under data.attributes. Calling this endpoint with the same provider replaces the existing configuration.
     pub async fn upsert_sync_config(
         &self,
         body: crate::datadogV2::model::UpsertCloudInventorySyncConfigRequest,
@@ -117,8 +116,7 @@ impl CloudInventorySyncConfigsAPI {
         }
     }
 
-    /// Create or update a cloud inventory sync configuration. Specify the cloud provider in `data.id`
-    /// and provider-specific settings under `data.attributes`. This endpoint uses an upsert model.
+    /// Enable Storage Management for an S3 bucket, GCS bucket, or Azure container by registering the destination that holds its inventory reports. Set data.id to the cloud provider (aws, gcp, or azure) and provide the matching settings under data.attributes. Calling this endpoint with the same provider replaces the existing configuration.
     pub async fn upsert_sync_config_with_http_info(
         &self,
         body: crate::datadogV2::model::UpsertCloudInventorySyncConfigRequest,
