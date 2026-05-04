@@ -10,6 +10,8 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum RoutingRuleAction {
     SendSlackMessageAction(Box<crate::datadogV2::model::SendSlackMessageAction>),
     SendTeamsMessageAction(Box<crate::datadogV2::model::SendTeamsMessageAction>),
+    TriggerWorkflowAutomationAction(Box<crate::datadogV2::model::TriggerWorkflowAutomationAction>),
+    WebhookAction(Box<crate::datadogV2::model::WebhookAction>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -31,6 +33,21 @@ impl<'de> Deserialize<'de> for RoutingRuleAction {
         ) {
             if !_v._unparsed {
                 return Ok(RoutingRuleAction::SendTeamsMessageAction(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::TriggerWorkflowAutomationAction>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(RoutingRuleAction::TriggerWorkflowAutomationAction(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::WebhookAction>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(RoutingRuleAction::WebhookAction(_v));
             }
         }
 
