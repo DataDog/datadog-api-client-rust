@@ -24,6 +24,12 @@ pub struct TreeMapWidgetRequest {
     /// Timeseries, scalar, or event list response. Event list response formats are supported by Geomap widgets.
     #[serde(rename = "response_format")]
     pub response_format: Option<crate::datadogV1::model::FormulaAndFunctionResponseFormat>,
+    /// The controls for sorting the widget.
+    #[serde(rename = "sort")]
+    pub sort: Option<crate::datadogV1::model::WidgetSortBy>,
+    /// Define request widget style.
+    #[serde(rename = "style")]
+    pub style: Option<crate::datadogV1::model::WidgetRequestStyle>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -39,6 +45,8 @@ impl TreeMapWidgetRequest {
             q: None,
             queries: None,
             response_format: None,
+            sort: None,
+            style: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -71,6 +79,18 @@ impl TreeMapWidgetRequest {
         value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
     ) -> Self {
         self.response_format = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn sort(mut self, value: crate::datadogV1::model::WidgetSortBy) -> Self {
+        self.sort = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn style(mut self, value: crate::datadogV1::model::WidgetRequestStyle) -> Self {
+        self.style = Some(value);
         self
     }
 
@@ -114,6 +134,8 @@ impl<'de> Deserialize<'de> for TreeMapWidgetRequest {
                 let mut response_format: Option<
                     crate::datadogV1::model::FormulaAndFunctionResponseFormat,
                 > = None;
+                let mut sort: Option<crate::datadogV1::model::WidgetSortBy> = None;
+                let mut style: Option<crate::datadogV1::model::WidgetRequestStyle> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -155,6 +177,18 @@ impl<'de> Deserialize<'de> for TreeMapWidgetRequest {
                                 }
                             }
                         }
+                        "sort" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "style" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            style = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -169,6 +203,8 @@ impl<'de> Deserialize<'de> for TreeMapWidgetRequest {
                     q,
                     queries,
                     response_format,
+                    sort,
+                    style,
                     additional_properties,
                     _unparsed,
                 };
