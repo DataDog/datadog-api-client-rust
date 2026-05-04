@@ -24,6 +24,7 @@ async fn main() {
         .resource_provider_configs(vec![ResourceProviderConfig::new()
             .metrics_enabled(true)
             .namespace("Microsoft.Compute".to_string())])
+        .secretless_auth_enabled(true)
         .tenant_name("testc44-1234-5678-9101-cc00736ftest".to_string())
         .usage_metrics_enabled(true);
     let configuration = datadog::Configuration::new();
