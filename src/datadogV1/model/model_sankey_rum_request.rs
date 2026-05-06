@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Sankey widget with RUM data source.
+/// Sankey widget request for Product Analytics or RUM data source.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SankeyRumRequest {
-    /// Sankey widget with RUM data source query.
+    /// Query configuration for Product Analytics or RUM Sankey widget.
     #[serde(rename = "query")]
     pub query: crate::datadogV1::model::SankeyRumQuery,
     /// Type of the Sankey widget.
