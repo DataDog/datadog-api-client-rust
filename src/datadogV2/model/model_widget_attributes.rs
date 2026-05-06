@@ -17,7 +17,11 @@ pub struct WidgetAttributes {
     /// The definition of a widget, including its type and configuration.
     #[serde(rename = "definition")]
     pub definition: crate::datadogV2::model::WidgetDefinition,
-    /// Will be implemented soon. Currently always returns false.
+    /// Whether the current user has favorited this widget. Populated on get,
+    /// batch_get, update, and search responses; create responses always return
+    /// `false` because a widget can only be favorited after it exists.
+    /// Favoriting itself is performed through the shared favorites API, not
+    /// this service.
     #[serde(rename = "is_favorited")]
     pub is_favorited: bool,
     /// ISO 8601 timestamp of when the widget was last modified.
