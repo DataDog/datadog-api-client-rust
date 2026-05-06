@@ -1,6 +1,6 @@
-// Create or update a sync configuration returns "OK" response
+// Enable Storage Management for a bucket returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_cloud_inventory_sync_configs::CloudInventorySyncConfigsAPI;
+use datadog_api_client::datadogV2::api_storage_management::StorageManagementAPI;
 use datadog_api_client::datadogV2::model::CloudInventoryCloudProviderId;
 use datadog_api_client::datadogV2::model::CloudInventoryCloudProviderRequestType;
 use datadog_api_client::datadogV2::model::CloudInventorySyncConfigAWSRequestAttributes;
@@ -40,9 +40,8 @@ async fn main() {
             CloudInventoryCloudProviderId::AWS,
             CloudInventoryCloudProviderRequestType::CLOUD_PROVIDER,
         ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpsertSyncConfig", true);
-    let api = CloudInventorySyncConfigsAPI::with_config(configuration);
+    let configuration = datadog::Configuration::new();
+    let api = StorageManagementAPI::with_config(configuration);
     let resp = api.upsert_sync_config(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

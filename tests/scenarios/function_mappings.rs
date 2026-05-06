@@ -81,8 +81,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_cloud_authentication::CloudAuthenticationAPI>,
     pub v2_api_security_monitoring:
         Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
-    pub v2_api_cloud_inventory_sync_configs:
-        Option<datadogV2::api_cloud_inventory_sync_configs::CloudInventorySyncConfigsAPI>,
+    pub v2_api_storage_management: Option<datadogV2::api_storage_management::StorageManagementAPI>,
     pub v2_api_code_coverage: Option<datadogV2::api_code_coverage::CodeCoverageAPI>,
     pub v2_api_container_images: Option<datadogV2::api_container_images::ContainerImagesAPI>,
     pub v2_api_containers: Option<datadogV2::api_containers::ContainersAPI>,
@@ -689,11 +688,13 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "CloudInventorySyncConfigs" => {
-            world.api_instances.v2_api_cloud_inventory_sync_configs = Some(datadogV2::api_cloud_inventory_sync_configs::CloudInventorySyncConfigsAPI::with_client_and_config(
-                world.config.clone(),
-                world.http_client.as_ref().unwrap().clone()
-            ));
+        "StorageManagement" => {
+            world.api_instances.v2_api_storage_management = Some(
+                datadogV2::api_storage_management::StorageManagementAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "CodeCoverage" => {
             world.api_instances.v2_api_code_coverage = Some(
@@ -24164,7 +24165,7 @@ fn test_v2_get_secrets_rules(world: &mut DatadogWorld, _parameters: &HashMap<Str
 fn test_v2_upsert_sync_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_cloud_inventory_sync_configs
+        .v2_api_storage_management
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
