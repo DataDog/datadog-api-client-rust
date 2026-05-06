@@ -19,7 +19,7 @@ async fn main() {
                         .description("Rating of the response quality.".to_string())
                         .has_assessment(false)
                         .has_reasoning(false)
-                        .id("ab12cd34".to_string())
+                        .id("abc-123".to_string())
                         .is_assessment(false)
                         .is_integer(false)
                         .is_required(true)

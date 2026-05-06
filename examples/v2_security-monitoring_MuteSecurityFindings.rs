@@ -29,7 +29,7 @@ async fn main() {
             ])),
             MuteDataType::MUTE,
         )
-        .id("93bfeb70-af47-424d-908a-948d3f08e37f".to_string()),
+        .id("00000000-0000-0000-0000-000000000001".to_string()),
     );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.MuteSecurityFindings", true);

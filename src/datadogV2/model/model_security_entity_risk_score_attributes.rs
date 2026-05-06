@@ -43,10 +43,10 @@ pub struct SecurityEntityRiskScoreAttributes {
     pub last_detected: i64,
     /// Current risk score for the entity
     #[serde(rename = "riskScore")]
-    pub risk_score: f64,
+    pub risk_score: i64,
     /// Change in risk score compared to previous period
     #[serde(rename = "riskScoreEvolution")]
-    pub risk_score_evolution: f64,
+    pub risk_score_evolution: i64,
     /// Severity level based on risk score
     #[serde(rename = "severity")]
     pub severity: crate::datadogV2::model::SecurityEntityRiskScoreAttributesSeverity,
@@ -70,8 +70,8 @@ impl SecurityEntityRiskScoreAttributes {
         first_detected: i64,
         last_activity_title: String,
         last_detected: i64,
-        risk_score: f64,
-        risk_score_evolution: f64,
+        risk_score: i64,
+        risk_score_evolution: i64,
         severity: crate::datadogV2::model::SecurityEntityRiskScoreAttributesSeverity,
         signals_detected: i64,
     ) -> SecurityEntityRiskScoreAttributes {
@@ -143,8 +143,8 @@ impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributes {
                 let mut first_detected: Option<i64> = None;
                 let mut last_activity_title: Option<String> = None;
                 let mut last_detected: Option<i64> = None;
-                let mut risk_score: Option<f64> = None;
-                let mut risk_score_evolution: Option<f64> = None;
+                let mut risk_score: Option<i64> = None;
+                let mut risk_score_evolution: Option<i64> = None;
                 let mut severity: Option<
                     crate::datadogV2::model::SecurityEntityRiskScoreAttributesSeverity,
                 > = None;
