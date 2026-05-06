@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LogsArchiveCreateRequestAttributes {
+    /// The type of compression for the archive.
+    #[serde(rename = "compression_method")]
+    pub compression_method: Option<crate::datadogV2::model::LogsArchiveAttributesCompressionMethod>,
     /// An archive's destination.
     #[serde(rename = "destination")]
     pub destination: crate::datadogV2::model::LogsArchiveCreateRequestDestination,
@@ -48,6 +51,7 @@ impl LogsArchiveCreateRequestAttributes {
         query: String,
     ) -> LogsArchiveCreateRequestAttributes {
         LogsArchiveCreateRequestAttributes {
+            compression_method: None,
             destination,
             include_tags: None,
             name,
@@ -57,6 +61,14 @@ impl LogsArchiveCreateRequestAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn compression_method(
+        mut self,
+        value: crate::datadogV2::model::LogsArchiveAttributesCompressionMethod,
+    ) -> Self {
+        self.compression_method = Some(value);
+        self
     }
 
     pub fn include_tags(mut self, value: bool) -> Self {
@@ -100,6 +112,9 @@ impl<'de> Deserialize<'de> for LogsArchiveCreateRequestAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut compression_method: Option<
+                    crate::datadogV2::model::LogsArchiveAttributesCompressionMethod,
+                > = None;
                 let mut destination: Option<
                     crate::datadogV2::model::LogsArchiveCreateRequestDestination,
                 > = None;
@@ -116,6 +131,21 @@ impl<'de> Deserialize<'de> for LogsArchiveCreateRequestAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "compression_method" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            compression_method =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _compression_method) = compression_method {
+                                match _compression_method {
+                                    crate::datadogV2::model::LogsArchiveAttributesCompressionMethod::UnparsedObject(_compression_method) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "destination" => {
                             destination =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -165,6 +195,7 @@ impl<'de> Deserialize<'de> for LogsArchiveCreateRequestAttributes {
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 
                 let content = LogsArchiveCreateRequestAttributes {
+                    compression_method,
                     destination,
                     include_tags,
                     name,
