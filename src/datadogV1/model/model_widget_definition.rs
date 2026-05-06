@@ -13,6 +13,7 @@ pub enum WidgetDefinition {
     BarChartWidgetDefinition(Box<crate::datadogV1::model::BarChartWidgetDefinition>),
     ChangeWidgetDefinition(Box<crate::datadogV1::model::ChangeWidgetDefinition>),
     CheckStatusWidgetDefinition(Box<crate::datadogV1::model::CheckStatusWidgetDefinition>),
+    CloudcraftWidgetDefinition(Box<crate::datadogV1::model::CloudcraftWidgetDefinition>),
     CohortWidgetDefinition(Box<crate::datadogV1::model::CohortWidgetDefinition>),
     DistributionWidgetDefinition(Box<crate::datadogV1::model::DistributionWidgetDefinition>),
     EventStreamWidgetDefinition(Box<crate::datadogV1::model::EventStreamWidgetDefinition>),
@@ -96,6 +97,14 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         {
             if !_v._unparsed {
                 return Ok(WidgetDefinition::CheckStatusWidgetDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::CloudcraftWidgetDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(WidgetDefinition::CloudcraftWidgetDefinition(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::CohortWidgetDefinition>>(
