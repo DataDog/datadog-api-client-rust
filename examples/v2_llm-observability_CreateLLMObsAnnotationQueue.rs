@@ -14,7 +14,7 @@ async fn main() {
     let body = LLMObsAnnotationQueueRequest::new(LLMObsAnnotationQueueDataRequest::new(
         LLMObsAnnotationQueueDataAttributesRequest::new(
             "My annotation queue".to_string(),
-            "a33671aa-24fd-4dcd-9b33-a8ec7dde7751".to_string(),
+            "00000000-0000-0000-0000-000000000002".to_string(),
         )
         .annotation_schema(LLMObsAnnotationSchema::new(vec![LLMObsLabelSchema::new(
             "quality".to_string(),
@@ -23,7 +23,7 @@ async fn main() {
         .description("Rating of the response quality.".to_string())
         .has_assessment(false)
         .has_reasoning(false)
-        .id("ab12cd34".to_string())
+        .id("abc-123".to_string())
         .is_assessment(false)
         .is_integer(false)
         .is_required(true)
