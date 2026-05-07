@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Sankey widget with RUM data source query.
+/// Query configuration for Product Analytics or RUM Sankey widget.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +14,7 @@ pub struct SankeyRumQuery {
     /// Product Analytics/RUM audience filters.
     #[serde(rename = "audience_filters")]
     pub audience_filters: Option<crate::datadogV1::model::ProductAnalyticsAudienceFilters>,
-    /// Sankey widget with RUM data source.
+    /// Product Analytics or RUM data source type.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV1::model::SankeyRumDataSource,
     /// Entries per step.
@@ -23,7 +23,7 @@ pub struct SankeyRumQuery {
     /// Join keys.
     #[serde(rename = "join_keys")]
     pub join_keys: Option<crate::datadogV1::model::SankeyJoinKeys>,
-    /// Sankey mode for RUM queries.
+    /// Sankey mode for Product Analytics or RUM queries.
     #[serde(rename = "mode")]
     pub mode: crate::datadogV1::model::SankeyRumQueryMode,
     /// Number of steps.
