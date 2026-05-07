@@ -689,7 +689,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Add one or more interactions (traces) to an annotation queue.
+    /// Add one or more interactions (traces or sessions) to an annotation queue.
     /// At least one interaction must be provided.
     pub async fn create_llm_obs_annotation_queue_interactions(
         &self,
@@ -716,7 +716,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Add one or more interactions (traces) to an annotation queue.
+    /// Add one or more interactions (traces or sessions) to an annotation queue.
     /// At least one interaction must be provided.
     pub async fn create_llm_obs_annotation_queue_interactions_with_http_info(
         &self,
@@ -2616,7 +2616,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Retrieve all interactions and their annotations for a given annotation queue.
+    /// Retrieve all interactions (traces and sessions) and their annotations for a given annotation queue.
     pub async fn get_llm_obs_annotated_interactions(
         &self,
         queue_id: String,
@@ -2641,7 +2641,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Retrieve all interactions and their annotations for a given annotation queue.
+    /// Retrieve all interactions (traces and sessions) and their annotations for a given annotation queue.
     pub async fn get_llm_obs_annotated_interactions_with_http_info(
         &self,
         queue_id: String,
