@@ -42,6 +42,7 @@ pub use self::api::api_deployment_gates;
 pub use self::api::api_domain_allowlist;
 pub use self::api::api_dora_metrics;
 pub use self::api::api_downtimes;
+pub use self::api::api_email_transport;
 pub use self::api::api_entity_risk_scores;
 pub use self::api::api_error_tracking;
 pub use self::api::api_events;
