@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing the upserted sync configuration. Additional read-only fields appear on list and get.
+/// Storage Management configuration returned after a create or update. Additional read-only fields appear on list and get responses.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudInventorySyncConfigResponse {
-    /// JSON:API data object for a sync configuration.
+    /// Storage Management configuration data.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CloudInventorySyncConfigResponseData,
     #[serde(flatten)]

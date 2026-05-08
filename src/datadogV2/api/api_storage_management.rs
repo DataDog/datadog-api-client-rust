@@ -6,12 +6,11 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// UpsertSyncConfigError is a struct for typed errors of method [`CloudInventorySyncConfigsAPI::upsert_sync_config`]
+/// UpsertSyncConfigError is a struct for typed errors of method [`StorageManagementAPI::upsert_sync_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpsertSyncConfigError {
@@ -20,20 +19,20 @@ pub enum UpsertSyncConfigError {
     UnknownValue(serde_json::Value),
 }
 
-/// Configure cloud inventory file synchronization from your cloud storage to Datadog.
+/// Enable Storage Management for S3 buckets, GCS buckets, and Azure containers. Each configuration registers the destination that holds inventory reports for the storage being monitored.
 #[derive(Debug, Clone)]
-pub struct CloudInventorySyncConfigsAPI {
+pub struct StorageManagementAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for CloudInventorySyncConfigsAPI {
+impl Default for StorageManagementAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl CloudInventorySyncConfigsAPI {
+impl StorageManagementAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -94,8 +93,7 @@ impl CloudInventorySyncConfigsAPI {
         Self { config, client }
     }
 
-    /// Create or update a cloud inventory sync configuration. Specify the cloud provider in `data.id`
-    /// and provider-specific settings under `data.attributes`. This endpoint uses an upsert model.
+    /// Enable Storage Management for an S3 bucket, GCS bucket, or Azure container by registering the destination that holds its inventory reports. Set `data.id` to the cloud provider (`aws`, `gcp`, or `azure`) and provide the matching settings under data.attributes. Calling this endpoint with the same provider replaces the existing configuration.
     pub async fn upsert_sync_config(
         &self,
         body: crate::datadogV2::model::UpsertCloudInventorySyncConfigRequest,
@@ -117,8 +115,7 @@ impl CloudInventorySyncConfigsAPI {
         }
     }
 
-    /// Create or update a cloud inventory sync configuration. Specify the cloud provider in `data.id`
-    /// and provider-specific settings under `data.attributes`. This endpoint uses an upsert model.
+    /// Enable Storage Management for an S3 bucket, GCS bucket, or Azure container by registering the destination that holds its inventory reports. Set `data.id` to the cloud provider (`aws`, `gcp`, or `azure`) and provide the matching settings under data.attributes. Calling this endpoint with the same provider replaces the existing configuration.
     pub async fn upsert_sync_config_with_http_info(
         &self,
         body: crate::datadogV2::model::UpsertCloudInventorySyncConfigRequest,
@@ -128,14 +125,6 @@ impl CloudInventorySyncConfigsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.upsert_sync_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.upsert_sync_config' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
