@@ -428,11 +428,6 @@ impl Default for Configuration {
             ("v2.add_member_team".to_owned(), false),
             ("v2.list_member_teams".to_owned(), false),
             ("v2.remove_member_team".to_owned(), false),
-            ("v2.create_incident_team".to_owned(), false),
-            ("v2.delete_incident_team".to_owned(), false),
-            ("v2.get_incident_team".to_owned(), false),
-            ("v2.list_incident_teams".to_owned(), false),
-            ("v2.update_incident_team".to_owned(), false),
         ]);
         let mut auth_keys: HashMap<String, APIKey> = HashMap::new();
         auth_keys.insert(
