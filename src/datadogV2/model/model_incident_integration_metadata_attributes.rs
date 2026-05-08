@@ -18,6 +18,7 @@ pub struct IncidentIntegrationMetadataAttributes {
     #[serde(rename = "incident_id")]
     pub incident_id: Option<String>,
     /// A number indicating the type of integration this metadata is for. 1 indicates Slack;
+    /// 7 indicates Microsoft Teams;
     /// 8 indicates Jira.
     #[serde(rename = "integration_type")]
     pub integration_type: i32,
