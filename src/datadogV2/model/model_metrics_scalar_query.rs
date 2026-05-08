@@ -14,6 +14,9 @@ pub struct MetricsScalarQuery {
     /// The type of aggregation that can be performed on metrics-based queries.
     #[serde(rename = "aggregator")]
     pub aggregator: crate::datadogV2::model::MetricsAggregator,
+    /// Organization UUIDs to query when using [cross-organization visibility](/account_management/org_settings/cross_org_visibility/). Limited to one organization UUID.
+    #[serde(rename = "cross_org_uuids")]
+    pub cross_org_uuids: Option<Vec<String>>,
     /// A data source that is powered by the Metrics platform.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV2::model::MetricsDataSource,
@@ -38,12 +41,18 @@ impl MetricsScalarQuery {
     ) -> MetricsScalarQuery {
         MetricsScalarQuery {
             aggregator,
+            cross_org_uuids: None,
             data_source,
             name: None,
             query,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
+        self.cross_org_uuids = Some(value);
+        self
     }
 
     pub fn name(mut self, value: String) -> Self {
@@ -78,6 +87,7 @@ impl<'de> Deserialize<'de> for MetricsScalarQuery {
                 M: MapAccess<'a>,
             {
                 let mut aggregator: Option<crate::datadogV2::model::MetricsAggregator> = None;
+                let mut cross_org_uuids: Option<Vec<String>> = None;
                 let mut data_source: Option<crate::datadogV2::model::MetricsDataSource> = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
@@ -101,6 +111,13 @@ impl<'de> Deserialize<'de> for MetricsScalarQuery {
                                     _ => {}
                                 }
                             }
+                        }
+                        "cross_org_uuids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cross_org_uuids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "data_source" => {
                             data_source =
@@ -139,6 +156,7 @@ impl<'de> Deserialize<'de> for MetricsScalarQuery {
 
                 let content = MetricsScalarQuery {
                     aggregator,
+                    cross_org_uuids,
                     data_source,
                     name,
                     query,
