@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ApmDependencyStatsQuery {
+    /// Organization UUIDs to query when using [cross-organization visibility](/account_management/org_settings/cross_org_visibility/). Limited to one organization UUID.
+    #[serde(rename = "cross_org_uuids")]
+    pub cross_org_uuids: Option<Vec<String>>,
     /// A data source for APM dependency statistics queries.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV2::model::ApmDependencyStatsDataSource,
@@ -59,6 +62,7 @@ impl ApmDependencyStatsQuery {
         stat: crate::datadogV2::model::ApmDependencyStatName,
     ) -> ApmDependencyStatsQuery {
         ApmDependencyStatsQuery {
+            cross_org_uuids: None,
             data_source,
             env,
             is_upstream: None,
@@ -72,6 +76,11 @@ impl ApmDependencyStatsQuery {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
+        self.cross_org_uuids = Some(value);
+        self
     }
 
     pub fn is_upstream(mut self, value: bool) -> Self {
@@ -115,6 +124,7 @@ impl<'de> Deserialize<'de> for ApmDependencyStatsQuery {
             where
                 M: MapAccess<'a>,
             {
+                let mut cross_org_uuids: Option<Vec<String>> = None;
                 let mut data_source: Option<crate::datadogV2::model::ApmDependencyStatsDataSource> =
                     None;
                 let mut env: Option<String> = None;
@@ -134,6 +144,13 @@ impl<'de> Deserialize<'de> for ApmDependencyStatsQuery {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "cross_org_uuids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cross_org_uuids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "data_source" => {
                             data_source =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -214,6 +231,7 @@ impl<'de> Deserialize<'de> for ApmDependencyStatsQuery {
                 let stat = stat.ok_or_else(|| M::Error::missing_field("stat"))?;
 
                 let content = ApmDependencyStatsQuery {
+                    cross_org_uuids,
                     data_source,
                     env,
                     is_upstream,

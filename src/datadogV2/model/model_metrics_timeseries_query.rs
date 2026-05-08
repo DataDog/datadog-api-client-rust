@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricsTimeseriesQuery {
+    /// Organization UUIDs to query when using [cross-organization visibility](/account_management/org_settings/cross_org_visibility/). Limited to one organization UUID.
+    #[serde(rename = "cross_org_uuids")]
+    pub cross_org_uuids: Option<Vec<String>>,
     /// A data source that is powered by the Metrics platform.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV2::model::MetricsDataSource,
@@ -33,12 +36,18 @@ impl MetricsTimeseriesQuery {
         query: String,
     ) -> MetricsTimeseriesQuery {
         MetricsTimeseriesQuery {
+            cross_org_uuids: None,
             data_source,
             name: None,
             query,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
+        self.cross_org_uuids = Some(value);
+        self
     }
 
     pub fn name(mut self, value: String) -> Self {
@@ -72,6 +81,7 @@ impl<'de> Deserialize<'de> for MetricsTimeseriesQuery {
             where
                 M: MapAccess<'a>,
             {
+                let mut cross_org_uuids: Option<Vec<String>> = None;
                 let mut data_source: Option<crate::datadogV2::model::MetricsDataSource> = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
@@ -83,6 +93,13 @@ impl<'de> Deserialize<'de> for MetricsTimeseriesQuery {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "cross_org_uuids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cross_org_uuids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "data_source" => {
                             data_source =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -118,6 +135,7 @@ impl<'de> Deserialize<'de> for MetricsTimeseriesQuery {
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 
                 let content = MetricsTimeseriesQuery {
+                    cross_org_uuids,
                     data_source,
                     name,
                     query,

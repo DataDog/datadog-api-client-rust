@@ -14,6 +14,9 @@ pub struct EventsScalarQuery {
     /// The instructions for what to compute for this query.
     #[serde(rename = "compute")]
     pub compute: crate::datadogV2::model::EventsCompute,
+    /// Organization UUIDs to query when using [cross-organization visibility](/account_management/org_settings/cross_org_visibility/). Limited to one organization UUID.
+    #[serde(rename = "cross_org_uuids")]
+    pub cross_org_uuids: Option<Vec<String>>,
     /// A data source that is powered by the Events Platform.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV2::model::EventsDataSource,
@@ -43,6 +46,7 @@ impl EventsScalarQuery {
     ) -> EventsScalarQuery {
         EventsScalarQuery {
             compute,
+            cross_org_uuids: None,
             data_source,
             group_by: None,
             indexes: None,
@@ -51,6 +55,11 @@ impl EventsScalarQuery {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
+        self.cross_org_uuids = Some(value);
+        self
     }
 
     pub fn group_by(mut self, value: Vec<crate::datadogV2::model::EventsGroupBy>) -> Self {
@@ -100,6 +109,7 @@ impl<'de> Deserialize<'de> for EventsScalarQuery {
                 M: MapAccess<'a>,
             {
                 let mut compute: Option<crate::datadogV2::model::EventsCompute> = None;
+                let mut cross_org_uuids: Option<Vec<String>> = None;
                 let mut data_source: Option<crate::datadogV2::model::EventsDataSource> = None;
                 let mut group_by: Option<Vec<crate::datadogV2::model::EventsGroupBy>> = None;
                 let mut indexes: Option<Vec<String>> = None;
@@ -115,6 +125,13 @@ impl<'de> Deserialize<'de> for EventsScalarQuery {
                     match k.as_str() {
                         "compute" => {
                             compute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "cross_org_uuids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cross_org_uuids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "data_source" => {
                             data_source =
@@ -167,6 +184,7 @@ impl<'de> Deserialize<'de> for EventsScalarQuery {
 
                 let content = EventsScalarQuery {
                     compute,
+                    cross_org_uuids,
                     data_source,
                     group_by,
                     indexes,
