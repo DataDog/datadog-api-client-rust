@@ -256,6 +256,8 @@ impl Default for Configuration {
             ("v2.delete_dashboard_secure_embed".to_owned(), false),
             ("v2.get_dashboard_secure_embed".to_owned(), false),
             ("v2.update_dashboard_secure_embed".to_owned(), false),
+            ("v2.list_dataset_restrictions".to_owned(), false),
+            ("v2.update_dataset_restriction".to_owned(), false),
             ("v2.create_dataset".to_owned(), false),
             ("v2.delete_dataset".to_owned(), false),
             ("v2.get_all_datasets".to_owned(), false),

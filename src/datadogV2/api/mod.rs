@@ -35,6 +35,7 @@ pub mod api_csm_threats;
 pub mod api_dashboard_lists;
 pub mod api_dashboard_secure_embed;
 pub mod api_data_deletion;
+pub mod api_dataset_restrictions;
 pub mod api_datasets;
 pub mod api_deployment_gates;
 pub mod api_domain_allowlist;

@@ -94,6 +94,8 @@ pub struct ApiInstances {
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
     pub v2_api_dashboard_secure_embed:
         Option<datadogV2::api_dashboard_secure_embed::DashboardSecureEmbedAPI>,
+    pub v2_api_dataset_restrictions:
+        Option<datadogV2::api_dataset_restrictions::DatasetRestrictionsAPI>,
     pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
     pub v2_api_data_deletion: Option<datadogV2::api_data_deletion::DataDeletionAPI>,
     pub v2_api_deployment_gates: Option<datadogV2::api_deployment_gates::DeploymentGatesAPI>,
@@ -746,6 +748,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "DatasetRestrictions" => {
+            world.api_instances.v2_api_dataset_restrictions = Some(
+                datadogV2::api_dataset_restrictions::DatasetRestrictionsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "Datasets" => {
             world.api_instances.v2_api_datasets = Some(
@@ -3561,6 +3571,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateDashboardSecureEmbed".into(),
         test_v2_update_dashboard_secure_embed,
+    );
+    world.function_mappings.insert(
+        "v2.ListDatasetRestrictions".into(),
+        test_v2_list_dataset_restrictions,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateDatasetRestriction".into(),
+        test_v2_update_dataset_restriction,
     );
     world
         .function_mappings
@@ -26456,6 +26474,64 @@ fn test_v2_update_dashboard_secure_embed(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_dataset_restrictions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_dataset_restrictions
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_dataset_restrictions_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_dataset_restriction(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_dataset_restrictions
+        .as_ref()
+        .expect("api instance not found");
+    let product_type =
+        serde_json::from_value(_parameters.get("product_type").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_dataset_restriction_with_http_info(product_type, body))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

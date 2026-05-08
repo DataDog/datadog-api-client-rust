@@ -36,6 +36,7 @@ pub use self::api::api_csm_threats;
 pub use self::api::api_dashboard_lists;
 pub use self::api::api_dashboard_secure_embed;
 pub use self::api::api_data_deletion;
+pub use self::api::api_dataset_restrictions;
 pub use self::api::api_datasets;
 pub use self::api::api_deployment_gates;
 pub use self::api::api_domain_allowlist;
