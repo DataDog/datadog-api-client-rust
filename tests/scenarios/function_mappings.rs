@@ -159,8 +159,11 @@ pub struct ApiInstances {
     pub v2_api_application_security:
         Option<datadogV2::api_application_security::ApplicationSecurityAPI>,
     pub v2_api_csm_threats: Option<datadogV2::api_csm_threats::CSMThreatsAPI>,
+    pub v2_api_rum_replay_analysis:
+        Option<datadogV2::api_rum_replay_analysis::RumReplayAnalysisAPI>,
     pub v2_api_rum_replay_heatmaps:
         Option<datadogV2::api_rum_replay_heatmaps::RumReplayHeatmapsAPI>,
+    pub v2_api_rum_replay: Option<datadogV2::api_rum_replay::RumReplayAPI>,
     pub v2_api_restriction_policies:
         Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
     pub v2_api_rum: Option<datadogV2::api_rum::RUMAPI>,
@@ -1050,9 +1053,25 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
+        "RumReplayAnalysis" => {
+            world.api_instances.v2_api_rum_replay_analysis = Some(
+                datadogV2::api_rum_replay_analysis::RumReplayAnalysisAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
         "RumReplayHeatmaps" => {
             world.api_instances.v2_api_rum_replay_heatmaps = Some(
                 datadogV2::api_rum_replay_heatmaps::RumReplayHeatmapsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "RumReplay" => {
+            world.api_instances.v2_api_rum_replay = Some(
+                datadogV2::api_rum_replay::RumReplayAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -5194,6 +5213,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_cloud_workload_security_agent_rule,
     );
     world.function_mappings.insert(
+        "v2.ListReplayAnalysisIssues".into(),
+        test_v2_list_replay_analysis_issues,
+    );
+    world.function_mappings.insert(
+        "v2.GetReplayAnalysisIssue".into(),
+        test_v2_get_replay_analysis_issue,
+    );
+    world.function_mappings.insert(
+        "v2.ListReplayAnalysisIssueSessions".into(),
+        test_v2_list_replay_analysis_issue_sessions,
+    );
+    world.function_mappings.insert(
         "v2.ListReplayHeatmapSnapshots".into(),
         test_v2_list_replay_heatmap_snapshots,
     );
@@ -5208,6 +5239,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateReplayHeatmapSnapshot".into(),
         test_v2_update_replay_heatmap_snapshot,
+    );
+    world.function_mappings.insert(
+        "v2.GenerateReplaySummary".into(),
+        test_v2_generate_replay_summary,
     );
     world.function_mappings.insert(
         "v2.DeleteRestrictionPolicy".into(),
@@ -39938,6 +39973,135 @@ fn test_v2_update_cloud_workload_security_agent_rule(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_replay_analysis_issues(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_replay_analysis
+        .as_ref()
+        .expect("api instance not found");
+    let filter_application_id = _parameters
+        .get("filter[application_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_severity = _parameters
+        .get("filter[severity]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_view_name = _parameters
+        .get("filter[view_name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_issue_category = _parameters
+        .get("filter[issue_category]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_rum_replay_analysis::ListReplayAnalysisIssuesOptionalParams::default();
+    params.filter_application_id = filter_application_id;
+    params.filter_severity = filter_severity;
+    params.filter_view_name = filter_view_name;
+    params.filter_issue_category = filter_issue_category;
+    params.sort = sort;
+    params.page_number = page_number;
+    params.page_size = page_size;
+    let response = match block_on(api.list_replay_analysis_issues_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_replay_analysis_issue(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_replay_analysis
+        .as_ref()
+        .expect("api instance not found");
+    let issue_id = serde_json::from_value(_parameters.get("issue_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_replay_analysis_issue_with_http_info(issue_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_replay_analysis_issue_sessions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_replay_analysis
+        .as_ref()
+        .expect("api instance not found");
+    let issue_id = serde_json::from_value(_parameters.get("issue_id").unwrap().clone()).unwrap();
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_rum_replay_analysis::ListReplayAnalysisIssueSessionsOptionalParams::default(
+        );
+    params.sort = sort;
+    params.page_number = page_number;
+    params.page_size = page_size;
+    let response =
+        match block_on(api.list_replay_analysis_issue_sessions_with_http_info(issue_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_replay_heatmap_snapshots(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -40067,6 +40231,45 @@ fn test_v2_update_replay_heatmap_snapshot(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_generate_replay_summary(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_replay
+        .as_ref()
+        .expect("api instance not found");
+    let session_id =
+        serde_json::from_value(_parameters.get("session_id").unwrap().clone()).unwrap();
+    let data_source =
+        serde_json::from_value(_parameters.get("data_source").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let ts = _parameters
+        .get("ts")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_rum_replay::GenerateReplaySummaryOptionalParams::default();
+    params.ts = ts;
+    let response = match block_on(api.generate_replay_summary_with_http_info(
+        session_id,
+        data_source,
+        body,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

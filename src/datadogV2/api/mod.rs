@@ -86,6 +86,8 @@ pub mod api_roles;
 pub mod api_rum;
 pub mod api_rum_audience_management;
 pub mod api_rum_metrics;
+pub mod api_rum_replay;
+pub mod api_rum_replay_analysis;
 pub mod api_rum_replay_heatmaps;
 pub mod api_rum_replay_playlists;
 pub mod api_rum_replay_sessions;
