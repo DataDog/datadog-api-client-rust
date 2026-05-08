@@ -26,6 +26,9 @@ pub struct IssuesSearchRequestDataAttributes {
     /// Search query following the event search syntax.
     #[serde(rename = "query")]
     pub query: String,
+    /// Filter issues by state. Multiple values are combined with OR logic.
+    #[serde(rename = "states")]
+    pub states: Option<Vec<crate::datadogV2::model::IssueState>>,
     /// Filter issues by team IDs. Multiple values are combined with OR logic.
     #[serde(rename = "team_ids")]
     pub team_ids: Option<Vec<uuid::Uuid>>,
@@ -50,6 +53,7 @@ impl IssuesSearchRequestDataAttributes {
             order_by: None,
             persona: None,
             query,
+            states: None,
             team_ids: None,
             to,
             track: None,
@@ -76,6 +80,11 @@ impl IssuesSearchRequestDataAttributes {
         value: crate::datadogV2::model::IssuesSearchRequestDataAttributesPersona,
     ) -> Self {
         self.persona = Some(value);
+        self
+    }
+
+    pub fn states(mut self, value: Vec<crate::datadogV2::model::IssueState>) -> Self {
+        self.states = Some(value);
         self
     }
 
@@ -127,6 +136,7 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
                     crate::datadogV2::model::IssuesSearchRequestDataAttributesPersona,
                 > = None;
                 let mut query: Option<String> = None;
+                let mut states: Option<Vec<crate::datadogV2::model::IssueState>> = None;
                 let mut team_ids: Option<Vec<uuid::Uuid>> = None;
                 let mut to: Option<i64> = None;
                 let mut track: Option<
@@ -181,6 +191,12 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "states" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            states = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "team_ids" => {
                             if v.is_null() {
                                 continue;
@@ -221,6 +237,7 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributes {
                     order_by,
                     persona,
                     query,
+                    states,
                     team_ids,
                     to,
                     track,
