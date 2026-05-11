@@ -11,50 +11,51 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UserAttributes {
-    /// Creation time of the user.
+    /// The ISO 8601 timestamp of when the user account was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// Whether the user is disabled.
+    /// Whether the user account is deactivated. Disabled users cannot log in.
     #[serde(rename = "disabled")]
     pub disabled: Option<bool>,
-    /// Email of the user.
+    /// The email address of the user, used for login and notifications.
     #[serde(rename = "email")]
     pub email: Option<String>,
-    /// Handle of the user.
+    /// The unique handle (username) of the user, typically matching their email prefix.
     #[serde(rename = "handle")]
     pub handle: Option<String>,
-    /// URL of the user's icon.
+    /// URL of the user's profile icon, typically a Gravatar URL derived from the email address.
     #[serde(rename = "icon")]
     pub icon: Option<String>,
-    /// The last time the user logged in.
+    /// The ISO 8601 timestamp of the user's most recent login, or null if the user has never logged in.
     #[serde(
         rename = "last_login_time",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub last_login_time: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// If user has MFA enabled.
+    /// Whether multi-factor authentication (MFA) is enabled for the user's account.
     #[serde(rename = "mfa_enabled")]
     pub mfa_enabled: Option<bool>,
-    /// Time that the user was last modified.
+    /// The ISO 8601 timestamp of when the user account was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// Name of the user.
+    /// The full display name of the user as shown in the Datadog UI.
     #[serde(rename = "name", default, with = "::serde_with::rust::double_option")]
     pub name: Option<Option<String>>,
-    /// Whether the user is a service account.
+    /// Whether this is a service account rather than a human user.
+    /// Service accounts are used for programmatic API access.
     #[serde(rename = "service_account")]
     pub service_account: Option<bool>,
-    /// Status of the user.
+    /// The current status of the user account (for example, `Active`, `Pending`, or `Disabled`).
     #[serde(rename = "status")]
     pub status: Option<String>,
-    /// Title of the user.
+    /// The job title of the user (for example, "Senior Engineer" or "Product Manager").
     #[serde(rename = "title", default, with = "::serde_with::rust::double_option")]
     pub title: Option<Option<String>>,
-    /// UUID of the user.
+    /// The globally unique identifier (UUID) of the user.
     #[serde(rename = "uuid")]
     pub uuid: Option<String>,
-    /// Whether the user is verified.
+    /// Whether the user's email address has been verified.
     #[serde(rename = "verified")]
     pub verified: Option<bool>,
     #[serde(flatten)]

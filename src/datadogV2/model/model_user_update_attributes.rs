@@ -11,15 +11,21 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UserUpdateAttributes {
-    /// If the user is enabled or disabled.
+    /// When set to `true`, the user is deactivated and can no longer log in.
+    /// When `false`, the user is active.
     #[serde(rename = "disabled")]
     pub disabled: Option<bool>,
-    /// The email of the user.
+    /// The email address of the user, used for login and notifications.
+    /// Must be a valid email format.
     #[serde(rename = "email")]
     pub email: Option<String>,
-    /// The name of the user.
+    /// The full display name of the user as shown in the Datadog UI.
+    /// Maximum 55 characters, cannot contain `<` or `>`.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// The job title of the user (for example, "Senior Engineer" or "Product Manager").
+    #[serde(rename = "title", default, with = "::serde_with::rust::double_option")]
+    pub title: Option<Option<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -33,6 +39,7 @@ impl UserUpdateAttributes {
             disabled: None,
             email: None,
             name: None,
+            title: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -50,6 +57,11 @@ impl UserUpdateAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn title(mut self, value: Option<String>) -> Self {
+        self.title = Some(value);
         self
     }
 
@@ -88,6 +100,7 @@ impl<'de> Deserialize<'de> for UserUpdateAttributes {
                 let mut disabled: Option<bool> = None;
                 let mut email: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut title: Option<Option<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -114,6 +127,9 @@ impl<'de> Deserialize<'de> for UserUpdateAttributes {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "title" => {
+                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -126,6 +142,7 @@ impl<'de> Deserialize<'de> for UserUpdateAttributes {
                     disabled,
                     email,
                     name,
+                    title,
                     additional_properties,
                     _unparsed,
                 };
