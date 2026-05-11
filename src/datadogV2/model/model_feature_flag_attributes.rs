@@ -52,6 +52,9 @@ pub struct FeatureFlagAttributes {
     /// Indicates whether this feature flag requires approval for changes.
     #[serde(rename = "require_approval")]
     pub require_approval: Option<bool>,
+    /// Indicates the whether a feature flag is stale or not.
+    #[serde(rename = "staleness_status")]
+    pub staleness_status: Option<String>,
     /// Tags associated with the feature flag.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -91,6 +94,7 @@ impl FeatureFlagAttributes {
             last_updated_by: None,
             name,
             require_approval: None,
+            staleness_status: None,
             tags: None,
             updated_at: None,
             value_type,
@@ -143,6 +147,11 @@ impl FeatureFlagAttributes {
         self
     }
 
+    pub fn staleness_status(mut self, value: String) -> Self {
+        self.staleness_status = Some(value);
+        self
+    }
+
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
@@ -192,6 +201,7 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                 let mut last_updated_by: Option<uuid::Uuid> = None;
                 let mut name: Option<String> = None;
                 let mut require_approval: Option<bool> = None;
+                let mut staleness_status: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut value_type: Option<crate::datadogV2::model::ValueType> = None;
@@ -262,6 +272,13 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                             require_approval =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "staleness_status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            staleness_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -316,6 +333,7 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                     last_updated_by,
                     name,
                     require_approval,
+                    staleness_status,
                     tags,
                     updated_at,
                     value_type,

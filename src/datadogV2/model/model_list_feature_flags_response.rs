@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ListFeatureFlagsResponse {
     /// List of feature flags.
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::FeatureFlag>,
+    pub data: Vec<crate::datadogV2::model::FeatureFlagListItem>,
     /// Pagination metadata for feature flags.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::FeatureFlagsPaginationMeta>,
@@ -25,7 +25,9 @@ pub struct ListFeatureFlagsResponse {
 }
 
 impl ListFeatureFlagsResponse {
-    pub fn new(data: Vec<crate::datadogV2::model::FeatureFlag>) -> ListFeatureFlagsResponse {
+    pub fn new(
+        data: Vec<crate::datadogV2::model::FeatureFlagListItem>,
+    ) -> ListFeatureFlagsResponse {
         ListFeatureFlagsResponse {
             data,
             meta: None,
@@ -65,7 +67,7 @@ impl<'de> Deserialize<'de> for ListFeatureFlagsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::FeatureFlag>> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::FeatureFlagListItem>> = None;
                 let mut meta: Option<crate::datadogV2::model::FeatureFlagsPaginationMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
