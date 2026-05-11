@@ -3330,6 +3330,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_reorder_custom_allocation_rules,
     );
     world.function_mappings.insert(
+        "v2.ListCustomAllocationRulesStatus".into(),
+        test_v2_list_custom_allocation_rules_status,
+    );
+    world.function_mappings.insert(
         "v2.DeleteCustomAllocationRule".into(),
         test_v2_delete_custom_allocation_rule,
     );
@@ -3450,6 +3454,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.ReorderTagPipelinesRulesets".into(),
         test_v2_reorder_tag_pipelines_rulesets,
+    );
+    world.function_mappings.insert(
+        "v2.ListTagPipelinesRulesetsStatus".into(),
+        test_v2_list_tag_pipelines_rulesets_status,
     );
     world
         .function_mappings
@@ -24548,6 +24556,33 @@ fn test_v2_reorder_custom_allocation_rules(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_custom_allocation_rules_status(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_custom_allocation_rules_status_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_delete_custom_allocation_rule(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -25435,6 +25470,33 @@ fn test_v2_reorder_tag_pipelines_rulesets(
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.reorder_tag_pipelines_rulesets_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_tag_pipelines_rulesets_status(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_tag_pipelines_rulesets_status_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {
