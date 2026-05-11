@@ -100,7 +100,6 @@ pub struct ApiInstances {
     pub v2_api_domain_allowlist: Option<datadogV2::api_domain_allowlist::DomainAllowlistAPI>,
     pub v2_api_dora_metrics: Option<datadogV2::api_dora_metrics::DORAMetricsAPI>,
     pub v2_api_downtimes: Option<datadogV2::api_downtimes::DowntimesAPI>,
-    pub v2_api_email_transport: Option<datadogV2::api_email_transport::EmailTransportAPI>,
     pub v2_api_error_tracking: Option<datadogV2::api_error_tracking::ErrorTrackingAPI>,
     pub v2_api_events: Option<datadogV2::api_events::EventsAPI>,
     pub v2_api_feature_flags: Option<datadogV2::api_feature_flags::FeatureFlagsAPI>,
@@ -782,14 +781,6 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "DORAMetrics" => {
             world.api_instances.v2_api_dora_metrics = Some(
                 datadogV2::api_dora_metrics::DORAMetricsAPI::with_client_and_config(
-                    world.config.clone(),
-                    world.http_client.as_ref().unwrap().clone(),
-                ),
-            );
-        }
-        "EmailTransport" => {
-            world.api_instances.v2_api_email_transport = Some(
-                datadogV2::api_email_transport::EmailTransportAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -3702,10 +3693,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.ListMonitorDowntimesWithPagination".into(),
         test_v2_list_monitor_downtimes_with_pagination,
-    );
-    world.function_mappings.insert(
-        "v2.CreateEmailTransportWebhookIntake".into(),
-        test_v2_create_email_transport_webhook_intake,
     );
     world
         .function_mappings
@@ -27609,34 +27596,6 @@ fn test_v2_list_monitor_downtimes_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
-}
-
-fn test_v2_create_email_transport_webhook_intake(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_email_transport
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_email_transport_webhook_intake_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_search_issues(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
