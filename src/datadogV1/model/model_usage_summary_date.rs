@@ -404,6 +404,9 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all distinct infrastructure hosts over all hours in the current date for all organizations.
     #[serde(rename = "infra_host_top99p")]
     pub infra_host_top99p: Option<i64>,
+    /// Shows the average of all storage management objects over all hours in the current date for all organizations.
+    #[serde(rename = "infra_storage_mgmt_objects_avg")]
+    pub infra_storage_mgmt_objects_avg: Option<i64>,
     /// Shows the sum of all log bytes ingested over all hours in the current date for all organizations.
     #[serde(rename = "ingested_events_bytes_sum")]
     pub ingested_events_bytes_sum: Option<i64>,
@@ -718,6 +721,9 @@ pub struct UsageSummaryDate {
     /// Shows the sum of all log events analyzed by Cloud SIEM over all hours in the current date for the given org.
     #[serde(rename = "siem_analyzed_logs_add_on_count_sum")]
     pub siem_analyzed_logs_add_on_count_sum: Option<i64>,
+    /// Shows the average of all storage management objects over all hours in the current date for all organizations.
+    #[serde(rename = "storage_management_object_count_avg")]
+    pub storage_management_object_count_avg: Option<i64>,
     /// Shows the sum of all Synthetic browser tests over all hours in the current date for all organizations.
     #[serde(rename = "synthetics_browser_check_calls_count_sum")]
     pub synthetics_browser_check_calls_count_sum: Option<i64>,
@@ -889,6 +895,7 @@ impl UsageSummaryDate {
             infra_host_basic_infra_basic_vsphere_top99p: None,
             infra_host_basic_top99p: None,
             infra_host_top99p: None,
+            infra_storage_mgmt_objects_avg: None,
             ingested_events_bytes_sum: None,
             iot_device_sum: None,
             iot_device_top99p: None,
@@ -990,6 +997,7 @@ impl UsageSummaryDate {
             serverless_apps_infra_gcp_gke_autopilot_pods_avg: None,
             serverless_apps_total_count_avg: None,
             siem_analyzed_logs_add_on_count_sum: None,
+            storage_management_object_count_avg: None,
             synthetics_browser_check_calls_count_sum: None,
             synthetics_check_calls_count_sum: None,
             synthetics_mobile_test_runs_sum: None,
@@ -1789,6 +1797,12 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn infra_storage_mgmt_objects_avg(mut self, value: i64) -> Self {
+        self.infra_storage_mgmt_objects_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn ingested_events_bytes_sum(mut self, value: i64) -> Self {
         self.ingested_events_bytes_sum = Some(value);
         self
@@ -2428,6 +2442,12 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn storage_management_object_count_avg(mut self, value: i64) -> Self {
+        self.storage_management_object_count_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn synthetics_browser_check_calls_count_sum(mut self, value: i64) -> Self {
         self.synthetics_browser_check_calls_count_sum = Some(value);
         self
@@ -2650,6 +2670,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut infra_host_basic_infra_basic_vsphere_top99p: Option<i64> = None;
                 let mut infra_host_basic_top99p: Option<i64> = None;
                 let mut infra_host_top99p: Option<i64> = None;
+                let mut infra_storage_mgmt_objects_avg: Option<i64> = None;
                 let mut ingested_events_bytes_sum: Option<i64> = None;
                 let mut iot_device_sum: Option<i64> = None;
                 let mut iot_device_top99p: Option<i64> = None;
@@ -2765,6 +2786,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut serverless_apps_infra_gcp_gke_autopilot_pods_avg: Option<i64> = None;
                 let mut serverless_apps_total_count_avg: Option<i64> = None;
                 let mut siem_analyzed_logs_add_on_count_sum: Option<i64> = None;
+                let mut storage_management_object_count_avg: Option<i64> = None;
                 let mut synthetics_browser_check_calls_count_sum: Option<i64> = None;
                 let mut synthetics_check_calls_count_sum: Option<i64> = None;
                 let mut synthetics_mobile_test_runs_sum: Option<i64> = None;
@@ -3563,6 +3585,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             infra_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "infra_storage_mgmt_objects_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_storage_mgmt_objects_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ingested_events_bytes_sum" => {
                             if v.is_null() {
                                 continue;
@@ -4169,6 +4197,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             siem_analyzed_logs_add_on_count_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "storage_management_object_count_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            storage_management_object_count_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "synthetics_browser_check_calls_count_sum" => {
                             if v.is_null() {
                                 continue;
@@ -4369,6 +4403,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     infra_host_basic_infra_basic_vsphere_top99p,
                     infra_host_basic_top99p,
                     infra_host_top99p,
+                    infra_storage_mgmt_objects_avg,
                     ingested_events_bytes_sum,
                     iot_device_sum,
                     iot_device_top99p,
@@ -4470,6 +4505,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     serverless_apps_infra_gcp_gke_autopilot_pods_avg,
                     serverless_apps_total_count_avg,
                     siem_analyzed_logs_add_on_count_sum,
+                    storage_management_object_count_avg,
                     synthetics_browser_check_calls_count_sum,
                     synthetics_check_calls_count_sum,
                     synthetics_mobile_test_runs_sum,
