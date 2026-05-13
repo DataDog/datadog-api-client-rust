@@ -6,9 +6,96 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
+
+/// ListCostAnomaliesOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_anomalies`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListCostAnomaliesOptionalParams {
+    /// Start time as Unix milliseconds. Defaults to the start of the latest stable seven-day window.
+    pub start: Option<i64>,
+    /// End time as Unix milliseconds. Defaults to the end of the latest stable seven-day window.
+    pub end: Option<i64>,
+    /// Optional JSON object mapping cost tag keys to allowed values, for example `{"team":["payments"],"env":["prod"]}`. Filters match anomaly dimensions or correlated tags.
+    pub filter: Option<String>,
+    /// Minimum absolute anomalous cost change to include. Numeric value; defaults to `1`.
+    pub min_anomalous_threshold: Option<String>,
+    /// Minimum absolute actual cost to include. Numeric value; defaults to `0`.
+    pub min_cost_threshold: Option<String>,
+    /// Filter by resolution state. Use `none` for unresolved anomalies, `all` or `*` for resolved anomalies, or a comma-separated list of causes.
+    pub dismissal_cause: Option<String>,
+    /// Sort field. One of `start_date`, `end_date`, `duration`, `max_cost`, `anomalous_cost`, or `dismissal_date`. Defaults to `anomalous_cost`.
+    pub order_by: Option<String>,
+    /// Sort direction. One of `asc` or `desc`. Defaults to `desc`.
+    pub order: Option<String>,
+    /// Maximum number of anomalies to return. Defaults to `200`.
+    pub limit: Option<i32>,
+    /// Pagination offset. Defaults to `0`.
+    pub offset: Option<i32>,
+    /// Optional repeated cloud or SaaS provider filters, such as `aws`, `gcp`, `azure`, `Oracle`, `datadog`, `OpenAI`, or `Anthropic`.
+    pub provider_ids: Option<Vec<String>>,
+}
+
+impl ListCostAnomaliesOptionalParams {
+    /// Start time as Unix milliseconds. Defaults to the start of the latest stable seven-day window.
+    pub fn start(mut self, value: i64) -> Self {
+        self.start = Some(value);
+        self
+    }
+    /// End time as Unix milliseconds. Defaults to the end of the latest stable seven-day window.
+    pub fn end(mut self, value: i64) -> Self {
+        self.end = Some(value);
+        self
+    }
+    /// Optional JSON object mapping cost tag keys to allowed values, for example `{"team":["payments"],"env":["prod"]}`. Filters match anomaly dimensions or correlated tags.
+    pub fn filter(mut self, value: String) -> Self {
+        self.filter = Some(value);
+        self
+    }
+    /// Minimum absolute anomalous cost change to include. Numeric value; defaults to `1`.
+    pub fn min_anomalous_threshold(mut self, value: String) -> Self {
+        self.min_anomalous_threshold = Some(value);
+        self
+    }
+    /// Minimum absolute actual cost to include. Numeric value; defaults to `0`.
+    pub fn min_cost_threshold(mut self, value: String) -> Self {
+        self.min_cost_threshold = Some(value);
+        self
+    }
+    /// Filter by resolution state. Use `none` for unresolved anomalies, `all` or `*` for resolved anomalies, or a comma-separated list of causes.
+    pub fn dismissal_cause(mut self, value: String) -> Self {
+        self.dismissal_cause = Some(value);
+        self
+    }
+    /// Sort field. One of `start_date`, `end_date`, `duration`, `max_cost`, `anomalous_cost`, or `dismissal_date`. Defaults to `anomalous_cost`.
+    pub fn order_by(mut self, value: String) -> Self {
+        self.order_by = Some(value);
+        self
+    }
+    /// Sort direction. One of `asc` or `desc`. Defaults to `desc`.
+    pub fn order(mut self, value: String) -> Self {
+        self.order = Some(value);
+        self
+    }
+    /// Maximum number of anomalies to return. Defaults to `200`.
+    pub fn limit(mut self, value: i32) -> Self {
+        self.limit = Some(value);
+        self
+    }
+    /// Pagination offset. Defaults to `0`.
+    pub fn offset(mut self, value: i32) -> Self {
+        self.offset = Some(value);
+        self
+    }
+    /// Optional repeated cloud or SaaS provider filters, such as `aws`, `gcp`, `azure`, `Oracle`, `datadog`, `OpenAI`, or `Anthropic`.
+    pub fn provider_ids(mut self, value: Vec<String>) -> Self {
+        self.provider_ids = Some(value);
+        self
+    }
+}
 
 /// ListCostTagDescriptionsOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_tag_descriptions`]
 #[non_exhaustive]
@@ -189,6 +276,14 @@ pub enum GetCostAWSCURConfigError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetCostAnomalyError is a struct for typed errors of method [`CloudCostManagementAPI::get_cost_anomaly`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCostAnomalyError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetCostAzureUCConfigError is a struct for typed errors of method [`CloudCostManagementAPI::get_cost_azure_uc_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -241,6 +336,14 @@ pub enum ListBudgetsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCostAWSCURConfigsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListCostAnomaliesError is a struct for typed errors of method [`CloudCostManagementAPI::list_cost_anomalies`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListCostAnomaliesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2135,6 +2238,121 @@ impl CloudCostManagementAPI {
         }
     }
 
+    /// Get a detected Cloud Cost Management anomaly by UUID.
+    pub async fn get_cost_anomaly(
+        &self,
+        anomaly_id: String,
+    ) -> Result<crate::datadogV2::model::CostAnomalyResponse, datadog::Error<GetCostAnomalyError>>
+    {
+        match self.get_cost_anomaly_with_http_info(anomaly_id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a detected Cloud Cost Management anomaly by UUID.
+    pub async fn get_cost_anomaly_with_http_info(
+        &self,
+        anomaly_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CostAnomalyResponse>,
+        datadog::Error<GetCostAnomalyError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_cost_anomaly";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_cost_anomaly' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/anomalies/{anomaly_id}",
+            local_configuration.get_operation_host(operation_id),
+            anomaly_id = datadog::urlencode(anomaly_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CostAnomalyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCostAnomalyError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a specific Azure config.
     pub async fn get_cost_azure_uc_config(
         &self,
@@ -2880,6 +3098,181 @@ impl CloudCostManagementAPI {
             };
         } else {
             let local_entity: Option<ListCostAWSCURConfigsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List detected Cloud Cost Management anomalies for the organization.
+    pub async fn list_cost_anomalies(
+        &self,
+        params: ListCostAnomaliesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CostAnomaliesResponse,
+        datadog::Error<ListCostAnomaliesError>,
+    > {
+        match self.list_cost_anomalies_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List detected Cloud Cost Management anomalies for the organization.
+    pub async fn list_cost_anomalies_with_http_info(
+        &self,
+        params: ListCostAnomaliesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CostAnomaliesResponse>,
+        datadog::Error<ListCostAnomaliesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_cost_anomalies";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_cost_anomalies' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let start = params.start;
+        let end = params.end;
+        let filter = params.filter;
+        let min_anomalous_threshold = params.min_anomalous_threshold;
+        let min_cost_threshold = params.min_cost_threshold;
+        let dismissal_cause = params.dismissal_cause;
+        let order_by = params.order_by;
+        let order = params.order;
+        let limit = params.limit;
+        let offset = params.offset;
+        let provider_ids = params.provider_ids;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/anomalies",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = start {
+            local_req_builder =
+                local_req_builder.query(&[("start", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = end {
+            local_req_builder = local_req_builder.query(&[("end", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = min_anomalous_threshold {
+            local_req_builder = local_req_builder
+                .query(&[("min_anomalous_threshold", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = min_cost_threshold {
+            local_req_builder =
+                local_req_builder.query(&[("min_cost_threshold", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = dismissal_cause {
+            local_req_builder =
+                local_req_builder.query(&[("dismissal_cause", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = order_by {
+            local_req_builder =
+                local_req_builder.query(&[("order_by", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = order {
+            local_req_builder =
+                local_req_builder.query(&[("order", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = offset {
+            local_req_builder =
+                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = provider_ids {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("provider_ids", &param.to_string())]);
+            }
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CostAnomaliesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListCostAnomaliesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
