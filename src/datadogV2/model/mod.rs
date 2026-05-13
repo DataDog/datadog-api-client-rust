@@ -3140,6 +3140,8 @@ pub mod model_issue_language;
 pub use self::model_issue_language::IssueLanguage;
 pub mod model_issue_platform;
 pub use self::model_issue_platform::IssuePlatform;
+pub mod model_issue_regression;
+pub use self::model_issue_regression::IssueRegression;
 pub mod model_issue_relationships;
 pub use self::model_issue_relationships::IssueRelationships;
 pub mod model_issue_assignee_relationship;
