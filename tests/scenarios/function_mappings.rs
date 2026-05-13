@@ -3329,6 +3329,12 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListContainersWithPagination".into(),
         test_v2_list_containers_with_pagination,
     );
+    world
+        .function_mappings
+        .insert("v2.ListCostAnomalies".into(), test_v2_list_cost_anomalies);
+    world
+        .function_mappings
+        .insert("v2.GetCostAnomaly".into(), test_v2_get_cost_anomaly);
     world.function_mappings.insert(
         "v2.ListCustomAllocationRules".into(),
         test_v2_list_custom_allocation_rules,
@@ -24592,6 +24598,102 @@ fn test_v2_list_containers_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_list_cost_anomalies(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let start = _parameters
+        .get("start")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let end = _parameters
+        .get("end")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let min_anomalous_threshold = _parameters
+        .get("min_anomalous_threshold")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let min_cost_threshold = _parameters
+        .get("min_cost_threshold")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let dismissal_cause = _parameters
+        .get("dismissal_cause")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let order_by = _parameters
+        .get("order_by")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let order = _parameters
+        .get("order")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let offset = _parameters
+        .get("offset")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let provider_ids = _parameters
+        .get("provider_ids")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_cloud_cost_management::ListCostAnomaliesOptionalParams::default();
+    params.start = start;
+    params.end = end;
+    params.filter = filter;
+    params.min_anomalous_threshold = min_anomalous_threshold;
+    params.min_cost_threshold = min_cost_threshold;
+    params.dismissal_cause = dismissal_cause;
+    params.order_by = order_by;
+    params.order = order;
+    params.limit = limit;
+    params.offset = offset;
+    params.provider_ids = provider_ids;
+    let response = match block_on(api.list_cost_anomalies_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_cost_anomaly(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let anomaly_id =
+        serde_json::from_value(_parameters.get("anomaly_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_cost_anomaly_with_http_info(anomaly_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_list_custom_allocation_rules(
