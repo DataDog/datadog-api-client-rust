@@ -11,6 +11,29 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// GetCostTagKeyOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_cost_tag_key`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCostTagKeyOptionalParams {
+    /// The Cloud Cost Management metric to scope the tag key details to. When omitted, returns details across all metrics.
+    pub filter_metric: Option<String>,
+    /// Controls the size of the internal tag value search scope. This does **not** restrict the number of example tag values returned in the response. Defaults to 50, maximum 10000.
+    pub page_size: Option<i32>,
+}
+
+impl GetCostTagKeyOptionalParams {
+    /// The Cloud Cost Management metric to scope the tag key details to. When omitted, returns details across all metrics.
+    pub fn filter_metric(mut self, value: String) -> Self {
+        self.filter_metric = Some(value);
+        self
+    }
+    /// Controls the size of the internal tag value search scope. This does **not** restrict the number of example tag values returned in the response. Defaults to 50, maximum 10000.
+    pub fn page_size(mut self, value: i32) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+}
+
 /// ListCostAnomaliesOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_anomalies`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -109,6 +132,73 @@ impl ListCostTagDescriptionsOptionalParams {
     /// Filter descriptions to a specific cloud provider (for example, `aws`). Omit to return descriptions across all clouds.
     pub fn filter_cloud(mut self, value: String) -> Self {
         self.filter_cloud = Some(value);
+        self
+    }
+}
+
+/// ListCostTagKeysOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_tag_keys`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListCostTagKeysOptionalParams {
+    /// The Cloud Cost Management metric to scope the tag keys to. When omitted, returns tag keys across all metrics.
+    pub filter_metric: Option<String>,
+    /// Filter to return only tag keys that appear with the given `key:value` tag values. For example, `filter[tags]=providername:aws` returns tag keys found on the same cost data, such as `is_aws_ec2_compute` and `aws_instance_type`.
+    pub filter_tags: Option<Vec<String>>,
+}
+
+impl ListCostTagKeysOptionalParams {
+    /// The Cloud Cost Management metric to scope the tag keys to. When omitted, returns tag keys across all metrics.
+    pub fn filter_metric(mut self, value: String) -> Self {
+        self.filter_metric = Some(value);
+        self
+    }
+    /// Filter to return only tag keys that appear with the given `key:value` tag values. For example, `filter[tags]=providername:aws` returns tag keys found on the same cost data, such as `is_aws_ec2_compute` and `aws_instance_type`.
+    pub fn filter_tags(mut self, value: Vec<String>) -> Self {
+        self.filter_tags = Some(value);
+        self
+    }
+}
+
+/// ListCostTagsOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_tags`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListCostTagsOptionalParams {
+    /// The Cloud Cost Management metric to scope the tags to. When omitted, returns tags across all metrics.
+    pub filter_metric: Option<String>,
+    /// A substring used to filter the returned tags by name.
+    pub filter_match: Option<String>,
+    /// Filter to return only tags that appear with the given `key:value` tag values. For example, `filter[tags]=providername:aws` returns tags found on the same cost data, such as `aws_instance_type:t3.micro` and `aws_instance_type:m5.large`.
+    pub filter_tags: Option<Vec<String>>,
+    /// Restrict the returned tags to those whose key matches one of the given tag keys.
+    pub filter_tag_keys: Option<Vec<String>>,
+    /// Controls the size of the internal tag search scope. This does **not** restrict the number of tags returned in the response. Defaults to 50, maximum 10000.
+    pub page_size: Option<i32>,
+}
+
+impl ListCostTagsOptionalParams {
+    /// The Cloud Cost Management metric to scope the tags to. When omitted, returns tags across all metrics.
+    pub fn filter_metric(mut self, value: String) -> Self {
+        self.filter_metric = Some(value);
+        self
+    }
+    /// A substring used to filter the returned tags by name.
+    pub fn filter_match(mut self, value: String) -> Self {
+        self.filter_match = Some(value);
+        self
+    }
+    /// Filter to return only tags that appear with the given `key:value` tag values. For example, `filter[tags]=providername:aws` returns tags found on the same cost data, such as `aws_instance_type:t3.micro` and `aws_instance_type:m5.large`.
+    pub fn filter_tags(mut self, value: Vec<String>) -> Self {
+        self.filter_tags = Some(value);
+        self
+    }
+    /// Restrict the returned tags to those whose key matches one of the given tag keys.
+    pub fn filter_tag_keys(mut self, value: Vec<String>) -> Self {
+        self.filter_tag_keys = Some(value);
+        self
+    }
+    /// Controls the size of the internal tag search scope. This does **not** restrict the number of tags returned in the response. Defaults to 50, maximum 10000.
+    pub fn page_size(mut self, value: i32) -> Self {
+        self.page_size = Some(value);
         self
     }
 }
@@ -300,6 +390,14 @@ pub enum GetCostGCPUsageCostConfigError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetCostTagKeyError is a struct for typed errors of method [`CloudCostManagementAPI::get_cost_tag_key`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCostTagKeyError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetCustomAllocationRuleError is a struct for typed errors of method [`CloudCostManagementAPI::get_custom_allocation_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -376,6 +474,22 @@ pub enum ListCostOCIConfigsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCostTagDescriptionsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListCostTagKeysError is a struct for typed errors of method [`CloudCostManagementAPI::list_cost_tag_keys`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListCostTagKeysError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListCostTagsError is a struct for typed errors of method [`CloudCostManagementAPI::list_cost_tags`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListCostTagsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2573,6 +2687,128 @@ impl CloudCostManagementAPI {
         }
     }
 
+    /// Get details for a specific Cloud Cost Management tag key, including example tag values and description.
+    pub async fn get_cost_tag_key(
+        &self,
+        tag_key: String,
+        params: GetCostTagKeyOptionalParams,
+    ) -> Result<crate::datadogV2::model::CostTagKeyResponse, datadog::Error<GetCostTagKeyError>>
+    {
+        match self.get_cost_tag_key_with_http_info(tag_key, params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get details for a specific Cloud Cost Management tag key, including example tag values and description.
+    pub async fn get_cost_tag_key_with_http_info(
+        &self,
+        tag_key: String,
+        params: GetCostTagKeyOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CostTagKeyResponse>,
+        datadog::Error<GetCostTagKeyError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_cost_tag_key";
+
+        // unbox and build optional parameters
+        let filter_metric = params.filter_metric;
+        let page_size = params.page_size;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tag_keys/{tag_key}",
+            local_configuration.get_operation_host(operation_id),
+            tag_key = datadog::urlencode(tag_key)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_metric {
+            local_req_builder =
+                local_req_builder.query(&[("filter[metric]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CostTagKeyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCostTagKeyError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a specific custom allocation rule - Retrieve a specific custom allocation rule by its ID
     pub async fn get_custom_allocation_rule(
         &self,
@@ -3706,6 +3942,262 @@ impl CloudCostManagementAPI {
         } else {
             let local_entity: Option<ListCostTagDescriptionsError> =
                 serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List Cloud Cost Management tag keys.
+    pub async fn list_cost_tag_keys(
+        &self,
+        params: ListCostTagKeysOptionalParams,
+    ) -> Result<crate::datadogV2::model::CostTagKeysResponse, datadog::Error<ListCostTagKeysError>>
+    {
+        match self.list_cost_tag_keys_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List Cloud Cost Management tag keys.
+    pub async fn list_cost_tag_keys_with_http_info(
+        &self,
+        params: ListCostTagKeysOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CostTagKeysResponse>,
+        datadog::Error<ListCostTagKeysError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_cost_tag_keys";
+
+        // unbox and build optional parameters
+        let filter_metric = params.filter_metric;
+        let filter_tags = params.filter_tags;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tag_keys",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_metric {
+            local_req_builder =
+                local_req_builder.query(&[("filter[metric]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = filter_tags {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[tags]", &param.to_string())]);
+            }
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CostTagKeysResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListCostTagKeysError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List Cloud Cost Management tags for a given metric.
+    pub async fn list_cost_tags(
+        &self,
+        params: ListCostTagsOptionalParams,
+    ) -> Result<crate::datadogV2::model::CostTagsResponse, datadog::Error<ListCostTagsError>> {
+        match self.list_cost_tags_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List Cloud Cost Management tags for a given metric.
+    pub async fn list_cost_tags_with_http_info(
+        &self,
+        params: ListCostTagsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CostTagsResponse>,
+        datadog::Error<ListCostTagsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_cost_tags";
+
+        // unbox and build optional parameters
+        let filter_metric = params.filter_metric;
+        let filter_match = params.filter_match;
+        let filter_tags = params.filter_tags;
+        let filter_tag_keys = params.filter_tag_keys;
+        let page_size = params.page_size;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tags",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_metric {
+            local_req_builder =
+                local_req_builder.query(&[("filter[metric]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_match {
+            local_req_builder =
+                local_req_builder.query(&[("filter[match]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = filter_tags {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[tags]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_tag_keys {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[tag_keys]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CostTagsResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListCostTagsError> = serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
