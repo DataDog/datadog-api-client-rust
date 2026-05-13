@@ -3465,6 +3465,15 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListCostTagDescriptions".into(),
         test_v2_list_cost_tag_descriptions,
     );
+    world
+        .function_mappings
+        .insert("v2.ListCostTagKeys".into(), test_v2_list_cost_tag_keys);
+    world
+        .function_mappings
+        .insert("v2.GetCostTagKey".into(), test_v2_get_cost_tag_key);
+    world
+        .function_mappings
+        .insert("v2.ListCostTags".into(), test_v2_list_cost_tags);
     world.function_mappings.insert(
         "v2.ListTagPipelinesRulesets".into(),
         test_v2_list_tag_pipelines_rulesets,
@@ -25643,6 +25652,118 @@ fn test_v2_list_cost_tag_descriptions(
         datadogV2::api_cloud_cost_management::ListCostTagDescriptionsOptionalParams::default();
     params.filter_cloud = filter_cloud;
     let response = match block_on(api.list_cost_tag_descriptions_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_cost_tag_keys(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let filter_metric = _parameters
+        .get("filter[metric]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tags = _parameters
+        .get("filter[tags]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_cloud_cost_management::ListCostTagKeysOptionalParams::default();
+    params.filter_metric = filter_metric;
+    params.filter_tags = filter_tags;
+    let response = match block_on(api.list_cost_tag_keys_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_cost_tag_key(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let tag_key = serde_json::from_value(_parameters.get("tag_key").unwrap().clone()).unwrap();
+    let filter_metric = _parameters
+        .get("filter[metric]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_cloud_cost_management::GetCostTagKeyOptionalParams::default();
+    params.filter_metric = filter_metric;
+    params.page_size = page_size;
+    let response = match block_on(api.get_cost_tag_key_with_http_info(tag_key, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_cost_tags(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let filter_metric = _parameters
+        .get("filter[metric]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_match = _parameters
+        .get("filter[match]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tags = _parameters
+        .get("filter[tags]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tag_keys = _parameters
+        .get("filter[tag_keys]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_cloud_cost_management::ListCostTagsOptionalParams::default();
+    params.filter_metric = filter_metric;
+    params.filter_match = filter_match;
+    params.filter_tags = filter_tags;
+    params.filter_tag_keys = filter_tag_keys;
+    params.page_size = page_size;
+    let response = match block_on(api.list_cost_tags_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
