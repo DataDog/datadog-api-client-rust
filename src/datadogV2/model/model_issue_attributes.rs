@@ -44,6 +44,9 @@ pub struct IssueAttributes {
     /// Platform associated with the issue.
     #[serde(rename = "platform")]
     pub platform: Option<crate::datadogV2::model::IssuePlatform>,
+    /// Regression information for an issue that was previously resolved and then reopened.
+    #[serde(rename = "regression")]
+    pub regression: Option<crate::datadogV2::model::IssueRegression>,
     /// Service name.
     #[serde(rename = "service")]
     pub service: Option<String>,
@@ -71,6 +74,7 @@ impl IssueAttributes {
             last_seen: None,
             last_seen_version: None,
             platform: None,
+            regression: None,
             service: None,
             state: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -133,6 +137,11 @@ impl IssueAttributes {
         self
     }
 
+    pub fn regression(mut self, value: crate::datadogV2::model::IssueRegression) -> Self {
+        self.regression = Some(value);
+        self
+    }
+
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
@@ -186,6 +195,7 @@ impl<'de> Deserialize<'de> for IssueAttributes {
                 let mut last_seen: Option<i64> = None;
                 let mut last_seen_version: Option<String> = None;
                 let mut platform: Option<crate::datadogV2::model::IssuePlatform> = None;
+                let mut regression: Option<crate::datadogV2::model::IssueRegression> = None;
                 let mut service: Option<String> = None;
                 let mut state: Option<crate::datadogV2::model::IssueState> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -276,6 +286,12 @@ impl<'de> Deserialize<'de> for IssueAttributes {
                                 }
                             }
                         }
+                        "regression" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            regression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "service" => {
                             if v.is_null() {
                                 continue;
@@ -316,6 +332,7 @@ impl<'de> Deserialize<'de> for IssueAttributes {
                     last_seen,
                     last_seen_version,
                     platform,
+                    regression,
                     service,
                     state,
                     additional_properties,
