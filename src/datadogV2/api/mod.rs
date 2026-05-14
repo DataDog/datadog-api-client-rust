@@ -101,6 +101,7 @@ pub mod api_software_catalog;
 pub mod api_spa;
 pub mod api_spans;
 pub mod api_spans_metrics;
+pub mod api_specs;
 pub mod api_static_analysis;
 pub mod api_status_pages;
 pub mod api_storage_management;
