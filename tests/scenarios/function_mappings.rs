@@ -83,6 +83,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
     pub v2_api_storage_management: Option<datadogV2::api_storage_management::StorageManagementAPI>,
     pub v2_api_code_coverage: Option<datadogV2::api_code_coverage::CodeCoverageAPI>,
+    pub v2_api_compliance: Option<datadogV2::api_compliance::ComplianceAPI>,
     pub v2_api_container_images: Option<datadogV2::api_container_images::ContainerImagesAPI>,
     pub v2_api_containers: Option<datadogV2::api_containers::ContainersAPI>,
     pub v2_api_cloud_cost_management:
@@ -699,6 +700,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "CodeCoverage" => {
             world.api_instances.v2_api_code_coverage = Some(
                 datadogV2::api_code_coverage::CodeCoverageAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "Compliance" => {
+            world.api_instances.v2_api_compliance = Some(
+                datadogV2::api_compliance::ComplianceAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -3305,6 +3314,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.GetCodeCoverageCommitSummary".into(),
         test_v2_get_code_coverage_commit_summary,
     );
+    world
+        .function_mappings
+        .insert("v2.GetRuleBasedView".into(), test_v2_get_rule_based_view);
     world.function_mappings.insert(
         "v2.ListContainerImages".into(),
         test_v2_list_container_images,
@@ -24375,6 +24387,56 @@ fn test_v2_get_code_coverage_commit_summary(
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.get_code_coverage_commit_summary_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_rule_based_view(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_compliance
+        .as_ref()
+        .expect("api instance not found");
+    let to = serde_json::from_value(_parameters.get("to").unwrap().clone()).unwrap();
+    let framework = _parameters
+        .get("framework")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let version = _parameters
+        .get("version")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query_findings_without_framework_version = _parameters
+        .get("query_findings_without_framework_version")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_rules_without_findings = _parameters
+        .get("include_rules_without_findings")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let is_custom = _parameters
+        .get("is_custom")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_compliance::GetRuleBasedViewOptionalParams::default();
+    params.framework = framework;
+    params.version = version;
+    params.query_findings_without_framework_version = query_findings_without_framework_version;
+    params.include_rules_without_findings = include_rules_without_findings;
+    params.is_custom = is_custom;
+    params.query = query;
+    let response = match block_on(api.get_rule_based_view_with_http_info(to, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

@@ -253,6 +253,7 @@ impl Default for Configuration {
             ),
             ("v2.get_code_coverage_branch_summary".to_owned(), false),
             ("v2.get_code_coverage_commit_summary".to_owned(), false),
+            ("v2.get_rule_based_view".to_owned(), false),
             ("v2.get_cost_anomaly".to_owned(), false),
             ("v2.list_cost_anomalies".to_owned(), false),
             ("v2.create_dashboard_secure_embed".to_owned(), false),
