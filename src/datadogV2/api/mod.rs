@@ -26,6 +26,7 @@ pub mod api_cloud_cost_management;
 pub mod api_cloud_network_monitoring;
 pub mod api_cloudflare_integration;
 pub mod api_code_coverage;
+pub mod api_compliance;
 pub mod api_confluent_cloud;
 pub mod api_container_images;
 pub mod api_containers;
