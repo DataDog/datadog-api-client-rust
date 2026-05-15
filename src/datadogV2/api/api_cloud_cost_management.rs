@@ -192,6 +192,22 @@ impl GetCostTagKeyOptionalParams {
     }
 }
 
+/// GetCostTagMetadataCurrencyOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_cost_tag_metadata_currency`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCostTagMetadataCurrencyOptionalParams {
+    /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
+    pub filter_provider: Option<String>,
+}
+
+impl GetCostTagMetadataCurrencyOptionalParams {
+    /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
+    pub fn filter_provider(mut self, value: String) -> Self {
+        self.filter_provider = Some(value);
+        self
+    }
+}
+
 /// ListCostAnomaliesOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_anomalies`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -294,6 +310,22 @@ impl ListCostTagDescriptionsOptionalParams {
     }
 }
 
+/// ListCostTagKeySourcesOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_tag_key_sources`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListCostTagKeySourcesOptionalParams {
+    /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
+    pub filter_provider: Option<String>,
+}
+
+impl ListCostTagKeySourcesOptionalParams {
+    /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
+    pub fn filter_provider(mut self, value: String) -> Self {
+        self.filter_provider = Some(value);
+        self
+    }
+}
+
 /// ListCostTagKeysOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_tag_keys`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -313,6 +345,78 @@ impl ListCostTagKeysOptionalParams {
     /// Filter to return only tag keys that appear with the given `key:value` tag values. For example, `filter[tags]=providername:aws` returns tag keys found on the same cost data, such as `is_aws_ec2_compute` and `aws_instance_type`.
     pub fn filter_tags(mut self, value: Vec<String>) -> Self {
         self.filter_tags = Some(value);
+        self
+    }
+}
+
+/// ListCostTagMetadataOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_tag_metadata`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListCostTagMetadataOptionalParams {
+    /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
+    pub filter_provider: Option<String>,
+    /// Filter results to a specific Cloud Cost Management metric (for example, `aws.cost.net.amortized`). When omitted, every available metric for the requested period is returned.
+    pub filter_metric: Option<String>,
+    /// Restrict results to a single tag key.
+    pub filter_tag_key: Option<String>,
+    /// When `true`, return one row per day with the day in the `date` attribute. Defaults to the monthly roll-up when omitted.
+    pub filter_daily: Option<crate::datadogV2::model::CostTagMetadataDailyFilter>,
+}
+
+impl ListCostTagMetadataOptionalParams {
+    /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
+    pub fn filter_provider(mut self, value: String) -> Self {
+        self.filter_provider = Some(value);
+        self
+    }
+    /// Filter results to a specific Cloud Cost Management metric (for example, `aws.cost.net.amortized`). When omitted, every available metric for the requested period is returned.
+    pub fn filter_metric(mut self, value: String) -> Self {
+        self.filter_metric = Some(value);
+        self
+    }
+    /// Restrict results to a single tag key.
+    pub fn filter_tag_key(mut self, value: String) -> Self {
+        self.filter_tag_key = Some(value);
+        self
+    }
+    /// When `true`, return one row per day with the day in the `date` attribute. Defaults to the monthly roll-up when omitted.
+    pub fn filter_daily(
+        mut self,
+        value: crate::datadogV2::model::CostTagMetadataDailyFilter,
+    ) -> Self {
+        self.filter_daily = Some(value);
+        self
+    }
+}
+
+/// ListCostTagMetadataMetricsOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_tag_metadata_metrics`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListCostTagMetadataMetricsOptionalParams {
+    /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
+    pub filter_provider: Option<String>,
+}
+
+impl ListCostTagMetadataMetricsOptionalParams {
+    /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
+    pub fn filter_provider(mut self, value: String) -> Self {
+        self.filter_provider = Some(value);
+        self
+    }
+}
+
+/// ListCostTagMetadataOrchestratorsOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_tag_metadata_orchestrators`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListCostTagMetadataOrchestratorsOptionalParams {
+    /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
+    pub filter_provider: Option<String>,
+}
+
+impl ListCostTagMetadataOrchestratorsOptionalParams {
+    /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
+    pub fn filter_provider(mut self, value: String) -> Self {
+        self.filter_provider = Some(value);
         self
     }
 }
@@ -628,6 +732,14 @@ pub enum GetCostTagKeyError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetCostTagMetadataCurrencyError is a struct for typed errors of method [`CloudCostManagementAPI::get_cost_tag_metadata_currency`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCostTagMetadataCurrencyError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetCustomAllocationRuleError is a struct for typed errors of method [`CloudCostManagementAPI::get_custom_allocation_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -708,10 +820,42 @@ pub enum ListCostTagDescriptionsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListCostTagKeySourcesError is a struct for typed errors of method [`CloudCostManagementAPI::list_cost_tag_key_sources`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListCostTagKeySourcesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListCostTagKeysError is a struct for typed errors of method [`CloudCostManagementAPI::list_cost_tag_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCostTagKeysError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListCostTagMetadataError is a struct for typed errors of method [`CloudCostManagementAPI::list_cost_tag_metadata`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListCostTagMetadataError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListCostTagMetadataMetricsError is a struct for typed errors of method [`CloudCostManagementAPI::list_cost_tag_metadata_metrics`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListCostTagMetadataMetricsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListCostTagMetadataOrchestratorsError is a struct for typed errors of method [`CloudCostManagementAPI::list_cost_tag_metadata_orchestrators`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListCostTagMetadataOrchestratorsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -4186,6 +4330,137 @@ impl CloudCostManagementAPI {
         }
     }
 
+    /// Get the dominant billing currency observed in Cloud Cost Management data for the requested period. The response wraps the currency in a JSON:API `data` array containing at most one entry; the array is empty when no currency data is available.
+    pub async fn get_cost_tag_metadata_currency(
+        &self,
+        filter_month: String,
+        params: GetCostTagMetadataCurrencyOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CostCurrencyResponse,
+        datadog::Error<GetCostTagMetadataCurrencyError>,
+    > {
+        match self
+            .get_cost_tag_metadata_currency_with_http_info(filter_month, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the dominant billing currency observed in Cloud Cost Management data for the requested period. The response wraps the currency in a JSON:API `data` array containing at most one entry; the array is empty when no currency data is available.
+    pub async fn get_cost_tag_metadata_currency_with_http_info(
+        &self,
+        filter_month: String,
+        params: GetCostTagMetadataCurrencyOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CostCurrencyResponse>,
+        datadog::Error<GetCostTagMetadataCurrencyError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_cost_tag_metadata_currency";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_cost_tag_metadata_currency' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_provider = params.filter_provider;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tag_metadata/currency",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder =
+            local_req_builder.query(&[("filter[month]", &filter_month.to_string())]);
+        if let Some(ref local_query_param) = filter_provider {
+            local_req_builder =
+                local_req_builder.query(&[("filter[provider]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CostCurrencyResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCostTagMetadataCurrencyError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a specific custom allocation rule - Retrieve a specific custom allocation rule by its ID
     pub async fn get_custom_allocation_rule(
         &self,
@@ -5328,6 +5603,137 @@ impl CloudCostManagementAPI {
         }
     }
 
+    /// List Cloud Cost Management tag keys observed for the requested period, along with the origin sources that produced them (for example, `aws-user-defined`, `custom`).
+    pub async fn list_cost_tag_key_sources(
+        &self,
+        filter_month: String,
+        params: ListCostTagKeySourcesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CostTagKeySourcesResponse,
+        datadog::Error<ListCostTagKeySourcesError>,
+    > {
+        match self
+            .list_cost_tag_key_sources_with_http_info(filter_month, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List Cloud Cost Management tag keys observed for the requested period, along with the origin sources that produced them (for example, `aws-user-defined`, `custom`).
+    pub async fn list_cost_tag_key_sources_with_http_info(
+        &self,
+        filter_month: String,
+        params: ListCostTagKeySourcesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CostTagKeySourcesResponse>,
+        datadog::Error<ListCostTagKeySourcesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_cost_tag_key_sources";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_cost_tag_key_sources' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_provider = params.filter_provider;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tag_metadata/tag_sources",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder =
+            local_req_builder.query(&[("filter[month]", &filter_month.to_string())]);
+        if let Some(ref local_query_param) = filter_provider {
+            local_req_builder =
+                local_req_builder.query(&[("filter[provider]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CostTagKeySourcesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListCostTagKeySourcesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// List Cloud Cost Management tag keys.
     pub async fn list_cost_tag_keys(
         &self,
@@ -5439,6 +5845,415 @@ impl CloudCostManagementAPI {
             };
         } else {
             let local_entity: Option<ListCostTagKeysError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List Cloud Cost Management tag key metadata, including row counts, cost covered, cardinality, and a sample of top tag values per cloud account. Use `filter[daily]=true` to return daily rows instead of the default monthly roll-up.
+    pub async fn list_cost_tag_metadata(
+        &self,
+        filter_month: String,
+        params: ListCostTagMetadataOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CostTagKeyMetadataResponse,
+        datadog::Error<ListCostTagMetadataError>,
+    > {
+        match self
+            .list_cost_tag_metadata_with_http_info(filter_month, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List Cloud Cost Management tag key metadata, including row counts, cost covered, cardinality, and a sample of top tag values per cloud account. Use `filter[daily]=true` to return daily rows instead of the default monthly roll-up.
+    pub async fn list_cost_tag_metadata_with_http_info(
+        &self,
+        filter_month: String,
+        params: ListCostTagMetadataOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CostTagKeyMetadataResponse>,
+        datadog::Error<ListCostTagMetadataError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_cost_tag_metadata";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_cost_tag_metadata' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_provider = params.filter_provider;
+        let filter_metric = params.filter_metric;
+        let filter_tag_key = params.filter_tag_key;
+        let filter_daily = params.filter_daily;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tag_metadata",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder =
+            local_req_builder.query(&[("filter[month]", &filter_month.to_string())]);
+        if let Some(ref local_query_param) = filter_provider {
+            local_req_builder =
+                local_req_builder.query(&[("filter[provider]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_metric {
+            local_req_builder =
+                local_req_builder.query(&[("filter[metric]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_tag_key {
+            local_req_builder =
+                local_req_builder.query(&[("filter[tag_key]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_daily {
+            local_req_builder =
+                local_req_builder.query(&[("filter[daily]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CostTagKeyMetadataResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListCostTagMetadataError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List Cloud Cost Management metrics that have data for the requested period.
+    pub async fn list_cost_tag_metadata_metrics(
+        &self,
+        filter_month: String,
+        params: ListCostTagMetadataMetricsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CostMetricsResponse,
+        datadog::Error<ListCostTagMetadataMetricsError>,
+    > {
+        match self
+            .list_cost_tag_metadata_metrics_with_http_info(filter_month, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List Cloud Cost Management metrics that have data for the requested period.
+    pub async fn list_cost_tag_metadata_metrics_with_http_info(
+        &self,
+        filter_month: String,
+        params: ListCostTagMetadataMetricsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CostMetricsResponse>,
+        datadog::Error<ListCostTagMetadataMetricsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_cost_tag_metadata_metrics";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_cost_tag_metadata_metrics' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_provider = params.filter_provider;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tag_metadata/metrics",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder =
+            local_req_builder.query(&[("filter[month]", &filter_month.to_string())]);
+        if let Some(ref local_query_param) = filter_provider {
+            local_req_builder =
+                local_req_builder.query(&[("filter[provider]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CostMetricsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListCostTagMetadataMetricsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List container orchestrators (for example, `kubernetes`, `ecs`) detected in Cloud Cost Management data for the requested period.
+    pub async fn list_cost_tag_metadata_orchestrators(
+        &self,
+        filter_month: String,
+        params: ListCostTagMetadataOrchestratorsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CostOrchestratorsResponse,
+        datadog::Error<ListCostTagMetadataOrchestratorsError>,
+    > {
+        match self
+            .list_cost_tag_metadata_orchestrators_with_http_info(filter_month, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List container orchestrators (for example, `kubernetes`, `ecs`) detected in Cloud Cost Management data for the requested period.
+    pub async fn list_cost_tag_metadata_orchestrators_with_http_info(
+        &self,
+        filter_month: String,
+        params: ListCostTagMetadataOrchestratorsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CostOrchestratorsResponse>,
+        datadog::Error<ListCostTagMetadataOrchestratorsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_cost_tag_metadata_orchestrators";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_cost_tag_metadata_orchestrators' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_provider = params.filter_provider;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tag_metadata/orchestrators",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder =
+            local_req_builder.query(&[("filter[month]", &filter_month.to_string())]);
+        if let Some(ref local_query_param) = filter_provider {
+            local_req_builder =
+                local_req_builder.query(&[("filter[provider]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CostOrchestratorsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListCostTagMetadataOrchestratorsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
