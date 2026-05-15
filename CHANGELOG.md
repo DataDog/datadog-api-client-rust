@@ -1,5 +1,59 @@
 # CHANGELOG
 
+## 0.31.0/2026-05-15
+
+### Added
+* Add Compliance Findings rule-based view endpoint to OpenAPI v2 [#1595](https://github.com/DataDog/datadog-api-client-rust/pull/1595)
+* Add window[seconds] query parameter for look back [#1593](https://github.com/DataDog/datadog-api-client-rust/pull/1593)
+* Add OpenAPI spec for cost-planning-api commitment program endpoints [#1591](https://github.com/DataDog/datadog-api-client-rust/pull/1591)
+* Add regression fields to Error Tracking API responses [#1590](https://github.com/DataDog/datadog-api-client-rust/pull/1590)
+* Add OpenAPI for Cloud Cost Management anomalies endpoints [#1588](https://github.com/DataDog/datadog-api-client-rust/pull/1588)
+* Allow errors data source in formula event queries for dashboards [#1582](https://github.com/DataDog/datadog-api-client-rust/pull/1582)
+* Document Cloud Cost Management v2 tags and tag_keys endpoints [#1581](https://github.com/DataDog/datadog-api-client-rust/pull/1581)
+* Add OpenAPI definition for CCM ListCostTagDescriptions [#1578](https://github.com/DataDog/datadog-api-client-rust/pull/1578)
+* Add OpenAPI spec for current user endpoints [#1574](https://github.com/DataDog/datadog-api-client-rust/pull/1574)
+* Add state filter for Search Error Tracking Issues API [#1568](https://github.com/DataDog/datadog-api-client-rust/pull/1568)
+* Add OpenAPI spec for email transport webhook intake [#1567](https://github.com/DataDog/datadog-api-client-rust/pull/1567)
+* Add integration_type for Microsoft Teams to IncidentIntegrationMetadataAttributes [#1566](https://github.com/DataDog/datadog-api-client-rust/pull/1566)
+* Add cross_org_uuids to v2 query endpoints [#1564](https://github.com/DataDog/datadog-api-client-rust/pull/1564)
+* Add GKE Autopilot usage types to API documentation [#1559](https://github.com/DataDog/datadog-api-client-rust/pull/1559)
+* Add session interaction type to LLM Observability API spec [#1558](https://github.com/DataDog/datadog-api-client-rust/pull/1558)
+* Add OpenAPI spec for authn-validation /api/v2/validate endpoint [#1557](https://github.com/DataDog/datadog-api-client-rust/pull/1557)
+* Add OpenAPI definitions for CCM status endpoints [#1556](https://github.com/DataDog/datadog-api-client-rust/pull/1556)
+* Add style and sort to TreeMapWidgetRequest and sort to SunburstWidgetRequest for Dashboards [#1546](https://github.com/DataDog/datadog-api-client-rust/pull/1546)
+* Add `compression_method` field to Log Archives [#1545](https://github.com/DataDog/datadog-api-client-rust/pull/1545)
+* Cloud inventory api sync config endpoint documentation [#1544](https://github.com/DataDog/datadog-api-client-rust/pull/1544)
+* Add Point Plot widget to dashboard API spec [#1542](https://github.com/DataDog/datadog-api-client-rust/pull/1542)
+* Add backfilled degradation and maintenance endpoints to Status Pages [#1541](https://github.com/DataDog/datadog-api-client-rust/pull/1541)
+* Add Cloud Cost Management ListCostOCIConfigs endpoint [#1540](https://github.com/DataDog/datadog-api-client-rust/pull/1540)
+* Add Observability pipelines databricks_zerobus destination [#1534](https://github.com/DataDog/datadog-api-client-rust/pull/1534)
+* Add infra_storage_mgmt_objects_count_avg fields to usage summary API [#1533](https://github.com/DataDog/datadog-api-client-rust/pull/1533)
+* RUM - Add Source Map Intake API endpoint specification [#1532](https://github.com/DataDog/datadog-api-client-rust/pull/1532)
+* Document bulk delete security monitoring rules endpoint [#1526](https://github.com/DataDog/datadog-api-client-rust/pull/1526)
+* Add compliance_host to Agentless Scanning scan options [#1525](https://github.com/DataDog/datadog-api-client-rust/pull/1525)
+* Add MuteSecurityFindings endpoint spec [#1519](https://github.com/DataDog/datadog-api-client-rust/pull/1519)
+* Add OpenAPI documentation for Synthetics downtime endpoints [#1518](https://github.com/DataDog/datadog-api-client-rust/pull/1518)
+* Add feature_flags_config_requests to usage summary API [#1486](https://github.com/DataDog/datadog-api-client-rust/pull/1486)
+* Add specs for ListOrgsV2 and DeleteUserInvitations [#1468](https://github.com/DataDog/datadog-api-client-rust/pull/1468)
+* Add infra_host_basic and eph_infra_host_basic to usage metering API [#1435](https://github.com/DataDog/datadog-api-client-rust/pull/1435)
+
+### Changed
+* Mark email transport webhook endpoint as private [#1586](https://github.com/DataDog/datadog-api-client-rust/pull/1586)
+* Document Annotations label schema API for AI Observability [#1536](https://github.com/DataDog/datadog-api-client-rust/pull/1536)
+* Security Monitoring - expand learningDuration and forgetAfter to support up to 30 days [#1492](https://github.com/DataDog/datadog-api-client-rust/pull/1492)
+
+### Removed
+* Remove deprecated incident teams endpoints [#1572](https://github.com/DataDog/datadog-api-client-rust/pull/1572)
+* Remove deprecated allocation key fields from feature flags API [#1509](https://github.com/DataDog/datadog-api-client-rust/pull/1509)
+
+### Fixed
+* Widgets API - add complete create/update example for cloud_cost_summary [#1554](https://github.com/DataDog/datadog-api-client-rust/pull/1554)
+* Fix Org Groups pagination response shape (meta.page + links) [#1547](https://github.com/DataDog/datadog-api-client-rust/pull/1547)
+* Clarify metrics API query strings [#1537](https://github.com/DataDog/datadog-api-client-rust/pull/1537)
+
+### Deprecated
+* Update Status Pages API documentation to reflect deprecation of creating a published status page [#1522](https://github.com/DataDog/datadog-api-client-rust/pull/1522)
+
 ## 0.30.0/2026-04-24
 
 ### Changed
