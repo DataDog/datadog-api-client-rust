@@ -3425,6 +3425,38 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.ListBudgets".into(), test_v2_list_budgets);
     world.function_mappings.insert(
+        "v2.GetCommitmentsCommitmentList".into(),
+        test_v2_get_commitments_commitment_list,
+    );
+    world.function_mappings.insert(
+        "v2.GetCommitmentsCoverageScalar".into(),
+        test_v2_get_commitments_coverage_scalar,
+    );
+    world.function_mappings.insert(
+        "v2.GetCommitmentsCoverageTimeseries".into(),
+        test_v2_get_commitments_coverage_timeseries,
+    );
+    world.function_mappings.insert(
+        "v2.GetCommitmentsOnDemandHotspotsScalar".into(),
+        test_v2_get_commitments_on_demand_hotspots_scalar,
+    );
+    world.function_mappings.insert(
+        "v2.GetCommitmentsSavingsScalar".into(),
+        test_v2_get_commitments_savings_scalar,
+    );
+    world.function_mappings.insert(
+        "v2.GetCommitmentsSavingsTimeseries".into(),
+        test_v2_get_commitments_savings_timeseries,
+    );
+    world.function_mappings.insert(
+        "v2.GetCommitmentsUtilizationScalar".into(),
+        test_v2_get_commitments_utilization_scalar,
+    );
+    world.function_mappings.insert(
+        "v2.GetCommitmentsUtilizationTimeseries".into(),
+        test_v2_get_commitments_utilization_timeseries,
+    );
+    world.function_mappings.insert(
         "v2.ListCustomCostsFiles".into(),
         test_v2_list_custom_costs_files,
     );
@@ -25366,6 +25398,330 @@ fn test_v2_list_budgets(world: &mut DatadogWorld, _parameters: &HashMap<String, 
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.list_budgets_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_commitments_commitment_list(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let provider = serde_json::from_value(_parameters.get("provider").unwrap().clone()).unwrap();
+    let product = serde_json::from_value(_parameters.get("product").unwrap().clone()).unwrap();
+    let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
+    let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
+    let filter_by = _parameters
+        .get("filterBy")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let commitment_type = _parameters
+        .get("commitmentType")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_cloud_cost_management::GetCommitmentsCommitmentListOptionalParams::default();
+    params.filter_by = filter_by;
+    params.commitment_type = commitment_type;
+    let response = match block_on(
+        api.get_commitments_commitment_list_with_http_info(provider, product, start, end, params),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_commitments_coverage_scalar(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let provider = serde_json::from_value(_parameters.get("provider").unwrap().clone()).unwrap();
+    let product = serde_json::from_value(_parameters.get("product").unwrap().clone()).unwrap();
+    let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
+    let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
+    let filter_by = _parameters
+        .get("filterBy")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_cloud_cost_management::GetCommitmentsCoverageScalarOptionalParams::default();
+    params.filter_by = filter_by;
+    let response = match block_on(
+        api.get_commitments_coverage_scalar_with_http_info(provider, product, start, end, params),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_commitments_coverage_timeseries(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let provider = serde_json::from_value(_parameters.get("provider").unwrap().clone()).unwrap();
+    let product = serde_json::from_value(_parameters.get("product").unwrap().clone()).unwrap();
+    let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
+    let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
+    let filter_by = _parameters
+        .get("filterBy")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_cloud_cost_management::GetCommitmentsCoverageTimeseriesOptionalParams::default();
+    params.filter_by = filter_by;
+    let response =
+        match block_on(api.get_commitments_coverage_timeseries_with_http_info(
+            provider, product, start, end, params,
+        )) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_commitments_on_demand_hotspots_scalar(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let provider = serde_json::from_value(_parameters.get("provider").unwrap().clone()).unwrap();
+    let product = serde_json::from_value(_parameters.get("product").unwrap().clone()).unwrap();
+    let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
+    let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
+    let filter_by = _parameters
+        .get("filterBy")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_cloud_cost_management::GetCommitmentsOnDemandHotspotsScalarOptionalParams::default();
+    params.filter_by = filter_by;
+    let response = match block_on(
+        api.get_commitments_on_demand_hotspots_scalar_with_http_info(
+            provider, product, start, end, params,
+        ),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_commitments_savings_scalar(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let provider = serde_json::from_value(_parameters.get("provider").unwrap().clone()).unwrap();
+    let product = serde_json::from_value(_parameters.get("product").unwrap().clone()).unwrap();
+    let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
+    let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
+    let filter_by = _parameters
+        .get("filterBy")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_cloud_cost_management::GetCommitmentsSavingsScalarOptionalParams::default();
+    params.filter_by = filter_by;
+    let response = match block_on(
+        api.get_commitments_savings_scalar_with_http_info(provider, product, start, end, params),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_commitments_savings_timeseries(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let provider = serde_json::from_value(_parameters.get("provider").unwrap().clone()).unwrap();
+    let product = serde_json::from_value(_parameters.get("product").unwrap().clone()).unwrap();
+    let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
+    let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
+    let filter_by = _parameters
+        .get("filterBy")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_cloud_cost_management::GetCommitmentsSavingsTimeseriesOptionalParams::default();
+    params.filter_by = filter_by;
+    let response =
+        match block_on(api.get_commitments_savings_timeseries_with_http_info(
+            provider, product, start, end, params,
+        )) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_commitments_utilization_scalar(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let provider = serde_json::from_value(_parameters.get("provider").unwrap().clone()).unwrap();
+    let product = serde_json::from_value(_parameters.get("product").unwrap().clone()).unwrap();
+    let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
+    let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
+    let filter_by = _parameters
+        .get("filterBy")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let commitment_type = _parameters
+        .get("commitmentType")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_cloud_cost_management::GetCommitmentsUtilizationScalarOptionalParams::default();
+    params.filter_by = filter_by;
+    params.commitment_type = commitment_type;
+    let response =
+        match block_on(api.get_commitments_utilization_scalar_with_http_info(
+            provider, product, start, end, params,
+        )) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_commitments_utilization_timeseries(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let provider = serde_json::from_value(_parameters.get("provider").unwrap().clone()).unwrap();
+    let product = serde_json::from_value(_parameters.get("product").unwrap().clone()).unwrap();
+    let start = serde_json::from_value(_parameters.get("start").unwrap().clone()).unwrap();
+    let end = serde_json::from_value(_parameters.get("end").unwrap().clone()).unwrap();
+    let filter_by = _parameters
+        .get("filterBy")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let commitment_type = _parameters
+        .get("commitmentType")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_cloud_cost_management::GetCommitmentsUtilizationTimeseriesOptionalParams::default();
+    params.filter_by = filter_by;
+    params.commitment_type = commitment_type;
+    let response = match block_on(api.get_commitments_utilization_timeseries_with_http_info(
+        provider, product, start, end, params,
+    )) {
         Ok(response) => response,
         Err(error) => {
             return match error {

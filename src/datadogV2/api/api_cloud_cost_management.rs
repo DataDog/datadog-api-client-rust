@@ -11,6 +11,164 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// GetCommitmentsCommitmentListOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_commitments_commitment_list`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCommitmentsCommitmentListOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub filter_by: Option<String>,
+    /// Type of commitment to query. ri for Reserved Instances, sp for Savings Plans. Defaults to ri.
+    pub commitment_type: Option<crate::datadogV2::model::CommitmentsCommitmentType>,
+}
+
+impl GetCommitmentsCommitmentListOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub fn filter_by(mut self, value: String) -> Self {
+        self.filter_by = Some(value);
+        self
+    }
+    /// Type of commitment to query. ri for Reserved Instances, sp for Savings Plans. Defaults to ri.
+    pub fn commitment_type(
+        mut self,
+        value: crate::datadogV2::model::CommitmentsCommitmentType,
+    ) -> Self {
+        self.commitment_type = Some(value);
+        self
+    }
+}
+
+/// GetCommitmentsCoverageScalarOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_commitments_coverage_scalar`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCommitmentsCoverageScalarOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub filter_by: Option<String>,
+}
+
+impl GetCommitmentsCoverageScalarOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub fn filter_by(mut self, value: String) -> Self {
+        self.filter_by = Some(value);
+        self
+    }
+}
+
+/// GetCommitmentsCoverageTimeseriesOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_commitments_coverage_timeseries`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCommitmentsCoverageTimeseriesOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub filter_by: Option<String>,
+}
+
+impl GetCommitmentsCoverageTimeseriesOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub fn filter_by(mut self, value: String) -> Self {
+        self.filter_by = Some(value);
+        self
+    }
+}
+
+/// GetCommitmentsOnDemandHotspotsScalarOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_commitments_on_demand_hotspots_scalar`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCommitmentsOnDemandHotspotsScalarOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub filter_by: Option<String>,
+}
+
+impl GetCommitmentsOnDemandHotspotsScalarOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub fn filter_by(mut self, value: String) -> Self {
+        self.filter_by = Some(value);
+        self
+    }
+}
+
+/// GetCommitmentsSavingsScalarOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_commitments_savings_scalar`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCommitmentsSavingsScalarOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub filter_by: Option<String>,
+}
+
+impl GetCommitmentsSavingsScalarOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub fn filter_by(mut self, value: String) -> Self {
+        self.filter_by = Some(value);
+        self
+    }
+}
+
+/// GetCommitmentsSavingsTimeseriesOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_commitments_savings_timeseries`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCommitmentsSavingsTimeseriesOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub filter_by: Option<String>,
+}
+
+impl GetCommitmentsSavingsTimeseriesOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub fn filter_by(mut self, value: String) -> Self {
+        self.filter_by = Some(value);
+        self
+    }
+}
+
+/// GetCommitmentsUtilizationScalarOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_commitments_utilization_scalar`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCommitmentsUtilizationScalarOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub filter_by: Option<String>,
+    /// Type of commitment to query. ri for Reserved Instances, sp for Savings Plans. Defaults to ri.
+    pub commitment_type: Option<crate::datadogV2::model::CommitmentsCommitmentType>,
+}
+
+impl GetCommitmentsUtilizationScalarOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub fn filter_by(mut self, value: String) -> Self {
+        self.filter_by = Some(value);
+        self
+    }
+    /// Type of commitment to query. ri for Reserved Instances, sp for Savings Plans. Defaults to ri.
+    pub fn commitment_type(
+        mut self,
+        value: crate::datadogV2::model::CommitmentsCommitmentType,
+    ) -> Self {
+        self.commitment_type = Some(value);
+        self
+    }
+}
+
+/// GetCommitmentsUtilizationTimeseriesOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_commitments_utilization_timeseries`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCommitmentsUtilizationTimeseriesOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub filter_by: Option<String>,
+    /// Type of commitment to query. ri for Reserved Instances, sp for Savings Plans. Defaults to ri.
+    pub commitment_type: Option<crate::datadogV2::model::CommitmentsCommitmentType>,
+}
+
+impl GetCommitmentsUtilizationTimeseriesOptionalParams {
+    /// Optional filter expression to narrow down results.
+    pub fn filter_by(mut self, value: String) -> Self {
+        self.filter_by = Some(value);
+        self
+    }
+    /// Type of commitment to query. ri for Reserved Instances, sp for Savings Plans. Defaults to ri.
+    pub fn commitment_type(
+        mut self,
+        value: crate::datadogV2::model::CommitmentsCommitmentType,
+    ) -> Self {
+        self.commitment_type = Some(value);
+        self
+    }
+}
+
 /// GetCostTagKeyOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_cost_tag_key`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -354,6 +512,78 @@ pub enum DeleteTagPipelinesRulesetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetBudgetError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetCommitmentsCommitmentListError is a struct for typed errors of method [`CloudCostManagementAPI::get_commitments_commitment_list`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCommitmentsCommitmentListError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetCommitmentsCoverageScalarError is a struct for typed errors of method [`CloudCostManagementAPI::get_commitments_coverage_scalar`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCommitmentsCoverageScalarError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetCommitmentsCoverageTimeseriesError is a struct for typed errors of method [`CloudCostManagementAPI::get_commitments_coverage_timeseries`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCommitmentsCoverageTimeseriesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetCommitmentsOnDemandHotspotsScalarError is a struct for typed errors of method [`CloudCostManagementAPI::get_commitments_on_demand_hotspots_scalar`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCommitmentsOnDemandHotspotsScalarError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetCommitmentsSavingsScalarError is a struct for typed errors of method [`CloudCostManagementAPI::get_commitments_savings_scalar`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCommitmentsSavingsScalarError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetCommitmentsSavingsTimeseriesError is a struct for typed errors of method [`CloudCostManagementAPI::get_commitments_savings_timeseries`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCommitmentsSavingsTimeseriesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetCommitmentsUtilizationScalarError is a struct for typed errors of method [`CloudCostManagementAPI::get_commitments_utilization_scalar`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCommitmentsUtilizationScalarError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetCommitmentsUtilizationTimeseriesError is a struct for typed errors of method [`CloudCostManagementAPI::get_commitments_utilization_timeseries`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCommitmentsUtilizationTimeseriesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2231,6 +2461,1153 @@ impl CloudCostManagementAPI {
             };
         } else {
             let local_entity: Option<GetBudgetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a list of individual cloud commitments (Reserved Instances or Savings Plans) with their utilization details. The response schema varies based on the provider, product, and commitment type.
+    pub async fn get_commitments_commitment_list(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsCommitmentListOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CommitmentsListResponse,
+        datadog::Error<GetCommitmentsCommitmentListError>,
+    > {
+        match self
+            .get_commitments_commitment_list_with_http_info(provider, product, start, end, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of individual cloud commitments (Reserved Instances or Savings Plans) with their utilization details. The response schema varies based on the provider, product, and commitment type.
+    pub async fn get_commitments_commitment_list_with_http_info(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsCommitmentListOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CommitmentsListResponse>,
+        datadog::Error<GetCommitmentsCommitmentListError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_commitments_commitment_list";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_commitments_commitment_list' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_by = params.filter_by;
+        let commitment_type = params.commitment_type;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/commitments/commitment-list",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("provider", &provider.to_string())]);
+        local_req_builder = local_req_builder.query(&[("product", &product.to_string())]);
+        local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
+        local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
+        if let Some(ref local_query_param) = filter_by {
+            local_req_builder =
+                local_req_builder.query(&[("filterBy", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = commitment_type {
+            local_req_builder =
+                local_req_builder.query(&[("commitmentType", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CommitmentsListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCommitmentsCommitmentListError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get scalar coverage metrics for cloud commitment programs, including hours and cost coverage percentages.
+    pub async fn get_commitments_coverage_scalar(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsCoverageScalarOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CommitmentsCoverageScalarResponse,
+        datadog::Error<GetCommitmentsCoverageScalarError>,
+    > {
+        match self
+            .get_commitments_coverage_scalar_with_http_info(provider, product, start, end, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get scalar coverage metrics for cloud commitment programs, including hours and cost coverage percentages.
+    pub async fn get_commitments_coverage_scalar_with_http_info(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsCoverageScalarOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CommitmentsCoverageScalarResponse>,
+        datadog::Error<GetCommitmentsCoverageScalarError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_commitments_coverage_scalar";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_commitments_coverage_scalar' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_by = params.filter_by;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/commitments/coverage/scalar",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("provider", &provider.to_string())]);
+        local_req_builder = local_req_builder.query(&[("product", &product.to_string())]);
+        local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
+        local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
+        if let Some(ref local_query_param) = filter_by {
+            local_req_builder =
+                local_req_builder.query(&[("filterBy", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CommitmentsCoverageScalarResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCommitmentsCoverageScalarError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get timeseries coverage metrics for cloud commitment programs, broken down by coverage type (Reserved Instances, Savings Plans, On-Demand, and Spot) for both hours and cost.
+    pub async fn get_commitments_coverage_timeseries(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsCoverageTimeseriesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CommitmentsCoverageTimeseriesResponse,
+        datadog::Error<GetCommitmentsCoverageTimeseriesError>,
+    > {
+        match self
+            .get_commitments_coverage_timeseries_with_http_info(
+                provider, product, start, end, params,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get timeseries coverage metrics for cloud commitment programs, broken down by coverage type (Reserved Instances, Savings Plans, On-Demand, and Spot) for both hours and cost.
+    pub async fn get_commitments_coverage_timeseries_with_http_info(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsCoverageTimeseriesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CommitmentsCoverageTimeseriesResponse>,
+        datadog::Error<GetCommitmentsCoverageTimeseriesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_commitments_coverage_timeseries";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_commitments_coverage_timeseries' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_by = params.filter_by;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/commitments/coverage/timeseries",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("provider", &provider.to_string())]);
+        local_req_builder = local_req_builder.query(&[("product", &product.to_string())]);
+        local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
+        local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
+        if let Some(ref local_query_param) = filter_by {
+            local_req_builder =
+                local_req_builder.query(&[("filterBy", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::CommitmentsCoverageTimeseriesResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCommitmentsCoverageTimeseriesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get scalar on-demand hot-spots data for cloud commitment programs, showing per-dimension breakdowns of on-demand spending with coverage metrics and potential savings.
+    pub async fn get_commitments_on_demand_hotspots_scalar(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsOnDemandHotspotsScalarOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CommitmentsOnDemandHotspotsScalarResponse,
+        datadog::Error<GetCommitmentsOnDemandHotspotsScalarError>,
+    > {
+        match self
+            .get_commitments_on_demand_hotspots_scalar_with_http_info(
+                provider, product, start, end, params,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get scalar on-demand hot-spots data for cloud commitment programs, showing per-dimension breakdowns of on-demand spending with coverage metrics and potential savings.
+    pub async fn get_commitments_on_demand_hotspots_scalar_with_http_info(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsOnDemandHotspotsScalarOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::CommitmentsOnDemandHotspotsScalarResponse,
+        >,
+        datadog::Error<GetCommitmentsOnDemandHotspotsScalarError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_commitments_on_demand_hotspots_scalar";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_commitments_on_demand_hotspots_scalar' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_by = params.filter_by;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/commitments/on-demand-hot-spots/scalar",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("provider", &provider.to_string())]);
+        local_req_builder = local_req_builder.query(&[("product", &product.to_string())]);
+        local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
+        local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
+        if let Some(ref local_query_param) = filter_by {
+            local_req_builder =
+                local_req_builder.query(&[("filterBy", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::CommitmentsOnDemandHotspotsScalarResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCommitmentsOnDemandHotspotsScalarError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get scalar savings metrics for cloud commitment programs, including realized savings and effective savings rate.
+    pub async fn get_commitments_savings_scalar(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsSavingsScalarOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CommitmentsSavingsScalarResponse,
+        datadog::Error<GetCommitmentsSavingsScalarError>,
+    > {
+        match self
+            .get_commitments_savings_scalar_with_http_info(provider, product, start, end, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get scalar savings metrics for cloud commitment programs, including realized savings and effective savings rate.
+    pub async fn get_commitments_savings_scalar_with_http_info(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsSavingsScalarOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CommitmentsSavingsScalarResponse>,
+        datadog::Error<GetCommitmentsSavingsScalarError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_commitments_savings_scalar";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_commitments_savings_scalar' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_by = params.filter_by;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/commitments/savings/scalar",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("provider", &provider.to_string())]);
+        local_req_builder = local_req_builder.query(&[("product", &product.to_string())]);
+        local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
+        local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
+        if let Some(ref local_query_param) = filter_by {
+            local_req_builder =
+                local_req_builder.query(&[("filterBy", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CommitmentsSavingsScalarResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCommitmentsSavingsScalarError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get timeseries savings metrics for cloud commitment programs, including actual cost, on-demand equivalent cost, realized savings, and effective savings rate over time.
+    pub async fn get_commitments_savings_timeseries(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsSavingsTimeseriesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CommitmentsSavingsTimeseriesResponse,
+        datadog::Error<GetCommitmentsSavingsTimeseriesError>,
+    > {
+        match self
+            .get_commitments_savings_timeseries_with_http_info(
+                provider, product, start, end, params,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get timeseries savings metrics for cloud commitment programs, including actual cost, on-demand equivalent cost, realized savings, and effective savings rate over time.
+    pub async fn get_commitments_savings_timeseries_with_http_info(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsSavingsTimeseriesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CommitmentsSavingsTimeseriesResponse>,
+        datadog::Error<GetCommitmentsSavingsTimeseriesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_commitments_savings_timeseries";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_commitments_savings_timeseries' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_by = params.filter_by;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/commitments/savings/timeseries",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("provider", &provider.to_string())]);
+        local_req_builder = local_req_builder.query(&[("product", &product.to_string())]);
+        local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
+        local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
+        if let Some(ref local_query_param) = filter_by {
+            local_req_builder =
+                local_req_builder.query(&[("filterBy", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::CommitmentsSavingsTimeseriesResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCommitmentsSavingsTimeseriesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get scalar utilization metrics for cloud commitment programs, including utilization percentage and unused cost.
+    pub async fn get_commitments_utilization_scalar(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsUtilizationScalarOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CommitmentsUtilizationScalarResponse,
+        datadog::Error<GetCommitmentsUtilizationScalarError>,
+    > {
+        match self
+            .get_commitments_utilization_scalar_with_http_info(
+                provider, product, start, end, params,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get scalar utilization metrics for cloud commitment programs, including utilization percentage and unused cost.
+    pub async fn get_commitments_utilization_scalar_with_http_info(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsUtilizationScalarOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CommitmentsUtilizationScalarResponse>,
+        datadog::Error<GetCommitmentsUtilizationScalarError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_commitments_utilization_scalar";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_commitments_utilization_scalar' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_by = params.filter_by;
+        let commitment_type = params.commitment_type;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/commitments/utilization/scalar",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("provider", &provider.to_string())]);
+        local_req_builder = local_req_builder.query(&[("product", &product.to_string())]);
+        local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
+        local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
+        if let Some(ref local_query_param) = filter_by {
+            local_req_builder =
+                local_req_builder.query(&[("filterBy", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = commitment_type {
+            local_req_builder =
+                local_req_builder.query(&[("commitmentType", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::CommitmentsUtilizationScalarResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCommitmentsUtilizationScalarError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get timeseries utilization metrics for cloud commitment programs, including used and unused cost series over time.
+    pub async fn get_commitments_utilization_timeseries(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsUtilizationTimeseriesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CommitmentsUtilizationTimeseriesResponse,
+        datadog::Error<GetCommitmentsUtilizationTimeseriesError>,
+    > {
+        match self
+            .get_commitments_utilization_timeseries_with_http_info(
+                provider, product, start, end, params,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get timeseries utilization metrics for cloud commitment programs, including used and unused cost series over time.
+    pub async fn get_commitments_utilization_timeseries_with_http_info(
+        &self,
+        provider: crate::datadogV2::model::CommitmentsProvider,
+        product: String,
+        start: i64,
+        end: i64,
+        params: GetCommitmentsUtilizationTimeseriesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CommitmentsUtilizationTimeseriesResponse>,
+        datadog::Error<GetCommitmentsUtilizationTimeseriesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_commitments_utilization_timeseries";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_commitments_utilization_timeseries' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_by = params.filter_by;
+        let commitment_type = params.commitment_type;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/commitments/utilization/timeseries",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("provider", &provider.to_string())]);
+        local_req_builder = local_req_builder.query(&[("product", &product.to_string())]);
+        local_req_builder = local_req_builder.query(&[("start", &start.to_string())]);
+        local_req_builder = local_req_builder.query(&[("end", &end.to_string())]);
+        if let Some(ref local_query_param) = filter_by {
+            local_req_builder =
+                local_req_builder.query(&[("filterBy", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = commitment_type {
+            local_req_builder =
+                local_req_builder.query(&[("commitmentType", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::CommitmentsUtilizationTimeseriesResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCommitmentsUtilizationTimeseriesError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
