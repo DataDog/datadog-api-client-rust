@@ -6,17 +6,20 @@ use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueInteractionsDataA
 use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueInteractionsDataRequest;
 use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueInteractionsRequest;
 use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueInteractionsType;
-use datadog_api_client::datadogV2::model::LLMObsInteractionType;
+use datadog_api_client::datadogV2::model::LLMObsTraceInteractionItem;
+use datadog_api_client::datadogV2::model::LLMObsTraceInteractionType;
 
 #[tokio::main]
 async fn main() {
     let body = LLMObsAnnotationQueueInteractionsRequest::new(
         LLMObsAnnotationQueueInteractionsDataRequest::new(
             LLMObsAnnotationQueueInteractionsDataAttributesRequest::new(vec![
-                LLMObsAnnotationQueueInteractionItem::new(
-                    "trace-abc-123".to_string(),
-                    LLMObsInteractionType::TRACE,
-                ),
+                LLMObsAnnotationQueueInteractionItem::LLMObsTraceInteractionItem(Box::new(
+                    LLMObsTraceInteractionItem::new(
+                        "trace-abc-123".to_string(),
+                        LLMObsTraceInteractionType::TRACE,
+                    ),
+                )),
             ]),
             LLMObsAnnotationQueueInteractionsType::INTERACTIONS,
         ),
