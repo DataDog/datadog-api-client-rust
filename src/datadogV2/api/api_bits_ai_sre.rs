@@ -13,7 +13,7 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// ListInvestigationsOptionalParams is a struct for passing parameters to the method [`BitsAIAPI::list_investigations`]
+/// ListInvestigationsOptionalParams is a struct for passing parameters to the method [`BitsAISREAPI::list_investigations`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListInvestigationsOptionalParams {
@@ -43,7 +43,7 @@ impl ListInvestigationsOptionalParams {
     }
 }
 
-/// GetInvestigationError is a struct for typed errors of method [`BitsAIAPI::get_investigation`]
+/// GetInvestigationError is a struct for typed errors of method [`BitsAISREAPI::get_investigation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetInvestigationError {
@@ -52,7 +52,7 @@ pub enum GetInvestigationError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListInvestigationsError is a struct for typed errors of method [`BitsAIAPI::list_investigations`]
+/// ListInvestigationsError is a struct for typed errors of method [`BitsAISREAPI::list_investigations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListInvestigationsError {
@@ -61,7 +61,7 @@ pub enum ListInvestigationsError {
     UnknownValue(serde_json::Value),
 }
 
-/// TriggerInvestigationError is a struct for typed errors of method [`BitsAIAPI::trigger_investigation`]
+/// TriggerInvestigationError is a struct for typed errors of method [`BitsAISREAPI::trigger_investigation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TriggerInvestigationError {
@@ -70,20 +70,20 @@ pub enum TriggerInvestigationError {
     UnknownValue(serde_json::Value),
 }
 
-/// Use the Bits AI endpoints to retrieve AI-powered investigations.
+/// Use the Bits AI SRE endpoints to retrieve AI-powered investigations.
 #[derive(Debug, Clone)]
-pub struct BitsAIAPI {
+pub struct BitsAISREAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for BitsAIAPI {
+impl Default for BitsAISREAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl BitsAIAPI {
+impl BitsAISREAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -144,7 +144,7 @@ impl BitsAIAPI {
         Self { config, client }
     }
 
-    /// Get a specific Bits AI investigation by ID.
+    /// Get a specific Bits AI SRE investigation by ID.
     pub async fn get_investigation(
         &self,
         id: String,
@@ -166,7 +166,7 @@ impl BitsAIAPI {
         }
     }
 
-    /// Get a specific Bits AI investigation by ID.
+    /// Get a specific Bits AI SRE investigation by ID.
     pub async fn get_investigation_with_http_info(
         &self,
         id: String,
@@ -261,7 +261,7 @@ impl BitsAIAPI {
         }
     }
 
-    /// List all Bits AI investigations for the organization.
+    /// List all Bits AI SRE investigations for the organization.
     pub async fn list_investigations(
         &self,
         params: ListInvestigationsOptionalParams,
@@ -320,7 +320,7 @@ impl BitsAIAPI {
         }
     }
 
-    /// List all Bits AI investigations for the organization.
+    /// List all Bits AI SRE investigations for the organization.
     pub async fn list_investigations_with_http_info(
         &self,
         params: ListInvestigationsOptionalParams,
@@ -432,7 +432,7 @@ impl BitsAIAPI {
         }
     }
 
-    /// Trigger a new Bits AI investigation based on a monitor alert.
+    /// Trigger a new Bits AI SRE investigation based on a monitor alert.
     pub async fn trigger_investigation(
         &self,
         body: crate::datadogV2::model::TriggerInvestigationRequest,
@@ -454,7 +454,7 @@ impl BitsAIAPI {
         }
     }
 
-    /// Trigger a new Bits AI investigation based on a monitor alert.
+    /// Trigger a new Bits AI SRE investigation based on a monitor alert.
     pub async fn trigger_investigation_with_http_info(
         &self,
         body: crate::datadogV2::model::TriggerInvestigationRequest,
