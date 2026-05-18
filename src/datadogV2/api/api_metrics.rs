@@ -1724,7 +1724,7 @@ impl MetricsAPI {
                     yield team;
                 }
 
-                if count < page_size as usize {
+                if count == 0 {
                     break;
                 }
                 let Some(meta) = resp.meta else { break };
