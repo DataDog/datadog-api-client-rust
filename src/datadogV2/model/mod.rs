@@ -9638,6 +9638,8 @@ pub mod model_synthetics_downtime_frequency;
 pub use self::model_synthetics_downtime_frequency::SyntheticsDowntimeFrequency;
 pub mod model_synthetics_downtime_time_slot_date;
 pub use self::model_synthetics_downtime_time_slot_date::SyntheticsDowntimeTimeSlotDate;
+pub mod model_synthetics_downtime_weekday_position;
+pub use self::model_synthetics_downtime_weekday_position::SyntheticsDowntimeWeekdayPosition;
 pub mod model_synthetics_downtime_weekday;
 pub use self::model_synthetics_downtime_weekday::SyntheticsDowntimeWeekday;
 pub mod model_synthetics_downtime_resource_type;
