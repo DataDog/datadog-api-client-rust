@@ -238,6 +238,78 @@ impl ListScorecardRulesOptionalParams {
     }
 }
 
+/// ListScorecardScoresOptionalParams is a struct for passing parameters to the method [`ScorecardsAPI::list_scorecard_scores`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListScorecardScoresOptionalParams {
+    /// Filter scores by rule ID(s), comma-separated.
+    pub filter_rule_id: Option<String>,
+    /// Filter scores by rule name.
+    pub filter_rule_name: Option<String>,
+    /// Filter scores by rule level(s), comma-separated.
+    pub filter_rule_level: Option<String>,
+    /// Filter scores by scorecard ID(s), comma-separated.
+    pub filter_rule_scorecard_id: Option<String>,
+    /// Filter scores to show only custom rules.
+    pub filter_rule_is_custom: Option<bool>,
+    /// Filter scores to show only enabled rules.
+    pub filter_rule_is_enabled: Option<bool>,
+    /// Sort scores by field. Use a hyphen prefix for descending order. Options: score, numerator, denominator, total_pass, total_fail, total_skip, total_no_data.
+    pub sort: Option<String>,
+    /// Offset for pagination.
+    pub page_offset: Option<i32>,
+    /// Number of scores to return. Max is 1000.
+    pub page_limit: Option<i32>,
+}
+
+impl ListScorecardScoresOptionalParams {
+    /// Filter scores by rule ID(s), comma-separated.
+    pub fn filter_rule_id(mut self, value: String) -> Self {
+        self.filter_rule_id = Some(value);
+        self
+    }
+    /// Filter scores by rule name.
+    pub fn filter_rule_name(mut self, value: String) -> Self {
+        self.filter_rule_name = Some(value);
+        self
+    }
+    /// Filter scores by rule level(s), comma-separated.
+    pub fn filter_rule_level(mut self, value: String) -> Self {
+        self.filter_rule_level = Some(value);
+        self
+    }
+    /// Filter scores by scorecard ID(s), comma-separated.
+    pub fn filter_rule_scorecard_id(mut self, value: String) -> Self {
+        self.filter_rule_scorecard_id = Some(value);
+        self
+    }
+    /// Filter scores to show only custom rules.
+    pub fn filter_rule_is_custom(mut self, value: bool) -> Self {
+        self.filter_rule_is_custom = Some(value);
+        self
+    }
+    /// Filter scores to show only enabled rules.
+    pub fn filter_rule_is_enabled(mut self, value: bool) -> Self {
+        self.filter_rule_is_enabled = Some(value);
+        self
+    }
+    /// Sort scores by field. Use a hyphen prefix for descending order. Options: score, numerator, denominator, total_pass, total_fail, total_skip, total_no_data.
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Offset for pagination.
+    pub fn page_offset(mut self, value: i32) -> Self {
+        self.page_offset = Some(value);
+        self
+    }
+    /// Number of scores to return. Max is 1000.
+    pub fn page_limit(mut self, value: i32) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+}
+
 /// ListScorecardsOptionalParams is a struct for passing parameters to the method [`ScorecardsAPI::list_scorecards`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -354,6 +426,14 @@ pub enum ListScorecardOutcomesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListScorecardRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListScorecardScoresError is a struct for typed errors of method [`ScorecardsAPI::list_scorecard_scores`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListScorecardScoresError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1760,6 +1840,168 @@ impl ScorecardsAPI {
             };
         } else {
             let local_entity: Option<ListScorecardRulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Returns a list of scorecard scores for each aggregation type, with score breakdowns.
+    pub async fn list_scorecard_scores(
+        &self,
+        aggregation: crate::datadogV2::model::ScorecardScoresAggregation,
+        params: ListScorecardScoresOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ListScorecardScoresResponse,
+        datadog::Error<ListScorecardScoresError>,
+    > {
+        match self
+            .list_scorecard_scores_with_http_info(aggregation, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Returns a list of scorecard scores for each aggregation type, with score breakdowns.
+    pub async fn list_scorecard_scores_with_http_info(
+        &self,
+        aggregation: crate::datadogV2::model::ScorecardScoresAggregation,
+        params: ListScorecardScoresOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ListScorecardScoresResponse>,
+        datadog::Error<ListScorecardScoresError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_scorecard_scores";
+
+        // unbox and build optional parameters
+        let filter_rule_id = params.filter_rule_id;
+        let filter_rule_name = params.filter_rule_name;
+        let filter_rule_level = params.filter_rule_level;
+        let filter_rule_scorecard_id = params.filter_rule_scorecard_id;
+        let filter_rule_is_custom = params.filter_rule_is_custom;
+        let filter_rule_is_enabled = params.filter_rule_is_enabled;
+        let sort = params.sort;
+        let page_offset = params.page_offset;
+        let page_limit = params.page_limit;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/scorecard/scores/{aggregation}",
+            local_configuration.get_operation_host(operation_id),
+            aggregation = datadog::urlencode(aggregation.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_rule_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[rule][id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_rule_name {
+            local_req_builder =
+                local_req_builder.query(&[("filter[rule][name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_rule_level {
+            local_req_builder =
+                local_req_builder.query(&[("filter[rule][level]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_rule_scorecard_id {
+            local_req_builder = local_req_builder
+                .query(&[("filter[rule][scorecard_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_rule_is_custom {
+            local_req_builder = local_req_builder
+                .query(&[("filter[rule][is_custom]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_rule_is_enabled {
+            local_req_builder = local_req_builder
+                .query(&[("filter[rule][is_enabled]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ListScorecardScoresResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListScorecardScoresError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
