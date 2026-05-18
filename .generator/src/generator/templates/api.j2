@@ -241,9 +241,15 @@ impl {{ structName }} {
                     yield team;
                 }
 
+                {%- if pagination.cursorParam %}
+                if count == 0 {
+                    break;
+                }
+                {%- else %}
                 if count < page_size as usize {
                     break;
                 }
+                {%- endif %}
 
                 {%- if pagination.pageParam %}
                 {%- set getter, setter, required, schema = get_accessors(operation, pagination.pageParam) %}
