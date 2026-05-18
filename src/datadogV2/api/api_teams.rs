@@ -2638,7 +2638,6 @@ impl TeamsAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count < page_size as usize {
                     break;
                 }
@@ -3358,7 +3357,6 @@ impl TeamsAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count < page_size as usize {
                     break;
                 }
@@ -3539,7 +3537,6 @@ impl TeamsAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count < page_size as usize {
                     break;
                 }
@@ -3745,7 +3742,6 @@ impl TeamsAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count < page_size as usize {
                     break;
                 }
@@ -3907,7 +3903,6 @@ impl TeamsAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count < page_size as usize {
                     break;
                 }

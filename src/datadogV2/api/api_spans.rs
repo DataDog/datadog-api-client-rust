@@ -371,7 +371,6 @@ impl SpansAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count == 0 {
                     break;
                 }
@@ -567,7 +566,6 @@ impl SpansAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count == 0 {
                     break;
                 }

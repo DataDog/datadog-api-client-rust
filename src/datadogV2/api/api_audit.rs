@@ -214,7 +214,6 @@ impl AuditAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count == 0 {
                     break;
                 }
@@ -413,7 +412,6 @@ impl AuditAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count == 0 {
                     break;
                 }

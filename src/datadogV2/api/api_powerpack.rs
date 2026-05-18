@@ -545,7 +545,6 @@ impl PowerpackAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count < page_size as usize {
                     break;
                 }

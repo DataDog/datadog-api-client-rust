@@ -10744,7 +10744,6 @@ impl SecurityMonitoringAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count == 0 {
                     break;
                 }
@@ -11824,7 +11823,6 @@ impl SecurityMonitoringAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count == 0 {
                     break;
                 }
@@ -12406,7 +12404,6 @@ impl SecurityMonitoringAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count == 0 {
                     break;
                 }
@@ -14351,7 +14348,6 @@ impl SecurityMonitoringAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count == 0 {
                     break;
                 }
@@ -14732,7 +14728,6 @@ impl SecurityMonitoringAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count == 0 {
                     break;
                 }

@@ -381,7 +381,6 @@ impl CIVisibilityTestsAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count == 0 {
                     break;
                 }
@@ -576,7 +575,6 @@ impl CIVisibilityTestsAPI {
                 for team in r {
                     yield team;
                 }
-
                 if count == 0 {
                     break;
                 }
