@@ -28,6 +28,7 @@ pub enum MonitorType {
     COST_ALERT,
     DATA_QUALITY_ALERT,
     NETWORK_PATH_ALERT,
+    DATA_JOBS_ALERT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -55,6 +56,7 @@ impl ToString for MonitorType {
             Self::COST_ALERT => String::from("cost alert"),
             Self::DATA_QUALITY_ALERT => String::from("data-quality alert"),
             Self::NETWORK_PATH_ALERT => String::from("network-path alert"),
+            Self::DATA_JOBS_ALERT => String::from("data-jobs alert"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -100,6 +102,7 @@ impl<'de> Deserialize<'de> for MonitorType {
             "cost alert" => Self::COST_ALERT,
             "data-quality alert" => Self::DATA_QUALITY_ALERT,
             "network-path alert" => Self::NETWORK_PATH_ALERT,
+            "data-jobs alert" => Self::DATA_JOBS_ALERT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
