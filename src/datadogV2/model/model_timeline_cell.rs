@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a timeline cell, representing a single event in a case's chronological activity log (for example, a comment, status change, or assignment update).
+/// timeline cell
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TimelineCell {
-    /// The author of the timeline cell. Currently only user authors are supported.
+    /// author of the timeline cell
     #[serde(rename = "author")]
     pub author: Option<crate::datadogV2::model::TimelineCellAuthor>,
-    /// The content payload of a timeline cell, varying by cell type.
+    /// timeline cell content
     #[serde(rename = "cell_content")]
     pub cell_content: Option<crate::datadogV2::model::TimelineCellContent>,
     /// Timestamp of when the cell was created
@@ -26,7 +26,7 @@ pub struct TimelineCell {
     /// Timestamp of when the cell was last modified
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// The type of content in the timeline cell. Currently only `COMMENT` is supported in this endpoint.
+    /// Timeline cell content type
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::TimelineCellType>,
     #[serde(flatten)]

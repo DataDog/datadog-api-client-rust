@@ -137,6 +137,7 @@ pub struct ApiInstances {
     pub v2_api_logs_restriction_queries:
         Option<datadogV2::api_logs_restriction_queries::LogsRestrictionQueriesAPI>,
     pub v2_api_metrics: Option<datadogV2::api_metrics::MetricsAPI>,
+    pub v2_api_model_lab_api: Option<datadogV2::api_model_lab_api::ModelLabAPIAPI>,
     pub v2_api_monitors: Option<datadogV2::api_monitors::MonitorsAPI>,
     pub v2_api_network_device_monitoring:
         Option<datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI>,
@@ -947,6 +948,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "ModelLabAPI" => {
+            world.api_instances.v2_api_model_lab_api = Some(
+                datadogV2::api_model_lab_api::ModelLabAPIAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "NetworkDeviceMonitoring" => {
             world.api_instances.v2_api_network_device_monitoring = Some(datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI::with_client_and_config(
@@ -2670,32 +2679,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.CreateCase".into(), test_v2_create_case);
     world
         .function_mappings
-        .insert("v2.AggregateCases".into(), test_v2_aggregate_cases);
-    world
-        .function_mappings
-        .insert("v2.BulkUpdateCases".into(), test_v2_bulk_update_cases);
-    world
-        .function_mappings
-        .insert("v2.CountCases".into(), test_v2_count_cases);
-    world
-        .function_mappings
-        .insert("v2.ListCaseLinks".into(), test_v2_list_case_links);
-    world
-        .function_mappings
-        .insert("v2.CreateCaseLink".into(), test_v2_create_case_link);
-    world
-        .function_mappings
-        .insert("v2.DeleteCaseLink".into(), test_v2_delete_case_link);
-    world
-        .function_mappings
         .insert("v2.GetProjects".into(), test_v2_get_projects);
     world
         .function_mappings
         .insert("v2.CreateProject".into(), test_v2_create_project);
-    world.function_mappings.insert(
-        "v2.ListUserCaseProjectFavorites".into(),
-        test_v2_list_user_case_project_favorites,
-    );
     world
         .function_mappings
         .insert("v2.DeleteProject".into(), test_v2_delete_project);
@@ -2705,14 +2692,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateProject".into(), test_v2_update_project);
-    world.function_mappings.insert(
-        "v2.UnfavoriteCaseProject".into(),
-        test_v2_unfavorite_case_project,
-    );
-    world.function_mappings.insert(
-        "v2.FavoriteCaseProject".into(),
-        test_v2_favorite_case_project,
-    );
     world.function_mappings.insert(
         "v2.GetProjectNotificationRules".into(),
         test_v2_get_project_notification_rules,
@@ -2729,49 +2708,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateProjectNotificationRule".into(),
         test_v2_update_project_notification_rule,
     );
-    world.function_mappings.insert(
-        "v2.ListCaseAutomationRules".into(),
-        test_v2_list_case_automation_rules,
-    );
-    world.function_mappings.insert(
-        "v2.CreateCaseAutomationRule".into(),
-        test_v2_create_case_automation_rule,
-    );
-    world.function_mappings.insert(
-        "v2.DeleteCaseAutomationRule".into(),
-        test_v2_delete_case_automation_rule,
-    );
-    world.function_mappings.insert(
-        "v2.GetCaseAutomationRule".into(),
-        test_v2_get_case_automation_rule,
-    );
-    world.function_mappings.insert(
-        "v2.UpdateCaseAutomationRule".into(),
-        test_v2_update_case_automation_rule,
-    );
-    world.function_mappings.insert(
-        "v2.DisableCaseAutomationRule".into(),
-        test_v2_disable_case_automation_rule,
-    );
-    world.function_mappings.insert(
-        "v2.EnableCaseAutomationRule".into(),
-        test_v2_enable_case_automation_rule,
-    );
-    world
-        .function_mappings
-        .insert("v2.ListCaseViews".into(), test_v2_list_case_views);
-    world
-        .function_mappings
-        .insert("v2.CreateCaseView".into(), test_v2_create_case_view);
-    world
-        .function_mappings
-        .insert("v2.DeleteCaseView".into(), test_v2_delete_case_view);
-    world
-        .function_mappings
-        .insert("v2.GetCaseView".into(), test_v2_get_case_view);
-    world
-        .function_mappings
-        .insert("v2.UpdateCaseView".into(), test_v2_update_case_view);
     world
         .function_mappings
         .insert("v2.GetCase".into(), test_v2_get_case);
@@ -2790,9 +2726,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.DeleteCaseComment".into(), test_v2_delete_case_comment);
-    world
-        .function_mappings
-        .insert("v2.UpdateCaseComment".into(), test_v2_update_case_comment);
     world.function_mappings.insert(
         "v2.DeleteCaseCustomAttribute".into(),
         test_v2_delete_case_custom_attribute,
@@ -2805,15 +2738,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateCaseDescription".into(),
         test_v2_update_case_description,
     );
-    world
-        .function_mappings
-        .insert("v2.UpdateCaseDueDate".into(), test_v2_update_case_due_date);
-    world
-        .function_mappings
-        .insert("v2.RemoveCaseInsights".into(), test_v2_remove_case_insights);
-    world
-        .function_mappings
-        .insert("v2.AddCaseInsights".into(), test_v2_add_case_insights);
     world
         .function_mappings
         .insert("v2.UpdatePriority".into(), test_v2_update_priority);
@@ -2841,16 +2765,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.CreateCaseServiceNowTicket".into(),
         test_v2_create_case_service_now_ticket,
     );
-    world.function_mappings.insert(
-        "v2.UpdateCaseResolvedReason".into(),
-        test_v2_update_case_resolved_reason,
-    );
     world
         .function_mappings
         .insert("v2.UpdateStatus".into(), test_v2_update_status);
-    world
-        .function_mappings
-        .insert("v2.ListCaseTimeline".into(), test_v2_list_case_timeline);
     world
         .function_mappings
         .insert("v2.UpdateCaseTitle".into(), test_v2_update_case_title);
@@ -2862,31 +2779,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.UnassignCase".into(), test_v2_unassign_case);
     world
         .function_mappings
-        .insert("v2.ListCaseWatchers".into(), test_v2_list_case_watchers);
-    world
-        .function_mappings
-        .insert("v2.UnwatchCase".into(), test_v2_unwatch_case);
-    world
-        .function_mappings
-        .insert("v2.WatchCase".into(), test_v2_watch_case);
-    world.function_mappings.insert(
-        "v2.ListMaintenanceWindows".into(),
-        test_v2_list_maintenance_windows,
-    );
-    world.function_mappings.insert(
-        "v2.CreateMaintenanceWindow".into(),
-        test_v2_create_maintenance_window,
-    );
-    world.function_mappings.insert(
-        "v2.DeleteMaintenanceWindow".into(),
-        test_v2_delete_maintenance_window,
-    );
-    world.function_mappings.insert(
-        "v2.UpdateMaintenanceWindow".into(),
-        test_v2_update_maintenance_window,
-    );
-    world
-        .function_mappings
         .insert("v2.GetAllCaseTypes".into(), test_v2_get_all_case_types);
     world
         .function_mappings
@@ -2894,9 +2786,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.DeleteCaseType".into(), test_v2_delete_case_type);
-    world
-        .function_mappings
-        .insert("v2.UpdateCaseType".into(), test_v2_update_case_type);
     world.function_mappings.insert(
         "v2.GetAllCustomAttributes".into(),
         test_v2_get_all_custom_attributes,
@@ -2912,10 +2801,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.DeleteCustomAttributeConfig".into(),
         test_v2_delete_custom_attribute_config,
-    );
-    world.function_mappings.insert(
-        "v2.UpdateCustomAttributeConfig".into(),
-        test_v2_update_custom_attribute_config,
     );
     world
         .function_mappings
@@ -4874,6 +4759,65 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.SubmitMetrics".into(), test_v2_submit_metrics);
+    world.function_mappings.insert(
+        "v2.GetModelLabArtifactContent".into(),
+        test_v2_get_model_lab_artifact_content,
+    );
+    world.function_mappings.insert(
+        "v2.ListModelLabRunFacetKeys".into(),
+        test_v2_list_model_lab_run_facet_keys,
+    );
+    world.function_mappings.insert(
+        "v2.ListModelLabRunFacetValues".into(),
+        test_v2_list_model_lab_run_facet_values,
+    );
+    world.function_mappings.insert(
+        "v2.ListModelLabProjectFacetKeys".into(),
+        test_v2_list_model_lab_project_facet_keys,
+    );
+    world.function_mappings.insert(
+        "v2.ListModelLabProjectFacetValues".into(),
+        test_v2_list_model_lab_project_facet_values,
+    );
+    world.function_mappings.insert(
+        "v2.ListModelLabProjects".into(),
+        test_v2_list_model_lab_projects,
+    );
+    world.function_mappings.insert(
+        "v2.GetModelLabProject".into(),
+        test_v2_get_model_lab_project,
+    );
+    world.function_mappings.insert(
+        "v2.ListModelLabProjectArtifacts".into(),
+        test_v2_list_model_lab_project_artifacts,
+    );
+    world.function_mappings.insert(
+        "v2.UnstarModelLabProject".into(),
+        test_v2_unstar_model_lab_project,
+    );
+    world.function_mappings.insert(
+        "v2.StarModelLabProject".into(),
+        test_v2_star_model_lab_project,
+    );
+    world
+        .function_mappings
+        .insert("v2.ListModelLabRuns".into(), test_v2_list_model_lab_runs);
+    world
+        .function_mappings
+        .insert("v2.DeleteModelLabRun".into(), test_v2_delete_model_lab_run);
+    world
+        .function_mappings
+        .insert("v2.GetModelLabRun".into(), test_v2_get_model_lab_run);
+    world.function_mappings.insert(
+        "v2.ListModelLabRunArtifacts".into(),
+        test_v2_list_model_lab_run_artifacts,
+    );
+    world
+        .function_mappings
+        .insert("v2.UnpinModelLabRun".into(), test_v2_unpin_model_lab_run);
+    world
+        .function_mappings
+        .insert("v2.PinModelLabRun".into(), test_v2_pin_model_lab_run);
     world.function_mappings.insert(
         "v2.GetMonitorNotificationRules".into(),
         test_v2_get_monitor_notification_rules,
@@ -18694,176 +18638,6 @@ fn test_v2_create_case(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_aggregate_cases(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.aggregate_cases_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_bulk_update_cases(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.bulk_update_cases_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_count_cases(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let query_filter = _parameters
-        .get("query_filter")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let group_bys = _parameters
-        .get("group_bys")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let limit = _parameters
-        .get("limit")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_case_management::CountCasesOptionalParams::default();
-    params.query_filter = query_filter;
-    params.group_bys = group_bys;
-    params.limit = limit;
-    let response = match block_on(api.count_cases_with_http_info(params)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_case_links(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let entity_type =
-        serde_json::from_value(_parameters.get("entity_type").unwrap().clone()).unwrap();
-    let entity_id = serde_json::from_value(_parameters.get("entity_id").unwrap().clone()).unwrap();
-    let relationship = _parameters
-        .get("relationship")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_case_management::ListCaseLinksOptionalParams::default();
-    params.relationship = relationship;
-    let response =
-        match block_on(api.list_case_links_with_http_info(entity_type, entity_id, params)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_create_case_link(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_case_link_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_case_link(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let link_id = serde_json::from_value(_parameters.get("link_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_case_link_with_http_info(link_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
 fn test_v2_get_projects(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -18896,33 +18670,6 @@ fn test_v2_create_project(world: &mut DatadogWorld, _parameters: &HashMap<String
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.create_project_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_user_case_project_favorites(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let response = match block_on(api.list_user_case_project_favorites_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -19002,58 +18749,6 @@ fn test_v2_update_project(world: &mut DatadogWorld, _parameters: &HashMap<String
         serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_project_with_http_info(project_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_unfavorite_case_project(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let project_id =
-        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.unfavorite_case_project_with_http_info(project_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_favorite_case_project(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let project_id =
-        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.favorite_case_project_with_http_info(project_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -19183,349 +18878,6 @@ fn test_v2_update_project_notification_rule(
         notification_rule_id,
         body,
     )) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_case_automation_rules(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let project_id =
-        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.list_case_automation_rules_with_http_info(project_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_create_case_automation_rule(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let project_id =
-        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_case_automation_rule_with_http_info(project_id, body))
-    {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_case_automation_rule(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let project_id =
-        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
-    let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.delete_case_automation_rule_with_http_info(project_id, rule_id)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_get_case_automation_rule(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let project_id =
-        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
-    let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_case_automation_rule_with_http_info(project_id, rule_id))
-    {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_update_case_automation_rule(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let project_id =
-        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
-    let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.update_case_automation_rule_with_http_info(project_id, rule_id, body)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_disable_case_automation_rule(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let project_id =
-        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
-    let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.disable_case_automation_rule_with_http_info(project_id, rule_id)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_enable_case_automation_rule(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let project_id =
-        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
-    let rule_id = serde_json::from_value(_parameters.get("rule_id").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.enable_case_automation_rule_with_http_info(project_id, rule_id)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_case_views(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let project_id =
-        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.list_case_views_with_http_info(project_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_create_case_view(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_case_view_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_case_view(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let view_id = serde_json::from_value(_parameters.get("view_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.delete_case_view_with_http_info(view_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_get_case_view(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let view_id = serde_json::from_value(_parameters.get("view_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_case_view_with_http_info(view_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_update_case_view(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let view_id = serde_json::from_value(_parameters.get("view_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_case_view_with_http_info(view_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -19698,33 +19050,6 @@ fn test_v2_delete_case_comment(world: &mut DatadogWorld, _parameters: &HashMap<S
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_update_case_comment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
-    let cell_id = serde_json::from_value(_parameters.get("cell_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_case_comment_with_http_info(case_id, cell_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
 fn test_v2_delete_case_custom_attribute(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -19801,84 +19126,6 @@ fn test_v2_update_case_description(world: &mut DatadogWorld, _parameters: &HashM
     let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_case_description_with_http_info(case_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_update_case_due_date(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_case_due_date_with_http_info(case_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_remove_case_insights(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.remove_case_insights_with_http_info(case_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_add_case_insights(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.add_case_insights_with_http_info(case_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -20107,35 +19354,6 @@ fn test_v2_create_case_service_now_ticket(
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_update_case_resolved_reason(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_case_resolved_reason_with_http_info(case_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
 fn test_v2_update_status(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -20145,44 +19363,6 @@ fn test_v2_update_status(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_status_with_http_info(case_id, body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_case_timeline(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
-    let page_size = _parameters
-        .get("page[size]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_number = _parameters
-        .get("page[number]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let sort_ascending = _parameters
-        .get("sort[ascending]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_case_management::ListCaseTimelineOptionalParams::default();
-    params.page_size = page_size;
-    params.page_number = page_number;
-    params.sort_ascending = sort_ascending;
-    let response = match block_on(api.list_case_timeline_with_http_info(case_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -20278,199 +19458,6 @@ fn test_v2_unassign_case(world: &mut DatadogWorld, _parameters: &HashMap<String,
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_list_case_watchers(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.list_case_watchers_with_http_info(case_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_unwatch_case(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
-    let user_uuid = serde_json::from_value(_parameters.get("user_uuid").unwrap().clone()).unwrap();
-    let response = match block_on(api.unwatch_case_with_http_info(case_id, user_uuid)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_watch_case(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let case_id = serde_json::from_value(_parameters.get("case_id").unwrap().clone()).unwrap();
-    let user_uuid = serde_json::from_value(_parameters.get("user_uuid").unwrap().clone()).unwrap();
-    let response = match block_on(api.watch_case_with_http_info(case_id, user_uuid)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_maintenance_windows(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let response = match block_on(api.list_maintenance_windows_with_http_info()) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_create_maintenance_window(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_maintenance_window_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_maintenance_window(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let maintenance_window_id =
-        serde_json::from_value(_parameters.get("maintenance_window_id").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.delete_maintenance_window_with_http_info(maintenance_window_id)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_update_maintenance_window(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management
-        .as_ref()
-        .expect("api instance not found");
-    let maintenance_window_id =
-        serde_json::from_value(_parameters.get("maintenance_window_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.update_maintenance_window_with_http_info(maintenance_window_id, body)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
 fn test_v2_get_all_case_types(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -20529,33 +19516,6 @@ fn test_v2_delete_case_type(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     let case_type_id =
         serde_json::from_value(_parameters.get("case_type_id").unwrap().clone()).unwrap();
     let response = match block_on(api.delete_case_type_with_http_info(case_type_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_update_case_type(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_case_management_type
-        .as_ref()
-        .expect("api instance not found");
-    let case_type_id =
-        serde_json::from_value(_parameters.get("case_type_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_case_type_with_http_info(case_type_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -20678,42 +19638,6 @@ fn test_v2_delete_custom_attribute_config(
     let response = match block_on(
         api.delete_custom_attribute_config_with_http_info(case_type_id, custom_attribute_id),
     ) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_update_custom_attribute_config(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_case_management_attribute
-        .as_ref()
-        .expect("api instance not found");
-    let case_type_id =
-        serde_json::from_value(_parameters.get("case_type_id").unwrap().clone()).unwrap();
-    let custom_attribute_id =
-        serde_json::from_value(_parameters.get("custom_attribute_id").unwrap().clone()).unwrap();
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_custom_attribute_config_with_http_info(
-        case_type_id,
-        custom_attribute_id,
-        body,
-    )) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -37628,6 +36552,540 @@ fn test_v2_submit_metrics(world: &mut DatadogWorld, _parameters: &HashMap<String
     let mut params = datadogV2::api_metrics::SubmitMetricsOptionalParams::default();
     params.content_encoding = content_encoding;
     let response = match block_on(api.submit_metrics_with_http_info(body, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_model_lab_artifact_content(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let project_id =
+        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
+    let artifact_path =
+        serde_json::from_value(_parameters.get("artifact_path").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_model_lab_artifact_content_with_http_info(project_id, artifact_path),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_model_lab_run_facet_keys(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let filter_project_id =
+        serde_json::from_value(_parameters.get("filter[project_id]").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.list_model_lab_run_facet_keys_with_http_info(filter_project_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_model_lab_run_facet_values(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let filter_project_id =
+        serde_json::from_value(_parameters.get("filter[project_id]").unwrap().clone()).unwrap();
+    let facet_type =
+        serde_json::from_value(_parameters.get("facet_type").unwrap().clone()).unwrap();
+    let facet_name =
+        serde_json::from_value(_parameters.get("facet_name").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_model_lab_run_facet_values_with_http_info(
+        filter_project_id,
+        facet_type,
+        facet_name,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_model_lab_project_facet_keys(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_model_lab_project_facet_keys_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_model_lab_project_facet_values(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let facet_type =
+        serde_json::from_value(_parameters.get("facet_type").unwrap().clone()).unwrap();
+    let facet_name =
+        serde_json::from_value(_parameters.get("facet_name").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.list_model_lab_project_facet_values_with_http_info(facet_type, facet_name),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_model_lab_projects(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_owner_id = _parameters
+        .get("filter[owner_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tags = _parameters
+        .get("filter[tags]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_model_lab_api::ListModelLabProjectsOptionalParams::default();
+    params.filter = filter;
+    params.filter_owner_id = filter_owner_id;
+    params.filter_tags = filter_tags;
+    params.sort = sort;
+    params.page_size = page_size;
+    params.page_number = page_number;
+    let response = match block_on(api.list_model_lab_projects_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_model_lab_project(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let project_id =
+        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_model_lab_project_with_http_info(project_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_model_lab_project_artifacts(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let project_id =
+        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_model_lab_project_artifacts_with_http_info(project_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_unstar_model_lab_project(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let project_id =
+        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.unstar_model_lab_project_with_http_info(project_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_star_model_lab_project(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let project_id =
+        serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.star_model_lab_project_with_http_info(project_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_model_lab_runs(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let filter_id = _parameters
+        .get("filter[id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_owner_id = _parameters
+        .get("filter[owner_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_project_id = _parameters
+        .get("filter[project_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tags = _parameters
+        .get("filter[tags]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_params = _parameters
+        .get("filter[params]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_parent_run_id = _parameters
+        .get("filter[parent_run_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let pinned_first = _parameters
+        .get("pinned_first")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_pinned = _parameters
+        .get("include_pinned")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_descendant_matches = _parameters
+        .get("include_descendant_matches")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_model_lab_api::ListModelLabRunsOptionalParams::default();
+    params.filter_id = filter_id;
+    params.filter = filter;
+    params.filter_owner_id = filter_owner_id;
+    params.filter_status = filter_status;
+    params.filter_project_id = filter_project_id;
+    params.filter_tags = filter_tags;
+    params.filter_params = filter_params;
+    params.filter_parent_run_id = filter_parent_run_id;
+    params.pinned_first = pinned_first;
+    params.include_pinned = include_pinned;
+    params.include_descendant_matches = include_descendant_matches;
+    params.sort = sort;
+    params.page_size = page_size;
+    params.page_number = page_number;
+    let response = match block_on(api.list_model_lab_runs_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_model_lab_run(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let run_id = serde_json::from_value(_parameters.get("run_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_model_lab_run_with_http_info(run_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_model_lab_run(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let run_id = serde_json::from_value(_parameters.get("run_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_model_lab_run_with_http_info(run_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_model_lab_run_artifacts(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let run_id = serde_json::from_value(_parameters.get("run_id").unwrap().clone()).unwrap();
+    let path = _parameters
+        .get("path")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_model_lab_api::ListModelLabRunArtifactsOptionalParams::default();
+    params.path = path;
+    let response = match block_on(api.list_model_lab_run_artifacts_with_http_info(run_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_unpin_model_lab_run(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let run_id = serde_json::from_value(_parameters.get("run_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.unpin_model_lab_run_with_http_info(run_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_pin_model_lab_run(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_model_lab_api
+        .as_ref()
+        .expect("api instance not found");
+    let run_id = serde_json::from_value(_parameters.get("run_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.pin_model_lab_run_with_http_info(run_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

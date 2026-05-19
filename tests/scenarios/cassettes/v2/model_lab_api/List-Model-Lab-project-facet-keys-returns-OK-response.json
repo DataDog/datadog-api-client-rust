@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/model-lab-api/project-facet-keys"
+      },
+      "response": {
+        "body": {
+          "string": "{\"data\":{\"id\":\"2\",\"type\":\"facet_keys\",\"attributes\":{\"metrics\":null,\"parameters\":[],\"tags\":[\"age\",\"beatings\",\"mlflow.experimentKind\",\"mlflow.experiment.ownerID\",\"morale\",\"team\",\"usecase\",\"weather\"]}}}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Mon, 18 May 2026 16:45:00 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

@@ -14,7 +14,7 @@ pub struct CaseUpdateDescription {
     /// Case update description attributes
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseUpdateDescriptionAttributes,
-    /// JSON:API resource type for cases.
+    /// Case resource type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
     #[serde(flatten)]

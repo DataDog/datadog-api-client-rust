@@ -17,7 +17,7 @@ pub struct CaseCreate {
     /// Relationships formed with the case on creation
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::CaseCreateRelationships>,
-    /// JSON:API resource type for cases.
+    /// Case resource type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
     #[serde(flatten)]
