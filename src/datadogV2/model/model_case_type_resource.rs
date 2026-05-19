@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `CaseType` object.
+/// A case type that defines a classification category for cases. Each case type can have its own custom attributes, statuses, and automation rules.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseTypeResource {
-    /// Case Type resource attributes
+    /// Attributes of a case type, which define a classification category for cases. Organizations use case types to model different workflows (for example, Security Incident, Bug Report, Change Request).
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CaseTypeResourceAttributes>,
     /// Case type's identifier
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Case type resource type
+    /// JSON:API resource type for case types.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::CaseTypeResourceType>,
     #[serde(flatten)]

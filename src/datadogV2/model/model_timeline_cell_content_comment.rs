@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// comment content
+/// The content of a comment timeline cell.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TimelineCellContentComment {
-    /// comment message
+    /// The text content of the comment. Supports Markdown formatting.
     #[serde(rename = "message")]
     pub message: Option<String>,
     #[serde(flatten)]

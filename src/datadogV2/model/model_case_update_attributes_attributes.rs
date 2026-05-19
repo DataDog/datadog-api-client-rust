@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateAttributesAttributes {
-    /// The definition of `CaseObjectAttributes` object.
+    /// Key-value pairs of case attributes. Each key maps to an array of string values, used for flexible metadata such as labels or tags.
     #[serde(rename = "attributes")]
     pub attributes: std::collections::BTreeMap<String, Vec<String>>,
     #[serde(flatten)]
