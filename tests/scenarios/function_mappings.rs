@@ -5668,6 +5668,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.ListScorecards".into(), test_v2_list_scorecards);
+    world.function_mappings.insert(
+        "v2.ListScorecardScores".into(),
+        test_v2_list_scorecard_scores,
+    );
     world
         .function_mappings
         .insert("v2.UnassignSeatsUser".into(), test_v2_unassign_seats_user);
@@ -44436,6 +44440,69 @@ fn test_v2_list_scorecards(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     params.filter_scorecard_name = filter_scorecard_name;
     params.filter_scorecard_description = filter_scorecard_description;
     let response = match block_on(api.list_scorecards_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_scorecard_scores(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_scorecards
+        .as_ref()
+        .expect("api instance not found");
+    let aggregation =
+        serde_json::from_value(_parameters.get("aggregation").unwrap().clone()).unwrap();
+    let filter_rule_id = _parameters
+        .get("filter[rule][id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_name = _parameters
+        .get("filter[rule][name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_level = _parameters
+        .get("filter[rule][level]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_scorecard_id = _parameters
+        .get("filter[rule][scorecard_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_is_custom = _parameters
+        .get("filter[rule][is_custom]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_is_enabled = _parameters
+        .get("filter[rule][is_enabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_scorecards::ListScorecardScoresOptionalParams::default();
+    params.filter_rule_id = filter_rule_id;
+    params.filter_rule_name = filter_rule_name;
+    params.filter_rule_level = filter_rule_level;
+    params.filter_rule_scorecard_id = filter_rule_scorecard_id;
+    params.filter_rule_is_custom = filter_rule_is_custom;
+    params.filter_rule_is_enabled = filter_rule_is_enabled;
+    params.sort = sort;
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
+    let response = match block_on(api.list_scorecard_scores_with_http_info(aggregation, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
