@@ -3,7 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// author of the timeline cell
+/// The author of the timeline cell. Currently only user authors are supported.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
