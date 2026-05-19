@@ -20,6 +20,9 @@ pub struct MonitorFormulaAndFunctionEventQueryGroupBy {
     /// Options for sorting group by results.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryGroupBySort>,
+    /// Source reference for composite query payloads.
+    #[serde(rename = "source")]
+    pub source: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -33,6 +36,7 @@ impl MonitorFormulaAndFunctionEventQueryGroupBy {
             facet,
             limit: None,
             sort: None,
+            source: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -48,6 +52,11 @@ impl MonitorFormulaAndFunctionEventQueryGroupBy {
         value: crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryGroupBySort,
     ) -> Self {
         self.sort = Some(value);
+        self
+    }
+
+    pub fn source(mut self, value: String) -> Self {
+        self.source = Some(value);
         self
     }
 
@@ -82,6 +91,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionEventQueryGroupBy {
                 let mut sort: Option<
                     crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryGroupBySort,
                 > = None;
+                let mut source: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -105,6 +115,12 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionEventQueryGroupBy {
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "source" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -118,6 +134,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionEventQueryGroupBy {
                     facet,
                     limit,
                     sort,
+                    source,
                     additional_properties,
                     _unparsed,
                 };
