@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A timeline cell resource representing a single entry in a case's activity timeline.
+/// Timeline cell JSON:API resource
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TimelineCellResource {
-    /// Attributes of a timeline cell, representing a single event in a case's chronological activity log (for example, a comment, status change, or assignment update).
+    /// timeline cell
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::TimelineCell,
     /// Timeline cell's identifier
     #[serde(rename = "id")]
     pub id: String,
-    /// JSON:API resource type for timeline cells.
+    /// Timeline cell JSON:API resource type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TimelineCellResourceType,
     #[serde(flatten)]

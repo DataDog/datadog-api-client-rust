@@ -3,7 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// The value of a custom attribute. The accepted format depends on the attribute's type and whether it accepts multiple values.
+/// Union of supported value for a custom attribute
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]

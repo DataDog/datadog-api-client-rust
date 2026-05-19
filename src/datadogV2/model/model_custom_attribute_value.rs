@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A typed value for a custom attribute on a specific case.
+/// Custom attribute values
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,10 +14,10 @@ pub struct CustomAttributeValue {
     /// If true, value must be an array
     #[serde(rename = "is_multi")]
     pub is_multi: bool,
-    /// The data type of the custom attribute, which determines the allowed values and UI input control.
+    /// Custom attributes type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CustomAttributeType,
-    /// The value of a custom attribute. The accepted format depends on the attribute's type and whether it accepts multiple values.
+    /// Union of supported value for a custom attribute
     #[serde(rename = "value")]
     pub value: crate::datadogV2::model::CustomAttributeValuesUnion,
     #[serde(flatten)]

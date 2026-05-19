@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for creating a case type.
+/// Case type
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseTypeCreate {
-    /// Attributes of a case type, which define a classification category for cases. Organizations use case types to model different workflows (for example, Security Incident, Bug Report, Change Request).
+    /// Case Type resource attributes
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseTypeResourceAttributes,
-    /// JSON:API resource type for case types.
+    /// Case type resource type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseTypeResourceType,
     #[serde(flatten)]

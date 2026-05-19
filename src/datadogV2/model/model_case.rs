@@ -20,7 +20,7 @@ pub struct Case {
     /// Resources related to a case
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::CaseRelationships>,
-    /// JSON:API resource type for cases.
+    /// Case resource type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
     #[serde(flatten)]

@@ -6,25 +6,25 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a case type, which define a classification category for cases. Organizations use case types to model different workflows (for example, Security Incident, Bug Report, Change Request).
+/// Case Type resource attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseTypeResourceAttributes {
-    /// Timestamp when the case type was marked as deleted. A null value indicates the case type is active.
+    /// Timestamp of when the case type was deleted
     #[serde(
         rename = "deleted_at",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub deleted_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// A detailed description explaining when this case type should be used.
+    /// Case type description.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// An emoji icon representing the case type in the UI.
+    /// Case type emoji.
     #[serde(rename = "emoji")]
     pub emoji: Option<String>,
-    /// The display name of the case type, shown in the Case Management UI when creating or viewing cases.
+    /// Case type name.
     #[serde(rename = "name")]
     pub name: String,
     #[serde(flatten)]

@@ -6,24 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes required to create a custom attribute configuration.
+/// Custom attribute config resource attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomAttributeConfigAttributesCreate {
-    /// A description explaining the purpose and expected values for this custom attribute.
+    /// Custom attribute description.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The human-readable label shown in the Case Management UI for this custom attribute.
+    /// Custom attribute name.
     #[serde(rename = "display_name")]
     pub display_name: String,
-    /// If `true`, this attribute accepts an array of values. If `false`, only a single value is allowed.
+    /// Whether multiple values can be set
     #[serde(rename = "is_multi")]
     pub is_multi: bool,
-    /// The programmatic key used to reference this custom attribute in search queries and API calls.
+    /// Custom attribute key. This will be the value use to search on this custom attribute
     #[serde(rename = "key")]
     pub key: String,
-    /// The data type of the custom attribute, which determines the allowed values and UI input control.
+    /// Custom attributes type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CustomAttributeType,
     #[serde(flatten)]

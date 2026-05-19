@@ -3,7 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// The content payload of a timeline cell, varying by cell type.
+/// timeline cell content
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]

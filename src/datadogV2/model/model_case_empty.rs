@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseEmpty {
-    /// JSON:API resource type for cases.
+    /// Case resource type
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
     #[serde(flatten)]
