@@ -20,6 +20,9 @@ pub struct SyntheticsDowntimeTimeSlotRecurrenceResponse {
     /// A specific date and time used to define the start or end of a Synthetics downtime time slot.
     #[serde(rename = "until")]
     pub until: Option<crate::datadogV2::model::SyntheticsDowntimeTimeSlotDate>,
+    /// Positions of the weekdays within a month for a monthly Synthetics downtime recurrence. Used in combination with `weekdays` to schedule occurrences such as "the first Monday of the month".
+    #[serde(rename = "weekdayPositions")]
+    pub weekday_positions: Option<Vec<crate::datadogV2::model::SyntheticsDowntimeWeekdayPosition>>,
     /// Days of the week for a Synthetics downtime recurrence schedule.
     #[serde(rename = "weekdays")]
     pub weekdays: Vec<crate::datadogV2::model::SyntheticsDowntimeWeekday>,
@@ -40,6 +43,7 @@ impl SyntheticsDowntimeTimeSlotRecurrenceResponse {
             frequency,
             interval,
             until: None,
+            weekday_positions: None,
             weekdays,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -48,6 +52,14 @@ impl SyntheticsDowntimeTimeSlotRecurrenceResponse {
 
     pub fn until(mut self, value: crate::datadogV2::model::SyntheticsDowntimeTimeSlotDate) -> Self {
         self.until = Some(value);
+        self
+    }
+
+    pub fn weekday_positions(
+        mut self,
+        value: Vec<crate::datadogV2::model::SyntheticsDowntimeWeekdayPosition>,
+    ) -> Self {
+        self.weekday_positions = Some(value);
         self
     }
 
@@ -82,6 +94,9 @@ impl<'de> Deserialize<'de> for SyntheticsDowntimeTimeSlotRecurrenceResponse {
                 let mut interval: Option<i64> = None;
                 let mut until: Option<crate::datadogV2::model::SyntheticsDowntimeTimeSlotDate> =
                     None;
+                let mut weekday_positions: Option<
+                    Vec<crate::datadogV2::model::SyntheticsDowntimeWeekdayPosition>,
+                > = None;
                 let mut weekdays: Option<Vec<crate::datadogV2::model::SyntheticsDowntimeWeekday>> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -112,6 +127,13 @@ impl<'de> Deserialize<'de> for SyntheticsDowntimeTimeSlotRecurrenceResponse {
                             }
                             until = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "weekdayPositions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            weekday_positions =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "weekdays" => {
                             weekdays = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -130,6 +152,7 @@ impl<'de> Deserialize<'de> for SyntheticsDowntimeTimeSlotRecurrenceResponse {
                     frequency,
                     interval,
                     until,
+                    weekday_positions,
                     weekdays,
                     additional_properties,
                     _unparsed,
