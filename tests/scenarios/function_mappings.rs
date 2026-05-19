@@ -95,6 +95,7 @@ pub struct ApiInstances {
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
     pub v2_api_dashboard_secure_embed:
         Option<datadogV2::api_dashboard_secure_embed::DashboardSecureEmbedAPI>,
+    pub v2_api_dashboards: Option<datadogV2::api_dashboards::DashboardsAPI>,
     pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
     pub v2_api_data_deletion: Option<datadogV2::api_data_deletion::DataDeletionAPI>,
     pub v2_api_deployment_gates: Option<datadogV2::api_deployment_gates::DeploymentGatesAPI>,
@@ -243,6 +244,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Dashboards" => {
             world.api_instances.v1_api_dashboards = Some(
                 datadogV1::api_dashboards::DashboardsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+            world.api_instances.v2_api_dashboards = Some(
+                datadogV2::api_dashboards::DashboardsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -3684,6 +3691,17 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateDashboardSecureEmbed".into(),
         test_v2_update_dashboard_secure_embed,
     );
+    world.function_mappings.insert(
+        "v2.ListDashboardsUsage".into(),
+        test_v2_list_dashboards_usage,
+    );
+    world.function_mappings.insert(
+        "v2.ListDashboardsUsageWithPagination".into(),
+        test_v2_list_dashboards_usage_with_pagination,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetDashboardUsage".into(), test_v2_get_dashboard_usage);
     world
         .function_mappings
         .insert("v2.GetAllDatasets".into(), test_v2_get_all_datasets);
@@ -27759,6 +27777,110 @@ fn test_v2_update_dashboard_secure_embed(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_dashboards_usage(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_dashboards
+        .as_ref()
+        .expect("api instance not found");
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_dashboards::ListDashboardsUsageOptionalParams::default();
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    let response = match block_on(api.list_dashboards_usage_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_dashboards_usage_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_dashboards
+        .as_ref()
+        .expect("api instance not found");
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_dashboards::ListDashboardsUsageOptionalParams::default();
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    let response = api.list_dashboards_usage_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_get_dashboard_usage(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_dashboards
+        .as_ref()
+        .expect("api instance not found");
+    let dashboard_id =
+        serde_json::from_value(_parameters.get("dashboard_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_dashboard_usage_with_http_info(dashboard_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
