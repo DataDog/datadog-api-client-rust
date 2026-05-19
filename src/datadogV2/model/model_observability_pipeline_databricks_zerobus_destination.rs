@@ -22,9 +22,9 @@ pub struct ObservabilityPipelineDatabricksZerobusDestination {
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
-    /// Your Databricks Zerobus ingestion endpoint. This is the endpoint used to stream data directly into your Databricks Lakehouse.
-    #[serde(rename = "ingestion_endpoint")]
-    pub ingestion_endpoint: String,
+    /// Name of the environment variable or the secret identifier that references the Databricks Zerobus ingestion endpoint, which is used to stream data directly into your Databricks Lakehouse.
+    #[serde(rename = "ingestion_endpoint_key")]
+    pub ingestion_endpoint_key: Option<String>,
     /// A list of component IDs whose output is used as the `input` for this component.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
@@ -34,9 +34,9 @@ pub struct ObservabilityPipelineDatabricksZerobusDestination {
     /// The destination type. The value must be `databricks_zerobus`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationType,
-    /// Your Databricks workspace URL. This is used to communicate with the Unity Catalog API.
-    #[serde(rename = "unity_catalog_endpoint")]
-    pub unity_catalog_endpoint: String,
+    /// Name of the environment variable or the secret identifier that references your Databricks workspace URL, which is used to communicate with the Unity Catalog API.
+    #[serde(rename = "unity_catalog_endpoint_key")]
+    pub unity_catalog_endpoint_key: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -48,21 +48,19 @@ impl ObservabilityPipelineDatabricksZerobusDestination {
     pub fn new(
         auth: crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationAuth,
         id: String,
-        ingestion_endpoint: String,
         inputs: Vec<String>,
         table_name: String,
         type_: crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationType,
-        unity_catalog_endpoint: String,
     ) -> ObservabilityPipelineDatabricksZerobusDestination {
         ObservabilityPipelineDatabricksZerobusDestination {
             auth,
             buffer: None,
             id,
-            ingestion_endpoint,
+            ingestion_endpoint_key: None,
             inputs,
             table_name,
             type_,
-            unity_catalog_endpoint,
+            unity_catalog_endpoint_key: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -73,6 +71,16 @@ impl ObservabilityPipelineDatabricksZerobusDestination {
         value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
     ) -> Self {
         self.buffer = Some(value);
+        self
+    }
+
+    pub fn ingestion_endpoint_key(mut self, value: String) -> Self {
+        self.ingestion_endpoint_key = Some(value);
+        self
+    }
+
+    pub fn unity_catalog_endpoint_key(mut self, value: String) -> Self {
+        self.unity_catalog_endpoint_key = Some(value);
         self
     }
 
@@ -109,13 +117,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatabricksZerobusDestination
                     crate::datadogV2::model::ObservabilityPipelineBufferOptions,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut ingestion_endpoint: Option<String> = None;
+                let mut ingestion_endpoint_key: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut table_name: Option<String> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationType,
                 > = None;
-                let mut unity_catalog_endpoint: Option<String> = None;
+                let mut unity_catalog_endpoint_key: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -144,8 +152,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatabricksZerobusDestination
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "ingestion_endpoint" => {
-                            ingestion_endpoint =
+                        "ingestion_endpoint_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingestion_endpoint_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "inputs" => {
@@ -165,8 +176,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatabricksZerobusDestination
                                 }
                             }
                         }
-                        "unity_catalog_endpoint" => {
-                            unity_catalog_endpoint =
+                        "unity_catalog_endpoint_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            unity_catalog_endpoint_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -178,23 +192,19 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatabricksZerobusDestination
                 }
                 let auth = auth.ok_or_else(|| M::Error::missing_field("auth"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let ingestion_endpoint = ingestion_endpoint
-                    .ok_or_else(|| M::Error::missing_field("ingestion_endpoint"))?;
                 let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let table_name = table_name.ok_or_else(|| M::Error::missing_field("table_name"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
-                let unity_catalog_endpoint = unity_catalog_endpoint
-                    .ok_or_else(|| M::Error::missing_field("unity_catalog_endpoint"))?;
 
                 let content = ObservabilityPipelineDatabricksZerobusDestination {
                     auth,
                     buffer,
                     id,
-                    ingestion_endpoint,
+                    ingestion_endpoint_key,
                     inputs,
                     table_name,
                     type_,
-                    unity_catalog_endpoint,
+                    unity_catalog_endpoint_key,
                     additional_properties,
                     _unparsed,
                 };
