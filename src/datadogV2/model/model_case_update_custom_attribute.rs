@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateCustomAttribute {
-    /// Custom attribute values
+    /// A typed value for a custom attribute on a specific case.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CustomAttributeValue,
-    /// Case resource type
+    /// JSON:API resource type for cases.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
     #[serde(flatten)]

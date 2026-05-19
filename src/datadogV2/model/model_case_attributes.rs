@@ -18,7 +18,7 @@ pub struct CaseAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub archived_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// The definition of `CaseObjectAttributes` object.
+    /// Key-value pairs of case attributes. Each key maps to an array of string values, used for flexible metadata such as labels or tags.
     #[serde(rename = "attributes")]
     pub attributes: Option<std::collections::BTreeMap<String, Vec<String>>>,
     /// Timestamp of when the case was closed

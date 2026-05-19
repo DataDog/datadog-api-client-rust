@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Custom attribute config
+/// Data object for creating a custom attribute configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomAttributeConfigCreate {
-    /// Custom attribute config resource attributes
+    /// Attributes required to create a custom attribute configuration.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CustomAttributeConfigAttributesCreate,
-    /// Custom attributes config JSON:API resource type
+    /// JSON:API resource type for custom attribute configurations.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CustomAttributeConfigResourceType,
     #[serde(flatten)]
