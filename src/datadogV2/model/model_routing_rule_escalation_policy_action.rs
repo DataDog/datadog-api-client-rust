@@ -1,0 +1,182 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
+use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
+
+/// Triggers an escalation policy.
+#[non_exhaustive]
+#[skip_serializing_none]
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub struct RoutingRuleEscalationPolicyAction {
+    /// The number of minutes before an acknowledged page is re-triggered.
+    #[serde(rename = "ack_timeout_minutes")]
+    pub ack_timeout_minutes: Option<i64>,
+    /// The ID of the escalation policy to route to.
+    #[serde(rename = "policy_id")]
+    pub policy_id: String,
+    /// Support hours during which the escalation policy will be executed. Outside of these hours, the escalation policy will be on hold and triggered once the next support hours window starts. This is mutually exclusive with the top-level `time_restriction` field on the routing rule.
+    #[serde(rename = "support_hours")]
+    pub support_hours:
+        Option<crate::datadogV2::model::RoutingRuleEscalationPolicyActionSupportHours>,
+    /// Indicates that the action pages an escalation policy. This action can be set once per routing rule item, and is mutually exclusive with the top-level `policy_id` field on the routing rule.
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV2::model::RoutingRuleEscalationPolicyActionType,
+    /// Specifies the level of urgency for a routing rule (low, high, or dynamic).
+    #[serde(rename = "urgency")]
+    pub urgency: Option<crate::datadogV2::model::Urgency>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
+}
+
+impl RoutingRuleEscalationPolicyAction {
+    pub fn new(
+        policy_id: String,
+        type_: crate::datadogV2::model::RoutingRuleEscalationPolicyActionType,
+    ) -> RoutingRuleEscalationPolicyAction {
+        RoutingRuleEscalationPolicyAction {
+            ack_timeout_minutes: None,
+            policy_id,
+            support_hours: None,
+            type_,
+            urgency: None,
+            additional_properties: std::collections::BTreeMap::new(),
+            _unparsed: false,
+        }
+    }
+
+    pub fn ack_timeout_minutes(mut self, value: i64) -> Self {
+        self.ack_timeout_minutes = Some(value);
+        self
+    }
+
+    pub fn support_hours(
+        mut self,
+        value: crate::datadogV2::model::RoutingRuleEscalationPolicyActionSupportHours,
+    ) -> Self {
+        self.support_hours = Some(value);
+        self
+    }
+
+    pub fn urgency(mut self, value: crate::datadogV2::model::Urgency) -> Self {
+        self.urgency = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
+}
+
+impl<'de> Deserialize<'de> for RoutingRuleEscalationPolicyAction {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct RoutingRuleEscalationPolicyActionVisitor;
+        impl<'a> Visitor<'a> for RoutingRuleEscalationPolicyActionVisitor {
+            type Value = RoutingRuleEscalationPolicyAction;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut ack_timeout_minutes: Option<i64> = None;
+                let mut policy_id: Option<String> = None;
+                let mut support_hours: Option<
+                    crate::datadogV2::model::RoutingRuleEscalationPolicyActionSupportHours,
+                > = None;
+                let mut type_: Option<
+                    crate::datadogV2::model::RoutingRuleEscalationPolicyActionType,
+                > = None;
+                let mut urgency: Option<crate::datadogV2::model::Urgency> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "ack_timeout_minutes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ack_timeout_minutes =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "policy_id" => {
+                            policy_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "support_hours" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            support_hours =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::RoutingRuleEscalationPolicyActionType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "urgency" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            urgency = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _urgency) = urgency {
+                                match _urgency {
+                                    crate::datadogV2::model::Urgency::UnparsedObject(_urgency) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
+                    }
+                }
+                let policy_id = policy_id.ok_or_else(|| M::Error::missing_field("policy_id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+
+                let content = RoutingRuleEscalationPolicyAction {
+                    ack_timeout_minutes,
+                    policy_id,
+                    support_hours,
+                    type_,
+                    urgency,
+                    additional_properties,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(RoutingRuleEscalationPolicyActionVisitor)
+    }
+}
