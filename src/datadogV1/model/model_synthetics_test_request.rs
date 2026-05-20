@@ -23,7 +23,9 @@ pub struct SyntheticsTestRequest {
     /// Type of the request body.
     #[serde(rename = "bodyType")]
     pub body_type: Option<crate::datadogV1::model::SyntheticsTestRequestBodyType>,
-    /// The type of gRPC call to perform.
+    /// The type of call to perform. Used by gRPC steps (`healthcheck`, `unary`)
+    /// and MCP steps (`init`, `tool_list`, `tool_call`). Valid values depend on
+    /// the parent step's `subtype`.
     #[serde(rename = "callType")]
     pub call_type: Option<crate::datadogV1::model::SyntheticsTestCallType>,
     /// Client certificate to use when performing the test request.
@@ -71,6 +73,9 @@ pub struct SyntheticsTestRequest {
     /// Whether the message is base64 encoded.
     #[serde(rename = "isMessageBase64Encoded")]
     pub is_message_base64_encoded: Option<bool>,
+    /// The MCP protocol version used by the step. See <https://modelcontextprotocol.io/specification.>
+    #[serde(rename = "mcpProtocolVersion")]
+    pub mcp_protocol_version: Option<crate::datadogV1::model::SyntheticsMCPProtocolVersion>,
     /// Message to send for UDP or WebSocket tests.
     #[serde(rename = "message")]
     pub message: Option<String>,
@@ -112,6 +117,12 @@ pub struct SyntheticsTestRequest {
     /// Timeout in seconds for the test.
     #[serde(rename = "timeout")]
     pub timeout: Option<f64>,
+    /// Arguments to pass to the MCP tool. Free-form object whose shape depends on the tool. Used when `callType` is `tool_call`.
+    #[serde(rename = "toolArgs")]
+    pub tool_args: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    /// The name of the MCP tool to call. Required when `callType` is `tool_call`.
+    #[serde(rename = "toolName")]
+    pub tool_name: Option<String>,
     /// URL to perform the test with.
     #[serde(rename = "url")]
     pub url: Option<String>,
@@ -145,6 +156,7 @@ impl SyntheticsTestRequest {
             host: None,
             http_version: None,
             is_message_base64_encoded: None,
+            mcp_protocol_version: None,
             message: None,
             metadata: None,
             method: None,
@@ -158,6 +170,8 @@ impl SyntheticsTestRequest {
             service: None,
             should_track_hops: None,
             timeout: None,
+            tool_args: None,
+            tool_name: None,
             url: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -279,6 +293,14 @@ impl SyntheticsTestRequest {
         self
     }
 
+    pub fn mcp_protocol_version(
+        mut self,
+        value: crate::datadogV1::model::SyntheticsMCPProtocolVersion,
+    ) -> Self {
+        self.mcp_protocol_version = Some(value);
+        self
+    }
+
     pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
@@ -341,6 +363,19 @@ impl SyntheticsTestRequest {
 
     pub fn timeout(mut self, value: f64) -> Self {
         self.timeout = Some(value);
+        self
+    }
+
+    pub fn tool_args(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.tool_args = Some(value);
+        self
+    }
+
+    pub fn tool_name(mut self, value: String) -> Self {
+        self.tool_name = Some(value);
         self
     }
 
@@ -409,6 +444,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                     crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
                 > = None;
                 let mut is_message_base64_encoded: Option<bool> = None;
+                let mut mcp_protocol_version: Option<
+                    crate::datadogV1::model::SyntheticsMCPProtocolVersion,
+                > = None;
                 let mut message: Option<String> = None;
                 let mut metadata: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut method: Option<String> = None;
@@ -422,6 +460,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut service: Option<String> = None;
                 let mut should_track_hops: Option<bool> = None;
                 let mut timeout: Option<f64> = None;
+                let mut tool_args: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
+                let mut tool_name: Option<String> = None;
                 let mut url: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -602,6 +643,21 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                             is_message_base64_encoded =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "mcpProtocolVersion" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            mcp_protocol_version =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _mcp_protocol_version) = mcp_protocol_version {
+                                match _mcp_protocol_version {
+                                    crate::datadogV1::model::SyntheticsMCPProtocolVersion::UnparsedObject(_mcp_protocol_version) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "message" => {
                             if v.is_null() {
                                 continue;
@@ -692,6 +748,18 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                             }
                             timeout = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "toolArgs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tool_args = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "toolName" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tool_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "url" => {
                             if v.is_null() {
                                 continue;
@@ -727,6 +795,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                     host,
                     http_version,
                     is_message_base64_encoded,
+                    mcp_protocol_version,
                     message,
                     metadata,
                     method,
@@ -740,6 +809,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                     service,
                     should_track_hops,
                     timeout,
+                    tool_args,
+                    tool_name,
                     url,
                     additional_properties,
                     _unparsed,

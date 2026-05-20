@@ -21,6 +21,12 @@ pub enum SyntheticsAssertion {
     ),
     SyntheticsAssertionXPathTarget(Box<crate::datadogV1::model::SyntheticsAssertionXPathTarget>),
     SyntheticsAssertionJavascript(Box<crate::datadogV1::model::SyntheticsAssertionJavascript>),
+    SyntheticsAssertionMCPServerCapabilitiesTarget(
+        Box<crate::datadogV1::model::SyntheticsAssertionMCPServerCapabilitiesTarget>,
+    ),
+    SyntheticsAssertionMCPRespectsSpecification(
+        Box<crate::datadogV1::model::SyntheticsAssertionMCPRespectsSpecification>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -76,6 +82,22 @@ impl<'de> Deserialize<'de> for SyntheticsAssertion {
         {
             if !_v._unparsed {
                 return Ok(SyntheticsAssertion::SyntheticsAssertionJavascript(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::SyntheticsAssertionMCPServerCapabilitiesTarget>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(SyntheticsAssertion::SyntheticsAssertionMCPServerCapabilitiesTarget(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::SyntheticsAssertionMCPRespectsSpecification>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(SyntheticsAssertion::SyntheticsAssertionMCPRespectsSpecification(_v));
             }
         }
 

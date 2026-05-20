@@ -28,6 +28,8 @@ pub enum SyntheticsAssertionType {
     CONNECTION,
     MULTI_NETWORK_HOP,
     JITTER,
+    MCP_TOOL_NAME_LENGTH,
+    MCP_TOOL_COUNT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -55,6 +57,8 @@ impl ToString for SyntheticsAssertionType {
             Self::CONNECTION => String::from("connection"),
             Self::MULTI_NETWORK_HOP => String::from("multiNetworkHop"),
             Self::JITTER => String::from("jitter"),
+            Self::MCP_TOOL_NAME_LENGTH => String::from("mcpToolNameLength"),
+            Self::MCP_TOOL_COUNT => String::from("mcpToolCount"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -100,6 +104,8 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionType {
             "connection" => Self::CONNECTION,
             "multiNetworkHop" => Self::MULTI_NETWORK_HOP,
             "jitter" => Self::JITTER,
+            "mcpToolNameLength" => Self::MCP_TOOL_NAME_LENGTH,
+            "mcpToolCount" => Self::MCP_TOOL_COUNT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
