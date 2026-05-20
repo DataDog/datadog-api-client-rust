@@ -11,6 +11,9 @@ pub enum RoutingRuleAction {
     SendSlackMessageAction(Box<crate::datadogV2::model::SendSlackMessageAction>),
     SendTeamsMessageAction(Box<crate::datadogV2::model::SendTeamsMessageAction>),
     TriggerWorkflowAutomationAction(Box<crate::datadogV2::model::TriggerWorkflowAutomationAction>),
+    RoutingRuleEscalationPolicyAction(
+        Box<crate::datadogV2::model::RoutingRuleEscalationPolicyAction>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -40,6 +43,14 @@ impl<'de> Deserialize<'de> for RoutingRuleAction {
         {
             if !_v._unparsed {
                 return Ok(RoutingRuleAction::TriggerWorkflowAutomationAction(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::RoutingRuleEscalationPolicyAction>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(RoutingRuleAction::RoutingRuleEscalationPolicyAction(_v));
             }
         }
 
