@@ -205,6 +205,99 @@ impl ListLLMObsProjectsOptionalParams {
     }
 }
 
+/// ListLLMObsSpansOptionalParams is a struct for passing parameters to the method [`LLMObservabilityAPI::list_llm_obs_spans`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListLLMObsSpansOptionalParams {
+    /// Start of the time range. Accepts ISO 8601 or relative format (e.g., `now-15m`). Defaults to `now-15m`.
+    pub filter_from: Option<String>,
+    /// End of the time range. Accepts ISO 8601 or relative format. Defaults to `now`.
+    pub filter_to: Option<String>,
+    /// Search query using LLM Observability query syntax. Supports attribute filters using the field:value syntax (e.g. session_id, trace_id, ml_app, meta.span.kind). When provided, structured field filters (`filter[span_id]`, `filter[trace_id]`, etc.) are ignored.
+    pub filter_query: Option<String>,
+    /// Filter by exact span ID.
+    pub filter_span_id: Option<String>,
+    /// Filter by exact trace ID.
+    pub filter_trace_id: Option<String>,
+    /// Filter by span kind (e.g., llm, agent, tool, task, workflow).
+    pub filter_span_kind: Option<String>,
+    /// Filter by span name.
+    pub filter_span_name: Option<String>,
+    /// Filter by ML application name.
+    pub filter_ml_app: Option<String>,
+    /// Maximum number of spans to return. Defaults to `10`.
+    pub page_limit: Option<i64>,
+    /// Cursor from the previous response to retrieve the next page.
+    pub page_cursor: Option<String>,
+    /// Sort order for the results.
+    pub sort: Option<String>,
+    /// Whether to include attachment data in the response. Defaults to `true`.
+    pub include_attachments: Option<bool>,
+}
+
+impl ListLLMObsSpansOptionalParams {
+    /// Start of the time range. Accepts ISO 8601 or relative format (e.g., `now-15m`). Defaults to `now-15m`.
+    pub fn filter_from(mut self, value: String) -> Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// End of the time range. Accepts ISO 8601 or relative format. Defaults to `now`.
+    pub fn filter_to(mut self, value: String) -> Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// Search query using LLM Observability query syntax. Supports attribute filters using the field:value syntax (e.g. session_id, trace_id, ml_app, meta.span.kind). When provided, structured field filters (`filter[span_id]`, `filter[trace_id]`, etc.) are ignored.
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Filter by exact span ID.
+    pub fn filter_span_id(mut self, value: String) -> Self {
+        self.filter_span_id = Some(value);
+        self
+    }
+    /// Filter by exact trace ID.
+    pub fn filter_trace_id(mut self, value: String) -> Self {
+        self.filter_trace_id = Some(value);
+        self
+    }
+    /// Filter by span kind (e.g., llm, agent, tool, task, workflow).
+    pub fn filter_span_kind(mut self, value: String) -> Self {
+        self.filter_span_kind = Some(value);
+        self
+    }
+    /// Filter by span name.
+    pub fn filter_span_name(mut self, value: String) -> Self {
+        self.filter_span_name = Some(value);
+        self
+    }
+    /// Filter by ML application name.
+    pub fn filter_ml_app(mut self, value: String) -> Self {
+        self.filter_ml_app = Some(value);
+        self
+    }
+    /// Maximum number of spans to return. Defaults to `10`.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// Cursor from the previous response to retrieve the next page.
+    pub fn page_cursor(mut self, value: String) -> Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Sort order for the results.
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Whether to include attachment data in the response. Defaults to `true`.
+    pub fn include_attachments(mut self, value: bool) -> Self {
+        self.include_attachments = Some(value);
+        self
+    }
+}
+
 /// AggregateLLMObsExperimentationError is a struct for typed errors of method [`LLMObservabilityAPI::aggregate_llm_obs_experimentation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -299,6 +392,15 @@ pub enum DeleteLLMObsAnnotationQueueInteractionsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteLLMObsCustomEvalConfigError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteLLMObsDataError is a struct for typed errors of method [`LLMObservabilityAPI::delete_llm_obs_data`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteLLMObsDataError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -421,10 +523,28 @@ pub enum ListLLMObsProjectsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListLLMObsSpansError is a struct for typed errors of method [`LLMObservabilityAPI::list_llm_obs_spans`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListLLMObsSpansError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// SearchLLMObsExperimentationError is a struct for typed errors of method [`LLMObservabilityAPI::search_llm_obs_experimentation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SearchLLMObsExperimentationError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// SearchLLMObsSpansError is a struct for typed errors of method [`LLMObservabilityAPI::search_llm_obs_spans`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SearchLLMObsSpansError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -502,7 +622,7 @@ pub enum UpdateLLMObsProjectError {
     UnknownValue(serde_json::Value),
 }
 
-/// Manage LLM Observability projects, datasets, dataset records, experiments, and annotations.
+/// Manage LLM Observability spans, data, projects, datasets, dataset records, experiments, and annotations.
 #[derive(Debug, Clone)]
 pub struct LLMObservabilityAPI {
     config: datadog::Configuration,
@@ -2271,6 +2391,169 @@ impl LLMObservabilityAPI {
             })
         } else {
             let local_entity: Option<DeleteLLMObsCustomEvalConfigError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Submit a request to delete LLM Observability span data matching a trace ID filter within a specified time range.
+    pub async fn delete_llm_obs_data(
+        &self,
+        body: crate::datadogV2::model::LLMObsDataDeletionRequest,
+    ) -> Result<
+        crate::datadogV2::model::LLMObsDataDeletionResponse,
+        datadog::Error<DeleteLLMObsDataError>,
+    > {
+        match self.delete_llm_obs_data_with_http_info(body).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Submit a request to delete LLM Observability span data matching a trace ID filter within a specified time range.
+    pub async fn delete_llm_obs_data_with_http_info(
+        &self,
+        body: crate::datadogV2::model::LLMObsDataDeletionRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsDataDeletionResponse>,
+        datadog::Error<DeleteLLMObsDataError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_llm_obs_data";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_llm_obs_data' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/deletion/data/llmobs",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDataDeletionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<DeleteLLMObsDataError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -4067,6 +4350,183 @@ impl LLMObservabilityAPI {
         }
     }
 
+    /// List LLM Observability spans matching the specified filters.
+    pub async fn list_llm_obs_spans(
+        &self,
+        params: ListLLMObsSpansOptionalParams,
+    ) -> Result<crate::datadogV2::model::LLMObsSpansResponse, datadog::Error<ListLLMObsSpansError>>
+    {
+        match self.list_llm_obs_spans_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List LLM Observability spans matching the specified filters.
+    pub async fn list_llm_obs_spans_with_http_info(
+        &self,
+        params: ListLLMObsSpansOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsSpansResponse>,
+        datadog::Error<ListLLMObsSpansError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_llm_obs_spans";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_llm_obs_spans' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_from = params.filter_from;
+        let filter_to = params.filter_to;
+        let filter_query = params.filter_query;
+        let filter_span_id = params.filter_span_id;
+        let filter_trace_id = params.filter_trace_id;
+        let filter_span_kind = params.filter_span_kind;
+        let filter_span_name = params.filter_span_name;
+        let filter_ml_app = params.filter_ml_app;
+        let page_limit = params.page_limit;
+        let page_cursor = params.page_cursor;
+        let sort = params.sort;
+        let include_attachments = params.include_attachments;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/spans/events",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_from {
+            local_req_builder =
+                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_to {
+            local_req_builder =
+                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_span_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[span_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_trace_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[trace_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_span_kind {
+            local_req_builder =
+                local_req_builder.query(&[("filter[span_kind]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_span_name {
+            local_req_builder =
+                local_req_builder.query(&[("filter[span_name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_ml_app {
+            local_req_builder =
+                local_req_builder.query(&[("filter[ml_app]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_attachments {
+            local_req_builder =
+                local_req_builder.query(&[("include_attachments", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsSpansResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListLLMObsSpansError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Search across LLM Observability experimentation entities — projects, datasets, dataset records, experiments, and experiment runs — using cursor-based pagination.
     ///
     /// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
@@ -4231,6 +4691,167 @@ impl LLMObservabilityAPI {
             };
         } else {
             let local_entity: Option<SearchLLMObsExperimentationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Search LLM Observability spans using structured filters in the request body.
+    pub async fn search_llm_obs_spans(
+        &self,
+        body: crate::datadogV2::model::LLMObsSearchSpansRequest,
+    ) -> Result<crate::datadogV2::model::LLMObsSpansResponse, datadog::Error<SearchLLMObsSpansError>>
+    {
+        match self.search_llm_obs_spans_with_http_info(body).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Search LLM Observability spans using structured filters in the request body.
+    pub async fn search_llm_obs_spans_with_http_info(
+        &self,
+        body: crate::datadogV2::model::LLMObsSearchSpansRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsSpansResponse>,
+        datadog::Error<SearchLLMObsSpansError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.search_llm_obs_spans";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.search_llm_obs_spans' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/spans/events/search",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsSpansResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<SearchLLMObsSpansError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
