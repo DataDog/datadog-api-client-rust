@@ -212,6 +212,12 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all Cloud Security Management Enterprise hosts over all hours in the current month for all organizations.
     #[serde(rename = "csm_host_enterprise_total_host_count_top99p_sum")]
     pub csm_host_enterprise_total_host_count_top99p_sum: Option<i64>,
+    /// Shows the sum of all Cloud Security Management Pro Agentless scanner hosts over all hours in the current month for all organizations.
+    #[serde(rename = "csm_host_pro_hosts_agentless_scanners_agg_sum")]
+    pub csm_host_pro_hosts_agentless_scanners_agg_sum: Option<i64>,
+    /// Shows the 99th percentile of all Cloud Security Management Pro Agentless scanner hosts over all hours in the current month for all organizations.
+    #[serde(rename = "csm_host_pro_hosts_agentless_scanners_top99p_sum")]
+    pub csm_host_pro_hosts_agentless_scanners_top99p_sum: Option<i64>,
     /// Shows the 99th percentile of all Cloud Security Management Pro OCI hosts over all hours in the current month for all organizations.
     #[serde(rename = "csm_host_pro_oci_host_count_top99p_sum")]
     pub csm_host_pro_oci_host_count_top99p_sum: Option<i64>,
@@ -236,6 +242,12 @@ pub struct UsageSummaryResponse {
     /// Shows the 99th percentile of all Cloud Security Management Pro hosts over all hours in the current month for all organizations.
     #[serde(rename = "cspm_host_top99p_sum")]
     pub cspm_host_top99p_sum: Option<i64>,
+    /// Shows the sum of all Cloud Security Management Pro Agentless scanner hosts over all hours in the current month for all organizations.
+    #[serde(rename = "cspm_hosts_agentless_scanners_agg_sum")]
+    pub cspm_hosts_agentless_scanners_agg_sum: Option<i64>,
+    /// Shows the 99th percentile of all Cloud Security Management Pro Agentless scanner hosts over all hours in the current month for all organizations.
+    #[serde(rename = "cspm_hosts_agentless_scanners_top99p_sum")]
+    pub cspm_hosts_agentless_scanners_top99p_sum: Option<i64>,
     /// Shows the average number of distinct historical custom metrics over all hours in the current month for all organizations.
     #[serde(rename = "custom_historical_ts_sum")]
     pub custom_historical_ts_sum: Option<i64>,
@@ -864,6 +876,8 @@ impl UsageSummaryResponse {
             csm_host_enterprise_gcp_host_count_top99p_sum: None,
             csm_host_enterprise_oci_host_count_top99p_sum: None,
             csm_host_enterprise_total_host_count_top99p_sum: None,
+            csm_host_pro_hosts_agentless_scanners_agg_sum: None,
+            csm_host_pro_hosts_agentless_scanners_top99p_sum: None,
             csm_host_pro_oci_host_count_top99p_sum: None,
             cspm_aas_host_top99p_sum: None,
             cspm_aws_host_top99p_sum: None,
@@ -872,6 +886,8 @@ impl UsageSummaryResponse {
             cspm_container_hwm_sum: None,
             cspm_gcp_host_top99p_sum: None,
             cspm_host_top99p_sum: None,
+            cspm_hosts_agentless_scanners_agg_sum: None,
+            cspm_hosts_agentless_scanners_top99p_sum: None,
             custom_historical_ts_sum: None,
             custom_live_ts_sum: None,
             custom_ts_sum: None,
@@ -1453,6 +1469,18 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn csm_host_pro_hosts_agentless_scanners_agg_sum(mut self, value: i64) -> Self {
+        self.csm_host_pro_hosts_agentless_scanners_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn csm_host_pro_hosts_agentless_scanners_top99p_sum(mut self, value: i64) -> Self {
+        self.csm_host_pro_hosts_agentless_scanners_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn csm_host_pro_oci_host_count_top99p_sum(mut self, value: i64) -> Self {
         self.csm_host_pro_oci_host_count_top99p_sum = Some(value);
         self
@@ -1497,6 +1525,18 @@ impl UsageSummaryResponse {
     #[allow(deprecated)]
     pub fn cspm_host_top99p_sum(mut self, value: i64) -> Self {
         self.cspm_host_top99p_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn cspm_hosts_agentless_scanners_agg_sum(mut self, value: i64) -> Self {
+        self.cspm_hosts_agentless_scanners_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn cspm_hosts_agentless_scanners_top99p_sum(mut self, value: i64) -> Self {
+        self.cspm_hosts_agentless_scanners_top99p_sum = Some(value);
         self
     }
 
@@ -2728,6 +2768,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut csm_host_enterprise_gcp_host_count_top99p_sum: Option<i64> = None;
                 let mut csm_host_enterprise_oci_host_count_top99p_sum: Option<i64> = None;
                 let mut csm_host_enterprise_total_host_count_top99p_sum: Option<i64> = None;
+                let mut csm_host_pro_hosts_agentless_scanners_agg_sum: Option<i64> = None;
+                let mut csm_host_pro_hosts_agentless_scanners_top99p_sum: Option<i64> = None;
                 let mut csm_host_pro_oci_host_count_top99p_sum: Option<i64> = None;
                 let mut cspm_aas_host_top99p_sum: Option<i64> = None;
                 let mut cspm_aws_host_top99p_sum: Option<i64> = None;
@@ -2736,6 +2778,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut cspm_container_hwm_sum: Option<i64> = None;
                 let mut cspm_gcp_host_top99p_sum: Option<i64> = None;
                 let mut cspm_host_top99p_sum: Option<i64> = None;
+                let mut cspm_hosts_agentless_scanners_agg_sum: Option<i64> = None;
+                let mut cspm_hosts_agentless_scanners_top99p_sum: Option<i64> = None;
                 let mut custom_historical_ts_sum: Option<i64> = None;
                 let mut custom_live_ts_sum: Option<i64> = None;
                 let mut custom_ts_sum: Option<i64> = None;
@@ -3338,6 +3382,18 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             }
                             csm_host_enterprise_total_host_count_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "csm_host_pro_hosts_agentless_scanners_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_host_pro_hosts_agentless_scanners_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "csm_host_pro_hosts_agentless_scanners_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            csm_host_pro_hosts_agentless_scanners_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "csm_host_pro_oci_host_count_top99p_sum" => {
                             if v.is_null() {
                                 continue;
@@ -3385,6 +3441,18 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                                 continue;
                             }
                             cspm_host_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "cspm_hosts_agentless_scanners_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_hosts_agentless_scanners_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "cspm_hosts_agentless_scanners_top99p_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cspm_hosts_agentless_scanners_top99p_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "custom_historical_ts_sum" => {
                             if v.is_null() {
@@ -4536,6 +4604,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     csm_host_enterprise_gcp_host_count_top99p_sum,
                     csm_host_enterprise_oci_host_count_top99p_sum,
                     csm_host_enterprise_total_host_count_top99p_sum,
+                    csm_host_pro_hosts_agentless_scanners_agg_sum,
+                    csm_host_pro_hosts_agentless_scanners_top99p_sum,
                     csm_host_pro_oci_host_count_top99p_sum,
                     cspm_aas_host_top99p_sum,
                     cspm_aws_host_top99p_sum,
@@ -4544,6 +4614,8 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     cspm_container_hwm_sum,
                     cspm_gcp_host_top99p_sum,
                     cspm_host_top99p_sum,
+                    cspm_hosts_agentless_scanners_agg_sum,
+                    cspm_hosts_agentless_scanners_top99p_sum,
                     custom_historical_ts_sum,
                     custom_live_ts_sum,
                     custom_ts_sum,
