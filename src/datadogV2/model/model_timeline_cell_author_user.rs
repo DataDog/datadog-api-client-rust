@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// timeline cell user author
+/// A user who authored a timeline cell.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TimelineCellAuthorUser {
-    /// user author content.
+    /// Profile information for the user who authored the timeline cell.
     #[serde(rename = "content")]
     pub content: Option<crate::datadogV2::model::TimelineCellAuthorUserContent>,
-    /// user author type.
+    /// The type of timeline cell author. Currently only `USER` is supported.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::TimelineCellAuthorUserType>,
     #[serde(flatten)]

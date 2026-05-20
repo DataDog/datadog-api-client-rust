@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// user author content.
+/// Profile information for the user who authored the timeline cell.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TimelineCellAuthorUserContent {
-    /// user email
+    /// The email address of the user.
     #[serde(rename = "email")]
     pub email: Option<String>,
-    /// user handle
+    /// The Datadog handle of the user.
     #[serde(rename = "handle")]
     pub handle: Option<String>,
-    /// user UUID
+    /// The UUID of the user.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// user name
+    /// The display name of the user.
     #[serde(rename = "name")]
     pub name: Option<String>,
     #[serde(flatten)]
