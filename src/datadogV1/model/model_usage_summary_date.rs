@@ -269,6 +269,9 @@ pub struct UsageSummaryDate {
     /// Shows the average of all normalized Database Monitoring queries over all hours in the current date for all organizations.
     #[serde(rename = "dbm_queries_count_avg")]
     pub dbm_queries_count_avg: Option<i64>,
+    /// Shows the sum of all orchestrator job hours over all hours in the current date for all organizations.
+    #[serde(rename = "do_jobs_monitoring_orchestrators_job_hours_sum")]
+    pub do_jobs_monitoring_orchestrators_job_hours_sum: Option<i64>,
     /// Shows the sum of all ephemeral infrastructure hosts with the Datadog Agent over all hours in the current date for the given org.
     #[serde(rename = "eph_infra_host_agent_sum")]
     pub eph_infra_host_agent_sum: Option<i64>,
@@ -859,6 +862,7 @@ impl UsageSummaryDate {
             date: None,
             dbm_host_top99p: None,
             dbm_queries_count_avg: None,
+            do_jobs_monitoring_orchestrators_job_hours_sum: None,
             eph_infra_host_agent_sum: None,
             eph_infra_host_alibaba_sum: None,
             eph_infra_host_aws_sum: None,
@@ -1532,6 +1536,12 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn dbm_queries_count_avg(mut self, value: i64) -> Self {
         self.dbm_queries_count_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn do_jobs_monitoring_orchestrators_job_hours_sum(mut self, value: i64) -> Self {
+        self.do_jobs_monitoring_orchestrators_job_hours_sum = Some(value);
         self
     }
 
@@ -2654,6 +2664,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut dbm_host_top99p: Option<i64> = None;
                 let mut dbm_queries_count_avg: Option<i64> = None;
+                let mut do_jobs_monitoring_orchestrators_job_hours_sum: Option<i64> = None;
                 let mut eph_infra_host_agent_sum: Option<i64> = None;
                 let mut eph_infra_host_alibaba_sum: Option<i64> = None;
                 let mut eph_infra_host_aws_sum: Option<i64> = None;
@@ -3347,6 +3358,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             dbm_queries_count_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "do_jobs_monitoring_orchestrators_job_hours_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            do_jobs_monitoring_orchestrators_job_hours_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "eph_infra_host_agent_sum" => {
                             if v.is_null() {
@@ -4409,6 +4426,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     date,
                     dbm_host_top99p,
                     dbm_queries_count_avg,
+                    do_jobs_monitoring_orchestrators_job_hours_sum,
                     eph_infra_host_agent_sum,
                     eph_infra_host_alibaba_sum,
                     eph_infra_host_aws_sum,
