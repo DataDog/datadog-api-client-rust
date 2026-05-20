@@ -2155,6 +2155,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateLLMObsCustomEvalConfig".into(),
         test_v2_update_llm_obs_custom_eval_config,
     );
+    world
+        .function_mappings
+        .insert("v2.DeleteLLMObsData".into(), test_v2_delete_llm_obs_data);
     world.function_mappings.insert(
         "v2.ListLLMObsAnnotationQueues".into(),
         test_v2_list_llm_obs_annotation_queues,
@@ -2239,6 +2242,12 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateLLMObsProject".into(),
         test_v2_update_llm_obs_project,
     );
+    world
+        .function_mappings
+        .insert("v2.ListLLMObsSpans".into(), test_v2_list_llm_obs_spans);
+    world
+        .function_mappings
+        .insert("v2.SearchLLMObsSpans".into(), test_v2_search_llm_obs_spans);
     world.function_mappings.insert(
         "v2.ListLLMObsDatasets".into(),
         test_v2_list_llm_obs_datasets,
@@ -14301,6 +14310,31 @@ fn test_v2_update_llm_obs_custom_eval_config(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_delete_llm_obs_data(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_llm_obs_data_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_llm_obs_annotation_queues(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -14926,6 +14960,104 @@ fn test_v2_update_llm_obs_project(world: &mut DatadogWorld, _parameters: &HashMa
         serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_llm_obs_project_with_http_info(project_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_spans(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let filter_from = _parameters
+        .get("filter[from]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to = _parameters
+        .get("filter[to]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_query = _parameters
+        .get("filter[query]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_span_id = _parameters
+        .get("filter[span_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_trace_id = _parameters
+        .get("filter[trace_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_span_kind = _parameters
+        .get("filter[span_kind]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_span_name = _parameters
+        .get("filter[span_name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_ml_app = _parameters
+        .get("filter[ml_app]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_attachments = _parameters
+        .get("include_attachments")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_llm_observability::ListLLMObsSpansOptionalParams::default();
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.filter_query = filter_query;
+    params.filter_span_id = filter_span_id;
+    params.filter_trace_id = filter_trace_id;
+    params.filter_span_kind = filter_span_kind;
+    params.filter_span_name = filter_span_name;
+    params.filter_ml_app = filter_ml_app;
+    params.page_limit = page_limit;
+    params.page_cursor = page_cursor;
+    params.sort = sort;
+    params.include_attachments = include_attachments;
+    let response = match block_on(api.list_llm_obs_spans_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_search_llm_obs_spans(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.search_llm_obs_spans_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

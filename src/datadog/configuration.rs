@@ -157,6 +157,7 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.delete_llm_obs_custom_eval_config".to_owned(), false),
+            ("v2.delete_llm_obs_data".to_owned(), false),
             ("v2.delete_llm_obs_dataset_records".to_owned(), false),
             ("v2.delete_llm_obs_datasets".to_owned(), false),
             ("v2.delete_llm_obs_experiments".to_owned(), false),
@@ -173,7 +174,9 @@ impl Default for Configuration {
             ("v2.list_llm_obs_experiment_events".to_owned(), false),
             ("v2.list_llm_obs_experiments".to_owned(), false),
             ("v2.list_llm_obs_projects".to_owned(), false),
+            ("v2.list_llm_obs_spans".to_owned(), false),
             ("v2.search_llm_obs_experimentation".to_owned(), false),
+            ("v2.search_llm_obs_spans".to_owned(), false),
             ("v2.simple_search_llm_obs_experimentation".to_owned(), false),
             ("v2.update_llm_obs_annotation_queue".to_owned(), false),
             (
