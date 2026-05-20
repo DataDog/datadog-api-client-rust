@@ -5,10 +5,12 @@ use datadog_api_client::datadogV2::model::AppFavoriteType;
 use datadog_api_client::datadogV2::model::UpdateAppFavoriteRequest;
 use datadog_api_client::datadogV2::model::UpdateAppFavoriteRequestData;
 use datadog_api_client::datadogV2::model::UpdateAppFavoriteRequestDataAttributes;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
+    // there is a valid "app" in the system
+    let app_data_id =
+        uuid::Uuid::parse_str(&std::env::var("APP_DATA_ID").unwrap()).expect("Invalid UUID");
     let body = UpdateAppFavoriteRequest::new().data(
         UpdateAppFavoriteRequestData::new()
             .attributes(UpdateAppFavoriteRequestDataAttributes::new(true))
@@ -16,12 +18,7 @@ async fn main() {
     );
     let configuration = datadog::Configuration::new();
     let api = AppBuilderAPI::with_config(configuration);
-    let resp = api
-        .update_app_favorite(
-            Uuid::parse_str("00000000-0000-0000-0000-000000000000").expect("invalid UUID"),
-            body,
-        )
-        .await;
+    let resp = api.update_app_favorite(app_data_id.clone(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
     } else {
