@@ -12,6 +12,7 @@ use datadog_api_client::datadogV1::model::SyntheticsBrowserVariable;
 use datadog_api_client::datadogV1::model::SyntheticsBrowserVariableType;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariable;
 use datadog_api_client::datadogV1::model::SyntheticsConfigVariableType;
+use datadog_api_client::datadogV1::model::SyntheticsMCPProtocolVersion;
 use datadog_api_client::datadogV1::model::SyntheticsStep;
 use datadog_api_client::datadogV1::model::SyntheticsStepType;
 use datadog_api_client::datadogV1::model::SyntheticsTestCallType;
@@ -54,10 +55,12 @@ async fn main() {
                 .certificate_domains(vec![])
                 .files(vec![SyntheticsTestRequestBodyFile::new()])
                 .http_version(SyntheticsTestOptionsHTTPVersion::HTTP1)
+                .mcp_protocol_version(SyntheticsMCPProtocolVersion::VERSION_2025_06_18)
                 .proxy(SyntheticsTestRequestProxy::new(
                     "https://example.com".to_string(),
                 ))
                 .service("Greeter".to_string())
+                .tool_name("search".to_string())
                 .url("https://example.com".to_string()),
         )
         .config_variables(vec![SyntheticsConfigVariable::new(

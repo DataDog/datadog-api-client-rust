@@ -6,29 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SyntheticsTestCallType {
-    HEALTHCHECK,
-    UNARY,
-    INIT,
-    TOOL_LIST,
-    TOOL_CALL,
+pub enum SyntheticsAssertionMCPRespectsSpecificationType {
+    MCP_RESPECTS_SPECIFICATION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SyntheticsTestCallType {
+impl ToString for SyntheticsAssertionMCPRespectsSpecificationType {
     fn to_string(&self) -> String {
         match self {
-            Self::HEALTHCHECK => String::from("healthcheck"),
-            Self::UNARY => String::from("unary"),
-            Self::INIT => String::from("init"),
-            Self::TOOL_LIST => String::from("tool_list"),
-            Self::TOOL_CALL => String::from("tool_call"),
+            Self::MCP_RESPECTS_SPECIFICATION => String::from("mcpRespectsSpecification"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for SyntheticsTestCallType {
+impl Serialize for SyntheticsAssertionMCPRespectsSpecificationType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -40,18 +32,14 @@ impl Serialize for SyntheticsTestCallType {
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsTestCallType {
+impl<'de> Deserialize<'de> for SyntheticsAssertionMCPRespectsSpecificationType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "healthcheck" => Self::HEALTHCHECK,
-            "unary" => Self::UNARY,
-            "init" => Self::INIT,
-            "tool_list" => Self::TOOL_LIST,
-            "tool_call" => Self::TOOL_CALL,
+            "mcpRespectsSpecification" => Self::MCP_RESPECTS_SPECIFICATION,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

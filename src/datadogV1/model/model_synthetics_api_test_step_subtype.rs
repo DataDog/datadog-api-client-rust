@@ -15,6 +15,7 @@ pub enum SyntheticsAPITestStepSubtype {
     UDP,
     ICMP,
     WEBSOCKET,
+    MCP,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -29,6 +30,7 @@ impl ToString for SyntheticsAPITestStepSubtype {
             Self::UDP => String::from("udp"),
             Self::ICMP => String::from("icmp"),
             Self::WEBSOCKET => String::from("websocket"),
+            Self::MCP => String::from("mcp"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -61,6 +63,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStepSubtype {
             "udp" => Self::UDP,
             "icmp" => Self::ICMP,
             "websocket" => Self::WEBSOCKET,
+            "mcp" => Self::MCP,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

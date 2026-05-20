@@ -6,29 +6,31 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SyntheticsTestCallType {
-    HEALTHCHECK,
-    UNARY,
-    INIT,
-    TOOL_LIST,
-    TOOL_CALL,
+pub enum SyntheticsMCPServerCapability {
+    COMPLETIONS,
+    EXPERIMENTAL,
+    LOGGING,
+    PROMPTS,
+    RESOURCES,
+    TOOLS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SyntheticsTestCallType {
+impl ToString for SyntheticsMCPServerCapability {
     fn to_string(&self) -> String {
         match self {
-            Self::HEALTHCHECK => String::from("healthcheck"),
-            Self::UNARY => String::from("unary"),
-            Self::INIT => String::from("init"),
-            Self::TOOL_LIST => String::from("tool_list"),
-            Self::TOOL_CALL => String::from("tool_call"),
+            Self::COMPLETIONS => String::from("completions"),
+            Self::EXPERIMENTAL => String::from("experimental"),
+            Self::LOGGING => String::from("logging"),
+            Self::PROMPTS => String::from("prompts"),
+            Self::RESOURCES => String::from("resources"),
+            Self::TOOLS => String::from("tools"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for SyntheticsTestCallType {
+impl Serialize for SyntheticsMCPServerCapability {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -40,18 +42,19 @@ impl Serialize for SyntheticsTestCallType {
     }
 }
 
-impl<'de> Deserialize<'de> for SyntheticsTestCallType {
+impl<'de> Deserialize<'de> for SyntheticsMCPServerCapability {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "healthcheck" => Self::HEALTHCHECK,
-            "unary" => Self::UNARY,
-            "init" => Self::INIT,
-            "tool_list" => Self::TOOL_LIST,
-            "tool_call" => Self::TOOL_CALL,
+            "completions" => Self::COMPLETIONS,
+            "experimental" => Self::EXPERIMENTAL,
+            "logging" => Self::LOGGING,
+            "prompts" => Self::PROMPTS,
+            "resources" => Self::RESOURCES,
+            "tools" => Self::TOOLS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
