@@ -32,18 +32,36 @@ pub struct SingleAggregatedConnectionResponseDataAttributes {
     /// The number of TCP connections in a closed state. Measured in connections per second from the client.
     #[serde(rename = "tcp_closed_connections")]
     pub tcp_closed_connections: Option<i64>,
+    /// The number of TCP segments acknowledged with the ECN Congestion Experienced (CE) mark, indicating that an upstream router marked packets as experiencing congestion.
+    #[serde(rename = "tcp_delivered_ce")]
+    pub tcp_delivered_ce: Option<i64>,
     /// The number of TCP connections in an established state. Measured in connections per second from the client.
     #[serde(rename = "tcp_established_connections")]
     pub tcp_established_connections: Option<i64>,
+    /// The number of TCP zero-window probes sent. These probes are sent when the receiver advertises a zero receive window, indicating it cannot accept more data.
+    #[serde(rename = "tcp_probe0_count")]
+    pub tcp_probe0_count: Option<i64>,
+    /// The number of TCP packets received out of order. This indicates network-level packet reordering, which can degrade TCP performance by triggering spurious retransmissions and reducing throughput.
+    #[serde(rename = "tcp_rcv_ooo_pack")]
+    pub tcp_rcv_ooo_pack: Option<i64>,
+    /// The number of TCP fast recovery events. Fast recovery retransmits lost segments detected through duplicate ACKs or selective acknowledgment (SACK) without waiting for a retransmission timeout.
+    #[serde(rename = "tcp_recovery_count")]
+    pub tcp_recovery_count: Option<i64>,
     /// The number of TCP connections that were refused by the server. Typically this indicates an attempt to connect to an IP/port that is not receiving connections, or a firewall/security misconfiguration.
     #[serde(rename = "tcp_refusals")]
     pub tcp_refusals: Option<i64>,
+    /// The number of times reordering of sent packets was detected. Reordering detection adjusts the duplicate ACK threshold, preventing spurious retransmissions caused by out-of-order delivery.
+    #[serde(rename = "tcp_reord_seen")]
+    pub tcp_reord_seen: Option<i64>,
     /// The number of TCP connections that were reset by the server.
     #[serde(rename = "tcp_resets")]
     pub tcp_resets: Option<i64>,
     /// TCP Retransmits represent detected failures that are retransmitted to ensure delivery. Measured in count of retransmits from the client.
     #[serde(rename = "tcp_retransmits")]
     pub tcp_retransmits: Option<i64>,
+    /// The number of TCP retransmission timeouts (RTOs). An RTO occurs when an ACK is not received within the estimated round-trip time, forcing the sender to retransmit and halve its congestion window.
+    #[serde(rename = "tcp_rto_count")]
+    pub tcp_rto_count: Option<i64>,
     /// The number of TCP connections that timed out from the perspective of the operating system. This can indicate general connectivity and latency issues.
     #[serde(rename = "tcp_timeouts")]
     pub tcp_timeouts: Option<i64>,
@@ -64,10 +82,16 @@ impl SingleAggregatedConnectionResponseDataAttributes {
             packets_sent_by_server: None,
             rtt_micro_seconds: None,
             tcp_closed_connections: None,
+            tcp_delivered_ce: None,
             tcp_established_connections: None,
+            tcp_probe0_count: None,
+            tcp_rcv_ooo_pack: None,
+            tcp_recovery_count: None,
             tcp_refusals: None,
+            tcp_reord_seen: None,
             tcp_resets: None,
             tcp_retransmits: None,
+            tcp_rto_count: None,
             tcp_timeouts: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -109,13 +133,38 @@ impl SingleAggregatedConnectionResponseDataAttributes {
         self
     }
 
+    pub fn tcp_delivered_ce(mut self, value: i64) -> Self {
+        self.tcp_delivered_ce = Some(value);
+        self
+    }
+
     pub fn tcp_established_connections(mut self, value: i64) -> Self {
         self.tcp_established_connections = Some(value);
         self
     }
 
+    pub fn tcp_probe0_count(mut self, value: i64) -> Self {
+        self.tcp_probe0_count = Some(value);
+        self
+    }
+
+    pub fn tcp_rcv_ooo_pack(mut self, value: i64) -> Self {
+        self.tcp_rcv_ooo_pack = Some(value);
+        self
+    }
+
+    pub fn tcp_recovery_count(mut self, value: i64) -> Self {
+        self.tcp_recovery_count = Some(value);
+        self
+    }
+
     pub fn tcp_refusals(mut self, value: i64) -> Self {
         self.tcp_refusals = Some(value);
+        self
+    }
+
+    pub fn tcp_reord_seen(mut self, value: i64) -> Self {
+        self.tcp_reord_seen = Some(value);
         self
     }
 
@@ -126,6 +175,11 @@ impl SingleAggregatedConnectionResponseDataAttributes {
 
     pub fn tcp_retransmits(mut self, value: i64) -> Self {
         self.tcp_retransmits = Some(value);
+        self
+    }
+
+    pub fn tcp_rto_count(mut self, value: i64) -> Self {
+        self.tcp_rto_count = Some(value);
         self
     }
 
@@ -173,10 +227,16 @@ impl<'de> Deserialize<'de> for SingleAggregatedConnectionResponseDataAttributes 
                 let mut packets_sent_by_server: Option<i64> = None;
                 let mut rtt_micro_seconds: Option<i64> = None;
                 let mut tcp_closed_connections: Option<i64> = None;
+                let mut tcp_delivered_ce: Option<i64> = None;
                 let mut tcp_established_connections: Option<i64> = None;
+                let mut tcp_probe0_count: Option<i64> = None;
+                let mut tcp_rcv_ooo_pack: Option<i64> = None;
+                let mut tcp_recovery_count: Option<i64> = None;
                 let mut tcp_refusals: Option<i64> = None;
+                let mut tcp_reord_seen: Option<i64> = None;
                 let mut tcp_resets: Option<i64> = None;
                 let mut tcp_retransmits: Option<i64> = None;
+                let mut tcp_rto_count: Option<i64> = None;
                 let mut tcp_timeouts: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -234,6 +294,13 @@ impl<'de> Deserialize<'de> for SingleAggregatedConnectionResponseDataAttributes 
                             tcp_closed_connections =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tcp_delivered_ce" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tcp_delivered_ce =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tcp_established_connections" => {
                             if v.is_null() {
                                 continue;
@@ -241,11 +308,39 @@ impl<'de> Deserialize<'de> for SingleAggregatedConnectionResponseDataAttributes 
                             tcp_established_connections =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tcp_probe0_count" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tcp_probe0_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tcp_rcv_ooo_pack" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tcp_rcv_ooo_pack =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tcp_recovery_count" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tcp_recovery_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tcp_refusals" => {
                             if v.is_null() {
                                 continue;
                             }
                             tcp_refusals =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tcp_reord_seen" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tcp_reord_seen =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tcp_resets" => {
@@ -259,6 +354,13 @@ impl<'de> Deserialize<'de> for SingleAggregatedConnectionResponseDataAttributes 
                                 continue;
                             }
                             tcp_retransmits =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "tcp_rto_count" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tcp_rto_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tcp_timeouts" => {
@@ -284,10 +386,16 @@ impl<'de> Deserialize<'de> for SingleAggregatedConnectionResponseDataAttributes 
                     packets_sent_by_server,
                     rtt_micro_seconds,
                     tcp_closed_connections,
+                    tcp_delivered_ce,
                     tcp_established_connections,
+                    tcp_probe0_count,
+                    tcp_rcv_ooo_pack,
+                    tcp_recovery_count,
                     tcp_refusals,
+                    tcp_reord_seen,
                     tcp_resets,
                     tcp_retransmits,
+                    tcp_rto_count,
                     tcp_timeouts,
                     additional_properties,
                     _unparsed,
