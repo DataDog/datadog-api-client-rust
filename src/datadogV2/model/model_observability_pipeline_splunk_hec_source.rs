@@ -29,6 +29,11 @@ pub struct ObservabilityPipelineSplunkHecSource {
     /// The source type. Always `splunk_hec`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineSplunkHecSourceType,
+    /// A list of tokens that are accepted for authenticating incoming HEC requests. When set, the source
+    /// rejects any request whose HEC token does not match an enabled entry in this list.
+    #[serde(rename = "valid_tokens")]
+    pub valid_tokens:
+        Option<Vec<crate::datadogV2::model::ObservabilityPipelineSplunkHecSourceValidToken>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -47,6 +52,7 @@ impl ObservabilityPipelineSplunkHecSource {
             store_hec_token: None,
             tls: None,
             type_,
+            valid_tokens: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -64,6 +70,14 @@ impl ObservabilityPipelineSplunkHecSource {
 
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
         self.tls = Some(value);
+        self
+    }
+
+    pub fn valid_tokens(
+        mut self,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineSplunkHecSourceValidToken>,
+    ) -> Self {
+        self.valid_tokens = Some(value);
         self
     }
 
@@ -99,6 +113,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecSource {
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineSplunkHecSourceType,
+                > = None;
+                let mut valid_tokens: Option<
+                    Vec<crate::datadogV2::model::ObservabilityPipelineSplunkHecSourceValidToken>,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -142,6 +159,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecSource {
                                 }
                             }
                         }
+                        "valid_tokens" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            valid_tokens =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -158,6 +182,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecSource {
                     store_hec_token,
                     tls,
                     type_,
+                    valid_tokens,
                     additional_properties,
                     _unparsed,
                 };

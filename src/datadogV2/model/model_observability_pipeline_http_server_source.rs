@@ -40,6 +40,12 @@ pub struct ObservabilityPipelineHttpServerSource {
     /// Name of the environment variable or secret that holds the username (used when `auth_strategy` is `plain`).
     #[serde(rename = "username_key")]
     pub username_key: Option<String>,
+    /// A list of tokens that are accepted for authenticating incoming HTTP requests. When set,
+    /// the source rejects any request whose token does not match an enabled entry in this list.
+    /// Cannot be combined with the `plain` auth strategy.
+    #[serde(rename = "valid_tokens")]
+    pub valid_tokens:
+        Option<Vec<crate::datadogV2::model::ObservabilityPipelineHttpServerSourceValidToken>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -64,6 +70,7 @@ impl ObservabilityPipelineHttpServerSource {
             tls: None,
             type_,
             username_key: None,
+            valid_tokens: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -91,6 +98,14 @@ impl ObservabilityPipelineHttpServerSource {
 
     pub fn username_key(mut self, value: String) -> Self {
         self.username_key = Some(value);
+        self
+    }
+
+    pub fn valid_tokens(
+        mut self,
+        value: Vec<crate::datadogV2::model::ObservabilityPipelineHttpServerSourceValidToken>,
+    ) -> Self {
+        self.valid_tokens = Some(value);
         self
     }
 
@@ -134,6 +149,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpServerSource {
                     crate::datadogV2::model::ObservabilityPipelineHttpServerSourceType,
                 > = None;
                 let mut username_key: Option<String> = None;
+                let mut valid_tokens: Option<
+                    Vec<crate::datadogV2::model::ObservabilityPipelineHttpServerSourceValidToken>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -212,6 +230,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpServerSource {
                             username_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "valid_tokens" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            valid_tokens =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -235,6 +260,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpServerSource {
                     tls,
                     type_,
                     username_key,
+                    valid_tokens,
                     additional_properties,
                     _unparsed,
                 };
