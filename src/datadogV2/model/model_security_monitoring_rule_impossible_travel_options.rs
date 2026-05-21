@@ -15,6 +15,13 @@ pub struct SecurityMonitoringRuleImpossibleTravelOptions {
     /// access locations. This can be helpful to reduce noise and infer VPN usage or credentialed API access.
     #[serde(rename = "baselineUserLocations")]
     pub baseline_user_locations: Option<bool>,
+    /// The duration in days during which Datadog learns the user's regular access locations. After this period, signals are generated for accesses from unknown locations.
+    #[serde(
+        rename = "baselineUserLocationsDuration",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub baseline_user_locations_duration: Option<Option<i32>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -26,6 +33,7 @@ impl SecurityMonitoringRuleImpossibleTravelOptions {
     pub fn new() -> SecurityMonitoringRuleImpossibleTravelOptions {
         SecurityMonitoringRuleImpossibleTravelOptions {
             baseline_user_locations: None,
+            baseline_user_locations_duration: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -33,6 +41,11 @@ impl SecurityMonitoringRuleImpossibleTravelOptions {
 
     pub fn baseline_user_locations(mut self, value: bool) -> Self {
         self.baseline_user_locations = Some(value);
+        self
+    }
+
+    pub fn baseline_user_locations_duration(mut self, value: Option<i32>) -> Self {
+        self.baseline_user_locations_duration = Some(value);
         self
     }
 
@@ -69,6 +82,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleImpossibleTravelOptions {
                 M: MapAccess<'a>,
             {
                 let mut baseline_user_locations: Option<bool> = None;
+                let mut baseline_user_locations_duration: Option<Option<i32>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -84,6 +98,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleImpossibleTravelOptions {
                             baseline_user_locations =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "baselineUserLocationsDuration" => {
+                            baseline_user_locations_duration =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -94,6 +112,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleImpossibleTravelOptions {
 
                 let content = SecurityMonitoringRuleImpossibleTravelOptions {
                     baseline_user_locations,
+                    baseline_user_locations_duration,
                     additional_properties,
                     _unparsed,
                 };
