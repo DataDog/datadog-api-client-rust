@@ -2663,6 +2663,23 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.ListAppVersions".into(), test_v2_list_app_versions);
     world
         .function_mappings
+        .insert("v2.GetBlueprint".into(), test_v2_get_blueprint);
+    world
+        .function_mappings
+        .insert("v2.ListBlueprints".into(), test_v2_list_blueprints);
+    world.function_mappings.insert(
+        "v2.GetBlueprintsByIntegrationId".into(),
+        test_v2_get_blueprints_by_integration_id,
+    );
+    world.function_mappings.insert(
+        "v2.GetBlueprintsBySlugs".into(),
+        test_v2_get_blueprints_by_slugs,
+    );
+    world
+        .function_mappings
+        .insert("v2.ListTags".into(), test_v2_list_tags);
+    world
+        .function_mappings
         .insert("v2.ListAuditLogs".into(), test_v2_list_audit_logs);
     world.function_mappings.insert(
         "v2.ListAuditLogsWithPagination".into(),
@@ -18540,6 +18557,144 @@ fn test_v2_list_app_versions(world: &mut DatadogWorld, _parameters: &HashMap<Str
     params.limit = limit;
     params.page = page;
     let response = match block_on(api.list_app_versions_with_http_info(app_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_blueprint(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_app_builder
+        .as_ref()
+        .expect("api instance not found");
+    let blueprint_id =
+        serde_json::from_value(_parameters.get("blueprint_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_blueprint_with_http_info(blueprint_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_blueprints(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_app_builder
+        .as_ref()
+        .expect("api instance not found");
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page = _parameters
+        .get("page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_app_builder::ListBlueprintsOptionalParams::default();
+    params.limit = limit;
+    params.page = page;
+    let response = match block_on(api.list_blueprints_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_blueprints_by_integration_id(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_app_builder
+        .as_ref()
+        .expect("api instance not found");
+    let integration_id =
+        serde_json::from_value(_parameters.get("integration_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_blueprints_by_integration_id_with_http_info(integration_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_blueprints_by_slugs(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_app_builder
+        .as_ref()
+        .expect("api instance not found");
+    let slugs = serde_json::from_value(_parameters.get("slugs").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_blueprints_by_slugs_with_http_info(slugs)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_tags(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_app_builder
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_tags_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {
