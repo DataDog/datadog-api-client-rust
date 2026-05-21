@@ -3690,6 +3690,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_cost_oci_configs,
     );
     world.function_mappings.insert(
+        "v2.SearchCostRecommendations".into(),
+        test_v2_search_cost_recommendations,
+    );
+    world.function_mappings.insert(
         "v2.ListCostTagDescriptions".into(),
         test_v2_list_cost_tag_descriptions,
     );
@@ -27796,6 +27800,44 @@ fn test_v2_list_cost_oci_configs(world: &mut DatadogWorld, _parameters: &HashMap
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.list_cost_oci_configs_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_search_cost_recommendations(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_token = _parameters
+        .get("page[token]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_cloud_cost_management::SearchCostRecommendationsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_token = page_token;
+    let response = match block_on(api.search_cost_recommendations_with_http_info(body, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
