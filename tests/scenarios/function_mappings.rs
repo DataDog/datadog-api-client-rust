@@ -2227,6 +2227,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_create_llm_obs_experiment_events,
     );
     world.function_mappings.insert(
+        "v2.ListLLMObsIntegrationAccounts".into(),
+        test_v2_list_llm_obs_integration_accounts,
+    );
+    world.function_mappings.insert(
+        "v2.CreateLLMObsIntegrationInference".into(),
+        test_v2_create_llm_obs_integration_inference,
+    );
+    world.function_mappings.insert(
+        "v2.ListLLMObsIntegrationModels".into(),
+        test_v2_list_llm_obs_integration_models,
+    );
+    world.function_mappings.insert(
         "v2.ListLLMObsProjects".into(),
         test_v2_list_llm_obs_projects,
     );
@@ -14842,6 +14854,105 @@ fn test_v2_create_llm_obs_experiment_events(
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response =
         match block_on(api.create_llm_obs_experiment_events_with_http_info(experiment_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_integration_accounts(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let integration =
+        serde_json::from_value(_parameters.get("integration").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_llm_obs_integration_accounts_with_http_info(integration))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_llm_obs_integration_inference(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let integration =
+        serde_json::from_value(_parameters.get("integration").unwrap().clone()).unwrap();
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_llm_obs_integration_inference_with_http_info(
+        integration,
+        account_id,
+        body,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_integration_models(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let integration =
+        serde_json::from_value(_parameters.get("integration").unwrap().clone()).unwrap();
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.list_llm_obs_integration_models_with_http_info(integration, account_id))
+        {
             Ok(response) => response,
             Err(error) => {
                 return match error {
