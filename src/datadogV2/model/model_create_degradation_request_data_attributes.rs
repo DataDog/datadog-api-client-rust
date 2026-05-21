@@ -24,9 +24,6 @@ pub struct CreateDegradationRequestDataAttributes {
     /// The title of the degradation.
     #[serde(rename = "title")]
     pub title: String,
-    #[serde(rename = "updates")]
-    pub updates:
-        Option<Vec<crate::datadogV2::model::CreateDegradationRequestDataAttributesUpdatesItems>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -47,7 +44,6 @@ impl CreateDegradationRequestDataAttributes {
             description: None,
             status,
             title,
-            updates: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -55,14 +51,6 @@ impl CreateDegradationRequestDataAttributes {
 
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
-        self
-    }
-
-    pub fn updates(
-        mut self,
-        value: Vec<crate::datadogV2::model::CreateDegradationRequestDataAttributesUpdatesItems>,
-    ) -> Self {
-        self.updates = Some(value);
         self
     }
 
@@ -98,11 +86,6 @@ impl<'de> Deserialize<'de> for CreateDegradationRequestDataAttributes {
                     crate::datadogV2::model::CreateDegradationRequestDataAttributesStatus,
                 > = None;
                 let mut title: Option<String> = None;
-                let mut updates: Option<
-                    Vec<
-                        crate::datadogV2::model::CreateDegradationRequestDataAttributesUpdatesItems,
-                    >,
-                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -136,12 +119,6 @@ impl<'de> Deserialize<'de> for CreateDegradationRequestDataAttributes {
                         "title" => {
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "updates" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            updates = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -159,7 +136,6 @@ impl<'de> Deserialize<'de> for CreateDegradationRequestDataAttributes {
                     description,
                     status,
                     title,
-                    updates,
                     additional_properties,
                     _unparsed,
                 };

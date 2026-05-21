@@ -25,6 +25,9 @@ pub struct DegradationDataAttributesUpdatesItems {
     /// Identifier of the update.
     #[serde(rename = "id")]
     pub id: Option<uuid::Uuid>,
+    /// UUID of the user who last modified the resource.
+    #[serde(rename = "last_modified_by_user_uuid")]
+    pub last_modified_by_user_uuid: Option<String>,
     /// Timestamp of when the update was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -48,6 +51,7 @@ impl DegradationDataAttributesUpdatesItems {
             created_at: None,
             description: None,
             id: None,
+            last_modified_by_user_uuid: None,
             modified_at: None,
             started_at: None,
             status: None,
@@ -78,6 +82,11 @@ impl DegradationDataAttributesUpdatesItems {
 
     pub fn id(mut self, value: uuid::Uuid) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn last_modified_by_user_uuid(mut self, value: String) -> Self {
+        self.last_modified_by_user_uuid = Some(value);
         self
     }
 
@@ -135,6 +144,7 @@ impl<'de> Deserialize<'de> for DegradationDataAttributesUpdatesItems {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut description: Option<String> = None;
                 let mut id: Option<uuid::Uuid> = None;
+                let mut last_modified_by_user_uuid: Option<String> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut started_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut status: Option<
@@ -173,6 +183,13 @@ impl<'de> Deserialize<'de> for DegradationDataAttributesUpdatesItems {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "last_modified_by_user_uuid" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            last_modified_by_user_uuid =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "modified_at" => {
                             if v.is_null() {
@@ -214,6 +231,7 @@ impl<'de> Deserialize<'de> for DegradationDataAttributesUpdatesItems {
                     created_at,
                     description,
                     id,
+                    last_modified_by_user_uuid,
                     modified_at,
                     started_at,
                     status,

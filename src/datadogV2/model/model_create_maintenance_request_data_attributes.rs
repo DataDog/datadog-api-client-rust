@@ -33,9 +33,6 @@ pub struct CreateMaintenanceRequestDataAttributes {
     /// The title of the maintenance.
     #[serde(rename = "title")]
     pub title: String,
-    #[serde(rename = "updates")]
-    pub updates:
-        Option<Vec<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesUpdatesItems>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -63,18 +60,9 @@ impl CreateMaintenanceRequestDataAttributes {
             scheduled_description,
             start_date,
             title,
-            updates: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn updates(
-        mut self,
-        value: Vec<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesUpdatesItems>,
-    ) -> Self {
-        self.updates = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -110,11 +98,6 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestDataAttributes {
                 let mut scheduled_description: Option<String> = None;
                 let mut start_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut title: Option<String> = None;
-                let mut updates: Option<
-                    Vec<
-                        crate::datadogV2::model::CreateMaintenanceRequestDataAttributesUpdatesItems,
-                    >,
-                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -149,12 +132,6 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestDataAttributes {
                         "title" => {
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "updates" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            updates = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -183,7 +160,6 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestDataAttributes {
                     scheduled_description,
                     start_date,
                     title,
-                    updates,
                     additional_properties,
                     _unparsed,
                 };
