@@ -510,6 +510,15 @@ pub enum GetLLMObsCustomEvalConfigError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetLLMObsDatasetDraftStateError is a struct for typed errors of method [`LLMObservabilityAPI::get_llm_obs_dataset_draft_state`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetLLMObsDatasetDraftStateError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListLLMObsAnnotationQueuesError is a struct for typed errors of method [`LLMObservabilityAPI::list_llm_obs_annotation_queues`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -523,6 +532,15 @@ pub enum ListLLMObsAnnotationQueuesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListLLMObsDatasetRecordsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListLLMObsDatasetVersionsError is a struct for typed errors of method [`LLMObservabilityAPI::list_llm_obs_dataset_versions`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListLLMObsDatasetVersionsError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -591,6 +609,15 @@ pub enum ListLLMObsSpansError {
     UnknownValue(serde_json::Value),
 }
 
+/// LockLLMObsDatasetDraftStateError is a struct for typed errors of method [`LLMObservabilityAPI::lock_llm_obs_dataset_draft_state`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LockLLMObsDatasetDraftStateError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// SearchLLMObsExperimentationError is a struct for typed errors of method [`LLMObservabilityAPI::search_llm_obs_experimentation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -613,6 +640,15 @@ pub enum SearchLLMObsSpansError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SimpleSearchLLMObsExperimentationError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UnlockLLMObsDatasetDraftStateError is a struct for typed errors of method [`LLMObservabilityAPI::unlock_llm_obs_dataset_draft_state`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UnlockLLMObsDatasetDraftStateError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -3889,6 +3925,129 @@ impl LLMObservabilityAPI {
         }
     }
 
+    /// Retrieve the draft state of a dataset, including whether it is currently locked for editing and which user holds the lock.
+    pub async fn get_llm_obs_dataset_draft_state(
+        &self,
+        project_id: String,
+        dataset_id: String,
+    ) -> Result<
+        crate::datadogV2::model::LLMObsDatasetDraftStateResponse,
+        datadog::Error<GetLLMObsDatasetDraftStateError>,
+    > {
+        match self
+            .get_llm_obs_dataset_draft_state_with_http_info(project_id, dataset_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieve the draft state of a dataset, including whether it is currently locked for editing and which user holds the lock.
+    pub async fn get_llm_obs_dataset_draft_state_with_http_info(
+        &self,
+        project_id: String,
+        dataset_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>,
+        datadog::Error<GetLLMObsDatasetDraftStateError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_llm_obs_dataset_draft_state";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_llm_obs_dataset_draft_state' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/draft_state",
+            local_configuration.get_operation_host(operation_id),
+            project_id = datadog::urlencode(project_id),
+            dataset_id = datadog::urlencode(dataset_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetLLMObsDatasetDraftStateError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// List annotation queues. Optionally filter by project ID or queue IDs. These parameters are mutually exclusive.
     /// If neither is provided, all queues in the organization are returned.
     pub async fn list_llm_obs_annotation_queues(
@@ -4157,6 +4316,129 @@ impl LLMObservabilityAPI {
             };
         } else {
             let local_entity: Option<ListLLMObsDatasetRecordsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List the active versions of a dataset. A version is created each time a dataset is referenced by an experiment run.
+    pub async fn list_llm_obs_dataset_versions(
+        &self,
+        project_id: String,
+        dataset_id: String,
+    ) -> Result<
+        crate::datadogV2::model::LLMObsDatasetVersionsResponse,
+        datadog::Error<ListLLMObsDatasetVersionsError>,
+    > {
+        match self
+            .list_llm_obs_dataset_versions_with_http_info(project_id, dataset_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List the active versions of a dataset. A version is created each time a dataset is referenced by an experiment run.
+    pub async fn list_llm_obs_dataset_versions_with_http_info(
+        &self,
+        project_id: String,
+        dataset_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetVersionsResponse>,
+        datadog::Error<ListLLMObsDatasetVersionsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_llm_obs_dataset_versions";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_llm_obs_dataset_versions' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/versions",
+            local_configuration.get_operation_host(operation_id),
+            project_id = datadog::urlencode(project_id),
+            dataset_id = datadog::urlencode(dataset_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetVersionsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListLLMObsDatasetVersionsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -5150,6 +5432,129 @@ impl LLMObservabilityAPI {
         }
     }
 
+    /// Acquire the draft lock on a dataset for the calling user. The lock prevents other users from concurrently editing the dataset draft.
+    pub async fn lock_llm_obs_dataset_draft_state(
+        &self,
+        project_id: String,
+        dataset_id: String,
+    ) -> Result<
+        crate::datadogV2::model::LLMObsDatasetDraftStateResponse,
+        datadog::Error<LockLLMObsDatasetDraftStateError>,
+    > {
+        match self
+            .lock_llm_obs_dataset_draft_state_with_http_info(project_id, dataset_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Acquire the draft lock on a dataset for the calling user. The lock prevents other users from concurrently editing the dataset draft.
+    pub async fn lock_llm_obs_dataset_draft_state_with_http_info(
+        &self,
+        project_id: String,
+        dataset_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>,
+        datadog::Error<LockLLMObsDatasetDraftStateError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.lock_llm_obs_dataset_draft_state";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.lock_llm_obs_dataset_draft_state' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/draft_state/lock",
+            local_configuration.get_operation_host(operation_id),
+            project_id = datadog::urlencode(project_id),
+            dataset_id = datadog::urlencode(dataset_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<LockLLMObsDatasetDraftStateError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Search across LLM Observability experimentation entities — projects, datasets, dataset records, experiments, and experiment runs — using cursor-based pagination.
     ///
     /// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
@@ -5651,6 +6056,109 @@ impl LLMObservabilityAPI {
             };
         } else {
             let local_entity: Option<SimpleSearchLLMObsExperimentationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Release the draft lock on a dataset held by the calling user, allowing other users to edit the dataset draft.
+    pub async fn unlock_llm_obs_dataset_draft_state(
+        &self,
+        project_id: String,
+        dataset_id: String,
+    ) -> Result<(), datadog::Error<UnlockLLMObsDatasetDraftStateError>> {
+        match self
+            .unlock_llm_obs_dataset_draft_state_with_http_info(project_id, dataset_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Release the draft lock on a dataset held by the calling user, allowing other users to edit the dataset draft.
+    pub async fn unlock_llm_obs_dataset_draft_state_with_http_info(
+        &self,
+        project_id: String,
+        dataset_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnlockLLMObsDatasetDraftStateError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.unlock_llm_obs_dataset_draft_state";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.unlock_llm_obs_dataset_draft_state' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/draft_state/unlock",
+            local_configuration.get_operation_host(operation_id),
+            project_id = datadog::urlencode(project_id),
+            dataset_id = datadog::urlencode(dataset_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<UnlockLLMObsDatasetDraftStateError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
