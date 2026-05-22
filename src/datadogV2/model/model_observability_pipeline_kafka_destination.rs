@@ -16,6 +16,9 @@ pub struct ObservabilityPipelineKafkaDestination {
     /// Name of the environment variable or secret that holds the Kafka bootstrap servers list.
     #[serde(rename = "bootstrap_servers_key")]
     pub bootstrap_servers_key: Option<String>,
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Compression codec for Kafka messages.
     #[serde(rename = "compression")]
     pub compression:
@@ -80,6 +83,7 @@ impl ObservabilityPipelineKafkaDestination {
     ) -> ObservabilityPipelineKafkaDestination {
         ObservabilityPipelineKafkaDestination {
             bootstrap_servers_key: None,
+            buffer: None,
             compression: None,
             encoding,
             headers_key: None,
@@ -102,6 +106,14 @@ impl ObservabilityPipelineKafkaDestination {
 
     pub fn bootstrap_servers_key(mut self, value: String) -> Self {
         self.bootstrap_servers_key = Some(value);
+        self
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
         self
     }
 
@@ -188,6 +200,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
                 M: MapAccess<'a>,
             {
                 let mut bootstrap_servers_key: Option<String> = None;
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut compression: Option<
                     crate::datadogV2::model::ObservabilityPipelineKafkaDestinationCompression,
                 > = None;
@@ -226,6 +241,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
                             }
                             bootstrap_servers_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "compression" => {
                             if v.is_null() {
@@ -348,6 +377,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
 
                 let content = ObservabilityPipelineKafkaDestination {
                     bootstrap_servers_key,
+                    buffer,
                     compression,
                     encoding,
                     headers_key,
