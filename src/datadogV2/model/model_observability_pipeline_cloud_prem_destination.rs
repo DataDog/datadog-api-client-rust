@@ -13,6 +13,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineCloudPremDestination {
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Name of the environment variable or secret that holds the CloudPrem endpoint URL.
     #[serde(rename = "endpoint_url_key")]
     pub endpoint_url_key: Option<String>,
@@ -39,6 +42,7 @@ impl ObservabilityPipelineCloudPremDestination {
         type_: crate::datadogV2::model::ObservabilityPipelineCloudPremDestinationType,
     ) -> ObservabilityPipelineCloudPremDestination {
         ObservabilityPipelineCloudPremDestination {
+            buffer: None,
             endpoint_url_key: None,
             id,
             inputs,
@@ -46,6 +50,14 @@ impl ObservabilityPipelineCloudPremDestination {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
+        self
     }
 
     pub fn endpoint_url_key(mut self, value: String) -> Self {
@@ -79,6 +91,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCloudPremDestination {
             where
                 M: MapAccess<'a>,
             {
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
@@ -93,6 +108,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCloudPremDestination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "endpoint_url_key" => {
                             if v.is_null() {
                                 continue;
@@ -129,6 +158,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCloudPremDestination {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineCloudPremDestination {
+                    buffer,
                     endpoint_url_key,
                     id,
                     inputs,

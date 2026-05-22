@@ -17,6 +17,9 @@ pub struct ObservabilityPipelineHttpClientDestination {
     #[serde(rename = "auth_strategy")]
     pub auth_strategy:
         Option<crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationAuthStrategy>,
+    /// Configuration for buffer settings on destination components.
+    #[serde(rename = "buffer")]
+    pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Compression configuration for HTTP requests.
     #[serde(rename = "compression")]
     pub compression:
@@ -67,6 +70,7 @@ impl ObservabilityPipelineHttpClientDestination {
     ) -> ObservabilityPipelineHttpClientDestination {
         ObservabilityPipelineHttpClientDestination {
             auth_strategy: None,
+            buffer: None,
             compression: None,
             custom_key: None,
             encoding,
@@ -88,6 +92,14 @@ impl ObservabilityPipelineHttpClientDestination {
         value: crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationAuthStrategy,
     ) -> Self {
         self.auth_strategy = Some(value);
+        self
+    }
+
+    pub fn buffer(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+    ) -> Self {
+        self.buffer = Some(value);
         self
     }
 
@@ -158,6 +170,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientDestination {
                 let mut auth_strategy: Option<
                     crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationAuthStrategy,
                 > = None;
+                let mut buffer: Option<
+                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
+                > = None;
                 let mut compression: Option<
                     crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationCompression,
                 > = None;
@@ -192,6 +207,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientDestination {
                             if let Some(ref _auth_strategy) = auth_strategy {
                                 match _auth_strategy {
                                     crate::datadogV2::model::ObservabilityPipelineHttpClientDestinationAuthStrategy::UnparsedObject(_auth_strategy) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "buffer" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            buffer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _buffer) = buffer {
+                                match _buffer {
+                                    crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -285,6 +314,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientDestination {
 
                 let content = ObservabilityPipelineHttpClientDestination {
                     auth_strategy,
+                    buffer,
                     compression,
                     custom_key,
                     encoding,
