@@ -14,6 +14,9 @@ pub struct MonitorThresholds {
     /// The monitor `CRITICAL` threshold.
     #[serde(rename = "critical")]
     pub critical: Option<f64>,
+    /// Query evaluated as a dynamic `CRITICAL` threshold. Only supported on metric monitors with a formula query and options['variables']. Cannot be combined with static thresholds. This field is in preview.
+    #[serde(rename = "critical_query")]
+    pub critical_query: Option<String>,
     /// The monitor `CRITICAL` recovery threshold.
     #[serde(
         rename = "critical_recovery",
@@ -21,6 +24,9 @@ pub struct MonitorThresholds {
         with = "::serde_with::rust::double_option"
     )]
     pub critical_recovery: Option<Option<f64>>,
+    /// Query evaluated as a dynamic `CRITICAL` recovery threshold. Only supported on metric monitors with a formula query and options['variables']. Cannot be combined with static thresholds. This field is in preview.
+    #[serde(rename = "critical_recovery_query")]
+    pub critical_recovery_query: Option<String>,
     /// The monitor `OK` threshold.
     #[serde(rename = "ok", default, with = "::serde_with::rust::double_option")]
     pub ok: Option<Option<f64>>,
@@ -56,7 +62,9 @@ impl MonitorThresholds {
     pub fn new() -> MonitorThresholds {
         MonitorThresholds {
             critical: None,
+            critical_query: None,
             critical_recovery: None,
+            critical_recovery_query: None,
             ok: None,
             unknown: None,
             warning: None,
@@ -71,8 +79,18 @@ impl MonitorThresholds {
         self
     }
 
+    pub fn critical_query(mut self, value: String) -> Self {
+        self.critical_query = Some(value);
+        self
+    }
+
     pub fn critical_recovery(mut self, value: Option<f64>) -> Self {
         self.critical_recovery = Some(value);
+        self
+    }
+
+    pub fn critical_recovery_query(mut self, value: String) -> Self {
+        self.critical_recovery_query = Some(value);
         self
     }
 
@@ -129,7 +147,9 @@ impl<'de> Deserialize<'de> for MonitorThresholds {
                 M: MapAccess<'a>,
             {
                 let mut critical: Option<f64> = None;
+                let mut critical_query: Option<String> = None;
                 let mut critical_recovery: Option<Option<f64>> = None;
+                let mut critical_recovery_query: Option<String> = None;
                 let mut ok: Option<Option<f64>> = None;
                 let mut unknown: Option<Option<f64>> = None;
                 let mut warning: Option<Option<f64>> = None;
@@ -148,11 +168,25 @@ impl<'de> Deserialize<'de> for MonitorThresholds {
                             }
                             critical = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "critical_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            critical_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "critical_recovery" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
                             critical_recovery =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "critical_recovery_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            critical_recovery_query =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "ok" => {
@@ -190,7 +224,9 @@ impl<'de> Deserialize<'de> for MonitorThresholds {
 
                 let content = MonitorThresholds {
                     critical,
+                    critical_query,
                     critical_recovery,
+                    critical_recovery_query,
                     ok,
                     unknown,
                     warning,

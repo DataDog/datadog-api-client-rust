@@ -574,6 +574,10 @@ impl MonitorsAPI {
     /// - `operator`: <, <=, >, >=, ==, or !=
     /// - `#`: an integer or decimal number used to set the threshold
     ///
+    /// To use a dynamic threshold on a metric monitor with a formula query, replace `#` with the `threshold` keyword
+    /// (for example, `... > threshold`) and provide the threshold as a query via `critical_query` on `options.thresholds`.
+    /// This feature is in preview.
+    ///
     /// If you are using the `_change_` or `_pct_change_` time aggregator, instead use `change_aggr(time_aggr(time_window),
     /// timeshift):space_aggr:metric{tags} [by {key}] operator #` with:
     ///
@@ -822,6 +826,10 @@ impl MonitorsAPI {
     /// - `key`: a 'key' in key:value tag syntax; defines a separate alert for each tag in the group (multi-alert)
     /// - `operator`: <, <=, >, >=, ==, or !=
     /// - `#`: an integer or decimal number used to set the threshold
+    ///
+    /// To use a dynamic threshold on a metric monitor with a formula query, replace `#` with the `threshold` keyword
+    /// (for example, `... > threshold`) and provide the threshold as a query via `critical_query` on `options.thresholds`.
+    /// This feature is in preview.
     ///
     /// If you are using the `_change_` or `_pct_change_` time aggregator, instead use `change_aggr(time_aggr(time_window),
     /// timeshift):space_aggr:metric{tags} [by {key}] operator #` with:
