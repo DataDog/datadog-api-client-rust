@@ -41972,14 +41972,10 @@ fn test_v2_list_org_groups(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let sort = _parameters
         .get("sort")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let include = _parameters
-        .get("include")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_org_groups::ListOrgGroupsOptionalParams::default();
     params.page_number = page_number;
     params.page_size = page_size;
     params.sort = sort;
-    params.include = include;
     let response = match block_on(api.list_org_groups_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {

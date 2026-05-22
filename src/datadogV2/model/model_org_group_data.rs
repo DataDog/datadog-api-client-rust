@@ -17,9 +17,6 @@ pub struct OrgGroupData {
     /// The ID of the org group.
     #[serde(rename = "id")]
     pub id: uuid::Uuid,
-    /// Relationships of an org group.
-    #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::OrgGroupRelationships>,
     /// Org groups resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::OrgGroupType,
@@ -39,16 +36,10 @@ impl OrgGroupData {
         OrgGroupData {
             attributes,
             id,
-            relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn relationships(mut self, value: crate::datadogV2::model::OrgGroupRelationships) -> Self {
-        self.relationships = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -79,8 +70,6 @@ impl<'de> Deserialize<'de> for OrgGroupData {
             {
                 let mut attributes: Option<crate::datadogV2::model::OrgGroupAttributes> = None;
                 let mut id: Option<uuid::Uuid> = None;
-                let mut relationships: Option<crate::datadogV2::model::OrgGroupRelationships> =
-                    None;
                 let mut type_: Option<crate::datadogV2::model::OrgGroupType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -95,13 +84,6 @@ impl<'de> Deserialize<'de> for OrgGroupData {
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "relationships" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            relationships =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -130,7 +112,6 @@ impl<'de> Deserialize<'de> for OrgGroupData {
                 let content = OrgGroupData {
                     attributes,
                     id,
-                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,

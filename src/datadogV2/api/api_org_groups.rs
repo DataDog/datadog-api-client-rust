@@ -142,8 +142,6 @@ pub struct ListOrgGroupsOptionalParams {
     pub page_size: Option<i64>,
     /// Field to sort org groups by. Supported values: `name`, `uuid`, `-name`, `-uuid`. Defaults to `uuid`.
     pub sort: Option<crate::datadogV2::model::OrgGroupSortOption>,
-    /// List of related resources to include.
-    pub include: Option<Vec<crate::datadogV2::model::OrgGroupIncludeOption>>,
 }
 
 impl ListOrgGroupsOptionalParams {
@@ -160,11 +158,6 @@ impl ListOrgGroupsOptionalParams {
     /// Field to sort org groups by. Supported values: `name`, `uuid`, `-name`, `-uuid`. Defaults to `uuid`.
     pub fn sort(mut self, value: crate::datadogV2::model::OrgGroupSortOption) -> Self {
         self.sort = Some(value);
-        self
-    }
-    /// List of related resources to include.
-    pub fn include(mut self, value: Vec<crate::datadogV2::model::OrgGroupIncludeOption>) -> Self {
-        self.include = Some(value);
         self
     }
 }
@@ -2440,7 +2433,6 @@ impl OrgGroupsAPI {
         let page_number = params.page_number;
         let page_size = params.page_size;
         let sort = params.sort;
-        let include = params.include;
 
         let local_client = &self.client;
 
@@ -2462,17 +2454,6 @@ impl OrgGroupsAPI {
         if let Some(ref local_query_param) = sort {
             local_req_builder =
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
-        };
-        if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
         };
 
         // build headers

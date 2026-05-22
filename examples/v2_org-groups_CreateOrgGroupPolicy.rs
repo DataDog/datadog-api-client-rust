@@ -22,7 +22,7 @@ async fn main() {
             BTreeMap::from([("value".to_string(), Value::from("UTC"))]),
             "monitor_timezone".to_string(),
         )
-        .enforcement_tier(OrgGroupPolicyEnforcementTier::DEFAULT)
+        .enforcement_tier(OrgGroupPolicyEnforcementTier::OVERRIDE_ALLOWED)
         .policy_type(OrgGroupPolicyPolicyType::ORG_CONFIG),
         OrgGroupPolicyCreateRelationships::new(OrgGroupRelationshipToOne::new(
             OrgGroupRelationshipToOneData::new(

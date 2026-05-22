@@ -7,8 +7,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum OrgGroupPolicyEnforcementTier {
-    DEFAULT,
-    ENFORCE,
+    OVERRIDE_ALLOWED,
+    GROUP_MANAGED,
     DELEGATE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -16,8 +16,8 @@ pub enum OrgGroupPolicyEnforcementTier {
 impl ToString for OrgGroupPolicyEnforcementTier {
     fn to_string(&self) -> String {
         match self {
-            Self::DEFAULT => String::from("DEFAULT"),
-            Self::ENFORCE => String::from("ENFORCE"),
+            Self::OVERRIDE_ALLOWED => String::from("OVERRIDE_ALLOWED"),
+            Self::GROUP_MANAGED => String::from("GROUP_MANAGED"),
             Self::DELEGATE => String::from("DELEGATE"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
@@ -43,8 +43,8 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyEnforcementTier {
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "DEFAULT" => Self::DEFAULT,
-            "ENFORCE" => Self::ENFORCE,
+            "OVERRIDE_ALLOWED" => Self::OVERRIDE_ALLOWED,
+            "GROUP_MANAGED" => Self::GROUP_MANAGED,
             "DELEGATE" => Self::DELEGATE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
