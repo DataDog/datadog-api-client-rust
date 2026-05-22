@@ -22,9 +22,9 @@ pub struct ObservabilityPipelineOpentelemetrySource {
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
-    /// Configuration for enabling TLS encryption between the pipeline component and external services.
+    /// Configuration for enabling TLS encryption between the pipeline component and external connecting clients.
     #[serde(rename = "tls")]
-    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
+    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTls>,
     /// The source type. The value should always be `opentelemetry`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineOpentelemetrySourceType,
@@ -61,7 +61,10 @@ impl ObservabilityPipelineOpentelemetrySource {
         self
     }
 
-    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
+    pub fn tls(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineMtlsServerTls,
+    ) -> Self {
         self.tls = Some(value);
         self
     }
@@ -95,7 +98,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpentelemetrySource {
                 let mut grpc_address_key: Option<String> = None;
                 let mut http_address_key: Option<String> = None;
                 let mut id: Option<String> = None;
-                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
+                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTls> =
+                    None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineOpentelemetrySourceType,
                 > = None;
