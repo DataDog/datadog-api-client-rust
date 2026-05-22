@@ -71,8 +71,20 @@ pub enum ObservabilityPipelineConfigProcessorItem {
     ObservabilityPipelineThrottleProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineThrottleProcessor>,
     ),
+    ObservabilityPipelineAddMetricTagsProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineAddMetricTagsProcessor>,
+    ),
+    ObservabilityPipelineAggregateProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineAggregateProcessor>,
+    ),
     ObservabilityPipelineMetricTagsProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineMetricTagsProcessor>,
+    ),
+    ObservabilityPipelineRenameMetricTagsProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineRenameMetricTagsProcessor>,
+    ),
+    ObservabilityPipelineTagCardinalityLimitProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessor>,
     ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -276,11 +288,43 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorItem {
             }
         }
         if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineAddMetricTagsProcessor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineAddMetricTagsProcessor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineAggregateProcessor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineAggregateProcessor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV2::model::ObservabilityPipelineMetricTagsProcessor>,
         >(value.clone())
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineMetricTagsProcessor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineRenameMetricTagsProcessor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineRenameMetricTagsProcessor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineTagCardinalityLimitProcessor(_v));
             }
         }
 
