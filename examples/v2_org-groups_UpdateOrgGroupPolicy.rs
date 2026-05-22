@@ -15,7 +15,7 @@ async fn main() {
     let body = OrgGroupPolicyUpdateRequest::new(OrgGroupPolicyUpdateData::new(
         OrgGroupPolicyUpdateAttributes::new()
             .content(BTreeMap::from([("value".to_string(), Value::from("UTC"))]))
-            .enforcement_tier(OrgGroupPolicyEnforcementTier::DEFAULT),
+            .enforcement_tier(OrgGroupPolicyEnforcementTier::OVERRIDE_ALLOWED),
         Uuid::parse_str("1a2b3c4d-5e6f-7890-abcd-ef0123456789").expect("invalid UUID"),
         OrgGroupPolicyType::ORG_GROUP_POLICIES,
     ));

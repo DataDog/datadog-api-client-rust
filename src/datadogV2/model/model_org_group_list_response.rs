@@ -14,9 +14,6 @@ pub struct OrgGroupListResponse {
     /// An array of org groups.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::OrgGroupData>,
-    /// Related resources included in the response when requested with the `include` parameter.
-    #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::OrgGroupMembershipData>>,
     /// Pagination links for navigating between pages of an org group list response.
     #[serde(rename = "links")]
     pub links: Option<crate::datadogV2::model::OrgGroupPaginationLinks>,
@@ -34,17 +31,11 @@ impl OrgGroupListResponse {
     pub fn new(data: Vec<crate::datadogV2::model::OrgGroupData>) -> OrgGroupListResponse {
         OrgGroupListResponse {
             data,
-            included: None,
             links: None,
             meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn included(mut self, value: Vec<crate::datadogV2::model::OrgGroupMembershipData>) -> Self {
-        self.included = Some(value);
-        self
     }
 
     pub fn links(mut self, value: crate::datadogV2::model::OrgGroupPaginationLinks) -> Self {
@@ -84,8 +75,6 @@ impl<'de> Deserialize<'de> for OrgGroupListResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<Vec<crate::datadogV2::model::OrgGroupData>> = None;
-                let mut included: Option<Vec<crate::datadogV2::model::OrgGroupMembershipData>> =
-                    None;
                 let mut links: Option<crate::datadogV2::model::OrgGroupPaginationLinks> = None;
                 let mut meta: Option<crate::datadogV2::model::OrgGroupPaginationMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -98,12 +87,6 @@ impl<'de> Deserialize<'de> for OrgGroupListResponse {
                     match k.as_str() {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "included" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "links" => {
                             if v.is_null() {
@@ -128,7 +111,6 @@ impl<'de> Deserialize<'de> for OrgGroupListResponse {
 
                 let content = OrgGroupListResponse {
                     data,
-                    included,
                     links,
                     meta,
                     additional_properties,
