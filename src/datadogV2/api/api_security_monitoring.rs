@@ -13,6 +13,65 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// GetEntityContextOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_entity_context`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetEntityContextOptionalParams {
+    /// A free-text query (for example, an email address or principal ID) used to filter the entities returned.
+    pub query: Option<String>,
+    /// The start of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now-7d`).
+    /// Defaults to `now-7d`. Ignored when `as_of` is set.
+    pub from: Option<String>,
+    /// The end of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now`).
+    /// Defaults to `now`. Ignored when `as_of` is set.
+    pub to: Option<String>,
+    /// A point in time at which to query the entity revisions, as an RFC3339 timestamp, a Unix timestamp
+    /// (in seconds), or a relative time (for example, `now-1d`). When set, `from` and `to` are ignored.
+    /// Cannot be combined with custom `from` / `to` values.
+    pub as_of: Option<String>,
+    /// The maximum number of entities to return.
+    pub limit: Option<i64>,
+    /// An opaque token used to fetch the next page of results, as returned in `meta.page.next_token` of a previous response.
+    pub page_token: Option<String>,
+}
+
+impl GetEntityContextOptionalParams {
+    /// A free-text query (for example, an email address or principal ID) used to filter the entities returned.
+    pub fn query(mut self, value: String) -> Self {
+        self.query = Some(value);
+        self
+    }
+    /// The start of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now-7d`).
+    /// Defaults to `now-7d`. Ignored when `as_of` is set.
+    pub fn from(mut self, value: String) -> Self {
+        self.from = Some(value);
+        self
+    }
+    /// The end of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now`).
+    /// Defaults to `now`. Ignored when `as_of` is set.
+    pub fn to(mut self, value: String) -> Self {
+        self.to = Some(value);
+        self
+    }
+    /// A point in time at which to query the entity revisions, as an RFC3339 timestamp, a Unix timestamp
+    /// (in seconds), or a relative time (for example, `now-1d`). When set, `from` and `to` are ignored.
+    /// Cannot be combined with custom `from` / `to` values.
+    pub fn as_of(mut self, value: String) -> Self {
+        self.as_of = Some(value);
+        self
+    }
+    /// The maximum number of entities to return.
+    pub fn limit(mut self, value: i64) -> Self {
+        self.limit = Some(value);
+        self
+    }
+    /// An opaque token used to fetch the next page of results, as returned in `meta.page.next_token` of a previous response.
+    pub fn page_token(mut self, value: String) -> Self {
+        self.page_token = Some(value);
+        self
+    }
+}
+
 /// GetFindingOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_finding`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -152,6 +211,22 @@ impl GetSecurityMonitoringHistsignalsByJobIdOptionalParams {
     /// The maximum number of security signals in the response.
     pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
+        self
+    }
+}
+
+/// GetSignalEntitiesOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_signal_entities`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetSignalEntitiesOptionalParams {
+    /// The maximum number of entities to return.
+    pub limit: Option<i32>,
+}
+
+impl GetSignalEntitiesOptionalParams {
+    /// The maximum number of entities to return.
+    pub fn limit(mut self, value: i32) -> Self {
+        self.limit = Some(value);
         self
     }
 }
@@ -445,6 +520,49 @@ impl ListIndicatorsOfCompromiseOptionalParams {
     }
 }
 
+/// ListSampleLogGenerationSubscriptionsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_sample_log_generation_subscriptions`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSampleLogGenerationSubscriptionsOptionalParams {
+    /// Filter the subscriptions by status. Use `active` to return only currently active
+    /// subscriptions, or `all` to return every subscription including expired ones.
+    /// Ignored when `start_timestamp` is provided. Defaults to `active`.
+    pub status: Option<crate::datadogV2::model::SampleLogGenerationSubscriptionsStatusFilter>,
+    /// The start of the time range, as an RFC3339 timestamp. When provided, the response includes
+    /// every subscription that was active at any point in `[start_timestamp, end_timestamp]`,
+    /// and the `status` filter is ignored.
+    pub start_timestamp: Option<chrono::DateTime<chrono::Utc>>,
+    /// The end of the time range, as an RFC3339 timestamp. Ignored unless `start_timestamp` is set.
+    /// Defaults to the current time when `start_timestamp` is provided.
+    pub end_timestamp: Option<chrono::DateTime<chrono::Utc>>,
+}
+
+impl ListSampleLogGenerationSubscriptionsOptionalParams {
+    /// Filter the subscriptions by status. Use `active` to return only currently active
+    /// subscriptions, or `all` to return every subscription including expired ones.
+    /// Ignored when `start_timestamp` is provided. Defaults to `active`.
+    pub fn status(
+        mut self,
+        value: crate::datadogV2::model::SampleLogGenerationSubscriptionsStatusFilter,
+    ) -> Self {
+        self.status = Some(value);
+        self
+    }
+    /// The start of the time range, as an RFC3339 timestamp. When provided, the response includes
+    /// every subscription that was active at any point in `[start_timestamp, end_timestamp]`,
+    /// and the `status` filter is ignored.
+    pub fn start_timestamp(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.start_timestamp = Some(value);
+        self
+    }
+    /// The end of the time range, as an RFC3339 timestamp. Ignored unless `start_timestamp` is set.
+    /// Defaults to the current time when `start_timestamp` is provided.
+    pub fn end_timestamp(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.end_timestamp = Some(value);
+        self
+    }
+}
+
 /// ListScannedAssetsMetadataOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_scanned_assets_metadata`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -580,6 +698,25 @@ impl ListSecurityMonitoringHistsignalsOptionalParams {
     /// The maximum number of security signals in the response.
     pub fn page_limit(mut self, value: i32) -> Self {
         self.page_limit = Some(value);
+        self
+    }
+}
+
+/// ListSecurityMonitoringIntegrationConfigsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_integration_configs`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSecurityMonitoringIntegrationConfigsOptionalParams {
+    /// Filter the entity context sync configurations by source type.
+    pub filter_integration_type: Option<crate::datadogV2::model::SecurityMonitoringIntegrationType>,
+}
+
+impl ListSecurityMonitoringIntegrationConfigsOptionalParams {
+    /// Filter the entity context sync configurations by source type.
+    pub fn filter_integration_type(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringIntegrationType,
+    ) -> Self {
+        self.filter_integration_type = Some(value);
         self
     }
 }
@@ -1221,6 +1358,14 @@ pub enum AttachJiraIssueError {
     UnknownValue(serde_json::Value),
 }
 
+/// BulkCreateSampleLogGenerationSubscriptionsError is a struct for typed errors of method [`SecurityMonitoringAPI::bulk_create_sample_log_generation_subscriptions`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum BulkCreateSampleLogGenerationSubscriptionsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// BulkDeleteSecurityMonitoringRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::bulk_delete_security_monitoring_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1336,6 +1481,14 @@ pub enum CreateJiraIssuesError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateSampleLogGenerationSubscriptionError is a struct for typed errors of method [`SecurityMonitoringAPI::create_sample_log_generation_subscription`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateSampleLogGenerationSubscriptionError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateSecurityFilterError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1348,6 +1501,14 @@ pub enum CreateSecurityFilterError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSecurityMonitoringCriticalAssetError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// CreateSecurityMonitoringIntegrationConfigError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_monitoring_integration_config`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateSecurityMonitoringIntegrationConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1409,6 +1570,14 @@ pub enum DeleteHistoricalJobError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteSampleLogGenerationSubscriptionError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_sample_log_generation_subscription`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteSampleLogGenerationSubscriptionError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteSecurityFilterError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_security_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1421,6 +1590,14 @@ pub enum DeleteSecurityFilterError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteSecurityMonitoringCriticalAssetError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteSecurityMonitoringIntegrationConfigError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_security_monitoring_integration_config`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteSecurityMonitoringIntegrationConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1531,6 +1708,14 @@ pub enum GetCustomFrameworkError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetEntityContextError is a struct for typed errors of method [`SecurityMonitoringAPI::get_entity_context`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetEntityContextError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetFindingError is a struct for typed errors of method [`SecurityMonitoringAPI::get_finding`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1628,6 +1813,14 @@ pub enum GetSecurityMonitoringHistsignalsByJobIdError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetSecurityMonitoringIntegrationConfigError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_monitoring_integration_config`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSecurityMonitoringIntegrationConfigError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetSecurityMonitoringRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_monitoring_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1648,6 +1841,14 @@ pub enum GetSecurityMonitoringSignalError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSecurityMonitoringSuppressionError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetSignalEntitiesError is a struct for typed errors of method [`SecurityMonitoringAPI::get_signal_entities`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSignalEntitiesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1757,11 +1958,27 @@ pub enum ListMultipleRulesetsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListSampleLogGenerationSubscriptionsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_sample_log_generation_subscriptions`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSampleLogGenerationSubscriptionsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListScannedAssetsMetadataError is a struct for typed errors of method [`SecurityMonitoringAPI::list_scanned_assets_metadata`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListScannedAssetsMetadataError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListSecurityFilterVersionsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_filter_versions`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSecurityFilterVersionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1794,6 +2011,14 @@ pub enum ListSecurityMonitoringCriticalAssetsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSecurityMonitoringHistsignalsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListSecurityMonitoringIntegrationConfigsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_monitoring_integration_configs`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSecurityMonitoringIntegrationConfigsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1955,6 +2180,14 @@ pub enum UpdateSecurityMonitoringCriticalAssetError {
     UnknownValue(serde_json::Value),
 }
 
+/// UpdateSecurityMonitoringIntegrationConfigError is a struct for typed errors of method [`SecurityMonitoringAPI::update_security_monitoring_integration_config`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateSecurityMonitoringIntegrationConfigError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// UpdateSecurityMonitoringRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::update_security_monitoring_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1967,6 +2200,22 @@ pub enum UpdateSecurityMonitoringRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateSecurityMonitoringSuppressionError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ValidateSecurityMonitoringIntegrationConfigError is a struct for typed errors of method [`SecurityMonitoringAPI::validate_security_monitoring_integration_config`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ValidateSecurityMonitoringIntegrationConfigError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ValidateSecurityMonitoringIntegrationCredentialsError is a struct for typed errors of method [`SecurityMonitoringAPI::validate_security_monitoring_integration_credentials`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ValidateSecurityMonitoringIntegrationCredentialsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2465,6 +2714,189 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<AttachJiraIssueError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Subscribe to sample log generation for multiple Cloud SIEM content packs in a single call.
+    /// Each requested content pack is processed independently; the response includes a per-item
+    /// status so partial successes can be inspected.
+    ///
+    /// **Availability**: this endpoint is restricted to Cloud SIEM trial organizations on an
+    /// eligible pricing model. Non-trial orgs receive `403 Forbidden`, the feature flag may also reject
+    /// requests with `400 Bad Request`, and legacy pricing tiers receive per-item responses with `status: not_available`.
+    pub async fn bulk_create_sample_log_generation_subscriptions(
+        &self,
+        body: crate::datadogV2::model::SampleLogGenerationBulkSubscriptionRequest,
+    ) -> Result<
+        crate::datadogV2::model::SampleLogGenerationBulkSubscriptionResponse,
+        datadog::Error<BulkCreateSampleLogGenerationSubscriptionsError>,
+    > {
+        match self
+            .bulk_create_sample_log_generation_subscriptions_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Subscribe to sample log generation for multiple Cloud SIEM content packs in a single call.
+    /// Each requested content pack is processed independently; the response includes a per-item
+    /// status so partial successes can be inspected.
+    ///
+    /// **Availability**: this endpoint is restricted to Cloud SIEM trial organizations on an
+    /// eligible pricing model. Non-trial orgs receive `403 Forbidden`, the feature flag may also reject
+    /// requests with `400 Bad Request`, and legacy pricing tiers receive per-item responses with `status: not_available`.
+    pub async fn bulk_create_sample_log_generation_subscriptions_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SampleLogGenerationBulkSubscriptionRequest,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SampleLogGenerationBulkSubscriptionResponse,
+        >,
+        datadog::Error<BulkCreateSampleLogGenerationSubscriptionsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.bulk_create_sample_log_generation_subscriptions";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg:
+                    "Operation 'v2.bulk_create_sample_log_generation_subscriptions' is not enabled"
+                        .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/sample_log_generation/subscriptions/bulk",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SampleLogGenerationBulkSubscriptionResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<BulkCreateSampleLogGenerationSubscriptionsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -4617,6 +5049,186 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Subscribe to sample log generation for a Cloud SIEM content pack. Sample logs for the
+    /// requested content pack are injected into the Logs platform for the duration of the subscription,
+    /// so detection rules can be exercised without onboarding the underlying integration first.
+    ///
+    /// **Availability**: this endpoint is restricted to Cloud SIEM trial organizations on an
+    /// eligible pricing model. Non-trial orgs receive `403 Forbidden`, the feature flag may also reject
+    /// requests with `400 Bad Request`, and legacy pricing tiers receive a response with `status: not_available`.
+    pub async fn create_sample_log_generation_subscription(
+        &self,
+        body: crate::datadogV2::model::SampleLogGenerationSubscriptionCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SampleLogGenerationSubscriptionResponse,
+        datadog::Error<CreateSampleLogGenerationSubscriptionError>,
+    > {
+        match self
+            .create_sample_log_generation_subscription_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Subscribe to sample log generation for a Cloud SIEM content pack. Sample logs for the
+    /// requested content pack are injected into the Logs platform for the duration of the subscription,
+    /// so detection rules can be exercised without onboarding the underlying integration first.
+    ///
+    /// **Availability**: this endpoint is restricted to Cloud SIEM trial organizations on an
+    /// eligible pricing model. Non-trial orgs receive `403 Forbidden`, the feature flag may also reject
+    /// requests with `400 Bad Request`, and legacy pricing tiers receive a response with `status: not_available`.
+    pub async fn create_sample_log_generation_subscription_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SampleLogGenerationSubscriptionCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SampleLogGenerationSubscriptionResponse>,
+        datadog::Error<CreateSampleLogGenerationSubscriptionError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_sample_log_generation_subscription";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_sample_log_generation_subscription' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/sample_log_generation/subscriptions",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SampleLogGenerationSubscriptionResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateSampleLogGenerationSubscriptionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Create a security filter.
     ///
     /// See the [security filter guide](<https://docs.datadoghq.com/security_platform/guide/how-to-setup-security-filters-using-security-monitoring-api/>)
@@ -4927,6 +5539,180 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<CreateSecurityMonitoringCriticalAssetError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Create a new entity context sync configuration so Cloud SIEM can ingest entities from an external
+    /// source. The credentials provided in `secrets` are validated against the source before the configuration
+    /// is stored and never returned in subsequent responses.
+    pub async fn create_security_monitoring_integration_config(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringIntegrationConfigCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringIntegrationConfigResponse,
+        datadog::Error<CreateSecurityMonitoringIntegrationConfigError>,
+    > {
+        match self
+            .create_security_monitoring_integration_config_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create a new entity context sync configuration so Cloud SIEM can ingest entities from an external
+    /// source. The credentials provided in `secrets` are validated against the source before the configuration
+    /// is stored and never returned in subsequent responses.
+    pub async fn create_security_monitoring_integration_config_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringIntegrationConfigCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringIntegrationConfigResponse,
+        >,
+        datadog::Error<CreateSecurityMonitoringIntegrationConfigError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_security_monitoring_integration_config";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_security_monitoring_integration_config' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/integration_config",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringIntegrationConfigResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateSecurityMonitoringIntegrationConfigError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -5882,6 +6668,138 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Unsubscribe from sample log generation for a Cloud SIEM content pack.
+    /// After unsubscribing, no more sample logs are generated for the requested content pack.
+    ///
+    /// **Availability**: this endpoint is restricted to Cloud SIEM trial organizations on an
+    /// eligible pricing model. Non-trial orgs receive `403 Forbidden`, the feature flag may also reject
+    /// requests with `400 Bad Request`, and legacy pricing tiers receive a response with `status: not_available`.
+    pub async fn delete_sample_log_generation_subscription(
+        &self,
+        content_pack_id: String,
+    ) -> Result<
+        crate::datadogV2::model::SampleLogGenerationSubscriptionResponse,
+        datadog::Error<DeleteSampleLogGenerationSubscriptionError>,
+    > {
+        match self
+            .delete_sample_log_generation_subscription_with_http_info(content_pack_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Unsubscribe from sample log generation for a Cloud SIEM content pack.
+    /// After unsubscribing, no more sample logs are generated for the requested content pack.
+    ///
+    /// **Availability**: this endpoint is restricted to Cloud SIEM trial organizations on an
+    /// eligible pricing model. Non-trial orgs receive `403 Forbidden`, the feature flag may also reject
+    /// requests with `400 Bad Request`, and legacy pricing tiers receive a response with `status: not_available`.
+    pub async fn delete_sample_log_generation_subscription_with_http_info(
+        &self,
+        content_pack_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SampleLogGenerationSubscriptionResponse>,
+        datadog::Error<DeleteSampleLogGenerationSubscriptionError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_sample_log_generation_subscription";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_sample_log_generation_subscription' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/sample_log_generation/subscriptions/{content_pack_id}",
+            local_configuration.get_operation_host(operation_id),
+            content_pack_id = datadog::urlencode(content_pack_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SampleLogGenerationSubscriptionResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<DeleteSampleLogGenerationSubscriptionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Delete a specific security filter.
     pub async fn delete_security_filter(
         &self,
@@ -6057,6 +6975,111 @@ impl SecurityMonitoringAPI {
             })
         } else {
             let local_entity: Option<DeleteSecurityMonitoringCriticalAssetError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete an entity context sync configuration. Cloud SIEM stops ingesting entities from this source,
+    /// and the credentials stored for the configuration are removed from the secrets store.
+    pub async fn delete_security_monitoring_integration_config(
+        &self,
+        integration_config_id: String,
+    ) -> Result<(), datadog::Error<DeleteSecurityMonitoringIntegrationConfigError>> {
+        match self
+            .delete_security_monitoring_integration_config_with_http_info(integration_config_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete an entity context sync configuration. Cloud SIEM stops ingesting entities from this source,
+    /// and the credentials stored for the configuration are removed from the secrets store.
+    pub async fn delete_security_monitoring_integration_config_with_http_info(
+        &self,
+        integration_config_id: String,
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<DeleteSecurityMonitoringIntegrationConfigError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_security_monitoring_integration_config";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_security_monitoring_integration_config' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/integration_config/{integration_config_id}",
+            local_configuration.get_operation_host(operation_id), integration_config_id=
+            datadog::urlencode(integration_config_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteSecurityMonitoringIntegrationConfigError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -7711,6 +8734,158 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Search the Cloud SIEM entity context store for entities that match a query, and return the historical
+    /// revisions of each entity in the requested time range. The endpoint can either return revisions across an
+    /// interval (`from` / `to`) or the snapshot of each entity at a single point in time (`as_of`); the two modes
+    /// are mutually exclusive.
+    pub async fn get_entity_context(
+        &self,
+        params: GetEntityContextOptionalParams,
+    ) -> Result<crate::datadogV2::model::EntityContextResponse, datadog::Error<GetEntityContextError>>
+    {
+        match self.get_entity_context_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Search the Cloud SIEM entity context store for entities that match a query, and return the historical
+    /// revisions of each entity in the requested time range. The endpoint can either return revisions across an
+    /// interval (`from` / `to`) or the snapshot of each entity at a single point in time (`as_of`); the two modes
+    /// are mutually exclusive.
+    pub async fn get_entity_context_with_http_info(
+        &self,
+        params: GetEntityContextOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::EntityContextResponse>,
+        datadog::Error<GetEntityContextError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_entity_context";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_entity_context' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let query = params.query;
+        let from = params.from;
+        let to = params.to;
+        let as_of = params.as_of;
+        let limit = params.limit;
+        let page_token = params.page_token;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/entity_context",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = from {
+            local_req_builder =
+                local_req_builder.query(&[("from", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = to {
+            local_req_builder = local_req_builder.query(&[("to", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = as_of {
+            local_req_builder =
+                local_req_builder.query(&[("as_of", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_token {
+            local_req_builder =
+                local_req_builder.query(&[("page_token", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::EntityContextResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetEntityContextError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Returns a single finding with message and resource configuration.
     pub async fn get_finding(
         &self,
@@ -9197,6 +10372,130 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get the details of a specific entity context sync configuration.
+    pub async fn get_security_monitoring_integration_config(
+        &self,
+        integration_config_id: String,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringIntegrationConfigResponse,
+        datadog::Error<GetSecurityMonitoringIntegrationConfigError>,
+    > {
+        match self
+            .get_security_monitoring_integration_config_with_http_info(integration_config_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the details of a specific entity context sync configuration.
+    pub async fn get_security_monitoring_integration_config_with_http_info(
+        &self,
+        integration_config_id: String,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringIntegrationConfigResponse,
+        >,
+        datadog::Error<GetSecurityMonitoringIntegrationConfigError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_security_monitoring_integration_config";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_security_monitoring_integration_config' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/integration_config/{integration_config_id}",
+            local_configuration.get_operation_host(operation_id), integration_config_id=
+            datadog::urlencode(integration_config_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringIntegrationConfigResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSecurityMonitoringIntegrationConfigError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a rule's details.
     pub async fn get_security_monitoring_rule(
         &self,
@@ -9524,6 +10823,136 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<GetSecurityMonitoringSuppressionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the list of entities related to a security signal, captured at the signal's timestamp.
+    pub async fn get_signal_entities(
+        &self,
+        signal_id: String,
+        params: GetSignalEntitiesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SignalEntitiesResponse,
+        datadog::Error<GetSignalEntitiesError>,
+    > {
+        match self
+            .get_signal_entities_with_http_info(signal_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the list of entities related to a security signal, captured at the signal's timestamp.
+    pub async fn get_signal_entities_with_http_info(
+        &self,
+        signal_id: String,
+        params: GetSignalEntitiesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SignalEntitiesResponse>,
+        datadog::Error<GetSignalEntitiesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_signal_entities";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_signal_entities' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let limit = params.limit;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/signals/{signal_id}/entities",
+            local_configuration.get_operation_host(operation_id),
+            signal_id = datadog::urlencode(signal_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SignalEntitiesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSignalEntitiesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -11424,6 +12853,161 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get the sample log generation subscriptions for the organization.
+    /// Sample log generation injects representative example logs for a given Cloud SIEM content pack into the Logs platform,
+    /// which can be used to test detection rules without onboarding the underlying integration first.
+    ///
+    /// **Availability**: this endpoint is restricted to Cloud SIEM trial organizations on an eligible
+    /// pricing model. Other organizations receive a `403 Forbidden` (non-trial orgs) or a `400 Bad Request`
+    /// (feature disabled), and legacy pricing tiers receive a response with `status: not_available`.
+    pub async fn list_sample_log_generation_subscriptions(
+        &self,
+        params: ListSampleLogGenerationSubscriptionsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SampleLogGenerationSubscriptionsResponse,
+        datadog::Error<ListSampleLogGenerationSubscriptionsError>,
+    > {
+        match self
+            .list_sample_log_generation_subscriptions_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the sample log generation subscriptions for the organization.
+    /// Sample log generation injects representative example logs for a given Cloud SIEM content pack into the Logs platform,
+    /// which can be used to test detection rules without onboarding the underlying integration first.
+    ///
+    /// **Availability**: this endpoint is restricted to Cloud SIEM trial organizations on an eligible
+    /// pricing model. Other organizations receive a `403 Forbidden` (non-trial orgs) or a `400 Bad Request`
+    /// (feature disabled), and legacy pricing tiers receive a response with `status: not_available`.
+    pub async fn list_sample_log_generation_subscriptions_with_http_info(
+        &self,
+        params: ListSampleLogGenerationSubscriptionsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SampleLogGenerationSubscriptionsResponse>,
+        datadog::Error<ListSampleLogGenerationSubscriptionsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_sample_log_generation_subscriptions";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_sample_log_generation_subscriptions' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let status = params.status;
+        let start_timestamp = params.start_timestamp;
+        let end_timestamp = params.end_timestamp;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/sample_log_generation/subscriptions",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = status {
+            local_req_builder =
+                local_req_builder.query(&[("status", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = start_timestamp {
+            local_req_builder = local_req_builder.query(&[(
+                "start_timestamp",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = end_timestamp {
+            local_req_builder = local_req_builder.query(&[(
+                "end_timestamp",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SampleLogGenerationSubscriptionsResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSampleLogGenerationSubscriptionsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a list of security scanned assets metadata for an organization.
     ///
     /// ### Pagination
@@ -11654,6 +13238,116 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<ListScannedAssetsMetadataError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the configured security filters at each historical version of the configuration.
+    /// Each entry in the response represents the set of all security filters at a given version,
+    /// ordered from the most recent version to the oldest.
+    pub async fn list_security_filter_versions(
+        &self,
+    ) -> Result<
+        crate::datadogV2::model::SecurityFilterVersionsResponse,
+        datadog::Error<ListSecurityFilterVersionsError>,
+    > {
+        match self.list_security_filter_versions_with_http_info().await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the configured security filters at each historical version of the configuration.
+    /// Each entry in the response represents the set of all security filters at a given version,
+    /// ordered from the most recent version to the oldest.
+    pub async fn list_security_filter_versions_with_http_info(
+        &self,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SecurityFilterVersionsResponse>,
+        datadog::Error<ListSecurityFilterVersionsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_security_filter_versions";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/security_filters/versions",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SecurityFilterVersionsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSecurityFilterVersionsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -12208,6 +13902,141 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<ListSecurityMonitoringHistsignalsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List the entity context sync configurations for Cloud SIEM. Each configuration connects Cloud SIEM
+    /// to an external source that provides entities (for example, users from an identity provider) for use
+    /// in signals and the entity explorer.
+    pub async fn list_security_monitoring_integration_configs(
+        &self,
+        params: ListSecurityMonitoringIntegrationConfigsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringIntegrationConfigsResponse,
+        datadog::Error<ListSecurityMonitoringIntegrationConfigsError>,
+    > {
+        match self
+            .list_security_monitoring_integration_configs_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List the entity context sync configurations for Cloud SIEM. Each configuration connects Cloud SIEM
+    /// to an external source that provides entities (for example, users from an identity provider) for use
+    /// in signals and the entity explorer.
+    pub async fn list_security_monitoring_integration_configs_with_http_info(
+        &self,
+        params: ListSecurityMonitoringIntegrationConfigsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringIntegrationConfigsResponse,
+        >,
+        datadog::Error<ListSecurityMonitoringIntegrationConfigsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_security_monitoring_integration_configs";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_security_monitoring_integration_configs' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_integration_type = params.filter_integration_type;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/integration_config",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_integration_type {
+            local_req_builder = local_req_builder
+                .query(&[("filter[integration_type]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringIntegrationConfigsResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSecurityMonitoringIntegrationConfigsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -15846,6 +17675,182 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Update an existing entity context sync configuration. Supports partial updates; only the fields provided in the request body are modified.
+    pub async fn update_security_monitoring_integration_config(
+        &self,
+        integration_config_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringIntegrationConfigUpdateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringIntegrationConfigResponse,
+        datadog::Error<UpdateSecurityMonitoringIntegrationConfigError>,
+    > {
+        match self
+            .update_security_monitoring_integration_config_with_http_info(
+                integration_config_id,
+                body,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update an existing entity context sync configuration. Supports partial updates; only the fields provided in the request body are modified.
+    pub async fn update_security_monitoring_integration_config_with_http_info(
+        &self,
+        integration_config_id: String,
+        body: crate::datadogV2::model::SecurityMonitoringIntegrationConfigUpdateRequest,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringIntegrationConfigResponse,
+        >,
+        datadog::Error<UpdateSecurityMonitoringIntegrationConfigError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_security_monitoring_integration_config";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_security_monitoring_integration_config' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/integration_config/{integration_config_id}",
+            local_configuration.get_operation_host(operation_id), integration_config_id=
+            datadog::urlencode(integration_config_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringIntegrationConfigResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateSecurityMonitoringIntegrationConfigError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Update an existing rule. When updating `cases`, `queries` or `options`, the whole field
     /// must be included. For example, when modifying a query all queries must be included.
     /// Default rules can only be updated to be enabled, to change notifications, or to update
@@ -16165,6 +18170,262 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<UpdateSecurityMonitoringSuppressionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Validate the credentials currently stored on an existing entity context sync configuration.
+    /// Returns a 200 status code if the credentials are still valid against the external entity source.
+    pub async fn validate_security_monitoring_integration_config(
+        &self,
+        integration_config_id: String,
+    ) -> Result<(), datadog::Error<ValidateSecurityMonitoringIntegrationConfigError>> {
+        match self
+            .validate_security_monitoring_integration_config_with_http_info(integration_config_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Validate the credentials currently stored on an existing entity context sync configuration.
+    /// Returns a 200 status code if the credentials are still valid against the external entity source.
+    pub async fn validate_security_monitoring_integration_config_with_http_info(
+        &self,
+        integration_config_id: String,
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<ValidateSecurityMonitoringIntegrationConfigError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.validate_security_monitoring_integration_config";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg:
+                    "Operation 'v2.validate_security_monitoring_integration_config' is not enabled"
+                        .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/integration_config/{integration_config_id}/validate",
+            local_configuration.get_operation_host(operation_id), integration_config_id=
+            datadog::urlencode(integration_config_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<ValidateSecurityMonitoringIntegrationConfigError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Validate a set of credentials against the external entity source before creating a sync configuration.
+    /// Returns a 200 status code if the credentials are valid.
+    pub async fn validate_security_monitoring_integration_credentials(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringIntegrationCredentialsValidateRequest,
+    ) -> Result<(), datadog::Error<ValidateSecurityMonitoringIntegrationCredentialsError>> {
+        match self
+            .validate_security_monitoring_integration_credentials_with_http_info(body)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Validate a set of credentials against the external entity source before creating a sync configuration.
+    /// Returns a 200 status code if the credentials are valid.
+    pub async fn validate_security_monitoring_integration_credentials_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringIntegrationCredentialsValidateRequest,
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<ValidateSecurityMonitoringIntegrationCredentialsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.validate_security_monitoring_integration_credentials";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.validate_security_monitoring_integration_credentials' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/configuration/integration_config/validate",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<ValidateSecurityMonitoringIntegrationCredentialsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

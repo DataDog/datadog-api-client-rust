@@ -256,6 +256,10 @@ impl Default for Configuration {
             ("v2.list_aws_cloud_auth_persona_mappings".to_owned(), false),
             ("v2.activate_content_pack".to_owned(), false),
             (
+                "v2.bulk_create_sample_log_generation_subscriptions".to_owned(),
+                false,
+            ),
+            (
                 "v2.bulk_export_security_monitoring_terraform_resources".to_owned(),
                 false,
             ),
@@ -265,13 +269,30 @@ impl Default for Configuration {
                 "v2.convert_security_monitoring_terraform_resource".to_owned(),
                 false,
             ),
+            (
+                "v2.create_sample_log_generation_subscription".to_owned(),
+                false,
+            ),
+            (
+                "v2.create_security_monitoring_integration_config".to_owned(),
+                false,
+            ),
             ("v2.deactivate_content_pack".to_owned(), false),
             ("v2.delete_historical_job".to_owned(), false),
+            (
+                "v2.delete_sample_log_generation_subscription".to_owned(),
+                false,
+            ),
+            (
+                "v2.delete_security_monitoring_integration_config".to_owned(),
+                false,
+            ),
             (
                 "v2.export_security_monitoring_terraform_resource".to_owned(),
                 false,
             ),
             ("v2.get_content_packs_states".to_owned(), false),
+            ("v2.get_entity_context".to_owned(), false),
             ("v2.get_finding".to_owned(), false),
             ("v2.get_historical_job".to_owned(), false),
             ("v2.get_indicator_of_compromise".to_owned(), false),
@@ -282,12 +303,25 @@ impl Default for Configuration {
                 "v2.get_security_monitoring_histsignals_by_job_id".to_owned(),
                 false,
             ),
+            (
+                "v2.get_security_monitoring_integration_config".to_owned(),
+                false,
+            ),
+            ("v2.get_signal_entities".to_owned(), false),
             ("v2.list_findings".to_owned(), false),
             ("v2.list_historical_jobs".to_owned(), false),
             ("v2.list_indicators_of_compromise".to_owned(), false),
             ("v2.list_multiple_rulesets".to_owned(), false),
+            (
+                "v2.list_sample_log_generation_subscriptions".to_owned(),
+                false,
+            ),
             ("v2.list_scanned_assets_metadata".to_owned(), false),
             ("v2.list_security_monitoring_histsignals".to_owned(), false),
+            (
+                "v2.list_security_monitoring_integration_configs".to_owned(),
+                false,
+            ),
             ("v2.list_vulnerabilities".to_owned(), false),
             ("v2.list_vulnerable_assets".to_owned(), false),
             ("v2.mute_findings".to_owned(), false),
@@ -295,6 +329,18 @@ impl Default for Configuration {
             ("v2.run_historical_job".to_owned(), false),
             (
                 "v2.search_security_monitoring_histsignals".to_owned(),
+                false,
+            ),
+            (
+                "v2.update_security_monitoring_integration_config".to_owned(),
+                false,
+            ),
+            (
+                "v2.validate_security_monitoring_integration_config".to_owned(),
+                false,
+            ),
+            (
+                "v2.validate_security_monitoring_integration_credentials".to_owned(),
                 false,
             ),
             ("v2.get_code_coverage_branch_summary".to_owned(), false),

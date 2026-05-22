@@ -3295,12 +3295,44 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_security_monitoring_critical_asset,
     );
     world.function_mappings.insert(
+        "v2.ListSecurityMonitoringIntegrationConfigs".into(),
+        test_v2_list_security_monitoring_integration_configs,
+    );
+    world.function_mappings.insert(
+        "v2.CreateSecurityMonitoringIntegrationConfig".into(),
+        test_v2_create_security_monitoring_integration_config,
+    );
+    world.function_mappings.insert(
+        "v2.ValidateSecurityMonitoringIntegrationCredentials".into(),
+        test_v2_validate_security_monitoring_integration_credentials,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteSecurityMonitoringIntegrationConfig".into(),
+        test_v2_delete_security_monitoring_integration_config,
+    );
+    world.function_mappings.insert(
+        "v2.GetSecurityMonitoringIntegrationConfig".into(),
+        test_v2_get_security_monitoring_integration_config,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateSecurityMonitoringIntegrationConfig".into(),
+        test_v2_update_security_monitoring_integration_config,
+    );
+    world.function_mappings.insert(
+        "v2.ValidateSecurityMonitoringIntegrationConfig".into(),
+        test_v2_validate_security_monitoring_integration_config,
+    );
+    world.function_mappings.insert(
         "v2.ListSecurityFilters".into(),
         test_v2_list_security_filters,
     );
     world.function_mappings.insert(
         "v2.CreateSecurityFilter".into(),
         test_v2_create_security_filter,
+    );
+    world.function_mappings.insert(
+        "v2.ListSecurityFilterVersions".into(),
+        test_v2_list_security_filter_versions,
     );
     world.function_mappings.insert(
         "v2.DeleteSecurityFilter".into(),
@@ -3361,6 +3393,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.DeactivateContentPack".into(),
         test_v2_deactivate_content_pack,
     );
+    world
+        .function_mappings
+        .insert("v2.GetEntityContext".into(), test_v2_get_entity_context);
     world.function_mappings.insert(
         "v2.ListSecurityMonitoringRules".into(),
         test_v2_list_security_monitoring_rules,
@@ -3414,6 +3449,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_rule_version_history,
     );
     world.function_mappings.insert(
+        "v2.ListSampleLogGenerationSubscriptions".into(),
+        test_v2_list_sample_log_generation_subscriptions,
+    );
+    world.function_mappings.insert(
+        "v2.CreateSampleLogGenerationSubscription".into(),
+        test_v2_create_sample_log_generation_subscription,
+    );
+    world.function_mappings.insert(
+        "v2.BulkCreateSampleLogGenerationSubscriptions".into(),
+        test_v2_bulk_create_sample_log_generation_subscriptions,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteSampleLogGenerationSubscription".into(),
+        test_v2_delete_sample_log_generation_subscription,
+    );
+    world.function_mappings.insert(
         "v2.ListSecurityMonitoringSignals".into(),
         test_v2_list_security_monitoring_signals,
     );
@@ -3449,6 +3500,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.EditSecurityMonitoringSignalAssignee".into(),
         test_v2_edit_security_monitoring_signal_assignee,
     );
+    world
+        .function_mappings
+        .insert("v2.GetSignalEntities".into(), test_v2_get_signal_entities);
     world.function_mappings.insert(
         "v2.EditSecurityMonitoringSignalIncidents".into(),
         test_v2_edit_security_monitoring_signal_incidents,
@@ -24524,6 +24578,226 @@ fn test_v2_update_security_monitoring_critical_asset(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_security_monitoring_integration_configs(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let filter_integration_type = _parameters
+        .get("filter[integration_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_security_monitoring::ListSecurityMonitoringIntegrationConfigsOptionalParams::default();
+    params.filter_integration_type = filter_integration_type;
+    let response =
+        match block_on(api.list_security_monitoring_integration_configs_with_http_info(params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_security_monitoring_integration_config(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_security_monitoring_integration_config_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_validate_security_monitoring_integration_credentials(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.validate_security_monitoring_integration_credentials_with_http_info(body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_security_monitoring_integration_config(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let integration_config_id =
+        serde_json::from_value(_parameters.get("integration_config_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_security_monitoring_integration_config_with_http_info(integration_config_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_security_monitoring_integration_config(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let integration_config_id =
+        serde_json::from_value(_parameters.get("integration_config_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_security_monitoring_integration_config_with_http_info(integration_config_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_security_monitoring_integration_config(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let integration_config_id =
+        serde_json::from_value(_parameters.get("integration_config_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.update_security_monitoring_integration_config_with_http_info(
+            integration_config_id,
+            body,
+        ),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_validate_security_monitoring_integration_config(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let integration_config_id =
+        serde_json::from_value(_parameters.get("integration_config_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.validate_security_monitoring_integration_config_with_http_info(integration_config_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_security_filters(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -24556,6 +24830,33 @@ fn test_v2_create_security_filter(world: &mut DatadogWorld, _parameters: &HashMa
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.create_security_filter_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_security_filter_versions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_security_filter_versions_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -25023,6 +25324,55 @@ fn test_v2_deactivate_content_pack(world: &mut DatadogWorld, _parameters: &HashM
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_get_entity_context(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let from = _parameters
+        .get("from")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let to = _parameters
+        .get("to")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let as_of = _parameters
+        .get("as_of")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_token = _parameters
+        .get("page_token")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_security_monitoring::GetEntityContextOptionalParams::default();
+    params.query = query;
+    params.from = from;
+    params.to = to;
+    params.as_of = as_of;
+    params.limit = limit;
+    params.page_token = page_token;
+    let response = match block_on(api.get_entity_context_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_security_monitoring_rules(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -25421,6 +25771,136 @@ fn test_v2_get_rule_version_history(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_sample_log_generation_subscriptions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let status = _parameters
+        .get("status")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let start_timestamp = _parameters
+        .get("start_timestamp")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let end_timestamp = _parameters
+        .get("end_timestamp")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_security_monitoring::ListSampleLogGenerationSubscriptionsOptionalParams::default();
+    params.status = status;
+    params.start_timestamp = start_timestamp;
+    params.end_timestamp = end_timestamp;
+    let response =
+        match block_on(api.list_sample_log_generation_subscriptions_with_http_info(params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_sample_log_generation_subscription(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_sample_log_generation_subscription_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_bulk_create_sample_log_generation_subscriptions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.bulk_create_sample_log_generation_subscriptions_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_sample_log_generation_subscription(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let content_pack_id =
+        serde_json::from_value(_parameters.get("content_pack_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_sample_log_generation_subscription_with_http_info(content_pack_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_security_monitoring_signals(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -25741,6 +26221,36 @@ fn test_v2_edit_security_monitoring_signal_assignee(
     let response = match block_on(
         api.edit_security_monitoring_signal_assignee_with_http_info(signal_id, body),
     ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_signal_entities(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let signal_id = serde_json::from_value(_parameters.get("signal_id").unwrap().clone()).unwrap();
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_security_monitoring::GetSignalEntitiesOptionalParams::default();
+    params.limit = limit;
+    let response = match block_on(api.get_signal_entities_with_http_info(signal_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
