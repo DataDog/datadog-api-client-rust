@@ -431,6 +431,18 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all IoT devices over all hours in the current date all organizations.
     #[serde(rename = "iot_device_top99p")]
     pub iot_device_top99p: Option<i64>,
+    /// Sum of all LLM Observability spans with 15-day retention over all hours in the current date for all organizations.
+    #[serde(rename = "llm_observability_15day_retention_spans_sum")]
+    pub llm_observability_15day_retention_spans_sum: Option<i64>,
+    /// Sum of all LLM Observability spans with 30-day retention over all hours in the current date for all organizations.
+    #[serde(rename = "llm_observability_30day_retention_spans_sum")]
+    pub llm_observability_30day_retention_spans_sum: Option<i64>,
+    /// Sum of all LLM Observability spans with 60-day retention over all hours in the current date for all organizations.
+    #[serde(rename = "llm_observability_60day_retention_spans_sum")]
+    pub llm_observability_60day_retention_spans_sum: Option<i64>,
+    /// Sum of all LLM Observability spans with 90-day retention over all hours in the current date for all organizations.
+    #[serde(rename = "llm_observability_90day_retention_spans_sum")]
+    pub llm_observability_90day_retention_spans_sum: Option<i64>,
     /// Sum of all LLM observability minimum spend over all hours in the current date for all organizations.
     #[serde(rename = "llm_observability_min_spend_sum")]
     pub llm_observability_min_spend_sum: Option<i64>,
@@ -916,6 +928,10 @@ impl UsageSummaryDate {
             ingested_events_bytes_sum: None,
             iot_device_sum: None,
             iot_device_top99p: None,
+            llm_observability_15day_retention_spans_sum: None,
+            llm_observability_30day_retention_spans_sum: None,
+            llm_observability_60day_retention_spans_sum: None,
+            llm_observability_90day_retention_spans_sum: None,
             llm_observability_min_spend_sum: None,
             llm_observability_sum: None,
             mobile_rum_lite_session_count_sum: None,
@@ -1867,6 +1883,30 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn llm_observability_15day_retention_spans_sum(mut self, value: i64) -> Self {
+        self.llm_observability_15day_retention_spans_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn llm_observability_30day_retention_spans_sum(mut self, value: i64) -> Self {
+        self.llm_observability_30day_retention_spans_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn llm_observability_60day_retention_spans_sum(mut self, value: i64) -> Self {
+        self.llm_observability_60day_retention_spans_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn llm_observability_90day_retention_spans_sum(mut self, value: i64) -> Self {
+        self.llm_observability_90day_retention_spans_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn llm_observability_min_spend_sum(mut self, value: i64) -> Self {
         self.llm_observability_min_spend_sum = Some(value);
         self
@@ -2719,6 +2759,10 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut ingested_events_bytes_sum: Option<i64> = None;
                 let mut iot_device_sum: Option<i64> = None;
                 let mut iot_device_top99p: Option<i64> = None;
+                let mut llm_observability_15day_retention_spans_sum: Option<i64> = None;
+                let mut llm_observability_30day_retention_spans_sum: Option<i64> = None;
+                let mut llm_observability_60day_retention_spans_sum: Option<i64> = None;
+                let mut llm_observability_90day_retention_spans_sum: Option<i64> = None;
                 let mut llm_observability_min_spend_sum: Option<i64> = None;
                 let mut llm_observability_sum: Option<i64> = None;
                 let mut mobile_rum_lite_session_count_sum: Option<i64> = None;
@@ -3683,6 +3727,30 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             iot_device_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "llm_observability_15day_retention_spans_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_15day_retention_spans_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "llm_observability_30day_retention_spans_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_30day_retention_spans_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "llm_observability_60day_retention_spans_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_60day_retention_spans_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "llm_observability_90day_retention_spans_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_90day_retention_spans_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "llm_observability_min_spend_sum" => {
                             if v.is_null() {
                                 continue;
@@ -4480,6 +4548,10 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     ingested_events_bytes_sum,
                     iot_device_sum,
                     iot_device_top99p,
+                    llm_observability_15day_retention_spans_sum,
+                    llm_observability_30day_retention_spans_sum,
+                    llm_observability_60day_retention_spans_sum,
+                    llm_observability_90day_retention_spans_sum,
                     llm_observability_min_spend_sum,
                     llm_observability_sum,
                     mobile_rum_lite_session_count_sum,
