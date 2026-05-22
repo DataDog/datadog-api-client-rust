@@ -109,6 +109,7 @@ pub use self::api::api_status_pages;
 pub use self::api::api_storage_management;
 pub use self::api::api_synthetics;
 pub use self::api::api_teams;
+pub use self::api::api_test_examples;
 pub use self::api::api_test_optimization;
 pub use self::api::api_usage_metering;
 pub use self::api::api_users;

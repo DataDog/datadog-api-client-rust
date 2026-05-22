@@ -108,6 +108,7 @@ pub mod api_status_pages;
 pub mod api_storage_management;
 pub mod api_synthetics;
 pub mod api_teams;
+pub mod api_test_examples;
 pub mod api_test_optimization;
 pub mod api_usage_metering;
 pub mod api_users;
