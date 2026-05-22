@@ -451,6 +451,18 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all live logs bytes ingested over all hours in the current month for all organizations (data available as of December 1, 2020).
     #[serde(rename = "live_ingested_bytes_agg_sum")]
     pub live_ingested_bytes_agg_sum: Option<i64>,
+    /// Sum of all LLM Observability spans with 15-day retention for all hours in the current month for all organizations.
+    #[serde(rename = "llm_observability_15day_retention_spans_agg_sum")]
+    pub llm_observability_15day_retention_spans_agg_sum: Option<i64>,
+    /// Sum of all LLM Observability spans with 30-day retention for all hours in the current month for all organizations.
+    #[serde(rename = "llm_observability_30day_retention_spans_agg_sum")]
+    pub llm_observability_30day_retention_spans_agg_sum: Option<i64>,
+    /// Sum of all LLM Observability spans with 60-day retention for all hours in the current month for all organizations.
+    #[serde(rename = "llm_observability_60day_retention_spans_agg_sum")]
+    pub llm_observability_60day_retention_spans_agg_sum: Option<i64>,
+    /// Sum of all LLM Observability spans with 90-day retention for all hours in the current month for all organizations.
+    #[serde(rename = "llm_observability_90day_retention_spans_agg_sum")]
+    pub llm_observability_90day_retention_spans_agg_sum: Option<i64>,
     /// Sum of all LLM observability sessions for all hours in the current month for all organizations.
     #[serde(rename = "llm_observability_agg_sum")]
     pub llm_observability_agg_sum: Option<i64>,
@@ -958,6 +970,10 @@ impl UsageSummaryResponse {
             last_updated: None,
             live_indexed_events_agg_sum: None,
             live_ingested_bytes_agg_sum: None,
+            llm_observability_15day_retention_spans_agg_sum: None,
+            llm_observability_30day_retention_spans_agg_sum: None,
+            llm_observability_60day_retention_spans_agg_sum: None,
+            llm_observability_90day_retention_spans_agg_sum: None,
             llm_observability_agg_sum: None,
             llm_observability_min_spend_agg_sum: None,
             logs_by_retention: None,
@@ -1950,6 +1966,30 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn llm_observability_15day_retention_spans_agg_sum(mut self, value: i64) -> Self {
+        self.llm_observability_15day_retention_spans_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn llm_observability_30day_retention_spans_agg_sum(mut self, value: i64) -> Self {
+        self.llm_observability_30day_retention_spans_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn llm_observability_60day_retention_spans_agg_sum(mut self, value: i64) -> Self {
+        self.llm_observability_60day_retention_spans_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn llm_observability_90day_retention_spans_agg_sum(mut self, value: i64) -> Self {
+        self.llm_observability_90day_retention_spans_agg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn llm_observability_agg_sum(mut self, value: i64) -> Self {
         self.llm_observability_agg_sum = Some(value);
         self
@@ -2860,6 +2900,10 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut last_updated: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut live_indexed_events_agg_sum: Option<i64> = None;
                 let mut live_ingested_bytes_agg_sum: Option<i64> = None;
+                let mut llm_observability_15day_retention_spans_agg_sum: Option<i64> = None;
+                let mut llm_observability_30day_retention_spans_agg_sum: Option<i64> = None;
+                let mut llm_observability_60day_retention_spans_agg_sum: Option<i64> = None;
+                let mut llm_observability_90day_retention_spans_agg_sum: Option<i64> = None;
                 let mut llm_observability_agg_sum: Option<i64> = None;
                 let mut llm_observability_min_spend_agg_sum: Option<i64> = None;
                 let mut logs_by_retention: Option<crate::datadogV1::model::LogsByRetention> = None;
@@ -3867,6 +3911,30 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             }
                             live_ingested_bytes_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "llm_observability_15day_retention_spans_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_15day_retention_spans_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "llm_observability_30day_retention_spans_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_30day_retention_spans_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "llm_observability_60day_retention_spans_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_60day_retention_spans_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "llm_observability_90day_retention_spans_agg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_90day_retention_spans_agg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "llm_observability_agg_sum" => {
                             if v.is_null() {
                                 continue;
@@ -4700,6 +4768,10 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     last_updated,
                     live_indexed_events_agg_sum,
                     live_ingested_bytes_agg_sum,
+                    llm_observability_15day_retention_spans_agg_sum,
+                    llm_observability_30day_retention_spans_agg_sum,
+                    llm_observability_60day_retention_spans_agg_sum,
+                    llm_observability_90day_retention_spans_agg_sum,
                     llm_observability_agg_sum,
                     llm_observability_min_spend_agg_sum,
                     logs_by_retention,
