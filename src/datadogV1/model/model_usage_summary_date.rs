@@ -158,6 +158,9 @@ pub struct UsageSummaryDate {
     /// Shows the sum of all Cloud Security Information and Event Management events over all hours in the current date for the given org.
     #[serde(rename = "cloud_siem_events_sum")]
     pub cloud_siem_events_sum: Option<i64>,
+    /// Shows the sum of all Cloud SIEM Indexed Logs over all hours in the current date for all organizations.
+    #[serde(rename = "cloud_siem_indexed_logs_sum")]
+    pub cloud_siem_indexed_logs_sum: Option<i64>,
     /// Shows the high-water mark of all Static Analysis committers over all hours in the current date for the given org.
     #[serde(rename = "code_analysis_sa_committers_hwm")]
     pub code_analysis_sa_committers_hwm: Option<i64>,
@@ -733,6 +736,12 @@ pub struct UsageSummaryDate {
     /// Shows the average number of Serverless Apps for Azure and Google Cloud for the given date and given org.
     #[serde(rename = "serverless_apps_total_count_avg")]
     pub serverless_apps_total_count_avg: Option<i64>,
+    /// Shows the sum of all SIEM 12mo Retention over all hours in the current date for all organizations.
+    #[serde(rename = "siem_12mo_retention_sum")]
+    pub siem_12mo_retention_sum: Option<i64>,
+    /// Shows the sum of all SIEM 6mo Retention over all hours in the current date for all organizations.
+    #[serde(rename = "siem_6mo_retention_sum")]
+    pub siem_6mo_retention_sum: Option<i64>,
     /// Shows the sum of all log events analyzed by Cloud SIEM over all hours in the current date for the given org.
     #[serde(rename = "siem_analyzed_logs_add_on_count_sum")]
     pub siem_analyzed_logs_add_on_count_sum: Option<i64>,
@@ -825,6 +834,7 @@ impl UsageSummaryDate {
             cloud_cost_management_host_count_avg: None,
             cloud_cost_management_oci_host_count_avg: None,
             cloud_siem_events_sum: None,
+            cloud_siem_indexed_logs_sum: None,
             code_analysis_sa_committers_hwm: None,
             code_analysis_sca_committers_hwm: None,
             code_security_host_top99p: None,
@@ -1013,6 +1023,8 @@ impl UsageSummaryDate {
             serverless_apps_google_count_avg: None,
             serverless_apps_infra_gcp_gke_autopilot_pods_avg: None,
             serverless_apps_total_count_avg: None,
+            siem_12mo_retention_sum: None,
+            siem_6mo_retention_sum: None,
             siem_analyzed_logs_add_on_count_sum: None,
             synthetics_browser_check_calls_count_sum: None,
             synthetics_check_calls_count_sum: None,
@@ -1314,6 +1326,12 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn cloud_siem_events_sum(mut self, value: i64) -> Self {
         self.cloud_siem_events_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn cloud_siem_indexed_logs_sum(mut self, value: i64) -> Self {
+        self.cloud_siem_indexed_logs_sum = Some(value);
         self
     }
 
@@ -2482,6 +2500,18 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn siem_12mo_retention_sum(mut self, value: i64) -> Self {
+        self.siem_12mo_retention_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn siem_6mo_retention_sum(mut self, value: i64) -> Self {
+        self.siem_6mo_retention_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn siem_analyzed_logs_add_on_count_sum(mut self, value: i64) -> Self {
         self.siem_analyzed_logs_add_on_count_sum = Some(value);
         self
@@ -2627,6 +2657,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut cloud_cost_management_host_count_avg: Option<i64> = None;
                 let mut cloud_cost_management_oci_host_count_avg: Option<i64> = None;
                 let mut cloud_siem_events_sum: Option<i64> = None;
+                let mut cloud_siem_indexed_logs_sum: Option<i64> = None;
                 let mut code_analysis_sa_committers_hwm: Option<i64> = None;
                 let mut code_analysis_sca_committers_hwm: Option<i64> = None;
                 let mut code_security_host_top99p: Option<i64> = None;
@@ -2830,6 +2861,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut serverless_apps_google_count_avg: Option<i64> = None;
                 let mut serverless_apps_infra_gcp_gke_autopilot_pods_avg: Option<i64> = None;
                 let mut serverless_apps_total_count_avg: Option<i64> = None;
+                let mut siem_12mo_retention_sum: Option<i64> = None;
+                let mut siem_6mo_retention_sum: Option<i64> = None;
                 let mut siem_analyzed_logs_add_on_count_sum: Option<i64> = None;
                 let mut synthetics_browser_check_calls_count_sum: Option<i64> = None;
                 let mut synthetics_check_calls_count_sum: Option<i64> = None;
@@ -3136,6 +3169,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             cloud_siem_events_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "cloud_siem_indexed_logs_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_siem_indexed_logs_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "code_analysis_sa_committers_hwm" => {
                             if v.is_null() {
@@ -4265,6 +4304,18 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             serverless_apps_total_count_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "siem_12mo_retention_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            siem_12mo_retention_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "siem_6mo_retention_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            siem_6mo_retention_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "siem_analyzed_logs_add_on_count_sum" => {
                             if v.is_null() {
                                 continue;
@@ -4389,6 +4440,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     cloud_cost_management_host_count_avg,
                     cloud_cost_management_oci_host_count_avg,
                     cloud_siem_events_sum,
+                    cloud_siem_indexed_logs_sum,
                     code_analysis_sa_committers_hwm,
                     code_analysis_sca_committers_hwm,
                     code_security_host_top99p,
@@ -4577,6 +4629,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     serverless_apps_google_count_avg,
                     serverless_apps_infra_gcp_gke_autopilot_pods_avg,
                     serverless_apps_total_count_avg,
+                    siem_12mo_retention_sum,
+                    siem_6mo_retention_sum,
                     siem_analyzed_logs_add_on_count_sum,
                     synthetics_browser_check_calls_count_sum,
                     synthetics_check_calls_count_sum,
