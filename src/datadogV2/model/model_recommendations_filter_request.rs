@@ -14,6 +14,9 @@ pub struct RecommendationsFilterRequest {
     /// Filter expression applied to the recommendations.
     #[serde(rename = "filter")]
     pub filter: Option<String>,
+    /// Recommendations scope. Defaults to `ccm`; use `experiment` for experimental recommendations or `*` for both.
+    #[serde(rename = "scope")]
+    pub scope: Option<String>,
     /// Ordered list of sort clauses applied to the result set.
     #[serde(rename = "sort")]
     pub sort: Option<Vec<crate::datadogV2::model::RecommendationsFilterRequestSortItems>>,
@@ -31,6 +34,7 @@ impl RecommendationsFilterRequest {
     pub fn new() -> RecommendationsFilterRequest {
         RecommendationsFilterRequest {
             filter: None,
+            scope: None,
             sort: None,
             view: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -40,6 +44,11 @@ impl RecommendationsFilterRequest {
 
     pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
+        self
+    }
+
+    pub fn scope(mut self, value: String) -> Self {
+        self.scope = Some(value);
         self
     }
 
@@ -89,6 +98,7 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequest {
                 M: MapAccess<'a>,
             {
                 let mut filter: Option<String> = None;
+                let mut scope: Option<String> = None;
                 let mut sort: Option<
                     Vec<crate::datadogV2::model::RecommendationsFilterRequestSortItems>,
                 > = None;
@@ -106,6 +116,12 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequest {
                                 continue;
                             }
                             filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "scope" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "sort" => {
                             if v.is_null() {
@@ -129,6 +145,7 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequest {
 
                 let content = RecommendationsFilterRequest {
                     filter,
+                    scope,
                     sort,
                     view,
                     additional_properties,

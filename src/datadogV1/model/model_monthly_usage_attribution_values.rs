@@ -473,6 +473,18 @@ pub struct MonthlyUsageAttributionValues {
     /// The total Serverless Apps usage by tag(s).
     #[serde(rename = "serverless_apps_usage")]
     pub serverless_apps_usage: Option<f64>,
+    /// The percentage of Cloud SIEM Indexed Logs (12-month retention) usage by tag(s).
+    #[serde(rename = "siem_12mo_retention_percentage")]
+    pub siem_12mo_retention_percentage: Option<f64>,
+    /// The Cloud SIEM Indexed Logs (12-month retention) usage by tag(s).
+    #[serde(rename = "siem_12mo_retention_usage")]
+    pub siem_12mo_retention_usage: Option<f64>,
+    /// The percentage of Cloud SIEM Indexed Logs (6-month retention) usage by tag(s).
+    #[serde(rename = "siem_6mo_retention_percentage")]
+    pub siem_6mo_retention_percentage: Option<f64>,
+    /// The Cloud SIEM Indexed Logs (6-month retention) usage by tag(s).
+    #[serde(rename = "siem_6mo_retention_usage")]
+    pub siem_6mo_retention_usage: Option<f64>,
     /// The percentage of log events analyzed by Cloud SIEM usage by tag(s).
     #[serde(rename = "siem_analyzed_logs_add_on_percentage")]
     pub siem_analyzed_logs_add_on_percentage: Option<f64>,
@@ -673,6 +685,10 @@ impl MonthlyUsageAttributionValues {
             serverless_apps_apm_usage: None,
             serverless_apps_percentage: None,
             serverless_apps_usage: None,
+            siem_12mo_retention_percentage: None,
+            siem_12mo_retention_usage: None,
+            siem_6mo_retention_percentage: None,
+            siem_6mo_retention_usage: None,
             siem_analyzed_logs_add_on_percentage: None,
             siem_analyzed_logs_add_on_usage: None,
             siem_ingested_bytes_percentage: None,
@@ -1460,6 +1476,26 @@ impl MonthlyUsageAttributionValues {
         self
     }
 
+    pub fn siem_12mo_retention_percentage(mut self, value: f64) -> Self {
+        self.siem_12mo_retention_percentage = Some(value);
+        self
+    }
+
+    pub fn siem_12mo_retention_usage(mut self, value: f64) -> Self {
+        self.siem_12mo_retention_usage = Some(value);
+        self
+    }
+
+    pub fn siem_6mo_retention_percentage(mut self, value: f64) -> Self {
+        self.siem_6mo_retention_percentage = Some(value);
+        self
+    }
+
+    pub fn siem_6mo_retention_usage(mut self, value: f64) -> Self {
+        self.siem_6mo_retention_usage = Some(value);
+        self
+    }
+
     pub fn siem_analyzed_logs_add_on_percentage(mut self, value: f64) -> Self {
         self.siem_analyzed_logs_add_on_percentage = Some(value);
         self
@@ -1706,6 +1742,10 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut serverless_apps_apm_usage: Option<f64> = None;
                 let mut serverless_apps_percentage: Option<f64> = None;
                 let mut serverless_apps_usage: Option<f64> = None;
+                let mut siem_12mo_retention_percentage: Option<f64> = None;
+                let mut siem_12mo_retention_usage: Option<f64> = None;
+                let mut siem_6mo_retention_percentage: Option<f64> = None;
+                let mut siem_6mo_retention_usage: Option<f64> = None;
                 let mut siem_analyzed_logs_add_on_percentage: Option<f64> = None;
                 let mut siem_analyzed_logs_add_on_usage: Option<f64> = None;
                 let mut siem_ingested_bytes_percentage: Option<f64> = None;
@@ -2803,6 +2843,34 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             serverless_apps_usage =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "siem_12mo_retention_percentage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            siem_12mo_retention_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "siem_12mo_retention_usage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            siem_12mo_retention_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "siem_6mo_retention_percentage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            siem_6mo_retention_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "siem_6mo_retention_usage" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            siem_6mo_retention_usage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "siem_analyzed_logs_add_on_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
@@ -3049,6 +3117,10 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     serverless_apps_apm_usage,
                     serverless_apps_percentage,
                     serverless_apps_usage,
+                    siem_12mo_retention_percentage,
+                    siem_12mo_retention_usage,
+                    siem_6mo_retention_percentage,
+                    siem_6mo_retention_usage,
                     siem_analyzed_logs_add_on_percentage,
                     siem_analyzed_logs_add_on_usage,
                     siem_ingested_bytes_percentage,
