@@ -724,6 +724,9 @@ pub struct UsageSummaryResponse {
     /// Sum of the average number of Serverless Apps for Azure Web App instances in the current month for all organizations.
     #[serde(rename = "serverless_apps_azure_web_app_instances_avg_sum")]
     pub serverless_apps_azure_web_app_instances_avg_sum: Option<i64>,
+    /// Sum of the average number of DSM Fargate ECS tasks monitored under Serverless Apps DSM in the current month for all organizations.
+    #[serde(rename = "serverless_apps_dsm_fargate_tasks_avg_sum")]
+    pub serverless_apps_dsm_fargate_tasks_avg_sum: Option<i64>,
     /// Sum of the average number of Serverless Apps for Elastic Container Service in the current month for all organizations.
     #[serde(rename = "serverless_apps_ecs_avg_sum")]
     pub serverless_apps_ecs_avg_sum: Option<i64>,
@@ -1054,6 +1057,7 @@ impl UsageSummaryResponse {
             serverless_apps_azure_count_avg_sum: None,
             serverless_apps_azure_function_app_instances_avg_sum: None,
             serverless_apps_azure_web_app_instances_avg_sum: None,
+            serverless_apps_dsm_fargate_tasks_avg_sum: None,
             serverless_apps_ecs_avg_sum: None,
             serverless_apps_eks_avg_sum: None,
             serverless_apps_excl_fargate_avg_sum: None,
@@ -2519,6 +2523,12 @@ impl UsageSummaryResponse {
     }
 
     #[allow(deprecated)]
+    pub fn serverless_apps_dsm_fargate_tasks_avg_sum(mut self, value: i64) -> Self {
+        self.serverless_apps_dsm_fargate_tasks_avg_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn serverless_apps_ecs_avg_sum(mut self, value: i64) -> Self {
         self.serverless_apps_ecs_avg_sum = Some(value);
         self
@@ -2983,6 +2993,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                 let mut serverless_apps_azure_count_avg_sum: Option<i64> = None;
                 let mut serverless_apps_azure_function_app_instances_avg_sum: Option<i64> = None;
                 let mut serverless_apps_azure_web_app_instances_avg_sum: Option<i64> = None;
+                let mut serverless_apps_dsm_fargate_tasks_avg_sum: Option<i64> = None;
                 let mut serverless_apps_ecs_avg_sum: Option<i64> = None;
                 let mut serverless_apps_eks_avg_sum: Option<i64> = None;
                 let mut serverless_apps_excl_fargate_avg_sum: Option<i64> = None;
@@ -4422,6 +4433,12 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                             }
                             serverless_apps_azure_web_app_instances_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "serverless_apps_dsm_fargate_tasks_avg_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            serverless_apps_dsm_fargate_tasks_avg_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_apps_ecs_avg_sum" => {
                             if v.is_null() {
                                 continue;
@@ -4838,6 +4855,7 @@ impl<'de> Deserialize<'de> for UsageSummaryResponse {
                     serverless_apps_azure_count_avg_sum,
                     serverless_apps_azure_function_app_instances_avg_sum,
                     serverless_apps_azure_web_app_instances_avg_sum,
+                    serverless_apps_dsm_fargate_tasks_avg_sum,
                     serverless_apps_ecs_avg_sum,
                     serverless_apps_eks_avg_sum,
                     serverless_apps_excl_fargate_avg_sum,
