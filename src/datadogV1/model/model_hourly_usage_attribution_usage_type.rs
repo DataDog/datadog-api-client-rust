@@ -88,6 +88,8 @@ pub enum HourlyUsageAttributionUsageType {
     SDS_SCANNED_BYTES_USAGE,
     SERVERLESS_APPS_USAGE,
     SERVERLESS_APPS_APM_USAGE,
+    SIEM_12MO_RETENTION_USAGE,
+    SIEM_6MO_RETENTION_USAGE,
     SIEM_ANALYZED_LOGS_ADD_ON_USAGE,
     SIEM_INGESTED_BYTES_USAGE,
     SNMP_USAGE,
@@ -205,6 +207,8 @@ impl ToString for HourlyUsageAttributionUsageType {
             Self::SDS_SCANNED_BYTES_USAGE => String::from("sds_scanned_bytes_usage"),
             Self::SERVERLESS_APPS_USAGE => String::from("serverless_apps_usage"),
             Self::SERVERLESS_APPS_APM_USAGE => String::from("serverless_apps_apm_usage"),
+            Self::SIEM_12MO_RETENTION_USAGE => String::from("siem_12mo_retention_usage"),
+            Self::SIEM_6MO_RETENTION_USAGE => String::from("siem_6mo_retention_usage"),
             Self::SIEM_ANALYZED_LOGS_ADD_ON_USAGE => {
                 String::from("siem_analyzed_logs_add_on_usage")
             }
@@ -328,6 +332,8 @@ impl<'de> Deserialize<'de> for HourlyUsageAttributionUsageType {
             "sds_scanned_bytes_usage" => Self::SDS_SCANNED_BYTES_USAGE,
             "serverless_apps_usage" => Self::SERVERLESS_APPS_USAGE,
             "serverless_apps_apm_usage" => Self::SERVERLESS_APPS_APM_USAGE,
+            "siem_12mo_retention_usage" => Self::SIEM_12MO_RETENTION_USAGE,
+            "siem_6mo_retention_usage" => Self::SIEM_6MO_RETENTION_USAGE,
             "siem_analyzed_logs_add_on_usage" => Self::SIEM_ANALYZED_LOGS_ADD_ON_USAGE,
             "siem_ingested_bytes_usage" => Self::SIEM_INGESTED_BYTES_USAGE,
             "snmp_usage" => Self::SNMP_USAGE,
