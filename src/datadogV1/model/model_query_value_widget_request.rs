@@ -20,6 +20,9 @@ pub struct QueryValueWidgetRequest {
     /// The log query.
     #[serde(rename = "audit_query")]
     pub audit_query: Option<crate::datadogV1::model::LogQueryDefinition>,
+    /// A change indicator that compares the current value to a historical period.
+    #[serde(rename = "comparison")]
+    pub comparison: Option<crate::datadogV1::model::QueryValueWidgetComparison>,
     /// List of conditional formats.
     #[serde(rename = "conditional_formats")]
     pub conditional_formats: Option<Vec<crate::datadogV1::model::WidgetConditionalFormat>>,
@@ -71,6 +74,7 @@ impl QueryValueWidgetRequest {
             aggregator: None,
             apm_query: None,
             audit_query: None,
+            comparison: None,
             conditional_formats: None,
             event_query: None,
             formulas: None,
@@ -103,6 +107,15 @@ impl QueryValueWidgetRequest {
     #[allow(deprecated)]
     pub fn audit_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.audit_query = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn comparison(
+        mut self,
+        value: crate::datadogV1::model::QueryValueWidgetComparison,
+    ) -> Self {
+        self.comparison = Some(value);
         self
     }
 
@@ -225,6 +238,8 @@ impl<'de> Deserialize<'de> for QueryValueWidgetRequest {
                 let mut aggregator: Option<crate::datadogV1::model::WidgetAggregator> = None;
                 let mut apm_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut audit_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
+                let mut comparison: Option<crate::datadogV1::model::QueryValueWidgetComparison> =
+                    None;
                 let mut conditional_formats: Option<
                     Vec<crate::datadogV1::model::WidgetConditionalFormat>,
                 > = None;
@@ -281,6 +296,12 @@ impl<'de> Deserialize<'de> for QueryValueWidgetRequest {
                             }
                             audit_query =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "comparison" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            comparison = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "conditional_formats" => {
                             if v.is_null() {
@@ -382,6 +403,7 @@ impl<'de> Deserialize<'de> for QueryValueWidgetRequest {
                     aggregator,
                     apm_query,
                     audit_query,
+                    comparison,
                     conditional_formats,
                     event_query,
                     formulas,
