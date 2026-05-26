@@ -264,6 +264,10 @@ impl Default for Configuration {
             ("v2.list_aws_cloud_auth_persona_mappings".to_owned(), false),
             ("v2.activate_content_pack".to_owned(), false),
             (
+                "v2.batch_get_security_monitoring_dataset_dependencies".to_owned(),
+                false,
+            ),
+            (
                 "v2.bulk_create_sample_log_generation_subscriptions".to_owned(),
                 false,
             ),
@@ -281,6 +285,7 @@ impl Default for Configuration {
                 "v2.create_sample_log_generation_subscription".to_owned(),
                 false,
             ),
+            ("v2.create_security_monitoring_dataset".to_owned(), false),
             (
                 "v2.create_security_monitoring_integration_config".to_owned(),
                 false,
@@ -296,6 +301,7 @@ impl Default for Configuration {
                 "v2.delete_sample_log_generation_subscription".to_owned(),
                 false,
             ),
+            ("v2.delete_security_monitoring_dataset".to_owned(), false),
             (
                 "v2.delete_security_monitoring_integration_config".to_owned(),
                 false,
@@ -311,6 +317,15 @@ impl Default for Configuration {
             ("v2.get_indicator_of_compromise".to_owned(), false),
             ("v2.get_rule_version_history".to_owned(), false),
             ("v2.get_secrets_rules".to_owned(), false),
+            ("v2.get_security_monitoring_dataset".to_owned(), false),
+            (
+                "v2.get_security_monitoring_dataset_by_version".to_owned(),
+                false,
+            ),
+            (
+                "v2.get_security_monitoring_dataset_version_history".to_owned(),
+                false,
+            ),
             ("v2.get_security_monitoring_histsignal".to_owned(), false),
             (
                 "v2.get_security_monitoring_histsignals_by_job_id".to_owned(),
@@ -334,6 +349,7 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.list_scanned_assets_metadata".to_owned(), false),
+            ("v2.list_security_monitoring_datasets".to_owned(), false),
             ("v2.list_security_monitoring_histsignals".to_owned(), false),
             (
                 "v2.list_security_monitoring_integration_configs".to_owned(),
@@ -349,6 +365,7 @@ impl Default for Configuration {
                 "v2.search_security_monitoring_histsignals".to_owned(),
                 false,
             ),
+            ("v2.update_security_monitoring_dataset".to_owned(), false),
             (
                 "v2.update_security_monitoring_integration_config".to_owned(),
                 false,
