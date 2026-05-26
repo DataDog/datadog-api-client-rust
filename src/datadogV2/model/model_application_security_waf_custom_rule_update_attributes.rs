@@ -24,7 +24,7 @@ pub struct ApplicationSecurityWafCustomRuleUpdateAttributes {
     /// Indicates whether the WAF custom rule is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
-    /// The Name of the WAF custom rule.
+    /// The name of the WAF custom rule.
     #[serde(rename = "name")]
     pub name: String,
     /// The path glob for the WAF custom rule.

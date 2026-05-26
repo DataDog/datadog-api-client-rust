@@ -27,7 +27,7 @@ pub struct ApplicationSecurityWafCustomRuleAttributes {
     /// Metadata associated with the WAF Custom Rule.
     #[serde(rename = "metadata")]
     pub metadata: Option<crate::datadogV2::model::ApplicationSecurityWafCustomRuleMetadata>,
-    /// The Name of the WAF custom rule.
+    /// The name of the WAF custom rule.
     #[serde(rename = "name")]
     pub name: String,
     /// The path glob for the WAF custom rule.
