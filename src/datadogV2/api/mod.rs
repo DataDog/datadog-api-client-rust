@@ -69,7 +69,6 @@ pub mod api_microsoft_teams_integration;
 pub mod api_model_lab_api;
 pub mod api_monitors;
 pub mod api_network_device_monitoring;
-pub mod api_o_auth2_client_public;
 pub mod api_observability_pipelines;
 pub mod api_oci_integration;
 pub mod api_okta_integration;
