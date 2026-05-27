@@ -23,6 +23,9 @@ pub struct TeamsResponse {
     /// Teams response metadata.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::TeamsResponseMeta>,
+    /// Indicates whether the response is from a test environment.
+    #[serde(rename = "test")]
+    pub test: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -37,6 +40,7 @@ impl TeamsResponse {
             included: None,
             links: None,
             meta: None,
+            test: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -59,6 +63,11 @@ impl TeamsResponse {
 
     pub fn meta(mut self, value: crate::datadogV2::model::TeamsResponseMeta) -> Self {
         self.meta = Some(value);
+        self
+    }
+
+    pub fn test(mut self, value: bool) -> Self {
+        self.test = Some(value);
         self
     }
 
@@ -98,6 +107,7 @@ impl<'de> Deserialize<'de> for TeamsResponse {
                 let mut included: Option<Vec<crate::datadogV2::model::TeamIncluded>> = None;
                 let mut links: Option<crate::datadogV2::model::TeamsResponseLinks> = None;
                 let mut meta: Option<crate::datadogV2::model::TeamsResponseMeta> = None;
+                let mut test: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -130,6 +140,12 @@ impl<'de> Deserialize<'de> for TeamsResponse {
                             }
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "test" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            test = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -143,6 +159,7 @@ impl<'de> Deserialize<'de> for TeamsResponse {
                     included,
                     links,
                     meta,
+                    test,
                     additional_properties,
                     _unparsed,
                 };
