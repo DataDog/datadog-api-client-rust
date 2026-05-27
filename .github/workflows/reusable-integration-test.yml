@@ -99,10 +99,17 @@ jobs:
           status: pending
           context: ${{ inputs.status-context || 'integration' }}
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9 # v1
+        run: rustup toolchain install stable --profile minimal --no-self-update && rustup default stable
+        shell: bash
+      - name: Cache Cargo
+        uses: actions/cache@v4
         with:
-          toolchain: "stable"
-      - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2.9.1
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
       - name: Run integration tests
         shell: bash
         run: ./run-tests.sh
