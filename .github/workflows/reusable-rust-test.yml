@@ -37,9 +37,16 @@ jobs:
           repository: DataDog/datadog-api-client-rust
           ref: ${{ inputs.target-branch || github.ref }}
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@v1
+        run: rustup toolchain install ${{ matrix.rust-version }} --profile minimal --no-self-update && rustup default ${{ matrix.rust-version }}
+        shell: bash
+      - name: Cache Cargo
+        uses: actions/cache@v4
         with:
-          toolchain: ${{ matrix.rust-version }}
-      - uses: Swatinem/rust-cache@v2
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ matrix.rust-version }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-${{ matrix.rust-version }}-
       - name: Test
         run: ${{ inputs.test-script }}
