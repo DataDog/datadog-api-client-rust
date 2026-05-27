@@ -3887,6 +3887,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_cost_tag_metadata_metrics,
     );
     world.function_mappings.insert(
+        "v2.ListCostTagMetadataMonths".into(),
+        test_v2_list_cost_tag_metadata_months,
+    );
+    world.function_mappings.insert(
         "v2.ListCostTagMetadataOrchestrators".into(),
         test_v2_list_cost_tag_metadata_orchestrators,
     );
@@ -29676,6 +29680,36 @@ fn test_v2_list_cost_tag_metadata_metrics(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_cost_tag_metadata_months(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let filter_provider =
+        serde_json::from_value(_parameters.get("filter[provider]").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_cost_tag_metadata_months_with_http_info(filter_provider))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

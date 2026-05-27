@@ -401,6 +401,7 @@ impl Default for Configuration {
             ("v2.list_cost_tag_key_sources".to_owned(), false),
             ("v2.list_cost_tag_metadata".to_owned(), false),
             ("v2.list_cost_tag_metadata_metrics".to_owned(), false),
+            ("v2.list_cost_tag_metadata_months".to_owned(), false),
             ("v2.list_cost_tag_metadata_orchestrators".to_owned(), false),
             ("v2.search_cost_recommendations".to_owned(), false),
             ("v2.create_dashboard_secure_embed".to_owned(), false),
