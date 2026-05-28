@@ -24,6 +24,9 @@ pub struct MaintenanceDataAttributes {
     /// The description shown while the maintenance is in progress.
     #[serde(rename = "in_progress_description")]
     pub in_progress_description: Option<String>,
+    /// Whether the maintenance was backfilled.
+    #[serde(rename = "is_backfilled")]
+    pub is_backfilled: Option<bool>,
     /// Timestamp of when the maintenance was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -59,6 +62,7 @@ impl MaintenanceDataAttributes {
             completed_description: None,
             components_affected: None,
             in_progress_description: None,
+            is_backfilled: None,
             modified_at: None,
             published_date: None,
             scheduled_description: None,
@@ -91,6 +95,11 @@ impl MaintenanceDataAttributes {
 
     pub fn in_progress_description(mut self, value: String) -> Self {
         self.in_progress_description = Some(value);
+        self
+    }
+
+    pub fn is_backfilled(mut self, value: bool) -> Self {
+        self.is_backfilled = Some(value);
         self
     }
 
@@ -173,6 +182,7 @@ impl<'de> Deserialize<'de> for MaintenanceDataAttributes {
                     Vec<crate::datadogV2::model::MaintenanceDataAttributesComponentsAffectedItems>,
                 > = None;
                 let mut in_progress_description: Option<String> = None;
+                let mut is_backfilled: Option<bool> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut published_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut scheduled_description: Option<String> = None;
@@ -217,6 +227,13 @@ impl<'de> Deserialize<'de> for MaintenanceDataAttributes {
                                 continue;
                             }
                             in_progress_description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_backfilled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_backfilled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "modified_at" => {
@@ -285,6 +302,7 @@ impl<'de> Deserialize<'de> for MaintenanceDataAttributes {
                     completed_description,
                     components_affected,
                     in_progress_description,
+                    is_backfilled,
                     modified_at,
                     published_date,
                     scheduled_description,
