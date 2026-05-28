@@ -141,6 +141,8 @@ impl Default for Configuration {
             ("v2.trigger_fleet_schedule".to_owned(), false),
             ("v2.update_fleet_schedule".to_owned(), false),
             ("v2.aggregate_llm_obs_experimentation".to_owned(), false),
+            ("v2.batch_update_llm_obs_dataset".to_owned(), false),
+            ("v2.clone_llm_obs_dataset".to_owned(), false),
             ("v2.create_llm_obs_annotation_queue".to_owned(), false),
             (
                 "v2.create_llm_obs_annotation_queue_interactions".to_owned(),
@@ -163,6 +165,7 @@ impl Default for Configuration {
             ("v2.delete_llm_obs_datasets".to_owned(), false),
             ("v2.delete_llm_obs_experiments".to_owned(), false),
             ("v2.delete_llm_obs_projects".to_owned(), false),
+            ("v2.export_llm_obs_dataset".to_owned(), false),
             ("v2.get_llm_obs_annotated_interactions".to_owned(), false),
             (
                 "v2.get_llm_obs_annotated_interactions_by_trace_i_ds".to_owned(),
@@ -185,6 +188,7 @@ impl Default for Configuration {
             ("v2.list_llm_obs_projects".to_owned(), false),
             ("v2.list_llm_obs_spans".to_owned(), false),
             ("v2.lock_llm_obs_dataset_draft_state".to_owned(), false),
+            ("v2.restore_llm_obs_dataset_version".to_owned(), false),
             ("v2.search_llm_obs_experimentation".to_owned(), false),
             ("v2.search_llm_obs_spans".to_owned(), false),
             ("v2.simple_search_llm_obs_experimentation".to_owned(), false),
@@ -199,6 +203,7 @@ impl Default for Configuration {
             ("v2.update_llm_obs_dataset_records".to_owned(), false),
             ("v2.update_llm_obs_experiment".to_owned(), false),
             ("v2.update_llm_obs_project".to_owned(), false),
+            ("v2.upload_llm_obs_dataset_records_file".to_owned(), false),
             ("v2.create_annotation".to_owned(), false),
             ("v2.delete_annotation".to_owned(), false),
             ("v2.get_page_annotations".to_owned(), false),
