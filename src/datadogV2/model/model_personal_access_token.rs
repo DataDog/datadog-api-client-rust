@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Datadog personal access token.
+/// Datadog access token.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PersonalAccessToken {
-    /// Attributes of a personal access token.
+    /// Attributes of an access token.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::PersonalAccessTokenAttributes>,
-    /// ID of the personal access token.
+    /// ID of the access token.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Resources related to the personal access token.
+    /// Resources related to the access token.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::PersonalAccessTokenRelationships>,
     /// Personal access tokens resource type.

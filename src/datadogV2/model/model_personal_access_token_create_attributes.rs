@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes used to create a personal access token.
+/// Attributes used to create an access token.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PersonalAccessTokenCreateAttributes {
-    /// Expiration date of the personal access token. Must be at least 24 hours in the future.
+    /// Expiration date of the access token. Must be at least 24 hours in the future.
     #[serde(rename = "expires_at")]
     pub expires_at: chrono::DateTime<chrono::Utc>,
-    /// Name of the personal access token.
+    /// Name of the access token.
     #[serde(rename = "name")]
     pub name: String,
-    /// Array of scopes to grant the personal access token.
+    /// Array of scopes to grant the access token.
     #[serde(rename = "scopes")]
     pub scopes: Vec<String>,
     #[serde(flatten)]

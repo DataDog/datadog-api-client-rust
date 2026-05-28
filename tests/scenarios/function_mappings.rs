@@ -18087,8 +18087,8 @@ fn test_v2_list_personal_access_tokens(
     let filter = _parameters
         .get("filter")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_owner_uuid = _parameters
-        .get("filter[owner_uuid]")
+    let filter_owned_by = _parameters
+        .get("filter[owned_by]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
         datadogV2::api_key_management::ListPersonalAccessTokensOptionalParams::default();
@@ -18096,7 +18096,7 @@ fn test_v2_list_personal_access_tokens(
     params.page_number = page_number;
     params.sort = sort;
     params.filter = filter;
-    params.filter_owner_uuid = filter_owner_uuid;
+    params.filter_owned_by = filter_owned_by;
     let response = match block_on(api.list_personal_access_tokens_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -18152,8 +18152,8 @@ fn test_v2_revoke_personal_access_token(
         .v2_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.revoke_personal_access_token_with_http_info(pat_id)) {
+    let token_id = serde_json::from_value(_parameters.get("token_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.revoke_personal_access_token_with_http_info(token_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -18180,8 +18180,8 @@ fn test_v2_get_personal_access_token(
         .v2_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_personal_access_token_with_http_info(pat_id)) {
+    let token_id = serde_json::from_value(_parameters.get("token_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_personal_access_token_with_http_info(token_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -18208,9 +18208,9 @@ fn test_v2_update_personal_access_token(
         .v2_api_key_management
         .as_ref()
         .expect("api instance not found");
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
+    let token_id = serde_json::from_value(_parameters.get("token_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_personal_access_token_with_http_info(pat_id, body)) {
+    let response = match block_on(api.update_personal_access_token_with_http_info(token_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -48373,9 +48373,9 @@ fn test_v2_revoke_service_account_access_token(
         .expect("api instance not found");
     let service_account_id =
         serde_json::from_value(_parameters.get("service_account_id").unwrap().clone()).unwrap();
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
+    let token_id = serde_json::from_value(_parameters.get("token_id").unwrap().clone()).unwrap();
     let response = match block_on(
-        api.revoke_service_account_access_token_with_http_info(service_account_id, pat_id),
+        api.revoke_service_account_access_token_with_http_info(service_account_id, token_id),
     ) {
         Ok(response) => response,
         Err(error) => {
@@ -48405,9 +48405,9 @@ fn test_v2_get_service_account_access_token(
         .expect("api instance not found");
     let service_account_id =
         serde_json::from_value(_parameters.get("service_account_id").unwrap().clone()).unwrap();
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
+    let token_id = serde_json::from_value(_parameters.get("token_id").unwrap().clone()).unwrap();
     let response = match block_on(
-        api.get_service_account_access_token_with_http_info(service_account_id, pat_id),
+        api.get_service_account_access_token_with_http_info(service_account_id, token_id),
     ) {
         Ok(response) => response,
         Err(error) => {
@@ -48437,11 +48437,11 @@ fn test_v2_update_service_account_access_token(
         .expect("api instance not found");
     let service_account_id =
         serde_json::from_value(_parameters.get("service_account_id").unwrap().clone()).unwrap();
-    let pat_id = serde_json::from_value(_parameters.get("pat_id").unwrap().clone()).unwrap();
+    let token_id = serde_json::from_value(_parameters.get("token_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_service_account_access_token_with_http_info(
         service_account_id,
-        pat_id,
+        token_id,
         body,
     )) {
         Ok(response) => response,

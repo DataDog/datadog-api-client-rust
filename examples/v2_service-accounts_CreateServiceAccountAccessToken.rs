@@ -1,7 +1,7 @@
 // Create an access token for a service account returns "Created" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_service_accounts::ServiceAccountsAPI;
-use datadog_api_client::datadogV2::model::PersonalAccessTokensType;
+use datadog_api_client::datadogV2::model::ServiceAccessTokensType;
 use datadog_api_client::datadogV2::model::ServiceAccountAccessTokenCreateAttributes;
 use datadog_api_client::datadogV2::model::ServiceAccountAccessTokenCreateData;
 use datadog_api_client::datadogV2::model::ServiceAccountAccessTokenCreateRequest;
@@ -16,7 +16,7 @@ async fn main() {
                 "Example-Service-Account".to_string(),
                 vec!["dashboards_read".to_string()],
             ),
-            PersonalAccessTokensType::PERSONAL_ACCESS_TOKENS,
+            ServiceAccessTokensType::SERVICE_ACCESS_TOKENS,
         ));
     let configuration = datadog::Configuration::new();
     let api = ServiceAccountsAPI::with_config(configuration);

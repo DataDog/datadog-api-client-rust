@@ -265,14 +265,14 @@ pub struct ListPersonalAccessTokensOptionalParams {
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
-    /// Personal access token attribute used to sort results. Sort order is ascending
+    /// Access token attribute used to sort results. Sort order is ascending
     /// by default. In order to specify a descending sort, prefix the
     /// attribute with a minus sign.
     pub sort: Option<crate::datadogV2::model::PersonalAccessTokensSort>,
-    /// Filter personal access tokens by the specified string.
+    /// Filter access tokens by the specified string.
     pub filter: Option<String>,
-    /// Filter personal access tokens by the owner's UUID. Supports multiple values.
-    pub filter_owner_uuid: Option<Vec<String>>,
+    /// Filter access tokens by the owner's ID. Supports multiple values.
+    pub filter_owned_by: Option<Vec<String>>,
 }
 
 impl ListPersonalAccessTokensOptionalParams {
@@ -286,21 +286,21 @@ impl ListPersonalAccessTokensOptionalParams {
         self.page_number = Some(value);
         self
     }
-    /// Personal access token attribute used to sort results. Sort order is ascending
+    /// Access token attribute used to sort results. Sort order is ascending
     /// by default. In order to specify a descending sort, prefix the
     /// attribute with a minus sign.
     pub fn sort(mut self, value: crate::datadogV2::model::PersonalAccessTokensSort) -> Self {
         self.sort = Some(value);
         self
     }
-    /// Filter personal access tokens by the specified string.
+    /// Filter access tokens by the specified string.
     pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
-    /// Filter personal access tokens by the owner's UUID. Supports multiple values.
-    pub fn filter_owner_uuid(mut self, value: Vec<String>) -> Self {
-        self.filter_owner_uuid = Some(value);
+    /// Filter access tokens by the owner's ID. Supports multiple values.
+    pub fn filter_owned_by(mut self, value: Vec<String>) -> Self {
+        self.filter_owned_by = Some(value);
         self
     }
 }
@@ -1632,15 +1632,18 @@ impl KeyManagementAPI {
         }
     }
 
-    /// Get a specific personal access token by its UUID.
+    /// Get a specific personal access token by its ID.
     pub async fn get_personal_access_token(
         &self,
-        pat_id: String,
+        token_id: String,
     ) -> Result<
         crate::datadogV2::model::PersonalAccessTokenResponse,
         datadog::Error<GetPersonalAccessTokenError>,
     > {
-        match self.get_personal_access_token_with_http_info(pat_id).await {
+        match self
+            .get_personal_access_token_with_http_info(token_id)
+            .await
+        {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -1654,10 +1657,10 @@ impl KeyManagementAPI {
         }
     }
 
-    /// Get a specific personal access token by its UUID.
+    /// Get a specific personal access token by its ID.
     pub async fn get_personal_access_token_with_http_info(
         &self,
-        pat_id: String,
+        token_id: String,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenResponse>,
         datadog::Error<GetPersonalAccessTokenError>,
@@ -1668,9 +1671,9 @@ impl KeyManagementAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/personal_access_tokens/{pat_id}",
+            "{}/api/v2/personal_access_tokens/{token_id}",
             local_configuration.get_operation_host(operation_id),
-            pat_id = datadog::urlencode(pat_id)
+            token_id = datadog::urlencode(token_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2198,7 +2201,7 @@ impl KeyManagementAPI {
         }
     }
 
-    /// List all personal access tokens for the organization.
+    /// List all access tokens for the organization.
     pub async fn list_personal_access_tokens(
         &self,
         params: ListPersonalAccessTokensOptionalParams,
@@ -2223,7 +2226,7 @@ impl KeyManagementAPI {
         }
     }
 
-    /// List all personal access tokens for the organization.
+    /// List all access tokens for the organization.
     pub async fn list_personal_access_tokens_with_http_info(
         &self,
         params: ListPersonalAccessTokensOptionalParams,
@@ -2239,7 +2242,7 @@ impl KeyManagementAPI {
         let page_number = params.page_number;
         let sort = params.sort;
         let filter = params.filter;
-        let filter_owner_uuid = params.filter_owner_uuid;
+        let filter_owned_by = params.filter_owned_by;
 
         let local_client = &self.client;
 
@@ -2266,10 +2269,10 @@ impl KeyManagementAPI {
             local_req_builder =
                 local_req_builder.query(&[("filter", &local_query_param.to_string())]);
         };
-        if let Some(ref local) = filter_owner_uuid {
+        if let Some(ref local) = filter_owned_by {
             for param in local {
                 local_req_builder =
-                    local_req_builder.query(&[("filter[owner_uuid]", &param.to_string())]);
+                    local_req_builder.query(&[("filter[owned_by]", &param.to_string())]);
             }
         };
 
@@ -2342,10 +2345,10 @@ impl KeyManagementAPI {
     /// Revoke a specific personal access token.
     pub async fn revoke_personal_access_token(
         &self,
-        pat_id: String,
+        token_id: String,
     ) -> Result<(), datadog::Error<RevokePersonalAccessTokenError>> {
         match self
-            .revoke_personal_access_token_with_http_info(pat_id)
+            .revoke_personal_access_token_with_http_info(token_id)
             .await
         {
             Ok(_) => Ok(()),
@@ -2356,7 +2359,7 @@ impl KeyManagementAPI {
     /// Revoke a specific personal access token.
     pub async fn revoke_personal_access_token_with_http_info(
         &self,
-        pat_id: String,
+        token_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RevokePersonalAccessTokenError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.revoke_personal_access_token";
@@ -2364,9 +2367,9 @@ impl KeyManagementAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/personal_access_tokens/{pat_id}",
+            "{}/api/v2/personal_access_tokens/{token_id}",
             local_configuration.get_operation_host(operation_id),
-            pat_id = datadog::urlencode(pat_id)
+            token_id = datadog::urlencode(token_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -2909,14 +2912,14 @@ impl KeyManagementAPI {
     /// Update a specific personal access token.
     pub async fn update_personal_access_token(
         &self,
-        pat_id: String,
+        token_id: String,
         body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::PersonalAccessTokenResponse,
         datadog::Error<UpdatePersonalAccessTokenError>,
     > {
         match self
-            .update_personal_access_token_with_http_info(pat_id, body)
+            .update_personal_access_token_with_http_info(token_id, body)
             .await
         {
             Ok(response_content) => {
@@ -2935,7 +2938,7 @@ impl KeyManagementAPI {
     /// Update a specific personal access token.
     pub async fn update_personal_access_token_with_http_info(
         &self,
-        pat_id: String,
+        token_id: String,
         body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenResponse>,
@@ -2947,9 +2950,9 @@ impl KeyManagementAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/personal_access_tokens/{pat_id}",
+            "{}/api/v2/personal_access_tokens/{token_id}",
             local_configuration.get_operation_host(operation_id),
-            pat_id = datadog::urlencode(pat_id)
+            token_id = datadog::urlencode(token_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());

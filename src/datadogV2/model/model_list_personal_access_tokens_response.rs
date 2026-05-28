@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response for a list of personal access tokens.
+/// Response for a list of access tokens. Includes both personal and service access tokens.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListPersonalAccessTokensResponse {
-    /// Array of personal access tokens.
+    /// Array of access tokens. Includes both personal and service access tokens.
     #[serde(rename = "data")]
-    pub data: Option<Vec<crate::datadogV2::model::PersonalAccessToken>>,
-    /// Additional information related to the personal access token response.
+    pub data: Option<Vec<crate::datadogV2::model::AccessTokenListItem>>,
+    /// Additional information related to the access token response.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::PersonalAccessTokenResponseMeta>,
     #[serde(flatten)]
@@ -34,7 +34,7 @@ impl ListPersonalAccessTokensResponse {
         }
     }
 
-    pub fn data(mut self, value: Vec<crate::datadogV2::model::PersonalAccessToken>) -> Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::AccessTokenListItem>) -> Self {
         self.data = Some(value);
         self
     }
@@ -76,7 +76,7 @@ impl<'de> Deserialize<'de> for ListPersonalAccessTokensResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::PersonalAccessToken>> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::AccessTokenListItem>> = None;
                 let mut meta: Option<crate::datadogV2::model::PersonalAccessTokenResponseMeta> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<

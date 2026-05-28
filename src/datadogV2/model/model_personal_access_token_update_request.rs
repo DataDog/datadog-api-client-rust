@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request used to update a personal access token.
+/// Request used to update an access token.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PersonalAccessTokenUpdateRequest {
-    /// Object used to update a personal access token.
+    /// Object used to update an access token.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::PersonalAccessTokenUpdateData,
     #[serde(flatten)]

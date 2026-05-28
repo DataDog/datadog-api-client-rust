@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object used to create a personal access token.
+/// Object used to create an access token.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PersonalAccessTokenCreateData {
-    /// Attributes used to create a personal access token.
+    /// Attributes used to create an access token.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::PersonalAccessTokenCreateAttributes,
     /// Personal access tokens resource type.

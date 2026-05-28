@@ -6,31 +6,31 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a full personal access token, including the token key.
+/// Attributes of a full access token, including the token key.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FullPersonalAccessTokenAttributes {
-    /// Creation date of the personal access token.
+    /// Creation date of the access token.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// Expiration date of the personal access token.
+    /// Expiration date of the access token.
     #[serde(
         rename = "expires_at",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub expires_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// The personal access token key. Only returned upon creation.
+    /// The access token key. Only returned upon creation.
     #[serde(rename = "key")]
     pub key: Option<String>,
-    /// Name of the personal access token.
+    /// Name of the access token.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The public portion of the personal access token.
+    /// The public portion of the access token.
     #[serde(rename = "public_portion")]
     pub public_portion: Option<String>,
-    /// Array of scopes granted to the personal access token.
+    /// Array of scopes granted to the access token.
     #[serde(rename = "scopes")]
     pub scopes: Option<Vec<String>>,
     #[serde(flatten)]

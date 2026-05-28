@@ -14,9 +14,9 @@ pub struct ServiceAccountAccessTokenCreateData {
     /// Attributes used to create a service account access token.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::ServiceAccountAccessTokenCreateAttributes,
-    /// Personal access tokens resource type.
+    /// Service access tokens resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::PersonalAccessTokensType,
+    pub type_: crate::datadogV2::model::ServiceAccessTokensType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,7 +27,7 @@ pub struct ServiceAccountAccessTokenCreateData {
 impl ServiceAccountAccessTokenCreateData {
     pub fn new(
         attributes: crate::datadogV2::model::ServiceAccountAccessTokenCreateAttributes,
-        type_: crate::datadogV2::model::PersonalAccessTokensType,
+        type_: crate::datadogV2::model::ServiceAccessTokensType,
     ) -> ServiceAccountAccessTokenCreateData {
         ServiceAccountAccessTokenCreateData {
             attributes,
@@ -66,7 +66,7 @@ impl<'de> Deserialize<'de> for ServiceAccountAccessTokenCreateData {
                 let mut attributes: Option<
                     crate::datadogV2::model::ServiceAccountAccessTokenCreateAttributes,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::PersonalAccessTokensType> = None;
+                let mut type_: Option<crate::datadogV2::model::ServiceAccessTokensType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,7 +82,7 @@ impl<'de> Deserialize<'de> for ServiceAccountAccessTokenCreateData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::PersonalAccessTokensType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::ServiceAccessTokensType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
