@@ -54,6 +54,7 @@ pub struct ApiInstances {
     pub v2_api_actions_datastores: Option<datadogV2::api_actions_datastores::ActionsDatastoresAPI>,
     pub v2_api_action_connection: Option<datadogV2::api_action_connection::ActionConnectionAPI>,
     pub v2_api_agentless_scanning: Option<datadogV2::api_agentless_scanning::AgentlessScanningAPI>,
+    pub v2_api_annotations: Option<datadogV2::api_annotations::AnnotationsAPI>,
     pub v2_api_users: Option<datadogV2::api_users::UsersAPI>,
     pub v2_api_key_management: Option<datadogV2::api_key_management::KeyManagementAPI>,
     pub v2_api_api_management: Option<datadogV2::api_api_management::APIManagementAPI>,
@@ -569,6 +570,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "AgentlessScanning" => {
             world.api_instances.v2_api_agentless_scanning = Some(
                 datadogV2::api_agentless_scanning::AgentlessScanningAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "Annotations" => {
+            world.api_instances.v2_api_annotations = Some(
+                datadogV2::api_annotations::AnnotationsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -2468,6 +2477,21 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.GetAwsOnDemandTask".into(),
         test_v2_get_aws_on_demand_task,
     );
+    world
+        .function_mappings
+        .insert("v2.ListAnnotations".into(), test_v2_list_annotations);
+    world
+        .function_mappings
+        .insert("v2.CreateAnnotation".into(), test_v2_create_annotation);
+    world
+        .function_mappings
+        .insert("v2.GetPageAnnotations".into(), test_v2_get_page_annotations);
+    world
+        .function_mappings
+        .insert("v2.DeleteAnnotation".into(), test_v2_delete_annotation);
+    world
+        .function_mappings
+        .insert("v2.UpdateAnnotation".into(), test_v2_update_annotation);
     world
         .function_mappings
         .insert("v2.AnonymizeUsers".into(), test_v2_anonymize_users);
@@ -16966,6 +16990,148 @@ fn test_v2_get_aws_on_demand_task(world: &mut DatadogWorld, _parameters: &HashMa
         .expect("api instance not found");
     let task_id = serde_json::from_value(_parameters.get("task_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_aws_on_demand_task_with_http_info(task_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_annotations(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_annotations
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let start_time =
+        serde_json::from_value(_parameters.get("start_time").unwrap().clone()).unwrap();
+    let end_time = serde_json::from_value(_parameters.get("end_time").unwrap().clone()).unwrap();
+    let widget_id = _parameters
+        .get("widget_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_annotations::ListAnnotationsOptionalParams::default();
+    params.widget_id = widget_id;
+    let response = match block_on(
+        api.list_annotations_with_http_info(page_id, start_time, end_time, params),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_annotation(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_annotations
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_annotation_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_page_annotations(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_annotations
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let start_time =
+        serde_json::from_value(_parameters.get("start_time").unwrap().clone()).unwrap();
+    let end_time = serde_json::from_value(_parameters.get("end_time").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_page_annotations_with_http_info(page_id, start_time, end_time)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_annotation(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_annotations
+        .as_ref()
+        .expect("api instance not found");
+    let annotation_id =
+        serde_json::from_value(_parameters.get("annotation_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_annotation_with_http_info(annotation_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_annotation(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_annotations
+        .as_ref()
+        .expect("api instance not found");
+    let annotation_id =
+        serde_json::from_value(_parameters.get("annotation_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_annotation_with_http_info(annotation_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
