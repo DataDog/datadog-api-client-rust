@@ -11,6 +11,22 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// DeleteCostTagDescriptionByKeyOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::delete_cost_tag_description_by_key`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct DeleteCostTagDescriptionByKeyOptionalParams {
+    /// Cloud provider to scope the deletion to (for example, `aws`). Omit to delete every description for the tag key.
+    pub cloud: Option<String>,
+}
+
+impl DeleteCostTagDescriptionByKeyOptionalParams {
+    /// Cloud provider to scope the deletion to (for example, `aws`). Omit to delete every description for the tag key.
+    pub fn cloud(mut self, value: String) -> Self {
+        self.cloud = Some(value);
+        self
+    }
+}
+
 /// GetCommitmentsCommitmentListOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_commitments_commitment_list`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -165,6 +181,22 @@ impl GetCommitmentsUtilizationTimeseriesOptionalParams {
         value: crate::datadogV2::model::CommitmentsCommitmentType,
     ) -> Self {
         self.commitment_type = Some(value);
+        self
+    }
+}
+
+/// GetCostTagDescriptionByKeyOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_cost_tag_description_by_key`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetCostTagDescriptionByKeyOptionalParams {
+    /// Cloud provider to scope the lookup to (for example, `aws`). Omit to use the resolved fallback.
+    pub filter_cloud: Option<String>,
+}
+
+impl GetCostTagDescriptionByKeyOptionalParams {
+    /// Cloud provider to scope the lookup to (for example, `aws`). Omit to use the resolved fallback.
+    pub fn filter_cloud(mut self, value: String) -> Self {
+        self.filter_cloud = Some(value);
         self
     }
 }
@@ -611,6 +643,14 @@ pub enum DeleteCostGCPUsageCostConfigError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteCostTagDescriptionByKeyError is a struct for typed errors of method [`CloudCostManagementAPI::delete_cost_tag_description_by_key`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteCostTagDescriptionByKeyError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteCustomAllocationRuleError is a struct for typed errors of method [`CloudCostManagementAPI::delete_custom_allocation_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -631,6 +671,14 @@ pub enum DeleteCustomCostsFileError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteTagPipelinesRulesetError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GenerateCostTagDescriptionByKeyError is a struct for typed errors of method [`CloudCostManagementAPI::generate_cost_tag_description_by_key`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GenerateCostTagDescriptionByKeyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -743,6 +791,14 @@ pub enum GetCostAzureUCConfigError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetCostGCPUsageCostConfigError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetCostTagDescriptionByKeyError is a struct for typed errors of method [`CloudCostManagementAPI::get_cost_tag_description_by_key`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetCostTagDescriptionByKeyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1015,6 +1071,14 @@ pub enum UploadCustomCostsFileError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpsertBudgetError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpsertCostTagDescriptionByKeyError is a struct for typed errors of method [`CloudCostManagementAPI::upsert_cost_tag_description_by_key`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpsertCostTagDescriptionByKeyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2279,6 +2343,108 @@ impl CloudCostManagementAPI {
         }
     }
 
+    /// Delete a Cloud Cost Management tag key description. When `cloud` is omitted, deletes every description for the tag key, falling back to Datadog's global default when available. When `cloud` is provided, deletes only the description scoped to that cloud provider.
+    pub async fn delete_cost_tag_description_by_key(
+        &self,
+        tag_key: String,
+        params: DeleteCostTagDescriptionByKeyOptionalParams,
+    ) -> Result<(), datadog::Error<DeleteCostTagDescriptionByKeyError>> {
+        match self
+            .delete_cost_tag_description_by_key_with_http_info(tag_key, params)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete a Cloud Cost Management tag key description. When `cloud` is omitted, deletes every description for the tag key, falling back to Datadog's global default when available. When `cloud` is provided, deletes only the description scoped to that cloud provider.
+    pub async fn delete_cost_tag_description_by_key_with_http_info(
+        &self,
+        tag_key: String,
+        params: DeleteCostTagDescriptionByKeyOptionalParams,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCostTagDescriptionByKeyError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_cost_tag_description_by_key";
+
+        // unbox and build optional parameters
+        let cloud = params.cloud;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tag_descriptions/{tag_key}",
+            local_configuration.get_operation_host(operation_id),
+            tag_key = datadog::urlencode(tag_key)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = cloud {
+            local_req_builder =
+                local_req_builder.query(&[("cloud", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteCostTagDescriptionByKeyError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Delete a custom allocation rule - Delete an existing custom allocation rule by its ID
     pub async fn delete_custom_allocation_rule(
         &self,
@@ -2539,6 +2705,118 @@ impl CloudCostManagementAPI {
             })
         } else {
             let local_entity: Option<DeleteTagPipelinesRulesetError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Use AI to draft a Cloud Cost Management tag key description based on associated cost data. The generated description is returned in the response and is not persisted by this endpoint; follow up with `UpsertCostTagDescriptionByKey` to save it.
+    pub async fn generate_cost_tag_description_by_key(
+        &self,
+        tag_key: String,
+    ) -> Result<
+        crate::datadogV2::model::GenerateCostTagDescriptionResponse,
+        datadog::Error<GenerateCostTagDescriptionByKeyError>,
+    > {
+        match self
+            .generate_cost_tag_description_by_key_with_http_info(tag_key)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Use AI to draft a Cloud Cost Management tag key description based on associated cost data. The generated description is returned in the response and is not persisted by this endpoint; follow up with `UpsertCostTagDescriptionByKey` to save it.
+    pub async fn generate_cost_tag_description_by_key_with_http_info(
+        &self,
+        tag_key: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GenerateCostTagDescriptionResponse>,
+        datadog::Error<GenerateCostTagDescriptionByKeyError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.generate_cost_tag_description_by_key";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tag_descriptions/{tag_key}/generate",
+            local_configuration.get_operation_host(operation_id),
+            tag_key = datadog::urlencode(tag_key)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::GenerateCostTagDescriptionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GenerateCostTagDescriptionByKeyError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -4237,6 +4515,128 @@ impl CloudCostManagementAPI {
             };
         } else {
             let local_entity: Option<GetCostGCPUsageCostConfigError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the Cloud Cost Management description for a single tag key. Use `filter[cloud]` to scope the lookup to a specific cloud provider; when omitted, the response resolves the description in fallback order (cloud-specific organization override, then cloudless organization default, then Datadog's global default).
+    pub async fn get_cost_tag_description_by_key(
+        &self,
+        tag_key: String,
+        params: GetCostTagDescriptionByKeyOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CostTagDescriptionResponse,
+        datadog::Error<GetCostTagDescriptionByKeyError>,
+    > {
+        match self
+            .get_cost_tag_description_by_key_with_http_info(tag_key, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the Cloud Cost Management description for a single tag key. Use `filter[cloud]` to scope the lookup to a specific cloud provider; when omitted, the response resolves the description in fallback order (cloud-specific organization override, then cloudless organization default, then Datadog's global default).
+    pub async fn get_cost_tag_description_by_key_with_http_info(
+        &self,
+        tag_key: String,
+        params: GetCostTagDescriptionByKeyOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CostTagDescriptionResponse>,
+        datadog::Error<GetCostTagDescriptionByKeyError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_cost_tag_description_by_key";
+
+        // unbox and build optional parameters
+        let filter_cloud = params.filter_cloud;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tag_descriptions/{tag_key}",
+            local_configuration.get_operation_host(operation_id),
+            tag_key = datadog::urlencode(tag_key)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_cloud {
+            local_req_builder =
+                local_req_builder.query(&[("filter[cloud]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CostTagDescriptionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetCostTagDescriptionByKeyError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -8726,6 +9126,147 @@ impl CloudCostManagementAPI {
             };
         } else {
             let local_entity: Option<UpsertBudgetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Create or update a Cloud Cost Management tag key description. The new description and optional cloud scoping are supplied in the request body. Omit `cloud` to set a cross-cloud default for the tag key.
+    pub async fn upsert_cost_tag_description_by_key(
+        &self,
+        tag_key: String,
+        body: crate::datadogV2::model::CostTagDescriptionUpsertRequest,
+    ) -> Result<(), datadog::Error<UpsertCostTagDescriptionByKeyError>> {
+        match self
+            .upsert_cost_tag_description_by_key_with_http_info(tag_key, body)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create or update a Cloud Cost Management tag key description. The new description and optional cloud scoping are supplied in the request body. Omit `cloud` to set a cross-cloud default for the tag key.
+    pub async fn upsert_cost_tag_description_by_key_with_http_info(
+        &self,
+        tag_key: String,
+        body: crate::datadogV2::model::CostTagDescriptionUpsertRequest,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpsertCostTagDescriptionByKeyError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.upsert_cost_tag_description_by_key";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/tag_descriptions/{tag_key}",
+            local_configuration.get_operation_host(operation_id),
+            tag_key = datadog::urlencode(tag_key)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<UpsertCostTagDescriptionByKeyError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
