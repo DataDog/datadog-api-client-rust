@@ -14,7 +14,7 @@ pub struct JobDefinition {
     /// Calculated fields.
     #[serde(rename = "calculatedFields")]
     pub calculated_fields: Option<Vec<crate::datadogV2::model::CalculatedField>>,
-    /// Cases used for generating job results.
+    /// Cases used for generating job results. Up to 10 cases are allowed.
     #[serde(rename = "cases")]
     pub cases: Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>,
     /// Starting time of data analyzed by the job.
@@ -35,7 +35,7 @@ pub struct JobDefinition {
     /// Job options.
     #[serde(rename = "options")]
     pub options: Option<crate::datadogV2::model::HistoricalJobOptions>,
-    /// Queries for selecting logs analyzed by the job.
+    /// Queries for selecting logs analyzed by the job. Up to 10 queries are allowed.
     #[serde(rename = "queries")]
     pub queries: Vec<crate::datadogV2::model::HistoricalJobQuery>,
     /// Reference tables used in the queries.
@@ -44,7 +44,7 @@ pub struct JobDefinition {
     /// Tags for generated signals.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// Cases for generating results from third-party detection method. Only available for third-party detection method.
+    /// Cases for generating results from third-party detection method. Only available for third-party detection method. Up to 10 cases are allowed.
     #[serde(rename = "thirdPartyCases")]
     pub third_party_cases:
         Option<Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRuleCaseCreate>>,

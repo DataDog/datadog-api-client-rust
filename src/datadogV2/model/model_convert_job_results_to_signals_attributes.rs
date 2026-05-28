@@ -11,9 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ConvertJobResultsToSignalsAttributes {
-    /// Request ID.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
     /// Job result IDs.
     #[serde(rename = "jobResultIds")]
     pub job_result_ids: Vec<String>,
@@ -41,7 +38,6 @@ impl ConvertJobResultsToSignalsAttributes {
         signal_severity: crate::datadogV2::model::SecurityMonitoringRuleSeverity,
     ) -> ConvertJobResultsToSignalsAttributes {
         ConvertJobResultsToSignalsAttributes {
-            id: None,
             job_result_ids,
             notifications,
             signal_message,
@@ -49,11 +45,6 @@ impl ConvertJobResultsToSignalsAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -82,7 +73,6 @@ impl<'de> Deserialize<'de> for ConvertJobResultsToSignalsAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<String> = None;
                 let mut job_result_ids: Option<Vec<String>> = None;
                 let mut notifications: Option<Vec<String>> = None;
                 let mut signal_message: Option<String> = None;
@@ -97,12 +87,6 @@ impl<'de> Deserialize<'de> for ConvertJobResultsToSignalsAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "jobResultIds" => {
                             job_result_ids =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -144,7 +128,6 @@ impl<'de> Deserialize<'de> for ConvertJobResultsToSignalsAttributes {
                     signal_severity.ok_or_else(|| M::Error::missing_field("signal_severity"))?;
 
                 let content = ConvertJobResultsToSignalsAttributes {
-                    id,
                     job_result_ids,
                     notifications,
                     signal_message,

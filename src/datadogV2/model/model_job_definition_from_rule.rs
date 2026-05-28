@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct JobDefinitionFromRule {
+    /// Zero-based index of the rule case to use as the job's signal condition. When omitted, all cases are evaluated. Up to 10 cases are supported, so valid values are 0 to 9.
+    #[serde(rename = "caseIndex")]
+    pub case_index: Option<i32>,
     /// Starting time of data analyzed by the job.
     #[serde(rename = "from")]
     pub from: i64,
@@ -36,6 +39,7 @@ pub struct JobDefinitionFromRule {
 impl JobDefinitionFromRule {
     pub fn new(from: i64, id: String, index: String, to: i64) -> JobDefinitionFromRule {
         JobDefinitionFromRule {
+            case_index: None,
             from,
             id,
             index,
@@ -44,6 +48,11 @@ impl JobDefinitionFromRule {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn case_index(mut self, value: i32) -> Self {
+        self.case_index = Some(value);
+        self
     }
 
     pub fn notifications(mut self, value: Vec<String>) -> Self {
@@ -77,6 +86,7 @@ impl<'de> Deserialize<'de> for JobDefinitionFromRule {
             where
                 M: MapAccess<'a>,
             {
+                let mut case_index: Option<i32> = None;
                 let mut from: Option<i64> = None;
                 let mut id: Option<String> = None;
                 let mut index: Option<String> = None;
@@ -90,6 +100,12 @@ impl<'de> Deserialize<'de> for JobDefinitionFromRule {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "caseIndex" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            case_index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "from" => {
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -122,6 +138,7 @@ impl<'de> Deserialize<'de> for JobDefinitionFromRule {
                 let to = to.ok_or_else(|| M::Error::missing_field("to"))?;
 
                 let content = JobDefinitionFromRule {
+                    case_index,
                     from,
                     id,
                     index,

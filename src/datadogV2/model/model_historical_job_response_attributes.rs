@@ -35,6 +35,9 @@ pub struct HistoricalJobResponseAttributes {
     /// Last modification time of the job.
     #[serde(rename = "modifiedAt")]
     pub modified_at: Option<String>,
+    /// Job execution progress as a value between 0 and 1. Available for ongoing jobs.
+    #[serde(rename = "progressRate")]
+    pub progress_rate: Option<f64>,
     /// Whether the job outputs signals.
     #[serde(rename = "signalOutput")]
     pub signal_output: Option<bool>,
@@ -56,6 +59,7 @@ impl HistoricalJobResponseAttributes {
             job_name: None,
             job_status: None,
             modified_at: None,
+            progress_rate: None,
             signal_output: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -99,6 +103,11 @@ impl HistoricalJobResponseAttributes {
 
     pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
+        self
+    }
+
+    pub fn progress_rate(mut self, value: f64) -> Self {
+        self.progress_rate = Some(value);
         self
     }
 
@@ -147,6 +156,7 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseAttributes {
                 let mut job_name: Option<String> = None;
                 let mut job_status: Option<String> = None;
                 let mut modified_at: Option<String> = None;
+                let mut progress_rate: Option<f64> = None;
                 let mut signal_output: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -209,6 +219,13 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseAttributes {
                             modified_at =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "progressRate" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            progress_rate =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "signalOutput" => {
                             if v.is_null() {
                                 continue;
@@ -233,6 +250,7 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseAttributes {
                     job_name,
                     job_status,
                     modified_at,
+                    progress_rate,
                     signal_output,
                     additional_properties,
                     _unparsed,
