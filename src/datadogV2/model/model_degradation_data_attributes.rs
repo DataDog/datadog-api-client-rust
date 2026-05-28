@@ -21,6 +21,9 @@ pub struct DegradationDataAttributes {
     /// Description of the degradation.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// Whether the degradation was backfilled.
+    #[serde(rename = "is_backfilled")]
+    pub is_backfilled: Option<bool>,
     /// Timestamp of when the degradation was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -49,6 +52,7 @@ impl DegradationDataAttributes {
             components_affected: None,
             created_at: None,
             description: None,
+            is_backfilled: None,
             modified_at: None,
             source: None,
             status: None,
@@ -74,6 +78,11 @@ impl DegradationDataAttributes {
 
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    pub fn is_backfilled(mut self, value: bool) -> Self {
+        self.is_backfilled = Some(value);
         self
     }
 
@@ -148,6 +157,7 @@ impl<'de> Deserialize<'de> for DegradationDataAttributes {
                 > = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut description: Option<String> = None;
+                let mut is_backfilled: Option<bool> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut source: Option<crate::datadogV2::model::DegradationDataAttributesSource> =
                     None;
@@ -184,6 +194,13 @@ impl<'de> Deserialize<'de> for DegradationDataAttributes {
                                 continue;
                             }
                             description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_backfilled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_backfilled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "modified_at" => {
@@ -237,6 +254,7 @@ impl<'de> Deserialize<'de> for DegradationDataAttributes {
                     components_affected,
                     created_at,
                     description,
+                    is_backfilled,
                     modified_at,
                     source,
                     status,
