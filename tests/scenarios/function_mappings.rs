@@ -3670,6 +3670,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpsertSyncConfig".into(), test_v2_upsert_sync_config);
+    world
+        .function_mappings
+        .insert("v2.DeleteSyncConfig".into(), test_v2_delete_sync_config);
     world.function_mappings.insert(
         "v2.GetCodeCoverageBranchSummary".into(),
         test_v2_get_code_coverage_branch_summary,
@@ -27752,6 +27755,31 @@ fn test_v2_upsert_sync_config(world: &mut DatadogWorld, _parameters: &HashMap<St
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.upsert_sync_config_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_sync_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_storage_management
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_sync_config_with_http_info(id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
