@@ -18501,7 +18501,7 @@ impl SecurityMonitoringAPI {
             local_configuration.get_operation_host(operation_id)
         );
         let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
         // build headers
         let mut headers = HeaderMap::new();
