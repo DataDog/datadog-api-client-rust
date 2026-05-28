@@ -575,6 +575,8 @@ impl Default for Configuration {
             ("v2.query_event_filtered_users".to_owned(), false),
             ("v2.query_users".to_owned(), false),
             ("v2.update_connection".to_owned(), false),
+            ("v2.get_pruned_trace_by_id".to_owned(), false),
+            ("v2.get_trace_by_id".to_owned(), false),
             ("v2.create_scorecard_outcomes_batch".to_owned(), false),
             ("v2.list_entity_risk_scores".to_owned(), false),
             ("v2.create_incident_service".to_owned(), false),

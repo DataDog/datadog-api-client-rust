@@ -160,6 +160,7 @@ pub struct ApiInstances {
     pub v2_api_product_analytics: Option<datadogV2::api_product_analytics::ProductAnalyticsAPI>,
     pub v2_api_rum_audience_management:
         Option<datadogV2::api_rum_audience_management::RumAudienceManagementAPI>,
+    pub v2_api_apm_trace: Option<datadogV2::api_apm_trace::APMTraceAPI>,
     pub v2_api_reference_tables: Option<datadogV2::api_reference_tables::ReferenceTablesAPI>,
     pub v2_api_application_security:
         Option<datadogV2::api_application_security::ApplicationSecurityAPI>,
@@ -1060,6 +1061,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "APMTrace" => {
+            world.api_instances.v2_api_apm_trace = Some(
+                datadogV2::api_apm_trace::APMTraceAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "ReferenceTables" => {
             world.api_instances.v2_api_reference_tables = Some(
@@ -5642,6 +5651,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.ListConnections".into(), test_v2_list_connections);
+    world.function_mappings.insert(
+        "v2.GetPrunedTraceByID".into(),
+        test_v2_get_pruned_trace_by_id,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetTraceByID".into(), test_v2_get_trace_by_id);
     world
         .function_mappings
         .insert("v2.BatchRowsQuery".into(), test_v2_batch_rows_query);
@@ -44331,6 +44347,90 @@ fn test_v2_list_connections(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .expect("api instance not found");
     let entity = serde_json::from_value(_parameters.get("entity").unwrap().clone()).unwrap();
     let response = match block_on(api.list_connections_with_http_info(entity)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_pruned_trace_by_id(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_apm_trace
+        .as_ref()
+        .expect("api instance not found");
+    let trace_id = serde_json::from_value(_parameters.get("trace_id").unwrap().clone()).unwrap();
+    let expand_span_id = _parameters
+        .get("expand_span_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let time_hint = _parameters
+        .get("time_hint")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let force_source = _parameters
+        .get("force_source")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_path = _parameters
+        .get("include_path")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let tag_include = _parameters
+        .get("tag_include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let tag_exclude = _parameters
+        .get("tag_exclude")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let only_service_entry_spans = _parameters
+        .get("only_service_entry_spans")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_apm_trace::GetPrunedTraceByIDOptionalParams::default();
+    params.expand_span_id = expand_span_id;
+    params.time_hint = time_hint;
+    params.force_source = force_source;
+    params.include_path = include_path;
+    params.tag_include = tag_include;
+    params.tag_exclude = tag_exclude;
+    params.only_service_entry_spans = only_service_entry_spans;
+    let response = match block_on(api.get_pruned_trace_by_id_with_http_info(trace_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_trace_by_id(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_apm_trace
+        .as_ref()
+        .expect("api instance not found");
+    let trace_id = serde_json::from_value(_parameters.get("trace_id").unwrap().clone()).unwrap();
+    let include_fields = _parameters
+        .get("include_fields")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_apm_trace::GetTraceByIDOptionalParams::default();
+    params.include_fields = include_fields;
+    let response = match block_on(api.get_trace_by_id_with_http_info(trace_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
