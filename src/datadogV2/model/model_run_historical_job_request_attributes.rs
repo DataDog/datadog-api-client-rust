@@ -14,12 +14,12 @@ pub struct RunHistoricalJobRequestAttributes {
     /// Definition of a historical job based on a security monitoring rule.
     #[serde(rename = "fromRule")]
     pub from_rule: Option<crate::datadogV2::model::JobDefinitionFromRule>,
-    /// Request ID.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
     /// Definition of a historical job.
     #[serde(rename = "jobDefinition")]
     pub job_definition: Option<crate::datadogV2::model::JobDefinition>,
+    /// Whether the job outputs signals when results are converted.
+    #[serde(rename = "signalOutput")]
+    pub signal_output: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -31,8 +31,8 @@ impl RunHistoricalJobRequestAttributes {
     pub fn new() -> RunHistoricalJobRequestAttributes {
         RunHistoricalJobRequestAttributes {
             from_rule: None,
-            id: None,
             job_definition: None,
+            signal_output: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -43,13 +43,13 @@ impl RunHistoricalJobRequestAttributes {
         self
     }
 
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
+    pub fn job_definition(mut self, value: crate::datadogV2::model::JobDefinition) -> Self {
+        self.job_definition = Some(value);
         self
     }
 
-    pub fn job_definition(mut self, value: crate::datadogV2::model::JobDefinition) -> Self {
-        self.job_definition = Some(value);
+    pub fn signal_output(mut self, value: bool) -> Self {
+        self.signal_output = Some(value);
         self
     }
 
@@ -86,8 +86,8 @@ impl<'de> Deserialize<'de> for RunHistoricalJobRequestAttributes {
                 M: MapAccess<'a>,
             {
                 let mut from_rule: Option<crate::datadogV2::model::JobDefinitionFromRule> = None;
-                let mut id: Option<String> = None;
                 let mut job_definition: Option<crate::datadogV2::model::JobDefinition> = None;
+                let mut signal_output: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -102,17 +102,18 @@ impl<'de> Deserialize<'de> for RunHistoricalJobRequestAttributes {
                             }
                             from_rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "jobDefinition" => {
                             if v.is_null() {
                                 continue;
                             }
                             job_definition =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "signalOutput" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            signal_output =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -125,8 +126,8 @@ impl<'de> Deserialize<'de> for RunHistoricalJobRequestAttributes {
 
                 let content = RunHistoricalJobRequestAttributes {
                     from_rule,
-                    id,
                     job_definition,
+                    signal_output,
                     additional_properties,
                     _unparsed,
                 };
