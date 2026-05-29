@@ -11,6 +11,29 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// ExportLLMObsDatasetOptionalParams is a struct for passing parameters to the method [`LLMObservabilityAPI::export_llm_obs_dataset`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ExportLLMObsDatasetOptionalParams {
+    /// Export format for the dataset contents. Only `csv` is currently supported.
+    pub format: Option<crate::datadogV2::model::LLMObsDatasetExportFormat>,
+    /// Version of the dataset to export. If omitted, the current version is used. Must be between 0 and the current version of the dataset, inclusive.
+    pub version: Option<i64>,
+}
+
+impl ExportLLMObsDatasetOptionalParams {
+    /// Export format for the dataset contents. Only `csv` is currently supported.
+    pub fn format(mut self, value: crate::datadogV2::model::LLMObsDatasetExportFormat) -> Self {
+        self.format = Some(value);
+        self
+    }
+    /// Version of the dataset to export. If omitted, the current version is used. Must be between 0 and the current version of the dataset, inclusive.
+    pub fn version(mut self, value: i64) -> Self {
+        self.version = Some(value);
+        self
+    }
+}
+
 /// GetLLMObsAnnotatedInteractionsByTraceIDsOptionalParams is a struct for passing parameters to the method [`LLMObservabilityAPI::get_llm_obs_annotated_interactions_by_trace_i_ds`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -321,10 +344,72 @@ impl ListLLMObsSpansOptionalParams {
     }
 }
 
+/// UploadLLMObsDatasetRecordsFileOptionalParams is a struct for passing parameters to the method [`LLMObservabilityAPI::upload_llm_obs_dataset_records_file`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct UploadLLMObsDatasetRecordsFileOptionalParams {
+    /// The records file to upload. Currently only CSV is supported. The file must include an `input` column. Optional columns include `id`, `expected_output`, `metadata`, and `tags`.
+    pub file: Option<Vec<u8>>,
+    /// Whether to skip records whose `input` already exists in the dataset. Defaults to `false`.
+    pub deduplicate: Option<bool>,
+    /// Whether to overwrite existing records that share the same user-provided `id`. Defaults to `true`.
+    pub overwrite: Option<bool>,
+    /// Tags to apply to every uploaded record, in addition to any tags defined on individual rows. Can be repeated, e.g. `tags=env:prod&tags=team:ai`.
+    pub tags: Option<Vec<String>>,
+    /// Whether to enrich the response with user metadata.
+    pub include_user_data: Option<bool>,
+}
+
+impl UploadLLMObsDatasetRecordsFileOptionalParams {
+    /// The records file to upload. Currently only CSV is supported. The file must include an `input` column. Optional columns include `id`, `expected_output`, `metadata`, and `tags`.
+    pub fn file(mut self, value: Vec<u8>) -> Self {
+        self.file = Some(value);
+        self
+    }
+    /// Whether to skip records whose `input` already exists in the dataset. Defaults to `false`.
+    pub fn deduplicate(mut self, value: bool) -> Self {
+        self.deduplicate = Some(value);
+        self
+    }
+    /// Whether to overwrite existing records that share the same user-provided `id`. Defaults to `true`.
+    pub fn overwrite(mut self, value: bool) -> Self {
+        self.overwrite = Some(value);
+        self
+    }
+    /// Tags to apply to every uploaded record, in addition to any tags defined on individual rows. Can be repeated, e.g. `tags=env:prod&tags=team:ai`.
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
+        self
+    }
+    /// Whether to enrich the response with user metadata.
+    pub fn include_user_data(mut self, value: bool) -> Self {
+        self.include_user_data = Some(value);
+        self
+    }
+}
+
 /// AggregateLLMObsExperimentationError is a struct for typed errors of method [`LLMObservabilityAPI::aggregate_llm_obs_experimentation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AggregateLLMObsExperimentationError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// BatchUpdateLLMObsDatasetError is a struct for typed errors of method [`LLMObservabilityAPI::batch_update_llm_obs_dataset`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum BatchUpdateLLMObsDatasetError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// CloneLLMObsDatasetError is a struct for typed errors of method [`LLMObservabilityAPI::clone_llm_obs_dataset`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CloneLLMObsDatasetError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -474,6 +559,15 @@ pub enum DeleteLLMObsProjectsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ExportLLMObsDatasetError is a struct for typed errors of method [`LLMObservabilityAPI::export_llm_obs_dataset`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ExportLLMObsDatasetError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetLLMObsAnnotatedInteractionsError is a struct for typed errors of method [`LLMObservabilityAPI::get_llm_obs_annotated_interactions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -618,6 +712,15 @@ pub enum LockLLMObsDatasetDraftStateError {
     UnknownValue(serde_json::Value),
 }
 
+/// RestoreLLMObsDatasetVersionError is a struct for typed errors of method [`LLMObservabilityAPI::restore_llm_obs_dataset_version`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum RestoreLLMObsDatasetVersionError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// SearchLLMObsExperimentationError is a struct for typed errors of method [`LLMObservabilityAPI::search_llm_obs_experimentation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -712,6 +815,15 @@ pub enum UpdateLLMObsExperimentError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateLLMObsProjectError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UploadLLMObsDatasetRecordsFileError is a struct for typed errors of method [`LLMObservabilityAPI::upload_llm_obs_dataset_records_file`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UploadLLMObsDatasetRecordsFileError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -954,6 +1066,351 @@ impl LLMObservabilityAPI {
             };
         } else {
             let local_entity: Option<AggregateLLMObsExperimentationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Insert, update, and delete records in a single dataset operation. By default, a new dataset version is created when the batch is applied.
+    pub async fn batch_update_llm_obs_dataset(
+        &self,
+        project_id: String,
+        dataset_id: String,
+        body: crate::datadogV2::model::LLMObsDatasetBatchUpdateRequest,
+    ) -> Result<
+        crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse,
+        datadog::Error<BatchUpdateLLMObsDatasetError>,
+    > {
+        match self
+            .batch_update_llm_obs_dataset_with_http_info(project_id, dataset_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Insert, update, and delete records in a single dataset operation. By default, a new dataset version is created when the batch is applied.
+    pub async fn batch_update_llm_obs_dataset_with_http_info(
+        &self,
+        project_id: String,
+        dataset_id: String,
+        body: crate::datadogV2::model::LLMObsDatasetBatchUpdateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse>,
+        datadog::Error<BatchUpdateLLMObsDatasetError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.batch_update_llm_obs_dataset";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.batch_update_llm_obs_dataset' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/batch_update",
+            local_configuration.get_operation_host(operation_id),
+            project_id = datadog::urlencode(project_id),
+            dataset_id = datadog::urlencode(dataset_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<BatchUpdateLLMObsDatasetError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Clone a dataset, copying its current records into a new dataset within the same project.
+    pub async fn clone_llm_obs_dataset(
+        &self,
+        project_id: String,
+        dataset_id: String,
+        body: crate::datadogV2::model::LLMObsDatasetCloneRequest,
+    ) -> Result<
+        crate::datadogV2::model::LLMObsDatasetResponse,
+        datadog::Error<CloneLLMObsDatasetError>,
+    > {
+        match self
+            .clone_llm_obs_dataset_with_http_info(project_id, dataset_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Clone a dataset, copying its current records into a new dataset within the same project.
+    pub async fn clone_llm_obs_dataset_with_http_info(
+        &self,
+        project_id: String,
+        dataset_id: String,
+        body: crate::datadogV2::model::LLMObsDatasetCloneRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetResponse>,
+        datadog::Error<CloneLLMObsDatasetError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.clone_llm_obs_dataset";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.clone_llm_obs_dataset' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/clone",
+            local_configuration.get_operation_host(operation_id),
+            project_id = datadog::urlencode(project_id),
+            dataset_id = datadog::urlencode(dataset_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CloneLLMObsDatasetError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -3415,6 +3872,136 @@ impl LLMObservabilityAPI {
         }
     }
 
+    /// Download the contents of a dataset as a CSV file. The download is streamed and includes one row per dataset record.
+    pub async fn export_llm_obs_dataset(
+        &self,
+        project_id: String,
+        dataset_id: String,
+        params: ExportLLMObsDatasetOptionalParams,
+    ) -> Result<String, datadog::Error<ExportLLMObsDatasetError>> {
+        match self
+            .export_llm_obs_dataset_with_http_info(project_id, dataset_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Download the contents of a dataset as a CSV file. The download is streamed and includes one row per dataset record.
+    pub async fn export_llm_obs_dataset_with_http_info(
+        &self,
+        project_id: String,
+        dataset_id: String,
+        params: ExportLLMObsDatasetOptionalParams,
+    ) -> Result<datadog::ResponseContent<String>, datadog::Error<ExportLLMObsDatasetError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.export_llm_obs_dataset";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.export_llm_obs_dataset' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let format = params.format;
+        let version = params.version;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/export",
+            local_configuration.get_operation_host(operation_id),
+            project_id = datadog::urlencode(project_id),
+            dataset_id = datadog::urlencode(dataset_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = format {
+            local_req_builder =
+                local_req_builder.query(&[("format", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = version {
+            local_req_builder =
+                local_req_builder.query(&[("version", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<String>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ExportLLMObsDatasetError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Retrieve all interactions (traces and sessions) and their annotations for a given annotation queue.
     pub async fn get_llm_obs_annotated_interactions(
         &self,
@@ -5555,6 +6142,158 @@ impl LLMObservabilityAPI {
         }
     }
 
+    /// Restore a dataset to a previous version. The dataset's current version is bumped, and its records are replaced with the records from the specified prior version.
+    pub async fn restore_llm_obs_dataset_version(
+        &self,
+        project_id: String,
+        dataset_id: String,
+        body: crate::datadogV2::model::LLMObsDatasetRestoreVersionRequest,
+    ) -> Result<(), datadog::Error<RestoreLLMObsDatasetVersionError>> {
+        match self
+            .restore_llm_obs_dataset_version_with_http_info(project_id, dataset_id, body)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Restore a dataset to a previous version. The dataset's current version is bumped, and its records are replaced with the records from the specified prior version.
+    pub async fn restore_llm_obs_dataset_version_with_http_info(
+        &self,
+        project_id: String,
+        dataset_id: String,
+        body: crate::datadogV2::model::LLMObsDatasetRestoreVersionRequest,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RestoreLLMObsDatasetVersionError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.restore_llm_obs_dataset_version";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.restore_llm_obs_dataset_version' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/restore",
+            local_configuration.get_operation_host(operation_id),
+            project_id = datadog::urlencode(project_id),
+            dataset_id = datadog::urlencode(dataset_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<RestoreLLMObsDatasetVersionError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Search across LLM Observability experimentation entities — projects, datasets, dataset records, experiments, and experiment runs — using cursor-based pagination.
     ///
     /// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
@@ -7337,6 +8076,176 @@ impl LLMObservabilityAPI {
             };
         } else {
             let local_entity: Option<UpdateLLMObsProjectError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Upload records to a dataset from a file. The request is a `multipart/form-data` upload containing a single `file` part.
+    /// Currently only CSV is supported. The CSV must include an `input` column. Optional columns are `id`, `expected_output`, `metadata`, and `tags`.
+    ///
+    /// The response is a Server-Sent Events stream (`text/event-stream`) emitting progress updates while records are processed. The stream emits the following named events:
+    ///   - `progress`: incremental record counts written so far.
+    ///   - `completed`: terminal event with a JSON body containing `records_created`.
+    ///   - `error`: terminal event with a JSON body containing an error `message`.
+    pub async fn upload_llm_obs_dataset_records_file(
+        &self,
+        project_id: String,
+        dataset_id: String,
+        params: UploadLLMObsDatasetRecordsFileOptionalParams,
+    ) -> Result<(), datadog::Error<UploadLLMObsDatasetRecordsFileError>> {
+        match self
+            .upload_llm_obs_dataset_records_file_with_http_info(project_id, dataset_id, params)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Upload records to a dataset from a file. The request is a `multipart/form-data` upload containing a single `file` part.
+    /// Currently only CSV is supported. The CSV must include an `input` column. Optional columns are `id`, `expected_output`, `metadata`, and `tags`.
+    ///
+    /// The response is a Server-Sent Events stream (`text/event-stream`) emitting progress updates while records are processed. The stream emits the following named events:
+    ///   - `progress`: incremental record counts written so far.
+    ///   - `completed`: terminal event with a JSON body containing `records_created`.
+    ///   - `error`: terminal event with a JSON body containing an error `message`.
+    pub async fn upload_llm_obs_dataset_records_file_with_http_info(
+        &self,
+        project_id: String,
+        dataset_id: String,
+        params: UploadLLMObsDatasetRecordsFileOptionalParams,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UploadLLMObsDatasetRecordsFileError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.upload_llm_obs_dataset_records_file";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.upload_llm_obs_dataset_records_file' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let file = params.file;
+        let deduplicate = params.deduplicate;
+        let overwrite = params.overwrite;
+        let tags = params.tags;
+        let include_user_data = params.include_user_data;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v2/{project_id}/datasets/{dataset_id}/records/upload",
+            local_configuration.get_operation_host(operation_id),
+            project_id = datadog::urlencode(project_id),
+            dataset_id = datadog::urlencode(dataset_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = deduplicate {
+            local_req_builder =
+                local_req_builder.query(&[("deduplicate", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = overwrite {
+            local_req_builder =
+                local_req_builder.query(&[("overwrite", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = tags {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("tags", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = include_user_data {
+            local_req_builder =
+                local_req_builder.query(&[("include[user_data]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "Content-Type",
+            HeaderValue::from_static("multipart/form-data"),
+        );
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build form parameters
+        if let Some(file) = file {
+            let mut local_form = form_data_builder::FormData::new(Vec::new());
+            let cursor = std::io::Cursor::new(file);
+            if let Err(e) = local_form.write_file(
+                "file",
+                cursor,
+                Some("file".as_ref()),
+                "application/octet-stream",
+            ) {
+                return Err(crate::datadog::Error::Io(e));
+            };
+            headers.insert(
+                "Content-Type",
+                local_form.content_type_header().parse().unwrap(),
+            );
+            let form_result = local_form.finish();
+            match form_result {
+                Ok(form) => local_req_builder = local_req_builder.body(form),
+                Err(e) => return Err(crate::datadog::Error::Io(e)),
+            };
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<UploadLLMObsDatasetRecordsFileError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
