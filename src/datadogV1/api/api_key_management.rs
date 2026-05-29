@@ -171,6 +171,8 @@ impl KeyManagementAPI {
     }
 
     /// Creates an API key with a given name.
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn create_api_key(
         &self,
         body: crate::datadogV1::model::ApiKey,
@@ -190,6 +192,8 @@ impl KeyManagementAPI {
     }
 
     /// Creates an API key with a given name.
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn create_api_key_with_http_info(
         &self,
         body: crate::datadogV1::model::ApiKey,
@@ -321,6 +325,8 @@ impl KeyManagementAPI {
 
     /// Create an application key with a given name.
     /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn create_application_key(
         &self,
         body: crate::datadogV1::model::ApplicationKey,
@@ -344,6 +350,8 @@ impl KeyManagementAPI {
 
     /// Create an application key with a given name.
     /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn create_application_key_with_http_info(
         &self,
         body: crate::datadogV1::model::ApplicationKey,
@@ -477,6 +485,8 @@ impl KeyManagementAPI {
     }
 
     /// Delete a given API key.
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn delete_api_key(
         &self,
         key: String,
@@ -496,6 +506,8 @@ impl KeyManagementAPI {
     }
 
     /// Delete a given API key.
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn delete_api_key_with_http_info(
         &self,
         key: String,
@@ -581,6 +593,8 @@ impl KeyManagementAPI {
 
     /// Delete a given application key.
     /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn delete_application_key(
         &self,
         key: String,
@@ -604,6 +618,8 @@ impl KeyManagementAPI {
 
     /// Delete a given application key.
     /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn delete_application_key_with_http_info(
         &self,
         key: String,
@@ -691,6 +707,8 @@ impl KeyManagementAPI {
     }
 
     /// Get a given API key.
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn get_api_key(
         &self,
         key: String,
@@ -710,6 +728,8 @@ impl KeyManagementAPI {
     }
 
     /// Get a given API key.
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn get_api_key_with_http_info(
         &self,
         key: String,
@@ -795,6 +815,8 @@ impl KeyManagementAPI {
 
     /// Get a given application key.
     /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn get_application_key(
         &self,
         key: String,
@@ -818,6 +840,8 @@ impl KeyManagementAPI {
 
     /// Get a given application key.
     /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn get_application_key_with_http_info(
         &self,
         key: String,
@@ -905,6 +929,8 @@ impl KeyManagementAPI {
     }
 
     /// Get all API keys available for your account.
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn list_api_keys(
         &self,
     ) -> Result<crate::datadogV1::model::ApiKeyListResponse, datadog::Error<ListAPIKeysError>> {
@@ -923,6 +949,8 @@ impl KeyManagementAPI {
     }
 
     /// Get all API keys available for your account.
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn list_api_keys_with_http_info(
         &self,
     ) -> Result<
@@ -1008,6 +1036,8 @@ impl KeyManagementAPI {
 
     /// Get all application keys available for your Datadog account.
     /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn list_application_keys(
         &self,
     ) -> Result<
@@ -1030,6 +1060,8 @@ impl KeyManagementAPI {
 
     /// Get all application keys available for your Datadog account.
     /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn list_application_keys_with_http_info(
         &self,
     ) -> Result<
@@ -1115,6 +1147,8 @@ impl KeyManagementAPI {
     }
 
     /// Edit an API key name.
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn update_api_key(
         &self,
         key: String,
@@ -1135,6 +1169,8 @@ impl KeyManagementAPI {
     }
 
     /// Edit an API key name.
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn update_api_key_with_http_info(
         &self,
         key: String,
@@ -1268,6 +1304,8 @@ impl KeyManagementAPI {
 
     /// Edit an application key name.
     /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn update_application_key(
         &self,
         key: String,
@@ -1292,6 +1330,8 @@ impl KeyManagementAPI {
 
     /// Edit an application key name.
     /// This endpoint is disabled for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    ///
+    /// **Note**: This endpoint is disabled for the Government sites (US1-FED and US2-FED). Use the [V2 Key Management](<https://docs.datadoghq.com/api/latest/key-management/>) endpoints instead.
     pub async fn update_application_key_with_http_info(
         &self,
         key: String,
