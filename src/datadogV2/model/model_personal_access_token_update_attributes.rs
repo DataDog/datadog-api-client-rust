@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes used to update a personal access token.
+/// Attributes used to update an access token.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PersonalAccessTokenUpdateAttributes {
-    /// Name of the personal access token.
+    /// Name of the access token.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Array of scopes to grant the personal access token.
+    /// Array of scopes to grant the access token.
     #[serde(rename = "scopes")]
     pub scopes: Option<Vec<String>>,
     #[serde(flatten)]

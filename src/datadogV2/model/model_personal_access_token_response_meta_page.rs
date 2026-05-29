@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PersonalAccessTokenResponseMetaPage {
-    /// Total filtered personal access token count.
+    /// Total filtered access token count.
     #[serde(rename = "total_filtered_count")]
     pub total_filtered_count: Option<i64>,
     #[serde(flatten)]

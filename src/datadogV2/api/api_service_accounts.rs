@@ -18,11 +18,11 @@ pub struct ListServiceAccountAccessTokensOptionalParams {
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
-    /// Personal access token attribute used to sort results. Sort order is ascending
+    /// Access token attribute used to sort results. Sort order is ascending
     /// by default. In order to specify a descending sort, prefix the
     /// attribute with a minus sign.
     pub sort: Option<crate::datadogV2::model::PersonalAccessTokensSort>,
-    /// Filter personal access tokens by the specified string.
+    /// Filter access tokens by the specified string.
     pub filter: Option<String>,
 }
 
@@ -37,14 +37,14 @@ impl ListServiceAccountAccessTokensOptionalParams {
         self.page_number = Some(value);
         self
     }
-    /// Personal access token attribute used to sort results. Sort order is ascending
+    /// Access token attribute used to sort results. Sort order is ascending
     /// by default. In order to specify a descending sort, prefix the
     /// attribute with a minus sign.
     pub fn sort(mut self, value: crate::datadogV2::model::PersonalAccessTokensSort) -> Self {
         self.sort = Some(value);
         self
     }
-    /// Filter personal access tokens by the specified string.
+    /// Filter access tokens by the specified string.
     pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
@@ -425,7 +425,7 @@ impl ServiceAccountsAPI {
         service_account_id: String,
         body: crate::datadogV2::model::ServiceAccountAccessTokenCreateRequest,
     ) -> Result<
-        crate::datadogV2::model::PersonalAccessTokenCreateResponse,
+        crate::datadogV2::model::ServiceAccessTokenCreateResponse,
         datadog::Error<CreateServiceAccountAccessTokenError>,
     > {
         match self
@@ -451,7 +451,7 @@ impl ServiceAccountsAPI {
         service_account_id: String,
         body: crate::datadogV2::model::ServiceAccountAccessTokenCreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenCreateResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::ServiceAccessTokenCreateResponse>,
         datadog::Error<CreateServiceAccountAccessTokenError>,
     > {
         let local_configuration = &self.config;
@@ -556,7 +556,7 @@ impl ServiceAccountsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PersonalAccessTokenCreateResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::ServiceAccessTokenCreateResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -836,17 +836,17 @@ impl ServiceAccountsAPI {
         }
     }
 
-    /// Get a specific access token for a service account by its UUID.
+    /// Get a specific access token for a service account by its ID.
     pub async fn get_service_account_access_token(
         &self,
         service_account_id: String,
-        pat_id: String,
+        token_id: String,
     ) -> Result<
-        crate::datadogV2::model::PersonalAccessTokenResponse,
+        crate::datadogV2::model::ServiceAccessTokenResponse,
         datadog::Error<GetServiceAccountAccessTokenError>,
     > {
         match self
-            .get_service_account_access_token_with_http_info(service_account_id, pat_id)
+            .get_service_account_access_token_with_http_info(service_account_id, token_id)
             .await
         {
             Ok(response_content) => {
@@ -862,13 +862,13 @@ impl ServiceAccountsAPI {
         }
     }
 
-    /// Get a specific access token for a service account by its UUID.
+    /// Get a specific access token for a service account by its ID.
     pub async fn get_service_account_access_token_with_http_info(
         &self,
         service_account_id: String,
-        pat_id: String,
+        token_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::ServiceAccessTokenResponse>,
         datadog::Error<GetServiceAccountAccessTokenError>,
     > {
         let local_configuration = &self.config;
@@ -877,10 +877,10 @@ impl ServiceAccountsAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/service_accounts/{service_account_id}/access_tokens/{pat_id}",
+            "{}/api/v2/service_accounts/{service_account_id}/access_tokens/{token_id}",
             local_configuration.get_operation_host(operation_id),
             service_account_id = datadog::urlencode(service_account_id),
-            pat_id = datadog::urlencode(pat_id)
+            token_id = datadog::urlencode(token_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -927,7 +927,7 @@ impl ServiceAccountsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PersonalAccessTokenResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::ServiceAccessTokenResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -1072,7 +1072,7 @@ impl ServiceAccountsAPI {
         service_account_id: String,
         params: ListServiceAccountAccessTokensOptionalParams,
     ) -> Result<
-        crate::datadogV2::model::ListPersonalAccessTokensResponse,
+        crate::datadogV2::model::ListServiceAccessTokensResponse,
         datadog::Error<ListServiceAccountAccessTokensError>,
     > {
         match self
@@ -1098,7 +1098,7 @@ impl ServiceAccountsAPI {
         service_account_id: String,
         params: ListServiceAccountAccessTokensOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListPersonalAccessTokensResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::ListServiceAccessTokensResponse>,
         datadog::Error<ListServiceAccountAccessTokensError>,
     > {
         let local_configuration = &self.config;
@@ -1179,7 +1179,7 @@ impl ServiceAccountsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListPersonalAccessTokensResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::ListServiceAccessTokensResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -1354,10 +1354,10 @@ impl ServiceAccountsAPI {
     pub async fn revoke_service_account_access_token(
         &self,
         service_account_id: String,
-        pat_id: String,
+        token_id: String,
     ) -> Result<(), datadog::Error<RevokeServiceAccountAccessTokenError>> {
         match self
-            .revoke_service_account_access_token_with_http_info(service_account_id, pat_id)
+            .revoke_service_account_access_token_with_http_info(service_account_id, token_id)
             .await
         {
             Ok(_) => Ok(()),
@@ -1369,7 +1369,7 @@ impl ServiceAccountsAPI {
     pub async fn revoke_service_account_access_token_with_http_info(
         &self,
         service_account_id: String,
-        pat_id: String,
+        token_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RevokeServiceAccountAccessTokenError>>
     {
         let local_configuration = &self.config;
@@ -1378,10 +1378,10 @@ impl ServiceAccountsAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/service_accounts/{service_account_id}/access_tokens/{pat_id}",
+            "{}/api/v2/service_accounts/{service_account_id}/access_tokens/{token_id}",
             local_configuration.get_operation_host(operation_id),
             service_account_id = datadog::urlencode(service_account_id),
-            pat_id = datadog::urlencode(pat_id)
+            token_id = datadog::urlencode(token_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1449,14 +1449,14 @@ impl ServiceAccountsAPI {
     pub async fn update_service_account_access_token(
         &self,
         service_account_id: String,
-        pat_id: String,
-        body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest,
+        token_id: String,
+        body: crate::datadogV2::model::ServiceAccountAccessTokenUpdateRequest,
     ) -> Result<
-        crate::datadogV2::model::PersonalAccessTokenResponse,
+        crate::datadogV2::model::ServiceAccessTokenResponse,
         datadog::Error<UpdateServiceAccountAccessTokenError>,
     > {
         match self
-            .update_service_account_access_token_with_http_info(service_account_id, pat_id, body)
+            .update_service_account_access_token_with_http_info(service_account_id, token_id, body)
             .await
         {
             Ok(response_content) => {
@@ -1476,10 +1476,10 @@ impl ServiceAccountsAPI {
     pub async fn update_service_account_access_token_with_http_info(
         &self,
         service_account_id: String,
-        pat_id: String,
-        body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest,
+        token_id: String,
+        body: crate::datadogV2::model::ServiceAccountAccessTokenUpdateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::ServiceAccessTokenResponse>,
         datadog::Error<UpdateServiceAccountAccessTokenError>,
     > {
         let local_configuration = &self.config;
@@ -1488,10 +1488,10 @@ impl ServiceAccountsAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/service_accounts/{service_account_id}/access_tokens/{pat_id}",
+            "{}/api/v2/service_accounts/{service_account_id}/access_tokens/{token_id}",
             local_configuration.get_operation_host(operation_id),
             service_account_id = datadog::urlencode(service_account_id),
-            pat_id = datadog::urlencode(pat_id)
+            token_id = datadog::urlencode(token_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1585,7 +1585,7 @@ impl ServiceAccountsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PersonalAccessTokenResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::ServiceAccessTokenResponse>(
                 &local_content,
             ) {
                 Ok(e) => {

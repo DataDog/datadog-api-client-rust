@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response for creating a personal access token. Includes the token key.
+/// Response for creating an access token. Includes the token key.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PersonalAccessTokenCreateResponse {
-    /// Datadog personal access token, including the token key.
+    /// Datadog access token, including the token key.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::FullPersonalAccessToken>,
     #[serde(flatten)]

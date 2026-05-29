@@ -6,42 +6,42 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a personal access token.
+/// Attributes of an access token.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PersonalAccessTokenAttributes {
-    /// Creation date of the personal access token.
+    /// Creation date of the access token.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// Expiration date of the personal access token.
+    /// Expiration date of the access token.
     #[serde(
         rename = "expires_at",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub expires_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// Date the personal access token was last used.
+    /// Date the access token was last used.
     #[serde(
         rename = "last_used_at",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub last_used_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// Date of last modification of the personal access token.
+    /// Date of last modification of the access token.
     #[serde(
         rename = "modified_at",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub modified_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// Name of the personal access token.
+    /// Name of the access token.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The public portion of the personal access token.
+    /// The public portion of the access token.
     #[serde(rename = "public_portion")]
     pub public_portion: Option<String>,
-    /// Array of scopes granted to the personal access token.
+    /// Array of scopes granted to the access token.
     #[serde(rename = "scopes")]
     pub scopes: Option<Vec<String>>,
     #[serde(flatten)]
