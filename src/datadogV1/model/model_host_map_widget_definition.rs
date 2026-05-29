@@ -32,7 +32,7 @@ pub struct HostMapWidgetDefinition {
     /// Notes on the title.
     #[serde(rename = "notes")]
     pub notes: Option<String>,
-    /// List of definitions.
+    /// Query definition for the host map widget. Supports two mutually exclusive formats distinguished by the presence of `request_type`: the legacy metric-based format (`fill`/`size`) and the infrastructure-backed format (`request_type`, `node_type`, `enrichments`).
     #[serde(rename = "requests")]
     pub requests: crate::datadogV1::model::HostMapWidgetDefinitionRequests,
     /// List of tags used to filter the map.
