@@ -21,6 +21,7 @@ pub enum FormulaAndFunctionEventsDataSource {
     PRODUCT_ANALYTICS,
     ON_CALL_EVENTS,
     ERRORS,
+    LLM_OBSERVABILITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -41,6 +42,7 @@ impl ToString for FormulaAndFunctionEventsDataSource {
             Self::PRODUCT_ANALYTICS => String::from("product_analytics"),
             Self::ON_CALL_EVENTS => String::from("on_call_events"),
             Self::ERRORS => String::from("errors"),
+            Self::LLM_OBSERVABILITY => String::from("llm_observability"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -79,6 +81,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionEventsDataSource {
             "product_analytics" => Self::PRODUCT_ANALYTICS,
             "on_call_events" => Self::ON_CALL_EVENTS,
             "errors" => Self::ERRORS,
+            "llm_observability" => Self::LLM_OBSERVABILITY,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
