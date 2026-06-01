@@ -5736,6 +5736,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.UpsertRows".into(), test_v2_upsert_rows);
     world.function_mappings.insert(
+        "v2.ListReferenceTableRows".into(),
+        test_v2_list_reference_table_rows,
+    );
+    world.function_mappings.insert(
         "v2.CreateReferenceTableUpload".into(),
         test_v2_create_reference_table_upload,
     );
@@ -45111,6 +45115,44 @@ fn test_v2_upsert_rows(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.upsert_rows_with_http_info(id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_reference_table_rows(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_reference_tables
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_continuation_token = _parameters
+        .get("page[continuation_token]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_reference_tables::ListReferenceTableRowsOptionalParams::default();
+    params.page_limit = page_limit;
+    params.page_continuation_token = page_continuation_token;
+    let response = match block_on(api.list_reference_table_rows_with_http_info(id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
