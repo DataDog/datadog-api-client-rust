@@ -1972,6 +1972,8 @@ impl MonitorsAPI {
     }
 
     /// Validate the monitor provided in the request.
+    ///
+    /// **Note**: Log monitors require an unscoped App Key and `logs_read_data` permission.
     pub async fn validate_existing_monitor(
         &self,
         monitor_id: i64,
@@ -1998,6 +2000,8 @@ impl MonitorsAPI {
     }
 
     /// Validate the monitor provided in the request.
+    ///
+    /// **Note**: Log monitors require an unscoped App Key and `logs_read_data` permission.
     pub async fn validate_existing_monitor_with_http_info(
         &self,
         monitor_id: i64,
@@ -2134,7 +2138,7 @@ impl MonitorsAPI {
 
     /// Validate the monitor provided in the request.
     ///
-    /// **Note**: Log monitors require an unscoped App Key.
+    /// **Note**: Log monitors require an unscoped App Key and `logs_read_data` permission.
     pub async fn validate_monitor(
         &self,
         body: crate::datadogV1::model::Monitor,
@@ -2158,7 +2162,7 @@ impl MonitorsAPI {
 
     /// Validate the monitor provided in the request.
     ///
-    /// **Note**: Log monitors require an unscoped App Key.
+    /// **Note**: Log monitors require an unscoped App Key and `logs_read_data` permission.
     pub async fn validate_monitor_with_http_info(
         &self,
         body: crate::datadogV1::model::Monitor,
