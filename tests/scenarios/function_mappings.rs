@@ -31613,9 +31613,17 @@ fn test_v2_list_dashboards_usage(world: &mut DatadogWorld, _parameters: &HashMap
     let page_offset = _parameters
         .get("page[offset]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_edited_before = _parameters
+        .get("filter[edited_before]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_viewed_before = _parameters
+        .get("filter[viewed_before]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_dashboards::ListDashboardsUsageOptionalParams::default();
     params.page_limit = page_limit;
     params.page_offset = page_offset;
+    params.filter_edited_before = filter_edited_before;
+    params.filter_viewed_before = filter_viewed_before;
     let response = match block_on(api.list_dashboards_usage_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -31648,9 +31656,17 @@ fn test_v2_list_dashboards_usage_with_pagination(
     let page_offset = _parameters
         .get("page[offset]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_edited_before = _parameters
+        .get("filter[edited_before]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_viewed_before = _parameters
+        .get("filter[viewed_before]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_dashboards::ListDashboardsUsageOptionalParams::default();
     params.page_limit = page_limit;
     params.page_offset = page_offset;
+    params.filter_edited_before = filter_edited_before;
+    params.filter_viewed_before = filter_viewed_before;
     let response = api.list_dashboards_usage_with_pagination(params);
     let mut result = Vec::new();
 
