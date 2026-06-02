@@ -201,6 +201,7 @@ pub struct ApiInstances {
     pub v2_api_spans: Option<datadogV2::api_spans::SpansAPI>,
     pub v2_api_static_analysis: Option<datadogV2::api_static_analysis::StaticAnalysisAPI>,
     pub v2_api_status_pages: Option<datadogV2::api_status_pages::StatusPagesAPI>,
+    pub v2_api_stegadography: Option<datadogV2::api_stegadography::StegadographyAPI>,
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
     pub v2_api_web_integrations: Option<datadogV2::api_web_integrations::WebIntegrationsAPI>,
@@ -1273,6 +1274,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "StatusPages" => {
             world.api_instances.v2_api_status_pages = Some(
                 datadogV2::api_status_pages::StatusPagesAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "Stegadography" => {
+            world.api_instances.v2_api_stegadography = Some(
+                datadogV2::api_stegadography::StegadographyAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -6607,6 +6616,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UnpublishStatusPage".into(),
         test_v2_unpublish_status_page,
+    );
+    world.function_mappings.insert(
+        "v2.GetWidgetsFromImage".into(),
+        test_v2_get_widgets_from_image,
     );
     world.function_mappings.insert(
         "v2.GetApiMultistepSubtests".into(),
@@ -52500,6 +52513,40 @@ fn test_v2_unpublish_status_page(world: &mut DatadogWorld, _parameters: &HashMap
         .expect("api instance not found");
     let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
     let response = match block_on(api.unpublish_status_page_with_http_info(page_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_widgets_from_image(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_stegadography
+        .as_ref()
+        .expect("api instance not found");
+    let image = _parameters.get("image").and_then(|param| {
+        std::fs::read(format!(
+            "tests/scenarios/features/v{}/{}",
+            world.api_version,
+            param.as_str().unwrap()
+        ))
+        .ok()
+    });
+    let mut params = datadogV2::api_stegadography::GetWidgetsFromImageOptionalParams::default();
+    params.image = image;
+    let response = match block_on(api.get_widgets_from_image_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
