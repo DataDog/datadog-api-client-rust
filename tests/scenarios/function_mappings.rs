@@ -127,6 +127,8 @@ pub struct ApiInstances {
         Option<datadogV2::api_service_now_integration::ServiceNowIntegrationAPI>,
     pub v2_api_statuspage_integration:
         Option<datadogV2::api_statuspage_integration::StatuspageIntegrationAPI>,
+    pub v2_api_webhooks_integration:
+        Option<datadogV2::api_webhooks_integration::WebhooksIntegrationAPI>,
     pub v2_api_integrations: Option<datadogV2::api_integrations::IntegrationsAPI>,
     pub v2_api_cloudflare_integration:
         Option<datadogV2::api_cloudflare_integration::CloudflareIntegrationAPI>,
@@ -398,6 +400,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "WebhooksIntegration" => {
             world.api_instances.v1_api_webhooks_integration = Some(
                 datadogV1::api_webhooks_integration::WebhooksIntegrationAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+            world.api_instances.v2_api_webhooks_integration = Some(
+                datadogV2::api_webhooks_integration::WebhooksIntegrationAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -4921,6 +4929,25 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateStatuspageUrlSetting".into(),
         test_v2_update_statuspage_url_setting,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetAllAuthMethods".into(), test_v2_get_all_auth_methods);
+    world.function_mappings.insert(
+        "v2.CreateOAuth2ClientCredentials".into(),
+        test_v2_create_o_auth2_client_credentials,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteOAuth2ClientCredentials".into(),
+        test_v2_delete_o_auth2_client_credentials,
+    );
+    world.function_mappings.insert(
+        "v2.GetOAuth2ClientCredentials".into(),
+        test_v2_get_o_auth2_client_credentials,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateOAuth2ClientCredentials".into(),
+        test_v2_update_o_auth2_client_credentials,
     );
     world
         .function_mappings
@@ -38112,6 +38139,156 @@ fn test_v2_update_statuspage_url_setting(
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(
         api.update_statuspage_url_setting_with_http_info(statuspage_url_setting_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_all_auth_methods(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_webhooks_integration
+        .as_ref()
+        .expect("api instance not found");
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_webhooks_integration::GetAllAuthMethodsOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.get_all_auth_methods_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_o_auth2_client_credentials(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_webhooks_integration
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_o_auth2_client_credentials_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_o_auth2_client_credentials(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_webhooks_integration
+        .as_ref()
+        .expect("api instance not found");
+    let auth_method_id =
+        serde_json::from_value(_parameters.get("auth_method_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_o_auth2_client_credentials_with_http_info(auth_method_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_o_auth2_client_credentials(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_webhooks_integration
+        .as_ref()
+        .expect("api instance not found");
+    let auth_method_id =
+        serde_json::from_value(_parameters.get("auth_method_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_o_auth2_client_credentials_with_http_info(auth_method_id))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_o_auth2_client_credentials(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_webhooks_integration
+        .as_ref()
+        .expect("api instance not found");
+    let auth_method_id =
+        serde_json::from_value(_parameters.get("auth_method_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.update_o_auth2_client_credentials_with_http_info(auth_method_id, body),
     ) {
         Ok(response) => response,
         Err(error) => {
