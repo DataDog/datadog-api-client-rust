@@ -11,13 +11,16 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListStreamQuery {
+    /// Filter by assignee UUIDs. Usable only with `issue_stream`.
+    #[serde(rename = "assignee_uuids")]
+    pub assignee_uuids: Option<Vec<String>>,
     /// Specifies the field for logs pattern clustering. Usable only with logs_pattern_stream.
     #[serde(rename = "clustering_pattern_field_path")]
     pub clustering_pattern_field_path: Option<String>,
     /// Compute configuration for the List Stream Widget. Compute can be used only with the logs_transaction_stream (from 1 to 5 items) list stream source.
     #[serde(rename = "compute")]
     pub compute: Option<Vec<crate::datadogV1::model::ListStreamComputeItems>>,
-    /// Source from which to query items to display in the stream.
+    /// Source from which to query items to display in the stream. apm_issue_stream, rum_issue_stream, and logs_issue_stream are deprecated. Use issue_stream instead.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV1::model::ListStreamSource,
     /// Size to use to display an event.
@@ -29,15 +32,27 @@ pub struct ListStreamQuery {
     /// List of indexes.
     #[serde(rename = "indexes")]
     pub indexes: Option<Vec<String>>,
+    /// Persona filter for the `issue_stream` data source.
+    #[serde(rename = "persona")]
+    pub persona: Option<crate::datadogV1::model::ListStreamIssuePersona>,
     /// Widget query.
     #[serde(rename = "query_string")]
     pub query_string: String,
     /// Which column and order to sort by
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV1::model::WidgetFieldSort>,
+    /// Filter by issue states. Usable only with `issue_stream`.
+    #[serde(rename = "states")]
+    pub states: Option<Vec<crate::datadogV1::model::ListStreamIssueState>>,
     /// Option for storage location. Feature in Private Beta.
     #[serde(rename = "storage")]
     pub storage: Option<String>,
+    /// Filter by suspected causes. Usable only with `issue_stream`.
+    #[serde(rename = "suspected_causes")]
+    pub suspected_causes: Option<Vec<String>>,
+    /// Filter by team handles. Usable only with `issue_stream`.
+    #[serde(rename = "team_handles")]
+    pub team_handles: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -51,18 +66,28 @@ impl ListStreamQuery {
         query_string: String,
     ) -> ListStreamQuery {
         ListStreamQuery {
+            assignee_uuids: None,
             clustering_pattern_field_path: None,
             compute: None,
             data_source,
             event_size: None,
             group_by: None,
             indexes: None,
+            persona: None,
             query_string,
             sort: None,
+            states: None,
             storage: None,
+            suspected_causes: None,
+            team_handles: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn assignee_uuids(mut self, value: Vec<String>) -> Self {
+        self.assignee_uuids = Some(value);
+        self
     }
 
     pub fn clustering_pattern_field_path(mut self, value: String) -> Self {
@@ -90,13 +115,33 @@ impl ListStreamQuery {
         self
     }
 
+    pub fn persona(mut self, value: crate::datadogV1::model::ListStreamIssuePersona) -> Self {
+        self.persona = Some(value);
+        self
+    }
+
     pub fn sort(mut self, value: crate::datadogV1::model::WidgetFieldSort) -> Self {
         self.sort = Some(value);
         self
     }
 
+    pub fn states(mut self, value: Vec<crate::datadogV1::model::ListStreamIssueState>) -> Self {
+        self.states = Some(value);
+        self
+    }
+
     pub fn storage(mut self, value: String) -> Self {
         self.storage = Some(value);
+        self
+    }
+
+    pub fn suspected_causes(mut self, value: Vec<String>) -> Self {
+        self.suspected_causes = Some(value);
+        self
+    }
+
+    pub fn team_handles(mut self, value: Vec<String>) -> Self {
+        self.team_handles = Some(value);
         self
     }
 
@@ -126,6 +171,7 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
             where
                 M: MapAccess<'a>,
             {
+                let mut assignee_uuids: Option<Vec<String>> = None;
                 let mut clustering_pattern_field_path: Option<String> = None;
                 let mut compute: Option<Vec<crate::datadogV1::model::ListStreamComputeItems>> =
                     None;
@@ -134,9 +180,13 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                 let mut group_by: Option<Vec<crate::datadogV1::model::ListStreamGroupByItems>> =
                     None;
                 let mut indexes: Option<Vec<String>> = None;
+                let mut persona: Option<crate::datadogV1::model::ListStreamIssuePersona> = None;
                 let mut query_string: Option<String> = None;
                 let mut sort: Option<crate::datadogV1::model::WidgetFieldSort> = None;
+                let mut states: Option<Vec<crate::datadogV1::model::ListStreamIssueState>> = None;
                 let mut storage: Option<String> = None;
+                let mut suspected_causes: Option<Vec<String>> = None;
+                let mut team_handles: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -145,6 +195,13 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "assignee_uuids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            assignee_uuids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "clustering_pattern_field_path" => {
                             if v.is_null() {
                                 continue;
@@ -200,6 +257,20 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                             }
                             indexes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "persona" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            persona = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _persona) = persona {
+                                match _persona {
+                                    crate::datadogV1::model::ListStreamIssuePersona::UnparsedObject(_persona) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "query_string" => {
                             query_string =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -210,11 +281,31 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "states" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            states = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "storage" => {
                             if v.is_null() {
                                 continue;
                             }
                             storage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "suspected_causes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            suspected_causes =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "team_handles" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            team_handles =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -229,15 +320,20 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                     query_string.ok_or_else(|| M::Error::missing_field("query_string"))?;
 
                 let content = ListStreamQuery {
+                    assignee_uuids,
                     clustering_pattern_field_path,
                     compute,
                     data_source,
                     event_size,
                     group_by,
                     indexes,
+                    persona,
                     query_string,
                     sort,
+                    states,
                     storage,
+                    suspected_causes,
+                    team_handles,
                     additional_properties,
                     _unparsed,
                 };

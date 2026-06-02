@@ -20,6 +20,7 @@ pub enum ListStreamSource {
     EVENT_STREAM,
     RUM_STREAM,
     LLM_OBSERVABILITY_STREAM,
+    ISSUE_STREAM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -39,6 +40,7 @@ impl ToString for ListStreamSource {
             Self::EVENT_STREAM => String::from("event_stream"),
             Self::RUM_STREAM => String::from("rum_stream"),
             Self::LLM_OBSERVABILITY_STREAM => String::from("llm_observability_stream"),
+            Self::ISSUE_STREAM => String::from("issue_stream"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -76,6 +78,7 @@ impl<'de> Deserialize<'de> for ListStreamSource {
             "event_stream" => Self::EVENT_STREAM,
             "rum_stream" => Self::RUM_STREAM,
             "llm_observability_stream" => Self::LLM_OBSERVABILITY_STREAM,
+            "issue_stream" => Self::ISSUE_STREAM,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
