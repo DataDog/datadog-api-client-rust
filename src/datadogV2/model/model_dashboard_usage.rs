@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DashboardUsage {
-    /// Usage statistics for a dashboard.
+    /// Usage statistics for a dashboard. The `viewer` field and all view-count fields (`total_views`, `viewed_at`, `total_views_by_type`) are populated only when Real User Monitoring (RUM) is active for the org.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::DashboardUsageAttributes,
     /// The dashboard ID.

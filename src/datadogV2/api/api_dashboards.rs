@@ -16,6 +16,10 @@ pub struct ListDashboardsUsageOptionalParams {
     pub page_limit: Option<i64>,
     /// Zero-based offset into the result set.
     pub page_offset: Option<i64>,
+    /// Return only dashboards whose last edit (`edited_at`) is strictly before this ISO 8601 timestamp (`edited_at < value`; boundary matches are excluded). Must include a timezone offset (for example, `Z` or `+00:00`); naive timestamps return HTTP 400.
+    pub filter_edited_before: Option<String>,
+    /// Return only dashboards whose most recent view (`viewed_at`) is strictly before this ISO 8601 timestamp, including dashboards that have never been viewed. Must include a timezone offset; naive timestamps return HTTP 400. Orgs without Real User Monitoring (RUM) will see all dashboards returned by this filter.
+    pub filter_viewed_before: Option<String>,
 }
 
 impl ListDashboardsUsageOptionalParams {
@@ -27,6 +31,16 @@ impl ListDashboardsUsageOptionalParams {
     /// Zero-based offset into the result set.
     pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
+        self
+    }
+    /// Return only dashboards whose last edit (`edited_at`) is strictly before this ISO 8601 timestamp (`edited_at < value`; boundary matches are excluded). Must include a timezone offset (for example, `Z` or `+00:00`); naive timestamps return HTTP 400.
+    pub fn filter_edited_before(mut self, value: String) -> Self {
+        self.filter_edited_before = Some(value);
+        self
+    }
+    /// Return only dashboards whose most recent view (`viewed_at`) is strictly before this ISO 8601 timestamp, including dashboards that have never been viewed. Must include a timezone offset; naive timestamps return HTTP 400. Orgs without Real User Monitoring (RUM) will see all dashboards returned by this filter.
+    pub fn filter_viewed_before(mut self, value: String) -> Self {
+        self.filter_viewed_before = Some(value);
         self
     }
 }
@@ -124,7 +138,7 @@ impl DashboardsAPI {
         Self { config, client }
     }
 
-    /// Get usage statistics for a single dashboard. The response includes view counts, the most recent view and edit times, widget counts, and the dashboard quality score.
+    /// Get usage statistics for a single dashboard. The response includes view counts, the most recent view and edit times, widget counts, and the dashboard quality score. View-count fields depend on Real User Monitoring (RUM) and are `null` or `0` in orgs without RUM.
     pub async fn get_dashboard_usage(
         &self,
         dashboard_id: String,
@@ -146,7 +160,7 @@ impl DashboardsAPI {
         }
     }
 
-    /// Get usage statistics for a single dashboard. The response includes view counts, the most recent view and edit times, widget counts, and the dashboard quality score.
+    /// Get usage statistics for a single dashboard. The response includes view counts, the most recent view and edit times, widget counts, and the dashboard quality score. View-count fields depend on Real User Monitoring (RUM) and are `null` or `0` in orgs without RUM.
     pub async fn get_dashboard_usage_with_http_info(
         &self,
         dashboard_id: String,
@@ -241,7 +255,7 @@ impl DashboardsAPI {
         }
     }
 
-    /// Get paginated usage statistics for every dashboard in the caller's organization. Use `page[limit]` and `page[offset]` to walk the result set.
+    /// Get paginated usage statistics for every dashboard in the caller's organization. Use `page[limit]` and `page[offset]` to walk the result set. Use `filter[edited_before]` or `filter[viewed_before]` to narrow results by recency. View-count fields depend on Real User Monitoring (RUM) and are `null` or `0` in orgs without RUM.
     pub async fn list_dashboards_usage(
         &self,
         params: ListDashboardsUsageOptionalParams,
@@ -299,7 +313,7 @@ impl DashboardsAPI {
         }
     }
 
-    /// Get paginated usage statistics for every dashboard in the caller's organization. Use `page[limit]` and `page[offset]` to walk the result set.
+    /// Get paginated usage statistics for every dashboard in the caller's organization. Use `page[limit]` and `page[offset]` to walk the result set. Use `filter[edited_before]` or `filter[viewed_before]` to narrow results by recency. View-count fields depend on Real User Monitoring (RUM) and are `null` or `0` in orgs without RUM.
     pub async fn list_dashboards_usage_with_http_info(
         &self,
         params: ListDashboardsUsageOptionalParams,
@@ -321,6 +335,8 @@ impl DashboardsAPI {
         // unbox and build optional parameters
         let page_limit = params.page_limit;
         let page_offset = params.page_offset;
+        let filter_edited_before = params.filter_edited_before;
+        let filter_viewed_before = params.filter_viewed_before;
 
         let local_client = &self.client;
 
@@ -338,6 +354,14 @@ impl DashboardsAPI {
         if let Some(ref local_query_param) = page_offset {
             local_req_builder =
                 local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_edited_before {
+            local_req_builder = local_req_builder
+                .query(&[("filter[edited_before]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_viewed_before {
+            local_req_builder = local_req_builder
+                .query(&[("filter[viewed_before]", &local_query_param.to_string())]);
         };
 
         // build headers
