@@ -109,6 +109,7 @@ pub mod api_spans;
 pub mod api_spans_metrics;
 pub mod api_static_analysis;
 pub mod api_status_pages;
+pub mod api_statuspage_integration;
 pub mod api_storage_management;
 pub mod api_synthetics;
 pub mod api_teams;
