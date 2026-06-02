@@ -6,51 +6,57 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of an entity risk score
+/// Attributes of an entity risk score.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityEntityRiskScoreAttributes {
+    /// Cloud account IDs associated with the entity.
+    #[serde(rename = "accountIds")]
+    pub account_ids: Vec<String>,
     /// Configuration risks associated with the entity
     #[serde(rename = "configRisks")]
     pub config_risks: crate::datadogV2::model::SecurityEntityConfigRisks,
-    /// Unique identifier for the entity
-    #[serde(rename = "entityID")]
-    pub entity_id: String,
     /// Metadata about the entity from cloud providers
     #[serde(rename = "entityMetadata")]
     pub entity_metadata: crate::datadogV2::model::SecurityEntityMetadata,
-    /// Human-readable name of the entity
+    /// Human-readable name of the entity.
     #[serde(rename = "entityName")]
     pub entity_name: Option<String>,
-    /// Cloud providers associated with the entity
+    /// Cloud providers associated with the entity.
     #[serde(rename = "entityProviders")]
     pub entity_providers: Vec<String>,
-    /// Roles associated with the entity
+    /// Roles associated with the entity.
     #[serde(rename = "entityRoles")]
     pub entity_roles: Option<Vec<String>>,
-    /// Type of the entity (e.g., aws_iam_user, aws_ec2_instance)
+    /// Sub-types associated with the entity.
+    #[serde(rename = "entitySubTypes")]
+    pub entity_sub_types: Vec<String>,
+    /// Type of the entity (for example, aws_iam_user, aws_ec2_instance).
     #[serde(rename = "entityType")]
-    pub entity_type: String,
-    /// Timestamp when the entity was first detected (Unix milliseconds)
+    pub entity_type: Option<String>,
+    /// All types associated with the entity.
+    #[serde(rename = "entityTypes")]
+    pub entity_types: Option<Vec<String>>,
+    /// Timestamp when the entity was first detected (Unix milliseconds).
     #[serde(rename = "firstDetected")]
     pub first_detected: i64,
-    /// Title of the most recent signal detected for this entity
+    /// Title of the most recent signal detected for this entity.
     #[serde(rename = "lastActivityTitle")]
     pub last_activity_title: String,
-    /// Timestamp when the entity was last detected (Unix milliseconds)
+    /// Timestamp when the entity was last detected (Unix milliseconds).
     #[serde(rename = "lastDetected")]
     pub last_detected: i64,
-    /// Current risk score for the entity
+    /// Current risk score for the entity.
     #[serde(rename = "riskScore")]
     pub risk_score: i64,
-    /// Change in risk score compared to previous period
+    /// Change in risk score compared to previous period.
     #[serde(rename = "riskScoreEvolution")]
     pub risk_score_evolution: i64,
     /// Severity level based on risk score
     #[serde(rename = "severity")]
     pub severity: crate::datadogV2::model::SecurityEntityRiskScoreAttributesSeverity,
-    /// Number of security signals detected for this entity
+    /// Number of security signals detected for this entity.
     #[serde(rename = "signalsDetected")]
     pub signals_detected: i64,
     #[serde(flatten)]
@@ -62,11 +68,11 @@ pub struct SecurityEntityRiskScoreAttributes {
 
 impl SecurityEntityRiskScoreAttributes {
     pub fn new(
+        account_ids: Vec<String>,
         config_risks: crate::datadogV2::model::SecurityEntityConfigRisks,
-        entity_id: String,
         entity_metadata: crate::datadogV2::model::SecurityEntityMetadata,
         entity_providers: Vec<String>,
-        entity_type: String,
+        entity_sub_types: Vec<String>,
         first_detected: i64,
         last_activity_title: String,
         last_detected: i64,
@@ -76,13 +82,15 @@ impl SecurityEntityRiskScoreAttributes {
         signals_detected: i64,
     ) -> SecurityEntityRiskScoreAttributes {
         SecurityEntityRiskScoreAttributes {
+            account_ids,
             config_risks,
-            entity_id,
             entity_metadata,
             entity_name: None,
             entity_providers,
             entity_roles: None,
-            entity_type,
+            entity_sub_types,
+            entity_type: None,
+            entity_types: None,
             first_detected,
             last_activity_title,
             last_detected,
@@ -102,6 +110,16 @@ impl SecurityEntityRiskScoreAttributes {
 
     pub fn entity_roles(mut self, value: Vec<String>) -> Self {
         self.entity_roles = Some(value);
+        self
+    }
+
+    pub fn entity_type(mut self, value: String) -> Self {
+        self.entity_type = Some(value);
+        self
+    }
+
+    pub fn entity_types(mut self, value: Vec<String>) -> Self {
+        self.entity_types = Some(value);
         self
     }
 
@@ -131,15 +149,17 @@ impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut account_ids: Option<Vec<String>> = None;
                 let mut config_risks: Option<crate::datadogV2::model::SecurityEntityConfigRisks> =
                     None;
-                let mut entity_id: Option<String> = None;
                 let mut entity_metadata: Option<crate::datadogV2::model::SecurityEntityMetadata> =
                     None;
                 let mut entity_name: Option<String> = None;
                 let mut entity_providers: Option<Vec<String>> = None;
                 let mut entity_roles: Option<Vec<String>> = None;
+                let mut entity_sub_types: Option<Vec<String>> = None;
                 let mut entity_type: Option<String> = None;
+                let mut entity_types: Option<Vec<String>> = None;
                 let mut first_detected: Option<i64> = None;
                 let mut last_activity_title: Option<String> = None;
                 let mut last_detected: Option<i64> = None;
@@ -157,12 +177,13 @@ impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "accountIds" => {
+                            account_ids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "configRisks" => {
                             config_risks =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "entityID" => {
-                            entity_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "entityMetadata" => {
                             entity_metadata =
@@ -186,8 +207,22 @@ impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributes {
                             entity_roles =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "entitySubTypes" => {
+                            entity_sub_types =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "entityType" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             entity_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "entityTypes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            entity_types =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "firstDetected" => {
@@ -231,15 +266,16 @@ impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributes {
                         }
                     }
                 }
+                let account_ids =
+                    account_ids.ok_or_else(|| M::Error::missing_field("account_ids"))?;
                 let config_risks =
                     config_risks.ok_or_else(|| M::Error::missing_field("config_risks"))?;
-                let entity_id = entity_id.ok_or_else(|| M::Error::missing_field("entity_id"))?;
                 let entity_metadata =
                     entity_metadata.ok_or_else(|| M::Error::missing_field("entity_metadata"))?;
                 let entity_providers =
                     entity_providers.ok_or_else(|| M::Error::missing_field("entity_providers"))?;
-                let entity_type =
-                    entity_type.ok_or_else(|| M::Error::missing_field("entity_type"))?;
+                let entity_sub_types =
+                    entity_sub_types.ok_or_else(|| M::Error::missing_field("entity_sub_types"))?;
                 let first_detected =
                     first_detected.ok_or_else(|| M::Error::missing_field("first_detected"))?;
                 let last_activity_title = last_activity_title
@@ -254,13 +290,15 @@ impl<'de> Deserialize<'de> for SecurityEntityRiskScoreAttributes {
                     signals_detected.ok_or_else(|| M::Error::missing_field("signals_detected"))?;
 
                 let content = SecurityEntityRiskScoreAttributes {
+                    account_ids,
                     config_risks,
-                    entity_id,
                     entity_metadata,
                     entity_name,
                     entity_providers,
                     entity_roles,
+                    entity_sub_types,
                     entity_type,
+                    entity_types,
                     first_detected,
                     last_activity_title,
                     last_detected,

@@ -14,7 +14,7 @@ pub enum SecurityEntityRiskScoreType {
 impl ToString for SecurityEntityRiskScoreType {
     fn to_string(&self) -> String {
         match self {
-            Self::SECURITY_ENTITY_RISK_SCORE => String::from("security_entity_risk_score"),
+            Self::SECURITY_ENTITY_RISK_SCORE => String::from("SecurityEntityRiskScore"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -39,7 +39,7 @@ impl<'de> Deserialize<'de> for SecurityEntityRiskScoreType {
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "security_entity_risk_score" => Self::SECURITY_ENTITY_RISK_SCORE,
+            "SecurityEntityRiskScore" => Self::SECURITY_ENTITY_RISK_SCORE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
