@@ -17,6 +17,8 @@ pub struct GetAggregatedConnectionsOptionalParams {
     pub group_by: Option<String>,
     /// Comma-separated list of tags to filter connections by.
     pub tags: Option<String>,
+    /// Free-form search query using AND/OR/NOT operators, wildcards, and parentheses. When provided, takes precedence over the `tags` parameter.
+    pub query: Option<String>,
     /// The number of connections to be returned. The maximum value is 7500. The default is 100.
     pub limit: Option<i32>,
 }
@@ -42,6 +44,11 @@ impl GetAggregatedConnectionsOptionalParams {
         self.tags = Some(value);
         self
     }
+    /// Free-form search query using AND/OR/NOT operators, wildcards, and parentheses. When provided, takes precedence over the `tags` parameter.
+    pub fn query(mut self, value: String) -> Self {
+        self.query = Some(value);
+        self
+    }
     /// The number of connections to be returned. The maximum value is 7500. The default is 100.
     pub fn limit(mut self, value: i32) -> Self {
         self.limit = Some(value);
@@ -61,6 +68,8 @@ pub struct GetAggregatedDnsOptionalParams {
     pub group_by: Option<String>,
     /// Comma-separated list of tags to filter DNS traffic by.
     pub tags: Option<String>,
+    /// Free-form search query using AND/OR/NOT operators, wildcards, and parentheses. When provided, takes precedence over the `tags` parameter.
+    pub query: Option<String>,
     /// The number of aggregated DNS entries to be returned. The maximum value is 7500. The default is 100.
     pub limit: Option<i32>,
 }
@@ -84,6 +93,11 @@ impl GetAggregatedDnsOptionalParams {
     /// Comma-separated list of tags to filter DNS traffic by.
     pub fn tags(mut self, value: String) -> Self {
         self.tags = Some(value);
+        self
+    }
+    /// Free-form search query using AND/OR/NOT operators, wildcards, and parentheses. When provided, takes precedence over the `tags` parameter.
+    pub fn query(mut self, value: String) -> Self {
+        self.query = Some(value);
         self
     }
     /// The number of aggregated DNS entries to be returned. The maximum value is 7500. The default is 100.
@@ -221,6 +235,7 @@ impl CloudNetworkMonitoringAPI {
         let to = params.to;
         let group_by = params.group_by;
         let tags = params.tags;
+        let query = params.query;
         let limit = params.limit;
 
         let local_client = &self.client;
@@ -246,6 +261,10 @@ impl CloudNetworkMonitoringAPI {
         if let Some(ref local_query_param) = tags {
             local_req_builder =
                 local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = limit {
             local_req_builder =
@@ -357,6 +376,7 @@ impl CloudNetworkMonitoringAPI {
         let to = params.to;
         let group_by = params.group_by;
         let tags = params.tags;
+        let query = params.query;
         let limit = params.limit;
 
         let local_client = &self.client;
@@ -382,6 +402,10 @@ impl CloudNetworkMonitoringAPI {
         if let Some(ref local_query_param) = tags {
             local_req_builder =
                 local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = limit {
             local_req_builder =

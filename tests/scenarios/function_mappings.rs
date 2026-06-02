@@ -42136,6 +42136,9 @@ fn test_v2_get_aggregated_connections(
     let tags = _parameters
         .get("tags")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let limit = _parameters
         .get("limit")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -42145,6 +42148,7 @@ fn test_v2_get_aggregated_connections(
     params.to = to;
     params.group_by = group_by;
     params.tags = tags;
+    params.query = query;
     params.limit = limit;
     let response = match block_on(api.get_aggregated_connections_with_http_info(params)) {
         Ok(response) => response,
@@ -42182,6 +42186,9 @@ fn test_v2_get_aggregated_dns(world: &mut DatadogWorld, _parameters: &HashMap<St
     let tags = _parameters
         .get("tags")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let limit = _parameters
         .get("limit")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -42191,6 +42198,7 @@ fn test_v2_get_aggregated_dns(world: &mut DatadogWorld, _parameters: &HashMap<St
     params.to = to;
     params.group_by = group_by;
     params.tags = tags;
+    params.query = query;
     params.limit = limit;
     let response = match block_on(api.get_aggregated_dns_with_http_info(params)) {
         Ok(response) => response,
