@@ -50,6 +50,9 @@ pub struct FindingCaseResponseDataAttributes {
     /// Priority of the case.
     #[serde(rename = "priority")]
     pub priority: Option<String>,
+    /// ServiceNow ticket associated with the case.
+    #[serde(rename = "servicenow_ticket")]
+    pub servicenow_ticket: Option<crate::datadogV2::model::FindingServiceNowTicket>,
     /// Status of the case.
     #[serde(rename = "status")]
     pub status: Option<String>,
@@ -88,6 +91,7 @@ impl FindingCaseResponseDataAttributes {
             key: None,
             modified_at: None,
             priority: None,
+            servicenow_ticket: None,
             status: None,
             status_group: None,
             status_name: None,
@@ -163,6 +167,14 @@ impl FindingCaseResponseDataAttributes {
         self
     }
 
+    pub fn servicenow_ticket(
+        mut self,
+        value: crate::datadogV2::model::FindingServiceNowTicket,
+    ) -> Self {
+        self.servicenow_ticket = Some(value);
+        self
+    }
+
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
@@ -233,6 +245,9 @@ impl<'de> Deserialize<'de> for FindingCaseResponseDataAttributes {
                 let mut key: Option<String> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut priority: Option<String> = None;
+                let mut servicenow_ticket: Option<
+                    crate::datadogV2::model::FindingServiceNowTicket,
+                > = None;
                 let mut status: Option<String> = None;
                 let mut status_group: Option<String> = None;
                 let mut status_name: Option<String> = None;
@@ -329,6 +344,13 @@ impl<'de> Deserialize<'de> for FindingCaseResponseDataAttributes {
                             }
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "servicenow_ticket" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            servicenow_ticket =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -383,6 +405,7 @@ impl<'de> Deserialize<'de> for FindingCaseResponseDataAttributes {
                     key,
                     modified_at,
                     priority,
+                    servicenow_ticket,
                     status,
                     status_group,
                     status_name,

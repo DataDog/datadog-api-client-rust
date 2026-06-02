@@ -273,6 +273,7 @@ impl Default for Configuration {
             ("v2.get_aws_cloud_auth_persona_mapping".to_owned(), false),
             ("v2.list_aws_cloud_auth_persona_mappings".to_owned(), false),
             ("v2.activate_content_pack".to_owned(), false),
+            ("v2.attach_service_now_ticket".to_owned(), false),
             (
                 "v2.batch_get_security_monitoring_dataset_dependencies".to_owned(),
                 false,
@@ -300,6 +301,7 @@ impl Default for Configuration {
                 "v2.create_security_monitoring_integration_config".to_owned(),
                 false,
             ),
+            ("v2.create_service_now_tickets".to_owned(), false),
             ("v2.create_static_analysis_ast".to_owned(), false),
             (
                 "v2.create_static_analysis_server_analysis".to_owned(),
@@ -374,6 +376,7 @@ impl Default for Configuration {
                 "v2.search_security_monitoring_histsignals".to_owned(),
                 false,
             ),
+            ("v2.update_findings_assignee".to_owned(), false),
             ("v2.update_security_monitoring_dataset".to_owned(), false),
             (
                 "v2.update_security_monitoring_integration_config".to_owned(),
