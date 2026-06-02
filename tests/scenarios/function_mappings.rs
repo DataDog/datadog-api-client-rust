@@ -4812,6 +4812,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_tenancy_config,
     );
     world.function_mappings.insert(
+        "v2.ListOpsgenieAccounts".into(),
+        test_v2_list_opsgenie_accounts,
+    );
+    world.function_mappings.insert(
+        "v2.CreateOpsgenieAccount".into(),
+        test_v2_create_opsgenie_account,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteOpsgenieAccount".into(),
+        test_v2_delete_opsgenie_account,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateOpsgenieAccount".into(),
+        test_v2_update_opsgenie_account,
+    );
+    world.function_mappings.insert(
         "v2.ListOpsgenieServices".into(),
         test_v2_list_opsgenie_services,
     );
@@ -37333,6 +37349,108 @@ fn test_v2_update_tenancy_config(world: &mut DatadogWorld, _parameters: &HashMap
         serde_json::from_value(_parameters.get("tenancy_ocid").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_tenancy_config_with_http_info(tenancy_ocid, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_opsgenie_accounts(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_opsgenie_integration
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_opsgenie_accounts_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_opsgenie_account(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_opsgenie_integration
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_opsgenie_account_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_opsgenie_account(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_opsgenie_integration
+        .as_ref()
+        .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_opsgenie_account_with_http_info(account_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_opsgenie_account(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_opsgenie_integration
+        .as_ref()
+        .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_opsgenie_account_with_http_info(account_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
