@@ -1,4 +1,4 @@
-// Create rum replay session watch returns "Created" response
+// Create RUM replay session watch returns "Created" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_replay_viewership::RumReplayViewershipAPI;

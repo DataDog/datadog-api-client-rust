@@ -1,4 +1,4 @@
-// Get a rum-based metric returns "OK" response
+// Get a RUM-based metric returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_metrics::RumMetricsAPI;
 

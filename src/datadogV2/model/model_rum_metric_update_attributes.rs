@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The rum-based metric properties that will be updated.
+/// The RUM-based metric properties that will be updated.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricUpdateAttributes {
-    /// The compute rule to compute the rum-based metric.
+    /// The compute rule to compute the RUM-based metric.
     #[serde(rename = "compute")]
     pub compute: Option<crate::datadogV2::model::RumMetricUpdateCompute>,
-    /// The rum-based metric filter. Events matching this filter will be aggregated in this metric.
+    /// The RUM-based metric filter. Events matching this filter will be aggregated in this metric.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::RumMetricFilter>,
     /// The rules for the group by.

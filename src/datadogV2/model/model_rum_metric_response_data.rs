@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The rum-based metric properties.
+/// The RUM-based metric properties.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricResponseData {
-    /// The object describing a Datadog rum-based metric.
+    /// The object describing a Datadog RUM-based metric.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::RumMetricResponseAttributes>,
-    /// The name of the rum-based metric.
+    /// The name of the RUM-based metric.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// The type of the resource. The value should always be rum_metrics.

@@ -1,4 +1,4 @@
-// List rum replay playlist sessions returns "OK" response
+// List RUM replay playlist sessions returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_replay_playlists::ListRumReplayPlaylistSessionsOptionalParams;
 use datadog_api_client::datadogV2::api_rum_replay_playlists::RumReplayPlaylistsAPI;
