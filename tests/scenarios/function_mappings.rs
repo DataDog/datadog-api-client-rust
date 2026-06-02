@@ -123,6 +123,8 @@ pub struct ApiInstances {
     pub v2_api_oci_integration: Option<datadogV2::api_oci_integration::OCIIntegrationAPI>,
     pub v2_api_opsgenie_integration:
         Option<datadogV2::api_opsgenie_integration::OpsgenieIntegrationAPI>,
+    pub v2_api_salesforce_integration:
+        Option<datadogV2::api_salesforce_integration::SalesforceIntegrationAPI>,
     pub v2_api_service_now_integration:
         Option<datadogV2::api_service_now_integration::ServiceNowIntegrationAPI>,
     pub v2_api_statuspage_integration:
@@ -898,6 +900,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "SalesforceIntegration" => {
+            world.api_instances.v2_api_salesforce_integration = Some(datadogV2::api_salesforce_integration::SalesforceIntegrationAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "ServiceNowIntegration" => {
             world.api_instances.v2_api_service_now_integration = Some(datadogV2::api_service_now_integration::ServiceNowIntegrationAPI::with_client_and_config(
@@ -4861,6 +4869,30 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateOpsgenieService".into(),
         test_v2_update_opsgenie_service,
+    );
+    world.function_mappings.insert(
+        "v2.GetIncidentTemplates".into(),
+        test_v2_get_incident_templates,
+    );
+    world.function_mappings.insert(
+        "v2.CreateIncidentTemplate".into(),
+        test_v2_create_incident_template,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteIncidentTemplate".into(),
+        test_v2_delete_incident_template,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateIncidentTemplate".into(),
+        test_v2_update_incident_template,
+    );
+    world.function_mappings.insert(
+        "v2.GetSalesforceOrganizations".into(),
+        test_v2_get_salesforce_organizations,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteSalesforceOrganization".into(),
+        test_v2_delete_salesforce_organization,
     );
     world.function_mappings.insert(
         "v2.ListServiceNowAssignmentGroups".into(),
@@ -37648,6 +37680,176 @@ fn test_v2_update_opsgenie_service(world: &mut DatadogWorld, _parameters: &HashM
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response =
         match block_on(api.update_opsgenie_service_with_http_info(integration_service_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_incident_templates(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_salesforce_integration
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_incident_templates_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_incident_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_salesforce_integration
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_incident_template_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_incident_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_salesforce_integration
+        .as_ref()
+        .expect("api instance not found");
+    let incident_template_id =
+        serde_json::from_value(_parameters.get("incident_template_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_incident_template_with_http_info(incident_template_id))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_incident_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_salesforce_integration
+        .as_ref()
+        .expect("api instance not found");
+    let incident_template_id =
+        serde_json::from_value(_parameters.get("incident_template_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_incident_template_with_http_info(incident_template_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_salesforce_organizations(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_salesforce_integration
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_salesforce_organizations_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_salesforce_organization(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_salesforce_integration
+        .as_ref()
+        .expect("api instance not found");
+    let salesforce_org_id =
+        serde_json::from_value(_parameters.get("salesforce_org_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_salesforce_organization_with_http_info(salesforce_org_id)) {
             Ok(response) => response,
             Err(error) => {
                 return match error {
