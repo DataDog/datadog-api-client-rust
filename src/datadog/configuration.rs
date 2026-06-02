@@ -591,6 +591,7 @@ impl Default for Configuration {
             ("v2.query_aggregated_signals_problems".to_owned(), false),
             ("v2.query_aggregated_waterfall".to_owned(), false),
             ("v2.create_scorecard_outcomes_batch".to_owned(), false),
+            ("v2.get_entity_risk_score".to_owned(), false),
             ("v2.list_entity_risk_scores".to_owned(), false),
             ("v2.create_incident_service".to_owned(), false),
             ("v2.delete_incident_service".to_owned(), false),

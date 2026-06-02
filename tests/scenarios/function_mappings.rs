@@ -6250,6 +6250,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListEntityRiskScores".into(),
         test_v2_list_entity_risk_scores,
     );
+    world.function_mappings.insert(
+        "v2.GetEntityRiskScore".into(),
+        test_v2_get_entity_risk_score,
+    );
     world
         .function_mappings
         .insert("v2.ListScanningGroups".into(), test_v2_list_scanning_groups);
@@ -49311,6 +49315,31 @@ fn test_v2_list_entity_risk_scores(world: &mut DatadogWorld, _parameters: &HashM
     params.filter_query = filter_query;
     params.entity_type = entity_type;
     let response = match block_on(api.list_entity_risk_scores_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_entity_risk_score(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_entity_risk_scores
+        .as_ref()
+        .expect("api instance not found");
+    let entity_id = serde_json::from_value(_parameters.get("entity_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_entity_risk_score_with_http_info(entity_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

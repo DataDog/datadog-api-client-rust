@@ -9056,6 +9056,8 @@ pub mod model_security_entity_risk_score_type;
 pub use self::model_security_entity_risk_score_type::SecurityEntityRiskScoreType;
 pub mod model_security_entity_risk_scores_meta;
 pub use self::model_security_entity_risk_scores_meta::SecurityEntityRiskScoresMeta;
+pub mod model_security_entity_risk_score_response;
+pub use self::model_security_entity_risk_score_response::SecurityEntityRiskScoreResponse;
 pub mod model_security_findings_sort;
 pub use self::model_security_findings_sort::SecurityFindingsSort;
 pub mod model_list_security_findings_response;
