@@ -118,6 +118,7 @@ pub use self::api::api_test_optimization;
 pub use self::api::api_usage_metering;
 pub use self::api::api_users;
 pub use self::api::api_web_integrations;
+pub use self::api::api_webhooks_integration;
 pub use self::api::api_widgets;
 pub use self::api::api_workflow_automation;
 pub mod model;
