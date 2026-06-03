@@ -22,9 +22,15 @@ pub struct LogsArchiveAttributes {
     /// If it is set to "false", the tags will be deleted when the logs are sent to the archive.
     #[serde(rename = "include_tags")]
     pub include_tags: Option<bool>,
+    /// An array of attributes to use as lookup keys for the archive.
+    #[serde(rename = "lookup_attributes")]
+    pub lookup_attributes: Option<Vec<String>>,
     /// The archive name.
     #[serde(rename = "name")]
     pub name: String,
+    /// An array of attributes to use as partition keys for the archive. The attribute used most frequently for querying should be first.
+    #[serde(rename = "partitioning_attributes")]
+    pub partitioning_attributes: Option<Vec<String>>,
     /// The archive query/filter. Logs matching this query are included in the archive.
     #[serde(rename = "query")]
     pub query: String,
@@ -58,7 +64,9 @@ impl LogsArchiveAttributes {
             compression_method: None,
             destination,
             include_tags: None,
+            lookup_attributes: None,
             name,
+            partitioning_attributes: None,
             query,
             rehydration_max_scan_size_in_gb: None,
             rehydration_tags: None,
@@ -78,6 +86,16 @@ impl LogsArchiveAttributes {
 
     pub fn include_tags(mut self, value: bool) -> Self {
         self.include_tags = Some(value);
+        self
+    }
+
+    pub fn lookup_attributes(mut self, value: Vec<String>) -> Self {
+        self.lookup_attributes = Some(value);
+        self
+    }
+
+    pub fn partitioning_attributes(mut self, value: Vec<String>) -> Self {
+        self.partitioning_attributes = Some(value);
         self
     }
 
@@ -129,7 +147,9 @@ impl<'de> Deserialize<'de> for LogsArchiveAttributes {
                     Option<crate::datadogV2::model::LogsArchiveDestination>,
                 > = None;
                 let mut include_tags: Option<bool> = None;
+                let mut lookup_attributes: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
+                let mut partitioning_attributes: Option<Vec<String>> = None;
                 let mut query: Option<String> = None;
                 let mut rehydration_max_scan_size_in_gb: Option<Option<i64>> = None;
                 let mut rehydration_tags: Option<Vec<String>> = None;
@@ -176,8 +196,22 @@ impl<'de> Deserialize<'de> for LogsArchiveAttributes {
                             include_tags =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "lookup_attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            lookup_attributes =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "partitioning_attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            partitioning_attributes =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -225,7 +259,9 @@ impl<'de> Deserialize<'de> for LogsArchiveAttributes {
                     compression_method,
                     destination,
                     include_tags,
+                    lookup_attributes,
                     name,
+                    partitioning_attributes,
                     query,
                     rehydration_max_scan_size_in_gb,
                     rehydration_tags,

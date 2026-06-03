@@ -31,6 +31,8 @@ async fn main() {
             )
             .compression_method(LogsArchiveAttributesCompressionMethod::GZIP)
             .include_tags(false)
+            .lookup_attributes(vec!["trace_id".to_string(), "user_id".to_string()])
+            .partitioning_attributes(vec!["service".to_string(), "status".to_string()])
             .rehydration_max_scan_size_in_gb(Some(100))
             .rehydration_tags(vec!["team:intake".to_string(), "team:app".to_string()]),
         ),
