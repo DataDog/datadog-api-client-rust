@@ -19,6 +19,21 @@ pub struct UsageSummaryDate {
     /// Shows the 99th percentile of all agent hosts over all hours in the current date for all organizations.
     #[serde(rename = "agent_host_top99p")]
     pub agent_host_top99p: Option<i64>,
+    /// Shows the sum of all AI credits used by Agent Builder over all hours in the current date for all organizations.
+    #[serde(rename = "ai_credits_agent_builder_ai_credits_sum")]
+    pub ai_credits_agent_builder_ai_credits_sum: Option<i64>,
+    /// Shows the sum of all AI credits used by Bits AI Assistant over all hours in the current date for all organizations.
+    #[serde(rename = "ai_credits_bits_assistant_ai_credits_sum")]
+    pub ai_credits_bits_assistant_ai_credits_sum: Option<i64>,
+    /// Shows the sum of all AI credits used by Bits AI Dev over all hours in the current date for all organizations.
+    #[serde(rename = "ai_credits_bits_dev_ai_credits_sum")]
+    pub ai_credits_bits_dev_ai_credits_sum: Option<i64>,
+    /// Shows the sum of all AI credits used by Bits AI SRE over all hours in the current date for all organizations.
+    #[serde(rename = "ai_credits_bits_sre_ai_credits_sum")]
+    pub ai_credits_bits_sre_ai_credits_sum: Option<i64>,
+    /// Shows the sum of all AI credits over all hours in the current date for all organizations.
+    #[serde(rename = "ai_credits_sum")]
+    pub ai_credits_sum: Option<i64>,
     /// Shows the 99th percentile of all Azure app services using APM over all hours in the current date all organizations.
     #[serde(rename = "apm_azure_app_service_host_top99p")]
     pub apm_azure_app_service_host_top99p: Option<i64>,
@@ -50,6 +65,9 @@ pub struct UsageSummaryDate {
     /// Shows the number of organizations that had Audit Trail enabled in the current date.
     #[serde(rename = "audit_trail_enabled_hwm")]
     pub audit_trail_enabled_hwm: Option<i64>,
+    /// Shows the sum of all Audit Trail event forwarding events over all hours in the current date for all organizations.
+    #[serde(rename = "audit_trail_event_forwarding_events_sum")]
+    pub audit_trail_event_forwarding_events_sum: Option<i64>,
     /// The average total count for Fargate Container Profiler over all hours in the current date for all organizations.
     #[serde(rename = "avg_profiled_fargate_tasks")]
     pub avg_profiled_fargate_tasks: Option<i64>,
@@ -268,6 +286,12 @@ pub struct UsageSummaryDate {
     /// Shows the sum of all Data Jobs Monitoring hosts over all hours in the current date for the given org.
     #[serde(rename = "data_jobs_monitoring_host_hr_sum")]
     pub data_jobs_monitoring_host_hr_sum: Option<i64>,
+    /// Shows the sum of all Data Streams Monitoring hosts over all hours in the current date for all organizations.
+    #[serde(rename = "data_stream_monitoring_host_count_sum")]
+    pub data_stream_monitoring_host_count_sum: Option<i64>,
+    /// Shows the 99th percentile of all Data Streams Monitoring hosts over all hours in the current date for all organizations.
+    #[serde(rename = "data_stream_monitoring_host_count_top99p")]
+    pub data_stream_monitoring_host_count_top99p: Option<i64>,
     /// The date for the usage.
     #[serde(rename = "date")]
     pub date: Option<chrono::DateTime<chrono::Utc>>,
@@ -412,6 +436,99 @@ pub struct UsageSummaryDate {
     /// Shows the sum of all log events indexed over all hours in the current date for all organizations.
     #[serde(rename = "indexed_events_count_sum")]
     pub indexed_events_count_sum: Option<i64>,
+    /// Shows the sum of all indexed custom metrics points over all hours in the current date for all organizations.
+    #[serde(rename = "indexed_points_sum")]
+    pub indexed_points_sum: Option<i64>,
+    /// Shows the average of all Infrastructure vCPU cores over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_avg")]
+    pub infra_cpu_avg: Option<i64>,
+    /// Shows the average of all default Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_agent_avg")]
+    pub infra_cpu_default_infra_host_vcpu_agent_avg: Option<i64>,
+    /// Shows the average of all default basic Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_agent_basic_avg")]
+    pub infra_cpu_default_infra_host_vcpu_agent_basic_avg: Option<i64>,
+    /// Shows the sum of all default basic Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_agent_basic_sum")]
+    pub infra_cpu_default_infra_host_vcpu_agent_basic_sum: Option<i64>,
+    /// Shows the sum of all default Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_agent_sum")]
+    pub infra_cpu_default_infra_host_vcpu_agent_sum: Option<i64>,
+    /// Shows the average of all default Infrastructure host vCPU cores on AWS over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_aws_avg")]
+    pub infra_cpu_default_infra_host_vcpu_aws_avg: Option<i64>,
+    /// Shows the sum of all default Infrastructure host vCPU cores on AWS over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_aws_sum")]
+    pub infra_cpu_default_infra_host_vcpu_aws_sum: Option<i64>,
+    /// Shows the average of all default Infrastructure host vCPU cores on Azure over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_azure_avg")]
+    pub infra_cpu_default_infra_host_vcpu_azure_avg: Option<i64>,
+    /// Shows the sum of all default Infrastructure host vCPU cores on Azure over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_azure_sum")]
+    pub infra_cpu_default_infra_host_vcpu_azure_sum: Option<i64>,
+    /// Shows the average of all default Infrastructure host vCPU cores on GCP over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_gcp_avg")]
+    pub infra_cpu_default_infra_host_vcpu_gcp_avg: Option<i64>,
+    /// Shows the sum of all default Infrastructure host vCPU cores on GCP over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_gcp_sum")]
+    pub infra_cpu_default_infra_host_vcpu_gcp_sum: Option<i64>,
+    /// Shows the average of all default Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_nutanix_avg")]
+    pub infra_cpu_default_infra_host_vcpu_nutanix_avg: Option<i64>,
+    /// Shows the average of all default basic Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_nutanix_basic_avg")]
+    pub infra_cpu_default_infra_host_vcpu_nutanix_basic_avg: Option<i64>,
+    /// Shows the sum of all default basic Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_nutanix_basic_sum")]
+    pub infra_cpu_default_infra_host_vcpu_nutanix_basic_sum: Option<i64>,
+    /// Shows the sum of all default Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_nutanix_sum")]
+    pub infra_cpu_default_infra_host_vcpu_nutanix_sum: Option<i64>,
+    /// Shows the average of all default Infrastructure host vCPU cores reported by OpenTelemetry over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_opentelemetry_avg")]
+    pub infra_cpu_default_infra_host_vcpu_opentelemetry_avg: Option<i64>,
+    /// Shows the sum of all default Infrastructure host vCPU cores reported by OpenTelemetry over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_default_infra_host_vcpu_opentelemetry_sum")]
+    pub infra_cpu_default_infra_host_vcpu_opentelemetry_sum: Option<i64>,
+    /// Shows the average of all observed Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_agent_avg")]
+    pub infra_cpu_observed_infra_host_vcpu_agent_avg: Option<i64>,
+    /// Shows the sum of all observed Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_agent_sum")]
+    pub infra_cpu_observed_infra_host_vcpu_agent_sum: Option<i64>,
+    /// Shows the average of all observed Infrastructure host vCPU cores on AWS over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_aws_avg")]
+    pub infra_cpu_observed_infra_host_vcpu_aws_avg: Option<i64>,
+    /// Shows the sum of all observed Infrastructure host vCPU cores on AWS over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_aws_sum")]
+    pub infra_cpu_observed_infra_host_vcpu_aws_sum: Option<i64>,
+    /// Shows the average of all observed Infrastructure host vCPU cores on Azure over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_azure_avg")]
+    pub infra_cpu_observed_infra_host_vcpu_azure_avg: Option<i64>,
+    /// Shows the sum of all observed Infrastructure host vCPU cores on Azure over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_azure_sum")]
+    pub infra_cpu_observed_infra_host_vcpu_azure_sum: Option<i64>,
+    /// Shows the average of all observed Infrastructure host vCPU cores on GCP over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_gcp_avg")]
+    pub infra_cpu_observed_infra_host_vcpu_gcp_avg: Option<i64>,
+    /// Shows the sum of all observed Infrastructure host vCPU cores on GCP over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_gcp_sum")]
+    pub infra_cpu_observed_infra_host_vcpu_gcp_sum: Option<i64>,
+    /// Shows the average of all observed Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_nutanix_avg")]
+    pub infra_cpu_observed_infra_host_vcpu_nutanix_avg: Option<i64>,
+    /// Shows the sum of all observed Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_nutanix_sum")]
+    pub infra_cpu_observed_infra_host_vcpu_nutanix_sum: Option<i64>,
+    /// Shows the average of all observed Infrastructure host vCPU cores reported by OpenTelemetry over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_opentelemetry_avg")]
+    pub infra_cpu_observed_infra_host_vcpu_opentelemetry_avg: Option<i64>,
+    /// Shows the sum of all observed Infrastructure host vCPU cores reported by OpenTelemetry over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_observed_infra_host_vcpu_opentelemetry_sum")]
+    pub infra_cpu_observed_infra_host_vcpu_opentelemetry_sum: Option<i64>,
+    /// Shows the sum of all Infrastructure vCPU cores over all hours in the current date for all organizations.
+    #[serde(rename = "infra_cpu_sum")]
+    pub infra_cpu_sum: Option<i64>,
     /// Shows the 99th percentile of all Edge Devices Monitoring devices over all hours in the current date for all organizations.
     #[serde(rename = "infra_edge_monitoring_devices_top99p")]
     pub infra_edge_monitoring_devices_top99p: Option<i64>,
@@ -430,21 +547,48 @@ pub struct UsageSummaryDate {
     /// Shows the average number of storage management objects over all hours in the current date for all organizations.
     #[serde(rename = "infra_storage_mgmt_objects_count_avg")]
     pub infra_storage_mgmt_objects_count_avg: Option<i64>,
+    /// Shows the sum of all ingested custom metrics points over all hours in the current date for all organizations.
+    #[serde(rename = "ingest_points_sum")]
+    pub ingest_points_sum: Option<i64>,
     /// Shows the sum of all log bytes ingested over all hours in the current date for all organizations.
     #[serde(rename = "ingested_events_bytes_sum")]
     pub ingested_events_bytes_sum: Option<i64>,
+    /// Shows the sum of all Application Performance Monitoring IoT hosts over all hours in the current date for all organizations.
+    #[serde(rename = "iot_apm_host_sum")]
+    pub iot_apm_host_sum: Option<i64>,
+    /// Shows the 99th percentile of all Application Performance Monitoring IoT hosts over all hours in the current date for all organizations.
+    #[serde(rename = "iot_apm_host_top99p")]
+    pub iot_apm_host_top99p: Option<i64>,
     /// Shows the sum of all IoT devices over all hours in the current date for all organizations.
     #[serde(rename = "iot_device_sum")]
     pub iot_device_sum: Option<i64>,
     /// Shows the 99th percentile of all IoT devices over all hours in the current date all organizations.
     #[serde(rename = "iot_device_top99p")]
     pub iot_device_top99p: Option<i64>,
+    /// Shows the sum of all LLM Observability 15-day retention spans over all hours in the current date for all organizations.
+    #[serde(rename = "llm_observability_15day_retention_spans_sum")]
+    pub llm_observability_15day_retention_spans_sum: Option<i64>,
+    /// Shows the sum of all LLM Observability 30-day retention spans over all hours in the current date for all organizations.
+    #[serde(rename = "llm_observability_30day_retention_spans_sum")]
+    pub llm_observability_30day_retention_spans_sum: Option<i64>,
+    /// Shows the sum of all LLM Observability 60-day retention spans over all hours in the current date for all organizations.
+    #[serde(rename = "llm_observability_60day_retention_spans_sum")]
+    pub llm_observability_60day_retention_spans_sum: Option<i64>,
+    /// Shows the sum of all LLM Observability 90-day retention spans over all hours in the current date for all organizations.
+    #[serde(rename = "llm_observability_90day_retention_spans_sum")]
+    pub llm_observability_90day_retention_spans_sum: Option<i64>,
     /// Sum of all LLM observability minimum spend over all hours in the current date for all organizations.
     #[serde(rename = "llm_observability_min_spend_sum")]
     pub llm_observability_min_spend_sum: Option<i64>,
     /// Sum of all LLM observability sessions over all hours in the current date for all organizations.
     #[serde(rename = "llm_observability_sum")]
     pub llm_observability_sum: Option<i64>,
+    /// Shows the sum of all Logs Archive Search scanned data over all hours in the current date for all organizations.
+    #[serde(rename = "logs_archive_search_gb_scanned_sum")]
+    pub logs_archive_search_gb_scanned_sum: Option<i64>,
+    /// Shows the sum of all custom metric names over all hours in the current date for all organizations.
+    #[serde(rename = "metric_names_sum")]
+    pub metric_names_sum: Option<i64>,
     /// Shows the sum of all mobile lite sessions over all hours in the current date for all organizations (To be deprecated on October 1st, 2024).
     #[deprecated]
     #[serde(rename = "mobile_rum_lite_session_count_sum")]
@@ -753,6 +897,12 @@ pub struct UsageSummaryDate {
     /// Shows the sum of all log events analyzed by Cloud SIEM over all hours in the current date for the given org.
     #[serde(rename = "siem_analyzed_logs_add_on_count_sum")]
     pub siem_analyzed_logs_add_on_count_sum: Option<i64>,
+    /// Shows the sum of all Network Device Monitoring devices over all hours in the current date for all organizations.
+    #[serde(rename = "snmp_device_count_sum")]
+    pub snmp_device_count_sum: Option<i64>,
+    /// Shows the 99th percentile of all Network Device Monitoring devices over all hours in the current date for all organizations.
+    #[serde(rename = "snmp_device_count_top99p")]
+    pub snmp_device_count_top99p: Option<i64>,
     /// Shows the sum of all Synthetic browser tests over all hours in the current date for all organizations.
     #[serde(rename = "synthetics_browser_check_calls_count_sum")]
     pub synthetics_browser_check_calls_count_sum: Option<i64>,
@@ -795,6 +945,11 @@ impl UsageSummaryDate {
         #[allow(deprecated)]
         UsageSummaryDate {
             agent_host_top99p: None,
+            ai_credits_agent_builder_ai_credits_sum: None,
+            ai_credits_bits_assistant_ai_credits_sum: None,
+            ai_credits_bits_dev_ai_credits_sum: None,
+            ai_credits_bits_sre_ai_credits_sum: None,
+            ai_credits_sum: None,
             apm_azure_app_service_host_top99p: None,
             apm_devsecops_host_top99p: None,
             apm_enterprise_standalone_hosts_top99p: None,
@@ -805,6 +960,7 @@ impl UsageSummaryDate {
             asm_serverless_sum: None,
             audit_logs_lines_indexed_sum: None,
             audit_trail_enabled_hwm: None,
+            audit_trail_event_forwarding_events_sum: None,
             avg_profiled_fargate_tasks: None,
             aws_host_top99p: None,
             aws_lambda_func_count: None,
@@ -877,6 +1033,8 @@ impl UsageSummaryDate {
             cws_fargate_task_avg: None,
             cws_host_top99p: None,
             data_jobs_monitoring_host_hr_sum: None,
+            data_stream_monitoring_host_count_sum: None,
+            data_stream_monitoring_host_count_top99p: None,
             date: None,
             dbm_host_top99p: None,
             dbm_queries_count_avg: None,
@@ -925,17 +1083,57 @@ impl UsageSummaryDate {
             incident_management_monthly_active_users_hwm: None,
             incident_management_seats_hwm: None,
             indexed_events_count_sum: None,
+            indexed_points_sum: None,
+            infra_cpu_avg: None,
+            infra_cpu_default_infra_host_vcpu_agent_avg: None,
+            infra_cpu_default_infra_host_vcpu_agent_basic_avg: None,
+            infra_cpu_default_infra_host_vcpu_agent_basic_sum: None,
+            infra_cpu_default_infra_host_vcpu_agent_sum: None,
+            infra_cpu_default_infra_host_vcpu_aws_avg: None,
+            infra_cpu_default_infra_host_vcpu_aws_sum: None,
+            infra_cpu_default_infra_host_vcpu_azure_avg: None,
+            infra_cpu_default_infra_host_vcpu_azure_sum: None,
+            infra_cpu_default_infra_host_vcpu_gcp_avg: None,
+            infra_cpu_default_infra_host_vcpu_gcp_sum: None,
+            infra_cpu_default_infra_host_vcpu_nutanix_avg: None,
+            infra_cpu_default_infra_host_vcpu_nutanix_basic_avg: None,
+            infra_cpu_default_infra_host_vcpu_nutanix_basic_sum: None,
+            infra_cpu_default_infra_host_vcpu_nutanix_sum: None,
+            infra_cpu_default_infra_host_vcpu_opentelemetry_avg: None,
+            infra_cpu_default_infra_host_vcpu_opentelemetry_sum: None,
+            infra_cpu_observed_infra_host_vcpu_agent_avg: None,
+            infra_cpu_observed_infra_host_vcpu_agent_sum: None,
+            infra_cpu_observed_infra_host_vcpu_aws_avg: None,
+            infra_cpu_observed_infra_host_vcpu_aws_sum: None,
+            infra_cpu_observed_infra_host_vcpu_azure_avg: None,
+            infra_cpu_observed_infra_host_vcpu_azure_sum: None,
+            infra_cpu_observed_infra_host_vcpu_gcp_avg: None,
+            infra_cpu_observed_infra_host_vcpu_gcp_sum: None,
+            infra_cpu_observed_infra_host_vcpu_nutanix_avg: None,
+            infra_cpu_observed_infra_host_vcpu_nutanix_sum: None,
+            infra_cpu_observed_infra_host_vcpu_opentelemetry_avg: None,
+            infra_cpu_observed_infra_host_vcpu_opentelemetry_sum: None,
+            infra_cpu_sum: None,
             infra_edge_monitoring_devices_top99p: None,
             infra_host_basic_infra_basic_agent_top99p: None,
             infra_host_basic_infra_basic_vsphere_top99p: None,
             infra_host_basic_top99p: None,
             infra_host_top99p: None,
             infra_storage_mgmt_objects_count_avg: None,
+            ingest_points_sum: None,
             ingested_events_bytes_sum: None,
+            iot_apm_host_sum: None,
+            iot_apm_host_top99p: None,
             iot_device_sum: None,
             iot_device_top99p: None,
+            llm_observability_15day_retention_spans_sum: None,
+            llm_observability_30day_retention_spans_sum: None,
+            llm_observability_60day_retention_spans_sum: None,
+            llm_observability_90day_retention_spans_sum: None,
             llm_observability_min_spend_sum: None,
             llm_observability_sum: None,
+            logs_archive_search_gb_scanned_sum: None,
+            metric_names_sum: None,
             mobile_rum_lite_session_count_sum: None,
             mobile_rum_session_count_android_sum: None,
             mobile_rum_session_count_flutter_sum: None,
@@ -1035,6 +1233,8 @@ impl UsageSummaryDate {
             siem_12mo_retention_sum: None,
             siem_6mo_retention_sum: None,
             siem_analyzed_logs_add_on_count_sum: None,
+            snmp_device_count_sum: None,
+            snmp_device_count_top99p: None,
             synthetics_browser_check_calls_count_sum: None,
             synthetics_check_calls_count_sum: None,
             synthetics_mobile_test_runs_sum: None,
@@ -1053,6 +1253,36 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn agent_host_top99p(mut self, value: i64) -> Self {
         self.agent_host_top99p = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ai_credits_agent_builder_ai_credits_sum(mut self, value: i64) -> Self {
+        self.ai_credits_agent_builder_ai_credits_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ai_credits_bits_assistant_ai_credits_sum(mut self, value: i64) -> Self {
+        self.ai_credits_bits_assistant_ai_credits_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ai_credits_bits_dev_ai_credits_sum(mut self, value: i64) -> Self {
+        self.ai_credits_bits_dev_ai_credits_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ai_credits_bits_sre_ai_credits_sum(mut self, value: i64) -> Self {
+        self.ai_credits_bits_sre_ai_credits_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ai_credits_sum(mut self, value: i64) -> Self {
+        self.ai_credits_sum = Some(value);
         self
     }
 
@@ -1113,6 +1343,12 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn audit_trail_enabled_hwm(mut self, value: i64) -> Self {
         self.audit_trail_enabled_hwm = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn audit_trail_event_forwarding_events_sum(mut self, value: i64) -> Self {
+        self.audit_trail_event_forwarding_events_sum = Some(value);
         self
     }
 
@@ -1549,6 +1785,18 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn data_stream_monitoring_host_count_sum(mut self, value: i64) -> Self {
+        self.data_stream_monitoring_host_count_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn data_stream_monitoring_host_count_top99p(mut self, value: i64) -> Self {
+        self.data_stream_monitoring_host_count_top99p = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.date = Some(value);
         self
@@ -1840,6 +2088,192 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn indexed_points_sum(mut self, value: i64) -> Self {
+        self.indexed_points_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_agent_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_agent_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_agent_basic_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_agent_basic_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_agent_basic_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_agent_basic_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_agent_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_agent_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_aws_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_aws_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_aws_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_aws_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_azure_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_azure_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_azure_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_azure_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_gcp_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_gcp_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_gcp_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_gcp_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_nutanix_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_nutanix_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_nutanix_basic_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_nutanix_basic_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_nutanix_basic_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_nutanix_basic_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_nutanix_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_nutanix_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_opentelemetry_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_opentelemetry_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_default_infra_host_vcpu_opentelemetry_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_default_infra_host_vcpu_opentelemetry_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_agent_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_agent_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_agent_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_agent_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_aws_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_aws_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_aws_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_aws_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_azure_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_azure_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_azure_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_azure_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_gcp_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_gcp_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_gcp_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_gcp_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_nutanix_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_nutanix_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_nutanix_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_nutanix_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_opentelemetry_avg(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_opentelemetry_avg = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_observed_infra_host_vcpu_opentelemetry_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_observed_infra_host_vcpu_opentelemetry_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn infra_cpu_sum(mut self, value: i64) -> Self {
+        self.infra_cpu_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn infra_edge_monitoring_devices_top99p(mut self, value: i64) -> Self {
         self.infra_edge_monitoring_devices_top99p = Some(value);
         self
@@ -1876,8 +2310,26 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn ingest_points_sum(mut self, value: i64) -> Self {
+        self.ingest_points_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn ingested_events_bytes_sum(mut self, value: i64) -> Self {
         self.ingested_events_bytes_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn iot_apm_host_sum(mut self, value: i64) -> Self {
+        self.iot_apm_host_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn iot_apm_host_top99p(mut self, value: i64) -> Self {
+        self.iot_apm_host_top99p = Some(value);
         self
     }
 
@@ -1894,6 +2346,30 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn llm_observability_15day_retention_spans_sum(mut self, value: i64) -> Self {
+        self.llm_observability_15day_retention_spans_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn llm_observability_30day_retention_spans_sum(mut self, value: i64) -> Self {
+        self.llm_observability_30day_retention_spans_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn llm_observability_60day_retention_spans_sum(mut self, value: i64) -> Self {
+        self.llm_observability_60day_retention_spans_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn llm_observability_90day_retention_spans_sum(mut self, value: i64) -> Self {
+        self.llm_observability_90day_retention_spans_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn llm_observability_min_spend_sum(mut self, value: i64) -> Self {
         self.llm_observability_min_spend_sum = Some(value);
         self
@@ -1902,6 +2378,18 @@ impl UsageSummaryDate {
     #[allow(deprecated)]
     pub fn llm_observability_sum(mut self, value: i64) -> Self {
         self.llm_observability_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn logs_archive_search_gb_scanned_sum(mut self, value: i64) -> Self {
+        self.logs_archive_search_gb_scanned_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn metric_names_sum(mut self, value: i64) -> Self {
+        self.metric_names_sum = Some(value);
         self
     }
 
@@ -2533,6 +3021,18 @@ impl UsageSummaryDate {
     }
 
     #[allow(deprecated)]
+    pub fn snmp_device_count_sum(mut self, value: i64) -> Self {
+        self.snmp_device_count_sum = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn snmp_device_count_top99p(mut self, value: i64) -> Self {
+        self.snmp_device_count_top99p = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn synthetics_browser_check_calls_count_sum(mut self, value: i64) -> Self {
         self.synthetics_browser_check_calls_count_sum = Some(value);
         self
@@ -2625,6 +3125,11 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 M: MapAccess<'a>,
             {
                 let mut agent_host_top99p: Option<i64> = None;
+                let mut ai_credits_agent_builder_ai_credits_sum: Option<i64> = None;
+                let mut ai_credits_bits_assistant_ai_credits_sum: Option<i64> = None;
+                let mut ai_credits_bits_dev_ai_credits_sum: Option<i64> = None;
+                let mut ai_credits_bits_sre_ai_credits_sum: Option<i64> = None;
+                let mut ai_credits_sum: Option<i64> = None;
                 let mut apm_azure_app_service_host_top99p: Option<i64> = None;
                 let mut apm_devsecops_host_top99p: Option<i64> = None;
                 let mut apm_enterprise_standalone_hosts_top99p: Option<i64> = None;
@@ -2635,6 +3140,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut asm_serverless_sum: Option<i64> = None;
                 let mut audit_logs_lines_indexed_sum: Option<i64> = None;
                 let mut audit_trail_enabled_hwm: Option<i64> = None;
+                let mut audit_trail_event_forwarding_events_sum: Option<i64> = None;
                 let mut avg_profiled_fargate_tasks: Option<i64> = None;
                 let mut aws_host_top99p: Option<i64> = None;
                 let mut aws_lambda_func_count: Option<i64> = None;
@@ -2707,6 +3213,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut cws_fargate_task_avg: Option<i64> = None;
                 let mut cws_host_top99p: Option<i64> = None;
                 let mut data_jobs_monitoring_host_hr_sum: Option<i64> = None;
+                let mut data_stream_monitoring_host_count_sum: Option<i64> = None;
+                let mut data_stream_monitoring_host_count_top99p: Option<i64> = None;
                 let mut date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut dbm_host_top99p: Option<i64> = None;
                 let mut dbm_queries_count_avg: Option<i64> = None;
@@ -2756,17 +3264,57 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut incident_management_monthly_active_users_hwm: Option<i64> = None;
                 let mut incident_management_seats_hwm: Option<i64> = None;
                 let mut indexed_events_count_sum: Option<i64> = None;
+                let mut indexed_points_sum: Option<i64> = None;
+                let mut infra_cpu_avg: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_agent_avg: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_agent_basic_avg: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_agent_basic_sum: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_agent_sum: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_aws_avg: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_aws_sum: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_azure_avg: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_azure_sum: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_gcp_avg: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_gcp_sum: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_nutanix_avg: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_nutanix_basic_avg: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_nutanix_basic_sum: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_nutanix_sum: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_opentelemetry_avg: Option<i64> = None;
+                let mut infra_cpu_default_infra_host_vcpu_opentelemetry_sum: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_agent_avg: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_agent_sum: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_aws_avg: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_aws_sum: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_azure_avg: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_azure_sum: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_gcp_avg: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_gcp_sum: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_nutanix_avg: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_nutanix_sum: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_opentelemetry_avg: Option<i64> = None;
+                let mut infra_cpu_observed_infra_host_vcpu_opentelemetry_sum: Option<i64> = None;
+                let mut infra_cpu_sum: Option<i64> = None;
                 let mut infra_edge_monitoring_devices_top99p: Option<i64> = None;
                 let mut infra_host_basic_infra_basic_agent_top99p: Option<i64> = None;
                 let mut infra_host_basic_infra_basic_vsphere_top99p: Option<i64> = None;
                 let mut infra_host_basic_top99p: Option<i64> = None;
                 let mut infra_host_top99p: Option<i64> = None;
                 let mut infra_storage_mgmt_objects_count_avg: Option<i64> = None;
+                let mut ingest_points_sum: Option<i64> = None;
                 let mut ingested_events_bytes_sum: Option<i64> = None;
+                let mut iot_apm_host_sum: Option<i64> = None;
+                let mut iot_apm_host_top99p: Option<i64> = None;
                 let mut iot_device_sum: Option<i64> = None;
                 let mut iot_device_top99p: Option<i64> = None;
+                let mut llm_observability_15day_retention_spans_sum: Option<i64> = None;
+                let mut llm_observability_30day_retention_spans_sum: Option<i64> = None;
+                let mut llm_observability_60day_retention_spans_sum: Option<i64> = None;
+                let mut llm_observability_90day_retention_spans_sum: Option<i64> = None;
                 let mut llm_observability_min_spend_sum: Option<i64> = None;
                 let mut llm_observability_sum: Option<i64> = None;
+                let mut logs_archive_search_gb_scanned_sum: Option<i64> = None;
+                let mut metric_names_sum: Option<i64> = None;
                 let mut mobile_rum_lite_session_count_sum: Option<i64> = None;
                 let mut mobile_rum_session_count_android_sum: Option<i64> = None;
                 let mut mobile_rum_session_count_flutter_sum: Option<i64> = None;
@@ -2880,6 +3428,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut siem_12mo_retention_sum: Option<i64> = None;
                 let mut siem_6mo_retention_sum: Option<i64> = None;
                 let mut siem_analyzed_logs_add_on_count_sum: Option<i64> = None;
+                let mut snmp_device_count_sum: Option<i64> = None;
+                let mut snmp_device_count_top99p: Option<i64> = None;
                 let mut synthetics_browser_check_calls_count_sum: Option<i64> = None;
                 let mut synthetics_check_calls_count_sum: Option<i64> = None;
                 let mut synthetics_mobile_test_runs_sum: Option<i64> = None;
@@ -2903,6 +3453,36 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             agent_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ai_credits_agent_builder_ai_credits_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ai_credits_agent_builder_ai_credits_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ai_credits_bits_assistant_ai_credits_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ai_credits_bits_assistant_ai_credits_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ai_credits_bits_dev_ai_credits_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ai_credits_bits_dev_ai_credits_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ai_credits_bits_sre_ai_credits_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ai_credits_bits_sre_ai_credits_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "ai_credits_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ai_credits_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "apm_azure_app_service_host_top99p" => {
                             if v.is_null() {
@@ -2963,6 +3543,12 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             audit_trail_enabled_hwm = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "audit_trail_event_forwarding_events_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            audit_trail_event_forwarding_events_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "avg_profiled_fargate_tasks" => {
                             if v.is_null() {
@@ -3396,6 +3982,18 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             data_jobs_monitoring_host_hr_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "data_stream_monitoring_host_count_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_stream_monitoring_host_count_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "data_stream_monitoring_host_count_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_stream_monitoring_host_count_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "date" => {
                             if v.is_null() {
                                 continue;
@@ -3684,6 +4282,192 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             indexed_events_count_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "indexed_points_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            indexed_points_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_agent_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_agent_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_agent_basic_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_agent_basic_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_agent_basic_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_agent_basic_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_agent_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_agent_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_aws_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_aws_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_aws_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_aws_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_azure_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_azure_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_azure_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_azure_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_gcp_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_gcp_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_gcp_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_gcp_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_nutanix_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_nutanix_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_nutanix_basic_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_nutanix_basic_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_nutanix_basic_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_nutanix_basic_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_nutanix_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_nutanix_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_opentelemetry_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_opentelemetry_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_default_infra_host_vcpu_opentelemetry_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_default_infra_host_vcpu_opentelemetry_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_agent_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_agent_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_agent_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_agent_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_aws_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_aws_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_aws_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_aws_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_azure_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_azure_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_azure_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_azure_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_gcp_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_gcp_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_gcp_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_gcp_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_nutanix_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_nutanix_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_nutanix_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_nutanix_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_opentelemetry_avg" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_opentelemetry_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_observed_infra_host_vcpu_opentelemetry_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_observed_infra_host_vcpu_opentelemetry_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "infra_cpu_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            infra_cpu_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "infra_edge_monitoring_devices_top99p" => {
                             if v.is_null() {
                                 continue;
@@ -3720,11 +4504,29 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             infra_storage_mgmt_objects_count_avg = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "ingest_points_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingest_points_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ingested_events_bytes_sum" => {
                             if v.is_null() {
                                 continue;
                             }
                             ingested_events_bytes_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "iot_apm_host_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            iot_apm_host_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "iot_apm_host_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            iot_apm_host_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "iot_device_sum" => {
                             if v.is_null() {
@@ -3738,6 +4540,30 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             iot_device_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "llm_observability_15day_retention_spans_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_15day_retention_spans_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "llm_observability_30day_retention_spans_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_30day_retention_spans_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "llm_observability_60day_retention_spans_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_60day_retention_spans_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "llm_observability_90day_retention_spans_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            llm_observability_90day_retention_spans_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "llm_observability_min_spend_sum" => {
                             if v.is_null() {
                                 continue;
@@ -3749,6 +4575,18 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                                 continue;
                             }
                             llm_observability_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "logs_archive_search_gb_scanned_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            logs_archive_search_gb_scanned_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "metric_names_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            metric_names_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
                         "mobile_rum_lite_session_count_sum" => {
                             if v.is_null() {
@@ -4344,6 +5182,18 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                             }
                             siem_analyzed_logs_add_on_count_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         },
+                        "snmp_device_count_sum" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            snmp_device_count_sum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "snmp_device_count_top99p" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            snmp_device_count_top99p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "synthetics_browser_check_calls_count_sum" => {
                             if v.is_null() {
                                 continue;
@@ -4415,6 +5265,11 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 #[allow(deprecated)]
                 let content = UsageSummaryDate {
                     agent_host_top99p,
+                    ai_credits_agent_builder_ai_credits_sum,
+                    ai_credits_bits_assistant_ai_credits_sum,
+                    ai_credits_bits_dev_ai_credits_sum,
+                    ai_credits_bits_sre_ai_credits_sum,
+                    ai_credits_sum,
                     apm_azure_app_service_host_top99p,
                     apm_devsecops_host_top99p,
                     apm_enterprise_standalone_hosts_top99p,
@@ -4425,6 +5280,7 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     asm_serverless_sum,
                     audit_logs_lines_indexed_sum,
                     audit_trail_enabled_hwm,
+                    audit_trail_event_forwarding_events_sum,
                     avg_profiled_fargate_tasks,
                     aws_host_top99p,
                     aws_lambda_func_count,
@@ -4497,6 +5353,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     cws_fargate_task_avg,
                     cws_host_top99p,
                     data_jobs_monitoring_host_hr_sum,
+                    data_stream_monitoring_host_count_sum,
+                    data_stream_monitoring_host_count_top99p,
                     date,
                     dbm_host_top99p,
                     dbm_queries_count_avg,
@@ -4545,17 +5403,57 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     incident_management_monthly_active_users_hwm,
                     incident_management_seats_hwm,
                     indexed_events_count_sum,
+                    indexed_points_sum,
+                    infra_cpu_avg,
+                    infra_cpu_default_infra_host_vcpu_agent_avg,
+                    infra_cpu_default_infra_host_vcpu_agent_basic_avg,
+                    infra_cpu_default_infra_host_vcpu_agent_basic_sum,
+                    infra_cpu_default_infra_host_vcpu_agent_sum,
+                    infra_cpu_default_infra_host_vcpu_aws_avg,
+                    infra_cpu_default_infra_host_vcpu_aws_sum,
+                    infra_cpu_default_infra_host_vcpu_azure_avg,
+                    infra_cpu_default_infra_host_vcpu_azure_sum,
+                    infra_cpu_default_infra_host_vcpu_gcp_avg,
+                    infra_cpu_default_infra_host_vcpu_gcp_sum,
+                    infra_cpu_default_infra_host_vcpu_nutanix_avg,
+                    infra_cpu_default_infra_host_vcpu_nutanix_basic_avg,
+                    infra_cpu_default_infra_host_vcpu_nutanix_basic_sum,
+                    infra_cpu_default_infra_host_vcpu_nutanix_sum,
+                    infra_cpu_default_infra_host_vcpu_opentelemetry_avg,
+                    infra_cpu_default_infra_host_vcpu_opentelemetry_sum,
+                    infra_cpu_observed_infra_host_vcpu_agent_avg,
+                    infra_cpu_observed_infra_host_vcpu_agent_sum,
+                    infra_cpu_observed_infra_host_vcpu_aws_avg,
+                    infra_cpu_observed_infra_host_vcpu_aws_sum,
+                    infra_cpu_observed_infra_host_vcpu_azure_avg,
+                    infra_cpu_observed_infra_host_vcpu_azure_sum,
+                    infra_cpu_observed_infra_host_vcpu_gcp_avg,
+                    infra_cpu_observed_infra_host_vcpu_gcp_sum,
+                    infra_cpu_observed_infra_host_vcpu_nutanix_avg,
+                    infra_cpu_observed_infra_host_vcpu_nutanix_sum,
+                    infra_cpu_observed_infra_host_vcpu_opentelemetry_avg,
+                    infra_cpu_observed_infra_host_vcpu_opentelemetry_sum,
+                    infra_cpu_sum,
                     infra_edge_monitoring_devices_top99p,
                     infra_host_basic_infra_basic_agent_top99p,
                     infra_host_basic_infra_basic_vsphere_top99p,
                     infra_host_basic_top99p,
                     infra_host_top99p,
                     infra_storage_mgmt_objects_count_avg,
+                    ingest_points_sum,
                     ingested_events_bytes_sum,
+                    iot_apm_host_sum,
+                    iot_apm_host_top99p,
                     iot_device_sum,
                     iot_device_top99p,
+                    llm_observability_15day_retention_spans_sum,
+                    llm_observability_30day_retention_spans_sum,
+                    llm_observability_60day_retention_spans_sum,
+                    llm_observability_90day_retention_spans_sum,
                     llm_observability_min_spend_sum,
                     llm_observability_sum,
+                    logs_archive_search_gb_scanned_sum,
+                    metric_names_sum,
                     mobile_rum_lite_session_count_sum,
                     mobile_rum_session_count_android_sum,
                     mobile_rum_session_count_flutter_sum,
@@ -4655,6 +5553,8 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                     siem_12mo_retention_sum,
                     siem_6mo_retention_sum,
                     siem_analyzed_logs_add_on_count_sum,
+                    snmp_device_count_sum,
+                    snmp_device_count_top99p,
                     synthetics_browser_check_calls_count_sum,
                     synthetics_check_calls_count_sum,
                     synthetics_mobile_test_runs_sum,
