@@ -38,6 +38,9 @@ pub struct IssueCaseAttributes {
     /// Key of the case.
     #[serde(rename = "key")]
     pub key: Option<String>,
+    /// Linear issue of the case.
+    #[serde(rename = "linear_issue")]
+    pub linear_issue: Option<crate::datadogV2::model::IssueCaseLinearIssue>,
     /// Timestamp of when the case was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -74,6 +77,7 @@ impl IssueCaseAttributes {
             insights: None,
             jira_issue: None,
             key: None,
+            linear_issue: None,
             modified_at: None,
             priority: None,
             status: None,
@@ -135,6 +139,12 @@ impl IssueCaseAttributes {
     #[allow(deprecated)]
     pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn linear_issue(mut self, value: crate::datadogV2::model::IssueCaseLinearIssue) -> Self {
+        self.linear_issue = Some(value);
         self
     }
 
@@ -209,6 +219,7 @@ impl<'de> Deserialize<'de> for IssueCaseAttributes {
                 let mut insights: Option<Vec<crate::datadogV2::model::IssueCaseInsight>> = None;
                 let mut jira_issue: Option<crate::datadogV2::model::IssueCaseJiraIssue> = None;
                 let mut key: Option<String> = None;
+                let mut linear_issue: Option<crate::datadogV2::model::IssueCaseLinearIssue> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut priority: Option<crate::datadogV2::model::CasePriority> = None;
                 let mut status: Option<crate::datadogV2::model::CaseStatus> = None;
@@ -278,6 +289,13 @@ impl<'de> Deserialize<'de> for IssueCaseAttributes {
                                 continue;
                             }
                             key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "linear_issue" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            linear_issue =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "modified_at" => {
                             if v.is_null() {
@@ -349,6 +367,7 @@ impl<'de> Deserialize<'de> for IssueCaseAttributes {
                     insights,
                     jira_issue,
                     key,
+                    linear_issue,
                     modified_at,
                     priority,
                     status,

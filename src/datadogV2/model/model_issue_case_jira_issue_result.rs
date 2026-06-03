@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IssueCaseJiraIssueResult {
+    /// Jira account identifier.
+    #[serde(rename = "account_id")]
+    pub account_id: Option<String>,
     /// Jira issue identifier.
     #[serde(rename = "issue_id")]
     pub issue_id: Option<String>,
@@ -20,6 +23,9 @@ pub struct IssueCaseJiraIssueResult {
     /// Jira issue URL.
     #[serde(rename = "issue_url")]
     pub issue_url: Option<String>,
+    /// Jira project identifier.
+    #[serde(rename = "project_id")]
+    pub project_id: Option<String>,
     /// Jira project key.
     #[serde(rename = "project_key")]
     pub project_key: Option<String>,
@@ -33,13 +39,20 @@ pub struct IssueCaseJiraIssueResult {
 impl IssueCaseJiraIssueResult {
     pub fn new() -> IssueCaseJiraIssueResult {
         IssueCaseJiraIssueResult {
+            account_id: None,
             issue_id: None,
             issue_key: None,
             issue_url: None,
+            project_id: None,
             project_key: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn account_id(mut self, value: String) -> Self {
+        self.account_id = Some(value);
+        self
     }
 
     pub fn issue_id(mut self, value: String) -> Self {
@@ -54,6 +67,11 @@ impl IssueCaseJiraIssueResult {
 
     pub fn issue_url(mut self, value: String) -> Self {
         self.issue_url = Some(value);
+        self
+    }
+
+    pub fn project_id(mut self, value: String) -> Self {
+        self.project_id = Some(value);
         self
     }
 
@@ -94,9 +112,11 @@ impl<'de> Deserialize<'de> for IssueCaseJiraIssueResult {
             where
                 M: MapAccess<'a>,
             {
+                let mut account_id: Option<String> = None;
                 let mut issue_id: Option<String> = None;
                 let mut issue_key: Option<String> = None;
                 let mut issue_url: Option<String> = None;
+                let mut project_id: Option<String> = None;
                 let mut project_key: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -106,6 +126,12 @@ impl<'de> Deserialize<'de> for IssueCaseJiraIssueResult {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "account_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "issue_id" => {
                             if v.is_null() {
                                 continue;
@@ -124,6 +150,12 @@ impl<'de> Deserialize<'de> for IssueCaseJiraIssueResult {
                             }
                             issue_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "project_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "project_key" => {
                             if v.is_null() {
                                 continue;
@@ -140,9 +172,11 @@ impl<'de> Deserialize<'de> for IssueCaseJiraIssueResult {
                 }
 
                 let content = IssueCaseJiraIssueResult {
+                    account_id,
                     issue_id,
                     issue_key,
                     issue_url,
+                    project_id,
                     project_key,
                     additional_properties,
                     _unparsed,
