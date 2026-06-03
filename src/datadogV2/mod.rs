@@ -90,6 +90,7 @@ pub use self::api::api_restriction_policies;
 pub use self::api::api_roles;
 pub use self::api::api_rum;
 pub use self::api::api_rum_audience_management;
+pub use self::api::api_rum_config;
 pub use self::api::api_rum_insights;
 pub use self::api::api_rum_metrics;
 pub use self::api::api_rum_replay_heatmaps;
