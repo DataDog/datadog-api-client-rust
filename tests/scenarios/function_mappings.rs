@@ -6452,6 +6452,15 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.CreateSCAResult".into(), test_v2_create_sca_result);
+    world
+        .function_mappings
+        .insert("v2.CreateSCAScan".into(), test_v2_create_sca_scan);
+    world
+        .function_mappings
+        .insert("v2.GetSCAScan".into(), test_v2_get_sca_scan);
+    world
+        .function_mappings
+        .insert("v2.ListSCALicenses".into(), test_v2_list_sca_licenses);
     world.function_mappings.insert(
         "v2.CreateSCAResolveVulnerableSymbols".into(),
         test_v2_create_sca_resolve_vulnerable_symbols,
@@ -50911,6 +50920,80 @@ fn test_v2_create_sca_result(world: &mut DatadogWorld, _parameters: &HashMap<Str
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.create_sca_result_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_sca_scan(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_static_analysis
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_sca_scan_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_sca_scan(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_static_analysis
+        .as_ref()
+        .expect("api instance not found");
+    let job_id = serde_json::from_value(_parameters.get("job_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_sca_scan_with_http_info(job_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_sca_licenses(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_static_analysis
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_sca_licenses_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {
