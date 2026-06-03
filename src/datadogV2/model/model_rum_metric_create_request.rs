@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The new rum-based metric body.
+/// The new RUM-based metric body.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricCreateRequest {
-    /// The new rum-based metric properties.
+    /// The new RUM-based metric properties.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::RumMetricCreateData,
     #[serde(flatten)]

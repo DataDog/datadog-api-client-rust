@@ -1,4 +1,4 @@
-// Bulk remove rum replay playlist sessions returns "No Content" response
+// Bulk remove RUM replay playlist sessions returns "No Content" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_replay_playlists::RumReplayPlaylistsAPI;
 use datadog_api_client::datadogV2::model::SessionIdArray;

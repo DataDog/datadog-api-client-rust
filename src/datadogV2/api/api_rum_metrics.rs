@@ -50,7 +50,7 @@ pub enum UpdateRumMetricError {
     UnknownValue(serde_json::Value),
 }
 
-/// Manage configuration of [rum-based metrics](<https://app.datadoghq.com/rum/generate-metrics>) for your organization.
+/// Manage configuration of [RUM-based metrics](<https://app.datadoghq.com/rum/generate-metrics>) for your organization.
 #[derive(Debug, Clone)]
 pub struct RumMetricsAPI {
     config: datadog::Configuration,
@@ -125,7 +125,7 @@ impl RumMetricsAPI {
     }
 
     /// Create a metric based on your organization's RUM data.
-    /// Returns the rum-based metric object from the request body when the request is successful.
+    /// Returns the RUM-based metric object from the request body when the request is successful.
     pub async fn create_rum_metric(
         &self,
         body: crate::datadogV2::model::RumMetricCreateRequest,
@@ -146,7 +146,7 @@ impl RumMetricsAPI {
     }
 
     /// Create a metric based on your organization's RUM data.
-    /// Returns the rum-based metric object from the request body when the request is successful.
+    /// Returns the RUM-based metric object from the request body when the request is successful.
     pub async fn create_rum_metric_with_http_info(
         &self,
         body: crate::datadogV2::model::RumMetricCreateRequest,
@@ -278,7 +278,7 @@ impl RumMetricsAPI {
         }
     }
 
-    /// Delete a specific rum-based metric from your organization.
+    /// Delete a specific RUM-based metric from your organization.
     pub async fn delete_rum_metric(
         &self,
         metric_id: String,
@@ -289,7 +289,7 @@ impl RumMetricsAPI {
         }
     }
 
-    /// Delete a specific rum-based metric from your organization.
+    /// Delete a specific RUM-based metric from your organization.
     pub async fn delete_rum_metric_with_http_info(
         &self,
         metric_id: String,
@@ -366,7 +366,7 @@ impl RumMetricsAPI {
         }
     }
 
-    /// Get a specific rum-based metric from your organization.
+    /// Get a specific RUM-based metric from your organization.
     pub async fn get_rum_metric(
         &self,
         metric_id: String,
@@ -385,7 +385,7 @@ impl RumMetricsAPI {
         }
     }
 
-    /// Get a specific rum-based metric from your organization.
+    /// Get a specific RUM-based metric from your organization.
     pub async fn get_rum_metric_with_http_info(
         &self,
         metric_id: String,
@@ -470,7 +470,7 @@ impl RumMetricsAPI {
         }
     }
 
-    /// Get the list of configured rum-based metrics with their definitions.
+    /// Get the list of configured RUM-based metrics with their definitions.
     pub async fn list_rum_metrics(
         &self,
     ) -> Result<crate::datadogV2::model::RumMetricsResponse, datadog::Error<ListRumMetricsError>>
@@ -489,7 +489,7 @@ impl RumMetricsAPI {
         }
     }
 
-    /// Get the list of configured rum-based metrics with their definitions.
+    /// Get the list of configured RUM-based metrics with their definitions.
     pub async fn list_rum_metrics_with_http_info(
         &self,
     ) -> Result<
@@ -574,8 +574,8 @@ impl RumMetricsAPI {
         }
     }
 
-    /// Update a specific rum-based metric from your organization.
-    /// Returns the rum-based metric object from the request body when the request is successful.
+    /// Update a specific RUM-based metric from your organization.
+    /// Returns the RUM-based metric object from the request body when the request is successful.
     pub async fn update_rum_metric(
         &self,
         metric_id: String,
@@ -596,8 +596,8 @@ impl RumMetricsAPI {
         }
     }
 
-    /// Update a specific rum-based metric from your organization.
-    /// Returns the rum-based metric object from the request body when the request is successful.
+    /// Update a specific RUM-based metric from your organization.
+    /// Returns the RUM-based metric object from the request body when the request is successful.
     pub async fn update_rum_metric_with_http_info(
         &self,
         metric_id: String,
