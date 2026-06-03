@@ -113,6 +113,7 @@ pub use self::api::api_spans_metrics;
 pub use self::api::api_static_analysis;
 pub use self::api::api_status_pages;
 pub use self::api::api_statuspage_integration;
+pub use self::api::api_stegadography;
 pub use self::api::api_storage_management;
 pub use self::api::api_synthetics;
 pub use self::api::api_teams;
