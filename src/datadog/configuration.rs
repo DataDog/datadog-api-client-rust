@@ -182,6 +182,8 @@ impl Default for Configuration {
             ("v2.list_llm_obs_datasets".to_owned(), false),
             ("v2.list_llm_obs_dataset_versions".to_owned(), false),
             ("v2.list_llm_obs_experiment_events".to_owned(), false),
+            ("v2.list_llm_obs_experiment_events_v1".to_owned(), false),
+            ("v2.list_llm_obs_experiment_events_v2".to_owned(), false),
             ("v2.list_llm_obs_experiments".to_owned(), false),
             ("v2.list_llm_obs_integration_accounts".to_owned(), false),
             ("v2.list_llm_obs_integration_models".to_owned(), false),
