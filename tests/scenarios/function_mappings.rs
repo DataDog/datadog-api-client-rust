@@ -6087,6 +6087,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.SearchRUMEventsWithPagination".into(),
         test_v2_search_rum_events_with_pagination,
     );
+    world
+        .function_mappings
+        .insert("v2.DeleteSourcemaps".into(), test_v2_delete_sourcemaps);
+    world
+        .function_mappings
+        .insert("v2.GetSourcemaps".into(), test_v2_get_sourcemaps);
+    world
+        .function_mappings
+        .insert("v2.ListSourcemaps".into(), test_v2_list_sourcemaps);
+    world
+        .function_mappings
+        .insert("v2.RestoreSourcemaps".into(), test_v2_restore_sourcemaps);
+    world.function_mappings.insert(
+        "v2.GetServiceRepositoryInfo".into(),
+        test_v2_get_service_repository_info,
+    );
     world.function_mappings.insert(
         "v2.ListHardcodedRetentionFilters".into(),
         test_v2_list_hardcoded_retention_filters,
@@ -47663,6 +47679,368 @@ fn test_v2_search_rum_events_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_delete_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum
+        .as_ref()
+        .expect("api instance not found");
+    let mapkind = serde_json::from_value(_parameters.get("mapkind").unwrap().clone()).unwrap();
+    let dry_run = serde_json::from_value(_parameters.get("dry_run").unwrap().clone()).unwrap();
+    let filter_service = _parameters
+        .get("filter[service]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_version = _parameters
+        .get("filter[version]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_variant = _parameters
+        .get("filter[variant]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_id = _parameters
+        .get("filter[id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_build_id = _parameters
+        .get("filter[build_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_uuid = _parameters
+        .get("filter[uuid]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_platform = _parameters
+        .get("filter[platform]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_build_number = _parameters
+        .get("filter[build_number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_bundle_name = _parameters
+        .get("filter[bundle_name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_arch = _parameters
+        .get("filter[arch]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_symbol_source = _parameters
+        .get("filter[symbol_source]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_origin = _parameters
+        .get("filter[origin]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_origin_version = _parameters
+        .get("filter[origin_version]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_filename = _parameters
+        .get("filter[filename]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_debug_id = _parameters
+        .get("filter[debug_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_gnu_build_id = _parameters
+        .get("filter[gnu_build_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_go_build_id = _parameters
+        .get("filter[go_build_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_file_hash = _parameters
+        .get("filter[file_hash]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_rum::DeleteSourcemapsOptionalParams::default();
+    params.filter_service = filter_service;
+    params.filter_version = filter_version;
+    params.filter_variant = filter_variant;
+    params.filter_id = filter_id;
+    params.filter_build_id = filter_build_id;
+    params.filter_uuid = filter_uuid;
+    params.filter_platform = filter_platform;
+    params.filter_build_number = filter_build_number;
+    params.filter_bundle_name = filter_bundle_name;
+    params.filter_arch = filter_arch;
+    params.filter_symbol_source = filter_symbol_source;
+    params.filter_origin = filter_origin;
+    params.filter_origin_version = filter_origin_version;
+    params.filter_filename = filter_filename;
+    params.filter_debug_id = filter_debug_id;
+    params.filter_gnu_build_id = filter_gnu_build_id;
+    params.filter_go_build_id = filter_go_build_id;
+    params.filter_file_hash = filter_file_hash;
+    let response = match block_on(api.delete_sourcemaps_with_http_info(mapkind, dry_run, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum
+        .as_ref()
+        .expect("api instance not found");
+    let filename = serde_json::from_value(_parameters.get("filename").unwrap().clone()).unwrap();
+    let service = serde_json::from_value(_parameters.get("service").unwrap().clone()).unwrap();
+    let version = serde_json::from_value(_parameters.get("version").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_sourcemaps_with_http_info(filename, service, version)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum
+        .as_ref()
+        .expect("api instance not found");
+    let mapkind = _parameters
+        .get("mapkind")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_service = _parameters
+        .get("filter[service]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_version = _parameters
+        .get("filter[version]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_variant = _parameters
+        .get("filter[variant]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_id = _parameters
+        .get("filter[id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_build_id = _parameters
+        .get("filter[build_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_uuid = _parameters
+        .get("filter[uuid]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_platform = _parameters
+        .get("filter[platform]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_build_number = _parameters
+        .get("filter[build_number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_bundle_name = _parameters
+        .get("filter[bundle_name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_arch = _parameters
+        .get("filter[arch]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_symbol_source = _parameters
+        .get("filter[symbol_source]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_origin = _parameters
+        .get("filter[origin]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_origin_version = _parameters
+        .get("filter[origin_version]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_filename = _parameters
+        .get("filter[filename]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_debug_id = _parameters
+        .get("filter[debug_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_gnu_build_id = _parameters
+        .get("filter[gnu_build_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_go_build_id = _parameters
+        .get("filter[go_build_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_file_hash = _parameters
+        .get("filter[file_hash]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_rum::ListSourcemapsOptionalParams::default();
+    params.mapkind = mapkind;
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.filter_service = filter_service;
+    params.filter_version = filter_version;
+    params.filter_variant = filter_variant;
+    params.filter_id = filter_id;
+    params.filter_build_id = filter_build_id;
+    params.filter_uuid = filter_uuid;
+    params.filter_platform = filter_platform;
+    params.filter_build_number = filter_build_number;
+    params.filter_bundle_name = filter_bundle_name;
+    params.filter_arch = filter_arch;
+    params.filter_symbol_source = filter_symbol_source;
+    params.filter_origin = filter_origin;
+    params.filter_origin_version = filter_origin_version;
+    params.filter_filename = filter_filename;
+    params.filter_debug_id = filter_debug_id;
+    params.filter_gnu_build_id = filter_gnu_build_id;
+    params.filter_go_build_id = filter_go_build_id;
+    params.filter_file_hash = filter_file_hash;
+    let response = match block_on(api.list_sourcemaps_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_restore_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum
+        .as_ref()
+        .expect("api instance not found");
+    let mapkind = serde_json::from_value(_parameters.get("mapkind").unwrap().clone()).unwrap();
+    let dry_run = serde_json::from_value(_parameters.get("dry_run").unwrap().clone()).unwrap();
+    let filter_service = _parameters
+        .get("filter[service]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_version = _parameters
+        .get("filter[version]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_variant = _parameters
+        .get("filter[variant]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_id = _parameters
+        .get("filter[id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_build_id = _parameters
+        .get("filter[build_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_uuid = _parameters
+        .get("filter[uuid]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_platform = _parameters
+        .get("filter[platform]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_build_number = _parameters
+        .get("filter[build_number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_bundle_name = _parameters
+        .get("filter[bundle_name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_arch = _parameters
+        .get("filter[arch]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_symbol_source = _parameters
+        .get("filter[symbol_source]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_origin = _parameters
+        .get("filter[origin]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_origin_version = _parameters
+        .get("filter[origin_version]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_filename = _parameters
+        .get("filter[filename]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_debug_id = _parameters
+        .get("filter[debug_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_gnu_build_id = _parameters
+        .get("filter[gnu_build_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_go_build_id = _parameters
+        .get("filter[go_build_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_file_hash = _parameters
+        .get("filter[file_hash]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_rum::RestoreSourcemapsOptionalParams::default();
+    params.filter_service = filter_service;
+    params.filter_version = filter_version;
+    params.filter_variant = filter_variant;
+    params.filter_id = filter_id;
+    params.filter_build_id = filter_build_id;
+    params.filter_uuid = filter_uuid;
+    params.filter_platform = filter_platform;
+    params.filter_build_number = filter_build_number;
+    params.filter_bundle_name = filter_bundle_name;
+    params.filter_arch = filter_arch;
+    params.filter_symbol_source = filter_symbol_source;
+    params.filter_origin = filter_origin;
+    params.filter_origin_version = filter_origin_version;
+    params.filter_filename = filter_filename;
+    params.filter_debug_id = filter_debug_id;
+    params.filter_gnu_build_id = filter_gnu_build_id;
+    params.filter_go_build_id = filter_go_build_id;
+    params.filter_file_hash = filter_file_hash;
+    let response = match block_on(api.restore_sourcemaps_with_http_info(mapkind, dry_run, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_service_repository_info(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_service_repository_info_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_list_hardcoded_retention_filters(
