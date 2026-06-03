@@ -5284,6 +5284,12 @@ impl UsageMeteringAPI {
 
     /// Get all usage across your account.
     ///
+    /// Newly added billing dimensions and usage types appear as untyped keys on the
+    /// `additionalProperties` map of `UsageSummaryResponse`, `UsageSummaryDate`, and
+    /// `UsageSummaryDateOrg` instead of as typed fields. Call
+    /// `GET /api/v2/usage/summary/available_fields` to enumerate every key returned
+    /// at each response level—both typed fields and `additionalProperties` keys.
+    ///
     /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_usage_summary(
         &self,
@@ -5309,6 +5315,12 @@ impl UsageMeteringAPI {
     }
 
     /// Get all usage across your account.
+    ///
+    /// Newly added billing dimensions and usage types appear as untyped keys on the
+    /// `additionalProperties` map of `UsageSummaryResponse`, `UsageSummaryDate`, and
+    /// `UsageSummaryDateOrg` instead of as typed fields. Call
+    /// `GET /api/v2/usage/summary/available_fields` to enumerate every key returned
+    /// at each response level—both typed fields and `additionalProperties` keys.
     ///
     /// This endpoint is only accessible for [parent-level organizations](<https://docs.datadoghq.com/account_management/multi_organization/>).
     pub async fn get_usage_summary_with_http_info(
