@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The object describing a Datadog RUM-based metric.
+/// The object describing a Datadog rum-based metric.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricResponseAttributes {
-    /// The compute rule to compute the RUM-based metric.
+    /// The compute rule to compute the rum-based metric.
     #[serde(rename = "compute")]
     pub compute: Option<crate::datadogV2::model::RumMetricResponseCompute>,
     /// The type of RUM events to filter on.
     #[serde(rename = "event_type")]
     pub event_type: Option<crate::datadogV2::model::RumMetricEventType>,
-    /// The RUM-based metric filter. RUM events matching this filter will be aggregated in this metric.
+    /// The rum-based metric filter. RUM events matching this filter will be aggregated in this metric.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::RumMetricResponseFilter>,
     /// The rules for the group by.

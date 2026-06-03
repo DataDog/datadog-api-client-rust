@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricResponseGroupBy {
-    /// The path to the value the RUM-based metric will be aggregated over.
+    /// The path to the value the rum-based metric will be aggregated over.
     #[serde(rename = "path")]
     pub path: Option<String>,
     /// Eventual name of the tag that gets created. By default, `path` is used as the tag name.

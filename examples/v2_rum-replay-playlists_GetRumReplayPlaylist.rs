@@ -1,4 +1,4 @@
-// Get RUM replay playlist returns "OK" response
+// Get rum replay playlist returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_replay_playlists::RumReplayPlaylistsAPI;
 

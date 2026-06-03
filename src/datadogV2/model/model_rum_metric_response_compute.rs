@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The compute rule to compute the RUM-based metric.
+/// The compute rule to compute the rum-based metric.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -18,7 +18,7 @@ pub struct RumMetricResponseCompute {
     /// Only present when `aggregation_type` is `distribution`.
     #[serde(rename = "include_percentiles")]
     pub include_percentiles: Option<bool>,
-    /// The path to the value the RUM-based metric will aggregate on.
+    /// The path to the value the rum-based metric will aggregate on.
     /// Only present when `aggregation_type` is `distribution`.
     #[serde(rename = "path")]
     pub path: Option<String>,

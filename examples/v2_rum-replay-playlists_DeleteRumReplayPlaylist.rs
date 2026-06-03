@@ -1,4 +1,4 @@
-// Delete RUM replay playlist returns "No Content" response
+// Delete rum replay playlist returns "No Content" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_replay_playlists::RumReplayPlaylistsAPI;
 

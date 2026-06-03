@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The RUM-based metric filter. RUM events matching this filter will be aggregated in this metric.
+/// The rum-based metric filter. RUM events matching this filter will be aggregated in this metric.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

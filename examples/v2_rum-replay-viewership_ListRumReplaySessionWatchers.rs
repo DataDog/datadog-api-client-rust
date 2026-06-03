@@ -1,4 +1,4 @@
-// List RUM replay session watchers returns "OK" response
+// List rum replay session watchers returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_replay_viewership::ListRumReplaySessionWatchersOptionalParams;
 use datadog_api_client::datadogV2::api_rum_replay_viewership::RumReplayViewershipAPI;

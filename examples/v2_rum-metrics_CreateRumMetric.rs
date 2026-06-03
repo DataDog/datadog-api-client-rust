@@ -1,4 +1,4 @@
-// Create a RUM-based metric returns "Created" response
+// Create a rum-based metric returns "Created" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_metrics::RumMetricsAPI;
 use datadog_api_client::datadogV2::model::RumMetricCompute;
