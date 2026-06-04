@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IssueCaseJiraIssue {
+    /// Error message set when the Jira issue creation fails.
+    #[serde(rename = "error_message")]
+    pub error_message: Option<String>,
     /// Contains the identifiers and URL for a successfully created Jira issue.
     #[serde(rename = "result")]
     pub result: Option<crate::datadogV2::model::IssueCaseJiraIssueResult>,
@@ -27,11 +30,17 @@ pub struct IssueCaseJiraIssue {
 impl IssueCaseJiraIssue {
     pub fn new() -> IssueCaseJiraIssue {
         IssueCaseJiraIssue {
+            error_message: None,
             result: None,
             status: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn error_message(mut self, value: String) -> Self {
+        self.error_message = Some(value);
+        self
     }
 
     pub fn result(mut self, value: crate::datadogV2::model::IssueCaseJiraIssueResult) -> Self {
@@ -76,6 +85,7 @@ impl<'de> Deserialize<'de> for IssueCaseJiraIssue {
             where
                 M: MapAccess<'a>,
             {
+                let mut error_message: Option<String> = None;
                 let mut result: Option<crate::datadogV2::model::IssueCaseJiraIssueResult> = None;
                 let mut status: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -86,6 +96,13 @@ impl<'de> Deserialize<'de> for IssueCaseJiraIssue {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "error_message" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_message =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "result" => {
                             if v.is_null() {
                                 continue;
@@ -107,6 +124,7 @@ impl<'de> Deserialize<'de> for IssueCaseJiraIssue {
                 }
 
                 let content = IssueCaseJiraIssue {
+                    error_message,
                     result,
                     status,
                     additional_properties,
