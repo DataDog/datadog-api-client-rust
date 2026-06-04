@@ -14,6 +14,7 @@ pub enum SyntheticsBasicAuth {
     SyntheticsBasicAuthDigest(Box<crate::datadogV1::model::SyntheticsBasicAuthDigest>),
     SyntheticsBasicAuthOauthClient(Box<crate::datadogV1::model::SyntheticsBasicAuthOauthClient>),
     SyntheticsBasicAuthOauthROP(Box<crate::datadogV1::model::SyntheticsBasicAuthOauthROP>),
+    SyntheticsBasicAuthJWT(Box<crate::datadogV1::model::SyntheticsBasicAuthJWT>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -68,6 +69,13 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuth {
         {
             if !_v._unparsed {
                 return Ok(SyntheticsBasicAuth::SyntheticsBasicAuthOauthROP(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::SyntheticsBasicAuthJWT>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(SyntheticsBasicAuth::SyntheticsBasicAuthJWT(_v));
             }
         }
 
