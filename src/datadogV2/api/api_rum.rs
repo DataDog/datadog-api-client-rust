@@ -8,9 +8,151 @@ use flate2::{
     Compression,
 };
 use futures_core::stream::Stream;
+use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
+
+/// DeleteSourcemapsOptionalParams is a struct for passing parameters to the method [`RUMAPI::delete_sourcemaps`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct DeleteSourcemapsOptionalParams {
+    /// Filter by service names (multiple values allowed). Required for
+    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub filter_service: Option<Vec<String>>,
+    /// Filter by version values (multiple values allowed, maximum 10).
+    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub filter_version: Option<Vec<String>>,
+    /// Filter by variant values (multiple values allowed). Supported for `jvm`.
+    pub filter_variant: Option<Vec<String>>,
+    /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
+    pub filter_id: Option<Vec<String>>,
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    pub filter_build_id: Option<Vec<String>>,
+    /// Filter by UUID values (multiple values allowed). Supported for `ios`.
+    pub filter_uuid: Option<Vec<String>>,
+    /// Filter by platform values (multiple values allowed). Supported for `react`.
+    pub filter_platform: Option<Vec<String>>,
+    /// Filter by build number values (multiple values allowed). Supported for `react`.
+    pub filter_build_number: Option<Vec<String>>,
+    /// Filter by bundle name values (multiple values allowed). Supported for `react`.
+    pub filter_bundle_name: Option<Vec<String>>,
+    /// Filter by architecture values (multiple values allowed). Supported
+    /// for `flutter`, `elf`, and `ndk`.
+    pub filter_arch: Option<Vec<String>>,
+    /// Filter by symbol source values (multiple values allowed). Supported for `elf`.
+    pub filter_symbol_source: Option<Vec<String>>,
+    /// Filter by origin values (multiple values allowed). Supported for `elf`.
+    pub filter_origin: Option<Vec<String>>,
+    /// Filter by origin version values (multiple values allowed). Supported for `elf`.
+    pub filter_origin_version: Option<Vec<String>>,
+    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    pub filter_filename: Option<String>,
+    /// Filter by debug ID (single value). Supported for `react`.
+    pub filter_debug_id: Option<String>,
+    /// Filter by GNU build ID (single value). Supported for `elf`.
+    pub filter_gnu_build_id: Option<String>,
+    /// Filter by Go build ID (single value). Supported for `elf`.
+    pub filter_go_build_id: Option<String>,
+    /// Filter by file hash (single value). Supported for `elf`.
+    pub filter_file_hash: Option<String>,
+}
+
+impl DeleteSourcemapsOptionalParams {
+    /// Filter by service names (multiple values allowed). Required for
+    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub fn filter_service(mut self, value: Vec<String>) -> Self {
+        self.filter_service = Some(value);
+        self
+    }
+    /// Filter by version values (multiple values allowed, maximum 10).
+    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub fn filter_version(mut self, value: Vec<String>) -> Self {
+        self.filter_version = Some(value);
+        self
+    }
+    /// Filter by variant values (multiple values allowed). Supported for `jvm`.
+    pub fn filter_variant(mut self, value: Vec<String>) -> Self {
+        self.filter_variant = Some(value);
+        self
+    }
+    /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
+    pub fn filter_id(mut self, value: Vec<String>) -> Self {
+        self.filter_id = Some(value);
+        self
+    }
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
+        self.filter_build_id = Some(value);
+        self
+    }
+    /// Filter by UUID values (multiple values allowed). Supported for `ios`.
+    pub fn filter_uuid(mut self, value: Vec<String>) -> Self {
+        self.filter_uuid = Some(value);
+        self
+    }
+    /// Filter by platform values (multiple values allowed). Supported for `react`.
+    pub fn filter_platform(mut self, value: Vec<String>) -> Self {
+        self.filter_platform = Some(value);
+        self
+    }
+    /// Filter by build number values (multiple values allowed). Supported for `react`.
+    pub fn filter_build_number(mut self, value: Vec<String>) -> Self {
+        self.filter_build_number = Some(value);
+        self
+    }
+    /// Filter by bundle name values (multiple values allowed). Supported for `react`.
+    pub fn filter_bundle_name(mut self, value: Vec<String>) -> Self {
+        self.filter_bundle_name = Some(value);
+        self
+    }
+    /// Filter by architecture values (multiple values allowed). Supported
+    /// for `flutter`, `elf`, and `ndk`.
+    pub fn filter_arch(mut self, value: Vec<String>) -> Self {
+        self.filter_arch = Some(value);
+        self
+    }
+    /// Filter by symbol source values (multiple values allowed). Supported for `elf`.
+    pub fn filter_symbol_source(mut self, value: Vec<String>) -> Self {
+        self.filter_symbol_source = Some(value);
+        self
+    }
+    /// Filter by origin values (multiple values allowed). Supported for `elf`.
+    pub fn filter_origin(mut self, value: Vec<String>) -> Self {
+        self.filter_origin = Some(value);
+        self
+    }
+    /// Filter by origin version values (multiple values allowed). Supported for `elf`.
+    pub fn filter_origin_version(mut self, value: Vec<String>) -> Self {
+        self.filter_origin_version = Some(value);
+        self
+    }
+    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    pub fn filter_filename(mut self, value: String) -> Self {
+        self.filter_filename = Some(value);
+        self
+    }
+    /// Filter by debug ID (single value). Supported for `react`.
+    pub fn filter_debug_id(mut self, value: String) -> Self {
+        self.filter_debug_id = Some(value);
+        self
+    }
+    /// Filter by GNU build ID (single value). Supported for `elf`.
+    pub fn filter_gnu_build_id(mut self, value: String) -> Self {
+        self.filter_gnu_build_id = Some(value);
+        self
+    }
+    /// Filter by Go build ID (single value). Supported for `elf`.
+    pub fn filter_go_build_id(mut self, value: String) -> Self {
+        self.filter_go_build_id = Some(value);
+        self
+    }
+    /// Filter by file hash (single value). Supported for `elf`.
+    pub fn filter_file_hash(mut self, value: String) -> Self {
+        self.filter_file_hash = Some(value);
+        self
+    }
+}
 
 /// ListRUMEventsOptionalParams is a struct for passing parameters to the method [`RUMAPI::list_rum_events`]
 #[non_exhaustive]
@@ -63,6 +205,309 @@ impl ListRUMEventsOptionalParams {
     }
 }
 
+/// ListSourcemapsOptionalParams is a struct for passing parameters to the method [`RUMAPI::list_sourcemaps`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSourcemapsOptionalParams {
+    /// The type of source map. Defaults to `js`.
+    pub mapkind: Option<crate::datadogV2::model::SourcemapMapKind>,
+    /// The number of results to return per page. Must be at least 1.
+    pub page_size: Option<i32>,
+    /// The page number to retrieve, starting from 1.
+    pub page_number: Option<i32>,
+    /// Filter by service names (multiple values allowed). Required for
+    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub filter_service: Option<Vec<String>>,
+    /// Filter by version values (multiple values allowed). Required for
+    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub filter_version: Option<Vec<String>>,
+    /// Filter by variant values (multiple values allowed). Supported for `jvm`.
+    pub filter_variant: Option<Vec<String>>,
+    /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
+    pub filter_id: Option<Vec<String>>,
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    pub filter_build_id: Option<Vec<String>>,
+    /// Filter by UUID values (multiple values allowed). Supported for `ios`.
+    pub filter_uuid: Option<Vec<String>>,
+    /// Filter by platform values (multiple values allowed). Supported for `react`.
+    pub filter_platform: Option<Vec<String>>,
+    /// Filter by build number values (multiple values allowed). Supported for `react`.
+    pub filter_build_number: Option<Vec<String>>,
+    /// Filter by bundle name values (multiple values allowed). Supported for `react`.
+    pub filter_bundle_name: Option<Vec<String>>,
+    /// Filter by architecture values (multiple values allowed). Supported
+    /// for `flutter`, `elf`, and `ndk`.
+    pub filter_arch: Option<Vec<String>>,
+    /// Filter by symbol source values (multiple values allowed). Supported for `elf`.
+    pub filter_symbol_source: Option<Vec<String>>,
+    /// Filter by origin values (multiple values allowed). Supported for `elf`.
+    pub filter_origin: Option<Vec<String>>,
+    /// Filter by origin version values (multiple values allowed). Supported for `elf`.
+    pub filter_origin_version: Option<Vec<String>>,
+    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    pub filter_filename: Option<String>,
+    /// Filter by debug ID (single value). Supported for `react`.
+    pub filter_debug_id: Option<String>,
+    /// Filter by GNU build ID (single value). Supported for `elf`.
+    pub filter_gnu_build_id: Option<String>,
+    /// Filter by Go build ID (single value). Supported for `elf`.
+    pub filter_go_build_id: Option<String>,
+    /// Filter by file hash (single value). Supported for `elf`.
+    pub filter_file_hash: Option<String>,
+}
+
+impl ListSourcemapsOptionalParams {
+    /// The type of source map. Defaults to `js`.
+    pub fn mapkind(mut self, value: crate::datadogV2::model::SourcemapMapKind) -> Self {
+        self.mapkind = Some(value);
+        self
+    }
+    /// The number of results to return per page. Must be at least 1.
+    pub fn page_size(mut self, value: i32) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// The page number to retrieve, starting from 1.
+    pub fn page_number(mut self, value: i32) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Filter by service names (multiple values allowed). Required for
+    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub fn filter_service(mut self, value: Vec<String>) -> Self {
+        self.filter_service = Some(value);
+        self
+    }
+    /// Filter by version values (multiple values allowed). Required for
+    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub fn filter_version(mut self, value: Vec<String>) -> Self {
+        self.filter_version = Some(value);
+        self
+    }
+    /// Filter by variant values (multiple values allowed). Supported for `jvm`.
+    pub fn filter_variant(mut self, value: Vec<String>) -> Self {
+        self.filter_variant = Some(value);
+        self
+    }
+    /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
+    pub fn filter_id(mut self, value: Vec<String>) -> Self {
+        self.filter_id = Some(value);
+        self
+    }
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
+        self.filter_build_id = Some(value);
+        self
+    }
+    /// Filter by UUID values (multiple values allowed). Supported for `ios`.
+    pub fn filter_uuid(mut self, value: Vec<String>) -> Self {
+        self.filter_uuid = Some(value);
+        self
+    }
+    /// Filter by platform values (multiple values allowed). Supported for `react`.
+    pub fn filter_platform(mut self, value: Vec<String>) -> Self {
+        self.filter_platform = Some(value);
+        self
+    }
+    /// Filter by build number values (multiple values allowed). Supported for `react`.
+    pub fn filter_build_number(mut self, value: Vec<String>) -> Self {
+        self.filter_build_number = Some(value);
+        self
+    }
+    /// Filter by bundle name values (multiple values allowed). Supported for `react`.
+    pub fn filter_bundle_name(mut self, value: Vec<String>) -> Self {
+        self.filter_bundle_name = Some(value);
+        self
+    }
+    /// Filter by architecture values (multiple values allowed). Supported
+    /// for `flutter`, `elf`, and `ndk`.
+    pub fn filter_arch(mut self, value: Vec<String>) -> Self {
+        self.filter_arch = Some(value);
+        self
+    }
+    /// Filter by symbol source values (multiple values allowed). Supported for `elf`.
+    pub fn filter_symbol_source(mut self, value: Vec<String>) -> Self {
+        self.filter_symbol_source = Some(value);
+        self
+    }
+    /// Filter by origin values (multiple values allowed). Supported for `elf`.
+    pub fn filter_origin(mut self, value: Vec<String>) -> Self {
+        self.filter_origin = Some(value);
+        self
+    }
+    /// Filter by origin version values (multiple values allowed). Supported for `elf`.
+    pub fn filter_origin_version(mut self, value: Vec<String>) -> Self {
+        self.filter_origin_version = Some(value);
+        self
+    }
+    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    pub fn filter_filename(mut self, value: String) -> Self {
+        self.filter_filename = Some(value);
+        self
+    }
+    /// Filter by debug ID (single value). Supported for `react`.
+    pub fn filter_debug_id(mut self, value: String) -> Self {
+        self.filter_debug_id = Some(value);
+        self
+    }
+    /// Filter by GNU build ID (single value). Supported for `elf`.
+    pub fn filter_gnu_build_id(mut self, value: String) -> Self {
+        self.filter_gnu_build_id = Some(value);
+        self
+    }
+    /// Filter by Go build ID (single value). Supported for `elf`.
+    pub fn filter_go_build_id(mut self, value: String) -> Self {
+        self.filter_go_build_id = Some(value);
+        self
+    }
+    /// Filter by file hash (single value). Supported for `elf`.
+    pub fn filter_file_hash(mut self, value: String) -> Self {
+        self.filter_file_hash = Some(value);
+        self
+    }
+}
+
+/// RestoreSourcemapsOptionalParams is a struct for passing parameters to the method [`RUMAPI::restore_sourcemaps`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct RestoreSourcemapsOptionalParams {
+    /// Filter by service names (multiple values allowed). Required for
+    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub filter_service: Option<Vec<String>>,
+    /// Filter by version values (multiple values allowed, maximum 10).
+    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub filter_version: Option<Vec<String>>,
+    /// Filter by variant values (multiple values allowed). Supported for `jvm`.
+    pub filter_variant: Option<Vec<String>>,
+    /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
+    pub filter_id: Option<Vec<String>>,
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    pub filter_build_id: Option<Vec<String>>,
+    /// Filter by UUID values (multiple values allowed). Supported for `ios`.
+    pub filter_uuid: Option<Vec<String>>,
+    /// Filter by platform values (multiple values allowed). Supported for `react`.
+    pub filter_platform: Option<Vec<String>>,
+    /// Filter by build number values (multiple values allowed). Supported for `react`.
+    pub filter_build_number: Option<Vec<String>>,
+    /// Filter by bundle name values (multiple values allowed). Supported for `react`.
+    pub filter_bundle_name: Option<Vec<String>>,
+    /// Filter by architecture values (multiple values allowed). Supported
+    /// for `flutter`, `elf`, and `ndk`.
+    pub filter_arch: Option<Vec<String>>,
+    /// Filter by symbol source values (multiple values allowed). Supported for `elf`.
+    pub filter_symbol_source: Option<Vec<String>>,
+    /// Filter by origin values (multiple values allowed). Supported for `elf`.
+    pub filter_origin: Option<Vec<String>>,
+    /// Filter by origin version values (multiple values allowed). Supported for `elf`.
+    pub filter_origin_version: Option<Vec<String>>,
+    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    pub filter_filename: Option<String>,
+    /// Filter by debug ID (single value). Supported for `react`.
+    pub filter_debug_id: Option<String>,
+    /// Filter by GNU build ID (single value). Supported for `elf`.
+    pub filter_gnu_build_id: Option<String>,
+    /// Filter by Go build ID (single value). Supported for `elf`.
+    pub filter_go_build_id: Option<String>,
+    /// Filter by file hash (single value). Supported for `elf`.
+    pub filter_file_hash: Option<String>,
+}
+
+impl RestoreSourcemapsOptionalParams {
+    /// Filter by service names (multiple values allowed). Required for
+    /// `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub fn filter_service(mut self, value: Vec<String>) -> Self {
+        self.filter_service = Some(value);
+        self
+    }
+    /// Filter by version values (multiple values allowed, maximum 10).
+    /// Required for `js`, `jvm`, `react`, and `flutter` map kinds.
+    pub fn filter_version(mut self, value: Vec<String>) -> Self {
+        self.filter_version = Some(value);
+        self
+    }
+    /// Filter by variant values (multiple values allowed). Supported for `jvm`.
+    pub fn filter_variant(mut self, value: Vec<String>) -> Self {
+        self.filter_variant = Some(value);
+        self
+    }
+    /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
+    pub fn filter_id(mut self, value: Vec<String>) -> Self {
+        self.filter_id = Some(value);
+        self
+    }
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
+        self.filter_build_id = Some(value);
+        self
+    }
+    /// Filter by UUID values (multiple values allowed). Supported for `ios`.
+    pub fn filter_uuid(mut self, value: Vec<String>) -> Self {
+        self.filter_uuid = Some(value);
+        self
+    }
+    /// Filter by platform values (multiple values allowed). Supported for `react`.
+    pub fn filter_platform(mut self, value: Vec<String>) -> Self {
+        self.filter_platform = Some(value);
+        self
+    }
+    /// Filter by build number values (multiple values allowed). Supported for `react`.
+    pub fn filter_build_number(mut self, value: Vec<String>) -> Self {
+        self.filter_build_number = Some(value);
+        self
+    }
+    /// Filter by bundle name values (multiple values allowed). Supported for `react`.
+    pub fn filter_bundle_name(mut self, value: Vec<String>) -> Self {
+        self.filter_bundle_name = Some(value);
+        self
+    }
+    /// Filter by architecture values (multiple values allowed). Supported
+    /// for `flutter`, `elf`, and `ndk`.
+    pub fn filter_arch(mut self, value: Vec<String>) -> Self {
+        self.filter_arch = Some(value);
+        self
+    }
+    /// Filter by symbol source values (multiple values allowed). Supported for `elf`.
+    pub fn filter_symbol_source(mut self, value: Vec<String>) -> Self {
+        self.filter_symbol_source = Some(value);
+        self
+    }
+    /// Filter by origin values (multiple values allowed). Supported for `elf`.
+    pub fn filter_origin(mut self, value: Vec<String>) -> Self {
+        self.filter_origin = Some(value);
+        self
+    }
+    /// Filter by origin version values (multiple values allowed). Supported for `elf`.
+    pub fn filter_origin_version(mut self, value: Vec<String>) -> Self {
+        self.filter_origin_version = Some(value);
+        self
+    }
+    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    pub fn filter_filename(mut self, value: String) -> Self {
+        self.filter_filename = Some(value);
+        self
+    }
+    /// Filter by debug ID (single value). Supported for `react`.
+    pub fn filter_debug_id(mut self, value: String) -> Self {
+        self.filter_debug_id = Some(value);
+        self
+    }
+    /// Filter by GNU build ID (single value). Supported for `elf`.
+    pub fn filter_gnu_build_id(mut self, value: String) -> Self {
+        self.filter_gnu_build_id = Some(value);
+        self
+    }
+    /// Filter by Go build ID (single value). Supported for `elf`.
+    pub fn filter_go_build_id(mut self, value: String) -> Self {
+        self.filter_go_build_id = Some(value);
+        self
+    }
+    /// Filter by file hash (single value). Supported for `elf`.
+    pub fn filter_file_hash(mut self, value: String) -> Self {
+        self.filter_file_hash = Some(value);
+        self
+    }
+}
+
 /// AggregateRUMEventsError is a struct for typed errors of method [`RUMAPI::aggregate_rum_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -87,6 +532,15 @@ pub enum DeleteRUMApplicationError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteSourcemapsError is a struct for typed errors of method [`RUMAPI::delete_sourcemaps`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteSourcemapsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetRUMApplicationError is a struct for typed errors of method [`RUMAPI::get_rum_application`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -103,10 +557,46 @@ pub enum GetRUMApplicationsError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetServiceRepositoryInfoError is a struct for typed errors of method [`RUMAPI::get_service_repository_info`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetServiceRepositoryInfoError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetSourcemapsError is a struct for typed errors of method [`RUMAPI::get_sourcemaps`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSourcemapsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListRUMEventsError is a struct for typed errors of method [`RUMAPI::list_rum_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListRUMEventsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListSourcemapsError is a struct for typed errors of method [`RUMAPI::list_sourcemaps`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSourcemapsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// RestoreSourcemapsError is a struct for typed errors of method [`RUMAPI::restore_sourcemaps`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum RestoreSourcemapsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -599,6 +1089,251 @@ impl RUMAPI {
         }
     }
 
+    /// Deletes source maps matching the specified filter criteria. Supports
+    /// dry-run mode to preview which source maps would be deleted without
+    /// performing the actual deletion.
+    pub async fn delete_sourcemaps(
+        &self,
+        mapkind: crate::datadogV2::model::SourcemapMapKind,
+        dry_run: bool,
+        params: DeleteSourcemapsOptionalParams,
+    ) -> Result<crate::datadogV2::model::SourcemapsResponse, datadog::Error<DeleteSourcemapsError>>
+    {
+        match self
+            .delete_sourcemaps_with_http_info(mapkind, dry_run, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Deletes source maps matching the specified filter criteria. Supports
+    /// dry-run mode to preview which source maps would be deleted without
+    /// performing the actual deletion.
+    pub async fn delete_sourcemaps_with_http_info(
+        &self,
+        mapkind: crate::datadogV2::model::SourcemapMapKind,
+        dry_run: bool,
+        params: DeleteSourcemapsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SourcemapsResponse>,
+        datadog::Error<DeleteSourcemapsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_sourcemaps";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_sourcemaps' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_service = params.filter_service;
+        let filter_version = params.filter_version;
+        let filter_variant = params.filter_variant;
+        let filter_id = params.filter_id;
+        let filter_build_id = params.filter_build_id;
+        let filter_uuid = params.filter_uuid;
+        let filter_platform = params.filter_platform;
+        let filter_build_number = params.filter_build_number;
+        let filter_bundle_name = params.filter_bundle_name;
+        let filter_arch = params.filter_arch;
+        let filter_symbol_source = params.filter_symbol_source;
+        let filter_origin = params.filter_origin;
+        let filter_origin_version = params.filter_origin_version;
+        let filter_filename = params.filter_filename;
+        let filter_debug_id = params.filter_debug_id;
+        let filter_gnu_build_id = params.filter_gnu_build_id;
+        let filter_go_build_id = params.filter_go_build_id;
+        let filter_file_hash = params.filter_file_hash;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/sourcemaps",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("mapkind", &mapkind.to_string())]);
+        local_req_builder = local_req_builder.query(&[("dry_run", &dry_run.to_string())]);
+        if let Some(ref local) = filter_service {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[service]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_version {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[version]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_variant {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[variant]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_id {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[id]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_build_id {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[build_id]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_uuid {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[uuid]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_platform {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[platform]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_build_number {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[build_number]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_bundle_name {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[bundle_name]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_arch {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[arch]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_symbol_source {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[symbol_source]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_origin {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[origin]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_origin_version {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[origin_version]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = filter_filename {
+            local_req_builder =
+                local_req_builder.query(&[("filter[filename]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_debug_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[debug_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_gnu_build_id {
+            local_req_builder = local_req_builder
+                .query(&[("filter[gnu_build_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_go_build_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[go_build_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_file_hash {
+            local_req_builder =
+                local_req_builder.query(&[("filter[file_hash]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SourcemapsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<DeleteSourcemapsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get the RUM application with given ID in your organization.
     pub async fn get_rum_application(
         &self,
@@ -814,6 +1549,296 @@ impl RUMAPI {
         }
     }
 
+    /// Returns the repository URL and commit SHA associated with a given service and version.
+    pub async fn get_service_repository_info(
+        &self,
+        body: crate::datadogV2::model::ServiceRepositoryInfoRequest,
+    ) -> Result<
+        crate::datadogV2::model::ServiceRepositoryInfoResponse,
+        datadog::Error<GetServiceRepositoryInfoError>,
+    > {
+        match self.get_service_repository_info_with_http_info(body).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Returns the repository URL and commit SHA associated with a given service and version.
+    pub async fn get_service_repository_info_with_http_info(
+        &self,
+        body: crate::datadogV2::model::ServiceRepositoryInfoRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ServiceRepositoryInfoResponse>,
+        datadog::Error<GetServiceRepositoryInfoError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_service_repository_info";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_service_repository_info' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/sourcemaps/service_repository_info",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ServiceRepositoryInfoResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetServiceRepositoryInfoError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieves the content of a specific JavaScript source map file by its
+    /// filename, service name, and version.
+    pub async fn get_sourcemaps(
+        &self,
+        filename: String,
+        service: String,
+        version: String,
+    ) -> Result<crate::datadogV2::model::SourcemapFileResponse, datadog::Error<GetSourcemapsError>>
+    {
+        match self
+            .get_sourcemaps_with_http_info(filename, service, version)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieves the content of a specific JavaScript source map file by its
+    /// filename, service name, and version.
+    pub async fn get_sourcemaps_with_http_info(
+        &self,
+        filename: String,
+        service: String,
+        version: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SourcemapFileResponse>,
+        datadog::Error<GetSourcemapsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_sourcemaps";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_sourcemaps' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/sourcemaps",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("filename", &filename.to_string())]);
+        local_req_builder = local_req_builder.query(&[("service", &service.to_string())]);
+        local_req_builder = local_req_builder.query(&[("version", &version.to_string())]);
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SourcemapFileResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSourcemapsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// List endpoint returns events that match a RUM search query.
     /// [Results are paginated][1].
     ///
@@ -990,6 +2015,498 @@ impl RUMAPI {
             };
         } else {
             let local_entity: Option<ListRUMEventsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieves a paginated list of source maps matching the specified filter criteria.
+    pub async fn list_sourcemaps(
+        &self,
+        params: ListSourcemapsOptionalParams,
+    ) -> Result<crate::datadogV2::model::ListSourcemapsResponse, datadog::Error<ListSourcemapsError>>
+    {
+        match self.list_sourcemaps_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieves a paginated list of source maps matching the specified filter criteria.
+    pub async fn list_sourcemaps_with_http_info(
+        &self,
+        params: ListSourcemapsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ListSourcemapsResponse>,
+        datadog::Error<ListSourcemapsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_sourcemaps";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_sourcemaps' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let mapkind = params.mapkind;
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+        let filter_service = params.filter_service;
+        let filter_version = params.filter_version;
+        let filter_variant = params.filter_variant;
+        let filter_id = params.filter_id;
+        let filter_build_id = params.filter_build_id;
+        let filter_uuid = params.filter_uuid;
+        let filter_platform = params.filter_platform;
+        let filter_build_number = params.filter_build_number;
+        let filter_bundle_name = params.filter_bundle_name;
+        let filter_arch = params.filter_arch;
+        let filter_symbol_source = params.filter_symbol_source;
+        let filter_origin = params.filter_origin;
+        let filter_origin_version = params.filter_origin_version;
+        let filter_filename = params.filter_filename;
+        let filter_debug_id = params.filter_debug_id;
+        let filter_gnu_build_id = params.filter_gnu_build_id;
+        let filter_go_build_id = params.filter_go_build_id;
+        let filter_file_hash = params.filter_file_hash;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/sourcemaps/list",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = mapkind {
+            local_req_builder =
+                local_req_builder.query(&[("mapkind", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = filter_service {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[service]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_version {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[version]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_variant {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[variant]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_id {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[id]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_build_id {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[build_id]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_uuid {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[uuid]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_platform {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[platform]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_build_number {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[build_number]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_bundle_name {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[bundle_name]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_arch {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[arch]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_symbol_source {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[symbol_source]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_origin {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[origin]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_origin_version {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[origin_version]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = filter_filename {
+            local_req_builder =
+                local_req_builder.query(&[("filter[filename]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_debug_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[debug_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_gnu_build_id {
+            local_req_builder = local_req_builder
+                .query(&[("filter[gnu_build_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_go_build_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[go_build_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_file_hash {
+            local_req_builder =
+                local_req_builder.query(&[("filter[file_hash]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ListSourcemapsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSourcemapsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Restores previously deleted source maps matching the specified filter
+    /// criteria. Supports dry-run mode to preview which source maps would be
+    /// restored without performing the actual restoration.
+    pub async fn restore_sourcemaps(
+        &self,
+        mapkind: crate::datadogV2::model::SourcemapMapKind,
+        dry_run: bool,
+        params: RestoreSourcemapsOptionalParams,
+    ) -> Result<crate::datadogV2::model::SourcemapsResponse, datadog::Error<RestoreSourcemapsError>>
+    {
+        match self
+            .restore_sourcemaps_with_http_info(mapkind, dry_run, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Restores previously deleted source maps matching the specified filter
+    /// criteria. Supports dry-run mode to preview which source maps would be
+    /// restored without performing the actual restoration.
+    pub async fn restore_sourcemaps_with_http_info(
+        &self,
+        mapkind: crate::datadogV2::model::SourcemapMapKind,
+        dry_run: bool,
+        params: RestoreSourcemapsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SourcemapsResponse>,
+        datadog::Error<RestoreSourcemapsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.restore_sourcemaps";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.restore_sourcemaps' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_service = params.filter_service;
+        let filter_version = params.filter_version;
+        let filter_variant = params.filter_variant;
+        let filter_id = params.filter_id;
+        let filter_build_id = params.filter_build_id;
+        let filter_uuid = params.filter_uuid;
+        let filter_platform = params.filter_platform;
+        let filter_build_number = params.filter_build_number;
+        let filter_bundle_name = params.filter_bundle_name;
+        let filter_arch = params.filter_arch;
+        let filter_symbol_source = params.filter_symbol_source;
+        let filter_origin = params.filter_origin;
+        let filter_origin_version = params.filter_origin_version;
+        let filter_filename = params.filter_filename;
+        let filter_debug_id = params.filter_debug_id;
+        let filter_gnu_build_id = params.filter_gnu_build_id;
+        let filter_go_build_id = params.filter_go_build_id;
+        let filter_file_hash = params.filter_file_hash;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/sourcemaps/restore",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("mapkind", &mapkind.to_string())]);
+        local_req_builder = local_req_builder.query(&[("dry_run", &dry_run.to_string())]);
+        if let Some(ref local) = filter_service {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[service]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_version {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[version]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_variant {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[variant]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_id {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[id]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_build_id {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[build_id]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_uuid {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[uuid]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_platform {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[platform]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_build_number {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[build_number]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_bundle_name {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[bundle_name]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_arch {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[arch]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_symbol_source {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[symbol_source]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_origin {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[origin]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_origin_version {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[origin_version]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = filter_filename {
+            local_req_builder =
+                local_req_builder.query(&[("filter[filename]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_debug_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[debug_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_gnu_build_id {
+            local_req_builder = local_req_builder
+                .query(&[("filter[gnu_build_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_go_build_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[go_build_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_file_hash {
+            local_req_builder =
+                local_req_builder.query(&[("filter[file_hash]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SourcemapsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<RestoreSourcemapsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
