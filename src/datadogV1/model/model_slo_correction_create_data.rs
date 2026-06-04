@@ -12,6 +12,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SLOCorrectionCreateData {
     /// The attribute object associated with the SLO correction to be created.
+    ///
+    /// Exactly one of `slo_id` or `slo_query` must be provided.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV1::model::SLOCorrectionCreateRequestAttributes>,
     /// SLO correction resource type.

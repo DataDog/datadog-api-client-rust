@@ -55,9 +55,16 @@ pub struct SLOCorrectionResponseAttributes {
     /// are `FREQ`, `INTERVAL`, `COUNT`, `UNTIL` and `BYDAY`.
     #[serde(rename = "rrule", default, with = "::serde_with::rust::double_option")]
     pub rrule: Option<Option<String>>,
-    /// ID of the SLO that this correction applies to.
-    #[serde(rename = "slo_id")]
-    pub slo_id: Option<String>,
+    /// ID of the single SLO that this correction applies to.
+    #[serde(rename = "slo_id", default, with = "::serde_with::rust::double_option")]
+    pub slo_id: Option<Option<String>>,
+    /// Query that matches the SLOs this correction applies to.
+    #[serde(
+        rename = "slo_query",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub slo_query: Option<Option<String>>,
     /// Starting time of the correction in epoch seconds.
     #[serde(rename = "start")]
     pub start: Option<i64>,
@@ -84,6 +91,7 @@ impl SLOCorrectionResponseAttributes {
             modifier: None,
             rrule: None,
             slo_id: None,
+            slo_query: None,
             start: None,
             timezone: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -139,8 +147,13 @@ impl SLOCorrectionResponseAttributes {
         self
     }
 
-    pub fn slo_id(mut self, value: String) -> Self {
+    pub fn slo_id(mut self, value: Option<String>) -> Self {
         self.slo_id = Some(value);
+        self
+    }
+
+    pub fn slo_query(mut self, value: Option<String>) -> Self {
+        self.slo_query = Some(value);
         self
     }
 
@@ -197,7 +210,8 @@ impl<'de> Deserialize<'de> for SLOCorrectionResponseAttributes {
                     Option<crate::datadogV1::model::SLOCorrectionResponseAttributesModifier>,
                 > = None;
                 let mut rrule: Option<Option<String>> = None;
-                let mut slo_id: Option<String> = None;
+                let mut slo_id: Option<Option<String>> = None;
+                let mut slo_query: Option<Option<String>> = None;
                 let mut start: Option<i64> = None;
                 let mut timezone: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -255,10 +269,10 @@ impl<'de> Deserialize<'de> for SLOCorrectionResponseAttributes {
                             rrule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "slo_id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             slo_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "slo_query" => {
+                            slo_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "start" => {
                             if v.is_null() {
@@ -291,6 +305,7 @@ impl<'de> Deserialize<'de> for SLOCorrectionResponseAttributes {
                     modifier,
                     rrule,
                     slo_id,
+                    slo_query,
                     start,
                     timezone,
                     additional_properties,

@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The attribute object associated with the SLO correction to be created.
+///
+/// Exactly one of `slo_id` or `slo_query` must be provided.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -27,9 +29,14 @@ pub struct SLOCorrectionCreateRequestAttributes {
     /// are `FREQ`, `INTERVAL`, `COUNT`, `UNTIL` and `BYDAY`.
     #[serde(rename = "rrule")]
     pub rrule: Option<String>,
-    /// ID of the SLO that this correction applies to.
+    /// ID of the single SLO that this correction applies to.
     #[serde(rename = "slo_id")]
-    pub slo_id: String,
+    pub slo_id: Option<String>,
+    /// Query that matches the SLOs this correction applies to.
+    /// The query uses the [Events search syntax](<https://docs.datadoghq.com/events/explorer/searching/>)
+    /// and can filter SLOs by SLO tags.
+    #[serde(rename = "slo_query")]
+    pub slo_query: Option<String>,
     /// Starting time of the correction in epoch seconds.
     #[serde(rename = "start")]
     pub start: i64,
@@ -46,7 +53,6 @@ pub struct SLOCorrectionCreateRequestAttributes {
 impl SLOCorrectionCreateRequestAttributes {
     pub fn new(
         category: crate::datadogV1::model::SLOCorrectionCategory,
-        slo_id: String,
         start: i64,
     ) -> SLOCorrectionCreateRequestAttributes {
         SLOCorrectionCreateRequestAttributes {
@@ -55,7 +61,8 @@ impl SLOCorrectionCreateRequestAttributes {
             duration: None,
             end: None,
             rrule: None,
-            slo_id,
+            slo_id: None,
+            slo_query: None,
             start,
             timezone: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -80,6 +87,16 @@ impl SLOCorrectionCreateRequestAttributes {
 
     pub fn rrule(mut self, value: String) -> Self {
         self.rrule = Some(value);
+        self
+    }
+
+    pub fn slo_id(mut self, value: String) -> Self {
+        self.slo_id = Some(value);
+        self
+    }
+
+    pub fn slo_query(mut self, value: String) -> Self {
+        self.slo_query = Some(value);
         self
     }
 
@@ -120,6 +137,7 @@ impl<'de> Deserialize<'de> for SLOCorrectionCreateRequestAttributes {
                 let mut end: Option<i64> = None;
                 let mut rrule: Option<String> = None;
                 let mut slo_id: Option<String> = None;
+                let mut slo_query: Option<String> = None;
                 let mut start: Option<i64> = None;
                 let mut timezone: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -167,7 +185,16 @@ impl<'de> Deserialize<'de> for SLOCorrectionCreateRequestAttributes {
                             rrule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "slo_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             slo_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "slo_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            slo_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "start" => {
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -186,7 +213,6 @@ impl<'de> Deserialize<'de> for SLOCorrectionCreateRequestAttributes {
                     }
                 }
                 let category = category.ok_or_else(|| M::Error::missing_field("category"))?;
-                let slo_id = slo_id.ok_or_else(|| M::Error::missing_field("slo_id"))?;
                 let start = start.ok_or_else(|| M::Error::missing_field("start"))?;
 
                 let content = SLOCorrectionCreateRequestAttributes {
@@ -196,6 +222,7 @@ impl<'de> Deserialize<'de> for SLOCorrectionCreateRequestAttributes {
                     end,
                     rrule,
                     slo_id,
+                    slo_query,
                     start,
                     timezone,
                     additional_properties,

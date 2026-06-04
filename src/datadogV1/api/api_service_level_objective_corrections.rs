@@ -152,7 +152,8 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         Self { config, client }
     }
 
-    /// Create an SLO Correction.
+    /// Create an SLO correction. Use `slo_id` to apply the correction to a single SLO, or `slo_query` to apply the
+    /// correction to SLOs that match a query. Exactly one of `slo_id` or `slo_query` is required.
     pub async fn create_slo_correction(
         &self,
         body: crate::datadogV1::model::SLOCorrectionCreateRequest,
@@ -174,7 +175,8 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         }
     }
 
-    /// Create an SLO Correction.
+    /// Create an SLO correction. Use `slo_id` to apply the correction to a single SLO, or `slo_query` to apply the
+    /// correction to SLOs that match a query. Exactly one of `slo_id` or `slo_query` is required.
     pub async fn create_slo_correction_with_http_info(
         &self,
         body: crate::datadogV1::model::SLOCorrectionCreateRequest,

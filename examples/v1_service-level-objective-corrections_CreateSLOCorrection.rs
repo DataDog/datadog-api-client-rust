@@ -15,11 +15,11 @@ async fn main() {
         SLOCorrectionCreateData::new(SLOCorrectionType::CORRECTION).attributes(
             SLOCorrectionCreateRequestAttributes::new(
                 SLOCorrectionCategory::SCHEDULED_MAINTENANCE,
-                slo_data_0_id.clone(),
                 1636629071,
             )
             .description("Example-Service-Level-Objective-Correction".to_string())
             .end(1636632671)
+            .slo_id(slo_data_0_id.clone())
             .timezone("UTC".to_string()),
         ),
     );

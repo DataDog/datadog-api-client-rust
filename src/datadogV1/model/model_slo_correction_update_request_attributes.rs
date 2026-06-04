@@ -27,6 +27,11 @@ pub struct SLOCorrectionUpdateRequestAttributes {
     /// are `FREQ`, `INTERVAL`, `COUNT`, `UNTIL` and `BYDAY`.
     #[serde(rename = "rrule")]
     pub rrule: Option<String>,
+    /// Query that matches the SLOs this correction applies to.
+    /// The query uses the [Events search syntax](<https://docs.datadoghq.com/events/explorer/searching/>)
+    /// and can filter SLOs by SLO tags.
+    #[serde(rename = "slo_query")]
+    pub slo_query: Option<String>,
     /// Starting time of the correction in epoch seconds.
     #[serde(rename = "start")]
     pub start: Option<i64>,
@@ -48,6 +53,7 @@ impl SLOCorrectionUpdateRequestAttributes {
             duration: None,
             end: None,
             rrule: None,
+            slo_query: None,
             start: None,
             timezone: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -77,6 +83,11 @@ impl SLOCorrectionUpdateRequestAttributes {
 
     pub fn rrule(mut self, value: String) -> Self {
         self.rrule = Some(value);
+        self
+    }
+
+    pub fn slo_query(mut self, value: String) -> Self {
+        self.slo_query = Some(value);
         self
     }
 
@@ -127,6 +138,7 @@ impl<'de> Deserialize<'de> for SLOCorrectionUpdateRequestAttributes {
                 let mut duration: Option<i64> = None;
                 let mut end: Option<i64> = None;
                 let mut rrule: Option<String> = None;
+                let mut slo_query: Option<String> = None;
                 let mut start: Option<i64> = None;
                 let mut timezone: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -176,6 +188,12 @@ impl<'de> Deserialize<'de> for SLOCorrectionUpdateRequestAttributes {
                             }
                             rrule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "slo_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            slo_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "start" => {
                             if v.is_null() {
                                 continue;
@@ -202,6 +220,7 @@ impl<'de> Deserialize<'de> for SLOCorrectionUpdateRequestAttributes {
                     duration,
                     end,
                     rrule,
+                    slo_query,
                     start,
                     timezone,
                     additional_properties,
