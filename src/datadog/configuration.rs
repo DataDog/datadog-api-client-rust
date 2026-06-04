@@ -556,6 +556,7 @@ impl Default for Configuration {
             ),
             ("v2.validate_monitor_user_template".to_owned(), false),
             ("v2.delete_scopes_restriction".to_owned(), false),
+            ("v2.get_o_auth2_well_known_sites".to_owned(), false),
             ("v2.get_scopes_restriction".to_owned(), false),
             ("v2.register_o_auth_client".to_owned(), false),
             ("v2.upsert_scopes_restriction".to_owned(), false),
