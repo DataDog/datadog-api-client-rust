@@ -180,9 +180,26 @@ pub struct ListLLMObsExperimentsOptionalParams {
     pub filter_dataset_id: Option<String>,
     /// Filter experiments by experiment ID. Can be specified multiple times.
     pub filter_id: Option<String>,
-    /// Use the Pagination cursor to retrieve the next page of results.
+    /// Filter experiments by their exact run name.
+    pub filter_name: Option<String>,
+    /// Filter by logical experiment name. This is the `name` field set when creating an experiment through `POST /experiments`. Returns all experiment runs that share the same name, enabling cross-commit and cross-branch comparisons.
+    pub filter_experiment: Option<String>,
+    /// Filter by JSONB metadata containment. Provide a JSON object string where
+    /// experiments whose metadata contains all specified key-value pairs are returned.
+    /// For example: `{"commit":"abc123","branch":"main"}`.
+    pub filter_metadata: Option<String>,
+    /// Filter experiments by the ID of their parent (baseline) experiment. Returns all experiments that were run against the given baseline. Can be specified multiple times.
+    pub filter_parent_experiment_id: Option<String>,
+    /// When `true`, return only soft-deleted experiments. Defaults to `false`.
+    pub filter_is_deleted: Option<bool>,
+    /// When `true`, enrich each experiment with its author's user data in the `author` field.
+    pub include_user_data: Option<bool>,
+    /// When `true`, enrich each experiment with its dataset name in the `dataset_name` field.
+    pub include_dataset_names: Option<bool>,
+    /// Use the pagination cursor returned in `meta.after` to retrieve the next page of results.
     pub page_cursor: Option<String>,
-    /// Maximum number of results to return per page.
+    /// Maximum number of results to return per page. Values above 5000 are clamped
+    /// to 5000. Defaults to 5000.
     pub page_limit: Option<i64>,
 }
 
@@ -202,12 +219,50 @@ impl ListLLMObsExperimentsOptionalParams {
         self.filter_id = Some(value);
         self
     }
-    /// Use the Pagination cursor to retrieve the next page of results.
+    /// Filter experiments by their exact run name.
+    pub fn filter_name(mut self, value: String) -> Self {
+        self.filter_name = Some(value);
+        self
+    }
+    /// Filter by logical experiment name. This is the `name` field set when creating an experiment through `POST /experiments`. Returns all experiment runs that share the same name, enabling cross-commit and cross-branch comparisons.
+    pub fn filter_experiment(mut self, value: String) -> Self {
+        self.filter_experiment = Some(value);
+        self
+    }
+    /// Filter by JSONB metadata containment. Provide a JSON object string where
+    /// experiments whose metadata contains all specified key-value pairs are returned.
+    /// For example: `{"commit":"abc123","branch":"main"}`.
+    pub fn filter_metadata(mut self, value: String) -> Self {
+        self.filter_metadata = Some(value);
+        self
+    }
+    /// Filter experiments by the ID of their parent (baseline) experiment. Returns all experiments that were run against the given baseline. Can be specified multiple times.
+    pub fn filter_parent_experiment_id(mut self, value: String) -> Self {
+        self.filter_parent_experiment_id = Some(value);
+        self
+    }
+    /// When `true`, return only soft-deleted experiments. Defaults to `false`.
+    pub fn filter_is_deleted(mut self, value: bool) -> Self {
+        self.filter_is_deleted = Some(value);
+        self
+    }
+    /// When `true`, enrich each experiment with its author's user data in the `author` field.
+    pub fn include_user_data(mut self, value: bool) -> Self {
+        self.include_user_data = Some(value);
+        self
+    }
+    /// When `true`, enrich each experiment with its dataset name in the `dataset_name` field.
+    pub fn include_dataset_names(mut self, value: bool) -> Self {
+        self.include_dataset_names = Some(value);
+        self
+    }
+    /// Use the pagination cursor returned in `meta.after` to retrieve the next page of results.
     pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
     }
-    /// Maximum number of results to return per page.
+    /// Maximum number of results to return per page. Values above 5000 are clamped
+    /// to 5000. Defaults to 5000.
     pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
@@ -653,6 +708,24 @@ pub enum ListLLMObsDatasetsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListLLMObsExperimentEventsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListLLMObsExperimentEventsV1Error is a struct for typed errors of method [`LLMObservabilityAPI::list_llm_obs_experiment_events_v1`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListLLMObsExperimentEventsV1Error {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListLLMObsExperimentEventsV2Error is a struct for typed errors of method [`LLMObservabilityAPI::list_llm_obs_experiment_events_v2`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListLLMObsExperimentEventsV2Error {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -5316,6 +5389,246 @@ impl LLMObservabilityAPI {
         }
     }
 
+    /// Retrieve spans with their evaluation metrics for a given experiment. Returns spans only, with no summary metrics and no pagination. Deprecated in favor of `ListLLMObsExperimentEventsV3`.
+    pub async fn list_llm_obs_experiment_events_v1(
+        &self,
+        experiment_id: String,
+    ) -> Result<
+        crate::datadogV2::model::LLMObsExperimentSpansResponse,
+        datadog::Error<ListLLMObsExperimentEventsV1Error>,
+    > {
+        match self
+            .list_llm_obs_experiment_events_v1_with_http_info(experiment_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieve spans with their evaluation metrics for a given experiment. Returns spans only, with no summary metrics and no pagination. Deprecated in favor of `ListLLMObsExperimentEventsV3`.
+    pub async fn list_llm_obs_experiment_events_v1_with_http_info(
+        &self,
+        experiment_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentSpansResponse>,
+        datadog::Error<ListLLMObsExperimentEventsV1Error>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_llm_obs_experiment_events_v1";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_llm_obs_experiment_events_v1' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/experiments/{experiment_id}/events",
+            local_configuration.get_operation_host(operation_id),
+            experiment_id = datadog::urlencode(experiment_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentSpansResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListLLMObsExperimentEventsV1Error> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieve spans and experiment-level summary metrics for a given experiment. Returns the full events payload without pagination. Deprecated: use `ListLLMObsExperimentEventsV3` instead.
+    pub async fn list_llm_obs_experiment_events_v2(
+        &self,
+        experiment_id: String,
+    ) -> Result<
+        crate::datadogV2::model::LLMObsExperimentEventsV2Response,
+        datadog::Error<ListLLMObsExperimentEventsV2Error>,
+    > {
+        match self
+            .list_llm_obs_experiment_events_v2_with_http_info(experiment_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieve spans and experiment-level summary metrics for a given experiment. Returns the full events payload without pagination. Deprecated: use `ListLLMObsExperimentEventsV3` instead.
+    pub async fn list_llm_obs_experiment_events_v2_with_http_info(
+        &self,
+        experiment_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentEventsV2Response>,
+        datadog::Error<ListLLMObsExperimentEventsV2Error>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_llm_obs_experiment_events_v2";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_llm_obs_experiment_events_v2' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v2/experiments/{experiment_id}/events",
+            local_configuration.get_operation_host(operation_id),
+            experiment_id = datadog::urlencode(experiment_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentEventsV2Response>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListLLMObsExperimentEventsV2Error> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// List all LLM Observability experiments sorted by creation date, newest first.
     pub async fn list_llm_obs_experiments(
         &self,
@@ -5361,6 +5674,13 @@ impl LLMObservabilityAPI {
         let filter_project_id = params.filter_project_id;
         let filter_dataset_id = params.filter_dataset_id;
         let filter_id = params.filter_id;
+        let filter_name = params.filter_name;
+        let filter_experiment = params.filter_experiment;
+        let filter_metadata = params.filter_metadata;
+        let filter_parent_experiment_id = params.filter_parent_experiment_id;
+        let filter_is_deleted = params.filter_is_deleted;
+        let include_user_data = params.include_user_data;
+        let include_dataset_names = params.include_dataset_names;
         let page_cursor = params.page_cursor;
         let page_limit = params.page_limit;
 
@@ -5384,6 +5704,36 @@ impl LLMObservabilityAPI {
         if let Some(ref local_query_param) = filter_id {
             local_req_builder =
                 local_req_builder.query(&[("filter[id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_name {
+            local_req_builder =
+                local_req_builder.query(&[("filter[name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_experiment {
+            local_req_builder =
+                local_req_builder.query(&[("filter[experiment]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_metadata {
+            local_req_builder =
+                local_req_builder.query(&[("filter[metadata]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_parent_experiment_id {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[parent_experiment_id]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_is_deleted {
+            local_req_builder =
+                local_req_builder.query(&[("filter[is_deleted]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_user_data {
+            local_req_builder =
+                local_req_builder.query(&[("include[user_data]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_dataset_names {
+            local_req_builder = local_req_builder
+                .query(&[("include[dataset_names]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = page_cursor {
             local_req_builder =

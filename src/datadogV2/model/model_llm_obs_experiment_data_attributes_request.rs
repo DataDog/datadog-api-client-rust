@@ -16,7 +16,7 @@ pub struct LLMObsExperimentDataAttributesRequest {
     pub config: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Identifier of the dataset used in this experiment.
     #[serde(rename = "dataset_id")]
-    pub dataset_id: String,
+    pub dataset_id: Option<String>,
     /// Version of the dataset to use. Defaults to the current version if not specified.
     #[serde(rename = "dataset_version")]
     pub dataset_version: Option<i64>,
@@ -32,9 +32,15 @@ pub struct LLMObsExperimentDataAttributesRequest {
     /// Name of the experiment.
     #[serde(rename = "name")]
     pub name: String,
+    /// Identifier of the parent (baseline) experiment this experiment is run against.
+    #[serde(rename = "parent_experiment_id")]
+    pub parent_experiment_id: Option<String>,
     /// Identifier of the project this experiment belongs to.
     #[serde(rename = "project_id")]
     pub project_id: String,
+    /// Number of runs configured for this experiment.
+    #[serde(rename = "run_count")]
+    pub run_count: Option<i32>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -43,20 +49,18 @@ pub struct LLMObsExperimentDataAttributesRequest {
 }
 
 impl LLMObsExperimentDataAttributesRequest {
-    pub fn new(
-        dataset_id: String,
-        name: String,
-        project_id: String,
-    ) -> LLMObsExperimentDataAttributesRequest {
+    pub fn new(name: String, project_id: String) -> LLMObsExperimentDataAttributesRequest {
         LLMObsExperimentDataAttributesRequest {
             config: None,
-            dataset_id,
+            dataset_id: None,
             dataset_version: None,
             description: None,
             ensure_unique: None,
             metadata: None,
             name,
+            parent_experiment_id: None,
             project_id,
+            run_count: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -64,6 +68,11 @@ impl LLMObsExperimentDataAttributesRequest {
 
     pub fn config(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.config = Some(value);
+        self
+    }
+
+    pub fn dataset_id(mut self, value: String) -> Self {
+        self.dataset_id = Some(value);
         self
     }
 
@@ -87,6 +96,16 @@ impl LLMObsExperimentDataAttributesRequest {
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> Self {
         self.metadata = Some(value);
+        self
+    }
+
+    pub fn parent_experiment_id(mut self, value: String) -> Self {
+        self.parent_experiment_id = Some(value);
+        self
+    }
+
+    pub fn run_count(mut self, value: i32) -> Self {
+        self.run_count = Some(value);
         self
     }
 
@@ -125,7 +144,9 @@ impl<'de> Deserialize<'de> for LLMObsExperimentDataAttributesRequest {
                 let mut metadata: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
                 let mut name: Option<String> = None;
+                let mut parent_experiment_id: Option<String> = None;
                 let mut project_id: Option<String> = None;
+                let mut run_count: Option<i32> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -141,6 +162,9 @@ impl<'de> Deserialize<'de> for LLMObsExperimentDataAttributesRequest {
                             config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "dataset_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             dataset_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "dataset_version" => {
@@ -173,8 +197,21 @@ impl<'de> Deserialize<'de> for LLMObsExperimentDataAttributesRequest {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "parent_experiment_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            parent_experiment_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "project_id" => {
                             project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "run_count" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            run_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -183,7 +220,6 @@ impl<'de> Deserialize<'de> for LLMObsExperimentDataAttributesRequest {
                         }
                     }
                 }
-                let dataset_id = dataset_id.ok_or_else(|| M::Error::missing_field("dataset_id"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let project_id = project_id.ok_or_else(|| M::Error::missing_field("project_id"))?;
 
@@ -195,7 +231,9 @@ impl<'de> Deserialize<'de> for LLMObsExperimentDataAttributesRequest {
                     ensure_unique,
                     metadata,
                     name,
+                    parent_experiment_id,
                     project_id,
+                    run_count,
                     additional_properties,
                     _unparsed,
                 };

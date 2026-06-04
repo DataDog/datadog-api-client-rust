@@ -2313,6 +2313,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_llm_obs_experiment,
     );
     world.function_mappings.insert(
+        "v2.ListLLMObsExperimentEventsV1".into(),
+        test_v2_list_llm_obs_experiment_events_v1,
+    );
+    world.function_mappings.insert(
         "v2.CreateLLMObsExperimentEvents".into(),
         test_v2_create_llm_obs_experiment_events,
     );
@@ -2413,6 +2417,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.ListLLMObsDatasetVersions".into(),
         test_v2_list_llm_obs_dataset_versions,
+    );
+    world.function_mappings.insert(
+        "v2.ListLLMObsExperimentEventsV2".into(),
+        test_v2_list_llm_obs_experiment_events_v2,
     );
     world.function_mappings.insert(
         "v2.UploadLLMObsDatasetRecordsFile".into(),
@@ -15353,6 +15361,27 @@ fn test_v2_list_llm_obs_experiments(
     let filter_id = _parameters
         .get("filter[id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_name = _parameters
+        .get("filter[name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_experiment = _parameters
+        .get("filter[experiment]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_metadata = _parameters
+        .get("filter[metadata]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_parent_experiment_id = _parameters
+        .get("filter[parent_experiment_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_is_deleted = _parameters
+        .get("filter[is_deleted]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_user_data = _parameters
+        .get("include[user_data]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_dataset_names = _parameters
+        .get("include[dataset_names]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let page_cursor = _parameters
         .get("page[cursor]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -15364,6 +15393,13 @@ fn test_v2_list_llm_obs_experiments(
     params.filter_project_id = filter_project_id;
     params.filter_dataset_id = filter_dataset_id;
     params.filter_id = filter_id;
+    params.filter_name = filter_name;
+    params.filter_experiment = filter_experiment;
+    params.filter_metadata = filter_metadata;
+    params.filter_parent_experiment_id = filter_parent_experiment_id;
+    params.filter_is_deleted = filter_is_deleted;
+    params.include_user_data = include_user_data;
+    params.include_dataset_names = include_dataset_names;
     params.page_cursor = page_cursor;
     params.page_limit = page_limit;
     let response = match block_on(api.list_llm_obs_experiments_with_http_info(params)) {
@@ -15467,6 +15503,36 @@ fn test_v2_update_llm_obs_experiment(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_experiment_events_v1(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let experiment_id =
+        serde_json::from_value(_parameters.get("experiment_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.list_llm_obs_experiment_events_v1_with_http_info(experiment_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
@@ -16343,6 +16409,36 @@ fn test_v2_list_llm_obs_dataset_versions(
         serde_json::from_value(_parameters.get("dataset_id").unwrap().clone()).unwrap();
     let response =
         match block_on(api.list_llm_obs_dataset_versions_with_http_info(project_id, dataset_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_experiment_events_v2(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let experiment_id =
+        serde_json::from_value(_parameters.get("experiment_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.list_llm_obs_experiment_events_v2_with_http_info(experiment_id)) {
             Ok(response) => response,
             Err(error) => {
                 return match error {
