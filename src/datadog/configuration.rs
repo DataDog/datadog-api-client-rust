@@ -509,6 +509,7 @@ impl Default for Configuration {
             ("v2.delete_aws_account_ccm_config".to_owned(), false),
             ("v2.get_aws_account_ccm_config".to_owned(), false),
             ("v2.update_aws_account_ccm_config".to_owned(), false),
+            ("v2.validate_awsccm_config".to_owned(), false),
             ("v2.create_jira_issue_template".to_owned(), false),
             ("v2.delete_jira_account".to_owned(), false),
             ("v2.delete_jira_issue_template".to_owned(), false),
