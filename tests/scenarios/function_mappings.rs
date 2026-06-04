@@ -159,6 +159,7 @@ pub struct ApiInstances {
     pub v2_api_on_call: Option<datadogV2::api_on_call::OnCallAPI>,
     pub v2_api_on_call_paging: Option<datadogV2::api_on_call_paging::OnCallPagingAPI>,
     pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
+    pub v2_api_customer_org: Option<datadogV2::api_customer_org::CustomerOrgAPI>,
     pub v2_api_org_connections: Option<datadogV2::api_org_connections::OrgConnectionsAPI>,
     pub v2_api_org_groups: Option<datadogV2::api_org_groups::OrgGroupsAPI>,
     pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
@@ -1041,6 +1042,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "OnCallPaging" => {
             world.api_instances.v2_api_on_call_paging = Some(
                 datadogV2::api_on_call_paging::OnCallPagingAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "CustomerOrg" => {
+            world.api_instances.v2_api_customer_org = Some(
+                datadogV2::api_customer_org::CustomerOrgAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -5663,6 +5672,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UploadIdPMetadata".into(), test_v2_upload_idp_metadata);
+    world
+        .function_mappings
+        .insert("v2.DisableCustomerOrg".into(), test_v2_disable_customer_org);
     world
         .function_mappings
         .insert("v2.ListOrgConnections".into(), test_v2_list_org_connections);
@@ -44123,6 +44135,31 @@ fn test_v2_upload_idp_metadata(world: &mut DatadogWorld, _parameters: &HashMap<S
     let mut params = datadogV2::api_organizations::UploadIdPMetadataOptionalParams::default();
     params.idp_file = idp_file;
     let response = match block_on(api.upload_idp_metadata_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_disable_customer_org(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_customer_org
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.disable_customer_org_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
