@@ -92,6 +92,7 @@ pub mod api_rum;
 pub mod api_rum_audience_management;
 pub mod api_rum_insights;
 pub mod api_rum_metrics;
+pub mod api_rum_rate_limit;
 pub mod api_rum_replay_heatmaps;
 pub mod api_rum_replay_playlists;
 pub mod api_rum_replay_sessions;
