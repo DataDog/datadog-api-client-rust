@@ -18422,6 +18422,9 @@ fn test_v2_list_application_keys(world: &mut DatadogWorld, _parameters: &HashMap
     let filter_created_at_end = _parameters
         .get("filter[created_at][end]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_owned_by = _parameters
+        .get("filter[owned_by]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -18432,6 +18435,7 @@ fn test_v2_list_application_keys(world: &mut DatadogWorld, _parameters: &HashMap
     params.filter = filter;
     params.filter_created_at_start = filter_created_at_start;
     params.filter_created_at_end = filter_created_at_end;
+    params.filter_owned_by = filter_owned_by;
     params.include = include;
     let response = match block_on(api.list_application_keys_with_http_info(params)) {
         Ok(response) => response,

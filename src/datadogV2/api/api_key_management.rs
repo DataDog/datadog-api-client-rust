@@ -151,6 +151,8 @@ pub struct ListApplicationKeysOptionalParams {
     pub filter_created_at_start: Option<String>,
     /// Only include application keys created on or before the specified date.
     pub filter_created_at_end: Option<String>,
+    /// Filter application keys by owner ID.
+    pub filter_owned_by: Option<String>,
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
     pub include: Option<String>,
 }
@@ -186,6 +188,11 @@ impl ListApplicationKeysOptionalParams {
     /// Only include application keys created on or before the specified date.
     pub fn filter_created_at_end(mut self, value: String) -> Self {
         self.filter_created_at_end = Some(value);
+        self
+    }
+    /// Filter application keys by owner ID.
+    pub fn filter_owned_by(mut self, value: String) -> Self {
+        self.filter_owned_by = Some(value);
         self
     }
     /// Resource path for related resources to include in the response. Only `owned_by` is supported.
@@ -1946,6 +1953,7 @@ impl KeyManagementAPI {
         let filter = params.filter;
         let filter_created_at_start = params.filter_created_at_start;
         let filter_created_at_end = params.filter_created_at_end;
+        let filter_owned_by = params.filter_owned_by;
         let include = params.include;
 
         let local_client = &self.client;
@@ -1980,6 +1988,10 @@ impl KeyManagementAPI {
         if let Some(ref local_query_param) = filter_created_at_end {
             local_req_builder = local_req_builder
                 .query(&[("filter[created_at][end]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_owned_by {
+            local_req_builder =
+                local_req_builder.query(&[("filter[owned_by]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = include {
             local_req_builder =
