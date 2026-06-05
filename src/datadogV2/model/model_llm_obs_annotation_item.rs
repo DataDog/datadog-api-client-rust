@@ -23,7 +23,7 @@ pub struct LLMObsAnnotationItem {
     /// Identifier of the interaction this annotation belongs to.
     #[serde(rename = "interaction_id")]
     pub interaction_id: String,
-    /// The label values for this annotation.
+    /// Label values for this annotation.
     #[serde(rename = "label_values")]
     pub label_values: std::collections::BTreeMap<String, serde_json::Value>,
     /// Timestamp when the annotation was last modified.

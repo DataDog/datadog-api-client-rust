@@ -14,7 +14,7 @@ pub struct LLMObsAnnotatedInteractionsDataResponse {
     /// Attributes containing the list of annotated interactions.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsAnnotatedInteractionsDataAttributesResponse,
-    /// The queue ID.
+    /// The annotation queue ID.
     #[serde(rename = "id")]
     pub id: String,
     /// Resource type for annotated interactions.
