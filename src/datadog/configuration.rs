@@ -560,6 +560,7 @@ impl Default for Configuration {
             ("v2.get_scopes_restriction".to_owned(), false),
             ("v2.register_o_auth_client".to_owned(), false),
             ("v2.upsert_scopes_restriction".to_owned(), false),
+            ("v2.update_org_saml_configurations".to_owned(), false),
             ("v2.disable_customer_org".to_owned(), false),
             ("v2.bulk_update_org_group_memberships".to_owned(), false),
             ("v2.create_org_group".to_owned(), false),
