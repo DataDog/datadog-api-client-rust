@@ -118,6 +118,11 @@ impl<'de> Deserialize<'de> for {{ name }} {
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    {%- if additionalProperties != false and model.get("x-keep-typed-in-additional-properties") %}
+                    if let Ok(ap_value) = serde_json::from_value(v.clone()) {
+                        additional_properties.insert(k.clone(), ap_value);
+                    }
+                    {%- endif %}
                     match k.as_str() {
                         {%- for attr, schema in model.get("properties", {}).items() %}
                         {%- set required = attr in model.required %}
