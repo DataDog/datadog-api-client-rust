@@ -5332,6 +5332,30 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_create_bulk_tags_metrics_configuration,
     );
     world.function_mappings.insert(
+        "v2.ListTagIndexingRules".into(),
+        test_v2_list_tag_indexing_rules,
+    );
+    world.function_mappings.insert(
+        "v2.CreateTagIndexingRule".into(),
+        test_v2_create_tag_indexing_rule,
+    );
+    world.function_mappings.insert(
+        "v2.ReorderTagIndexingRules".into(),
+        test_v2_reorder_tag_indexing_rules,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteTagIndexingRule".into(),
+        test_v2_delete_tag_indexing_rule,
+    );
+    world.function_mappings.insert(
+        "v2.GetTagIndexingRule".into(),
+        test_v2_get_tag_indexing_rule,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateTagIndexingRule".into(),
+        test_v2_update_tag_indexing_rule,
+    );
+    world.function_mappings.insert(
         "v2.ListActiveMetricConfigurations".into(),
         test_v2_list_active_metric_configurations,
     );
@@ -5349,6 +5373,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.GetMetricTagCardinalityDetails".into(),
         test_v2_get_metric_tag_cardinality_details,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteTagIndexingRuleExemption".into(),
+        test_v2_delete_tag_indexing_rule_exemption,
+    );
+    world.function_mappings.insert(
+        "v2.GetTagIndexingRuleExemption".into(),
+        test_v2_get_tag_indexing_rule_exemption,
+    );
+    world.function_mappings.insert(
+        "v2.CreateTagIndexingRuleExemption".into(),
+        test_v2_create_tag_indexing_rule_exemption,
+    );
+    world.function_mappings.insert(
+        "v2.ListTagIndexingRulesForMetric".into(),
+        test_v2_list_tag_indexing_rules_for_metric,
     );
     world.function_mappings.insert(
         "v2.DeleteTagConfiguration".into(),
@@ -41223,6 +41263,181 @@ fn test_v2_create_bulk_tags_metrics_configuration(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_tag_indexing_rules(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let search = _parameters
+        .get("search")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_metrics::ListTagIndexingRulesOptionalParams::default();
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    params.search = search;
+    let response = match block_on(api.list_tag_indexing_rules_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_tag_indexing_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_tag_indexing_rule_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_reorder_tag_indexing_rules(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.reorder_tag_indexing_rules_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_tag_indexing_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_tag_indexing_rule_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_tag_indexing_rule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_tag_indexing_rule_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_tag_indexing_rule(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_tag_indexing_rule_with_http_info(id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_active_metric_configurations(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -41404,6 +41619,126 @@ fn test_v2_get_metric_tag_cardinality_details(
         serde_json::from_value(_parameters.get("metric_name").unwrap().clone()).unwrap();
     let response =
         match block_on(api.get_metric_tag_cardinality_details_with_http_info(metric_name)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_tag_indexing_rule_exemption(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let metric_name =
+        serde_json::from_value(_parameters.get("metric_name").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_tag_indexing_rule_exemption_with_http_info(metric_name)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_tag_indexing_rule_exemption(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let metric_name =
+        serde_json::from_value(_parameters.get("metric_name").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_tag_indexing_rule_exemption_with_http_info(metric_name)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_tag_indexing_rule_exemption(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let metric_name =
+        serde_json::from_value(_parameters.get("metric_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_tag_indexing_rule_exemption_with_http_info(metric_name, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_tag_indexing_rules_for_metric(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let metric_name =
+        serde_json::from_value(_parameters.get("metric_name").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.list_tag_indexing_rules_for_metric_with_http_info(metric_name)) {
             Ok(response) => response,
             Err(error) => {
                 return match error {
