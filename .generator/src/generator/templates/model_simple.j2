@@ -119,6 +119,7 @@ impl<'de> Deserialize<'de> for {{ name }} {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     {%- if additionalProperties != false and model.get("x-keep-typed-in-additional-properties") %}
+                    // from_value::<serde_json::Value> is infallible; the Ok guard future-proofs typed AP schemas.
                     if let Ok(ap_value) = serde_json::from_value(v.clone()) {
                         additional_properties.insert(k.clone(), ap_value);
                     }
