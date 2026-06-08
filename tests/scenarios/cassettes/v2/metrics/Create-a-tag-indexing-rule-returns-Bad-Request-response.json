@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"metric_name_matches\":[\"dd.test.*\"],\"name\":\"test\",\"options\":{\"data\":{\"manage_preexisting_metrics\":true,\"override_previous_rules\":false},\"version\":99}},\"type\":\"tag_indexing_rules\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/metrics/tag-indexing-rules"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Invalid request body: options version must be 1\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Thu, 04 Jun 2026 18:25:59 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

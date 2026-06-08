@@ -1,0 +1,33 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "application/json"
+          ]
+        },
+        "method": "get",
+        "uri": "https://api.datadoghq.com/api/v2/metrics/1invalid/tag-indexing-rules"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[\"Invalid metric name: metric name must start with a letter and only contain letters, numbers, dots, and underscores\"]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Thu, 04 Jun 2026 16:39:37 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
