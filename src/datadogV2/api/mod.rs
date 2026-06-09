@@ -34,6 +34,7 @@ pub mod api_container_images;
 pub mod api_containers;
 pub mod api_csm_agents;
 pub mod api_csm_coverage_analysis;
+pub mod api_csm_settings;
 pub mod api_csm_threats;
 pub mod api_customer_org;
 pub mod api_dashboard_lists;
