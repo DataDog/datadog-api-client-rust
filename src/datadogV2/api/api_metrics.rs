@@ -169,21 +169,21 @@ impl ListTagConfigurationsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListTagIndexingRulesOptionalParams {
     /// Page size (1–1000, default 100).
-    pub page_limit: Option<i32>,
+    pub page_limit: Option<i64>,
     /// Page offset from the start of the list (default 0).
-    pub page_offset: Option<i32>,
+    pub page_offset: Option<i64>,
     /// Substring filter on rule name.
     pub search: Option<String>,
 }
 
 impl ListTagIndexingRulesOptionalParams {
     /// Page size (1–1000, default 100).
-    pub fn page_limit(mut self, value: i32) -> Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
     /// Page offset from the start of the list (default 0).
-    pub fn page_offset(mut self, value: i32) -> Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }

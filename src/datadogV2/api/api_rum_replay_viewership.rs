@@ -15,19 +15,19 @@ use std::io::Write;
 #[derive(Clone, Default, Debug)]
 pub struct ListRumReplaySessionWatchersOptionalParams {
     /// Number of items per page.
-    pub page_size: Option<i32>,
+    pub page_size: Option<i64>,
     /// Page number for pagination (0-indexed).
-    pub page_number: Option<i32>,
+    pub page_number: Option<i64>,
 }
 
 impl ListRumReplaySessionWatchersOptionalParams {
     /// Number of items per page.
-    pub fn page_size(mut self, value: i32) -> Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Page number for pagination (0-indexed).
-    pub fn page_number(mut self, value: i32) -> Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
@@ -40,7 +40,7 @@ pub struct ListRumReplayViewershipHistorySessionsOptionalParams {
     /// Start timestamp in milliseconds for watched_at filter.
     pub filter_watched_at_start: Option<i64>,
     /// Page number for pagination (0-indexed).
-    pub page_number: Option<i32>,
+    pub page_number: Option<i64>,
     /// Filter by user UUID. Defaults to current user if not specified.
     pub filter_created_by: Option<String>,
     /// End timestamp in milliseconds for watched_at filter.
@@ -48,7 +48,7 @@ pub struct ListRumReplayViewershipHistorySessionsOptionalParams {
     /// Comma-separated list of session IDs to filter by.
     pub filter_session_ids: Option<String>,
     /// Number of items per page.
-    pub page_size: Option<i32>,
+    pub page_size: Option<i64>,
     /// Filter by application ID.
     pub filter_application_id: Option<String>,
 }
@@ -60,7 +60,7 @@ impl ListRumReplayViewershipHistorySessionsOptionalParams {
         self
     }
     /// Page number for pagination (0-indexed).
-    pub fn page_number(mut self, value: i32) -> Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
@@ -80,7 +80,7 @@ impl ListRumReplayViewershipHistorySessionsOptionalParams {
         self
     }
     /// Number of items per page.
-    pub fn page_size(mut self, value: i32) -> Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }

@@ -19,9 +19,9 @@ pub struct ListModelLabProjectsOptionalParams {
     /// Sort field. Valid values: name, created_at, updated_at. Prefix with '-' for descending order (e.g., -updated_at).
     pub sort: Option<String>,
     /// Number of items per page. Maximum is 100.
-    pub page_size: Option<i32>,
+    pub page_size: Option<i64>,
     /// Page number (1-indexed).
-    pub page_number: Option<i32>,
+    pub page_number: Option<i64>,
 }
 
 impl ListModelLabProjectsOptionalParams {
@@ -46,12 +46,12 @@ impl ListModelLabProjectsOptionalParams {
         self
     }
     /// Number of items per page. Maximum is 100.
-    pub fn page_size(mut self, value: i32) -> Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Page number (1-indexed).
-    pub fn page_number(mut self, value: i32) -> Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
@@ -102,9 +102,9 @@ pub struct ListModelLabRunsOptionalParams {
     /// Sort field. Valid values: name, created_at, updated_at, duration. Prefix with '-' for descending order (e.g., -updated_at).
     pub sort: Option<String>,
     /// Number of items per page. Maximum is 100.
-    pub page_size: Option<i32>,
+    pub page_size: Option<i64>,
     /// Page number (1-indexed).
-    pub page_number: Option<i32>,
+    pub page_number: Option<i64>,
 }
 
 impl ListModelLabRunsOptionalParams {
@@ -169,12 +169,12 @@ impl ListModelLabRunsOptionalParams {
         self
     }
     /// Number of items per page. Maximum is 100.
-    pub fn page_size(mut self, value: i32) -> Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Page number (1-indexed).
-    pub fn page_number(mut self, value: i32) -> Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }

@@ -15,9 +15,9 @@ pub struct ListEntityRiskScoresOptionalParams {
     /// End time for the query in Unix timestamp (milliseconds). Defaults to now.
     pub to: Option<i64>,
     /// Size of the page to return. Maximum is 1000.
-    pub page_size: Option<i32>,
+    pub page_size: Option<i64>,
     /// Page number to return (1-indexed).
-    pub page_number: Option<i32>,
+    pub page_number: Option<i64>,
     /// Query ID for pagination consistency.
     pub page_query_id: Option<String>,
     /// Sort order for results. Format: `field:direction` where direction is `asc` or `desc`.
@@ -42,12 +42,12 @@ impl ListEntityRiskScoresOptionalParams {
         self
     }
     /// Size of the page to return. Maximum is 1000.
-    pub fn page_size(mut self, value: i32) -> Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Page number to return (1-indexed).
-    pub fn page_number(mut self, value: i32) -> Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }

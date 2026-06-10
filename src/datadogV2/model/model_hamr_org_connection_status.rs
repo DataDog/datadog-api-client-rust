@@ -23,12 +23,12 @@ impl Serialize for HamrOrgConnectionStatus {
     {
         match self {
             Self::UnparsedObject(v) => v.serialize(serializer),
-            Self::UNSPECIFIED => serializer.serialize_i32(0),
-            Self::ONBOARDING => serializer.serialize_i32(1),
-            Self::PASSIVE => serializer.serialize_i32(2),
-            Self::FAILOVER => serializer.serialize_i32(3),
-            Self::ACTIVE => serializer.serialize_i32(4),
-            Self::RECOVERY => serializer.serialize_i32(5),
+            Self::UNSPECIFIED => serializer.serialize_i64(0),
+            Self::ONBOARDING => serializer.serialize_i64(1),
+            Self::PASSIVE => serializer.serialize_i64(2),
+            Self::FAILOVER => serializer.serialize_i64(3),
+            Self::ACTIVE => serializer.serialize_i64(4),
+            Self::RECOVERY => serializer.serialize_i64(5),
         }
     }
 }
@@ -38,7 +38,7 @@ impl<'de> Deserialize<'de> for HamrOrgConnectionStatus {
     where
         D: Deserializer<'de>,
     {
-        let s: i32 = i32::deserialize(deserializer)?;
+        let s: i64 = i64::deserialize(deserializer)?;
         Ok(match s {
             0 => Self::UNSPECIFIED,
             1 => Self::ONBOARDING,

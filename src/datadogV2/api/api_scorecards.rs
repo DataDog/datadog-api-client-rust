@@ -257,9 +257,9 @@ pub struct ListScorecardScoresOptionalParams {
     /// Sort scores by field. Use a hyphen prefix for descending order. Options: score, numerator, denominator, total_pass, total_fail, total_skip, total_no_data.
     pub sort: Option<String>,
     /// Offset for pagination.
-    pub page_offset: Option<i32>,
+    pub page_offset: Option<i64>,
     /// Number of scores to return. Max is 1000.
-    pub page_limit: Option<i32>,
+    pub page_limit: Option<i64>,
 }
 
 impl ListScorecardScoresOptionalParams {
@@ -299,12 +299,12 @@ impl ListScorecardScoresOptionalParams {
         self
     }
     /// Offset for pagination.
-    pub fn page_offset(mut self, value: i32) -> Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// Number of scores to return. Max is 1000.
-    pub fn page_limit(mut self, value: i32) -> Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }

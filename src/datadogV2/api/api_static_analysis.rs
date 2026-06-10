@@ -64,19 +64,19 @@ impl ListAiCustomRulesetsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListCustomRuleRevisionsOptionalParams {
     /// Pagination offset
-    pub page_offset: Option<i32>,
+    pub page_offset: Option<i64>,
     /// Pagination limit
-    pub page_limit: Option<i32>,
+    pub page_limit: Option<i64>,
 }
 
 impl ListCustomRuleRevisionsOptionalParams {
     /// Pagination offset
-    pub fn page_offset(mut self, value: i32) -> Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// Pagination limit
-    pub fn page_limit(mut self, value: i32) -> Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
@@ -3927,7 +3927,7 @@ impl StaticAnalysisAPI {
         >,
     > + '_ {
         try_stream! {
-            let mut page_size: i32 = 10;
+            let mut page_size: i64 = 10;
             if params.page_limit.is_none() {
                 params.page_limit = Some(page_size);
             } else {

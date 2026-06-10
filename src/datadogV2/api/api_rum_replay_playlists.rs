@@ -31,19 +31,19 @@ impl AddRumReplaySessionToPlaylistOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListRumReplayPlaylistSessionsOptionalParams {
     /// Page number for pagination (0-indexed).
-    pub page_number: Option<i32>,
+    pub page_number: Option<i64>,
     /// Number of items per page.
-    pub page_size: Option<i32>,
+    pub page_size: Option<i64>,
 }
 
 impl ListRumReplayPlaylistSessionsOptionalParams {
     /// Page number for pagination (0-indexed).
-    pub fn page_number(mut self, value: i32) -> Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Number of items per page.
-    pub fn page_size(mut self, value: i32) -> Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
@@ -58,9 +58,9 @@ pub struct ListRumReplayPlaylistsOptionalParams {
     /// Search query to filter playlists by name.
     pub filter_query: Option<String>,
     /// Page number for pagination (0-indexed).
-    pub page_number: Option<i32>,
+    pub page_number: Option<i64>,
     /// Number of items per page.
-    pub page_size: Option<i32>,
+    pub page_size: Option<i64>,
 }
 
 impl ListRumReplayPlaylistsOptionalParams {
@@ -75,12 +75,12 @@ impl ListRumReplayPlaylistsOptionalParams {
         self
     }
     /// Page number for pagination (0-indexed).
-    pub fn page_number(mut self, value: i32) -> Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Number of items per page.
-    pub fn page_size(mut self, value: i32) -> Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
@@ -236,7 +236,7 @@ impl RumReplayPlaylistsAPI {
     pub async fn add_rum_replay_session_to_playlist(
         &self,
         ts: i64,
-        playlist_id: i32,
+        playlist_id: i64,
         session_id: String,
         params: AddRumReplaySessionToPlaylistOptionalParams,
     ) -> Result<
@@ -264,7 +264,7 @@ impl RumReplayPlaylistsAPI {
     pub async fn add_rum_replay_session_to_playlist_with_http_info(
         &self,
         ts: i64,
-        playlist_id: i32,
+        playlist_id: i64,
         session_id: String,
         params: AddRumReplaySessionToPlaylistOptionalParams,
     ) -> Result<
@@ -362,7 +362,7 @@ impl RumReplayPlaylistsAPI {
     /// Remove sessions from a playlist.
     pub async fn bulk_remove_rum_replay_playlist_sessions(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
         body: crate::datadogV2::model::SessionIdArray,
     ) -> Result<(), datadog::Error<BulkRemoveRumReplayPlaylistSessionsError>> {
         match self
@@ -377,7 +377,7 @@ impl RumReplayPlaylistsAPI {
     /// Remove sessions from a playlist.
     pub async fn bulk_remove_rum_replay_playlist_sessions_with_http_info(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
         body: crate::datadogV2::model::SessionIdArray,
     ) -> Result<
         datadog::ResponseContent<()>,
@@ -656,7 +656,7 @@ impl RumReplayPlaylistsAPI {
     /// Delete a playlist.
     pub async fn delete_rum_replay_playlist(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
     ) -> Result<(), datadog::Error<DeleteRumReplayPlaylistError>> {
         match self
             .delete_rum_replay_playlist_with_http_info(playlist_id)
@@ -670,7 +670,7 @@ impl RumReplayPlaylistsAPI {
     /// Delete a playlist.
     pub async fn delete_rum_replay_playlist_with_http_info(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumReplayPlaylistError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_rum_replay_playlist";
@@ -747,7 +747,7 @@ impl RumReplayPlaylistsAPI {
     /// Get a playlist.
     pub async fn get_rum_replay_playlist(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
     ) -> Result<crate::datadogV2::model::Playlist, datadog::Error<GetRumReplayPlaylistError>> {
         match self
             .get_rum_replay_playlist_with_http_info(playlist_id)
@@ -769,7 +769,7 @@ impl RumReplayPlaylistsAPI {
     /// Get a playlist.
     pub async fn get_rum_replay_playlist_with_http_info(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::Playlist>,
         datadog::Error<GetRumReplayPlaylistError>,
@@ -854,7 +854,7 @@ impl RumReplayPlaylistsAPI {
     /// List sessions in a playlist.
     pub async fn list_rum_replay_playlist_sessions(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
         params: ListRumReplayPlaylistSessionsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::PlaylistsSessionArray,
@@ -880,7 +880,7 @@ impl RumReplayPlaylistsAPI {
     /// List sessions in a playlist.
     pub async fn list_rum_replay_playlist_sessions_with_http_info(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
         params: ListRumReplayPlaylistSessionsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::PlaylistsSessionArray>,
@@ -1108,7 +1108,7 @@ impl RumReplayPlaylistsAPI {
     /// Remove a session from a playlist.
     pub async fn remove_rum_replay_session_from_playlist(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
         session_id: String,
     ) -> Result<(), datadog::Error<RemoveRumReplaySessionFromPlaylistError>> {
         match self
@@ -1123,7 +1123,7 @@ impl RumReplayPlaylistsAPI {
     /// Remove a session from a playlist.
     pub async fn remove_rum_replay_session_from_playlist_with_http_info(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
         session_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveRumReplaySessionFromPlaylistError>>
     {
@@ -1203,7 +1203,7 @@ impl RumReplayPlaylistsAPI {
     /// Update a playlist.
     pub async fn update_rum_replay_playlist(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
         body: crate::datadogV2::model::Playlist,
     ) -> Result<crate::datadogV2::model::Playlist, datadog::Error<UpdateRumReplayPlaylistError>>
     {
@@ -1227,7 +1227,7 @@ impl RumReplayPlaylistsAPI {
     /// Update a playlist.
     pub async fn update_rum_replay_playlist_with_http_info(
         &self,
-        playlist_id: i32,
+        playlist_id: i64,
         body: crate::datadogV2::model::Playlist,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::Playlist>,

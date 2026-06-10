@@ -22,7 +22,7 @@ pub struct CountCasesOptionalParams {
     /// Comma-separated fields to group by.
     pub group_bys: Option<String>,
     /// Maximum facet values to return.
-    pub limit: Option<i32>,
+    pub limit: Option<i64>,
 }
 
 impl CountCasesOptionalParams {
@@ -37,7 +37,7 @@ impl CountCasesOptionalParams {
         self
     }
     /// Maximum facet values to return.
-    pub fn limit(mut self, value: i32) -> Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
@@ -64,21 +64,21 @@ impl ListCaseLinksOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListCaseTimelineOptionalParams {
     /// Number of timeline cells to return per page.
-    pub page_size: Option<i32>,
+    pub page_size: Option<i64>,
     /// Zero-based page number for pagination.
-    pub page_number: Option<i32>,
+    pub page_number: Option<i64>,
     /// If `true`, returns timeline cells in chronological order (oldest first). Defaults to `false` (newest first).
     pub sort_ascending: Option<bool>,
 }
 
 impl ListCaseTimelineOptionalParams {
     /// Number of timeline cells to return per page.
-    pub fn page_size(mut self, value: i32) -> Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// Zero-based page number for pagination.
-    pub fn page_number(mut self, value: i32) -> Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
