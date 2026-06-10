@@ -178,6 +178,7 @@ pub struct ApiInstances {
     pub v2_api_csm_threats: Option<datadogV2::api_csm_threats::CSMThreatsAPI>,
     pub v2_api_rum_replay_heatmaps:
         Option<datadogV2::api_rum_replay_heatmaps::RumReplayHeatmapsAPI>,
+    pub v2_api_report_schedules: Option<datadogV2::api_report_schedules::ReportSchedulesAPI>,
     pub v2_api_restriction_policies:
         Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
     pub v2_api_rum: Option<datadogV2::api_rum::RUMAPI>,
@@ -1170,6 +1171,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "RumReplayHeatmaps" => {
             world.api_instances.v2_api_rum_replay_heatmaps = Some(
                 datadogV2::api_rum_replay_heatmaps::RumReplayHeatmapsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "ReportSchedules" => {
+            world.api_instances.v2_api_report_schedules = Some(
+                datadogV2::api_report_schedules::ReportSchedulesAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -6227,6 +6236,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateReplayHeatmapSnapshot".into(),
         test_v2_update_replay_heatmap_snapshot,
+    );
+    world.function_mappings.insert(
+        "v2.CreateReportSchedule".into(),
+        test_v2_create_report_schedule,
+    );
+    world.function_mappings.insert(
+        "v2.PatchReportSchedule".into(),
+        test_v2_patch_report_schedule,
     );
     world.function_mappings.insert(
         "v2.DeleteRestrictionPolicy".into(),
@@ -48599,6 +48616,58 @@ fn test_v2_update_replay_heatmap_snapshot(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_report_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_report_schedules
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_report_schedule_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_patch_report_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_report_schedules
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_uuid =
+        serde_json::from_value(_parameters.get("schedule_uuid").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.patch_report_schedule_with_http_info(schedule_uuid, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
