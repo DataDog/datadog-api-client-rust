@@ -17,6 +17,9 @@ pub struct CreateNotificationRuleParametersDataAttributes {
     /// Name of the notification rule.
     #[serde(rename = "name")]
     pub name: String,
+    /// Routing configuration for the notification rule.
+    #[serde(rename = "routing")]
+    pub routing: Option<crate::datadogV2::model::NotificationRuleRouting>,
     /// Selectors are used to filter security issues for which notifications should be generated.
     /// Users can specify rule severities, rule types, a query to filter security issues on tags and attributes, and the trigger source.
     /// Only the trigger_source field is required.
@@ -50,6 +53,7 @@ impl CreateNotificationRuleParametersDataAttributes {
         CreateNotificationRuleParametersDataAttributes {
             enabled: None,
             name,
+            routing: None,
             selectors,
             targets,
             time_aggregation: None,
@@ -60,6 +64,11 @@ impl CreateNotificationRuleParametersDataAttributes {
 
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
+        self
+    }
+
+    pub fn routing(mut self, value: crate::datadogV2::model::NotificationRuleRouting) -> Self {
+        self.routing = Some(value);
         self
     }
 
@@ -96,6 +105,7 @@ impl<'de> Deserialize<'de> for CreateNotificationRuleParametersDataAttributes {
             {
                 let mut enabled: Option<bool> = None;
                 let mut name: Option<String> = None;
+                let mut routing: Option<crate::datadogV2::model::NotificationRuleRouting> = None;
                 let mut selectors: Option<crate::datadogV2::model::Selectors> = None;
                 let mut targets: Option<Vec<String>> = None;
                 let mut time_aggregation: Option<i64> = None;
@@ -115,6 +125,12 @@ impl<'de> Deserialize<'de> for CreateNotificationRuleParametersDataAttributes {
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "routing" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            routing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "selectors" => {
                             selectors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -143,6 +159,7 @@ impl<'de> Deserialize<'de> for CreateNotificationRuleParametersDataAttributes {
                 let content = CreateNotificationRuleParametersDataAttributes {
                     enabled,
                     name,
+                    routing,
                     selectors,
                     targets,
                     time_aggregation,
