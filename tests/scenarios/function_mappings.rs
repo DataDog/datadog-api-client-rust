@@ -93,6 +93,7 @@ pub struct ApiInstances {
     pub v2_api_csm_agents: Option<datadogV2::api_csm_agents::CSMAgentsAPI>,
     pub v2_api_csm_coverage_analysis:
         Option<datadogV2::api_csm_coverage_analysis::CSMCoverageAnalysisAPI>,
+    pub v2_api_csm_ownership: Option<datadogV2::api_csm_ownership::CSMOwnershipAPI>,
     pub v2_api_csm_settings: Option<datadogV2::api_csm_settings::CSMSettingsAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
     pub v2_api_dashboard_secure_embed:
@@ -789,6 +790,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "CSMOwnership" => {
+            world.api_instances.v2_api_csm_ownership = Some(
+                datadogV2::api_csm_ownership::CSMOwnershipAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "CSMSettings" => {
             world.api_instances.v2_api_csm_settings = Some(
@@ -4183,6 +4192,30 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.GetCSMServerlessCoverageAnalysis".into(),
         test_v2_get_csm_serverless_coverage_analysis,
+    );
+    world.function_mappings.insert(
+        "v2.ListOwnershipInferences".into(),
+        test_v2_list_ownership_inferences,
+    );
+    world.function_mappings.insert(
+        "v2.ListOwnershipHistory".into(),
+        test_v2_list_ownership_history,
+    );
+    world.function_mappings.insert(
+        "v2.GetOwnershipInference".into(),
+        test_v2_get_ownership_inference,
+    );
+    world.function_mappings.insert(
+        "v2.GetOwnershipEvidence".into(),
+        test_v2_get_ownership_evidence,
+    );
+    world.function_mappings.insert(
+        "v2.CreateOwnershipFeedback".into(),
+        test_v2_create_ownership_feedback,
+    );
+    world.function_mappings.insert(
+        "v2.ListOwnershipHistoryByOwnerType".into(),
+        test_v2_list_ownership_history_by_owner_type,
     );
     world.function_mappings.insert(
         "v2.ListCSMAgentlessHosts".into(),
@@ -31872,6 +31905,221 @@ fn test_v2_get_csm_serverless_coverage_analysis(
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.get_csm_serverless_coverage_analysis_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ownership_inferences(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_ownership_inferences_with_http_info(resource_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ownership_history(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_csm_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let cursor = _parameters
+        .get("cursor")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_csm_ownership::ListOwnershipHistoryOptionalParams::default();
+    params.cursor = cursor;
+    params.limit = limit;
+    let response = match block_on(api.list_ownership_history_with_http_info(resource_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ownership_inference(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_csm_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let owner_type =
+        serde_json::from_value(_parameters.get("owner_type").unwrap().clone()).unwrap();
+    let if_none_match = _parameters
+        .get("If-None-Match")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_csm_ownership::GetOwnershipInferenceOptionalParams::default();
+    params.if_none_match = if_none_match;
+    let response =
+        match block_on(api.get_ownership_inference_with_http_info(resource_id, owner_type, params))
+        {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ownership_evidence(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_csm_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let owner_type =
+        serde_json::from_value(_parameters.get("owner_type").unwrap().clone()).unwrap();
+    let if_none_match = _parameters
+        .get("If-None-Match")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_csm_ownership::GetOwnershipEvidenceOptionalParams::default();
+    params.if_none_match = if_none_match;
+    let response = match block_on(api.get_ownership_evidence_with_http_info(
+        resource_id,
+        owner_type,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_ownership_feedback(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let owner_type =
+        serde_json::from_value(_parameters.get("owner_type").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_ownership_feedback_with_http_info(resource_id, owner_type, body))
+        {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ownership_history_by_owner_type(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let owner_type =
+        serde_json::from_value(_parameters.get("owner_type").unwrap().clone()).unwrap();
+    let cursor = _parameters
+        .get("cursor")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_csm_ownership::ListOwnershipHistoryByOwnerTypeOptionalParams::default();
+    params.cursor = cursor;
+    params.limit = limit;
+    let response = match block_on(api.list_ownership_history_by_owner_type_with_http_info(
+        resource_id,
+        owner_type,
+        params,
+    )) {
         Ok(response) => response,
         Err(error) => {
             return match error {
