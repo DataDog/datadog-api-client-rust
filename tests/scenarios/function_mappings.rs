@@ -93,6 +93,7 @@ pub struct ApiInstances {
     pub v2_api_csm_agents: Option<datadogV2::api_csm_agents::CSMAgentsAPI>,
     pub v2_api_csm_coverage_analysis:
         Option<datadogV2::api_csm_coverage_analysis::CSMCoverageAnalysisAPI>,
+    pub v2_api_csm_settings: Option<datadogV2::api_csm_settings::CSMSettingsAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
     pub v2_api_dashboard_secure_embed:
         Option<datadogV2::api_dashboard_secure_embed::DashboardSecureEmbedAPI>,
@@ -788,6 +789,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "CSMSettings" => {
+            world.api_instances.v2_api_csm_settings = Some(
+                datadogV2::api_csm_settings::CSMSettingsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "DashboardSecureEmbed" => {
             world.api_instances.v2_api_dashboard_secure_embed = Some(datadogV2::api_dashboard_secure_embed::DashboardSecureEmbedAPI::with_client_and_config(
@@ -4181,6 +4190,30 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.GetCSMServerlessCoverageAnalysis".into(),
         test_v2_get_csm_serverless_coverage_analysis,
+    );
+    world.function_mappings.insert(
+        "v2.ListCSMAgentlessHosts".into(),
+        test_v2_list_csm_agentless_hosts,
+    );
+    world.function_mappings.insert(
+        "v2.GetCSMAgentlessHostFacetInfo".into(),
+        test_v2_get_csm_agentless_host_facet_info,
+    );
+    world.function_mappings.insert(
+        "v2.ListCSMAgentlessHostFacets".into(),
+        test_v2_list_csm_agentless_host_facets,
+    );
+    world.function_mappings.insert(
+        "v2.ListCSMUnifiedHosts".into(),
+        test_v2_list_csm_unified_hosts,
+    );
+    world.function_mappings.insert(
+        "v2.GetCSMUnifiedHostFacetInfo".into(),
+        test_v2_get_csm_unified_host_facet_info,
+    );
+    world.function_mappings.insert(
+        "v2.ListCSMUnifiedHostFacets".into(),
+        test_v2_list_csm_unified_host_facets,
     );
     world.function_mappings.insert(
         "v2.DeleteDashboardListItems".into(),
@@ -31924,6 +31957,215 @@ fn test_v2_get_csm_serverless_coverage_analysis(
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.get_csm_serverless_coverage_analysis_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_csm_agentless_hosts(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_settings
+        .as_ref()
+        .expect("api instance not found");
+    let page = _parameters
+        .get("page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let size = _parameters
+        .get("size")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_csm_settings::ListCSMAgentlessHostsOptionalParams::default();
+    params.page = page;
+    params.size = size;
+    params.query = query;
+    let response = match block_on(api.list_csm_agentless_hosts_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_csm_agentless_host_facet_info(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_settings
+        .as_ref()
+        .expect("api instance not found");
+    let facet = serde_json::from_value(_parameters.get("facet").unwrap().clone()).unwrap();
+    let search = _parameters
+        .get("search")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_csm_settings::GetCSMAgentlessHostFacetInfoOptionalParams::default();
+    params.search = search;
+    params.query = query;
+    let response =
+        match block_on(api.get_csm_agentless_host_facet_info_with_http_info(facet, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_csm_agentless_host_facets(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_settings
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_csm_agentless_host_facets_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_csm_unified_hosts(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_csm_settings
+        .as_ref()
+        .expect("api instance not found");
+    let page = _parameters
+        .get("page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let size = _parameters
+        .get("size")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_csm_settings::ListCSMUnifiedHostsOptionalParams::default();
+    params.page = page;
+    params.size = size;
+    params.query = query;
+    let response = match block_on(api.list_csm_unified_hosts_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_csm_unified_host_facet_info(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_settings
+        .as_ref()
+        .expect("api instance not found");
+    let facet = serde_json::from_value(_parameters.get("facet").unwrap().clone()).unwrap();
+    let search = _parameters
+        .get("search")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_csm_settings::GetCSMUnifiedHostFacetInfoOptionalParams::default();
+    params.search = search;
+    params.query = query;
+    let response = match block_on(api.get_csm_unified_host_facet_info_with_http_info(facet, params))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_csm_unified_host_facets(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_settings
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_csm_unified_host_facets_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {

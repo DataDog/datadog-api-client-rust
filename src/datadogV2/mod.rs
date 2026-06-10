@@ -35,6 +35,7 @@ pub use self::api::api_container_images;
 pub use self::api::api_containers;
 pub use self::api::api_csm_agents;
 pub use self::api::api_csm_coverage_analysis;
+pub use self::api::api_csm_settings;
 pub use self::api::api_csm_threats;
 pub use self::api::api_customer_org;
 pub use self::api::api_dashboard_lists;
