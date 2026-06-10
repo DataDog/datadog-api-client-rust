@@ -20,7 +20,7 @@ pub struct SourcemapFileAttributes {
     pub mappings: String,
     /// List of character counts for each line in the minified file.
     #[serde(rename = "minifiedLineLengths")]
-    pub minified_line_lengths: Vec<i32>,
+    pub minified_line_lengths: Vec<i64>,
     /// List of symbol names referenced in the mappings.
     #[serde(rename = "names")]
     pub names: Vec<serde_json::Value>,
@@ -47,7 +47,7 @@ impl SourcemapFileAttributes {
     pub fn new(
         file: String,
         mappings: String,
-        minified_line_lengths: Vec<i32>,
+        minified_line_lengths: Vec<i64>,
         names: Vec<serde_json::Value>,
         source_root: String,
         sources: Vec<String>,
@@ -96,7 +96,7 @@ impl<'de> Deserialize<'de> for SourcemapFileAttributes {
             {
                 let mut file: Option<String> = None;
                 let mut mappings: Option<String> = None;
-                let mut minified_line_lengths: Option<Vec<i32>> = None;
+                let mut minified_line_lengths: Option<Vec<i64>> = None;
                 let mut names: Option<Vec<serde_json::Value>> = None;
                 let mut source_root: Option<String> = None;
                 let mut sources: Option<Vec<String>> = None;

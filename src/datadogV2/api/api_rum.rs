@@ -212,9 +212,9 @@ pub struct ListSourcemapsOptionalParams {
     /// The type of source map. Defaults to `js`.
     pub mapkind: Option<crate::datadogV2::model::SourcemapMapKind>,
     /// The number of results to return per page. Must be at least 1.
-    pub page_size: Option<i32>,
+    pub page_size: Option<i64>,
     /// The page number to retrieve, starting from 1.
-    pub page_number: Option<i32>,
+    pub page_number: Option<i64>,
     /// Filter by service names (multiple values allowed). Required for
     /// `js`, `jvm`, `react`, and `flutter` map kinds.
     pub filter_service: Option<Vec<String>>,
@@ -263,12 +263,12 @@ impl ListSourcemapsOptionalParams {
         self
     }
     /// The number of results to return per page. Must be at least 1.
-    pub fn page_size(mut self, value: i32) -> Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
     /// The page number to retrieve, starting from 1.
-    pub fn page_number(mut self, value: i32) -> Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }

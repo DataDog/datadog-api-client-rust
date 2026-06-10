@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ProjectNotificationSettings {
     /// Notification destinations (1=email, 2=slack, 3=in-app).
     #[serde(rename = "destinations")]
-    pub destinations: Option<Vec<i32>>,
+    pub destinations: Option<Vec<i64>>,
     /// Whether notifications are enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
@@ -62,7 +62,7 @@ impl ProjectNotificationSettings {
         }
     }
 
-    pub fn destinations(mut self, value: Vec<i32>) -> Self {
+    pub fn destinations(mut self, value: Vec<i64>) -> Self {
         self.destinations = Some(value);
         self
     }
@@ -139,7 +139,7 @@ impl<'de> Deserialize<'de> for ProjectNotificationSettings {
             where
                 M: MapAccess<'a>,
             {
-                let mut destinations: Option<Vec<i32>> = None;
+                let mut destinations: Option<Vec<i64>> = None;
                 let mut enabled: Option<bool> = None;
                 let mut notify_on_case_assignment: Option<bool> = None;
                 let mut notify_on_case_closed: Option<bool> = None;

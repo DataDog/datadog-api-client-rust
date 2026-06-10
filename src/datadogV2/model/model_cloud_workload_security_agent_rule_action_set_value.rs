@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[serde(untagged)]
 pub enum CloudWorkloadSecurityAgentRuleActionSetValue {
     String(String),
-    I32(i32),
+    I64(i64),
     Bool(bool),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -23,8 +23,8 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSetValue {
         if let Ok(_v) = serde_json::from_value::<String>(value.clone()) {
             return Ok(CloudWorkloadSecurityAgentRuleActionSetValue::String(_v));
         }
-        if let Ok(_v) = serde_json::from_value::<i32>(value.clone()) {
-            return Ok(CloudWorkloadSecurityAgentRuleActionSetValue::I32(_v));
+        if let Ok(_v) = serde_json::from_value::<i64>(value.clone()) {
+            return Ok(CloudWorkloadSecurityAgentRuleActionSetValue::I64(_v));
         }
         if let Ok(_v) = serde_json::from_value::<bool>(value.clone()) {
             return Ok(CloudWorkloadSecurityAgentRuleActionSetValue::Bool(_v));

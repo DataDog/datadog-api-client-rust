@@ -12965,7 +12965,7 @@ impl SecurityMonitoringAPI {
     pub async fn get_signal_notification_rules(
         &self,
     ) -> Result<
-        std::collections::BTreeMap<String, serde_json::Value>,
+        crate::datadogV2::model::NotificationRulesListResponse,
         datadog::Error<GetSignalNotificationRulesError>,
     > {
         match self.get_signal_notification_rules_with_http_info().await {
@@ -12986,7 +12986,7 @@ impl SecurityMonitoringAPI {
     pub async fn get_signal_notification_rules_with_http_info(
         &self,
     ) -> Result<
-        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::ResponseContent<crate::datadogV2::model::NotificationRulesListResponse>,
         datadog::Error<GetSignalNotificationRulesError>,
     > {
         let local_configuration = &self.config;
@@ -13043,7 +13043,7 @@ impl SecurityMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+            match serde_json::from_str::<crate::datadogV2::model::NotificationRulesListResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -14184,7 +14184,7 @@ impl SecurityMonitoringAPI {
     pub async fn get_vulnerability_notification_rules(
         &self,
     ) -> Result<
-        std::collections::BTreeMap<String, serde_json::Value>,
+        crate::datadogV2::model::NotificationRulesListResponse,
         datadog::Error<GetVulnerabilityNotificationRulesError>,
     > {
         match self
@@ -14208,7 +14208,7 @@ impl SecurityMonitoringAPI {
     pub async fn get_vulnerability_notification_rules_with_http_info(
         &self,
     ) -> Result<
-        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
+        datadog::ResponseContent<crate::datadogV2::model::NotificationRulesListResponse>,
         datadog::Error<GetVulnerabilityNotificationRulesError>,
     > {
         let local_configuration = &self.config;
@@ -14265,7 +14265,7 @@ impl SecurityMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
+            match serde_json::from_str::<crate::datadogV2::model::NotificationRulesListResponse>(
                 &local_content,
             ) {
                 Ok(e) => {

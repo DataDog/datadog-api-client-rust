@@ -19,9 +19,9 @@ pub struct ListFeatureFlagsOptionalParams {
     /// Filter by archived status.
     pub is_archived: Option<bool>,
     /// Maximum number of results to return.
-    pub limit: Option<i32>,
+    pub limit: Option<i64>,
     /// Number of results to skip.
-    pub offset: Option<i32>,
+    pub offset: Option<i64>,
 }
 
 impl ListFeatureFlagsOptionalParams {
@@ -36,12 +36,12 @@ impl ListFeatureFlagsOptionalParams {
         self
     }
     /// Maximum number of results to return.
-    pub fn limit(mut self, value: i32) -> Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
     /// Number of results to skip.
-    pub fn offset(mut self, value: i32) -> Self {
+    pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
     }
@@ -56,9 +56,9 @@ pub struct ListFeatureFlagsEnvironmentsOptionalParams {
     /// Filter environments by key (partial matching).
     pub key: Option<String>,
     /// Maximum number of results to return.
-    pub limit: Option<i32>,
+    pub limit: Option<i64>,
     /// Number of results to skip.
-    pub offset: Option<i32>,
+    pub offset: Option<i64>,
 }
 
 impl ListFeatureFlagsEnvironmentsOptionalParams {
@@ -73,12 +73,12 @@ impl ListFeatureFlagsEnvironmentsOptionalParams {
         self
     }
     /// Maximum number of results to return.
-    pub fn limit(mut self, value: i32) -> Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
     /// Number of results to skip.
-    pub fn offset(mut self, value: i32) -> Self {
+    pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
     }

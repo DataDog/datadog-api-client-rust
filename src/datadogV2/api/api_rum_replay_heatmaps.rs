@@ -17,7 +17,7 @@ pub struct ListReplayHeatmapSnapshotsOptionalParams {
     /// Device type to filter snapshots.
     pub filter_device_type: Option<String>,
     /// Maximum number of snapshots to return.
-    pub page_limit: Option<i32>,
+    pub page_limit: Option<i64>,
     /// Filter by application ID.
     pub filter_application_id: Option<String>,
 }
@@ -29,7 +29,7 @@ impl ListReplayHeatmapSnapshotsOptionalParams {
         self
     }
     /// Maximum number of snapshots to return.
-    pub fn page_limit(mut self, value: i32) -> Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }

@@ -14,7 +14,7 @@ pub struct GetSegmentsOptionalParams {
     /// Server-side timestamp in milliseconds.
     pub ts: Option<i64>,
     /// Maximum size in bytes for the segment list.
-    pub max_list_size: Option<i32>,
+    pub max_list_size: Option<i64>,
     /// Paging token for pagination.
     pub paging: Option<String>,
 }
@@ -31,7 +31,7 @@ impl GetSegmentsOptionalParams {
         self
     }
     /// Maximum size in bytes for the segment list.
-    pub fn max_list_size(mut self, value: i32) -> Self {
+    pub fn max_list_size(mut self, value: i64) -> Self {
         self.max_list_size = Some(value);
         self
     }

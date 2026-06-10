@@ -207,9 +207,9 @@ pub struct ListDegradationsOptionalParams {
     /// Optional page id filter.
     pub filter_page_id: Option<String>,
     /// Offset to use as the start of the page.
-    pub page_offset: Option<i32>,
+    pub page_offset: Option<i64>,
     /// The number of degradations to return per page.
-    pub page_limit: Option<i32>,
+    pub page_limit: Option<i64>,
     /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
     pub include: Option<String>,
     /// Optional degradation status filter. Supported values: investigating, identified, monitoring, resolved.
@@ -225,12 +225,12 @@ impl ListDegradationsOptionalParams {
         self
     }
     /// Offset to use as the start of the page.
-    pub fn page_offset(mut self, value: i32) -> Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// The number of degradations to return per page.
-    pub fn page_limit(mut self, value: i32) -> Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
@@ -258,9 +258,9 @@ pub struct ListMaintenancesOptionalParams {
     /// Optional page id filter.
     pub filter_page_id: Option<String>,
     /// Offset to use as the start of the page.
-    pub page_offset: Option<i32>,
+    pub page_offset: Option<i64>,
     /// The number of maintenances to return per page.
-    pub page_limit: Option<i32>,
+    pub page_limit: Option<i64>,
     /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
     pub include: Option<String>,
     /// Optional maintenance status filter. Supported values: scheduled, in_progress, completed.
@@ -276,12 +276,12 @@ impl ListMaintenancesOptionalParams {
         self
     }
     /// Offset to use as the start of the page.
-    pub fn page_offset(mut self, value: i32) -> Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// The number of maintenances to return per page.
-    pub fn page_limit(mut self, value: i32) -> Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }
@@ -307,9 +307,9 @@ impl ListMaintenancesOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListStatusPagesOptionalParams {
     /// Offset to use as the start of the page.
-    pub page_offset: Option<i32>,
+    pub page_offset: Option<i64>,
     /// The number of status pages to return per page.
-    pub page_limit: Option<i32>,
+    pub page_limit: Option<i64>,
     /// Filter status pages by exact domain prefix match. Returns at most one result.
     pub filter_domain_prefix: Option<String>,
     /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user.
@@ -318,12 +318,12 @@ pub struct ListStatusPagesOptionalParams {
 
 impl ListStatusPagesOptionalParams {
     /// Offset to use as the start of the page.
-    pub fn page_offset(mut self, value: i32) -> Self {
+    pub fn page_offset(mut self, value: i64) -> Self {
         self.page_offset = Some(value);
         self
     }
     /// The number of status pages to return per page.
-    pub fn page_limit(mut self, value: i32) -> Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }

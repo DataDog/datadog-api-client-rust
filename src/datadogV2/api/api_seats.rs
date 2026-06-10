@@ -15,14 +15,14 @@ use std::io::Write;
 #[derive(Clone, Default, Debug)]
 pub struct GetSeatsUsersOptionalParams {
     /// Maximum number of results to return.
-    pub page_limit: Option<i32>,
+    pub page_limit: Option<i64>,
     /// Cursor for pagination.
     pub page_cursor: Option<String>,
 }
 
 impl GetSeatsUsersOptionalParams {
     /// Maximum number of results to return.
-    pub fn page_limit(mut self, value: i32) -> Self {
+    pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
     }

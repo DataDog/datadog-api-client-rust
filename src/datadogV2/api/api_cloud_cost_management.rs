@@ -261,9 +261,9 @@ pub struct ListCostAnomaliesOptionalParams {
     /// Sort direction. One of `asc` or `desc`. Defaults to `desc`.
     pub order: Option<String>,
     /// Maximum number of anomalies to return. Defaults to `200`.
-    pub limit: Option<i32>,
+    pub limit: Option<i64>,
     /// Pagination offset. Defaults to `0`.
-    pub offset: Option<i32>,
+    pub offset: Option<i64>,
     /// Optional repeated cloud or SaaS provider filters, such as `aws`, `gcp`, `azure`, `Oracle`, `datadog`, `OpenAI`, or `Anthropic`.
     pub provider_ids: Option<Vec<String>>,
 }
@@ -310,12 +310,12 @@ impl ListCostAnomaliesOptionalParams {
         self
     }
     /// Maximum number of anomalies to return. Defaults to `200`.
-    pub fn limit(mut self, value: i32) -> Self {
+    pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
     /// Pagination offset. Defaults to `0`.
-    pub fn offset(mut self, value: i32) -> Self {
+    pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
         self
     }

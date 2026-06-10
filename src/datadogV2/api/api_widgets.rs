@@ -34,9 +34,9 @@ pub struct SearchWidgetsOptionalParams {
     /// then the rest). Direction is fixed; the `-` prefix is ignored for this field.
     pub sort: Option<String>,
     /// Page number for pagination (0-indexed).
-    pub page_number: Option<i32>,
+    pub page_number: Option<i64>,
     /// Number of widgets per page.
-    pub page_size: Option<i32>,
+    pub page_size: Option<i64>,
 }
 
 impl SearchWidgetsOptionalParams {
@@ -78,12 +78,12 @@ impl SearchWidgetsOptionalParams {
         self
     }
     /// Page number for pagination (0-indexed).
-    pub fn page_number(mut self, value: i32) -> Self {
+    pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
     /// Number of widgets per page.
-    pub fn page_size(mut self, value: i32) -> Self {
+    pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
