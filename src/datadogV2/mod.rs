@@ -114,6 +114,7 @@ pub use self::api::api_service_accounts;
 pub use self::api::api_service_definition;
 pub use self::api::api_service_level_objectives;
 pub use self::api::api_service_now_integration;
+pub use self::api::api_slack_integration;
 pub use self::api::api_software_catalog;
 pub use self::api::api_spa;
 pub use self::api::api_spans;
