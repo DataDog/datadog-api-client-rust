@@ -574,6 +574,7 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.validate_monitor_user_template".to_owned(), false),
+            ("v2.list_network_health_insights".to_owned(), false),
             ("v2.delete_scopes_restriction".to_owned(), false),
             ("v2.get_o_auth2_well_known_sites".to_owned(), false),
             ("v2.get_scopes_restriction".to_owned(), false),

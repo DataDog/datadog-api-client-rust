@@ -153,6 +153,8 @@ pub struct ApiInstances {
     pub v2_api_monitors: Option<datadogV2::api_monitors::MonitorsAPI>,
     pub v2_api_network_device_monitoring:
         Option<datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI>,
+    pub v2_api_network_health_insights:
+        Option<datadogV2::api_network_health_insights::NetworkHealthInsightsAPI>,
     pub v2_api_cloud_network_monitoring:
         Option<datadogV2::api_cloud_network_monitoring::CloudNetworkMonitoringAPI>,
     pub v2_api_o_auth2_client_public:
@@ -1036,6 +1038,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         }
         "NetworkDeviceMonitoring" => {
             world.api_instances.v2_api_network_device_monitoring = Some(datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
+        }
+        "NetworkHealthInsights" => {
+            world.api_instances.v2_api_network_health_insights = Some(datadogV2::api_network_health_insights::NetworkHealthInsightsAPI::with_client_and_config(
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
@@ -5675,6 +5683,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateInterfaceUserTags".into(),
         test_v2_update_interface_user_tags,
+    );
+    world.function_mappings.insert(
+        "v2.ListNetworkHealthInsights".into(),
+        test_v2_list_network_health_insights,
     );
     world.function_mappings.insert(
         "v2.GetAggregatedConnections".into(),
@@ -43940,6 +43952,43 @@ fn test_v2_update_interface_user_tags(
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_interface_user_tags_with_http_info(interface_id, body))
     {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_network_health_insights(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_network_health_insights
+        .as_ref()
+        .expect("api instance not found");
+    let from = _parameters
+        .get("from")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let to = _parameters
+        .get("to")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_network_health_insights::ListNetworkHealthInsightsOptionalParams::default();
+    params.from = from;
+    params.to = to;
+    let response = match block_on(api.list_network_health_insights_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
