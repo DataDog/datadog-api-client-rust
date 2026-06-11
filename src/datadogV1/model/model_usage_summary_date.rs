@@ -20,18 +20,23 @@ pub struct UsageSummaryDate {
     #[serde(rename = "agent_host_top99p")]
     pub agent_host_top99p: Option<i64>,
     /// Shows the sum of all AI credits used by Agent Builder over all hours in the current date for all organizations.
+    /// Values are returned in micro-credits. Divide by 1,000,000 to get AI credits.
     #[serde(rename = "ai_credits_agent_builder_ai_credits_sum")]
     pub ai_credits_agent_builder_ai_credits_sum: Option<i64>,
     /// Shows the sum of all AI credits used by Bits AI Assistant over all hours in the current date for all organizations.
+    /// Values are returned in micro-credits. Divide by 1,000,000 to get AI credits.
     #[serde(rename = "ai_credits_bits_assistant_ai_credits_sum")]
     pub ai_credits_bits_assistant_ai_credits_sum: Option<i64>,
     /// Shows the sum of all AI credits used by Bits AI Dev over all hours in the current date for all organizations.
+    /// Values are returned in micro-credits. Divide by 1,000,000 to get AI credits.
     #[serde(rename = "ai_credits_bits_dev_ai_credits_sum")]
     pub ai_credits_bits_dev_ai_credits_sum: Option<i64>,
     /// Shows the sum of all AI credits used by Bits AI SRE over all hours in the current date for all organizations.
+    /// Values are returned in micro-credits. Divide by 1,000,000 to get AI credits.
     #[serde(rename = "ai_credits_bits_sre_ai_credits_sum")]
     pub ai_credits_bits_sre_ai_credits_sum: Option<i64>,
     /// Shows the sum of all AI credits over all hours in the current date for all organizations.
+    /// Values are returned in micro-credits. Divide by 1,000,000 to get AI credits.
     #[serde(rename = "ai_credits_sum")]
     pub ai_credits_sum: Option<i64>,
     /// Shows the 99th percentile of all Azure app services using APM over all hours in the current date all organizations.
@@ -302,6 +307,7 @@ pub struct UsageSummaryDate {
     #[serde(rename = "dbm_queries_count_avg")]
     pub dbm_queries_count_avg: Option<i64>,
     /// Shows the sum of all orchestrator job hours over all hours in the current date for all organizations.
+    /// Values are returned in seconds. Divide by 3,600 to convert to hours.
     #[serde(rename = "do_jobs_monitoring_orchestrators_job_hours_sum")]
     pub do_jobs_monitoring_orchestrators_job_hours_sum: Option<i64>,
     /// Shows the sum of all ephemeral infrastructure hosts with the Datadog Agent over all hours in the current date for the given org.
@@ -440,93 +446,123 @@ pub struct UsageSummaryDate {
     #[serde(rename = "indexed_points_sum")]
     pub indexed_points_sum: Option<i64>,
     /// Shows the average of all Infrastructure vCPU cores over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_avg")]
     pub infra_cpu_avg: Option<i64>,
     /// Shows the average of all default Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_agent_avg")]
     pub infra_cpu_default_infra_host_vcpu_agent_avg: Option<i64>,
     /// Shows the average of all default basic Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_agent_basic_avg")]
     pub infra_cpu_default_infra_host_vcpu_agent_basic_avg: Option<i64>,
     /// Shows the sum of all default basic Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_agent_basic_sum")]
     pub infra_cpu_default_infra_host_vcpu_agent_basic_sum: Option<i64>,
     /// Shows the sum of all default Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_agent_sum")]
     pub infra_cpu_default_infra_host_vcpu_agent_sum: Option<i64>,
     /// Shows the average of all default Infrastructure host vCPU cores on AWS over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_aws_avg")]
     pub infra_cpu_default_infra_host_vcpu_aws_avg: Option<i64>,
     /// Shows the sum of all default Infrastructure host vCPU cores on AWS over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_aws_sum")]
     pub infra_cpu_default_infra_host_vcpu_aws_sum: Option<i64>,
     /// Shows the average of all default Infrastructure host vCPU cores on Azure over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_azure_avg")]
     pub infra_cpu_default_infra_host_vcpu_azure_avg: Option<i64>,
     /// Shows the sum of all default Infrastructure host vCPU cores on Azure over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_azure_sum")]
     pub infra_cpu_default_infra_host_vcpu_azure_sum: Option<i64>,
     /// Shows the average of all default Infrastructure host vCPU cores on GCP over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_gcp_avg")]
     pub infra_cpu_default_infra_host_vcpu_gcp_avg: Option<i64>,
     /// Shows the sum of all default Infrastructure host vCPU cores on GCP over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_gcp_sum")]
     pub infra_cpu_default_infra_host_vcpu_gcp_sum: Option<i64>,
     /// Shows the average of all default Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_nutanix_avg")]
     pub infra_cpu_default_infra_host_vcpu_nutanix_avg: Option<i64>,
     /// Shows the average of all default basic Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_nutanix_basic_avg")]
     pub infra_cpu_default_infra_host_vcpu_nutanix_basic_avg: Option<i64>,
     /// Shows the sum of all default basic Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_nutanix_basic_sum")]
     pub infra_cpu_default_infra_host_vcpu_nutanix_basic_sum: Option<i64>,
     /// Shows the sum of all default Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_nutanix_sum")]
     pub infra_cpu_default_infra_host_vcpu_nutanix_sum: Option<i64>,
     /// Shows the average of all default Infrastructure host vCPU cores reported by OpenTelemetry over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_opentelemetry_avg")]
     pub infra_cpu_default_infra_host_vcpu_opentelemetry_avg: Option<i64>,
     /// Shows the sum of all default Infrastructure host vCPU cores reported by OpenTelemetry over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_default_infra_host_vcpu_opentelemetry_sum")]
     pub infra_cpu_default_infra_host_vcpu_opentelemetry_sum: Option<i64>,
     /// Shows the average of all observed Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_agent_avg")]
     pub infra_cpu_observed_infra_host_vcpu_agent_avg: Option<i64>,
     /// Shows the sum of all observed Infrastructure host vCPU cores reported by the Datadog Agent over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_agent_sum")]
     pub infra_cpu_observed_infra_host_vcpu_agent_sum: Option<i64>,
     /// Shows the average of all observed Infrastructure host vCPU cores on AWS over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_aws_avg")]
     pub infra_cpu_observed_infra_host_vcpu_aws_avg: Option<i64>,
     /// Shows the sum of all observed Infrastructure host vCPU cores on AWS over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_aws_sum")]
     pub infra_cpu_observed_infra_host_vcpu_aws_sum: Option<i64>,
     /// Shows the average of all observed Infrastructure host vCPU cores on Azure over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_azure_avg")]
     pub infra_cpu_observed_infra_host_vcpu_azure_avg: Option<i64>,
     /// Shows the sum of all observed Infrastructure host vCPU cores on Azure over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_azure_sum")]
     pub infra_cpu_observed_infra_host_vcpu_azure_sum: Option<i64>,
     /// Shows the average of all observed Infrastructure host vCPU cores on GCP over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_gcp_avg")]
     pub infra_cpu_observed_infra_host_vcpu_gcp_avg: Option<i64>,
     /// Shows the sum of all observed Infrastructure host vCPU cores on GCP over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_gcp_sum")]
     pub infra_cpu_observed_infra_host_vcpu_gcp_sum: Option<i64>,
     /// Shows the average of all observed Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_nutanix_avg")]
     pub infra_cpu_observed_infra_host_vcpu_nutanix_avg: Option<i64>,
     /// Shows the sum of all observed Infrastructure host vCPU cores on Nutanix over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_nutanix_sum")]
     pub infra_cpu_observed_infra_host_vcpu_nutanix_sum: Option<i64>,
     /// Shows the average of all observed Infrastructure host vCPU cores reported by OpenTelemetry over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_opentelemetry_avg")]
     pub infra_cpu_observed_infra_host_vcpu_opentelemetry_avg: Option<i64>,
     /// Shows the sum of all observed Infrastructure host vCPU cores reported by OpenTelemetry over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_observed_infra_host_vcpu_opentelemetry_sum")]
     pub infra_cpu_observed_infra_host_vcpu_opentelemetry_sum: Option<i64>,
     /// Shows the sum of all Infrastructure vCPU cores over all hours in the current date for all organizations.
+    /// Values are returned in millicores. Divide by 1,000 to convert to cores.
     #[serde(rename = "infra_cpu_sum")]
     pub infra_cpu_sum: Option<i64>,
     /// Shows the 99th percentile of all Edge Devices Monitoring devices over all hours in the current date for all organizations.
