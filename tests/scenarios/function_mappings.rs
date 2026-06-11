@@ -111,6 +111,7 @@ pub struct ApiInstances {
     pub v2_api_forms: Option<datadogV2::api_forms::FormsAPI>,
     pub v2_api_high_availability_multi_region:
         Option<datadogV2::api_high_availability_multi_region::HighAvailabilityMultiRegionAPI>,
+    pub v2_api_identity_providers: Option<datadogV2::api_identity_providers::IdentityProvidersAPI>,
     pub v2_api_entity_integration_configs:
         Option<datadogV2::api_entity_integration_configs::EntityIntegrationConfigsAPI>,
     pub v2_api_incidents: Option<datadogV2::api_incidents::IncidentsAPI>,
@@ -165,6 +166,8 @@ pub struct ApiInstances {
     pub v2_api_on_call_paging: Option<datadogV2::api_on_call_paging::OnCallPagingAPI>,
     pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
     pub v2_api_customer_org: Option<datadogV2::api_customer_org::CustomerOrgAPI>,
+    pub v2_api_org_authorized_clients:
+        Option<datadogV2::api_org_authorized_clients::OrgAuthorizedClientsAPI>,
     pub v2_api_org_connections: Option<datadogV2::api_org_connections::OrgConnectionsAPI>,
     pub v2_api_org_groups: Option<datadogV2::api_org_groups::OrgGroupsAPI>,
     pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
@@ -214,6 +217,8 @@ pub struct ApiInstances {
     pub v2_api_stegadography: Option<datadogV2::api_stegadography::StegadographyAPI>,
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
+    pub v2_api_user_authorized_clients:
+        Option<datadogV2::api_user_authorized_clients::UserAuthorizedClientsAPI>,
     pub v2_api_web_integrations: Option<datadogV2::api_web_integrations::WebIntegrationsAPI>,
     pub v2_api_widgets: Option<datadogV2::api_widgets::WidgetsAPI>,
     pub v2_api_workflow_automation:
@@ -886,6 +891,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.http_client.as_ref().unwrap().clone()
             ));
         }
+        "IdentityProviders" => {
+            world.api_instances.v2_api_identity_providers = Some(
+                datadogV2::api_identity_providers::IdentityProvidersAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
         "EntityIntegrationConfigs" => {
             world.api_instances.v2_api_entity_integration_configs = Some(datadogV2::api_entity_integration_configs::EntityIntegrationConfigsAPI::with_client_and_config(
                 world.config.clone(),
@@ -1090,6 +1103,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "OrgAuthorizedClients" => {
+            world.api_instances.v2_api_org_authorized_clients = Some(datadogV2::api_org_authorized_clients::OrgAuthorizedClientsAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "OrgConnections" => {
             world.api_instances.v2_api_org_connections = Some(
@@ -1362,6 +1381,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
+        }
+        "UserAuthorizedClients" => {
+            world.api_instances.v2_api_user_authorized_clients = Some(datadogV2::api_user_authorized_clients::UserAuthorizedClientsAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "WebIntegrations" => {
             world.api_instances.v2_api_web_integrations = Some(
@@ -2676,6 +2701,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.UpdateUser".into(), test_v2_update_user);
     world.function_mappings.insert(
+        "v2.GetUserIdentityProviders".into(),
+        test_v2_get_user_identity_providers,
+    );
+    world.function_mappings.insert(
         "v2.DeleteUserInvitations".into(),
         test_v2_delete_user_invitations,
     );
@@ -2686,6 +2715,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.ListUserPermissions".into(),
         test_v2_list_user_permissions,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateUserIdentityProviders".into(),
+        test_v2_update_user_identity_providers,
     );
     world
         .function_mappings
@@ -4607,6 +4640,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_create_hamr_org_connection,
     );
     world.function_mappings.insert(
+        "v2.ListIdentityProviders".into(),
+        test_v2_list_identity_providers,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateIdentityProvider".into(),
+        test_v2_update_identity_provider,
+    );
+    world.function_mappings.insert(
+        "v2.ListIdentityProviderUsers".into(),
+        test_v2_list_identity_provider_users,
+    );
+    world.function_mappings.insert(
+        "v2.ListIdentityProviderUsersWithPagination".into(),
+        test_v2_list_identity_provider_users_with_pagination,
+    );
+    world.function_mappings.insert(
         "v2.DeleteEntityIntegrationConfig".into(),
         test_v2_delete_entity_integration_config,
     );
@@ -5880,6 +5929,42 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.DisableCustomerOrg".into(), test_v2_disable_customer_org);
+    world.function_mappings.insert(
+        "v2.ListOrgAuthorizedClients".into(),
+        test_v2_list_org_authorized_clients,
+    );
+    world.function_mappings.insert(
+        "v2.ListOrgAuthorizedClientsWithPagination".into(),
+        test_v2_list_org_authorized_clients_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteOrgAuthorizedClient".into(),
+        test_v2_delete_org_authorized_client,
+    );
+    world.function_mappings.insert(
+        "v2.GetOrgAuthorizedClient".into(),
+        test_v2_get_org_authorized_client,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateOrgAuthorizedClient".into(),
+        test_v2_update_org_authorized_client,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteOrgAuthorizedClientAllUserAuthorizations".into(),
+        test_v2_delete_org_authorized_client_all_user_authorizations,
+    );
+    world.function_mappings.insert(
+        "v2.ListOrgAuthorizedClientUserAuthorizations".into(),
+        test_v2_list_org_authorized_client_user_authorizations,
+    );
+    world.function_mappings.insert(
+        "v2.ListOrgAuthorizedClientUserAuthorizationsWithPagination".into(),
+        test_v2_list_org_authorized_client_user_authorizations_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteOrgAuthorizedClientUserAuthorization".into(),
+        test_v2_delete_org_authorized_client_user_authorization,
+    );
     world
         .function_mappings
         .insert("v2.ListOrgConnections".into(), test_v2_list_org_connections);
@@ -7195,6 +7280,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetUserMemberships".into(), test_v2_get_user_memberships);
+    world.function_mappings.insert(
+        "v2.ListUserAuthorizedClients".into(),
+        test_v2_list_user_authorized_clients,
+    );
+    world.function_mappings.insert(
+        "v2.ListUserAuthorizedClientsWithPagination".into(),
+        test_v2_list_user_authorized_clients_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteUserAuthorizedClientsByClient".into(),
+        test_v2_delete_user_authorized_clients_by_client,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteUserAuthorizedClient".into(),
+        test_v2_delete_user_authorized_client,
+    );
+    world.function_mappings.insert(
+        "v2.GetUserAuthorizedClient".into(),
+        test_v2_get_user_authorized_client,
+    );
     world.function_mappings.insert(
         "v2.ListWebIntegrationAccounts".into(),
         test_v2_list_web_integration_accounts,
@@ -18268,6 +18373,34 @@ fn test_v2_update_user(world: &mut DatadogWorld, _parameters: &HashMap<String, V
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_get_user_identity_providers(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_users
+        .as_ref()
+        .expect("api instance not found");
+    let user_id = serde_json::from_value(_parameters.get("user_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_user_identity_providers_with_http_info(user_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_delete_user_invitations(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -18326,6 +18459,36 @@ fn test_v2_list_user_permissions(world: &mut DatadogWorld, _parameters: &HashMap
         .expect("api instance not found");
     let user_id = serde_json::from_value(_parameters.get("user_id").unwrap().clone()).unwrap();
     let response = match block_on(api.list_user_permissions_with_http_info(user_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_user_identity_providers(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_users
+        .as_ref()
+        .expect("api instance not found");
+    let user_id = serde_json::from_value(_parameters.get("user_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_user_identity_providers_with_http_info(user_id, body))
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -35277,6 +35440,176 @@ fn test_v2_create_hamr_org_connection(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_identity_providers(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_identity_providers
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_identity_providers_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_identity_provider(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_identity_providers
+        .as_ref()
+        .expect("api instance not found");
+    let idp_id = serde_json::from_value(_parameters.get("idp_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_identity_provider_with_http_info(idp_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_identity_provider_users(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_identity_providers
+        .as_ref()
+        .expect("api instance not found");
+    let idp_id = serde_json::from_value(_parameters.get("idp_id").unwrap().clone()).unwrap();
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort_dir = _parameters
+        .get("sort_dir")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_identity_providers::ListIdentityProviderUsersOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.sort_dir = sort_dir;
+    params.filter = filter;
+    params.filter_status = filter_status;
+    let response = match block_on(api.list_identity_provider_users_with_http_info(idp_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_identity_provider_users_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_identity_providers
+        .as_ref()
+        .expect("api instance not found");
+    let idp_id = serde_json::from_value(_parameters.get("idp_id").unwrap().clone()).unwrap();
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort_dir = _parameters
+        .get("sort_dir")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_identity_providers::ListIdentityProviderUsersOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.sort_dir = sort_dir;
+    params.filter = filter;
+    params.filter_status = filter_status;
+    let response = api.list_identity_provider_users_with_pagination(idp_id, params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
 fn test_v2_delete_entity_integration_config(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -45596,6 +45929,453 @@ fn test_v2_disable_customer_org(world: &mut DatadogWorld, _parameters: &HashMap<
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.disable_customer_org_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_org_authorized_clients(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_oauth2_client_name = _parameters
+        .get("filter[oauth2_client][name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_disabled = _parameters
+        .get("filter[disabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_org_authorized_clients::ListOrgAuthorizedClientsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter = filter;
+    params.filter_oauth2_client_name = filter_oauth2_client_name;
+    params.filter_disabled = filter_disabled;
+    params.include = include;
+    let response = match block_on(api.list_org_authorized_clients_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_org_authorized_clients_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_oauth2_client_name = _parameters
+        .get("filter[oauth2_client][name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_disabled = _parameters
+        .get("filter[disabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_org_authorized_clients::ListOrgAuthorizedClientsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter = filter;
+    params.filter_oauth2_client_name = filter_oauth2_client_name;
+    params.filter_disabled = filter_disabled;
+    params.include = include;
+    let response = api.list_org_authorized_clients_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_delete_org_authorized_client(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let org_authorized_client_id =
+        serde_json::from_value(_parameters.get("org_authorized_client_id").unwrap().clone())
+            .unwrap();
+    let response =
+        match block_on(api.delete_org_authorized_client_with_http_info(org_authorized_client_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_org_authorized_client(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let org_authorized_client_id =
+        serde_json::from_value(_parameters.get("org_authorized_client_id").unwrap().clone())
+            .unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_user_authorized_clients_disabled = _parameters
+        .get("filter[user_authorized_clients][disabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_user_authorized_clients_user_disabled = _parameters
+        .get("filter[user_authorized_clients][user][disabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_org_authorized_clients::GetOrgAuthorizedClientOptionalParams::default();
+    params.include = include;
+    params.filter_user_authorized_clients_disabled = filter_user_authorized_clients_disabled;
+    params.filter_user_authorized_clients_user_disabled =
+        filter_user_authorized_clients_user_disabled;
+    let response = match block_on(
+        api.get_org_authorized_client_with_http_info(org_authorized_client_id, params),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_org_authorized_client(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let org_authorized_client_id =
+        serde_json::from_value(_parameters.get("org_authorized_client_id").unwrap().clone())
+            .unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.update_org_authorized_client_with_http_info(org_authorized_client_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_org_authorized_client_all_user_authorizations(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let org_authorized_client_id =
+        serde_json::from_value(_parameters.get("org_authorized_client_id").unwrap().clone())
+            .unwrap();
+    let user_id = serde_json::from_value(_parameters.get("user_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_org_authorized_client_all_user_authorizations_with_http_info(
+            org_authorized_client_id,
+            user_id,
+        ),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_org_authorized_client_user_authorizations(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let org_authorized_client_id =
+        serde_json::from_value(_parameters.get("org_authorized_client_id").unwrap().clone())
+            .unwrap();
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_disabled = _parameters
+        .get("filter[disabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_user_name = _parameters
+        .get("filter[user][name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_user_email = _parameters
+        .get("filter[user][email]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_user_disabled = _parameters
+        .get("filter[user][disabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_org_authorized_clients::ListOrgAuthorizedClientUserAuthorizationsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter_disabled = filter_disabled;
+    params.filter_user_name = filter_user_name;
+    params.filter_user_email = filter_user_email;
+    params.filter_user_disabled = filter_user_disabled;
+    let response = match block_on(
+        api.list_org_authorized_client_user_authorizations_with_http_info(
+            org_authorized_client_id,
+            params,
+        ),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_org_authorized_client_user_authorizations_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let org_authorized_client_id =
+        serde_json::from_value(_parameters.get("org_authorized_client_id").unwrap().clone())
+            .unwrap();
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_disabled = _parameters
+        .get("filter[disabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_user_name = _parameters
+        .get("filter[user][name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_user_email = _parameters
+        .get("filter[user][email]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_user_disabled = _parameters
+        .get("filter[user][disabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_org_authorized_clients::ListOrgAuthorizedClientUserAuthorizationsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.sort = sort;
+    params.filter_disabled = filter_disabled;
+    params.filter_user_name = filter_user_name;
+    params.filter_user_email = filter_user_email;
+    params.filter_user_disabled = filter_user_disabled;
+    let response = api.list_org_authorized_client_user_authorizations_with_pagination(
+        org_authorized_client_id,
+        params,
+    );
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_delete_org_authorized_client_user_authorization(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let org_authorized_client_id =
+        serde_json::from_value(_parameters.get("org_authorized_client_id").unwrap().clone())
+            .unwrap();
+    let user_authorized_client_id = serde_json::from_value(
+        _parameters
+            .get("user_authorized_client_id")
+            .unwrap()
+            .clone(),
+    )
+    .unwrap();
+    let response = match block_on(
+        api.delete_org_authorized_client_user_authorization_with_http_info(
+            org_authorized_client_id,
+            user_authorized_client_id,
+        ),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -57307,6 +58087,213 @@ fn test_v2_get_user_memberships(world: &mut DatadogWorld, _parameters: &HashMap<
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_user_authorized_clients(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_user_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_disabled = _parameters
+        .get("filter[disabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_user_authorized_clients::ListUserAuthorizedClientsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.filter = filter;
+    params.filter_disabled = filter_disabled;
+    params.include = include;
+    let response = match block_on(api.list_user_authorized_clients_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_user_authorized_clients_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_user_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter = _parameters
+        .get("filter")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_disabled = _parameters
+        .get("filter[disabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_user_authorized_clients::ListUserAuthorizedClientsOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.filter = filter;
+    params.filter_disabled = filter_disabled;
+    params.include = include;
+    let response = api.list_user_authorized_clients_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_delete_user_authorized_clients_by_client(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_user_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let client_id = serde_json::from_value(_parameters.get("client_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_user_authorized_clients_by_client_with_http_info(client_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_user_authorized_client(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_user_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let user_authorized_client_id = serde_json::from_value(
+        _parameters
+            .get("user_authorized_client_id")
+            .unwrap()
+            .clone(),
+    )
+    .unwrap();
+    let response =
+        match block_on(api.delete_user_authorized_client_with_http_info(user_authorized_client_id))
+        {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_user_authorized_client(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_user_authorized_clients
+        .as_ref()
+        .expect("api instance not found");
+    let user_authorized_client_id = serde_json::from_value(
+        _parameters
+            .get("user_authorized_client_id")
+            .unwrap()
+            .clone(),
+    )
+    .unwrap();
+    let response =
+        match block_on(api.get_user_authorized_client_with_http_info(user_authorized_client_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
