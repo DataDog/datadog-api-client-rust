@@ -254,6 +254,44 @@ impl GetSignalEntitiesOptionalParams {
     }
 }
 
+/// GetSingleEntityContextOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_single_entity_context`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetSingleEntityContextOptionalParams {
+    /// The start of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now-7d`).
+    /// Defaults to `now-7d`. Ignored when `as_of` is set.
+    pub from: Option<String>,
+    /// The end of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now`).
+    /// Defaults to `now`. Ignored when `as_of` is set.
+    pub to: Option<String>,
+    /// A point in time at which to query the entity revisions, as an RFC3339 timestamp, a Unix timestamp
+    /// (in seconds), or a relative time (for example, `now-1d`). When set, `from` and `to` are ignored.
+    /// Cannot be combined with custom `from` / `to` values.
+    pub as_of: Option<String>,
+}
+
+impl GetSingleEntityContextOptionalParams {
+    /// The start of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now-7d`).
+    /// Defaults to `now-7d`. Ignored when `as_of` is set.
+    pub fn from(mut self, value: String) -> Self {
+        self.from = Some(value);
+        self
+    }
+    /// The end of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now`).
+    /// Defaults to `now`. Ignored when `as_of` is set.
+    pub fn to(mut self, value: String) -> Self {
+        self.to = Some(value);
+        self
+    }
+    /// A point in time at which to query the entity revisions, as an RFC3339 timestamp, a Unix timestamp
+    /// (in seconds), or a relative time (for example, `now-1d`). When set, `from` and `to` are ignored.
+    /// Cannot be combined with custom `from` / `to` values.
+    pub fn as_of(mut self, value: String) -> Self {
+        self.as_of = Some(value);
+        self
+    }
+}
+
 /// GetStaticAnalysisRulesetOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_static_analysis_ruleset`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -2044,6 +2082,14 @@ pub enum GetSignalNotificationRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSignalNotificationRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetSingleEntityContextError is a struct for typed errors of method [`SecurityMonitoringAPI::get_single_entity_context`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSingleEntityContextError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -13066,6 +13112,151 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<GetSignalNotificationRulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a single entity from the Cloud SIEM entity context store by its identifier, returning the historical
+    /// revisions of the entity in the requested time range. The endpoint can either return revisions across an
+    /// interval (`from` / `to`) or the snapshot of the entity at a single point in time (`as_of`); the two modes
+    /// are mutually exclusive.
+    pub async fn get_single_entity_context(
+        &self,
+        id: String,
+        params: GetSingleEntityContextOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SingleEntityContextResponse,
+        datadog::Error<GetSingleEntityContextError>,
+    > {
+        match self
+            .get_single_entity_context_with_http_info(id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a single entity from the Cloud SIEM entity context store by its identifier, returning the historical
+    /// revisions of the entity in the requested time range. The endpoint can either return revisions across an
+    /// interval (`from` / `to`) or the snapshot of the entity at a single point in time (`as_of`); the two modes
+    /// are mutually exclusive.
+    pub async fn get_single_entity_context_with_http_info(
+        &self,
+        id: String,
+        params: GetSingleEntityContextOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SingleEntityContextResponse>,
+        datadog::Error<GetSingleEntityContextError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_single_entity_context";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_single_entity_context' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let from = params.from;
+        let to = params.to;
+        let as_of = params.as_of;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/entity_context/{id}",
+            local_configuration.get_operation_host(operation_id),
+            id = datadog::urlencode(id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = from {
+            local_req_builder =
+                local_req_builder.query(&[("from", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = to {
+            local_req_builder = local_req_builder.query(&[("to", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = as_of {
+            local_req_builder =
+                local_req_builder.query(&[("as_of", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SingleEntityContextResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSingleEntityContextError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

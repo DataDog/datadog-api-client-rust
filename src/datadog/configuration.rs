@@ -350,6 +350,7 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.get_signal_entities".to_owned(), false),
+            ("v2.get_single_entity_context".to_owned(), false),
             ("v2.get_static_analysis_default_rulesets".to_owned(), false),
             ("v2.get_static_analysis_node_types".to_owned(), false),
             ("v2.get_static_analysis_ruleset".to_owned(), false),

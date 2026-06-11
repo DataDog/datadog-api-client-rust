@@ -10142,6 +10142,8 @@ pub mod model_entity_context_response_meta;
 pub use self::model_entity_context_response_meta::EntityContextResponseMeta;
 pub mod model_entity_context_page;
 pub use self::model_entity_context_page::EntityContextPage;
+pub mod model_single_entity_context_response;
+pub use self::model_single_entity_context_response::SingleEntityContextResponse;
 pub mod model_security_monitoring_rule_sort;
 pub use self::model_security_monitoring_rule_sort::SecurityMonitoringRuleSort;
 pub mod model_security_monitoring_list_rules_response;

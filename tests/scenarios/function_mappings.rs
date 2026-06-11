@@ -3648,6 +3648,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.GetEntityContext".into(), test_v2_get_entity_context);
     world.function_mappings.insert(
+        "v2.GetSingleEntityContext".into(),
+        test_v2_get_single_entity_context,
+    );
+    world.function_mappings.insert(
         "v2.ListSecurityMonitoringRules".into(),
         test_v2_list_security_monitoring_rules,
     );
@@ -27064,6 +27068,48 @@ fn test_v2_get_entity_context(world: &mut DatadogWorld, _parameters: &HashMap<St
     params.limit = limit;
     params.page_token = page_token;
     let response = match block_on(api.get_entity_context_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_single_entity_context(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let from = _parameters
+        .get("from")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let to = _parameters
+        .get("to")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let as_of = _parameters
+        .get("as_of")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_security_monitoring::GetSingleEntityContextOptionalParams::default();
+    params.from = from;
+    params.to = to;
+    params.as_of = as_of;
+    let response = match block_on(api.get_single_entity_context_with_http_info(id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
