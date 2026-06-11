@@ -17,6 +17,9 @@ pub struct PatchNotificationRuleParametersDataAttributes {
     /// Name of the notification rule.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// Routing configuration for the notification rule.
+    #[serde(rename = "routing")]
+    pub routing: Option<crate::datadogV2::model::NotificationRuleRouting>,
     /// Selectors are used to filter security issues for which notifications should be generated.
     /// Users can specify rule severities, rule types, a query to filter security issues on tags and attributes, and the trigger source.
     /// Only the trigger_source field is required.
@@ -49,6 +52,7 @@ impl PatchNotificationRuleParametersDataAttributes {
         PatchNotificationRuleParametersDataAttributes {
             enabled: None,
             name: None,
+            routing: None,
             selectors: None,
             targets: None,
             time_aggregation: None,
@@ -65,6 +69,11 @@ impl PatchNotificationRuleParametersDataAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn routing(mut self, value: crate::datadogV2::model::NotificationRuleRouting) -> Self {
+        self.routing = Some(value);
         self
     }
 
@@ -122,6 +131,7 @@ impl<'de> Deserialize<'de> for PatchNotificationRuleParametersDataAttributes {
             {
                 let mut enabled: Option<bool> = None;
                 let mut name: Option<String> = None;
+                let mut routing: Option<crate::datadogV2::model::NotificationRuleRouting> = None;
                 let mut selectors: Option<crate::datadogV2::model::Selectors> = None;
                 let mut targets: Option<Vec<String>> = None;
                 let mut time_aggregation: Option<i64> = None;
@@ -145,6 +155,12 @@ impl<'de> Deserialize<'de> for PatchNotificationRuleParametersDataAttributes {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "routing" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            routing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "selectors" => {
                             if v.is_null() {
@@ -182,6 +198,7 @@ impl<'de> Deserialize<'de> for PatchNotificationRuleParametersDataAttributes {
                 let content = PatchNotificationRuleParametersDataAttributes {
                     enabled,
                     name,
+                    routing,
                     selectors,
                     targets,
                     time_aggregation,
