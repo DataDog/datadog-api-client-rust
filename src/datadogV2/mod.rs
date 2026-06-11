@@ -76,6 +76,7 @@ pub use self::api::api_microsoft_teams_integration;
 pub use self::api::api_model_lab_api;
 pub use self::api::api_monitors;
 pub use self::api::api_network_device_monitoring;
+pub use self::api::api_network_health_insights;
 pub use self::api::api_o_auth2_client_public;
 pub use self::api::api_observability_pipelines;
 pub use self::api::api_oci_integration;
