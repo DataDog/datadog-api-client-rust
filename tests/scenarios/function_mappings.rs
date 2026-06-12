@@ -131,6 +131,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_salesforce_integration::SalesforceIntegrationAPI>,
     pub v2_api_service_now_integration:
         Option<datadogV2::api_service_now_integration::ServiceNowIntegrationAPI>,
+    pub v2_api_slack_integration: Option<datadogV2::api_slack_integration::SlackIntegrationAPI>,
     pub v2_api_statuspage_integration:
         Option<datadogV2::api_statuspage_integration::StatuspageIntegrationAPI>,
     pub v2_api_webhooks_integration:
@@ -407,6 +408,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "SlackIntegration" => {
             world.api_instances.v1_api_slack_integration = Some(
                 datadogV1::api_slack_integration::SlackIntegrationAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+            world.api_instances.v2_api_slack_integration = Some(
+                datadogV2::api_slack_integration::SlackIntegrationAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -5146,6 +5153,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.ListServiceNowUsers".into(),
         test_v2_list_service_now_users,
+    );
+    world.function_mappings.insert(
+        "v2.ListSlackUserBindings".into(),
+        test_v2_list_slack_user_bindings,
     );
     world.function_mappings.insert(
         "v2.DeleteStatuspageAccount".into(),
@@ -39480,6 +39491,34 @@ fn test_v2_list_service_now_users(world: &mut DatadogWorld, _parameters: &HashMa
     let instance_id =
         serde_json::from_value(_parameters.get("instance_id").unwrap().clone()).unwrap();
     let response = match block_on(api.list_service_now_users_with_http_info(instance_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_slack_user_bindings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_slack_integration
+        .as_ref()
+        .expect("api instance not found");
+    let user_uuid = serde_json::from_value(_parameters.get("user_uuid").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_slack_user_bindings_with_http_info(user_uuid)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
