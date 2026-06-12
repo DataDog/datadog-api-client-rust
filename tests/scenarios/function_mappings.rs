@@ -4945,8 +4945,28 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.MakeGCPSTSDelegate".into(), test_v2_make_gcpsts_delegate);
     world.function_mappings.insert(
+        "v2.ListGoogleChatOrganizations".into(),
+        test_v2_list_google_chat_organizations,
+    );
+    world.function_mappings.insert(
         "v2.GetSpaceByDisplayName".into(),
         test_v2_get_space_by_display_name,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteGoogleChatOrganization".into(),
+        test_v2_delete_google_chat_organization,
+    );
+    world.function_mappings.insert(
+        "v2.GetGoogleChatOrganization".into(),
+        test_v2_get_google_chat_organization,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteGoogleChatDelegatedUser".into(),
+        test_v2_delete_google_chat_delegated_user,
+    );
+    world.function_mappings.insert(
+        "v2.GetGoogleChatDelegatedUser".into(),
+        test_v2_get_google_chat_delegated_user,
     );
     world.function_mappings.insert(
         "v2.ListOrganizationHandles".into(),
@@ -4967,6 +4987,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateOrganizationHandle".into(),
         test_v2_update_organization_handle,
+    );
+    world.function_mappings.insert(
+        "v2.ListGoogleChatTargetAudiences".into(),
+        test_v2_list_google_chat_target_audiences,
+    );
+    world.function_mappings.insert(
+        "v2.CreateGoogleChatTargetAudience".into(),
+        test_v2_create_google_chat_target_audience,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteGoogleChatTargetAudience".into(),
+        test_v2_delete_google_chat_target_audience,
+    );
+    world.function_mappings.insert(
+        "v2.GetGoogleChatTargetAudience".into(),
+        test_v2_get_google_chat_target_audience,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateGoogleChatTargetAudience".into(),
+        test_v2_update_google_chat_target_audience,
     );
     world
         .function_mappings
@@ -37985,6 +38025,33 @@ fn test_v2_make_gcpsts_delegate(world: &mut DatadogWorld, _parameters: &HashMap<
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_google_chat_organizations(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_google_chat_organizations_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_get_space_by_display_name(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -38000,6 +38067,133 @@ fn test_v2_get_space_by_display_name(
         serde_json::from_value(_parameters.get("space_display_name").unwrap().clone()).unwrap();
     let response = match block_on(
         api.get_space_by_display_name_with_http_info(domain_name, space_display_name),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_google_chat_organization(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let response =
+        match block_on(api.delete_google_chat_organization_with_http_info(organization_binding_id))
+        {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_google_chat_organization(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let response =
+        match block_on(api.get_google_chat_organization_with_http_info(organization_binding_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_google_chat_delegated_user(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let response = match block_on(
+        api.delete_google_chat_delegated_user_with_http_info(organization_binding_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_google_chat_delegated_user(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let response = match block_on(
+        api.get_google_chat_delegated_user_with_http_info(organization_binding_id),
     ) {
         Ok(response) => response,
         Err(error) => {
@@ -38162,6 +38356,178 @@ fn test_v2_update_organization_handle(
     let response = match block_on(api.update_organization_handle_with_http_info(
         organization_binding_id,
         handle_id,
+        body,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_google_chat_target_audiences(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let response = match block_on(
+        api.list_google_chat_target_audiences_with_http_info(organization_binding_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_google_chat_target_audience(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.create_google_chat_target_audience_with_http_info(organization_binding_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_google_chat_target_audience(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let target_audience_id =
+        serde_json::from_value(_parameters.get("target_audience_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_google_chat_target_audience_with_http_info(
+        organization_binding_id,
+        target_audience_id,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_google_chat_target_audience(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let target_audience_id =
+        serde_json::from_value(_parameters.get("target_audience_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_google_chat_target_audience_with_http_info(
+        organization_binding_id,
+        target_audience_id,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_google_chat_target_audience(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_google_chat_integration
+        .as_ref()
+        .expect("api instance not found");
+    let organization_binding_id =
+        serde_json::from_value(_parameters.get("organization_binding_id").unwrap().clone())
+            .unwrap();
+    let target_audience_id =
+        serde_json::from_value(_parameters.get("target_audience_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_google_chat_target_audience_with_http_info(
+        organization_binding_id,
+        target_audience_id,
         body,
     )) {
         Ok(response) => response,

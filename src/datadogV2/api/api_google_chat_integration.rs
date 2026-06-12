@@ -10,6 +10,14 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// CreateGoogleChatTargetAudienceError is a struct for typed errors of method [`GoogleChatIntegrationAPI::create_google_chat_target_audience`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateGoogleChatTargetAudienceError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateOrganizationHandleError is a struct for typed errors of method [`GoogleChatIntegrationAPI::create_organization_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -18,10 +26,58 @@ pub enum CreateOrganizationHandleError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteGoogleChatDelegatedUserError is a struct for typed errors of method [`GoogleChatIntegrationAPI::delete_google_chat_delegated_user`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteGoogleChatDelegatedUserError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteGoogleChatOrganizationError is a struct for typed errors of method [`GoogleChatIntegrationAPI::delete_google_chat_organization`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteGoogleChatOrganizationError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteGoogleChatTargetAudienceError is a struct for typed errors of method [`GoogleChatIntegrationAPI::delete_google_chat_target_audience`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteGoogleChatTargetAudienceError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteOrganizationHandleError is a struct for typed errors of method [`GoogleChatIntegrationAPI::delete_organization_handle`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteOrganizationHandleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetGoogleChatDelegatedUserError is a struct for typed errors of method [`GoogleChatIntegrationAPI::get_google_chat_delegated_user`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetGoogleChatDelegatedUserError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetGoogleChatOrganizationError is a struct for typed errors of method [`GoogleChatIntegrationAPI::get_google_chat_organization`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetGoogleChatOrganizationError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetGoogleChatTargetAudienceError is a struct for typed errors of method [`GoogleChatIntegrationAPI::get_google_chat_target_audience`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetGoogleChatTargetAudienceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -42,10 +98,34 @@ pub enum GetSpaceByDisplayNameError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListGoogleChatOrganizationsError is a struct for typed errors of method [`GoogleChatIntegrationAPI::list_google_chat_organizations`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListGoogleChatOrganizationsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListGoogleChatTargetAudiencesError is a struct for typed errors of method [`GoogleChatIntegrationAPI::list_google_chat_target_audiences`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListGoogleChatTargetAudiencesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListOrganizationHandlesError is a struct for typed errors of method [`GoogleChatIntegrationAPI::list_organization_handles`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListOrganizationHandlesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateGoogleChatTargetAudienceError is a struct for typed errors of method [`GoogleChatIntegrationAPI::update_google_chat_target_audience`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateGoogleChatTargetAudienceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -131,6 +211,167 @@ impl GoogleChatIntegrationAPI {
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
+    }
+
+    /// Create a target audience for a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn create_google_chat_target_audience(
+        &self,
+        organization_binding_id: String,
+        body: crate::datadogV2::model::GoogleChatTargetAudienceCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::GoogleChatTargetAudienceResponse,
+        datadog::Error<CreateGoogleChatTargetAudienceError>,
+    > {
+        match self
+            .create_google_chat_target_audience_with_http_info(organization_binding_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create a target audience for a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn create_google_chat_target_audience_with_http_info(
+        &self,
+        organization_binding_id: String,
+        body: crate::datadogV2::model::GoogleChatTargetAudienceCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GoogleChatTargetAudienceResponse>,
+        datadog::Error<CreateGoogleChatTargetAudienceError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_google_chat_target_audience";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/target-audiences",
+            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            datadog::urlencode(organization_binding_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::GoogleChatTargetAudienceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateGoogleChatTargetAudienceError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
     }
 
     /// Create an organization handle in the Datadog Google Chat integration.
@@ -295,6 +536,289 @@ impl GoogleChatIntegrationAPI {
         }
     }
 
+    /// Delete the delegated user for a Google Chat organization binding from the Datadog Google Chat integration.
+    pub async fn delete_google_chat_delegated_user(
+        &self,
+        organization_binding_id: String,
+    ) -> Result<(), datadog::Error<DeleteGoogleChatDelegatedUserError>> {
+        match self
+            .delete_google_chat_delegated_user_with_http_info(organization_binding_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete the delegated user for a Google Chat organization binding from the Datadog Google Chat integration.
+    pub async fn delete_google_chat_delegated_user_with_http_info(
+        &self,
+        organization_binding_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGoogleChatDelegatedUserError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_google_chat_delegated_user";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/delegated-user",
+            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            datadog::urlencode(organization_binding_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteGoogleChatDelegatedUserError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete a Google Chat organization binding from the Datadog Google Chat integration.
+    pub async fn delete_google_chat_organization(
+        &self,
+        organization_binding_id: String,
+    ) -> Result<(), datadog::Error<DeleteGoogleChatOrganizationError>> {
+        match self
+            .delete_google_chat_organization_with_http_info(organization_binding_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete a Google Chat organization binding from the Datadog Google Chat integration.
+    pub async fn delete_google_chat_organization_with_http_info(
+        &self,
+        organization_binding_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGoogleChatOrganizationError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_google_chat_organization";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}",
+            local_configuration.get_operation_host(operation_id),
+            organization_binding_id = datadog::urlencode(organization_binding_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteGoogleChatOrganizationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete a target audience from a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn delete_google_chat_target_audience(
+        &self,
+        organization_binding_id: String,
+        target_audience_id: String,
+    ) -> Result<(), datadog::Error<DeleteGoogleChatTargetAudienceError>> {
+        match self
+            .delete_google_chat_target_audience_with_http_info(
+                organization_binding_id,
+                target_audience_id,
+            )
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete a target audience from a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn delete_google_chat_target_audience_with_http_info(
+        &self,
+        organization_binding_id: String,
+        target_audience_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGoogleChatTargetAudienceError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_google_chat_target_audience";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/target-audiences/{target_audience_id}",
+            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            datadog::urlencode(organization_binding_id)
+            , target_audience_id=
+            datadog::urlencode(target_audience_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteGoogleChatTargetAudienceError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Delete an organization handle from the Datadog Google Chat integration.
     pub async fn delete_organization_handle(
         &self,
@@ -380,6 +904,349 @@ impl GoogleChatIntegrationAPI {
             })
         } else {
             let local_entity: Option<DeleteOrganizationHandleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the delegated user for a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn get_google_chat_delegated_user(
+        &self,
+        organization_binding_id: String,
+    ) -> Result<
+        crate::datadogV2::model::GoogleChatDelegatedUserResponse,
+        datadog::Error<GetGoogleChatDelegatedUserError>,
+    > {
+        match self
+            .get_google_chat_delegated_user_with_http_info(organization_binding_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the delegated user for a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn get_google_chat_delegated_user_with_http_info(
+        &self,
+        organization_binding_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GoogleChatDelegatedUserResponse>,
+        datadog::Error<GetGoogleChatDelegatedUserError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_google_chat_delegated_user";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/delegated-user",
+            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            datadog::urlencode(organization_binding_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::GoogleChatDelegatedUserResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetGoogleChatDelegatedUserError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a Google Chat organization binding from the Datadog Google Chat integration.
+    pub async fn get_google_chat_organization(
+        &self,
+        organization_binding_id: String,
+    ) -> Result<
+        crate::datadogV2::model::GoogleChatOrganizationResponse,
+        datadog::Error<GetGoogleChatOrganizationError>,
+    > {
+        match self
+            .get_google_chat_organization_with_http_info(organization_binding_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a Google Chat organization binding from the Datadog Google Chat integration.
+    pub async fn get_google_chat_organization_with_http_info(
+        &self,
+        organization_binding_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GoogleChatOrganizationResponse>,
+        datadog::Error<GetGoogleChatOrganizationError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_google_chat_organization";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}",
+            local_configuration.get_operation_host(operation_id),
+            organization_binding_id = datadog::urlencode(organization_binding_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::GoogleChatOrganizationResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetGoogleChatOrganizationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a target audience for a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn get_google_chat_target_audience(
+        &self,
+        organization_binding_id: String,
+        target_audience_id: String,
+    ) -> Result<
+        crate::datadogV2::model::GoogleChatTargetAudienceResponse,
+        datadog::Error<GetGoogleChatTargetAudienceError>,
+    > {
+        match self
+            .get_google_chat_target_audience_with_http_info(
+                organization_binding_id,
+                target_audience_id,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a target audience for a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn get_google_chat_target_audience_with_http_info(
+        &self,
+        organization_binding_id: String,
+        target_audience_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GoogleChatTargetAudienceResponse>,
+        datadog::Error<GetGoogleChatTargetAudienceError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_google_chat_target_audience";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/target-audiences/{target_audience_id}",
+            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            datadog::urlencode(organization_binding_id)
+            , target_audience_id=
+            datadog::urlencode(target_audience_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::GoogleChatTargetAudienceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetGoogleChatTargetAudienceError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -623,6 +1490,224 @@ impl GoogleChatIntegrationAPI {
         }
     }
 
+    /// Get a list of all Google Chat organization bindings in the Datadog Google Chat integration.
+    pub async fn list_google_chat_organizations(
+        &self,
+    ) -> Result<
+        crate::datadogV2::model::GoogleChatOrganizationsResponse,
+        datadog::Error<ListGoogleChatOrganizationsError>,
+    > {
+        match self.list_google_chat_organizations_with_http_info().await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of all Google Chat organization bindings in the Datadog Google Chat integration.
+    pub async fn list_google_chat_organizations_with_http_info(
+        &self,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GoogleChatOrganizationsResponse>,
+        datadog::Error<ListGoogleChatOrganizationsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_google_chat_organizations";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/google-chat/organizations",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::GoogleChatOrganizationsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListGoogleChatOrganizationsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a list of all target audiences for a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn list_google_chat_target_audiences(
+        &self,
+        organization_binding_id: String,
+    ) -> Result<
+        crate::datadogV2::model::GoogleChatTargetAudiencesResponse,
+        datadog::Error<ListGoogleChatTargetAudiencesError>,
+    > {
+        match self
+            .list_google_chat_target_audiences_with_http_info(organization_binding_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a list of all target audiences for a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn list_google_chat_target_audiences_with_http_info(
+        &self,
+        organization_binding_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GoogleChatTargetAudiencesResponse>,
+        datadog::Error<ListGoogleChatTargetAudiencesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_google_chat_target_audiences";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/target-audiences",
+            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            datadog::urlencode(organization_binding_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::GoogleChatTargetAudiencesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListGoogleChatTargetAudiencesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get a list of all organization handles from the Datadog Google Chat integration.
     pub async fn list_organization_handles(
         &self,
@@ -726,6 +1811,175 @@ impl GoogleChatIntegrationAPI {
             };
         } else {
             let local_entity: Option<ListOrganizationHandlesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update a target audience for a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn update_google_chat_target_audience(
+        &self,
+        organization_binding_id: String,
+        target_audience_id: String,
+        body: crate::datadogV2::model::GoogleChatTargetAudienceUpdateRequest,
+    ) -> Result<
+        crate::datadogV2::model::GoogleChatTargetAudienceResponse,
+        datadog::Error<UpdateGoogleChatTargetAudienceError>,
+    > {
+        match self
+            .update_google_chat_target_audience_with_http_info(
+                organization_binding_id,
+                target_audience_id,
+                body,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update a target audience for a Google Chat organization binding in the Datadog Google Chat integration.
+    pub async fn update_google_chat_target_audience_with_http_info(
+        &self,
+        organization_binding_id: String,
+        target_audience_id: String,
+        body: crate::datadogV2::model::GoogleChatTargetAudienceUpdateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GoogleChatTargetAudienceResponse>,
+        datadog::Error<UpdateGoogleChatTargetAudienceError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_google_chat_target_audience";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/target-audiences/{target_audience_id}",
+            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            datadog::urlencode(organization_binding_id)
+            , target_audience_id=
+            datadog::urlencode(target_audience_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::GoogleChatTargetAudienceResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateGoogleChatTargetAudienceError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
