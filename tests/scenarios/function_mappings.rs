@@ -5018,6 +5018,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_tenant_based_handle,
     );
     world.function_mappings.insert(
+        "v2.DeleteMSTeamsUserBinding".into(),
+        test_v2_delete_ms_teams_user_binding,
+    );
+    world.function_mappings.insert(
         "v2.ListWorkflowsWebhookHandles".into(),
         test_v2_list_workflows_webhook_handles,
     );
@@ -38532,6 +38536,34 @@ fn test_v2_update_tenant_based_handle(
     let handle_id = serde_json::from_value(_parameters.get("handle_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_tenant_based_handle_with_http_info(handle_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_ms_teams_user_binding(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_microsoft_teams_integration
+        .as_ref()
+        .expect("api instance not found");
+    let tenant_id = serde_json::from_value(_parameters.get("tenant_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_ms_teams_user_binding_with_http_info(tenant_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
