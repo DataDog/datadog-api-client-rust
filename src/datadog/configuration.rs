@@ -431,6 +431,10 @@ impl Default for Configuration {
             ("v2.list_csm_agentless_hosts".to_owned(), false),
             ("v2.list_csm_unified_host_facets".to_owned(), false),
             ("v2.list_csm_unified_hosts".to_owned(), false),
+            (
+                "v2.list_shared_dashboards_by_dashboard_id".to_owned(),
+                false,
+            ),
             ("v2.create_dashboard_secure_embed".to_owned(), false),
             ("v2.delete_dashboard_secure_embed".to_owned(), false),
             ("v2.get_dashboard_secure_embed".to_owned(), false),
