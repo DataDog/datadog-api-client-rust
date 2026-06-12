@@ -2,14 +2,41 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
+use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use futures_core::stream::Stream;
 use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
+
+/// ListGlobalOrgsOptionalParams is a struct for passing parameters to the method [`OrganizationsAPI::list_global_orgs`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListGlobalOrgsOptionalParams {
+    /// Maximum number of results returned.
+    pub page_limit: Option<i32>,
+    /// String to query the next page of results.
+    /// This key is provided with each valid response from the API in `meta.page.next_cursor`.
+    pub page_cursor: Option<String>,
+}
+
+impl ListGlobalOrgsOptionalParams {
+    /// Maximum number of results returned.
+    pub fn page_limit(mut self, value: i32) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// String to query the next page of results.
+    /// This key is provided with each valid response from the API in `meta.page.next_cursor`.
+    pub fn page_cursor(mut self, value: String) -> Self {
+        self.page_cursor = Some(value);
+        self
+    }
+}
 
 /// ListOrgsOptionalParams is a struct for passing parameters to the method [`OrganizationsAPI::list_orgs`]
 #[non_exhaustive]
@@ -55,6 +82,14 @@ pub enum GetOrgConfigError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSAMLConfigurationError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListGlobalOrgsError is a struct for typed errors of method [`OrganizationsAPI::list_global_orgs`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListGlobalOrgsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -398,6 +433,165 @@ impl OrganizationsAPI {
             };
         } else {
             let local_entity: Option<GetSAMLConfigurationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Returns organizations across regions for the authenticated user. The `user_handle` query parameter must match the authenticated user's handle.
+    pub async fn list_global_orgs(
+        &self,
+        user_handle: String,
+        params: ListGlobalOrgsOptionalParams,
+    ) -> Result<crate::datadogV2::model::GlobalOrgsResponse, datadog::Error<ListGlobalOrgsError>>
+    {
+        match self
+            .list_global_orgs_with_http_info(user_handle, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_global_orgs_with_pagination(
+        &self,
+        user_handle: String,
+        mut params: ListGlobalOrgsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<crate::datadogV2::model::GlobalOrgData, datadog::Error<ListGlobalOrgsError>>,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 100;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_global_orgs( user_handle.clone(),params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count == 0 {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(page) = meta.page else { break };
+                let Some(next_cursor) = page.next_cursor.unwrap() else { break };
+
+                params.page_cursor = Some(next_cursor);
+            }
+        }
+    }
+
+    /// Returns organizations across regions for the authenticated user. The `user_handle` query parameter must match the authenticated user's handle.
+    pub async fn list_global_orgs_with_http_info(
+        &self,
+        user_handle: String,
+        params: ListGlobalOrgsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::GlobalOrgsResponse>,
+        datadog::Error<ListGlobalOrgsError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_global_orgs";
+
+        // unbox and build optional parameters
+        let page_limit = params.page_limit;
+        let page_cursor = params.page_cursor;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/global_orgs",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[("user_handle", &user_handle.to_string())]);
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::GlobalOrgsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListGlobalOrgsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
