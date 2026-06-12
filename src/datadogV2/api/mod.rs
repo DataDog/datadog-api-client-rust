@@ -40,6 +40,7 @@ pub mod api_csm_threats;
 pub mod api_customer_org;
 pub mod api_dashboard_lists;
 pub mod api_dashboard_secure_embed;
+pub mod api_dashboard_sharing;
 pub mod api_dashboards;
 pub mod api_data_deletion;
 pub mod api_datasets;
