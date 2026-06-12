@@ -348,12 +348,19 @@ impl ListCostTagDescriptionsOptionalParams {
 pub struct ListCostTagKeySourcesOptionalParams {
     /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
     pub filter_provider: Option<String>,
+    /// Filter results to tag keys that have data for a specific Cloud Cost Management metric (for example, `aws.cost.net.amortized`). When omitted, all tag keys for the requested period are returned.
+    pub filter_metric: Option<String>,
 }
 
 impl ListCostTagKeySourcesOptionalParams {
     /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
     pub fn filter_provider(mut self, value: String) -> Self {
         self.filter_provider = Some(value);
+        self
+    }
+    /// Filter results to tag keys that have data for a specific Cloud Cost Management metric (for example, `aws.cost.net.amortized`). When omitted, all tag keys for the requested period are returned.
+    pub fn filter_metric(mut self, value: String) -> Self {
+        self.filter_metric = Some(value);
         self
     }
 }
@@ -6090,6 +6097,7 @@ impl CloudCostManagementAPI {
 
         // unbox and build optional parameters
         let filter_provider = params.filter_provider;
+        let filter_metric = params.filter_metric;
 
         let local_client = &self.client;
 
@@ -6105,6 +6113,10 @@ impl CloudCostManagementAPI {
         if let Some(ref local_query_param) = filter_provider {
             local_req_builder =
                 local_req_builder.query(&[("filter[provider]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_metric {
+            local_req_builder =
+                local_req_builder.query(&[("filter[metric]", &local_query_param.to_string())]);
         };
 
         // build headers
