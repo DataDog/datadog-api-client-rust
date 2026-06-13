@@ -31152,9 +31152,13 @@ fn test_v2_list_cost_tag_key_sources(
     let filter_provider = _parameters
         .get("filter[provider]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_metric = _parameters
+        .get("filter[metric]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
         datadogV2::api_cloud_cost_management::ListCostTagKeySourcesOptionalParams::default();
     params.filter_provider = filter_provider;
+    params.filter_metric = filter_metric;
     let response =
         match block_on(api.list_cost_tag_key_sources_with_http_info(filter_month, params)) {
             Ok(response) => response,
