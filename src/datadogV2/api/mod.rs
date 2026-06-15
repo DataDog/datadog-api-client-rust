@@ -124,6 +124,7 @@ pub mod api_statuspage_integration;
 pub mod api_stegadography;
 pub mod api_storage_management;
 pub mod api_synthetics;
+pub mod api_tag_policies;
 pub mod api_teams;
 pub mod api_test_optimization;
 pub mod api_usage_metering;

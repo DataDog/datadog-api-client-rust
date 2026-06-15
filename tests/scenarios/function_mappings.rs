@@ -213,6 +213,7 @@ pub struct ApiInstances {
     pub v2_api_status_pages: Option<datadogV2::api_status_pages::StatusPagesAPI>,
     pub v2_api_stegadography: Option<datadogV2::api_stegadography::StegadographyAPI>,
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
+    pub v2_api_tag_policies: Option<datadogV2::api_tag_policies::TagPoliciesAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
     pub v2_api_web_integrations: Option<datadogV2::api_web_integrations::WebIntegrationsAPI>,
     pub v2_api_widgets: Option<datadogV2::api_widgets::WidgetsAPI>,
@@ -1359,6 +1360,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Stegadography" => {
             world.api_instances.v2_api_stegadography = Some(
                 datadogV2::api_stegadography::StegadographyAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "TagPolicies" => {
+            world.api_instances.v2_api_tag_policies = Some(
+                datadogV2::api_tag_policies::TagPoliciesAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -7148,6 +7157,24 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.PatchGlobalVariable".into(),
         test_v2_patch_global_variable,
     );
+    world
+        .function_mappings
+        .insert("v2.ListTagPolicies".into(), test_v2_list_tag_policies);
+    world
+        .function_mappings
+        .insert("v2.CreateTagPolicy".into(), test_v2_create_tag_policy);
+    world
+        .function_mappings
+        .insert("v2.DeleteTagPolicy".into(), test_v2_delete_tag_policy);
+    world
+        .function_mappings
+        .insert("v2.GetTagPolicy".into(), test_v2_get_tag_policy);
+    world
+        .function_mappings
+        .insert("v2.UpdateTagPolicy".into(), test_v2_update_tag_policy);
+    world
+        .function_mappings
+        .insert("v2.GetTagPolicyScore".into(), test_v2_get_tag_policy_score);
     world
         .function_mappings
         .insert("v2.ListTeams".into(), test_v2_list_teams);
@@ -56782,6 +56809,208 @@ fn test_v2_patch_global_variable(world: &mut DatadogWorld, _parameters: &HashMap
         serde_json::from_value(_parameters.get("variable_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.patch_global_variable_with_http_info(variable_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_tag_policies(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_tag_policies
+        .as_ref()
+        .expect("api instance not found");
+    let include_disabled = _parameters
+        .get("include_disabled")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_deleted = _parameters
+        .get("include_deleted")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_source = _parameters
+        .get("filter[source]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let ts_start = _parameters
+        .get("ts_start")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let ts_end = _parameters
+        .get("ts_end")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_tag_policies::ListTagPoliciesOptionalParams::default();
+    params.include_disabled = include_disabled;
+    params.include_deleted = include_deleted;
+    params.include = include;
+    params.filter_source = filter_source;
+    params.ts_start = ts_start;
+    params.ts_end = ts_end;
+    let response = match block_on(api.list_tag_policies_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_tag_policies
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_tag_policy_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_tag_policies
+        .as_ref()
+        .expect("api instance not found");
+    let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
+    let hard_delete = _parameters
+        .get("hard_delete")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_tag_policies::DeleteTagPolicyOptionalParams::default();
+    params.hard_delete = hard_delete;
+    let response = match block_on(api.delete_tag_policy_with_http_info(policy_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_tag_policies
+        .as_ref()
+        .expect("api instance not found");
+    let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let ts_start = _parameters
+        .get("ts_start")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let ts_end = _parameters
+        .get("ts_end")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_tag_policies::GetTagPolicyOptionalParams::default();
+    params.include = include;
+    params.ts_start = ts_start;
+    params.ts_end = ts_end;
+    let response = match block_on(api.get_tag_policy_with_http_info(policy_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_tag_policies
+        .as_ref()
+        .expect("api instance not found");
+    let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_tag_policy_with_http_info(policy_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_tag_policy_score(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_tag_policies
+        .as_ref()
+        .expect("api instance not found");
+    let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
+    let ts_start = _parameters
+        .get("ts_start")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let ts_end = _parameters
+        .get("ts_end")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_tag_policies::GetTagPolicyScoreOptionalParams::default();
+    params.ts_start = ts_start;
+    params.ts_end = ts_end;
+    let response = match block_on(api.get_tag_policy_score_with_http_info(policy_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
