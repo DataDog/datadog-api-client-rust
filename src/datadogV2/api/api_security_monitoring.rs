@@ -2379,6 +2379,14 @@ pub enum PatchVulnerabilityNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// RestoreSecurityMonitoringRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::restore_security_monitoring_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum RestoreSecurityMonitoringRuleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// RunHistoricalJobError is a struct for typed errors of method [`SecurityMonitoringAPI::run_historical_job`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -18775,6 +18783,133 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<PatchVulnerabilityNotificationRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Restores a custom detection rule to a previously saved historical version.
+    /// Only custom rules can be restored. Default and partner rules return 400.
+    /// The restore creates a new version entry; it does not overwrite history.
+    pub async fn restore_security_monitoring_rule(
+        &self,
+        rule_id: String,
+        version: i64,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringRuleResponse,
+        datadog::Error<RestoreSecurityMonitoringRuleError>,
+    > {
+        match self
+            .restore_security_monitoring_rule_with_http_info(rule_id, version)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Restores a custom detection rule to a previously saved historical version.
+    /// Only custom rules can be restored. Default and partner rules return 400.
+    /// The restore creates a new version entry; it does not overwrite history.
+    pub async fn restore_security_monitoring_rule_with_http_info(
+        &self,
+        rule_id: String,
+        version: i64,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
+        datadog::Error<RestoreSecurityMonitoringRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.restore_security_monitoring_rule";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.restore_security_monitoring_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/rules/{rule_id}/restore/{version}",
+            local_configuration.get_operation_host(operation_id),
+            rule_id = datadog::urlencode(rule_id),
+            version = version
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SecurityMonitoringRuleResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<RestoreSecurityMonitoringRuleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

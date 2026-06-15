@@ -374,6 +374,7 @@ impl Default for Configuration {
             ("v2.list_vulnerabilities".to_owned(), false),
             ("v2.list_vulnerable_assets".to_owned(), false),
             ("v2.mute_findings".to_owned(), false),
+            ("v2.restore_security_monitoring_rule".to_owned(), false),
             ("v2.run_historical_job".to_owned(), false),
             (
                 "v2.search_security_monitoring_histsignals".to_owned(),
@@ -441,6 +442,11 @@ impl Default for Configuration {
             ("v2.update_dashboard_secure_embed".to_owned(), false),
             ("v2.get_dashboard_usage".to_owned(), false),
             ("v2.list_dashboards_usage".to_owned(), false),
+            (
+                "v2.get_data_observability_monitor_run_status".to_owned(),
+                false,
+            ),
+            ("v2.run_data_observability_monitor".to_owned(), false),
             ("v2.create_dataset".to_owned(), false),
             ("v2.delete_dataset".to_owned(), false),
             ("v2.get_all_datasets".to_owned(), false),

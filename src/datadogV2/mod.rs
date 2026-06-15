@@ -44,6 +44,7 @@ pub use self::api::api_dashboard_secure_embed;
 pub use self::api::api_dashboard_sharing;
 pub use self::api::api_dashboards;
 pub use self::api::api_data_deletion;
+pub use self::api::api_data_observability;
 pub use self::api::api_datasets;
 pub use self::api::api_deployment_gates;
 pub use self::api::api_domain_allowlist;

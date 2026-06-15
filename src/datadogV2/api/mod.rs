@@ -43,6 +43,7 @@ pub mod api_dashboard_secure_embed;
 pub mod api_dashboard_sharing;
 pub mod api_dashboards;
 pub mod api_data_deletion;
+pub mod api_data_observability;
 pub mod api_datasets;
 pub mod api_deployment_gates;
 pub mod api_domain_allowlist;
