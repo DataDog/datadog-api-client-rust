@@ -374,6 +374,7 @@ impl Default for Configuration {
             ("v2.list_vulnerabilities".to_owned(), false),
             ("v2.list_vulnerable_assets".to_owned(), false),
             ("v2.mute_findings".to_owned(), false),
+            ("v2.restore_security_monitoring_rule".to_owned(), false),
             ("v2.run_historical_job".to_owned(), false),
             (
                 "v2.search_security_monitoring_histsignals".to_owned(),
