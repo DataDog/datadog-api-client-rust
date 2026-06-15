@@ -2425,6 +2425,46 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.SearchLLMObsSpans".into(), test_v2_search_llm_obs_spans);
     world.function_mappings.insert(
+        "v2.ListLLMObsPatternsClusteredPoints".into(),
+        test_v2_list_llm_obs_patterns_clustered_points,
+    );
+    world.function_mappings.insert(
+        "v2.ListLLMObsPatternsConfigs".into(),
+        test_v2_list_llm_obs_patterns_configs,
+    );
+    world.function_mappings.insert(
+        "v2.UpsertLLMObsPatternsConfig".into(),
+        test_v2_upsert_llm_obs_patterns_config,
+    );
+    world.function_mappings.insert(
+        "v2.GetLLMObsPatternsConfig".into(),
+        test_v2_get_llm_obs_patterns_config,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteLLMObsPatternsConfig".into(),
+        test_v2_delete_llm_obs_patterns_config,
+    );
+    world.function_mappings.insert(
+        "v2.ListLLMObsPatternsRuns".into(),
+        test_v2_list_llm_obs_patterns_runs,
+    );
+    world.function_mappings.insert(
+        "v2.TriggerLLMObsPatterns".into(),
+        test_v2_trigger_llm_obs_patterns,
+    );
+    world.function_mappings.insert(
+        "v2.GetLLMObsPatternsRunStatus".into(),
+        test_v2_get_llm_obs_patterns_run_status,
+    );
+    world.function_mappings.insert(
+        "v2.ListLLMObsPatternsTopics".into(),
+        test_v2_list_llm_obs_patterns_topics,
+    );
+    world.function_mappings.insert(
+        "v2.ListLLMObsPatternsTopicsWithClusteredPoints".into(),
+        test_v2_list_llm_obs_patterns_topics_with_clustered_points,
+    );
+    world.function_mappings.insert(
         "v2.ListLLMObsDatasets".into(),
         test_v2_list_llm_obs_datasets,
     );
@@ -16155,6 +16195,315 @@ fn test_v2_search_llm_obs_spans(world: &mut DatadogWorld, _parameters: &HashMap<
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.search_llm_obs_spans_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_patterns_clustered_points(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let topic_id = serde_json::from_value(_parameters.get("topic_id").unwrap().clone()).unwrap();
+    let page_size = _parameters
+        .get("page_size")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_token = _parameters
+        .get("page_token")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_llm_observability::ListLLMObsPatternsClusteredPointsOptionalParams::default(
+        );
+    params.page_size = page_size;
+    params.page_token = page_token;
+    let response =
+        match block_on(api.list_llm_obs_patterns_clustered_points_with_http_info(topic_id, params))
+        {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_patterns_configs(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_llm_obs_patterns_configs_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_upsert_llm_obs_patterns_config(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.upsert_llm_obs_patterns_config_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_llm_obs_patterns_config(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_llm_obs_patterns_config_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_llm_obs_patterns_config(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_llm_obs_patterns_config_with_http_info(config_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_patterns_runs(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_llm_obs_patterns_runs_with_http_info(config_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_trigger_llm_obs_patterns(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.trigger_llm_obs_patterns_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_llm_obs_patterns_run_status(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_llm_obs_patterns_run_status_with_http_info(config_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_patterns_topics(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
+    let run_id = _parameters
+        .get("run_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_llm_observability::ListLLMObsPatternsTopicsOptionalParams::default();
+    params.run_id = run_id;
+    let response =
+        match block_on(api.list_llm_obs_patterns_topics_with_http_info(config_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_patterns_topics_with_clustered_points(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
+    let run_id = _parameters
+        .get("run_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_metrics = _parameters
+        .get("include_metrics")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_llm_observability::ListLLMObsPatternsTopicsWithClusteredPointsOptionalParams::default();
+    params.run_id = run_id;
+    params.include_metrics = include_metrics;
+    let response = match block_on(
+        api.list_llm_obs_patterns_topics_with_clustered_points_with_http_info(config_id, params),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {
