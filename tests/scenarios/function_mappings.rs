@@ -100,6 +100,7 @@ pub struct ApiInstances {
     pub v2_api_dashboard_secure_embed:
         Option<datadogV2::api_dashboard_secure_embed::DashboardSecureEmbedAPI>,
     pub v2_api_dashboards: Option<datadogV2::api_dashboards::DashboardsAPI>,
+    pub v2_api_data_observability: Option<datadogV2::api_data_observability::DataObservabilityAPI>,
     pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
     pub v2_api_data_deletion: Option<datadogV2::api_data_deletion::DataDeletionAPI>,
     pub v2_api_deployment_gates: Option<datadogV2::api_deployment_gates::DeploymentGatesAPI>,
@@ -831,6 +832,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "DataObservability" => {
+            world.api_instances.v2_api_data_observability = Some(
+                datadogV2::api_data_observability::DataObservabilityAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "Datasets" => {
             world.api_instances.v2_api_datasets = Some(
@@ -4328,6 +4337,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetDashboardUsage".into(), test_v2_get_dashboard_usage);
+    world.function_mappings.insert(
+        "v2.GetDataObservabilityMonitorRunStatus".into(),
+        test_v2_get_data_observability_monitor_run_status,
+    );
+    world.function_mappings.insert(
+        "v2.RunDataObservabilityMonitor".into(),
+        test_v2_run_data_observability_monitor,
+    );
     world
         .function_mappings
         .insert("v2.GetAllDatasets".into(), test_v2_get_all_datasets);
@@ -32930,6 +32947,64 @@ fn test_v2_get_dashboard_usage(world: &mut DatadogWorld, _parameters: &HashMap<S
     let dashboard_id =
         serde_json::from_value(_parameters.get("dashboard_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_dashboard_usage_with_http_info(dashboard_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_data_observability_monitor_run_status(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_data_observability
+        .as_ref()
+        .expect("api instance not found");
+    let run_id = serde_json::from_value(_parameters.get("run_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_data_observability_monitor_run_status_with_http_info(run_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_run_data_observability_monitor(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_data_observability
+        .as_ref()
+        .expect("api instance not found");
+    let monitor_id =
+        serde_json::from_value(_parameters.get("monitor_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.run_data_observability_monitor_with_http_info(monitor_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
