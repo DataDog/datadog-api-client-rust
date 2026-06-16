@@ -3483,6 +3483,11 @@ impl<'de> Deserialize<'de> for UsageSummaryDate {
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    // from_value::<serde_json::Value> is infallible so Ok always fires;
+                    // for typed AP schemas a type mismatch silently drops the entry (same as the catch-all arm).
+                    if let Ok(ap_value) = serde_json::from_value(v.clone()) {
+                        additional_properties.insert(k.clone(), ap_value);
+                    }
                     match k.as_str() {
                         "agent_host_top99p" => {
                             if v.is_null() {
