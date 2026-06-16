@@ -113,6 +113,18 @@ pub struct IoCIndicatorDetailed {
     /// Tags associated with the indicator.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
+    /// Full triage history timeline. Returned only when `include_triage_history` is true.
+    #[serde(rename = "triage_history")]
+    pub triage_history: Option<Vec<crate::datadogV2::model::IoCTriageEvent>>,
+    /// Current triage state of the indicator.
+    #[serde(rename = "triage_state")]
+    pub triage_state: Option<crate::datadogV2::model::IoCTriageState>,
+    /// Timestamp when the indicator was last triaged.
+    #[serde(rename = "triaged_at")]
+    pub triaged_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// UUID of the user who last triaged the indicator.
+    #[serde(rename = "triaged_by")]
+    pub triaged_by: Option<String>,
     /// Users associated with this indicator, grouped by category.
     #[serde(rename = "users")]
     pub users: Option<std::collections::BTreeMap<String, Vec<String>>>,
@@ -156,6 +168,10 @@ impl IoCIndicatorDetailed {
             signal_tier: None,
             suspicious_sources: None,
             tags: None,
+            triage_history: None,
+            triage_state: None,
+            triaged_at: None,
+            triaged_by: None,
             users: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -327,6 +343,26 @@ impl IoCIndicatorDetailed {
         self
     }
 
+    pub fn triage_history(mut self, value: Vec<crate::datadogV2::model::IoCTriageEvent>) -> Self {
+        self.triage_history = Some(value);
+        self
+    }
+
+    pub fn triage_state(mut self, value: crate::datadogV2::model::IoCTriageState) -> Self {
+        self.triage_state = Some(value);
+        self
+    }
+
+    pub fn triaged_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.triaged_at = Some(value);
+        self
+    }
+
+    pub fn triaged_by(mut self, value: String) -> Self {
+        self.triaged_by = Some(value);
+        self
+    }
+
     pub fn users(mut self, value: std::collections::BTreeMap<String, Vec<String>>) -> Self {
         self.users = Some(value);
         self
@@ -402,6 +438,10 @@ impl<'de> Deserialize<'de> for IoCIndicatorDetailed {
                     Option<Vec<crate::datadogV2::model::IoCSource>>,
                 > = None;
                 let mut tags: Option<Vec<String>> = None;
+                let mut triage_history: Option<Vec<crate::datadogV2::model::IoCTriageEvent>> = None;
+                let mut triage_state: Option<crate::datadogV2::model::IoCTriageState> = None;
+                let mut triaged_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut triaged_by: Option<String> = None;
                 let mut users: Option<std::collections::BTreeMap<String, Vec<String>>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -647,6 +687,42 @@ impl<'de> Deserialize<'de> for IoCIndicatorDetailed {
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "triage_history" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            triage_history =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "triage_state" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            triage_state =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _triage_state) = triage_state {
+                                match _triage_state {
+                                    crate::datadogV2::model::IoCTriageState::UnparsedObject(
+                                        _triage_state,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "triaged_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            triaged_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "triaged_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            triaged_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "users" => {
                             if v.is_null() {
                                 continue;
@@ -692,6 +768,10 @@ impl<'de> Deserialize<'de> for IoCIndicatorDetailed {
                     signal_tier,
                     suspicious_sources,
                     tags,
+                    triage_history,
+                    triage_state,
+                    triaged_at,
+                    triaged_by,
                     users,
                     additional_properties,
                     _unparsed,
