@@ -21,6 +21,9 @@ pub struct SyntheticsTestOptions {
     /// Array of URL patterns to block.
     #[serde(rename = "blockedRequestPatterns")]
     pub blocked_request_patterns: Option<Vec<String>>,
+    /// Capture HTTP request/response headers and bodies for Fetch/XHR calls made during browser tests.
+    #[serde(rename = "captureNetworkPayloads")]
+    pub capture_network_payloads: Option<bool>,
     /// For SSL tests, whether or not the test should fail on revoked certificate in stapled OCSP.
     #[serde(rename = "checkCertificateRevocation")]
     pub check_certificate_revocation: Option<bool>,
@@ -118,6 +121,7 @@ impl SyntheticsTestOptions {
             accept_self_signed: None,
             allow_insecure: None,
             blocked_request_patterns: None,
+            capture_network_payloads: None,
             check_certificate_revocation: None,
             ci: None,
             device_ids: None,
@@ -161,6 +165,12 @@ impl SyntheticsTestOptions {
     #[allow(deprecated)]
     pub fn blocked_request_patterns(mut self, value: Vec<String>) -> Self {
         self.blocked_request_patterns = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn capture_network_payloads(mut self, value: bool) -> Self {
+        self.capture_network_payloads = Some(value);
         self
     }
 
@@ -349,6 +359,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                 let mut accept_self_signed: Option<bool> = None;
                 let mut allow_insecure: Option<bool> = None;
                 let mut blocked_request_patterns: Option<Vec<String>> = None;
+                let mut capture_network_payloads: Option<bool> = None;
                 let mut check_certificate_revocation: Option<bool> = None;
                 let mut ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions> = None;
                 let mut device_ids: Option<Vec<String>> = None;
@@ -407,6 +418,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                                 continue;
                             }
                             blocked_request_patterns =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "captureNetworkPayloads" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            capture_network_payloads =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "checkCertificateRevocation" => {
@@ -586,6 +604,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                     accept_self_signed,
                     allow_insecure,
                     blocked_request_patterns,
+                    capture_network_payloads,
                     check_certificate_revocation,
                     ci,
                     device_ids,
