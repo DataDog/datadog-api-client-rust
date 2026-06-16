@@ -35,6 +35,9 @@ pub enum ObservabilityPipelineConfigProcessorItem {
     ObservabilityPipelineGenerateMetricsProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineGenerateMetricsProcessor>,
     ),
+    ObservabilityPipelineGenerateMetricsV2Processor(
+        Box<crate::datadogV2::model::ObservabilityPipelineGenerateMetricsV2Processor>,
+    ),
     ObservabilityPipelineOcsfMapperProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineOcsfMapperProcessor>,
     ),
@@ -177,6 +180,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineGenerateMetricsProcessor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineGenerateMetricsV2Processor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineGenerateMetricsV2Processor(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
