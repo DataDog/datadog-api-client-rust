@@ -6319,6 +6319,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_application_security_waf_policy,
     );
     world.function_mappings.insert(
+        "v2.GetAsmServiceByName".into(),
+        test_v2_get_asm_service_by_name,
+    );
+    world.function_mappings.insert(
         "v2.ListCSMThreatsAgentRules".into(),
         test_v2_list_csm_threats_agent_rules,
     );
@@ -49250,6 +49254,32 @@ fn test_v2_update_application_security_waf_policy(
     let response = match block_on(
         api.update_application_security_waf_policy_with_http_info(policy_id, body),
     ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_asm_service_by_name(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_application_security
+        .as_ref()
+        .expect("api instance not found");
+    let service_filter =
+        serde_json::from_value(_parameters.get("service_filter").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_asm_service_by_name_with_http_info(service_filter)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
