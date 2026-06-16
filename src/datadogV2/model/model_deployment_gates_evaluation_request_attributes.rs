@@ -7,10 +7,17 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// Attributes for a deployment gate evaluation request.
+/// When `configuration` is provided, rules are evaluated inline from that configuration.
+/// When omitted, rules are resolved from the preconfigured gate for the given service and environment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeploymentGatesEvaluationRequestAttributes {
+    /// Inline rule definitions for a deployment gate evaluation. When provided, rules are evaluated
+    /// directly from this configuration instead of using the preconfigured gate rules.
+    /// At least one rule is required.
+    #[serde(rename = "configuration")]
+    pub configuration: Option<crate::datadogV2::model::DeploymentGatesEvaluationConfiguration>,
     /// The environment of the deployment.
     #[serde(rename = "env")]
     pub env: String,
@@ -36,6 +43,7 @@ pub struct DeploymentGatesEvaluationRequestAttributes {
 impl DeploymentGatesEvaluationRequestAttributes {
     pub fn new(env: String, service: String) -> DeploymentGatesEvaluationRequestAttributes {
         DeploymentGatesEvaluationRequestAttributes {
+            configuration: None,
             env,
             identifier: None,
             primary_tag: None,
@@ -44,6 +52,14 @@ impl DeploymentGatesEvaluationRequestAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn configuration(
+        mut self,
+        value: crate::datadogV2::model::DeploymentGatesEvaluationConfiguration,
+    ) -> Self {
+        self.configuration = Some(value);
+        self
     }
 
     pub fn identifier(mut self, value: String) -> Self {
@@ -87,6 +103,9 @@ impl<'de> Deserialize<'de> for DeploymentGatesEvaluationRequestAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut configuration: Option<
+                    crate::datadogV2::model::DeploymentGatesEvaluationConfiguration,
+                > = None;
                 let mut env: Option<String> = None;
                 let mut identifier: Option<String> = None;
                 let mut primary_tag: Option<String> = None;
@@ -100,6 +119,13 @@ impl<'de> Deserialize<'de> for DeploymentGatesEvaluationRequestAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "configuration" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            configuration =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "env" => {
                             env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -136,6 +162,7 @@ impl<'de> Deserialize<'de> for DeploymentGatesEvaluationRequestAttributes {
                 let service = service.ok_or_else(|| M::Error::missing_field("service"))?;
 
                 let content = DeploymentGatesEvaluationRequestAttributes {
+                    configuration,
                     env,
                     identifier,
                     primary_tag,

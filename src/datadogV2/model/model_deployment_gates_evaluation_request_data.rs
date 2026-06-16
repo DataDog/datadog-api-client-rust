@@ -12,6 +12,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeploymentGatesEvaluationRequestData {
     /// Attributes for a deployment gate evaluation request.
+    /// When `configuration` is provided, rules are evaluated inline from that configuration.
+    /// When omitted, rules are resolved from the preconfigured gate for the given service and environment.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::DeploymentGatesEvaluationRequestAttributes,
     /// JSON:API type for a deployment gate evaluation request.
