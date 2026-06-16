@@ -7352,6 +7352,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.UpdateWidget".into(), test_v2_update_widget);
     world
         .function_mappings
+        .insert("v2.ListWorkflows".into(), test_v2_list_workflows);
+    world.function_mappings.insert(
+        "v2.ListWorkflowsWithPagination".into(),
+        test_v2_list_workflows_with_pagination,
+    );
+    world
+        .function_mappings
         .insert("v2.CreateWorkflow".into(), test_v2_create_workflow);
     world
         .function_mappings
@@ -58647,6 +58654,124 @@ fn test_v2_update_widget(world: &mut DatadogWorld, _parameters: &HashMap<String,
     };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_workflows(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page = _parameters
+        .get("page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_query = _parameters
+        .get("filter[query]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_trigger_ids = _parameters
+        .get("filter[triggerIds]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_include_unpublished = _parameters
+        .get("filter[includeUnpublished]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_include_specs = _parameters
+        .get("filter[includeSpecs]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_workflow_automation::ListWorkflowsOptionalParams::default();
+    params.limit = limit;
+    params.page = page;
+    params.sort = sort;
+    params.filter_query = filter_query;
+    params.filter_trigger_ids = filter_trigger_ids;
+    params.filter_include_unpublished = filter_include_unpublished;
+    params.filter_include_specs = filter_include_specs;
+    let response = match block_on(api.list_workflows_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_workflows_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_workflow_automation
+        .as_ref()
+        .expect("api instance not found");
+    let limit = _parameters
+        .get("limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page = _parameters
+        .get("page")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_query = _parameters
+        .get("filter[query]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_trigger_ids = _parameters
+        .get("filter[triggerIds]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_include_unpublished = _parameters
+        .get("filter[includeUnpublished]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_include_specs = _parameters
+        .get("filter[includeSpecs]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_workflow_automation::ListWorkflowsOptionalParams::default();
+    params.limit = limit;
+    params.page = page;
+    params.sort = sort;
+    params.filter_query = filter_query;
+    params.filter_trigger_ids = filter_trigger_ids;
+    params.filter_include_unpublished = filter_include_unpublished;
+    params.filter_include_specs = filter_include_specs;
+    let response = api.list_workflows_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
 }
 
 fn test_v2_create_workflow(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
