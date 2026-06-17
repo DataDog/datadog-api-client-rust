@@ -3500,6 +3500,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_indicator_of_compromise,
     );
     world.function_mappings.insert(
+        "v2.CreateIoCTriageState".into(),
+        test_v2_create_io_c_triage_state,
+    );
+    world.function_mappings.insert(
         "v2.GetSignalNotificationRules".into(),
         test_v2_get_signal_notification_rules,
     );
@@ -25630,6 +25634,15 @@ fn test_v2_list_indicators_of_compromise(
     let sort_order = _parameters
         .get("sort[order]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let ocsf = _parameters
+        .get("ocsf")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let worked_by = _parameters
+        .get("worked_by")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let triage_state = _parameters
+        .get("triage_state")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
         datadogV2::api_security_monitoring::ListIndicatorsOfCompromiseOptionalParams::default();
     params.limit = limit;
@@ -25637,6 +25650,9 @@ fn test_v2_list_indicators_of_compromise(
     params.query = query;
     params.sort_column = sort_column;
     params.sort_order = sort_order;
+    params.ocsf = ocsf;
+    params.worked_by = worked_by;
+    params.triage_state = triage_state;
     let response = match block_on(api.list_indicators_of_compromise_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -25665,7 +25681,54 @@ fn test_v2_get_indicator_of_compromise(
         .as_ref()
         .expect("api instance not found");
     let indicator = serde_json::from_value(_parameters.get("indicator").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_indicator_of_compromise_with_http_info(indicator)) {
+    let ocsf = _parameters
+        .get("ocsf")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include_triage_history = _parameters
+        .get("include_triage_history")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let triage_history_limit = _parameters
+        .get("triage_history_limit")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let triage_history_offset = _parameters
+        .get("triage_history_offset")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_security_monitoring::GetIndicatorOfCompromiseOptionalParams::default();
+    params.ocsf = ocsf;
+    params.include_triage_history = include_triage_history;
+    params.triage_history_limit = triage_history_limit;
+    params.triage_history_offset = triage_history_offset;
+    let response = match block_on(api.get_indicator_of_compromise_with_http_info(indicator, params))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_io_c_triage_state(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_io_c_triage_state_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

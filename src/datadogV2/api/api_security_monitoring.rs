@@ -88,6 +88,43 @@ impl GetFindingOptionalParams {
     }
 }
 
+/// GetIndicatorOfCompromiseOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_indicator_of_compromise`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetIndicatorOfCompromiseOptionalParams {
+    /// When true, return only OCSF field-based matches. When false, return regex/message-based matches.
+    pub ocsf: Option<bool>,
+    /// Include full triage history for the indicator.
+    pub include_triage_history: Option<bool>,
+    /// Maximum number of triage history events returned. Only applied when `include_triage_history` is true.
+    pub triage_history_limit: Option<i32>,
+    /// Pagination offset into the triage history. Only applied when `include_triage_history` is true.
+    pub triage_history_offset: Option<i32>,
+}
+
+impl GetIndicatorOfCompromiseOptionalParams {
+    /// When true, return only OCSF field-based matches. When false, return regex/message-based matches.
+    pub fn ocsf(mut self, value: bool) -> Self {
+        self.ocsf = Some(value);
+        self
+    }
+    /// Include full triage history for the indicator.
+    pub fn include_triage_history(mut self, value: bool) -> Self {
+        self.include_triage_history = Some(value);
+        self
+    }
+    /// Maximum number of triage history events returned. Only applied when `include_triage_history` is true.
+    pub fn triage_history_limit(mut self, value: i32) -> Self {
+        self.triage_history_limit = Some(value);
+        self
+    }
+    /// Pagination offset into the triage history. Only applied when `include_triage_history` is true.
+    pub fn triage_history_offset(mut self, value: i32) -> Self {
+        self.triage_history_offset = Some(value);
+        self
+    }
+}
+
 /// GetResourceEvaluationFiltersOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_resource_evaluation_filters`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -574,6 +611,12 @@ pub struct ListIndicatorsOfCompromiseOptionalParams {
     pub sort_column: Option<String>,
     /// Sort order: asc or desc.
     pub sort_order: Option<String>,
+    /// When true, return only OCSF field-based matches. When false, return regex/message-based matches.
+    pub ocsf: Option<bool>,
+    /// Filter indicators whose triage state was updated by a specific user UUID.
+    pub worked_by: Option<String>,
+    /// Filter by triage state.
+    pub triage_state: Option<crate::datadogV2::model::IoCTriageState>,
 }
 
 impl ListIndicatorsOfCompromiseOptionalParams {
@@ -600,6 +643,21 @@ impl ListIndicatorsOfCompromiseOptionalParams {
     /// Sort order: asc or desc.
     pub fn sort_order(mut self, value: String) -> Self {
         self.sort_order = Some(value);
+        self
+    }
+    /// When true, return only OCSF field-based matches. When false, return regex/message-based matches.
+    pub fn ocsf(mut self, value: bool) -> Self {
+        self.ocsf = Some(value);
+        self
+    }
+    /// Filter indicators whose triage state was updated by a specific user UUID.
+    pub fn worked_by(mut self, value: String) -> Self {
+        self.worked_by = Some(value);
+        self
+    }
+    /// Filter by triage state.
+    pub fn triage_state(mut self, value: crate::datadogV2::model::IoCTriageState) -> Self {
+        self.triage_state = Some(value);
         self
     }
 }
@@ -1615,6 +1673,14 @@ pub enum CreateCasesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateCustomFrameworkError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// CreateIoCTriageStateError is a struct for typed errors of method [`SecurityMonitoringAPI::create_io_c_triage_state`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateIoCTriageStateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -3063,6 +3129,14 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.attach_service_now_ticket";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.attach_service_now_ticket' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -5683,6 +5757,171 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Set the triage state of an indicator of compromise (IoC). This creates or
+    /// updates the triage state for the indicator in your organization.
+    pub async fn create_io_c_triage_state(
+        &self,
+        body: crate::datadogV2::model::IoCTriageWriteRequest,
+    ) -> Result<
+        crate::datadogV2::model::IoCTriageWriteResponse,
+        datadog::Error<CreateIoCTriageStateError>,
+    > {
+        match self.create_io_c_triage_state_with_http_info(body).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Set the triage state of an indicator of compromise (IoC). This creates or
+    /// updates the triage state for the indicator in your organization.
+    pub async fn create_io_c_triage_state_with_http_info(
+        &self,
+        body: crate::datadogV2::model::IoCTriageWriteRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::IoCTriageWriteResponse>,
+        datadog::Error<CreateIoCTriageStateError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_io_c_triage_state";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_io_c_triage_state' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/siem/ioc-explorer/triage",
+            local_configuration.get_operation_host(operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::IoCTriageWriteResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateIoCTriageStateError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Create Jira issues for security findings.
     /// This operation creates a case in Datadog and a Jira issue linked to that case for bidirectional sync between Datadog and Jira. To configure the Jira integration, see [Bidirectional ticket syncing with Jira](<https://docs.datadoghq.com/security/ticketing_integrations/#bidirectional-ticket-syncing-with-jira>). You can create up to 50 Jira issues per request and associate up to 50 security findings per Jira issue. Security findings that are already attached to another Jira issue will be detached from their previous Jira issue and attached to the newly created Jira issue.
     pub async fn create_jira_issues(
@@ -7034,6 +7273,14 @@ impl SecurityMonitoringAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_service_now_tickets";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_service_now_tickets' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -10672,12 +10919,13 @@ impl SecurityMonitoringAPI {
     pub async fn get_indicator_of_compromise(
         &self,
         indicator: String,
+        params: GetIndicatorOfCompromiseOptionalParams,
     ) -> Result<
         crate::datadogV2::model::GetIoCIndicatorResponse,
         datadog::Error<GetIndicatorOfCompromiseError>,
     > {
         match self
-            .get_indicator_of_compromise_with_http_info(indicator)
+            .get_indicator_of_compromise_with_http_info(indicator, params)
             .await
         {
             Ok(response_content) => {
@@ -10697,6 +10945,7 @@ impl SecurityMonitoringAPI {
     pub async fn get_indicator_of_compromise_with_http_info(
         &self,
         indicator: String,
+        params: GetIndicatorOfCompromiseOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::GetIoCIndicatorResponse>,
         datadog::Error<GetIndicatorOfCompromiseError>,
@@ -10712,6 +10961,12 @@ impl SecurityMonitoringAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        // unbox and build optional parameters
+        let ocsf = params.ocsf;
+        let include_triage_history = params.include_triage_history;
+        let triage_history_limit = params.triage_history_limit;
+        let triage_history_offset = params.triage_history_offset;
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -10722,6 +10977,22 @@ impl SecurityMonitoringAPI {
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
         local_req_builder = local_req_builder.query(&[("indicator", &indicator.to_string())]);
+        if let Some(ref local_query_param) = ocsf {
+            local_req_builder =
+                local_req_builder.query(&[("ocsf", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include_triage_history {
+            local_req_builder = local_req_builder
+                .query(&[("include_triage_history", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = triage_history_limit {
+            local_req_builder = local_req_builder
+                .query(&[("triage_history_limit", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = triage_history_offset {
+            local_req_builder = local_req_builder
+                .query(&[("triage_history_offset", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -15152,6 +15423,9 @@ impl SecurityMonitoringAPI {
         let query = params.query;
         let sort_column = params.sort_column;
         let sort_order = params.sort_order;
+        let ocsf = params.ocsf;
+        let worked_by = params.worked_by;
+        let triage_state = params.triage_state;
 
         let local_client = &self.client;
 
@@ -15181,6 +15455,18 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = sort_order {
             local_req_builder =
                 local_req_builder.query(&[("sort[order]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = ocsf {
+            local_req_builder =
+                local_req_builder.query(&[("ocsf", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = worked_by {
+            local_req_builder =
+                local_req_builder.query(&[("worked_by", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = triage_state {
+            local_req_builder =
+                local_req_builder.query(&[("triage_state", &local_query_param.to_string())]);
         };
 
         // build headers
