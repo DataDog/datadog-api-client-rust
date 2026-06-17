@@ -497,6 +497,7 @@ impl Default for Configuration {
             ("v2.upsert_and_publish_form_version".to_owned(), false),
             ("v2.upsert_form_version".to_owned(), false),
             ("v2.update_org_saml_configurations".to_owned(), false),
+            ("v2.list_governance_insights".to_owned(), false),
             ("v2.create_hamr_org_connection".to_owned(), false),
             ("v2.get_hamr_org_connection".to_owned(), false),
             ("v2.delete_entity_integration_config".to_owned(), false),
