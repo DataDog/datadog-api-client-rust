@@ -19,12 +19,6 @@ async fn main() {
                 .expect("Failed to parse datetime")
                 .with_timezone(&Utc),
             "We have completed maintenance on the API to improve performance.".to_string(),
-            vec![
-                CreateMaintenanceRequestDataAttributesComponentsAffectedItems::new(
-                    Uuid::parse_str("1234abcd-12ab-34cd-56ef-123456abcdef").expect("invalid UUID"),
-                    PatchMaintenanceRequestDataAttributesComponentsAffectedItemsStatus::OPERATIONAL,
-                ),
-            ],
             "We are currently performing maintenance on the API to improve performance."
                 .to_string(),
             "We will be performing maintenance on the API to improve performance.".to_string(),
@@ -32,7 +26,13 @@ async fn main() {
                 .expect("Failed to parse datetime")
                 .with_timezone(&Utc),
             "API Maintenance".to_string(),
-        ),
+        )
+        .components_affected(vec![
+            CreateMaintenanceRequestDataAttributesComponentsAffectedItems::new(
+                Uuid::parse_str("1234abcd-12ab-34cd-56ef-123456abcdef").expect("invalid UUID"),
+                PatchMaintenanceRequestDataAttributesComponentsAffectedItemsStatus::OPERATIONAL,
+            ),
+        ]),
         PatchMaintenanceRequestDataType::MAINTENANCES,
     ));
     let configuration = datadog::Configuration::new();

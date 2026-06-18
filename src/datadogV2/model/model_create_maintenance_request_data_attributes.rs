@@ -19,8 +19,9 @@ pub struct CreateMaintenanceRequestDataAttributes {
     pub completed_description: String,
     /// The components affected by the maintenance.
     #[serde(rename = "components_affected")]
-    pub components_affected:
+    pub components_affected: Option<
         Vec<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems>,
+    >,
     /// The description shown while the maintenance is in progress.
     #[serde(rename = "in_progress_description")]
     pub in_progress_description: String,
@@ -44,9 +45,6 @@ impl CreateMaintenanceRequestDataAttributes {
     pub fn new(
         completed_date: chrono::DateTime<chrono::Utc>,
         completed_description: String,
-        components_affected: Vec<
-            crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems,
-        >,
         in_progress_description: String,
         scheduled_description: String,
         start_date: chrono::DateTime<chrono::Utc>,
@@ -55,7 +53,7 @@ impl CreateMaintenanceRequestDataAttributes {
         CreateMaintenanceRequestDataAttributes {
             completed_date,
             completed_description,
-            components_affected,
+            components_affected: None,
             in_progress_description,
             scheduled_description,
             start_date,
@@ -63,6 +61,16 @@ impl CreateMaintenanceRequestDataAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn components_affected(
+        mut self,
+        value: Vec<
+            crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems,
+        >,
+    ) -> Self {
+        self.components_affected = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -115,6 +123,9 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestDataAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "components_affected" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             components_affected =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -143,8 +154,6 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestDataAttributes {
                     completed_date.ok_or_else(|| M::Error::missing_field("completed_date"))?;
                 let completed_description = completed_description
                     .ok_or_else(|| M::Error::missing_field("completed_description"))?;
-                let components_affected = components_affected
-                    .ok_or_else(|| M::Error::missing_field("components_affected"))?;
                 let in_progress_description = in_progress_description
                     .ok_or_else(|| M::Error::missing_field("in_progress_description"))?;
                 let scheduled_description = scheduled_description

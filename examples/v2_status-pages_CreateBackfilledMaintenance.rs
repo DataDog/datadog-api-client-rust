@@ -31,30 +31,32 @@ async fn main() {
                     "Past Database Maintenance".to_string(),
                     vec![
                         CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems::new(
+                            "Database maintenance is in progress.".to_string(),
+                            DateTime::parse_from_rfc3339("2021-11-11T10:11:11+00:00")
+                                .expect("Failed to parse datetime")
+                                .with_timezone(&Utc),
+                            CreateMaintenanceRequestDataAttributesUpdatesItemsStatus::IN_PROGRESS,
+                        ).components_affected(
                             vec![
                                 CreateMaintenanceRequestDataAttributesComponentsAffectedItems::new(
                                     status_page_data_attributes_components_0_components_0_id.clone(),
                                     PatchMaintenanceRequestDataAttributesComponentsAffectedItemsStatus::MAINTENANCE,
                                 )
                             ],
-                            "Database maintenance is in progress.".to_string(),
-                            DateTime::parse_from_rfc3339("2021-11-11T10:11:11+00:00")
-                                .expect("Failed to parse datetime")
-                                .with_timezone(&Utc),
-                            CreateMaintenanceRequestDataAttributesUpdatesItemsStatus::IN_PROGRESS,
                         ),
                         CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems::new(
+                            "Database maintenance has been completed successfully.".to_string(),
+                            DateTime::parse_from_rfc3339("2021-11-11T11:11:11+00:00")
+                                .expect("Failed to parse datetime")
+                                .with_timezone(&Utc),
+                            CreateMaintenanceRequestDataAttributesUpdatesItemsStatus::COMPLETED,
+                        ).components_affected(
                             vec![
                                 CreateMaintenanceRequestDataAttributesComponentsAffectedItems::new(
                                     status_page_data_attributes_components_0_components_0_id.clone(),
                                     PatchMaintenanceRequestDataAttributesComponentsAffectedItemsStatus::OPERATIONAL,
                                 )
                             ],
-                            "Database maintenance has been completed successfully.".to_string(),
-                            DateTime::parse_from_rfc3339("2021-11-11T11:11:11+00:00")
-                                .expect("Failed to parse datetime")
-                                .with_timezone(&Utc),
-                            CreateMaintenanceRequestDataAttributesUpdatesItemsStatus::COMPLETED,
                         )
                     ],
                 ),

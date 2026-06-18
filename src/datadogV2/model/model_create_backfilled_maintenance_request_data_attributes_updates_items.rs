@@ -13,8 +13,9 @@ use std::fmt::{self, Formatter};
 pub struct CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
     /// The components affected.
     #[serde(rename = "components_affected")]
-    pub components_affected:
+    pub components_affected: Option<
         Vec<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems>,
+    >,
     /// A description of the update.
     #[serde(rename = "description")]
     pub description: String,
@@ -33,21 +34,28 @@ pub struct CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
 
 impl CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
     pub fn new(
-        components_affected: Vec<
-            crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems,
-        >,
         description: String,
         started_at: chrono::DateTime<chrono::Utc>,
         status: crate::datadogV2::model::CreateMaintenanceRequestDataAttributesUpdatesItemsStatus,
     ) -> CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
         CreateBackfilledMaintenanceRequestDataAttributesUpdatesItems {
-            components_affected,
+            components_affected: None,
             description,
             started_at,
             status,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn components_affected(
+        mut self,
+        value: Vec<
+            crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems,
+        >,
+    ) -> Self {
+        self.components_affected = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -89,6 +97,9 @@ impl<'de> Deserialize<'de> for CreateBackfilledMaintenanceRequestDataAttributesU
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "components_affected" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             components_affected =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -117,8 +128,6 @@ impl<'de> Deserialize<'de> for CreateBackfilledMaintenanceRequestDataAttributesU
                         }
                     }
                 }
-                let components_affected = components_affected
-                    .ok_or_else(|| M::Error::missing_field("components_affected"))?;
                 let description =
                     description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let started_at = started_at.ok_or_else(|| M::Error::missing_field("started_at"))?;
