@@ -102,6 +102,7 @@ pub struct ApiInstances {
     pub v2_api_dashboards: Option<datadogV2::api_dashboards::DashboardsAPI>,
     pub v2_api_data_observability: Option<datadogV2::api_data_observability::DataObservabilityAPI>,
     pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
+    pub v2_api_delegated_token: Option<datadogV2::api_delegated_token::DelegatedTokenAPI>,
     pub v2_api_data_deletion: Option<datadogV2::api_data_deletion::DataDeletionAPI>,
     pub v2_api_deployment_gates: Option<datadogV2::api_deployment_gates::DeploymentGatesAPI>,
     pub v2_api_domain_allowlist: Option<datadogV2::api_domain_allowlist::DomainAllowlistAPI>,
@@ -119,6 +120,7 @@ pub struct ApiInstances {
     pub v2_api_entity_integration_configs:
         Option<datadogV2::api_entity_integration_configs::EntityIntegrationConfigsAPI>,
     pub v2_api_incidents: Option<datadogV2::api_incidents::IncidentsAPI>,
+    pub v2_api_intake_key: Option<datadogV2::api_intake_key::IntakeKeyAPI>,
     pub v2_api_aws_integration: Option<datadogV2::api_aws_integration::AWSIntegrationAPI>,
     pub v2_api_aws_logs_integration:
         Option<datadogV2::api_aws_logs_integration::AWSLogsIntegrationAPI>,
@@ -220,6 +222,7 @@ pub struct ApiInstances {
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
     pub v2_api_web_integrations: Option<datadogV2::api_web_integrations::WebIntegrationsAPI>,
     pub v2_api_widgets: Option<datadogV2::api_widgets::WidgetsAPI>,
+    pub v2_api_aws_wif: Option<datadogV2::api_aws_wif::AWSWIFAPI>,
     pub v2_api_workflow_automation:
         Option<datadogV2::api_workflow_automation::WorkflowAutomationAPI>,
 }
@@ -851,6 +854,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
+        "DelegatedToken" => {
+            world.api_instances.v2_api_delegated_token = Some(
+                datadogV2::api_delegated_token::DelegatedTokenAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
         "DataDeletion" => {
             world.api_instances.v2_api_data_deletion = Some(
                 datadogV2::api_data_deletion::DataDeletionAPI::with_client_and_config(
@@ -929,6 +940,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Incidents" => {
             world.api_instances.v2_api_incidents = Some(
                 datadogV2::api_incidents::IncidentsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "IntakeKey" => {
+            world.api_instances.v2_api_intake_key = Some(
+                datadogV2::api_intake_key::IntakeKeyAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -1410,6 +1429,13 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Widgets" => {
             world.api_instances.v2_api_widgets =
                 Some(datadogV2::api_widgets::WidgetsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ));
+        }
+        "AWSWIF" => {
+            world.api_instances.v2_api_aws_wif =
+                Some(datadogV2::api_aws_wif::AWSWIFAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
@@ -4497,6 +4523,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateDataset".into(), test_v2_update_dataset);
+    world
+        .function_mappings
+        .insert("v2.GetDelegatedToken".into(), test_v2_get_delegated_token);
     world.function_mappings.insert(
         "v2.CreateDataDeletionRequest".into(),
         test_v2_create_data_deletion_request,
@@ -5044,6 +5073,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateIncidentTodo".into(), test_v2_update_incident_todo);
+    world
+        .function_mappings
+        .insert("v2.GetIntakeKey".into(), test_v2_get_intake_key);
     world
         .function_mappings
         .insert("v2.ListAWSAccounts".into(), test_v2_list_aws_accounts);
@@ -7456,6 +7488,38 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateWidget".into(), test_v2_update_widget);
+    world.function_mappings.insert(
+        "v2.ListAwsWifIntakeMappings".into(),
+        test_v2_list_aws_wif_intake_mappings,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAwsWifIntakeMapping".into(),
+        test_v2_create_aws_wif_intake_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAwsWifIntakeMapping".into(),
+        test_v2_delete_aws_wif_intake_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.GetAwsWifIntakeMapping".into(),
+        test_v2_get_aws_wif_intake_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.ListAwsWifPersonaMappings".into(),
+        test_v2_list_aws_wif_persona_mappings,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAwsWifPersonaMapping".into(),
+        test_v2_create_aws_wif_persona_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAwsWifPersonaMapping".into(),
+        test_v2_delete_aws_wif_persona_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.GetAwsWifPersonaMapping".into(),
+        test_v2_get_aws_wif_persona_mapping,
+    );
     world
         .function_mappings
         .insert("v2.ListWorkflows".into(), test_v2_list_workflows);
@@ -34250,6 +34314,30 @@ fn test_v2_update_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_get_delegated_token(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_delegated_token
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_delegated_token_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_create_data_deletion_request(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -38907,6 +38995,30 @@ fn test_v2_update_incident_todo(world: &mut DatadogWorld, _parameters: &HashMap<
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_intake_key(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_intake_key
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_intake_key_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
@@ -59458,6 +59570,232 @@ fn test_v2_update_widget(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let uuid = serde_json::from_value(_parameters.get("uuid").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_widget_with_http_info(experience_type, uuid, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_aws_wif_intake_mappings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_wif
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_aws_wif_intake_mappings_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_aws_wif_intake_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_wif
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_aws_wif_intake_mapping_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_aws_wif_intake_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_wif
+        .as_ref()
+        .expect("api instance not found");
+    let config_uuid =
+        serde_json::from_value(_parameters.get("config_uuid").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_aws_wif_intake_mapping_with_http_info(config_uuid)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_aws_wif_intake_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_wif
+        .as_ref()
+        .expect("api instance not found");
+    let config_uuid =
+        serde_json::from_value(_parameters.get("config_uuid").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_aws_wif_intake_mapping_with_http_info(config_uuid)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_aws_wif_persona_mappings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_wif
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_aws_wif_persona_mappings_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_aws_wif_persona_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_wif
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_aws_wif_persona_mapping_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_aws_wif_persona_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_wif
+        .as_ref()
+        .expect("api instance not found");
+    let config_uuid =
+        serde_json::from_value(_parameters.get("config_uuid").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_aws_wif_persona_mapping_with_http_info(config_uuid)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_aws_wif_persona_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_wif
+        .as_ref()
+        .expect("api instance not found");
+    let config_uuid =
+        serde_json::from_value(_parameters.get("config_uuid").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_aws_wif_persona_mapping_with_http_info(config_uuid)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
