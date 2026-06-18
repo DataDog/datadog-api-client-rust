@@ -141,7 +141,7 @@ impl AWSLogsIntegrationAPI {
         Self { config, client }
     }
 
-    /// Test if permissions are present to add a log-forwarding triggers for the given services and AWS account. The input
+    /// **This endpoint is deprecated.** Test if permissions are present to add a log-forwarding triggers for the given services and AWS account. The input
     /// is the same as for Enable an AWS service log collection. Subsequent requests will always repeat the above, so this
     /// endpoint can be polled intermittently instead of blocking.
     ///
@@ -170,7 +170,7 @@ impl AWSLogsIntegrationAPI {
         }
     }
 
-    /// Test if permissions are present to add a log-forwarding triggers for the given services and AWS account. The input
+    /// **This endpoint is deprecated.** Test if permissions are present to add a log-forwarding triggers for the given services and AWS account. The input
     /// is the same as for Enable an AWS service log collection. Subsequent requests will always repeat the above, so this
     /// endpoint can be polled intermittently instead of blocking.
     ///
@@ -310,7 +310,7 @@ impl AWSLogsIntegrationAPI {
         }
     }
 
-    /// Test if permissions are present to add log-forwarding triggers for the
+    /// **This endpoint is deprecated.** Test if permissions are present to add log-forwarding triggers for the
     /// given services and AWS account. Input is the same as for `EnableAWSLogServices`.
     /// Done async, so can be repeatedly polled in a non-blocking fashion until
     /// the async request completes.
@@ -344,7 +344,7 @@ impl AWSLogsIntegrationAPI {
         }
     }
 
-    /// Test if permissions are present to add log-forwarding triggers for the
+    /// **This endpoint is deprecated.** Test if permissions are present to add log-forwarding triggers for the
     /// given services and AWS account. Input is the same as for `EnableAWSLogServices`.
     /// Done async, so can be repeatedly polled in a non-blocking fashion until
     /// the async request completes.
@@ -486,7 +486,7 @@ impl AWSLogsIntegrationAPI {
         }
     }
 
-    /// Attach the Lambda ARN of the Lambda created for the Datadog-AWS log collection to your AWS account ID to enable log collection.
+    /// **This endpoint is deprecated.** Attach the Lambda ARN of the Lambda created for the Datadog-AWS log collection to your AWS account ID to enable log collection.
     pub async fn create_aws_lambda_arn(
         &self,
         body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
@@ -508,7 +508,7 @@ impl AWSLogsIntegrationAPI {
         }
     }
 
-    /// Attach the Lambda ARN of the Lambda created for the Datadog-AWS log collection to your AWS account ID to enable log collection.
+    /// **This endpoint is deprecated.** Attach the Lambda ARN of the Lambda created for the Datadog-AWS log collection to your AWS account ID to enable log collection.
     pub async fn create_aws_lambda_arn_with_http_info(
         &self,
         body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
@@ -641,7 +641,7 @@ impl AWSLogsIntegrationAPI {
         }
     }
 
-    /// Delete a Datadog-AWS logs configuration by removing the specific Lambda ARN associated with a given AWS account.
+    /// **This endpoint is deprecated.** Delete a Datadog-AWS logs configuration by removing the specific Lambda ARN associated with a given AWS account.
     pub async fn delete_aws_lambda_arn(
         &self,
         body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
@@ -663,7 +663,7 @@ impl AWSLogsIntegrationAPI {
         }
     }
 
-    /// Delete a Datadog-AWS logs configuration by removing the specific Lambda ARN associated with a given AWS account.
+    /// **This endpoint is deprecated.** Delete a Datadog-AWS logs configuration by removing the specific Lambda ARN associated with a given AWS account.
     pub async fn delete_aws_lambda_arn_with_http_info(
         &self,
         body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
