@@ -218,6 +218,7 @@ pub struct ApiInstances {
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
     pub v2_api_tag_policies: Option<datadogV2::api_tag_policies::TagPoliciesAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
+    pub v2_api_vercel: Option<datadogV2::api_vercel::VercelAPI>,
     pub v2_api_web_integrations: Option<datadogV2::api_web_integrations::WebIntegrationsAPI>,
     pub v2_api_widgets: Option<datadogV2::api_widgets::WidgetsAPI>,
     pub v2_api_workflow_automation:
@@ -1395,6 +1396,13 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Teams" => {
             world.api_instances.v2_api_teams =
                 Some(datadogV2::api_teams::TeamsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ));
+        }
+        "Vercel" => {
+            world.api_instances.v2_api_vercel =
+                Some(datadogV2::api_vercel::VercelAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
@@ -7421,6 +7429,15 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetUserMemberships".into(), test_v2_get_user_memberships);
+    world
+        .function_mappings
+        .insert("v2.GetVercelConfig".into(), test_v2_get_vercel_config);
+    world
+        .function_mappings
+        .insert("v2.UpdateVercelConfig".into(), test_v2_update_vercel_config);
+    world
+        .function_mappings
+        .insert("v2.CreateVercelToken".into(), test_v2_create_vercel_token);
     world.function_mappings.insert(
         "v2.ListWebIntegrationAccounts".into(),
         test_v2_list_web_integration_accounts,
@@ -59127,6 +59144,84 @@ fn test_v2_get_user_memberships(world: &mut DatadogWorld, _parameters: &HashMap<
         .expect("api instance not found");
     let user_uuid = serde_json::from_value(_parameters.get("user_uuid").unwrap().clone()).unwrap();
     let response = match block_on(api.get_user_memberships_with_http_info(user_uuid)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_vercel_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_vercel
+        .as_ref()
+        .expect("api instance not found");
+    let configuration_id =
+        serde_json::from_value(_parameters.get("configuration_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_vercel_config_with_http_info(configuration_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_vercel_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_vercel
+        .as_ref()
+        .expect("api instance not found");
+    let configuration_id =
+        serde_json::from_value(_parameters.get("configuration_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_vercel_config_with_http_info(configuration_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_vercel_token(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_vercel
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_vercel_token_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

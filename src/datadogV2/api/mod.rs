@@ -131,6 +131,7 @@ pub mod api_teams;
 pub mod api_test_optimization;
 pub mod api_usage_metering;
 pub mod api_users;
+pub mod api_vercel;
 pub mod api_web_integrations;
 pub mod api_webhooks_integration;
 pub mod api_widgets;
