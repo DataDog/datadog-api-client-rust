@@ -183,6 +183,7 @@ pub struct ApiInstances {
     pub v2_api_application_security:
         Option<datadogV2::api_application_security::ApplicationSecurityAPI>,
     pub v2_api_csm_threats: Option<datadogV2::api_csm_threats::CSMThreatsAPI>,
+    pub v2_api_rum_remote_config: Option<datadogV2::api_rum_remote_config::RUMRemoteConfigAPI>,
     pub v2_api_rum_replay_heatmaps:
         Option<datadogV2::api_rum_replay_heatmaps::RumReplayHeatmapsAPI>,
     pub v2_api_report_schedules: Option<datadogV2::api_report_schedules::ReportSchedulesAPI>,
@@ -1204,6 +1205,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "CSMThreats" => {
             world.api_instances.v2_api_csm_threats = Some(
                 datadogV2::api_csm_threats::CSMThreatsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "RUMRemoteConfig" => {
+            world.api_instances.v2_api_rum_remote_config = Some(
+                datadogV2::api_rum_remote_config::RUMRemoteConfigAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -6479,6 +6488,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateCloudWorkloadSecurityAgentRule".into(),
         test_v2_update_cloud_workload_security_agent_rule,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetRumSdkConfig".into(), test_v2_get_rum_sdk_config);
+    world.function_mappings.insert(
+        "v2.UpdateRumSdkConfig".into(),
+        test_v2_update_rum_sdk_config,
     );
     world.function_mappings.insert(
         "v2.ListReplayHeatmapSnapshots".into(),
@@ -50552,6 +50568,57 @@ fn test_v2_update_cloud_workload_security_agent_rule(
     let response = match block_on(
         api.update_cloud_workload_security_agent_rule_with_http_info(agent_rule_id, body),
     ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_rum_sdk_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_remote_config
+        .as_ref()
+        .expect("api instance not found");
+    let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_rum_sdk_config_with_http_info(config_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_rum_sdk_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_remote_config
+        .as_ref()
+        .expect("api instance not found");
+    let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_rum_sdk_config_with_http_info(config_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

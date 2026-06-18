@@ -720,6 +720,8 @@ impl Default for Configuration {
             ("v2.get_pruned_trace_by_id".to_owned(), false),
             ("v2.get_trace_by_id".to_owned(), false),
             ("v2.get_asm_service_by_name".to_owned(), false),
+            ("v2.get_rum_sdk_config".to_owned(), false),
+            ("v2.update_rum_sdk_config".to_owned(), false),
             ("v2.create_report_schedule".to_owned(), false),
             ("v2.patch_report_schedule".to_owned(), false),
             ("v2.delete_sourcemaps".to_owned(), false),
