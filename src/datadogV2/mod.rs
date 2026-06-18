@@ -101,6 +101,7 @@ pub use self::api::api_rum_audience_management;
 pub use self::api::api_rum_insights;
 pub use self::api::api_rum_metrics;
 pub use self::api::api_rum_rate_limit;
+pub use self::api::api_rum_remote_config;
 pub use self::api::api_rum_replay_heatmaps;
 pub use self::api::api_rum_replay_playlists;
 pub use self::api::api_rum_replay_sessions;

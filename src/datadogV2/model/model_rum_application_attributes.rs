@@ -41,6 +41,9 @@ pub struct RUMApplicationAttributes {
     /// Product Scales configuration for the RUM application.
     #[serde(rename = "product_scales")]
     pub product_scales: Option<crate::datadogV2::model::RUMProductScales>,
+    /// ID of the RUM SDK remote configuration for the application, if one exists.
+    #[serde(rename = "remote_config_id")]
+    pub remote_config_id: Option<String>,
     /// Type of the RUM application. Supported values are `browser`, `ios`, `android`, `react-native`, `flutter`, `roku`, `electron`, `unity`, `kotlin-multiplatform`.
     #[serde(rename = "type")]
     pub type_: String,
@@ -80,6 +83,7 @@ impl RUMApplicationAttributes {
             name,
             org_id,
             product_scales: None,
+            remote_config_id: None,
             type_,
             updated_at,
             updated_by_handle,
@@ -105,6 +109,11 @@ impl RUMApplicationAttributes {
 
     pub fn product_scales(mut self, value: crate::datadogV2::model::RUMProductScales) -> Self {
         self.product_scales = Some(value);
+        self
+    }
+
+    pub fn remote_config_id(mut self, value: String) -> Self {
+        self.remote_config_id = Some(value);
         self
     }
 
@@ -144,6 +153,7 @@ impl<'de> Deserialize<'de> for RUMApplicationAttributes {
                 let mut name: Option<String> = None;
                 let mut org_id: Option<i32> = None;
                 let mut product_scales: Option<crate::datadogV2::model::RUMProductScales> = None;
+                let mut remote_config_id: Option<String> = None;
                 let mut type_: Option<String> = None;
                 let mut updated_at: Option<i64> = None;
                 let mut updated_by_handle: Option<String> = None;
@@ -201,6 +211,13 @@ impl<'de> Deserialize<'de> for RUMApplicationAttributes {
                             product_scales =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "remote_config_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            remote_config_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -243,6 +260,7 @@ impl<'de> Deserialize<'de> for RUMApplicationAttributes {
                     name,
                     org_id,
                     product_scales,
+                    remote_config_id,
                     type_,
                     updated_at,
                     updated_by_handle,
