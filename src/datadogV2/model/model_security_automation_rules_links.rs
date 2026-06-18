@@ -1,0 +1,136 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
+use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
+
+/// Pagination links for the list of automation rules.
+#[non_exhaustive]
+#[skip_serializing_none]
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub struct SecurityAutomationRulesLinks {
+    /// Link to the first page of results.
+    #[serde(rename = "first")]
+    pub first: String,
+    /// Link to the last page of results.
+    #[serde(rename = "last")]
+    pub last: String,
+    /// Link to the next page of results.
+    #[serde(rename = "next")]
+    pub next: Option<String>,
+    /// Link to the previous page of results.
+    #[serde(rename = "prev")]
+    pub prev: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
+}
+
+impl SecurityAutomationRulesLinks {
+    pub fn new(first: String, last: String) -> SecurityAutomationRulesLinks {
+        SecurityAutomationRulesLinks {
+            first,
+            last,
+            next: None,
+            prev: None,
+            additional_properties: std::collections::BTreeMap::new(),
+            _unparsed: false,
+        }
+    }
+
+    pub fn next(mut self, value: String) -> Self {
+        self.next = Some(value);
+        self
+    }
+
+    pub fn prev(mut self, value: String) -> Self {
+        self.prev = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
+}
+
+impl<'de> Deserialize<'de> for SecurityAutomationRulesLinks {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SecurityAutomationRulesLinksVisitor;
+        impl<'a> Visitor<'a> for SecurityAutomationRulesLinksVisitor {
+            type Value = SecurityAutomationRulesLinks;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut first: Option<String> = None;
+                let mut last: Option<String> = None;
+                let mut next: Option<String> = None;
+                let mut prev: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "first" => {
+                            first = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "last" => {
+                            last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "next" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            next = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "prev" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            prev = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
+                    }
+                }
+                let first = first.ok_or_else(|| M::Error::missing_field("first"))?;
+                let last = last.ok_or_else(|| M::Error::missing_field("last"))?;
+
+                let content = SecurityAutomationRulesLinks {
+                    first,
+                    last,
+                    next,
+                    prev,
+                    additional_properties,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(SecurityAutomationRulesLinksVisitor)
+    }
+}
