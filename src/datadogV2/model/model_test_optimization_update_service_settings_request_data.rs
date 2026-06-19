@@ -13,6 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct TestOptimizationUpdateServiceSettingsRequestData {
     /// Attributes for updating Test Optimization service settings.
     /// All non-required fields are optional; only provided fields will be updated.
+    /// Setting a field to `null` is a no-op. To reset a setting to inherit from the repository level, use the corresponding `<setting>_inherit` field.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::TestOptimizationUpdateServiceSettingsRequestAttributes,
     /// JSON:API type for update service settings request.

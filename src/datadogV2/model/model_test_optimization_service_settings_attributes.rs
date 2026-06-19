@@ -14,19 +14,31 @@ pub struct TestOptimizationServiceSettingsAttributes {
     /// Whether Auto Test Retries are enabled for this service.
     #[serde(rename = "auto_test_retries_enabled")]
     pub auto_test_retries_enabled: Option<bool>,
+    /// Whether the Auto Test Retries setting is overridden at the service level.
+    #[serde(rename = "auto_test_retries_enabled_is_overridden")]
+    pub auto_test_retries_enabled_is_overridden: Option<bool>,
     /// Whether Code Coverage is enabled for this service.
     #[serde(rename = "code_coverage_enabled")]
     pub code_coverage_enabled: Option<bool>,
+    /// Whether the Code Coverage setting is overridden at the service level.
+    #[serde(rename = "code_coverage_enabled_is_overridden")]
+    pub code_coverage_enabled_is_overridden: Option<bool>,
     /// Whether Early Flake Detection is enabled for this service.
     #[serde(rename = "early_flake_detection_enabled")]
     pub early_flake_detection_enabled: Option<bool>,
+    /// Whether the Early Flake Detection setting is overridden at the service level.
+    #[serde(rename = "early_flake_detection_enabled_is_overridden")]
+    pub early_flake_detection_enabled_is_overridden: Option<bool>,
     /// The environment name.
     #[serde(rename = "env")]
     pub env: Option<String>,
     /// Whether Failed Test Replay is enabled for this service.
     #[serde(rename = "failed_test_replay_enabled")]
     pub failed_test_replay_enabled: Option<bool>,
-    /// Whether PR Comments are enabled for this service.
+    /// Whether the Failed Test Replay setting is overridden at the service level.
+    #[serde(rename = "failed_test_replay_enabled_is_overridden")]
+    pub failed_test_replay_enabled_is_overridden: Option<bool>,
+    /// Whether PR Comments are enabled. This value reflects the repository-level setting and cannot be overridden at the service level.
     #[serde(rename = "pr_comments_enabled")]
     pub pr_comments_enabled: Option<bool>,
     /// The repository identifier.
@@ -38,6 +50,9 @@ pub struct TestOptimizationServiceSettingsAttributes {
     /// Whether Test Impact Analysis is enabled for this service.
     #[serde(rename = "test_impact_analysis_enabled")]
     pub test_impact_analysis_enabled: Option<bool>,
+    /// Whether the Test Impact Analysis setting is overridden at the service level.
+    #[serde(rename = "test_impact_analysis_enabled_is_overridden")]
+    pub test_impact_analysis_enabled_is_overridden: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -49,14 +64,19 @@ impl TestOptimizationServiceSettingsAttributes {
     pub fn new() -> TestOptimizationServiceSettingsAttributes {
         TestOptimizationServiceSettingsAttributes {
             auto_test_retries_enabled: None,
+            auto_test_retries_enabled_is_overridden: None,
             code_coverage_enabled: None,
+            code_coverage_enabled_is_overridden: None,
             early_flake_detection_enabled: None,
+            early_flake_detection_enabled_is_overridden: None,
             env: None,
             failed_test_replay_enabled: None,
+            failed_test_replay_enabled_is_overridden: None,
             pr_comments_enabled: None,
             repository_id: None,
             service_name: None,
             test_impact_analysis_enabled: None,
+            test_impact_analysis_enabled_is_overridden: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -67,13 +87,28 @@ impl TestOptimizationServiceSettingsAttributes {
         self
     }
 
+    pub fn auto_test_retries_enabled_is_overridden(mut self, value: bool) -> Self {
+        self.auto_test_retries_enabled_is_overridden = Some(value);
+        self
+    }
+
     pub fn code_coverage_enabled(mut self, value: bool) -> Self {
         self.code_coverage_enabled = Some(value);
         self
     }
 
+    pub fn code_coverage_enabled_is_overridden(mut self, value: bool) -> Self {
+        self.code_coverage_enabled_is_overridden = Some(value);
+        self
+    }
+
     pub fn early_flake_detection_enabled(mut self, value: bool) -> Self {
         self.early_flake_detection_enabled = Some(value);
+        self
+    }
+
+    pub fn early_flake_detection_enabled_is_overridden(mut self, value: bool) -> Self {
+        self.early_flake_detection_enabled_is_overridden = Some(value);
         self
     }
 
@@ -84,6 +119,11 @@ impl TestOptimizationServiceSettingsAttributes {
 
     pub fn failed_test_replay_enabled(mut self, value: bool) -> Self {
         self.failed_test_replay_enabled = Some(value);
+        self
+    }
+
+    pub fn failed_test_replay_enabled_is_overridden(mut self, value: bool) -> Self {
+        self.failed_test_replay_enabled_is_overridden = Some(value);
         self
     }
 
@@ -104,6 +144,11 @@ impl TestOptimizationServiceSettingsAttributes {
 
     pub fn test_impact_analysis_enabled(mut self, value: bool) -> Self {
         self.test_impact_analysis_enabled = Some(value);
+        self
+    }
+
+    pub fn test_impact_analysis_enabled_is_overridden(mut self, value: bool) -> Self {
+        self.test_impact_analysis_enabled_is_overridden = Some(value);
         self
     }
 
@@ -140,14 +185,19 @@ impl<'de> Deserialize<'de> for TestOptimizationServiceSettingsAttributes {
                 M: MapAccess<'a>,
             {
                 let mut auto_test_retries_enabled: Option<bool> = None;
+                let mut auto_test_retries_enabled_is_overridden: Option<bool> = None;
                 let mut code_coverage_enabled: Option<bool> = None;
+                let mut code_coverage_enabled_is_overridden: Option<bool> = None;
                 let mut early_flake_detection_enabled: Option<bool> = None;
+                let mut early_flake_detection_enabled_is_overridden: Option<bool> = None;
                 let mut env: Option<String> = None;
                 let mut failed_test_replay_enabled: Option<bool> = None;
+                let mut failed_test_replay_enabled_is_overridden: Option<bool> = None;
                 let mut pr_comments_enabled: Option<bool> = None;
                 let mut repository_id: Option<String> = None;
                 let mut service_name: Option<String> = None;
                 let mut test_impact_analysis_enabled: Option<bool> = None;
+                let mut test_impact_analysis_enabled_is_overridden: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -163,6 +213,13 @@ impl<'de> Deserialize<'de> for TestOptimizationServiceSettingsAttributes {
                             auto_test_retries_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "auto_test_retries_enabled_is_overridden" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            auto_test_retries_enabled_is_overridden =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "code_coverage_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -170,11 +227,25 @@ impl<'de> Deserialize<'de> for TestOptimizationServiceSettingsAttributes {
                             code_coverage_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "code_coverage_enabled_is_overridden" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code_coverage_enabled_is_overridden =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "early_flake_detection_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             early_flake_detection_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "early_flake_detection_enabled_is_overridden" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            early_flake_detection_enabled_is_overridden =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "env" => {
@@ -188,6 +259,13 @@ impl<'de> Deserialize<'de> for TestOptimizationServiceSettingsAttributes {
                                 continue;
                             }
                             failed_test_replay_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "failed_test_replay_enabled_is_overridden" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            failed_test_replay_enabled_is_overridden =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "pr_comments_enabled" => {
@@ -218,6 +296,13 @@ impl<'de> Deserialize<'de> for TestOptimizationServiceSettingsAttributes {
                             test_impact_analysis_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "test_impact_analysis_enabled_is_overridden" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            test_impact_analysis_enabled_is_overridden =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -228,14 +313,19 @@ impl<'de> Deserialize<'de> for TestOptimizationServiceSettingsAttributes {
 
                 let content = TestOptimizationServiceSettingsAttributes {
                     auto_test_retries_enabled,
+                    auto_test_retries_enabled_is_overridden,
                     code_coverage_enabled,
+                    code_coverage_enabled_is_overridden,
                     early_flake_detection_enabled,
+                    early_flake_detection_enabled_is_overridden,
                     env,
                     failed_test_replay_enabled,
+                    failed_test_replay_enabled_is_overridden,
                     pr_comments_enabled,
                     repository_id,
                     service_name,
                     test_impact_analysis_enabled,
+                    test_impact_analysis_enabled_is_overridden,
                     additional_properties,
                     _unparsed,
                 };

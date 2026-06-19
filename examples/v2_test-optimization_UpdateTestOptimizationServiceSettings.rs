@@ -16,12 +16,17 @@ async fn main() {
                     "shopist".to_string(),
                 )
                     .auto_test_retries_enabled(false)
+                    .auto_test_retries_enabled_inherit(false)
                     .code_coverage_enabled(false)
+                    .code_coverage_enabled_inherit(false)
                     .early_flake_detection_enabled(false)
+                    .early_flake_detection_enabled_inherit(false)
                     .env("prod".to_string())
                     .failed_test_replay_enabled(false)
-                    .pr_comments_enabled(true)
-                    .test_impact_analysis_enabled(false),
+                    .failed_test_replay_enabled_inherit(false)
+                    .pr_comments_enabled(false)
+                    .test_impact_analysis_enabled(true)
+                    .test_impact_analysis_enabled_inherit(true),
                 TestOptimizationUpdateServiceSettingsRequestDataType
                 ::TEST_OPTIMIZATION_UPDATE_SERVICE_SETTINGS_REQUEST,
             ),
