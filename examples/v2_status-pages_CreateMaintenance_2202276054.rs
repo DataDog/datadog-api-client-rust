@@ -25,12 +25,6 @@ async fn main() {
                 .expect("Failed to parse datetime")
                 .with_timezone(&Utc),
             "We have completed maintenance on the API to improve performance.".to_string(),
-            vec![
-                CreateMaintenanceRequestDataAttributesComponentsAffectedItems::new(
-                    status_page_data_attributes_components_0_components_0_id.clone(),
-                    PatchMaintenanceRequestDataAttributesComponentsAffectedItemsStatus::OPERATIONAL,
-                ),
-            ],
             "We are currently performing maintenance on the API to improve performance."
                 .to_string(),
             "We will be performing maintenance on the API to improve performance.".to_string(),
@@ -38,7 +32,13 @@ async fn main() {
                 .expect("Failed to parse datetime")
                 .with_timezone(&Utc),
             "API Maintenance".to_string(),
-        ),
+        )
+        .components_affected(vec![
+            CreateMaintenanceRequestDataAttributesComponentsAffectedItems::new(
+                status_page_data_attributes_components_0_components_0_id.clone(),
+                PatchMaintenanceRequestDataAttributesComponentsAffectedItemsStatus::OPERATIONAL,
+            ),
+        ]),
         PatchMaintenanceRequestDataType::MAINTENANCES,
     ));
     let configuration = datadog::Configuration::new();

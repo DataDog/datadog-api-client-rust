@@ -19,6 +19,12 @@ pub struct DegradationDataAttributesUpdatesItems {
     /// Timestamp of when the update was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// The date and time the resource was deleted.
+    #[serde(rename = "deleted_at")]
+    pub deleted_at: Option<String>,
+    /// UUID of the user who deleted the resource.
+    #[serde(rename = "deleted_by_user_uuid")]
+    pub deleted_by_user_uuid: Option<String>,
     /// Description of the update.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -49,6 +55,8 @@ impl DegradationDataAttributesUpdatesItems {
         DegradationDataAttributesUpdatesItems {
             components_affected: None,
             created_at: None,
+            deleted_at: None,
+            deleted_by_user_uuid: None,
             description: None,
             id: None,
             last_modified_by_user_uuid: None,
@@ -72,6 +80,16 @@ impl DegradationDataAttributesUpdatesItems {
 
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
+        self
+    }
+
+    pub fn deleted_at(mut self, value: String) -> Self {
+        self.deleted_at = Some(value);
+        self
+    }
+
+    pub fn deleted_by_user_uuid(mut self, value: String) -> Self {
+        self.deleted_by_user_uuid = Some(value);
         self
     }
 
@@ -142,6 +160,8 @@ impl<'de> Deserialize<'de> for DegradationDataAttributesUpdatesItems {
             {
                 let mut components_affected: Option<Vec<crate::datadogV2::model::DegradationDataAttributesUpdatesItemsComponentsAffectedItems>> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut deleted_at: Option<String> = None;
+                let mut deleted_by_user_uuid: Option<String> = None;
                 let mut description: Option<String> = None;
                 let mut id: Option<uuid::Uuid> = None;
                 let mut last_modified_by_user_uuid: Option<String> = None;
@@ -170,6 +190,19 @@ impl<'de> Deserialize<'de> for DegradationDataAttributesUpdatesItems {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "deleted_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            deleted_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "deleted_by_user_uuid" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            deleted_by_user_uuid =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "description" => {
                             if v.is_null() {
@@ -229,6 +262,8 @@ impl<'de> Deserialize<'de> for DegradationDataAttributesUpdatesItems {
                 let content = DegradationDataAttributesUpdatesItems {
                     components_affected,
                     created_at,
+                    deleted_at,
+                    deleted_by_user_uuid,
                     description,
                     id,
                     last_modified_by_user_uuid,

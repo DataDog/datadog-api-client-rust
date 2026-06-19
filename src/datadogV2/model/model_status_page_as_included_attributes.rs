@@ -48,6 +48,12 @@ pub struct StatusPageAsIncludedAttributes {
     /// The url that the status page is accessible at.
     #[serde(rename = "page_url")]
     pub page_url: Option<String>,
+    /// The Slack app icon URL for the status page.
+    #[serde(rename = "slack_app_icon")]
+    pub slack_app_icon: Option<String>,
+    /// Whether Slack subscriptions are enabled for the status page.
+    #[serde(rename = "slack_subscriptions_enabled")]
+    pub slack_subscriptions_enabled: Option<bool>,
     /// Whether users can subscribe to the status page.
     #[serde(rename = "subscriptions_enabled")]
     pub subscriptions_enabled: Option<bool>,
@@ -80,6 +86,8 @@ impl StatusPageAsIncludedAttributes {
             modified_at: None,
             name: None,
             page_url: None,
+            slack_app_icon: None,
+            slack_subscriptions_enabled: None,
             subscriptions_enabled: None,
             type_: None,
             visualization_type: None,
@@ -151,6 +159,16 @@ impl StatusPageAsIncludedAttributes {
         self
     }
 
+    pub fn slack_app_icon(mut self, value: String) -> Self {
+        self.slack_app_icon = Some(value);
+        self
+    }
+
+    pub fn slack_subscriptions_enabled(mut self, value: bool) -> Self {
+        self.slack_subscriptions_enabled = Some(value);
+        self
+    }
+
     pub fn subscriptions_enabled(mut self, value: bool) -> Self {
         self.subscriptions_enabled = Some(value);
         self
@@ -218,6 +236,8 @@ impl<'de> Deserialize<'de> for StatusPageAsIncludedAttributes {
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut page_url: Option<String> = None;
+                let mut slack_app_icon: Option<String> = None;
+                let mut slack_subscriptions_enabled: Option<bool> = None;
                 let mut subscriptions_enabled: Option<bool> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::CreateStatusPageRequestDataAttributesType,
@@ -311,6 +331,20 @@ impl<'de> Deserialize<'de> for StatusPageAsIncludedAttributes {
                             }
                             page_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "slack_app_icon" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            slack_app_icon =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "slack_subscriptions_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            slack_subscriptions_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "subscriptions_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -368,6 +402,8 @@ impl<'de> Deserialize<'de> for StatusPageAsIncludedAttributes {
                     modified_at,
                     name,
                     page_url,
+                    slack_app_icon,
+                    slack_subscriptions_enabled,
                     subscriptions_enabled,
                     type_,
                     visualization_type,

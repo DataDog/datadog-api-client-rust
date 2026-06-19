@@ -24,12 +24,21 @@ pub struct CreateStatusPageRequestDataAttributes {
     /// Base64-encoded image data included in email notifications sent to status page subscribers.
     #[serde(rename = "email_header_image")]
     pub email_header_image: Option<String>,
+    /// Whether the status page is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: Option<bool>,
     /// Base64-encoded image data displayed in the browser tab.
     #[serde(rename = "favicon")]
     pub favicon: Option<String>,
     /// The name of the status page.
     #[serde(rename = "name")]
     pub name: String,
+    /// The Slack app icon URL for the status page.
+    #[serde(rename = "slack_app_icon")]
+    pub slack_app_icon: Option<String>,
+    /// Whether Slack subscriptions are enabled for the status page.
+    #[serde(rename = "slack_subscriptions_enabled")]
+    pub slack_subscriptions_enabled: Option<bool>,
     /// Whether users can subscribe to the status page.
     #[serde(rename = "subscriptions_enabled")]
     pub subscriptions_enabled: Option<bool>,
@@ -59,8 +68,11 @@ impl CreateStatusPageRequestDataAttributes {
             components: None,
             domain_prefix,
             email_header_image: None,
+            enabled: None,
             favicon: None,
             name,
+            slack_app_icon: None,
+            slack_subscriptions_enabled: None,
             subscriptions_enabled: None,
             type_,
             visualization_type,
@@ -87,8 +99,23 @@ impl CreateStatusPageRequestDataAttributes {
         self
     }
 
+    pub fn enabled(mut self, value: bool) -> Self {
+        self.enabled = Some(value);
+        self
+    }
+
     pub fn favicon(mut self, value: String) -> Self {
         self.favicon = Some(value);
+        self
+    }
+
+    pub fn slack_app_icon(mut self, value: String) -> Self {
+        self.slack_app_icon = Some(value);
+        self
+    }
+
+    pub fn slack_subscriptions_enabled(mut self, value: bool) -> Self {
+        self.slack_subscriptions_enabled = Some(value);
         self
     }
 
@@ -127,8 +154,11 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                 let mut components: Option<Vec<crate::datadogV2::model::CreateStatusPageRequestDataAttributesComponentsItems>> = None;
                 let mut domain_prefix: Option<String> = None;
                 let mut email_header_image: Option<String> = None;
+                let mut enabled: Option<bool> = None;
                 let mut favicon: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut slack_app_icon: Option<String> = None;
+                let mut slack_subscriptions_enabled: Option<bool> = None;
                 let mut subscriptions_enabled: Option<bool> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::CreateStatusPageRequestDataAttributesType,
@@ -168,6 +198,12 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                             email_header_image =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "favicon" => {
                             if v.is_null() {
                                 continue;
@@ -176,6 +212,20 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "slack_app_icon" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            slack_app_icon =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "slack_subscriptions_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            slack_subscriptions_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "subscriptions_enabled" => {
                             if v.is_null() {
@@ -226,8 +276,11 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                     components,
                     domain_prefix,
                     email_header_image,
+                    enabled,
                     favicon,
                     name,
+                    slack_app_icon,
+                    slack_subscriptions_enabled,
                     subscriptions_enabled,
                     type_,
                     visualization_type,
