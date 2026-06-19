@@ -8,26 +8,39 @@ use std::fmt::{self, Formatter};
 
 /// Attributes for updating Test Optimization service settings.
 /// All non-required fields are optional; only provided fields will be updated.
+/// Setting a field to `null` is a no-op. To reset a setting to inherit from the repository level, use the corresponding `<setting>_inherit` field.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TestOptimizationUpdateServiceSettingsRequestAttributes {
-    /// Whether Auto Test Retries are enabled for this service.
+    /// Whether Auto Test Retries are enabled for this service. Setting to `null` is a no-op; use `auto_test_retries_enabled_inherit` to reset to repository-level inheritance.
     #[serde(rename = "auto_test_retries_enabled")]
     pub auto_test_retries_enabled: Option<bool>,
-    /// Whether Code Coverage is enabled for this service.
+    /// When `true`, resets the Auto Test Retries setting to inherit from the repository level.
+    #[serde(rename = "auto_test_retries_enabled_inherit")]
+    pub auto_test_retries_enabled_inherit: Option<bool>,
+    /// Whether Code Coverage is enabled for this service. Setting to `null` is a no-op; use `code_coverage_enabled_inherit` to reset to repository-level inheritance.
     #[serde(rename = "code_coverage_enabled")]
     pub code_coverage_enabled: Option<bool>,
-    /// Whether Early Flake Detection is enabled for this service.
+    /// When `true`, resets the Code Coverage setting to inherit from the repository level.
+    #[serde(rename = "code_coverage_enabled_inherit")]
+    pub code_coverage_enabled_inherit: Option<bool>,
+    /// Whether Early Flake Detection is enabled for this service. Setting to `null` is a no-op; use `early_flake_detection_enabled_inherit` to reset to repository-level inheritance.
     #[serde(rename = "early_flake_detection_enabled")]
     pub early_flake_detection_enabled: Option<bool>,
+    /// When `true`, resets the Early Flake Detection setting to inherit from the repository level.
+    #[serde(rename = "early_flake_detection_enabled_inherit")]
+    pub early_flake_detection_enabled_inherit: Option<bool>,
     /// The environment name. If omitted, defaults to `none`.
     #[serde(rename = "env")]
     pub env: Option<String>,
-    /// Whether Failed Test Replay is enabled for this service.
+    /// Whether Failed Test Replay is enabled for this service. Setting to `null` is a no-op; use `failed_test_replay_enabled_inherit` to reset to repository-level inheritance.
     #[serde(rename = "failed_test_replay_enabled")]
     pub failed_test_replay_enabled: Option<bool>,
-    /// Whether PR Comments are enabled for this service.
+    /// When `true`, resets the Failed Test Replay setting to inherit from the repository level.
+    #[serde(rename = "failed_test_replay_enabled_inherit")]
+    pub failed_test_replay_enabled_inherit: Option<bool>,
+    /// This field is ignored. PR Comments cannot be overridden at the service level.
     #[serde(rename = "pr_comments_enabled")]
     pub pr_comments_enabled: Option<bool>,
     /// The repository identifier.
@@ -36,9 +49,12 @@ pub struct TestOptimizationUpdateServiceSettingsRequestAttributes {
     /// The service name.
     #[serde(rename = "service_name")]
     pub service_name: String,
-    /// Whether Test Impact Analysis is enabled for this service.
+    /// Whether Test Impact Analysis is enabled for this service. Setting to `null` is a no-op; use `test_impact_analysis_enabled_inherit` to reset to repository-level inheritance.
     #[serde(rename = "test_impact_analysis_enabled")]
     pub test_impact_analysis_enabled: Option<bool>,
+    /// When `true`, resets the Test Impact Analysis setting to inherit from the repository level.
+    #[serde(rename = "test_impact_analysis_enabled_inherit")]
+    pub test_impact_analysis_enabled_inherit: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -53,14 +69,19 @@ impl TestOptimizationUpdateServiceSettingsRequestAttributes {
     ) -> TestOptimizationUpdateServiceSettingsRequestAttributes {
         TestOptimizationUpdateServiceSettingsRequestAttributes {
             auto_test_retries_enabled: None,
+            auto_test_retries_enabled_inherit: None,
             code_coverage_enabled: None,
+            code_coverage_enabled_inherit: None,
             early_flake_detection_enabled: None,
+            early_flake_detection_enabled_inherit: None,
             env: None,
             failed_test_replay_enabled: None,
+            failed_test_replay_enabled_inherit: None,
             pr_comments_enabled: None,
             repository_id,
             service_name,
             test_impact_analysis_enabled: None,
+            test_impact_analysis_enabled_inherit: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -71,13 +92,28 @@ impl TestOptimizationUpdateServiceSettingsRequestAttributes {
         self
     }
 
+    pub fn auto_test_retries_enabled_inherit(mut self, value: bool) -> Self {
+        self.auto_test_retries_enabled_inherit = Some(value);
+        self
+    }
+
     pub fn code_coverage_enabled(mut self, value: bool) -> Self {
         self.code_coverage_enabled = Some(value);
         self
     }
 
+    pub fn code_coverage_enabled_inherit(mut self, value: bool) -> Self {
+        self.code_coverage_enabled_inherit = Some(value);
+        self
+    }
+
     pub fn early_flake_detection_enabled(mut self, value: bool) -> Self {
         self.early_flake_detection_enabled = Some(value);
+        self
+    }
+
+    pub fn early_flake_detection_enabled_inherit(mut self, value: bool) -> Self {
+        self.early_flake_detection_enabled_inherit = Some(value);
         self
     }
 
@@ -91,6 +127,11 @@ impl TestOptimizationUpdateServiceSettingsRequestAttributes {
         self
     }
 
+    pub fn failed_test_replay_enabled_inherit(mut self, value: bool) -> Self {
+        self.failed_test_replay_enabled_inherit = Some(value);
+        self
+    }
+
     pub fn pr_comments_enabled(mut self, value: bool) -> Self {
         self.pr_comments_enabled = Some(value);
         self
@@ -98,6 +139,11 @@ impl TestOptimizationUpdateServiceSettingsRequestAttributes {
 
     pub fn test_impact_analysis_enabled(mut self, value: bool) -> Self {
         self.test_impact_analysis_enabled = Some(value);
+        self
+    }
+
+    pub fn test_impact_analysis_enabled_inherit(mut self, value: bool) -> Self {
+        self.test_impact_analysis_enabled_inherit = Some(value);
         self
     }
 
@@ -128,14 +174,19 @@ impl<'de> Deserialize<'de> for TestOptimizationUpdateServiceSettingsRequestAttri
                 M: MapAccess<'a>,
             {
                 let mut auto_test_retries_enabled: Option<bool> = None;
+                let mut auto_test_retries_enabled_inherit: Option<bool> = None;
                 let mut code_coverage_enabled: Option<bool> = None;
+                let mut code_coverage_enabled_inherit: Option<bool> = None;
                 let mut early_flake_detection_enabled: Option<bool> = None;
+                let mut early_flake_detection_enabled_inherit: Option<bool> = None;
                 let mut env: Option<String> = None;
                 let mut failed_test_replay_enabled: Option<bool> = None;
+                let mut failed_test_replay_enabled_inherit: Option<bool> = None;
                 let mut pr_comments_enabled: Option<bool> = None;
                 let mut repository_id: Option<String> = None;
                 let mut service_name: Option<String> = None;
                 let mut test_impact_analysis_enabled: Option<bool> = None;
+                let mut test_impact_analysis_enabled_inherit: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -151,6 +202,13 @@ impl<'de> Deserialize<'de> for TestOptimizationUpdateServiceSettingsRequestAttri
                             auto_test_retries_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "auto_test_retries_enabled_inherit" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            auto_test_retries_enabled_inherit =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "code_coverage_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -158,11 +216,25 @@ impl<'de> Deserialize<'de> for TestOptimizationUpdateServiceSettingsRequestAttri
                             code_coverage_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "code_coverage_enabled_inherit" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code_coverage_enabled_inherit =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "early_flake_detection_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             early_flake_detection_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "early_flake_detection_enabled_inherit" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            early_flake_detection_enabled_inherit =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "env" => {
@@ -176,6 +248,13 @@ impl<'de> Deserialize<'de> for TestOptimizationUpdateServiceSettingsRequestAttri
                                 continue;
                             }
                             failed_test_replay_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "failed_test_replay_enabled_inherit" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            failed_test_replay_enabled_inherit =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "pr_comments_enabled" => {
@@ -200,6 +279,13 @@ impl<'de> Deserialize<'de> for TestOptimizationUpdateServiceSettingsRequestAttri
                             test_impact_analysis_enabled =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "test_impact_analysis_enabled_inherit" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            test_impact_analysis_enabled_inherit =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -214,14 +300,19 @@ impl<'de> Deserialize<'de> for TestOptimizationUpdateServiceSettingsRequestAttri
 
                 let content = TestOptimizationUpdateServiceSettingsRequestAttributes {
                     auto_test_retries_enabled,
+                    auto_test_retries_enabled_inherit,
                     code_coverage_enabled,
+                    code_coverage_enabled_inherit,
                     early_flake_detection_enabled,
+                    early_flake_detection_enabled_inherit,
                     env,
                     failed_test_replay_enabled,
+                    failed_test_replay_enabled_inherit,
                     pr_comments_enabled,
                     repository_id,
                     service_name,
                     test_impact_analysis_enabled,
+                    test_impact_analysis_enabled_inherit,
                     additional_properties,
                     _unparsed,
                 };
