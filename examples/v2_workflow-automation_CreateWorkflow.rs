@@ -34,7 +34,7 @@ async fn main() {
             Spec::new()
                 .connection_envs(vec![ConnectionEnv::new(ConnectionEnvEnv::DEFAULT)
                     .connections(vec![Connection::new(
-                        "11111111-1111-1111-1111-111111111111".to_string(),
+                        "e1e64943-c7c5-4487-aece-25aaec7d3aad".to_string(),
                         "INTEGRATION_DATADOG".to_string(),
                     )])])
                 .input_schema(InputSchema::new().parameters(vec![
