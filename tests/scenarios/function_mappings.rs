@@ -49,6 +49,7 @@ pub struct ApiInstances {
     pub v1_api_tags: Option<datadogV1::api_tags::TagsAPI>,
     pub v1_api_users: Option<datadogV1::api_users::UsersAPI>,
     pub v1_api_authentication: Option<datadogV1::api_authentication::AuthenticationAPI>,
+    pub v2_api_ecs_remediation: Option<datadogV2::api_ecs_remediation::ECSRemediationAPI>,
     pub v2_api_fleet_automation: Option<datadogV2::api_fleet_automation::FleetAutomationAPI>,
     pub v2_api_llm_observability: Option<datadogV2::api_llm_observability::LLMObservabilityAPI>,
     pub v2_api_actions_datastores: Option<datadogV2::api_actions_datastores::ActionsDatastoresAPI>,
@@ -565,6 +566,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Authentication" => {
             world.api_instances.v1_api_authentication = Some(
                 datadogV1::api_authentication::AuthenticationAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "ECSRemediation" => {
+            world.api_instances.v2_api_ecs_remediation = Some(
+                datadogV2::api_ecs_remediation::ECSRemediationAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -2261,6 +2270,17 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v1.Validate".into(), test_v1_validate);
+    world
+        .function_mappings
+        .insert("v2.ExecuteRemediation".into(), test_v2_execute_remediation);
+    world.function_mappings.insert(
+        "v2.GetEcsRemediationInvestigation".into(),
+        test_v2_get_ecs_remediation_investigation,
+    );
+    world.function_mappings.insert(
+        "v2.ListEcsRemediationInvestigations".into(),
+        test_v2_list_ecs_remediation_investigations,
+    );
     world.function_mappings.insert(
         "v2.ListFleetAgentVersions".into(),
         test_v2_list_fleet_agent_versions,
@@ -14746,6 +14766,132 @@ fn test_v1_validate(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.validate_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_execute_remediation(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_ecs_remediation
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.execute_remediation_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ecs_remediation_investigation(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ecs_remediation
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_ecs_remediation_investigation_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ecs_remediation_investigations(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ecs_remediation
+        .as_ref()
+        .expect("api instance not found");
+    let cluster_arn = _parameters
+        .get("cluster_arn")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let cluster_name = _parameters
+        .get("cluster_name")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let service_arn = _parameters
+        .get("service_arn")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let task_arn = _parameters
+        .get("task_arn")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let resource_arn = _parameters
+        .get("resource_arn")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let status = _parameters
+        .get("status")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let issue_type = _parameters
+        .get("issue_type")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let since_ms = _parameters
+        .get("since_ms")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let until_ms = _parameters
+        .get("until_ms")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page_size")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_token = _parameters
+        .get("page_token")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_ecs_remediation::ListEcsRemediationInvestigationsOptionalParams::default();
+    params.cluster_arn = cluster_arn;
+    params.cluster_name = cluster_name;
+    params.service_arn = service_arn;
+    params.task_arn = task_arn;
+    params.resource_arn = resource_arn;
+    params.status = status;
+    params.issue_type = issue_type;
+    params.since_ms = since_ms;
+    params.until_ms = until_ms;
+    params.page_size = page_size;
+    params.page_token = page_token;
+    let response = match block_on(api.list_ecs_remediation_investigations_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
