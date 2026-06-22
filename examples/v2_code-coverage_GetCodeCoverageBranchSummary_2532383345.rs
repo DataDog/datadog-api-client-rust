@@ -9,10 +9,8 @@ use datadog_api_client::datadogV2::model::BranchCoverageSummaryRequestType;
 #[tokio::main]
 async fn main() {
     let body = BranchCoverageSummaryRequest::new(BranchCoverageSummaryRequestData::new(
-        BranchCoverageSummaryRequestAttributes::new(
-            "prod".to_string(),
-            "github.com/datadog/shopist".to_string(),
-        ),
+        BranchCoverageSummaryRequestAttributes::new("prod".to_string())
+            .repository_id("github.com/datadog/shopist".to_string()),
         BranchCoverageSummaryRequestType::CI_APP_COVERAGE_BRANCH_SUMMARY_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();

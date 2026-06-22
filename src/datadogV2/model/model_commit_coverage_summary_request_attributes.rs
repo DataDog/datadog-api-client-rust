@@ -14,9 +14,13 @@ pub struct CommitCoverageSummaryRequestAttributes {
     /// The commit SHA (40-character hexadecimal string).
     #[serde(rename = "commit_sha")]
     pub commit_sha: String,
-    /// The repository identifier.
+    /// Deprecated: use `repository_url` instead. The repository URL.
+    #[deprecated]
     #[serde(rename = "repository_id")]
-    pub repository_id: String,
+    pub repository_id: Option<String>,
+    /// The repository URL. Accepts a full URL with or without a scheme (for example, `<https://github.com/org/repo`> or `github.com/org/repo`).
+    #[serde(rename = "repository_url")]
+    pub repository_url: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,16 +29,27 @@ pub struct CommitCoverageSummaryRequestAttributes {
 }
 
 impl CommitCoverageSummaryRequestAttributes {
-    pub fn new(
-        commit_sha: String,
-        repository_id: String,
-    ) -> CommitCoverageSummaryRequestAttributes {
+    pub fn new(commit_sha: String) -> CommitCoverageSummaryRequestAttributes {
+        #[allow(deprecated)]
         CommitCoverageSummaryRequestAttributes {
             commit_sha,
-            repository_id,
+            repository_id: None,
+            repository_url: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn repository_id(mut self, value: String) -> Self {
+        self.repository_id = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn repository_url(mut self, value: String) -> Self {
+        self.repository_url = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -65,6 +80,7 @@ impl<'de> Deserialize<'de> for CommitCoverageSummaryRequestAttributes {
             {
                 let mut commit_sha: Option<String> = None;
                 let mut repository_id: Option<String> = None;
+                let mut repository_url: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,7 +93,17 @@ impl<'de> Deserialize<'de> for CommitCoverageSummaryRequestAttributes {
                             commit_sha = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "repository_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             repository_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "repository_url" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            repository_url =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -88,12 +114,12 @@ impl<'de> Deserialize<'de> for CommitCoverageSummaryRequestAttributes {
                     }
                 }
                 let commit_sha = commit_sha.ok_or_else(|| M::Error::missing_field("commit_sha"))?;
-                let repository_id =
-                    repository_id.ok_or_else(|| M::Error::missing_field("repository_id"))?;
 
+                #[allow(deprecated)]
                 let content = CommitCoverageSummaryRequestAttributes {
                     commit_sha,
                     repository_id,
+                    repository_url,
                     additional_properties,
                     _unparsed,
                 };

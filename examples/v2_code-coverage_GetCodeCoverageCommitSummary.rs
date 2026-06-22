@@ -11,8 +11,9 @@ async fn main() {
     let body = CommitCoverageSummaryRequest::new(CommitCoverageSummaryRequestData::new(
         CommitCoverageSummaryRequestAttributes::new(
             "66adc9350f2cc9b250b69abddab733dd55e1a588".to_string(),
-            "github.com/datadog/shopist".to_string(),
-        ),
+        )
+        .repository_id("github.com/datadog/shopist".to_string())
+        .repository_url("https://github.com/datadog/shopist".to_string()),
         CommitCoverageSummaryRequestType::CI_APP_COVERAGE_COMMIT_SUMMARY_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();
