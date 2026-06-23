@@ -762,7 +762,13 @@ impl RolesAPI {
         }
     }
 
-    /// Create a new role for your organization.
+    /// Create a role for your organization.
+    ///
+    ///
+    /// **Note**: When a role is created, the following permissions are
+    /// automatically added, unless specifically excluded: Dashboards Read, Notebooks Read, Monitors Read, APM Read,
+    /// Vulnerability Management Read, RUM Apps Read, Incidents Read, SLOs
+    /// Read, CI Visibility Read, and CD Visibility Read.
     pub async fn create_role(
         &self,
         body: crate::datadogV2::model::RoleCreateRequest,
@@ -781,7 +787,13 @@ impl RolesAPI {
         }
     }
 
-    /// Create a new role for your organization.
+    /// Create a role for your organization.
+    ///
+    ///
+    /// **Note**: When a role is created, the following permissions are
+    /// automatically added, unless specifically excluded: Dashboards Read, Notebooks Read, Monitors Read, APM Read,
+    /// Vulnerability Management Read, RUM Apps Read, Incidents Read, SLOs
+    /// Read, CI Visibility Read, and CD Visibility Read.
     pub async fn create_role_with_http_info(
         &self,
         body: crate::datadogV2::model::RoleCreateRequest,
