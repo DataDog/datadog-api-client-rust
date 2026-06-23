@@ -4086,6 +4086,8 @@ pub mod model_overwrite_allocations_request;
 pub use self::model_overwrite_allocations_request::OverwriteAllocationsRequest;
 pub mod model_list_allocations_response;
 pub use self::model_list_allocations_response::ListAllocationsResponse;
+pub mod model_update_variant_request;
+pub use self::model_update_variant_request::UpdateVariantRequest;
 pub mod model_forms_response;
 pub use self::model_forms_response::FormsResponse;
 pub mod model_form_data;

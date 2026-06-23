@@ -116,10 +116,26 @@ pub enum CreateFeatureFlagsEnvironmentError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateVariantForFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::create_variant_for_feature_flag`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateVariantForFeatureFlagError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteFeatureFlagsEnvironmentError is a struct for typed errors of method [`FeatureFlagsAPI::delete_feature_flags_environment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteFeatureFlagsEnvironmentError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteVariantFromFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::delete_variant_from_feature_flag`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteVariantFromFeatureFlagError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -232,6 +248,14 @@ pub enum UpdateFeatureFlagError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateFeatureFlagsEnvironmentError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateVariantForFeatureFlagError is a struct for typed errors of method [`FeatureFlagsAPI::update_variant_for_feature_flag`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateVariantForFeatureFlagError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -901,6 +925,175 @@ impl FeatureFlagsAPI {
         }
     }
 
+    /// Adds a single new variant to an existing feature flag. This endpoint is
+    /// additive-only: it never modifies existing variants. A request whose `key`
+    /// already exists on the flag is rejected with `409 Conflict`; a `value`
+    /// whose type does not match the flag's `value_type` is rejected with `400`.
+    /// The server generates the variant UUID and returns it in the response body;
+    /// callers (for example, the flag-migration tool) need this UUID to reference
+    /// the new variant in subsequent allocation syncs.
+    pub async fn create_variant_for_feature_flag(
+        &self,
+        feature_flag_id: uuid::Uuid,
+        body: crate::datadogV2::model::CreateVariant,
+    ) -> Result<crate::datadogV2::model::Variant, datadog::Error<CreateVariantForFeatureFlagError>>
+    {
+        match self
+            .create_variant_for_feature_flag_with_http_info(feature_flag_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Adds a single new variant to an existing feature flag. This endpoint is
+    /// additive-only: it never modifies existing variants. A request whose `key`
+    /// already exists on the flag is rejected with `409 Conflict`; a `value`
+    /// whose type does not match the flag's `value_type` is rejected with `400`.
+    /// The server generates the variant UUID and returns it in the response body;
+    /// callers (for example, the flag-migration tool) need this UUID to reference
+    /// the new variant in subsequent allocation syncs.
+    pub async fn create_variant_for_feature_flag_with_http_info(
+        &self,
+        feature_flag_id: uuid::Uuid,
+        body: crate::datadogV2::model::CreateVariant,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::Variant>,
+        datadog::Error<CreateVariantForFeatureFlagError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_variant_for_feature_flag";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/{feature_flag_id}/variants",
+            local_configuration.get_operation_host(operation_id),
+            feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::Variant>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateVariantForFeatureFlagError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Deletes an environment. This operation cannot be undone.
     pub async fn delete_feature_flags_environment(
         &self,
@@ -983,6 +1176,105 @@ impl FeatureFlagsAPI {
             })
         } else {
             let local_entity: Option<DeleteFeatureFlagsEnvironmentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Deletes a variant from a feature flag.
+    ///
+    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of deleting the variant immediately. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    pub async fn delete_variant_from_feature_flag(
+        &self,
+        feature_flag_id: uuid::Uuid,
+        variant_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<DeleteVariantFromFeatureFlagError>> {
+        match self
+            .delete_variant_from_feature_flag_with_http_info(feature_flag_id, variant_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Deletes a variant from a feature flag.
+    ///
+    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of deleting the variant immediately. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    pub async fn delete_variant_from_feature_flag_with_http_info(
+        &self,
+        feature_flag_id: uuid::Uuid,
+        variant_id: uuid::Uuid,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteVariantFromFeatureFlagError>>
+    {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_variant_from_feature_flag";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/{feature_flag_id}/variants/{variant_id}",
+            local_configuration.get_operation_host(operation_id),
+            feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
+            variant_id = datadog::urlencode(variant_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteVariantFromFeatureFlagError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -2717,6 +3009,170 @@ impl FeatureFlagsAPI {
             };
         } else {
             let local_entity: Option<UpdateFeatureFlagsEnvironmentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Updates the name and value of an existing variant on a feature flag.
+    ///
+    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of applying the change immediately. Use the returned suggestion `id` to approve or reject the change. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    pub async fn update_variant_for_feature_flag(
+        &self,
+        feature_flag_id: uuid::Uuid,
+        variant_id: uuid::Uuid,
+        body: crate::datadogV2::model::UpdateVariantRequest,
+    ) -> Result<crate::datadogV2::model::Variant, datadog::Error<UpdateVariantForFeatureFlagError>>
+    {
+        match self
+            .update_variant_for_feature_flag_with_http_info(feature_flag_id, variant_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Updates the name and value of an existing variant on a feature flag.
+    ///
+    /// When backend approvals are enabled and the flag requires approval, this endpoint creates and returns a `FlagSuggestion` with `201 Created` instead of applying the change immediately. Use the returned suggestion `id` to approve or reject the change. If a pending suggestion already exists for this flag's variant property, the endpoint returns `409 Conflict`.
+    pub async fn update_variant_for_feature_flag_with_http_info(
+        &self,
+        feature_flag_id: uuid::Uuid,
+        variant_id: uuid::Uuid,
+        body: crate::datadogV2::model::UpdateVariantRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::Variant>,
+        datadog::Error<UpdateVariantForFeatureFlagError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_variant_for_feature_flag";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/{feature_flag_id}/variants/{variant_id}",
+            local_configuration.get_operation_host(operation_id),
+            feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
+            variant_id = datadog::urlencode(variant_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::Variant>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateVariantForFeatureFlagError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
