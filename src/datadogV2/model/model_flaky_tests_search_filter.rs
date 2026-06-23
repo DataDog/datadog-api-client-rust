@@ -27,6 +27,8 @@ pub struct FlakyTestsSearchFilter {
     /// - `@git.branch`
     /// - `@test.codeowners`
     /// - `env`
+    /// - `failure_rate`
+    /// - `pipelines_failed`
     #[serde(rename = "query")]
     pub query: Option<String>,
     #[serde(flatten)]
