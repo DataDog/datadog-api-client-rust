@@ -17,6 +17,9 @@ pub struct IPAllowlistEntryAttributes {
     /// Creation time of the entry.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// A label for the IP allowlist entry.
+    #[serde(rename = "label")]
+    pub label: Option<String>,
     /// Time of last entry modification.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -35,6 +38,7 @@ impl IPAllowlistEntryAttributes {
         IPAllowlistEntryAttributes {
             cidr_block: None,
             created_at: None,
+            label: None,
             modified_at: None,
             note: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -49,6 +53,11 @@ impl IPAllowlistEntryAttributes {
 
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
+        self
+    }
+
+    pub fn label(mut self, value: String) -> Self {
+        self.label = Some(value);
         self
     }
 
@@ -96,6 +105,7 @@ impl<'de> Deserialize<'de> for IPAllowlistEntryAttributes {
             {
                 let mut cidr_block: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut label: Option<String> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut note: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -117,6 +127,12 @@ impl<'de> Deserialize<'de> for IPAllowlistEntryAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "label" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            label = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "modified_at" => {
                             if v.is_null() {
@@ -142,6 +158,7 @@ impl<'de> Deserialize<'de> for IPAllowlistEntryAttributes {
                 let content = IPAllowlistEntryAttributes {
                     cidr_block,
                     created_at,
+                    label,
                     modified_at,
                     note,
                     additional_properties,
