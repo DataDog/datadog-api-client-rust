@@ -1,0 +1,67 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"filter\":{\"query\":\"source:python\"},\"name\":\"testPipelineArrayMapArithmetic\",\"processors\":[{\"is_enabled\":true,\"name\":\"double counts\",\"processors\":[{\"expression\":\"$sourceElem.count * 2\",\"target\":\"$targetElem.doubled\",\"type\":\"arithmetic-processor\"}],\"source\":\"items\",\"target\":\"out\",\"type\":\"array-map-processor\"}],\"tags\":[]}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v1/logs/config/pipelines"
+      },
+      "response": {
+        "body": {
+          "string": "{\"id\":\"PxfujWHYRaGCWVqVCVrBAg\",\"type\":\"pipeline\",\"name\":\"testPipelineArrayMapArithmetic\",\"is_enabled\":false,\"is_read_only\":false,\"filter\":{\"query\":\"source:python\"},\"processors\":[{\"name\":\"double counts\",\"is_enabled\":true,\"source\":\"items\",\"target\":\"out\",\"processors\":[{\"expression\":\"$sourceElem.count * 2\",\"target\":\"$targetElem.doubled\",\"is_replace_missing\":false,\"type\":\"arithmetic-processor\"}],\"preserve_source\":true,\"type\":\"array-map-processor\"}],\"tags\":[]}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Tue, 23 Jun 2026 13:27:34 GMT"
+    },
+    {
+      "request": {
+        "body": "",
+        "headers": {
+          "Accept": [
+            "*/*"
+          ]
+        },
+        "method": "delete",
+        "uri": "https://api.datadoghq.com/api/v1/logs/config/pipelines/PxfujWHYRaGCWVqVCVrBAg"
+      },
+      "response": {
+        "body": {
+          "string": "{}\n",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        }
+      },
+      "recorded_at": "Tue, 23 Jun 2026 13:27:34 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
