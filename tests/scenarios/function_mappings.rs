@@ -218,6 +218,7 @@ pub struct ApiInstances {
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
     pub v2_api_tag_policies: Option<datadogV2::api_tag_policies::TagPoliciesAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
+    pub v2_api_test_examples: Option<datadogV2::api_test_examples::TestExamplesAPI>,
     pub v2_api_web_integrations: Option<datadogV2::api_web_integrations::WebIntegrationsAPI>,
     pub v2_api_widgets: Option<datadogV2::api_widgets::WidgetsAPI>,
     pub v2_api_workflow_automation:
@@ -1398,6 +1399,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
+        }
+        "TestExamples" => {
+            world.api_instances.v2_api_test_examples = Some(
+                datadogV2::api_test_examples::TestExamplesAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "WebIntegrations" => {
             world.api_instances.v2_api_web_integrations = Some(
@@ -7429,6 +7438,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetUserMemberships".into(), test_v2_get_user_memberships);
+    world
+        .function_mappings
+        .insert("v2.ListTestExamples".into(), test_v2_list_test_examples);
     world.function_mappings.insert(
         "v2.ListWebIntegrationAccounts".into(),
         test_v2_list_web_integration_accounts,
@@ -59210,6 +59222,30 @@ fn test_v2_get_user_memberships(world: &mut DatadogWorld, _parameters: &HashMap<
         .expect("api instance not found");
     let user_uuid = serde_json::from_value(_parameters.get("user_uuid").unwrap().clone()).unwrap();
     let response = match block_on(api.get_user_memberships_with_http_info(user_uuid)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_test_examples(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_test_examples
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_test_examples_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {
