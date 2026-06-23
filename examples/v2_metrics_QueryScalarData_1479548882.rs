@@ -23,12 +23,12 @@ async fn main() {
                 ApmResourceStatsQuery::new(
                     ApmResourceStatsDataSource::APM_RESOURCE_STATS,
                     "staging".to_string(),
+                    vec!["resource_name".to_string()],
                     "a".to_string(),
+                    "cassandra.query".to_string(),
                     "azure-bill-import".to_string(),
                     ApmResourceStatName::HITS,
                 )
-                .group_by(vec!["resource_name".to_string()])
-                .operation_name("cassandra.query".to_string())
                 .primary_tag_name("datacenter".to_string())
                 .primary_tag_value("*".to_string()),
             ))],
