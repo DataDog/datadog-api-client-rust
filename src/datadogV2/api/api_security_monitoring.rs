@@ -4796,8 +4796,9 @@ impl SecurityMonitoringAPI {
 
     /// Export multiple security monitoring resources to Terraform, packaged as a zip archive.
     /// The `resource_type` path parameter specifies the type of resources to export
-    /// and must be one of `suppressions` or `critical_assets`.
+    /// and must be one of `suppressions`, `critical_assets`, `security_filters`, or `rules`.
     /// A maximum of 1000 resources can be exported in a single request.
+    /// For `rules`, partner rules cannot be exported and return a 400 error.
     pub async fn bulk_export_security_monitoring_terraform_resources(
         &self,
         resource_type: crate::datadogV2::model::SecurityMonitoringTerraformResourceType,
@@ -4822,8 +4823,9 @@ impl SecurityMonitoringAPI {
 
     /// Export multiple security monitoring resources to Terraform, packaged as a zip archive.
     /// The `resource_type` path parameter specifies the type of resources to export
-    /// and must be one of `suppressions` or `critical_assets`.
+    /// and must be one of `suppressions`, `critical_assets`, `security_filters`, or `rules`.
     /// A maximum of 1000 resources can be exported in a single request.
+    /// For `rules`, partner rules cannot be exported and return a 400 error.
     pub async fn bulk_export_security_monitoring_terraform_resources_with_http_info(
         &self,
         resource_type: crate::datadogV2::model::SecurityMonitoringTerraformResourceType,
@@ -5495,7 +5497,7 @@ impl SecurityMonitoringAPI {
 
     /// Convert a security monitoring resource that doesn't (yet) exist from JSON to Terraform.
     /// The `resource_type` path parameter specifies the type of resource to convert
-    /// and must be one of `suppressions` or `critical_assets`.
+    /// and must be one of `suppressions`, `critical_assets`, `security_filters`, or `rules`.
     pub async fn convert_security_monitoring_terraform_resource(
         &self,
         resource_type: crate::datadogV2::model::SecurityMonitoringTerraformResourceType,
@@ -5523,7 +5525,7 @@ impl SecurityMonitoringAPI {
 
     /// Convert a security monitoring resource that doesn't (yet) exist from JSON to Terraform.
     /// The `resource_type` path parameter specifies the type of resource to convert
-    /// and must be one of `suppressions` or `critical_assets`.
+    /// and must be one of `suppressions`, `critical_assets`, `security_filters`, or `rules`.
     pub async fn convert_security_monitoring_terraform_resource_with_http_info(
         &self,
         resource_type: crate::datadogV2::model::SecurityMonitoringTerraformResourceType,
@@ -11073,7 +11075,8 @@ impl SecurityMonitoringAPI {
 
     /// Export a security monitoring resource to a Terraform configuration.
     /// The `resource_type` path parameter specifies the type of resource to export
-    /// and must be one of `suppressions` or `critical_assets`.
+    /// and must be one of `suppressions`, `critical_assets`, `security_filters`, or `rules`.
+    /// For `rules`, partner rules cannot be exported and return a 400 error.
     pub async fn export_security_monitoring_terraform_resource(
         &self,
         resource_type: crate::datadogV2::model::SecurityMonitoringTerraformResourceType,
@@ -11104,7 +11107,8 @@ impl SecurityMonitoringAPI {
 
     /// Export a security monitoring resource to a Terraform configuration.
     /// The `resource_type` path parameter specifies the type of resource to export
-    /// and must be one of `suppressions` or `critical_assets`.
+    /// and must be one of `suppressions`, `critical_assets`, `security_filters`, or `rules`.
+    /// For `rules`, partner rules cannot be exported and return a 400 error.
     pub async fn export_security_monitoring_terraform_resource_with_http_info(
         &self,
         resource_type: crate::datadogV2::model::SecurityMonitoringTerraformResourceType,

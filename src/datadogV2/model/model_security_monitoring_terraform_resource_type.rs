@@ -9,6 +9,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum SecurityMonitoringTerraformResourceType {
     SUPPRESSIONS,
     CRITICAL_ASSETS,
+    SECURITY_FILTERS,
+    RULES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +19,8 @@ impl ToString for SecurityMonitoringTerraformResourceType {
         match self {
             Self::SUPPRESSIONS => String::from("suppressions"),
             Self::CRITICAL_ASSETS => String::from("critical_assets"),
+            Self::SECURITY_FILTERS => String::from("security_filters"),
+            Self::RULES => String::from("rules"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +47,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringTerraformResourceType {
         Ok(match s.as_str() {
             "suppressions" => Self::SUPPRESSIONS,
             "critical_assets" => Self::CRITICAL_ASSETS,
+            "security_filters" => Self::SECURITY_FILTERS,
+            "rules" => Self::RULES,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
