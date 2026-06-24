@@ -56,6 +56,9 @@ pub enum ObservabilityPipelineConfigSourceItem {
     ObservabilityPipelineSyslogNgSource(
         Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgSource>,
     ),
+    ObservabilityPipelineWebsocketSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineWebsocketSource>,
+    ),
     ObservabilityPipelineOpentelemetrySource(
         Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>,
     ),
@@ -231,6 +234,16 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
             if !_v._unparsed {
                 return Ok(
                     ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSyslogNgSource(_v),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineWebsocketSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineWebsocketSource(_v),
                 );
             }
         }
