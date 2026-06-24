@@ -2,9 +2,12 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagementAPI;
 use datadog_api_client::datadogV2::model::BudgetAttributes;
+use datadog_api_client::datadogV2::model::BudgetAttributesCosts;
+use datadog_api_client::datadogV2::model::BudgetAttributesCostsUnit;
 use datadog_api_client::datadogV2::model::BudgetWithEntries;
 use datadog_api_client::datadogV2::model::BudgetWithEntriesData;
 use datadog_api_client::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItems;
+use datadog_api_client::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItemsCosts;
 use datadog_api_client::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems;
 
 #[tokio::main]
@@ -13,10 +16,26 @@ async fn main() {
         BudgetWithEntriesData::new()
             .attributes(
                 BudgetAttributes::new()
+                    .costs(
+                        BudgetAttributesCosts::new()
+                            .actual(None)
+                            .amount(None)
+                            .forecast(None)
+                            .ootb_forecast(None),
+                    )
+                    .costs_unit(BudgetAttributesCostsUnit::new())
                     .created_at(1738258683590)
                     .created_by("00000000-0a0a-0a0a-aaa0-00000000000a".to_string())
                     .end_month(202502)
                     .entries(vec![BudgetWithEntriesDataAttributesEntriesItems::new()
+                        .costs(
+                            BudgetWithEntriesDataAttributesEntriesItemsCosts::new()
+                                .actual(None)
+                                .amount(None)
+                                .custom_forecast(None)
+                                .forecast(None)
+                                .ootb_forecast(None),
+                        )
                         .tag_filters(vec![
                             BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems::new(),
                         ])])

@@ -14,6 +14,9 @@ pub struct BudgetWithEntriesDataAttributesEntriesItems {
     /// The budgeted amount for this entry.
     #[serde(rename = "amount")]
     pub amount: Option<f64>,
+    /// Cost data for a single budget entry.
+    #[serde(rename = "costs")]
+    pub costs: Option<crate::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItemsCosts>,
     /// The month this budget entry applies to, in YYYYMM format.
     #[serde(rename = "month")]
     pub month: Option<i64>,
@@ -33,6 +36,7 @@ impl BudgetWithEntriesDataAttributesEntriesItems {
     pub fn new() -> BudgetWithEntriesDataAttributesEntriesItems {
         BudgetWithEntriesDataAttributesEntriesItems {
             amount: None,
+            costs: None,
             month: None,
             tag_filters: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -42,6 +46,14 @@ impl BudgetWithEntriesDataAttributesEntriesItems {
 
     pub fn amount(mut self, value: f64) -> Self {
         self.amount = Some(value);
+        self
+    }
+
+    pub fn costs(
+        mut self,
+        value: crate::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItemsCosts,
+    ) -> Self {
+        self.costs = Some(value);
         self
     }
 
@@ -93,6 +105,9 @@ impl<'de> Deserialize<'de> for BudgetWithEntriesDataAttributesEntriesItems {
                 M: MapAccess<'a>,
             {
                 let mut amount: Option<f64> = None;
+                let mut costs: Option<
+                    crate::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItemsCosts,
+                > = None;
                 let mut month: Option<i64> = None;
                 let mut tag_filters: Option<Vec<crate::datadogV2::model::BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -108,6 +123,12 @@ impl<'de> Deserialize<'de> for BudgetWithEntriesDataAttributesEntriesItems {
                                 continue;
                             }
                             amount = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "costs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            costs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "month" => {
                             if v.is_null() {
@@ -132,6 +153,7 @@ impl<'de> Deserialize<'de> for BudgetWithEntriesDataAttributesEntriesItems {
 
                 let content = BudgetWithEntriesDataAttributesEntriesItems {
                     amount,
+                    costs,
                     month,
                     tag_filters,
                     additional_properties,
