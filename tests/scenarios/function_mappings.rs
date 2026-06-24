@@ -112,6 +112,8 @@ pub struct ApiInstances {
     pub v2_api_feature_flags: Option<datadogV2::api_feature_flags::FeatureFlagsAPI>,
     pub v2_api_forms: Option<datadogV2::api_forms::FormsAPI>,
     pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
+    pub v2_api_governance_controls:
+        Option<datadogV2::api_governance_controls::GovernanceControlsAPI>,
     pub v2_api_governance_insights:
         Option<datadogV2::api_governance_insights::GovernanceInsightsAPI>,
     pub v2_api_high_availability_multi_region:
@@ -905,6 +907,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
+        }
+        "GovernanceControls" => {
+            world.api_instances.v2_api_governance_controls = Some(
+                datadogV2::api_governance_controls::GovernanceControlsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "GovernanceInsights" => {
             world.api_instances.v2_api_governance_insights = Some(
@@ -4824,6 +4834,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateSAMLConfiguration".into(),
         test_v2_update_saml_configuration,
+    );
+    world.function_mappings.insert(
+        "v2.ListGovernanceControls".into(),
+        test_v2_list_governance_controls,
+    );
+    world.function_mappings.insert(
+        "v2.GetGovernanceControl".into(),
+        test_v2_get_governance_control,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateGovernanceControl".into(),
+        test_v2_update_governance_control,
     );
     world.function_mappings.insert(
         "v2.ListGovernanceInsights".into(),
@@ -37026,6 +37048,90 @@ fn test_v2_update_saml_configuration(
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response =
         match block_on(api.update_saml_configuration_with_http_info(saml_config_uuid, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_governance_controls(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_governance_controls
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_governance_controls_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_governance_control(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_governance_controls
+        .as_ref()
+        .expect("api instance not found");
+    let detection_type =
+        serde_json::from_value(_parameters.get("detection_type").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_governance_control_with_http_info(detection_type)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_governance_control(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_governance_controls
+        .as_ref()
+        .expect("api instance not found");
+    let detection_type =
+        serde_json::from_value(_parameters.get("detection_type").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_governance_control_with_http_info(detection_type, body)) {
             Ok(response) => response,
             Err(error) => {
                 return match error {
