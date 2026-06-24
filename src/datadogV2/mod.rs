@@ -60,6 +60,7 @@ pub use self::api::api_fleet_automation;
 pub use self::api::api_forms;
 pub use self::api::api_gcp_integration;
 pub use self::api::api_google_chat_integration;
+pub use self::api::api_governance_controls;
 pub use self::api::api_governance_insights;
 pub use self::api::api_high_availability_multi_region;
 pub use self::api::api_incidents;
