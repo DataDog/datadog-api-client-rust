@@ -27,6 +27,43 @@ impl DeleteCostTagDescriptionByKeyOptionalParams {
     }
 }
 
+/// GetBudgetOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_budget`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetBudgetOptionalParams {
+    /// When `true`, includes actual cost data in the response.
+    pub actual: Option<bool>,
+    /// When `true`, includes forecast cost data in the response, including `ootb_forecast` and `custom_forecast` per entry.
+    pub forecast: Option<bool>,
+    /// Start of the cost window in milliseconds since epoch. Must be used together with `end`.
+    pub start: Option<i64>,
+    /// End of the cost window in milliseconds since epoch. Must be used together with `start`.
+    pub end: Option<i64>,
+}
+
+impl GetBudgetOptionalParams {
+    /// When `true`, includes actual cost data in the response.
+    pub fn actual(mut self, value: bool) -> Self {
+        self.actual = Some(value);
+        self
+    }
+    /// When `true`, includes forecast cost data in the response, including `ootb_forecast` and `custom_forecast` per entry.
+    pub fn forecast(mut self, value: bool) -> Self {
+        self.forecast = Some(value);
+        self
+    }
+    /// Start of the cost window in milliseconds since epoch. Must be used together with `end`.
+    pub fn start(mut self, value: i64) -> Self {
+        self.start = Some(value);
+        self
+    }
+    /// End of the cost window in milliseconds since epoch. Must be used together with `start`.
+    pub fn end(mut self, value: i64) -> Self {
+        self.end = Some(value);
+        self
+    }
+}
+
 /// GetCommitmentsCommitmentListOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::get_commitments_commitment_list`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -2946,12 +2983,13 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// Get a budget
+    /// Get a budget by ID. Pass `actual=true` or `forecast=true` to include cost data in the response. Use `start` and `end` (millisecond epochs, both required) to set the cost window. When `forecast=true`, each entry also includes `ootb_forecast` (the ML forecast before overrides) and `custom_forecast` (`null` if no override is set, a number if one is).
     pub async fn get_budget(
         &self,
         budget_id: String,
+        params: GetBudgetOptionalParams,
     ) -> Result<crate::datadogV2::model::BudgetWithEntries, datadog::Error<GetBudgetError>> {
-        match self.get_budget_with_http_info(budget_id).await {
+        match self.get_budget_with_http_info(budget_id, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -2965,16 +3003,23 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// Get a budget
+    /// Get a budget by ID. Pass `actual=true` or `forecast=true` to include cost data in the response. Use `start` and `end` (millisecond epochs, both required) to set the cost window. When `forecast=true`, each entry also includes `ootb_forecast` (the ML forecast before overrides) and `custom_forecast` (`null` if no override is set, a number if one is).
     pub async fn get_budget_with_http_info(
         &self,
         budget_id: String,
+        params: GetBudgetOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::BudgetWithEntries>,
         datadog::Error<GetBudgetError>,
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_budget";
+
+        // unbox and build optional parameters
+        let actual = params.actual;
+        let forecast = params.forecast;
+        let start = params.start;
+        let end = params.end;
 
         let local_client = &self.client;
 
@@ -2985,6 +3030,22 @@ impl CloudCostManagementAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = actual {
+            local_req_builder =
+                local_req_builder.query(&[("actual", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = forecast {
+            local_req_builder =
+                local_req_builder.query(&[("forecast", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = start {
+            local_req_builder =
+                local_req_builder.query(&[("start", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = end {
+            local_req_builder = local_req_builder.query(&[("end", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();

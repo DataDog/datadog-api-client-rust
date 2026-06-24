@@ -11,6 +11,18 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct BudgetAttributes {
+    /// Aggregated cost data for the budget over the requested period.
+    #[serde(rename = "costs")]
+    pub costs: Option<crate::datadogV2::model::BudgetAttributesCosts>,
+    /// The end of the period used to compute cost data, in milliseconds since epoch.
+    #[serde(rename = "costs_period_end")]
+    pub costs_period_end: Option<i64>,
+    /// The start of the period used to compute cost data, in milliseconds since epoch.
+    #[serde(rename = "costs_period_start")]
+    pub costs_period_start: Option<i64>,
+    /// The unit used for all cost values in the response.
+    #[serde(rename = "costs_unit")]
+    pub costs_unit: Option<crate::datadogV2::model::BudgetAttributesCostsUnit>,
     /// The timestamp when the budget was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<i64>,
@@ -54,6 +66,10 @@ pub struct BudgetAttributes {
 impl BudgetAttributes {
     pub fn new() -> BudgetAttributes {
         BudgetAttributes {
+            costs: None,
+            costs_period_end: None,
+            costs_period_start: None,
+            costs_unit: None,
             created_at: None,
             created_by: None,
             end_month: None,
@@ -68,6 +84,26 @@ impl BudgetAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn costs(mut self, value: crate::datadogV2::model::BudgetAttributesCosts) -> Self {
+        self.costs = Some(value);
+        self
+    }
+
+    pub fn costs_period_end(mut self, value: i64) -> Self {
+        self.costs_period_end = Some(value);
+        self
+    }
+
+    pub fn costs_period_start(mut self, value: i64) -> Self {
+        self.costs_period_start = Some(value);
+        self
+    }
+
+    pub fn costs_unit(mut self, value: crate::datadogV2::model::BudgetAttributesCostsUnit) -> Self {
+        self.costs_unit = Some(value);
+        self
     }
 
     pub fn created_at(mut self, value: i64) -> Self {
@@ -160,6 +196,11 @@ impl<'de> Deserialize<'de> for BudgetAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut costs: Option<crate::datadogV2::model::BudgetAttributesCosts> = None;
+                let mut costs_period_end: Option<i64> = None;
+                let mut costs_period_start: Option<i64> = None;
+                let mut costs_unit: Option<crate::datadogV2::model::BudgetAttributesCostsUnit> =
+                    None;
                 let mut created_at: Option<i64> = None;
                 let mut created_by: Option<String> = None;
                 let mut end_month: Option<i64> = None;
@@ -181,6 +222,32 @@ impl<'de> Deserialize<'de> for BudgetAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "costs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            costs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "costs_period_end" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            costs_period_end =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "costs_period_start" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            costs_period_start =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "costs_unit" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            costs_unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "created_at" => {
                             if v.is_null() {
                                 continue;
@@ -259,6 +326,10 @@ impl<'de> Deserialize<'de> for BudgetAttributes {
                 }
 
                 let content = BudgetAttributes {
+                    costs,
+                    costs_period_end,
+                    costs_period_start,
+                    costs_unit,
                     created_at,
                     created_by,
                     end_month,

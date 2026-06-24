@@ -31190,7 +31190,24 @@ fn test_v2_get_budget(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
         .as_ref()
         .expect("api instance not found");
     let budget_id = serde_json::from_value(_parameters.get("budget_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_budget_with_http_info(budget_id)) {
+    let actual = _parameters
+        .get("actual")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let forecast = _parameters
+        .get("forecast")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let start = _parameters
+        .get("start")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let end = _parameters
+        .get("end")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_cloud_cost_management::GetBudgetOptionalParams::default();
+    params.actual = actual;
+    params.forecast = forecast;
+    params.start = start;
+    params.end = end;
+    let response = match block_on(api.get_budget_with_http_info(budget_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
