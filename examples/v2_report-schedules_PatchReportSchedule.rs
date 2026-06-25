@@ -24,7 +24,7 @@ async fn main() {
                     r#"DTSTART;TZID=America/New_York:20260601T090000
 RRULE:FREQ=WEEKLY;BYDAY=MO;BYHOUR=9;BYMINUTE=0"#.to_string(),
                     vec![ReportScheduleTemplateVariable::new("env".to_string(), vec!["prod".to_string()])],
-                    "calendar_month".to_string(),
+                    "1w".to_string(),
                     "America/New_York".to_string(),
                     "Weekly Infrastructure Report".to_string(),
                 )
