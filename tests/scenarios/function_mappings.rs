@@ -44248,6 +44248,9 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
     let filter_configured = _parameters
         .get("filter[configured]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_is_configurable = _parameters
+        .get("filter[is_configurable]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_tags_configured = _parameters
         .get("filter[tags_configured]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -44269,6 +44272,12 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
     let filter_related_assets = _parameters
         .get("filter[related_assets]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let window_seconds = _parameters
         .get("window[seconds]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -44280,6 +44289,7 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_metrics::ListTagConfigurationsOptionalParams::default();
     params.filter_configured = filter_configured;
+    params.filter_is_configurable = filter_is_configurable;
     params.filter_tags_configured = filter_tags_configured;
     params.filter_metric_type = filter_metric_type;
     params.filter_include_percentiles = filter_include_percentiles;
@@ -44287,6 +44297,8 @@ fn test_v2_list_tag_configurations(world: &mut DatadogWorld, _parameters: &HashM
     params.filter_queried_window_seconds = filter_queried_window_seconds;
     params.filter_tags = filter_tags;
     params.filter_related_assets = filter_related_assets;
+    params.include = include;
+    params.sort = sort;
     params.window_seconds = window_seconds;
     params.page_size = page_size;
     params.page_cursor = page_cursor;
@@ -44319,6 +44331,9 @@ fn test_v2_list_tag_configurations_with_pagination(
     let filter_configured = _parameters
         .get("filter[configured]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_is_configurable = _parameters
+        .get("filter[is_configurable]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_tags_configured = _parameters
         .get("filter[tags_configured]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -44340,6 +44355,12 @@ fn test_v2_list_tag_configurations_with_pagination(
     let filter_related_assets = _parameters
         .get("filter[related_assets]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let window_seconds = _parameters
         .get("window[seconds]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -44351,6 +44372,7 @@ fn test_v2_list_tag_configurations_with_pagination(
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_metrics::ListTagConfigurationsOptionalParams::default();
     params.filter_configured = filter_configured;
+    params.filter_is_configurable = filter_is_configurable;
     params.filter_tags_configured = filter_tags_configured;
     params.filter_metric_type = filter_metric_type;
     params.filter_include_percentiles = filter_include_percentiles;
@@ -44358,6 +44380,8 @@ fn test_v2_list_tag_configurations_with_pagination(
     params.filter_queried_window_seconds = filter_queried_window_seconds;
     params.filter_tags = filter_tags;
     params.filter_related_assets = filter_related_assets;
+    params.include = include;
+    params.sort = sort;
     params.window_seconds = window_seconds;
     params.page_size = page_size;
     params.page_cursor = page_cursor;

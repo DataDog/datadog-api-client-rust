@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object for a single metric tag configuration.
+/// Object for a single metric.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,6 +14,9 @@ pub struct Metric {
     /// The metric name for this resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// Relationships for a metric.
+    #[serde(rename = "relationships")]
+    pub relationships: Option<crate::datadogV2::model::MetricRelationships>,
     /// The metric resource type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::MetricType>,
@@ -28,6 +31,7 @@ impl Metric {
     pub fn new() -> Metric {
         Metric {
             id: None,
+            relationships: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -36,6 +40,11 @@ impl Metric {
 
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn relationships(mut self, value: crate::datadogV2::model::MetricRelationships) -> Self {
+        self.relationships = Some(value);
         self
     }
 
@@ -77,6 +86,7 @@ impl<'de> Deserialize<'de> for Metric {
                 M: MapAccess<'a>,
             {
                 let mut id: Option<String> = None;
+                let mut relationships: Option<crate::datadogV2::model::MetricRelationships> = None;
                 let mut type_: Option<crate::datadogV2::model::MetricType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -91,6 +101,13 @@ impl<'de> Deserialize<'de> for Metric {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "relationships" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            relationships =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             if v.is_null() {
@@ -116,6 +133,7 @@ impl<'de> Deserialize<'de> for Metric {
 
                 let content = Metric {
                     id,
+                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,

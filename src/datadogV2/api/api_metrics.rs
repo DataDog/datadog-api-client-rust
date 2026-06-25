@@ -78,8 +78,10 @@ impl ListActiveMetricConfigurationsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListTagConfigurationsOptionalParams {
-    /// Only return custom metrics that have been configured with Metrics Without Limits.
+    /// Only return custom metrics that have been configured (`true`) or not configured (`false`) with Metrics Without Limits.
     pub filter_configured: Option<bool>,
+    /// Only return metrics that are eligible (`true`) or ineligible (`false`) for configuration with Metrics Without Limits.
+    pub filter_is_configurable: Option<bool>,
     /// Only return metrics that have the given tag key(s) in their Metrics Without Limits configuration (included or excluded).
     pub filter_tags_configured: Option<String>,
     /// Only return metrics of the given metric type.
@@ -95,6 +97,10 @@ pub struct ListTagConfigurationsOptionalParams {
     pub filter_tags: Option<String>,
     /// Only return metrics that are used in at least one dashboard, monitor, notebook, or SLO.
     pub filter_related_assets: Option<bool>,
+    /// Include related resources in the response. Set to `metric_volumes` to include indexed and ingested volume counts for each metric.
+    pub include: Option<String>,
+    /// Sort results by metric volume. Prefix a key with `-` for descending order. Supported keys: `metric_volumes.indexed_volume`, `metric_volumes.ingested_volume`, `metric_volumes.indexed_volume_delta`, `metric_volumes.ingested_volume_delta`. Requires a paginated request (`page[size]` or `page[cursor]`).
+    pub sort: Option<String>,
     /// Only return metrics that have been actively reporting in the specified window. The default value is 3600 seconds (1 hour), the maximum value is 2,592,000 seconds (30 days), and the minimum value is 1 second.
     pub window_seconds: Option<i64>,
     /// Maximum number of results per page. Send `page[size]` on the first request to opt in to pagination. On each subsequent request, send `page[cursor]` set to the value of `meta.pagination.next_cursor` from the previous response. The default value is 10000, the maximum value is 10000, and the minimum value is 1.
@@ -104,9 +110,14 @@ pub struct ListTagConfigurationsOptionalParams {
 }
 
 impl ListTagConfigurationsOptionalParams {
-    /// Only return custom metrics that have been configured with Metrics Without Limits.
+    /// Only return custom metrics that have been configured (`true`) or not configured (`false`) with Metrics Without Limits.
     pub fn filter_configured(mut self, value: bool) -> Self {
         self.filter_configured = Some(value);
+        self
+    }
+    /// Only return metrics that are eligible (`true`) or ineligible (`false`) for configuration with Metrics Without Limits.
+    pub fn filter_is_configurable(mut self, value: bool) -> Self {
+        self.filter_is_configurable = Some(value);
         self
     }
     /// Only return metrics that have the given tag key(s) in their Metrics Without Limits configuration (included or excluded).
@@ -145,6 +156,16 @@ impl ListTagConfigurationsOptionalParams {
     /// Only return metrics that are used in at least one dashboard, monitor, notebook, or SLO.
     pub fn filter_related_assets(mut self, value: bool) -> Self {
         self.filter_related_assets = Some(value);
+        self
+    }
+    /// Include related resources in the response. Set to `metric_volumes` to include indexed and ingested volume counts for each metric.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+    /// Sort results by metric volume. Prefix a key with `-` for descending order. Supported keys: `metric_volumes.indexed_volume`, `metric_volumes.ingested_volume`, `metric_volumes.indexed_volume_delta`, `metric_volumes.ingested_volume_delta`. Requires a paginated request (`page[size]` or `page[cursor]`).
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
         self
     }
     /// Only return metrics that have been actively reporting in the specified window. The default value is 3600 seconds (1 hour), the maximum value is 2,592,000 seconds (30 days), and the minimum value is 1 second.
@@ -2607,6 +2628,7 @@ impl MetricsAPI {
 
         // unbox and build optional parameters
         let filter_configured = params.filter_configured;
+        let filter_is_configurable = params.filter_is_configurable;
         let filter_tags_configured = params.filter_tags_configured;
         let filter_metric_type = params.filter_metric_type;
         let filter_include_percentiles = params.filter_include_percentiles;
@@ -2614,6 +2636,8 @@ impl MetricsAPI {
         let filter_queried_window_seconds = params.filter_queried_window_seconds;
         let filter_tags = params.filter_tags;
         let filter_related_assets = params.filter_related_assets;
+        let include = params.include;
+        let sort = params.sort;
         let window_seconds = params.window_seconds;
         let page_size = params.page_size;
         let page_cursor = params.page_cursor;
@@ -2630,6 +2654,10 @@ impl MetricsAPI {
         if let Some(ref local_query_param) = filter_configured {
             local_req_builder =
                 local_req_builder.query(&[("filter[configured]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_is_configurable {
+            local_req_builder = local_req_builder
+                .query(&[("filter[is_configurable]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_tags_configured {
             local_req_builder = local_req_builder
@@ -2662,6 +2690,14 @@ impl MetricsAPI {
         if let Some(ref local_query_param) = filter_related_assets {
             local_req_builder = local_req_builder
                 .query(&[("filter[related_assets]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = window_seconds {
             local_req_builder =
