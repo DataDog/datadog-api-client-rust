@@ -17,6 +17,9 @@ pub struct MetricTagConfiguration {
     /// The metric name for this resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// Relationships for a metric.
+    #[serde(rename = "relationships")]
+    pub relationships: Option<crate::datadogV2::model::MetricRelationships>,
     /// The metric tag configuration resource type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::MetricTagConfigurationType>,
@@ -32,6 +35,7 @@ impl MetricTagConfiguration {
         MetricTagConfiguration {
             attributes: None,
             id: None,
+            relationships: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -48,6 +52,11 @@ impl MetricTagConfiguration {
 
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn relationships(mut self, value: crate::datadogV2::model::MetricRelationships) -> Self {
+        self.relationships = Some(value);
         self
     }
 
@@ -92,6 +101,7 @@ impl<'de> Deserialize<'de> for MetricTagConfiguration {
                     crate::datadogV2::model::MetricTagConfigurationAttributes,
                 > = None;
                 let mut id: Option<String> = None;
+                let mut relationships: Option<crate::datadogV2::model::MetricRelationships> = None;
                 let mut type_: Option<crate::datadogV2::model::MetricTagConfigurationType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -112,6 +122,13 @@ impl<'de> Deserialize<'de> for MetricTagConfiguration {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "relationships" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            relationships =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             if v.is_null() {
@@ -138,6 +155,7 @@ impl<'de> Deserialize<'de> for MetricTagConfiguration {
                 let content = MetricTagConfiguration {
                     attributes,
                     id,
+                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,

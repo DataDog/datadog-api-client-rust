@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricIngestedIndexedVolumeAttributes {
-    /// Indexed volume for the given metric.
+    /// Estimated average hourly number of indexed time series for the given metric over the last hour. For organizations on Metric Name Pricing, this represents the estimated sum of indexed data points over the last hour.
     #[serde(rename = "indexed_volume")]
     pub indexed_volume: Option<i64>,
-    /// Ingested volume for the given metric.
+    /// Estimated average hourly number of ingested time series for the given metric over the last hour. This value is `0` for metrics not configured with Metrics Without Limits. For organizations on Metric Name Pricing, this represents the estimated sum of ingested data points over the last hour.
     #[serde(rename = "ingested_volume")]
     pub ingested_volume: Option<i64>,
     #[serde(flatten)]
