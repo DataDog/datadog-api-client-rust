@@ -6559,8 +6559,27 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_create_report_schedule,
     );
     world.function_mappings.insert(
+        "v2.ListReportSchedules".into(),
+        test_v2_list_report_schedules,
+    );
+    world.function_mappings.insert(
+        "v2.GetReportSchedulesForResource".into(),
+        test_v2_get_report_schedules_for_resource,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteReportSchedule".into(),
+        test_v2_delete_report_schedule,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetReportSchedule".into(), test_v2_get_report_schedule);
+    world.function_mappings.insert(
         "v2.PatchReportSchedule".into(),
         test_v2_patch_report_schedule,
+    );
+    world.function_mappings.insert(
+        "v2.ToggleReportSchedule".into(),
+        test_v2_toggle_report_schedule,
     );
     world.function_mappings.insert(
         "v2.DeleteRestrictionPolicy".into(),
@@ -51095,6 +51114,136 @@ fn test_v2_create_report_schedule(world: &mut DatadogWorld, _parameters: &HashMa
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_report_schedules(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_report_schedules
+        .as_ref()
+        .expect("api instance not found");
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_title = _parameters
+        .get("filter[title]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_author_uuid = _parameters
+        .get("filter[author_uuid]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_recipients = _parameters
+        .get("filter[recipients]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_report_schedules::ListReportSchedulesOptionalParams::default();
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    params.filter_title = filter_title;
+    params.filter_author_uuid = filter_author_uuid;
+    params.filter_recipients = filter_recipients;
+    let response = match block_on(api.list_report_schedules_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_report_schedules_for_resource(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_report_schedules
+        .as_ref()
+        .expect("api instance not found");
+    let resource_type =
+        serde_json::from_value(_parameters.get("resource_type").unwrap().clone()).unwrap();
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_report_schedules_for_resource_with_http_info(resource_type, resource_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_report_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_report_schedules
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_uuid =
+        serde_json::from_value(_parameters.get("schedule_uuid").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_report_schedule_with_http_info(schedule_uuid)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_report_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_report_schedules
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_uuid =
+        serde_json::from_value(_parameters.get("schedule_uuid").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_report_schedule_with_http_info(schedule_uuid)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_patch_report_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -51105,6 +51254,33 @@ fn test_v2_patch_report_schedule(world: &mut DatadogWorld, _parameters: &HashMap
         serde_json::from_value(_parameters.get("schedule_uuid").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.patch_report_schedule_with_http_info(schedule_uuid, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_toggle_report_schedule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_report_schedules
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_uuid =
+        serde_json::from_value(_parameters.get("schedule_uuid").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.toggle_report_schedule_with_http_info(schedule_uuid, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

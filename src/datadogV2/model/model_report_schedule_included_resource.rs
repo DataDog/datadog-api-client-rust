@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[serde(untagged)]
 pub enum ReportScheduleIncludedResource {
     ReportScheduleAuthor(Box<crate::datadogV2::model::ReportScheduleAuthor>),
+    ReportScheduleResource(Box<crate::datadogV2::model::ReportScheduleResource>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -23,6 +24,13 @@ impl<'de> Deserialize<'de> for ReportScheduleIncludedResource {
         ) {
             if !_v._unparsed {
                 return Ok(ReportScheduleIncludedResource::ReportScheduleAuthor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ReportScheduleResource>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(ReportScheduleIncludedResource::ReportScheduleResource(_v));
             }
         }
 
