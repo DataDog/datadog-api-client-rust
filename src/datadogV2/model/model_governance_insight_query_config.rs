@@ -14,7 +14,7 @@ pub struct GovernanceInsightQueryConfig {
     /// The chart type the frontend should use to render the insight.
     #[serde(rename = "chart_type")]
     pub chart_type: Option<String>,
-    /// The window used for the previous value comparison, for example `week` or `month`.
+    /// The window used for the previous value comparison; for example, `week` or `month`.
     #[serde(rename = "comparison_shift")]
     pub comparison_shift: String,
     /// The default value to display when no data is available.
