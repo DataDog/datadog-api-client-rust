@@ -143,6 +143,8 @@ impl ComplianceAPI {
         Self { config, client }
     }
 
+    /// **This endpoint is deprecated.** Use the [Security Monitoring - Search Security Findings](<https://docs.datadoghq.com/api/latest/security-monitoring/search-security-findings/>) endpoint instead.
+    ///
     /// Get an aggregated view of compliance rules with their pass, fail, and muted finding counts.
     /// Supports filtering by compliance framework, framework version, and additional query filters.
     pub async fn get_rule_based_view(
@@ -165,6 +167,8 @@ impl ComplianceAPI {
         }
     }
 
+    /// **This endpoint is deprecated.** Use the [Security Monitoring - Search Security Findings](<https://docs.datadoghq.com/api/latest/security-monitoring/search-security-findings/>) endpoint instead.
+    ///
     /// Get an aggregated view of compliance rules with their pass, fail, and muted finding counts.
     /// Supports filtering by compliance framework, framework version, and additional query filters.
     pub async fn get_rule_based_view_with_http_info(
