@@ -3629,6 +3629,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_vulnerabilities,
     );
     world.function_mappings.insert(
+        "v2.ImportSecurityVulnerabilities".into(),
+        test_v2_import_security_vulnerabilities,
+    );
+    world.function_mappings.insert(
         "v2.GetVulnerabilityNotificationRules".into(),
         test_v2_get_vulnerability_notification_rules,
     );
@@ -26801,6 +26805,34 @@ fn test_v2_list_vulnerabilities(world: &mut DatadogWorld, _parameters: &HashMap<
     params.filter_asset_operating_system_name = filter_asset_operating_system_name;
     params.filter_asset_operating_system_version = filter_asset_operating_system_version;
     let response = match block_on(api.list_vulnerabilities_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_import_security_vulnerabilities(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_security_monitoring
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.import_security_vulnerabilities_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

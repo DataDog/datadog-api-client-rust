@@ -408,6 +408,7 @@ impl Default for Configuration {
             ("v2.get_static_analysis_node_types".to_owned(), false),
             ("v2.get_static_analysis_ruleset".to_owned(), false),
             ("v2.get_static_analysis_tree_sitter_wasm".to_owned(), false),
+            ("v2.import_security_vulnerabilities".to_owned(), false),
             ("v2.list_findings".to_owned(), false),
             ("v2.list_historical_jobs".to_owned(), false),
             ("v2.list_indicators_of_compromise".to_owned(), false),
