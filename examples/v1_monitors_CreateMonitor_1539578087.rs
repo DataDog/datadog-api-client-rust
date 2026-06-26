@@ -10,6 +10,7 @@ use datadog_api_client::datadogV1::model::MonitorOptionsSchedulingOptions;
 use datadog_api_client::datadogV1::model::MonitorOptionsSchedulingOptionsEvaluationWindow;
 use datadog_api_client::datadogV1::model::MonitorThresholds;
 use datadog_api_client::datadogV1::model::MonitorType;
+use datadog_api_client::datadogV1::model::OnMissingDataOption;
 
 #[tokio::main]
 async fn main() {
@@ -24,6 +25,7 @@ async fn main() {
         MonitorOptions::new()
             .include_tags(false)
             .notify_audit(false)
+            .on_missing_data(OnMissingDataOption::DEFAULT)
             .scheduling_options(
                 MonitorOptionsSchedulingOptions::new()
                     .custom_schedule(MonitorOptionsCustomSchedule::new().recurrences(vec![
