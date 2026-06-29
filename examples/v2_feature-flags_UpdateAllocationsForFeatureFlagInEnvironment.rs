@@ -53,11 +53,13 @@ async fn main() {
         )])
         .id(Uuid::parse_str("550e8400-e29b-41d4-a716-446655440020").expect("invalid UUID"))
         .targeting_rules(vec![TargetingRuleRequest::new(vec![
-            ConditionRequest::new(
-                "user_tier".to_string(),
-                ConditionOperator::ONE_OF,
-                vec!["premium".to_string(), "enterprise".to_string()],
-            ),
+            ConditionRequest::new()
+                .attribute("user_tier".to_string())
+                .operator(ConditionOperator::ONE_OF)
+                .saved_filter_id(
+                    Uuid::parse_str("550e8400-e29b-41d4-a716-446655440090").expect("invalid UUID"),
+                )
+                .value(vec!["premium".to_string(), "enterprise".to_string()]),
         ])])
         .variant_weights(vec![VariantWeightRequest::new(50.0)
             .variant_id(

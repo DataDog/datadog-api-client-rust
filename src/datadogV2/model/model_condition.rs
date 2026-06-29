@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Targeting condition details.
+/// Targeting condition details. A condition is either an inline
+/// predicate with `operator`, `attribute`, and `value`, or a reference to a
+/// saved filter with `saved_filter_id`. The inline fields are omitted for saved-filter
+/// references.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Condition {
-    /// The user or request attribute to evaluate.
+    /// The user or request attribute to evaluate. Omitted for saved-filter references.
     #[serde(rename = "attribute")]
-    pub attribute: String,
+    pub attribute: Option<String>,
     /// The timestamp when the condition was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
@@ -22,13 +25,20 @@ pub struct Condition {
     pub id: uuid::Uuid,
     /// The operator used in a targeting condition.
     #[serde(rename = "operator")]
-    pub operator: crate::datadogV2::model::ConditionOperator,
+    pub operator: Option<crate::datadogV2::model::ConditionOperator>,
+    /// The ID of the saved filter referenced by this condition, or null for inline conditions.
+    #[serde(
+        rename = "saved_filter_id",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub saved_filter_id: Option<Option<uuid::Uuid>>,
     /// The timestamp when the condition was last updated.
     #[serde(rename = "updated_at")]
     pub updated_at: chrono::DateTime<chrono::Utc>,
-    /// Values used by the selected operator.
+    /// Values used by the selected operator. Omitted for saved-filter references.
     #[serde(rename = "value")]
-    pub value: Vec<String>,
+    pub value: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -38,23 +48,41 @@ pub struct Condition {
 
 impl Condition {
     pub fn new(
-        attribute: String,
         created_at: chrono::DateTime<chrono::Utc>,
         id: uuid::Uuid,
-        operator: crate::datadogV2::model::ConditionOperator,
         updated_at: chrono::DateTime<chrono::Utc>,
-        value: Vec<String>,
     ) -> Condition {
         Condition {
-            attribute,
+            attribute: None,
             created_at,
             id,
-            operator,
+            operator: None,
+            saved_filter_id: None,
             updated_at,
-            value,
+            value: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attribute(mut self, value: String) -> Self {
+        self.attribute = Some(value);
+        self
+    }
+
+    pub fn operator(mut self, value: crate::datadogV2::model::ConditionOperator) -> Self {
+        self.operator = Some(value);
+        self
+    }
+
+    pub fn saved_filter_id(mut self, value: Option<uuid::Uuid>) -> Self {
+        self.saved_filter_id = Some(value);
+        self
+    }
+
+    pub fn value(mut self, value: Vec<String>) -> Self {
+        self.value = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -87,6 +115,7 @@ impl<'de> Deserialize<'de> for Condition {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut id: Option<uuid::Uuid> = None;
                 let mut operator: Option<crate::datadogV2::model::ConditionOperator> = None;
+                let mut saved_filter_id: Option<Option<uuid::Uuid>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut value: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -98,6 +127,9 @@ impl<'de> Deserialize<'de> for Condition {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attribute" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attribute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_at" => {
@@ -107,6 +139,9 @@ impl<'de> Deserialize<'de> for Condition {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "operator" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             operator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _operator) = operator {
                                 match _operator {
@@ -119,10 +154,17 @@ impl<'de> Deserialize<'de> for Condition {
                                 }
                             }
                         }
+                        "saved_filter_id" => {
+                            saved_filter_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "value" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -132,18 +174,16 @@ impl<'de> Deserialize<'de> for Condition {
                         }
                     }
                 }
-                let attribute = attribute.ok_or_else(|| M::Error::missing_field("attribute"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let operator = operator.ok_or_else(|| M::Error::missing_field("operator"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
-                let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
                 let content = Condition {
                     attribute,
                     created_at,
                     id,
                     operator,
+                    saved_filter_id,
                     updated_at,
                     value,
                     additional_properties,

@@ -6,20 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Condition request payload for targeting rules.
+/// Condition request payload for targeting rules. A condition is either an inline
+/// predicate with `operator`, `attribute`, and `value`, or a reference to a
+/// saved filter with `saved_filter_id`. The two shapes are mutually exclusive.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ConditionRequest {
-    /// The user or request attribute to evaluate.
+    /// The user or request attribute to evaluate. Required for inline conditions; omit when `saved_filter_id` is set.
     #[serde(rename = "attribute")]
-    pub attribute: String,
+    pub attribute: Option<String>,
     /// The operator used in a targeting condition.
     #[serde(rename = "operator")]
-    pub operator: crate::datadogV2::model::ConditionOperator,
-    /// Values used by the selected operator.
+    pub operator: Option<crate::datadogV2::model::ConditionOperator>,
+    /// The ID of a saved filter to reference as this condition. Mutually exclusive
+    /// with `operator`, `attribute`, and `value`. When set, the saved filter's
+    /// targeting rules are evaluated in place of an inline predicate.
+    #[serde(rename = "saved_filter_id")]
+    pub saved_filter_id: Option<uuid::Uuid>,
+    /// Values used by the selected operator. Required for inline conditions; omit when `saved_filter_id` is set.
     #[serde(rename = "value")]
-    pub value: Vec<String>,
+    pub value: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -28,18 +35,35 @@ pub struct ConditionRequest {
 }
 
 impl ConditionRequest {
-    pub fn new(
-        attribute: String,
-        operator: crate::datadogV2::model::ConditionOperator,
-        value: Vec<String>,
-    ) -> ConditionRequest {
+    pub fn new() -> ConditionRequest {
         ConditionRequest {
-            attribute,
-            operator,
-            value,
+            attribute: None,
+            operator: None,
+            saved_filter_id: None,
+            value: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attribute(mut self, value: String) -> Self {
+        self.attribute = Some(value);
+        self
+    }
+
+    pub fn operator(mut self, value: crate::datadogV2::model::ConditionOperator) -> Self {
+        self.operator = Some(value);
+        self
+    }
+
+    pub fn saved_filter_id(mut self, value: uuid::Uuid) -> Self {
+        self.saved_filter_id = Some(value);
+        self
+    }
+
+    pub fn value(mut self, value: Vec<String>) -> Self {
+        self.value = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -48,6 +72,12 @@ impl ConditionRequest {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for ConditionRequest {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -70,6 +100,7 @@ impl<'de> Deserialize<'de> for ConditionRequest {
             {
                 let mut attribute: Option<String> = None;
                 let mut operator: Option<crate::datadogV2::model::ConditionOperator> = None;
+                let mut saved_filter_id: Option<uuid::Uuid> = None;
                 let mut value: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -80,9 +111,15 @@ impl<'de> Deserialize<'de> for ConditionRequest {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attribute" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attribute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "operator" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             operator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _operator) = operator {
                                 match _operator {
@@ -95,7 +132,17 @@ impl<'de> Deserialize<'de> for ConditionRequest {
                                 }
                             }
                         }
+                        "saved_filter_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            saved_filter_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "value" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -105,13 +152,11 @@ impl<'de> Deserialize<'de> for ConditionRequest {
                         }
                     }
                 }
-                let attribute = attribute.ok_or_else(|| M::Error::missing_field("attribute"))?;
-                let operator = operator.ok_or_else(|| M::Error::missing_field("operator"))?;
-                let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
                 let content = ConditionRequest {
                     attribute,
                     operator,
+                    saved_filter_id,
                     value,
                     additional_properties,
                     _unparsed,
