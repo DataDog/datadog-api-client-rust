@@ -47,10 +47,15 @@ impl<'de> Deserialize<'de> for CIAppCreatePipelineEventRequestAttributesResource
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CIAppPipelineEventJob>>(
             value.clone(),
         ) {
-            if !_v._unparsed {
-                return Ok(
-                    CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventJob(_v),
-                );
+            match *_v {
+                crate::datadogV2::model::CIAppPipelineEventJob::UnparsedObject(_v) => {}
+                _ => {
+                    return Ok(
+                        CIAppCreatePipelineEventRequestAttributesResource::CIAppPipelineEventJob(
+                            _v,
+                        ),
+                    )
+                }
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CIAppPipelineEventStep>>(
