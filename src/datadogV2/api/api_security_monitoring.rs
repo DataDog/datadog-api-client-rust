@@ -613,7 +613,7 @@ pub struct ListIndicatorsOfCompromiseOptionalParams {
     pub sort_order: Option<String>,
     /// When true, return only OCSF field-based matches. When false, return regex/message-based matches.
     pub ocsf: Option<bool>,
-    /// Filter indicators whose triage state was updated by a specific user UUID.
+    /// Filter indicators whose triage state was updated by a specific user identified by their handle.
     pub worked_by: Option<String>,
     /// Filter by triage state.
     pub triage_state: Option<crate::datadogV2::model::IoCTriageState>,
@@ -650,7 +650,7 @@ impl ListIndicatorsOfCompromiseOptionalParams {
         self.ocsf = Some(value);
         self
     }
-    /// Filter indicators whose triage state was updated by a specific user UUID.
+    /// Filter indicators whose triage state was updated by a specific user identified by their handle.
     pub fn worked_by(mut self, value: String) -> Self {
         self.worked_by = Some(value);
         self
