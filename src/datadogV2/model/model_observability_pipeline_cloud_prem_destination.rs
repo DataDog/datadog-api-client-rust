@@ -25,9 +25,6 @@ pub struct ObservabilityPipelineCloudPremDestination {
     /// A list of component IDs whose output is used as the `input` for this component.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
-    /// Configuration for enabling TLS encryption between the pipeline component and external services.
-    #[serde(rename = "tls")]
-    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
     /// The destination type. The value should always be `cloud_prem`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineCloudPremDestinationType,
@@ -49,7 +46,6 @@ impl ObservabilityPipelineCloudPremDestination {
             endpoint_url_key: None,
             id,
             inputs,
-            tls: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -66,11 +62,6 @@ impl ObservabilityPipelineCloudPremDestination {
 
     pub fn endpoint_url_key(mut self, value: String) -> Self {
         self.endpoint_url_key = Some(value);
-        self
-    }
-
-    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
-        self.tls = Some(value);
         self
     }
 
@@ -106,7 +97,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCloudPremDestination {
                 let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
-                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineCloudPremDestinationType,
                 > = None;
@@ -145,12 +135,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCloudPremDestination {
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "tls" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -178,7 +162,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCloudPremDestination {
                     endpoint_url_key,
                     id,
                     inputs,
-                    tls,
                     type_,
                     additional_properties,
                     _unparsed,

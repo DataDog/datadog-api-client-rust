@@ -859,6 +859,7 @@ lazy_static! {
                                 "datadoghq.eu".into(),
                                 "ddog-gov.com".into(),
                                 "us2.ddog-gov.com".into(),
+                                "uk1.datadoghq.com".into(),
                             ],
                         },
                     ),
