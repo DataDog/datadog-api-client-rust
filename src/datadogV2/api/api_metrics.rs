@@ -8,6 +8,7 @@ use flate2::{
     Compression,
 };
 use futures_core::stream::Stream;
+use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -988,6 +989,14 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_tag_indexing_rule";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_tag_indexing_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -1150,6 +1159,14 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_tag_indexing_rule_exemption";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_tag_indexing_rule_exemption' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -1559,6 +1576,14 @@ impl MetricsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagIndexingRuleError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_tag_indexing_rule";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_tag_indexing_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -1655,6 +1680,14 @@ impl MetricsAPI {
     {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_tag_indexing_rule_exemption";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_tag_indexing_rule_exemption' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -2011,6 +2044,14 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_tag_indexing_rule";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_tag_indexing_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -2129,6 +2170,14 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_tag_indexing_rule_exemption";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_tag_indexing_rule_exemption' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -2811,6 +2860,14 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_tag_indexing_rules";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_tag_indexing_rules' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         // unbox and build optional parameters
         let page_limit = params.page_limit;
@@ -2942,6 +2999,14 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_tag_indexing_rules_for_metric";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_tag_indexing_rules_for_metric' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -3632,6 +3697,14 @@ impl MetricsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ReorderTagIndexingRulesError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.reorder_tag_indexing_rules";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.reorder_tag_indexing_rules' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
@@ -4138,6 +4211,14 @@ impl MetricsAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_tag_indexing_rule";
+        if local_configuration.is_unstable_operation_enabled(operation_id) {
+            warn!("Using unstable operation {operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_tag_indexing_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
