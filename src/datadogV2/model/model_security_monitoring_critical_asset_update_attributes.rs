@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringCriticalAssetUpdateAttributes {
+    /// A description of the critical asset.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// Whether the critical asset is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
@@ -39,6 +42,7 @@ pub struct SecurityMonitoringCriticalAssetUpdateAttributes {
 impl SecurityMonitoringCriticalAssetUpdateAttributes {
     pub fn new() -> SecurityMonitoringCriticalAssetUpdateAttributes {
         SecurityMonitoringCriticalAssetUpdateAttributes {
+            description: None,
             enabled: None,
             query: None,
             rule_query: None,
@@ -48,6 +52,11 @@ impl SecurityMonitoringCriticalAssetUpdateAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn enabled(mut self, value: bool) -> Self {
@@ -115,6 +124,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringCriticalAssetUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut description: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut query: Option<String> = None;
                 let mut rule_query: Option<String> = None;
@@ -131,6 +141,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringCriticalAssetUpdateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "enabled" => {
                             if v.is_null() {
                                 continue;
@@ -184,6 +201,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringCriticalAssetUpdateAttributes {
                 }
 
                 let content = SecurityMonitoringCriticalAssetUpdateAttributes {
+                    description,
                     enabled,
                     query,
                     rule_query,
