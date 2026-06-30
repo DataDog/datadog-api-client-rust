@@ -1,5 +1,40 @@
 # CHANGELOG
 
+## 0.33.0/2026-06-30
+
+### Added
+* Add the uk1 data center. [#1795](https://github.com/DataDog/datadog-api-client-rust/pull/1795)
+* [obs-pipelines] Add TLS support to cloud_prem destination [#1789](https://github.com/DataDog/datadog-api-client-rust/pull/1789)
+* Add OpenAPI spec for k9-integration-api security findings and vulnerabilities [#1786](https://github.com/DataDog/datadog-api-client-rust/pull/1786)
+* Document metrics volume includes [#1784](https://github.com/DataDog/datadog-api-client-rust/pull/1784)
+* Add buffer configuration to ClickHouse destination [#1783](https://github.com/DataDog/datadog-api-client-rust/pull/1783)
+* Add public API endpoints for feature flag variant create, update, and delete [#1781](https://github.com/DataDog/datadog-api-client-rust/pull/1781)
+* Add public v2 OpenAPI operations for governance controls [#1779](https://github.com/DataDog/datadog-api-client-rust/pull/1779)
+* Add ObservabilityPipelineClickhouseDestination to OpenAPI spec [#1778](https://github.com/DataDog/datadog-api-client-rust/pull/1778)
+* Add ObservabilityPipelineWebsocketSource to schema [#1776](https://github.com/DataDog/datadog-api-client-rust/pull/1776)
+* Add security_filters and rules resource types to terraform export endpoints [#1774](https://github.com/DataDog/datadog-api-client-rust/pull/1774)
+* Add OpenAPI for Cloud Cost Management custom forecast endpoints [#1773](https://github.com/DataDog/datadog-api-client-rust/pull/1773)
+* Add Edit and Delete Notice Update and Slack icon support in API spec [#1769](https://github.com/DataDog/datadog-api-client-rust/pull/1769)
+* Add OpenAPI spec for RUM Remote Config endpoints [#1766](https://github.com/DataDog/datadog-api-client-rust/pull/1766)
+* Add OpenAPI spec for code-coverage PR summary and files endpoints [#1765](https://github.com/DataDog/datadog-api-client-rust/pull/1765)
+* Add public API for security findings automation rules [#1762](https://github.com/DataDog/datadog-api-client-rust/pull/1762)
+* Add OpenAPI spec for governance insights [#1757](https://github.com/DataDog/datadog-api-client-rust/pull/1757)
+* Add OpenAPI specs for reporting schedule endpoints [#1751](https://github.com/DataDog/datadog-api-client-rust/pull/1751)
+* Add LogsArrayMapProcessor to OpenAPI v1 spec [#1723](https://github.com/DataDog/datadog-api-client-rust/pull/1723)
+* Update GetBudget API spec with cost query parameters and custom forecast fields [#1722](https://github.com/DataDog/datadog-api-client-rust/pull/1722)
+
+### Changed
+* Update worked_by param to accept handle instead of UUID [#1793](https://github.com/DataDog/datadog-api-client-rust/pull/1793)
+* Add support for running CI jobs [#1780](https://github.com/DataDog/datadog-api-client-rust/pull/1780)
+* feat(test-optimization): update service settings API with override and inherit fields [#1764](https://github.com/DataDog/datadog-api-client-rust/pull/1764)
+* Mark tag indexing rule endpoints as Preview in API spec [#1763](https://github.com/DataDog/datadog-api-client-rust/pull/1763)
+
+### Deprecated
+* Remove Compliance Findings rule-based view endpoint from OpenAPI v2 [#1790](https://github.com/DataDog/datadog-api-client-rust/pull/1790)
+
+### Fixed
+* Fix test by adding on_missing_data options to the req payload [#1788](https://github.com/DataDog/datadog-api-client-rust/pull/1788)
+
 ## 0.32.0/2026-06-17
 
 ### Added
