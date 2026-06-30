@@ -39,7 +39,8 @@ async fn main() {
         .tags(vec!["env".to_string(), "service".to_string()]),
         TagIndexingRuleType::TAG_INDEXING_RULES,
     ));
-    let configuration = datadog::Configuration::new();
+    let mut configuration = datadog::Configuration::new();
+    configuration.set_unstable_operation_enabled("v2.CreateTagIndexingRule", true);
     let api = MetricsAPI::with_config(configuration);
     let resp = api.create_tag_indexing_rule(body).await;
     if let Ok(value) = resp {
