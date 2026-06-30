@@ -37,8 +37,7 @@ async fn main() {
                 .priority(CasePriority::NOT_DEFINED)
                 .title("A title for the ServiceNow ticket.".to_string()),
         )]);
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateServiceNowTickets", true);
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_service_now_tickets(body).await;
     if let Ok(value) = resp {
