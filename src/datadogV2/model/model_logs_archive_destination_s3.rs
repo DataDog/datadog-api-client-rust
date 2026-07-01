@@ -17,7 +17,7 @@ pub struct LogsArchiveDestinationS3 {
     /// The S3 encryption settings.
     #[serde(rename = "encryption")]
     pub encryption: Option<crate::datadogV2::model::LogsArchiveEncryptionS3>,
-    /// The S3 Archive's integration destination.
+    /// The S3 Archive's integration destination. You must provide one of the following: `access_key_id` alone, or both `account_id` and `role_name` together.
     #[serde(rename = "integration")]
     pub integration: crate::datadogV2::model::LogsArchiveIntegrationS3,
     /// The archive path.
@@ -127,6 +127,14 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
                         "integration" => {
                             integration =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _integration) = integration {
+                                match _integration {
+                                    crate::datadogV2::model::LogsArchiveIntegrationS3::UnparsedObject(_integration) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "path" => {
                             if v.is_null() {
