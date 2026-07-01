@@ -14,6 +14,9 @@ pub struct BatchRowsQueryResponse {
     /// Data object for a batch rows query response.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::BatchRowsQueryResponseData>,
+    /// Full row resources matching the query, included alongside the relationship references in `data`.
+    #[serde(rename = "included")]
+    pub included: Option<Vec<crate::datadogV2::model::TableRowResourceData>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,6 +28,7 @@ impl BatchRowsQueryResponse {
     pub fn new() -> BatchRowsQueryResponse {
         BatchRowsQueryResponse {
             data: None,
+            included: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -32,6 +36,11 @@ impl BatchRowsQueryResponse {
 
     pub fn data(mut self, value: crate::datadogV2::model::BatchRowsQueryResponseData) -> Self {
         self.data = Some(value);
+        self
+    }
+
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::TableRowResourceData>) -> Self {
+        self.included = Some(value);
         self
     }
 
@@ -68,6 +77,7 @@ impl<'de> Deserialize<'de> for BatchRowsQueryResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<crate::datadogV2::model::BatchRowsQueryResponseData> = None;
+                let mut included: Option<Vec<crate::datadogV2::model::TableRowResourceData>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,6 +92,12 @@ impl<'de> Deserialize<'de> for BatchRowsQueryResponse {
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "included" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -92,6 +108,7 @@ impl<'de> Deserialize<'de> for BatchRowsQueryResponse {
 
                 let content = BatchRowsQueryResponse {
                     data,
+                    included,
                     additional_properties,
                     _unparsed,
                 };
