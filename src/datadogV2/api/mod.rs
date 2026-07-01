@@ -94,6 +94,7 @@ pub mod api_processes;
 pub mod api_product_analytics;
 pub mod api_reference_tables;
 pub mod api_report_schedules;
+pub mod api_reporting_and_sharing;
 pub mod api_restriction_policies;
 pub mod api_roles;
 pub mod api_rum;
