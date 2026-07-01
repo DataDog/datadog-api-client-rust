@@ -41,8 +41,7 @@ async fn main() {
                 ServiceNowTicketsDataType::SERVICENOW_TICKETS,
             ),
         );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.AttachServiceNowTicket", true);
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.attach_service_now_ticket(body).await;
     if let Ok(value) = resp {
