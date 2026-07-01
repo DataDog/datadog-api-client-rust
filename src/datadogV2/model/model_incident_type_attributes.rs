@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentTypeAttributes {
+    /// The incident-type-scoped behavior settings. All fields are optional on update. Any field omitted from a PATCH request keeps its current value. This object is read-only on the incident type resource itself and is only mutated through the update (PATCH) endpoint.
+    #[serde(rename = "configuration")]
+    pub configuration: Option<crate::datadogV2::model::IncidentTypeConfiguration>,
     /// Timestamp when the incident type was created.
     #[serde(rename = "createdAt")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -45,6 +48,7 @@ pub struct IncidentTypeAttributes {
 impl IncidentTypeAttributes {
     pub fn new(name: String) -> IncidentTypeAttributes {
         IncidentTypeAttributes {
+            configuration: None,
             created_at: None,
             created_by: None,
             description: None,
@@ -56,6 +60,14 @@ impl IncidentTypeAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn configuration(
+        mut self,
+        value: crate::datadogV2::model::IncidentTypeConfiguration,
+    ) -> Self {
+        self.configuration = Some(value);
+        self
     }
 
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
@@ -119,6 +131,8 @@ impl<'de> Deserialize<'de> for IncidentTypeAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut configuration: Option<crate::datadogV2::model::IncidentTypeConfiguration> =
+                    None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut description: Option<String> = None;
@@ -135,6 +149,13 @@ impl<'de> Deserialize<'de> for IncidentTypeAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "configuration" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            configuration =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "createdAt" => {
                             if v.is_null() {
                                 continue;
@@ -193,6 +214,7 @@ impl<'de> Deserialize<'de> for IncidentTypeAttributes {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = IncidentTypeAttributes {
+                    configuration,
                     created_at,
                     created_by,
                     description,
