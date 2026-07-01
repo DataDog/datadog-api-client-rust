@@ -22,15 +22,18 @@ pub struct ObservabilityPipelineParseGrokProcessor {
     /// Indicates whether the processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
+    /// The log field to parse with the Grok rules.
+    #[serde(rename = "field")]
+    pub field: Option<String>,
     /// A unique identifier for this processor.
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which logs this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// The list of Grok parsing rules. If multiple matching rules are provided, they are evaluated in order. The first successful match is applied.
+    /// The list of Grok parsing rules selected by either source field or include query.
     #[serde(rename = "rules")]
-    pub rules: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRule>,
+    pub rules: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>,
     /// The processor type. The value should always be `parse_grok`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorType,
@@ -46,13 +49,14 @@ impl ObservabilityPipelineParseGrokProcessor {
         enabled: bool,
         id: String,
         include: String,
-        rules: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRule>,
+        rules: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>,
         type_: crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorType,
     ) -> ObservabilityPipelineParseGrokProcessor {
         ObservabilityPipelineParseGrokProcessor {
             disable_library_rules: None,
             display_name: None,
             enabled,
+            field: None,
             id,
             include,
             rules,
@@ -69,6 +73,11 @@ impl ObservabilityPipelineParseGrokProcessor {
 
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
+        self
+    }
+
+    pub fn field(mut self, value: String) -> Self {
+        self.field = Some(value);
         self
     }
 
@@ -101,10 +110,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                 let mut disable_library_rules: Option<bool> = None;
                 let mut display_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
+                let mut field: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
                 let mut rules: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRule>,
+                    Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>,
                 > = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorType,
@@ -133,6 +143,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                         }
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "field" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -171,6 +187,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                     disable_library_rules,
                     display_name,
                     enabled,
+                    field,
                     id,
                     include,
                     rules,
