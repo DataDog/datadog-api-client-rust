@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response object for a batch rows query against a reference table.
+/// Contains the continuation token for navigating to the next page of rows.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct BatchRowsQueryResponse {
-    /// Data object for a batch rows query response.
-    #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::BatchRowsQueryResponseData>,
-    /// Full row resources matching the query, included alongside the relationship references in `data`.
-    #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::TableRowResourceData>>,
+pub struct ListRowsResponseMetaPage {
+    /// Opaque token to pass as the `page[continuation_token]` query parameter to fetch the next page of results. Only present when more rows are available.
+    #[serde(rename = "next_continuation_token")]
+    pub next_continuation_token: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,17 @@ pub struct BatchRowsQueryResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl BatchRowsQueryResponse {
-    pub fn new() -> BatchRowsQueryResponse {
-        BatchRowsQueryResponse {
-            data: None,
-            included: None,
+impl ListRowsResponseMetaPage {
+    pub fn new() -> ListRowsResponseMetaPage {
+        ListRowsResponseMetaPage {
+            next_continuation_token: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::BatchRowsQueryResponseData) -> Self {
-        self.data = Some(value);
-        self
-    }
-
-    pub fn included(mut self, value: Vec<crate::datadogV2::model::TableRowResourceData>) -> Self {
-        self.included = Some(value);
+    pub fn next_continuation_token(mut self, value: String) -> Self {
+        self.next_continuation_token = Some(value);
         self
     }
 
@@ -53,20 +44,20 @@ impl BatchRowsQueryResponse {
     }
 }
 
-impl Default for BatchRowsQueryResponse {
+impl Default for ListRowsResponseMetaPage {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for BatchRowsQueryResponse {
+impl<'de> Deserialize<'de> for ListRowsResponseMetaPage {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BatchRowsQueryResponseVisitor;
-        impl<'a> Visitor<'a> for BatchRowsQueryResponseVisitor {
-            type Value = BatchRowsQueryResponse;
+        struct ListRowsResponseMetaPageVisitor;
+        impl<'a> Visitor<'a> for ListRowsResponseMetaPageVisitor {
+            type Value = ListRowsResponseMetaPage;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +67,7 @@ impl<'de> Deserialize<'de> for BatchRowsQueryResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::BatchRowsQueryResponseData> = None;
-                let mut included: Option<Vec<crate::datadogV2::model::TableRowResourceData>> = None;
+                let mut next_continuation_token: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +76,12 @@ impl<'de> Deserialize<'de> for BatchRowsQueryResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
+                        "next_continuation_token" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "included" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            next_continuation_token =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,9 +91,8 @@ impl<'de> Deserialize<'de> for BatchRowsQueryResponse {
                     }
                 }
 
-                let content = BatchRowsQueryResponse {
-                    data,
-                    included,
+                let content = ListRowsResponseMetaPage {
+                    next_continuation_token,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +101,6 @@ impl<'de> Deserialize<'de> for BatchRowsQueryResponse {
             }
         }
 
-        deserializer.deserialize_any(BatchRowsQueryResponseVisitor)
+        deserializer.deserialize_any(ListRowsResponseMetaPageVisitor)
     }
 }

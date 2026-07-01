@@ -17,6 +17,9 @@ pub struct ListRowsResponse {
     /// Pagination links for the list rows response.
     #[serde(rename = "links")]
     pub links: crate::datadogV2::model::ListRowsResponseLinks,
+    /// Contains pagination details, including the continuation token for fetching additional rows.
+    #[serde(rename = "meta")]
+    pub meta: Option<crate::datadogV2::model::ListRowsResponseMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -32,9 +35,15 @@ impl ListRowsResponse {
         ListRowsResponse {
             data,
             links,
+            meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn meta(mut self, value: crate::datadogV2::model::ListRowsResponseMeta) -> Self {
+        self.meta = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -65,6 +74,7 @@ impl<'de> Deserialize<'de> for ListRowsResponse {
             {
                 let mut data: Option<Vec<crate::datadogV2::model::TableRowResourceData>> = None;
                 let mut links: Option<crate::datadogV2::model::ListRowsResponseLinks> = None;
+                let mut meta: Option<crate::datadogV2::model::ListRowsResponseMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,6 +89,12 @@ impl<'de> Deserialize<'de> for ListRowsResponse {
                         "links" => {
                             links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -92,6 +108,7 @@ impl<'de> Deserialize<'de> for ListRowsResponse {
                 let content = ListRowsResponse {
                     data,
                     links,
+                    meta,
                     additional_properties,
                     _unparsed,
                 };
