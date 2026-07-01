@@ -18,10 +18,10 @@ pub struct ListFeatureFlagsOptionalParams {
     pub key: Option<String>,
     /// Filter by archived status.
     pub is_archived: Option<bool>,
-    /// Maximum number of results to return.
-    pub limit: Option<i64>,
-    /// Number of results to skip.
-    pub offset: Option<i64>,
+    /// Maximum number of feature flags to return.
+    pub page_limit: Option<i64>,
+    /// Number of feature flags to skip for pagination.
+    pub page_offset: Option<i64>,
 }
 
 impl ListFeatureFlagsOptionalParams {
@@ -35,14 +35,14 @@ impl ListFeatureFlagsOptionalParams {
         self.is_archived = Some(value);
         self
     }
-    /// Maximum number of results to return.
-    pub fn limit(mut self, value: i64) -> Self {
-        self.limit = Some(value);
+    /// Maximum number of feature flags to return.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
         self
     }
-    /// Number of results to skip.
-    pub fn offset(mut self, value: i64) -> Self {
-        self.offset = Some(value);
+    /// Number of feature flags to skip for pagination.
+    pub fn page_offset(mut self, value: i64) -> Self {
+        self.page_offset = Some(value);
         self
     }
 }
@@ -1734,8 +1734,8 @@ impl FeatureFlagsAPI {
         // unbox and build optional parameters
         let key = params.key;
         let is_archived = params.is_archived;
-        let limit = params.limit;
-        let offset = params.offset;
+        let page_limit = params.page_limit;
+        let page_offset = params.page_offset;
 
         let local_client = &self.client;
 
@@ -1753,13 +1753,13 @@ impl FeatureFlagsAPI {
             local_req_builder =
                 local_req_builder.query(&[("is_archived", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = limit {
+        if let Some(ref local_query_param) = page_limit {
             local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = offset {
+        if let Some(ref local_query_param) = page_offset {
             local_req_builder =
-                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
         };
 
         // build headers
