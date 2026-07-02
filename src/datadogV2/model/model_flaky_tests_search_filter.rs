@@ -27,6 +27,9 @@ pub struct FlakyTestsSearchFilter {
     /// - `@git.branch`
     /// - `@test.codeowners`
     /// - `env`
+    /// - `fingerprint_fqn`
+    ///
+    /// Use `fingerprint_fqn` to filter by a test's stable Fingerprint FQN (the same value as the test's `id`).
     #[serde(rename = "query")]
     pub query: Option<String>,
     #[serde(flatten)]
