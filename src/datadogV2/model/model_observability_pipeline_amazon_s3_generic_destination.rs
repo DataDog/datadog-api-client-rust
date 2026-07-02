@@ -45,6 +45,15 @@ pub struct ObservabilityPipelineAmazonS3GenericDestination {
     /// AWS region of the S3 bucket.
     #[serde(rename = "region")]
     pub region: String,
+    /// Server-side encryption type for Amazon S3.
+    #[serde(rename = "server_side_encryption")]
+    pub server_side_encryption: Option<
+        crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationServerSideEncryption,
+    >,
+    /// The AWS KMS key ID used for SSE-KMS encryption.
+    /// Only applies when `server_side_encryption` is set to `aws:kms`.
+    #[serde(rename = "ssekms_key_id")]
+    pub ssekms_key_id: Option<String>,
     /// S3 storage class.
     #[serde(rename = "storage_class")]
     pub storage_class:
@@ -81,6 +90,8 @@ impl ObservabilityPipelineAmazonS3GenericDestination {
             inputs,
             key_prefix: None,
             region,
+            server_side_encryption: None,
+            ssekms_key_id: None,
             storage_class,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -111,6 +122,19 @@ impl ObservabilityPipelineAmazonS3GenericDestination {
 
     pub fn key_prefix(mut self, value: String) -> Self {
         self.key_prefix = Some(value);
+        self
+    }
+
+    pub fn server_side_encryption(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationServerSideEncryption,
+    ) -> Self {
+        self.server_side_encryption = Some(value);
+        self
+    }
+
+    pub fn ssekms_key_id(mut self, value: String) -> Self {
+        self.ssekms_key_id = Some(value);
         self
     }
 
@@ -158,6 +182,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
                 let mut inputs: Option<Vec<String>> = None;
                 let mut key_prefix: Option<String> = None;
                 let mut region: Option<String> = None;
+                let mut server_side_encryption: Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationServerSideEncryption> = None;
+                let mut ssekms_key_id: Option<String> = None;
                 let mut storage_class: Option<
                     crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationStorageClass,
                 > = None;
@@ -240,6 +266,28 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
                         "region" => {
                             region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "server_side_encryption" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            server_side_encryption =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _server_side_encryption) = server_side_encryption {
+                                match _server_side_encryption {
+                                    crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationServerSideEncryption::UnparsedObject(_server_side_encryption) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "ssekms_key_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ssekms_key_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "storage_class" => {
                             storage_class =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -292,6 +340,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3GenericDestination {
                     inputs,
                     key_prefix,
                     region,
+                    server_side_encryption,
+                    ssekms_key_id,
                     storage_class,
                     type_,
                     additional_properties,
