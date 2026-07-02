@@ -510,6 +510,8 @@ pub mod model_widget_field_sort;
 pub use self::model_widget_field_sort::WidgetFieldSort;
 pub mod model_list_stream_issue_state;
 pub use self::model_list_stream_issue_state::ListStreamIssueState;
+pub mod model_list_stream_query_version;
+pub use self::model_list_stream_query_version::ListStreamQueryVersion;
 pub mod model_geomap_widget_request_style;
 pub use self::model_geomap_widget_request_style::GeomapWidgetRequestStyle;
 pub mod model_table_widget_text_format_rule;

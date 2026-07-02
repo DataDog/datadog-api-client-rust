@@ -53,6 +53,10 @@ pub struct ListStreamQuery {
     /// Filter by team handles. Usable only with `issue_stream`.
     #[serde(rename = "team_handles")]
     pub team_handles: Option<Vec<String>>,
+    /// Version of the query for the logs transaction stream widget. When omitted, v1 query behavior is
+    /// preserved. Set to `sequential_query` to use v2 behavior. **This feature is in Preview.**
+    #[serde(rename = "version")]
+    pub version: Option<crate::datadogV1::model::ListStreamQueryVersion>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -80,6 +84,7 @@ impl ListStreamQuery {
             storage: None,
             suspected_causes: None,
             team_handles: None,
+            version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -145,6 +150,11 @@ impl ListStreamQuery {
         self
     }
 
+    pub fn version(mut self, value: crate::datadogV1::model::ListStreamQueryVersion) -> Self {
+        self.version = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -187,6 +197,7 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                 let mut storage: Option<String> = None;
                 let mut suspected_causes: Option<Vec<String>> = None;
                 let mut team_handles: Option<Vec<String>> = None;
+                let mut version: Option<crate::datadogV1::model::ListStreamQueryVersion> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -307,6 +318,20 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                             team_handles =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "version" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _version) = version {
+                                match _version {
+                                    crate::datadogV1::model::ListStreamQueryVersion::UnparsedObject(_version) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -334,6 +359,7 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                     storage,
                     suspected_causes,
                     team_handles,
+                    version,
                     additional_properties,
                     _unparsed,
                 };
