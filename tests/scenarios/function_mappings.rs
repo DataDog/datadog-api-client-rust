@@ -212,6 +212,8 @@ pub struct ApiInstances {
     pub v2_api_service_definition: Option<datadogV2::api_service_definition::ServiceDefinitionAPI>,
     pub v2_api_service_level_objectives:
         Option<datadogV2::api_service_level_objectives::ServiceLevelObjectivesAPI>,
+    pub v2_api_reporting_and_sharing:
+        Option<datadogV2::api_reporting_and_sharing::ReportingAndSharingAPI>,
     pub v2_api_spa: Option<datadogV2::api_spa::SpaAPI>,
     pub v2_api_spans: Option<datadogV2::api_spans::SpansAPI>,
     pub v2_api_static_analysis: Option<datadogV2::api_static_analysis::StaticAnalysisAPI>,
@@ -1355,6 +1357,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "ReportingAndSharing" => {
+            world.api_instances.v2_api_reporting_and_sharing = Some(datadogV2::api_reporting_and_sharing::ReportingAndSharingAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "Spa" => {
             world.api_instances.v2_api_spa =
@@ -6966,6 +6974,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetSloStatus".into(), test_v2_get_slo_status);
+    world
+        .function_mappings
+        .insert("v2.CreateSnapshot".into(), test_v2_create_snapshot);
     world.function_mappings.insert(
         "v2.GetSPARecommendations".into(),
         test_v2_get_spa_recommendations,
@@ -54952,6 +54963,31 @@ fn test_v2_get_slo_status(world: &mut DatadogWorld, _parameters: &HashMap<String
     params.disable_corrections = disable_corrections;
     let response = match block_on(api.get_slo_status_with_http_info(slo_id, from_ts, to_ts, params))
     {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_snapshot(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_reporting_and_sharing
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_snapshot_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
