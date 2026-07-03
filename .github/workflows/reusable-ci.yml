@@ -18,11 +18,6 @@ on:
         required: false
         type: string
         default: '["ubuntu-latest"]'
-      test-script:
-        description: 'Test script to execute'
-        required: false
-        type: string
-        default: './run-tests.sh'
       examples-command:
         description: 'Examples command to execute'
         required: false
@@ -53,7 +48,6 @@ jobs:
       target-branch: ${{ inputs.target-branch }}
       rust-versions: ${{ inputs.rust-versions }}
       platforms: ${{ inputs.platforms }}
-      test-script: ${{ inputs.test-script }}
 
   examples:
     uses: ./.github/workflows/reusable-examples.yml

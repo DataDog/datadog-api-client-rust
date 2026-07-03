@@ -32,6 +32,42 @@ jobs:
     with:
       enable-commit-changes: true
 
+  license:
+    if: >
+      (github.event.pull_request.draft == false &&
+       !contains(github.event.pull_request.labels.*.name, 'ci/skip') &&
+       !contains(github.event.pull_request.head.ref, 'datadog-api-spec/test/')) ||
+      github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: DataDog/datadog-api-client-rust
+      - name: Install Rust
+        id: rust
+        run: |
+          rustup toolchain install stable --profile minimal --no-self-update && rustup default stable
+          echo "version=$(rustc --version | awk '{print $2}')" >> $GITHUB_OUTPUT
+        shell: bash
+      - name: Cache Cargo registry
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
+          restore-keys: ${{ runner.os }}-cargo-registry-
+      - name: Cache license tool
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
+        with:
+          path: ~/.cargo/bin
+          key: ${{ runner.os }}-cargo-bin-${{ steps.rust.outputs.version }}
+          restore-keys: ${{ runner.os }}-cargo-bin-
+      - name: License check
+        run: ./scripts/license-check.sh
+        shell: bash
+
   test:
     if: >
       (github.event.pull_request.draft == false &&
@@ -42,7 +78,6 @@ jobs:
     with:
       rust-versions: '["stable"]'
       platforms: '["ubuntu-latest"]'
-      test-script: './run-tests.sh'
 
   examples:
     if: >
@@ -50,16 +85,43 @@ jobs:
        !contains(github.event.pull_request.labels.*.name, 'ci/skip') &&
        !contains(github.event.pull_request.head.ref, 'datadog-api-spec/test/')) ||
       github.event_name == 'schedule'
-    uses: ./.github/workflows/reusable-examples.yml
-    with:
-      examples-command: 'cargo check --examples'
-      rust-version: 'stable'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: DataDog/datadog-api-client-rust
+      - name: Install Rust
+        id: rust
+        run: |
+          rustup toolchain install stable --profile minimal --no-self-update && rustup default stable
+          echo "version=$(rustc --version | awk '{print $2}')" >> $GITHUB_OUTPUT
+        shell: bash
+      - name: Cache Cargo registry
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
+          restore-keys: ${{ runner.os }}-cargo-registry-
+      - name: Cache Cargo build
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-target-${{ steps.rust.outputs.version }}-${{ hashFiles('**/Cargo.toml') }}
+          restore-keys: ${{ runner.os }}-cargo-target-${{ steps.rust.outputs.version }}-
+      - name: Check examples
+        run: cargo check --examples
+        shell: bash
 
   report:
     runs-on: ubuntu-latest
     if: always() && github.event_name == 'pull_request' && contains(github.event.pull_request.head.ref, 'datadog-api-spec/generated/')
     needs:
       - test
+      - license
       - examples
     permissions:
       id-token: write
@@ -76,5 +138,5 @@ jobs:
         with:
           github-token: ${{ steps.get_token.outputs.token }}
           repo: datadog-api-spec
-          status: ${{ (needs.test.result == 'cancelled' || needs.examples.result == 'cancelled') && 'pending' || (needs.test.result == 'success' && needs.examples.result == 'success') && 'success' || 'failure' }}
+          status: ${{ (needs.test.result == 'cancelled' || needs.license.result == 'cancelled' || needs.examples.result == 'cancelled') && 'pending' || (needs.test.result == 'success' && needs.license.result == 'success' && needs.examples.result == 'success') && 'success' || 'failure' }}
           context: master/unit
