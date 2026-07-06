@@ -1,0 +1,203 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
+use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
+
+/// Attributes of the Linear issue to create.
+#[non_exhaustive]
+#[skip_serializing_none]
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub struct CreateLinearIssueRequestDataAttributes {
+    /// Unique identifier of the Datadog user assigned to the Linear issue.
+    #[serde(rename = "assignee_id")]
+    pub assignee_id: Option<String>,
+    /// Description of the Linear issue. If not provided, the description will be automatically generated.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
+    /// Linear label IDs to set on the created issue.
+    #[serde(rename = "label_ids")]
+    pub label_ids: Option<Vec<String>>,
+    /// Unique identifier of the Linear project to pin the issue to. If not provided, the issue is not associated with a Linear project.
+    #[serde(rename = "linear_project_id")]
+    pub linear_project_id: Option<String>,
+    /// Case priority
+    #[serde(rename = "priority")]
+    pub priority: Option<crate::datadogV2::model::CasePriority>,
+    /// Title of the Linear issue. If not provided, the title will be automatically generated.
+    #[serde(rename = "title")]
+    pub title: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
+}
+
+impl CreateLinearIssueRequestDataAttributes {
+    pub fn new() -> CreateLinearIssueRequestDataAttributes {
+        CreateLinearIssueRequestDataAttributes {
+            assignee_id: None,
+            description: None,
+            label_ids: None,
+            linear_project_id: None,
+            priority: None,
+            title: None,
+            additional_properties: std::collections::BTreeMap::new(),
+            _unparsed: false,
+        }
+    }
+
+    pub fn assignee_id(mut self, value: String) -> Self {
+        self.assignee_id = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn label_ids(mut self, value: Vec<String>) -> Self {
+        self.label_ids = Some(value);
+        self
+    }
+
+    pub fn linear_project_id(mut self, value: String) -> Self {
+        self.linear_project_id = Some(value);
+        self
+    }
+
+    pub fn priority(mut self, value: crate::datadogV2::model::CasePriority) -> Self {
+        self.priority = Some(value);
+        self
+    }
+
+    pub fn title(mut self, value: String) -> Self {
+        self.title = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
+}
+
+impl Default for CreateLinearIssueRequestDataAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for CreateLinearIssueRequestDataAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct CreateLinearIssueRequestDataAttributesVisitor;
+        impl<'a> Visitor<'a> for CreateLinearIssueRequestDataAttributesVisitor {
+            type Value = CreateLinearIssueRequestDataAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut assignee_id: Option<String> = None;
+                let mut description: Option<String> = None;
+                let mut label_ids: Option<Vec<String>> = None;
+                let mut linear_project_id: Option<String> = None;
+                let mut priority: Option<crate::datadogV2::model::CasePriority> = None;
+                let mut title: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "assignee_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            assignee_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "label_ids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            label_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "linear_project_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            linear_project_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "priority" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _priority) = priority {
+                                match _priority {
+                                    crate::datadogV2::model::CasePriority::UnparsedObject(
+                                        _priority,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "title" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
+                    }
+                }
+
+                let content = CreateLinearIssueRequestDataAttributes {
+                    assignee_id,
+                    description,
+                    label_ids,
+                    linear_project_id,
+                    priority,
+                    title,
+                    additional_properties,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(CreateLinearIssueRequestDataAttributesVisitor)
+    }
+}
