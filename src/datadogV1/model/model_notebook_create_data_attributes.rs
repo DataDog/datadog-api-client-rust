@@ -23,6 +23,13 @@ pub struct NotebookCreateDataAttributes {
     /// Publication status of the notebook. For now, always "published".
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV1::model::NotebookStatus>,
+    /// List of template variables for this notebook.
+    #[serde(
+        rename = "template_variables",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub template_variables: Option<Option<Vec<crate::datadogV1::model::NotebookTemplateVariable>>>,
     /// Notebook global timeframe.
     #[serde(rename = "time")]
     pub time: crate::datadogV1::model::NotebookGlobalTime,
@@ -44,6 +51,7 @@ impl NotebookCreateDataAttributes {
             metadata: None,
             name,
             status: None,
+            template_variables: None,
             time,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -57,6 +65,14 @@ impl NotebookCreateDataAttributes {
 
     pub fn status(mut self, value: crate::datadogV1::model::NotebookStatus) -> Self {
         self.status = Some(value);
+        self
+    }
+
+    pub fn template_variables(
+        mut self,
+        value: Option<Vec<crate::datadogV1::model::NotebookTemplateVariable>>,
+    ) -> Self {
+        self.template_variables = Some(value);
         self
     }
 
@@ -91,6 +107,9 @@ impl<'de> Deserialize<'de> for NotebookCreateDataAttributes {
                 let mut metadata: Option<crate::datadogV1::model::NotebookMetadata> = None;
                 let mut name: Option<String> = None;
                 let mut status: Option<crate::datadogV1::model::NotebookStatus> = None;
+                let mut template_variables: Option<
+                    Option<Vec<crate::datadogV1::model::NotebookTemplateVariable>>,
+                > = None;
                 let mut time: Option<crate::datadogV1::model::NotebookGlobalTime> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -128,6 +147,10 @@ impl<'de> Deserialize<'de> for NotebookCreateDataAttributes {
                                 }
                             }
                         }
+                        "template_variables" => {
+                            template_variables =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "time" => {
                             time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _time) = time {
@@ -157,6 +180,7 @@ impl<'de> Deserialize<'de> for NotebookCreateDataAttributes {
                     metadata,
                     name,
                     status,
+                    template_variables,
                     time,
                     additional_properties,
                     _unparsed,
