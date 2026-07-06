@@ -24,6 +24,7 @@ pub enum RuleTypesItems {
     IAC_MISCONFIGURATION,
     SAST_VULNERABILITY,
     SECRET_VULNERABILITY,
+    WORKLOAD_ACTIVITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -49,6 +50,7 @@ impl ToString for RuleTypesItems {
             Self::IAC_MISCONFIGURATION => String::from("iac_misconfiguration"),
             Self::SAST_VULNERABILITY => String::from("sast_vulnerability"),
             Self::SECRET_VULNERABILITY => String::from("secret_vulnerability"),
+            Self::WORKLOAD_ACTIVITY => String::from("workload_activity"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -90,6 +92,7 @@ impl<'de> Deserialize<'de> for RuleTypesItems {
             "iac_misconfiguration" => Self::IAC_MISCONFIGURATION,
             "sast_vulnerability" => Self::SAST_VULNERABILITY,
             "secret_vulnerability" => Self::SECRET_VULNERABILITY,
+            "workload_activity" => Self::WORKLOAD_ACTIVITY,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
