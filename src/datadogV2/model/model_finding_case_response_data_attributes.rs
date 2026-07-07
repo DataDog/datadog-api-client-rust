@@ -44,6 +44,9 @@ pub struct FindingCaseResponseDataAttributes {
     /// Key of the case.
     #[serde(rename = "key")]
     pub key: Option<String>,
+    /// Linear issue associated with the case.
+    #[serde(rename = "linear_issue")]
+    pub linear_issue: Option<crate::datadogV2::model::FindingLinearIssue>,
     /// Timestamp of when the case was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -89,6 +92,7 @@ impl FindingCaseResponseDataAttributes {
             insights: None,
             jira_issue: None,
             key: None,
+            linear_issue: None,
             modified_at: None,
             priority: None,
             servicenow_ticket: None,
@@ -154,6 +158,11 @@ impl FindingCaseResponseDataAttributes {
 
     pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
+        self
+    }
+
+    pub fn linear_issue(mut self, value: crate::datadogV2::model::FindingLinearIssue) -> Self {
+        self.linear_issue = Some(value);
         self
     }
 
@@ -243,6 +252,7 @@ impl<'de> Deserialize<'de> for FindingCaseResponseDataAttributes {
                 let mut insights: Option<Vec<crate::datadogV2::model::CaseInsightsItems>> = None;
                 let mut jira_issue: Option<crate::datadogV2::model::FindingJiraIssue> = None;
                 let mut key: Option<String> = None;
+                let mut linear_issue: Option<crate::datadogV2::model::FindingLinearIssue> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut priority: Option<String> = None;
                 let mut servicenow_ticket: Option<
@@ -331,6 +341,13 @@ impl<'de> Deserialize<'de> for FindingCaseResponseDataAttributes {
                             }
                             key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "linear_issue" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            linear_issue =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "modified_at" => {
                             if v.is_null() {
                                 continue;
@@ -403,6 +420,7 @@ impl<'de> Deserialize<'de> for FindingCaseResponseDataAttributes {
                     insights,
                     jira_issue,
                     key,
+                    linear_issue,
                     modified_at,
                     priority,
                     servicenow_ticket,
