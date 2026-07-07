@@ -12,6 +12,7 @@ pub enum AssetType {
     HOST,
     HOSTIMAGE,
     IMAGE,
+    SERVERLESSFUNCTION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -23,6 +24,7 @@ impl ToString for AssetType {
             Self::HOST => String::from("Host"),
             Self::HOSTIMAGE => String::from("HostImage"),
             Self::IMAGE => String::from("Image"),
+            Self::SERVERLESSFUNCTION => String::from("ServerlessFunction"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -52,6 +54,7 @@ impl<'de> Deserialize<'de> for AssetType {
             "Host" => Self::HOST,
             "HostImage" => Self::HOSTIMAGE,
             "Image" => Self::IMAGE,
+            "ServerlessFunction" => Self::SERVERLESSFUNCTION,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
