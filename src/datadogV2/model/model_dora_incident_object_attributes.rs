@@ -21,9 +21,9 @@ pub struct DORAIncidentObjectAttributes {
     /// Environment name that was impacted by the incident.
     #[serde(rename = "env")]
     pub env: Option<String>,
-    /// Unix timestamp when the incident finished.
+    /// The time when the incident finished.
     #[serde(rename = "finished_at")]
-    pub finished_at: Option<i64>,
+    pub finished_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Git info for DORA Metrics events.
     #[serde(rename = "git")]
     pub git: Option<crate::datadogV2::model::DORAGitInfo>,
@@ -36,9 +36,9 @@ pub struct DORAIncidentObjectAttributes {
     /// Incident severity.
     #[serde(rename = "severity")]
     pub severity: Option<String>,
-    /// Unix timestamp when the incident started.
+    /// The time when the incident started.
     #[serde(rename = "started_at")]
-    pub started_at: i64,
+    pub started_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Name of the team owning the services impacted.
     #[serde(rename = "team")]
     pub team: Option<String>,
@@ -53,7 +53,7 @@ pub struct DORAIncidentObjectAttributes {
 }
 
 impl DORAIncidentObjectAttributes {
-    pub fn new(started_at: i64) -> DORAIncidentObjectAttributes {
+    pub fn new() -> DORAIncidentObjectAttributes {
         DORAIncidentObjectAttributes {
             custom_tags: None,
             env: None,
@@ -62,7 +62,7 @@ impl DORAIncidentObjectAttributes {
             name: None,
             services: None,
             severity: None,
-            started_at,
+            started_at: None,
             team: None,
             version: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -80,7 +80,7 @@ impl DORAIncidentObjectAttributes {
         self
     }
 
-    pub fn finished_at(mut self, value: i64) -> Self {
+    pub fn finished_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.finished_at = Some(value);
         self
     }
@@ -105,6 +105,11 @@ impl DORAIncidentObjectAttributes {
         self
     }
 
+    pub fn started_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.started_at = Some(value);
+        self
+    }
+
     pub fn team(mut self, value: String) -> Self {
         self.team = Some(value);
         self
@@ -121,6 +126,12 @@ impl DORAIncidentObjectAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for DORAIncidentObjectAttributes {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -143,12 +154,12 @@ impl<'de> Deserialize<'de> for DORAIncidentObjectAttributes {
             {
                 let mut custom_tags: Option<Option<Vec<String>>> = None;
                 let mut env: Option<String> = None;
-                let mut finished_at: Option<i64> = None;
+                let mut finished_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut git: Option<crate::datadogV2::model::DORAGitInfo> = None;
                 let mut name: Option<String> = None;
                 let mut services: Option<Vec<String>> = None;
                 let mut severity: Option<String> = None;
-                let mut started_at: Option<i64> = None;
+                let mut started_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut team: Option<String> = None;
                 let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -201,6 +212,9 @@ impl<'de> Deserialize<'de> for DORAIncidentObjectAttributes {
                             severity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "started_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             started_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "team" => {
@@ -222,7 +236,6 @@ impl<'de> Deserialize<'de> for DORAIncidentObjectAttributes {
                         }
                     }
                 }
-                let started_at = started_at.ok_or_else(|| M::Error::missing_field("started_at"))?;
 
                 let content = DORAIncidentObjectAttributes {
                     custom_tags,

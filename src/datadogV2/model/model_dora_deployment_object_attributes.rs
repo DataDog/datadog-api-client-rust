@@ -21,18 +21,18 @@ pub struct DORADeploymentObjectAttributes {
     /// Environment name to where the service was deployed.
     #[serde(rename = "env")]
     pub env: Option<String>,
-    /// Unix timestamp when the deployment finished.
+    /// The time when the deployment finished.
     #[serde(rename = "finished_at")]
-    pub finished_at: i64,
+    pub finished_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Git info returned by DORA Metrics events.
     #[serde(rename = "git")]
     pub git: Option<crate::datadogV2::model::DORAGitInfoResponse>,
     /// Service name.
     #[serde(rename = "service")]
     pub service: String,
-    /// Unix timestamp when the deployment started.
+    /// The time when the deployment started.
     #[serde(rename = "started_at")]
-    pub started_at: i64,
+    pub started_at: chrono::DateTime<chrono::Utc>,
     /// Name of the team owning the deployed service.
     #[serde(rename = "team")]
     pub team: Option<String>,
@@ -48,14 +48,13 @@ pub struct DORADeploymentObjectAttributes {
 
 impl DORADeploymentObjectAttributes {
     pub fn new(
-        finished_at: i64,
         service: String,
-        started_at: i64,
+        started_at: chrono::DateTime<chrono::Utc>,
     ) -> DORADeploymentObjectAttributes {
         DORADeploymentObjectAttributes {
             custom_tags: None,
             env: None,
-            finished_at,
+            finished_at: None,
             git: None,
             service,
             started_at,
@@ -73,6 +72,11 @@ impl DORADeploymentObjectAttributes {
 
     pub fn env(mut self, value: String) -> Self {
         self.env = Some(value);
+        self
+    }
+
+    pub fn finished_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.finished_at = Some(value);
         self
     }
 
@@ -119,10 +123,10 @@ impl<'de> Deserialize<'de> for DORADeploymentObjectAttributes {
             {
                 let mut custom_tags: Option<Option<Vec<String>>> = None;
                 let mut env: Option<String> = None;
-                let mut finished_at: Option<i64> = None;
+                let mut finished_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut git: Option<crate::datadogV2::model::DORAGitInfoResponse> = None;
                 let mut service: Option<String> = None;
-                let mut started_at: Option<i64> = None;
+                let mut started_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut team: Option<String> = None;
                 let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -144,6 +148,9 @@ impl<'de> Deserialize<'de> for DORADeploymentObjectAttributes {
                             env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "finished_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             finished_at =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -178,8 +185,6 @@ impl<'de> Deserialize<'de> for DORADeploymentObjectAttributes {
                         }
                     }
                 }
-                let finished_at =
-                    finished_at.ok_or_else(|| M::Error::missing_field("finished_at"))?;
                 let service = service.ok_or_else(|| M::Error::missing_field("service"))?;
                 let started_at = started_at.ok_or_else(|| M::Error::missing_field("started_at"))?;
 
