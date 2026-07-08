@@ -16,8 +16,11 @@ async fn main() {
             SecurityMonitoringIntegrationCredentialsValidateAttributes::new(
                 "siem-test.com".to_string(),
                 SecurityMonitoringIntegrationType::GOOGLE_WORKSPACE,
-                BTreeMap::from([("admin_email".to_string(), Value::from("test@example.com"))]),
-            ),
+            )
+            .secrets(BTreeMap::from([(
+                "admin_email".to_string(),
+                Value::from("test@example.com"),
+            )])),
             SecurityMonitoringIntegrationConfigResourceType::INTEGRATION_CONFIG,
         ),
     );

@@ -20,9 +20,10 @@ pub struct SecurityMonitoringIntegrationConfigCreateAttributes {
     /// The display name for the entity context sync configuration.
     #[serde(rename = "name")]
     pub name: String,
-    /// The secrets used to authenticate against the external entity source. The accepted keys depend on the source type (for example, `admin_email` for Google Workspace).
+    /// The secrets used to authenticate against the external entity source. The accepted keys depend on the source type
+    /// (for example, `admin_email` for Google Workspace). Not required for source types that do not use secrets (for example, `ENTRA_ID`).
     #[serde(rename = "secrets")]
-    pub secrets: std::collections::BTreeMap<String, serde_json::Value>,
+    pub secrets: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Free-form, non-sensitive settings for the entity context sync. The accepted keys depend on the source type.
     #[serde(rename = "settings")]
     pub settings: Option<std::collections::BTreeMap<String, serde_json::Value>>,
@@ -38,17 +39,21 @@ impl SecurityMonitoringIntegrationConfigCreateAttributes {
         domain: String,
         integration_type: crate::datadogV2::model::SecurityMonitoringIntegrationType,
         name: String,
-        secrets: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> SecurityMonitoringIntegrationConfigCreateAttributes {
         SecurityMonitoringIntegrationConfigCreateAttributes {
             domain,
             integration_type,
             name,
-            secrets,
+            secrets: None,
             settings: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn secrets(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
+        self.secrets = Some(value);
+        self
     }
 
     pub fn settings(
@@ -121,6 +126,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringIntegrationConfigCreateAttribut
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "secrets" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             secrets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "settings" => {
@@ -140,7 +148,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringIntegrationConfigCreateAttribut
                 let integration_type =
                     integration_type.ok_or_else(|| M::Error::missing_field("integration_type"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let secrets = secrets.ok_or_else(|| M::Error::missing_field("secrets"))?;
 
                 let content = SecurityMonitoringIntegrationConfigCreateAttributes {
                     domain,
