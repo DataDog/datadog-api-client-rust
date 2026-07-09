@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The style to apply to the widget.
+/// Deprecated - The style to apply to the legacy metric-based host map widget. Use `HostMapWidgetInfrastructureStyle` instead.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

@@ -17,13 +17,16 @@ pub struct HostMapWidgetDefinition {
     /// The description of the widget.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// List of tag prefixes to group by.
+    /// Deprecated - Only used by the legacy metric-based format. Use `group_by` (infrastructure) or a `group` dimension (DDSQL) inside `requests` instead.
+    #[deprecated]
     #[serde(rename = "group")]
     pub group: Option<Vec<String>>,
-    /// Whether to show the hosts that don’t fit in a group.
+    /// Deprecated - Only used by the legacy metric-based format. Use `no_group_hosts` inside `requests` instead.
+    #[deprecated]
     #[serde(rename = "no_group_hosts")]
     pub no_group_hosts: Option<bool>,
-    /// Whether to show the hosts with no metrics.
+    /// Deprecated - Only used by the legacy metric-based format. Use `no_metric_hosts` inside `requests` instead.
+    #[deprecated]
     #[serde(rename = "no_metric_hosts")]
     pub no_metric_hosts: Option<bool>,
     /// Which type of node to use in the map.
@@ -32,13 +35,15 @@ pub struct HostMapWidgetDefinition {
     /// Notes on the title.
     #[serde(rename = "notes")]
     pub notes: Option<String>,
-    /// Query definition for the host map widget. Supports two mutually exclusive formats distinguished by the presence of `request_type`: the legacy metric-based format (`fill`/`size`) and the infrastructure-backed format (`request_type`, `node_type`, `enrichments`).
+    /// Query definition for the host map widget. Supports three mutually exclusive formats distinguished by `request_type`: the deprecated legacy metric-based format (`fill`/`size`, no `request_type`), the infrastructure-backed format (`request_type: infrastructure_hostmap`), and the DDSQL published-dataset format (`request_type: data_projection`).
     #[serde(rename = "requests")]
     pub requests: crate::datadogV1::model::HostMapWidgetDefinitionRequests,
-    /// List of tags used to filter the map.
+    /// Deprecated - Only used by the legacy metric-based format. Use `filter` inside `requests` instead.
+    #[deprecated]
     #[serde(rename = "scope")]
     pub scope: Option<Vec<String>>,
-    /// The style to apply to the widget.
+    /// Deprecated - The style to apply to the legacy metric-based host map widget. Use `HostMapWidgetInfrastructureStyle` instead.
+    #[deprecated]
     #[serde(rename = "style")]
     pub style: Option<crate::datadogV1::model::HostMapWidgetDefinitionStyle>,
     /// Title of the widget.
@@ -65,6 +70,7 @@ impl HostMapWidgetDefinition {
         requests: crate::datadogV1::model::HostMapWidgetDefinitionRequests,
         type_: crate::datadogV1::model::HostMapWidgetDefinitionType,
     ) -> HostMapWidgetDefinition {
+        #[allow(deprecated)]
         HostMapWidgetDefinition {
             custom_links: None,
             description: None,
@@ -85,61 +91,73 @@ impl HostMapWidgetDefinition {
         }
     }
 
+    #[allow(deprecated)]
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn group(mut self, value: Vec<String>) -> Self {
         self.group = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn no_group_hosts(mut self, value: bool) -> Self {
         self.no_group_hosts = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn no_metric_hosts(mut self, value: bool) -> Self {
         self.no_metric_hosts = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn node_type(mut self, value: crate::datadogV1::model::WidgetNodeType) -> Self {
         self.node_type = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn notes(mut self, value: String) -> Self {
         self.notes = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn scope(mut self, value: Vec<String>) -> Self {
         self.scope = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn style(mut self, value: crate::datadogV1::model::HostMapWidgetDefinitionStyle) -> Self {
         self.style = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
@@ -315,6 +333,7 @@ impl<'de> Deserialize<'de> for HostMapWidgetDefinition {
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
+                #[allow(deprecated)]
                 let content = HostMapWidgetDefinition {
                     custom_links,
                     description,

@@ -7,12 +7,12 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionQueryDefinition;
 use datadog_api_client::datadogV1::model::HostMapWidgetDefinition;
+use datadog_api_client::datadogV1::model::HostMapWidgetDefinitionRequestType;
 use datadog_api_client::datadogV1::model::HostMapWidgetDefinitionRequests;
 use datadog_api_client::datadogV1::model::HostMapWidgetDefinitionType;
 use datadog_api_client::datadogV1::model::HostMapWidgetDimension;
 use datadog_api_client::datadogV1::model::HostMapWidgetFormula;
 use datadog_api_client::datadogV1::model::HostMapWidgetGroupBy;
-use datadog_api_client::datadogV1::model::HostMapWidgetInfrastructureRequestRequestType;
 use datadog_api_client::datadogV1::model::HostMapWidgetInfrastructureStyle;
 use datadog_api_client::datadogV1::model::HostMapWidgetNodeType;
 use datadog_api_client::datadogV1::model::HostMapWidgetScalarRequest;
@@ -66,9 +66,7 @@ async fn main() {
                                         ],
                                     )
                                     .node_type(HostMapWidgetNodeType::HOST)
-                                    .request_type(
-                                        HostMapWidgetInfrastructureRequestRequestType::INFRASTRUCTURE_HOSTMAP,
-                                    )
+                                    .request_type(HostMapWidgetDefinitionRequestType::INFRASTRUCTURE_HOSTMAP)
                                     .style(
                                         HostMapWidgetInfrastructureStyle::new()
                                             .palette("green_to_orange".to_string())
