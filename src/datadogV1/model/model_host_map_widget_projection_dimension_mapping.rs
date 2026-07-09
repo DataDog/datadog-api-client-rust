@@ -6,21 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Formula for the infrastructure host map widget that specifies both the expression
-/// and the visual dimension it populates.
+/// Maps a dataset column to a host map visual dimension.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct HostMapWidgetFormula {
-    /// Expression alias.
+pub struct HostMapWidgetProjectionDimensionMapping {
+    /// Alias used to label the column instead of its name.
     #[serde(rename = "alias")]
     pub alias: Option<String>,
+    /// Source column name from the dataset.
+    #[serde(rename = "column")]
+    pub column: String,
     /// Visual dimension for the host map widget. Used both by infrastructure-backed formulas and by DDSQL projection columns; `group` is only meaningful for DDSQL projection columns, where repeated entries define the grouping hierarchy.
     #[serde(rename = "dimension")]
     pub dimension: crate::datadogV1::model::HostMapWidgetDimension,
-    /// String expression built from queries, formulas, and functions.
-    #[serde(rename = "formula")]
-    pub formula: String,
     /// Number format options for the widget.
     #[serde(rename = "number_format")]
     pub number_format: Option<crate::datadogV1::model::WidgetNumberFormat>,
@@ -31,15 +30,15 @@ pub struct HostMapWidgetFormula {
     pub(crate) _unparsed: bool,
 }
 
-impl HostMapWidgetFormula {
+impl HostMapWidgetProjectionDimensionMapping {
     pub fn new(
+        column: String,
         dimension: crate::datadogV1::model::HostMapWidgetDimension,
-        formula: String,
-    ) -> HostMapWidgetFormula {
-        HostMapWidgetFormula {
+    ) -> HostMapWidgetProjectionDimensionMapping {
+        HostMapWidgetProjectionDimensionMapping {
             alias: None,
+            column,
             dimension,
-            formula,
             number_format: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -65,14 +64,14 @@ impl HostMapWidgetFormula {
     }
 }
 
-impl<'de> Deserialize<'de> for HostMapWidgetFormula {
+impl<'de> Deserialize<'de> for HostMapWidgetProjectionDimensionMapping {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct HostMapWidgetFormulaVisitor;
-        impl<'a> Visitor<'a> for HostMapWidgetFormulaVisitor {
-            type Value = HostMapWidgetFormula;
+        struct HostMapWidgetProjectionDimensionMappingVisitor;
+        impl<'a> Visitor<'a> for HostMapWidgetProjectionDimensionMappingVisitor {
+            type Value = HostMapWidgetProjectionDimensionMapping;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -83,8 +82,8 @@ impl<'de> Deserialize<'de> for HostMapWidgetFormula {
                 M: MapAccess<'a>,
             {
                 let mut alias: Option<String> = None;
+                let mut column: Option<String> = None;
                 let mut dimension: Option<crate::datadogV1::model::HostMapWidgetDimension> = None;
-                let mut formula: Option<String> = None;
                 let mut number_format: Option<crate::datadogV1::model::WidgetNumberFormat> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -100,6 +99,9 @@ impl<'de> Deserialize<'de> for HostMapWidgetFormula {
                             }
                             alias = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "column" => {
+                            column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "dimension" => {
                             dimension = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _dimension) = dimension {
@@ -110,9 +112,6 @@ impl<'de> Deserialize<'de> for HostMapWidgetFormula {
                                     _ => {}
                                 }
                             }
-                        }
-                        "formula" => {
-                            formula = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "number_format" => {
                             if v.is_null() {
@@ -128,13 +127,13 @@ impl<'de> Deserialize<'de> for HostMapWidgetFormula {
                         }
                     }
                 }
+                let column = column.ok_or_else(|| M::Error::missing_field("column"))?;
                 let dimension = dimension.ok_or_else(|| M::Error::missing_field("dimension"))?;
-                let formula = formula.ok_or_else(|| M::Error::missing_field("formula"))?;
 
-                let content = HostMapWidgetFormula {
+                let content = HostMapWidgetProjectionDimensionMapping {
                     alias,
+                    column,
                     dimension,
-                    formula,
                     number_format,
                     additional_properties,
                     _unparsed,
@@ -144,6 +143,6 @@ impl<'de> Deserialize<'de> for HostMapWidgetFormula {
             }
         }
 
-        deserializer.deserialize_any(HostMapWidgetFormulaVisitor)
+        deserializer.deserialize_any(HostMapWidgetProjectionDimensionMappingVisitor)
     }
 }

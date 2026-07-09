@@ -6,27 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum HostMapWidgetDimension {
-    NODE,
-    FILL,
-    SIZE,
-    GROUP,
+pub enum DatasetListQueryDataSourceType {
+    DATASET,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for HostMapWidgetDimension {
+impl ToString for DatasetListQueryDataSourceType {
     fn to_string(&self) -> String {
         match self {
-            Self::NODE => String::from("node"),
-            Self::FILL => String::from("fill"),
-            Self::SIZE => String::from("size"),
-            Self::GROUP => String::from("group"),
+            Self::DATASET => String::from("dataset"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for HostMapWidgetDimension {
+impl Serialize for DatasetListQueryDataSourceType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -38,17 +32,14 @@ impl Serialize for HostMapWidgetDimension {
     }
 }
 
-impl<'de> Deserialize<'de> for HostMapWidgetDimension {
+impl<'de> Deserialize<'de> for DatasetListQueryDataSourceType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "node" => Self::NODE,
-            "fill" => Self::FILL,
-            "size" => Self::SIZE,
-            "group" => Self::GROUP,
+            "dataset" => Self::DATASET,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
