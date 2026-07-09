@@ -17,8 +17,11 @@ async fn main() {
                 "siem-test.com".to_string(),
                 SecurityMonitoringIntegrationType::GOOGLE_WORKSPACE,
                 "My GWS Integration".to_string(),
-                BTreeMap::from([("admin_email".to_string(), Value::from("test@example.com"))]),
             )
+            .secrets(BTreeMap::from([(
+                "admin_email".to_string(),
+                Value::from("test@example.com"),
+            )]))
             .settings(BTreeMap::from([(
                 "setting1".to_string(),
                 Value::from("value1"),

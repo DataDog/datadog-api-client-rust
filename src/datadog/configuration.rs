@@ -291,6 +291,7 @@ impl Default for Configuration {
             ("v2.get_aws_cloud_auth_persona_mapping".to_owned(), false),
             ("v2.list_aws_cloud_auth_persona_mappings".to_owned(), false),
             ("v2.activate_content_pack".to_owned(), false),
+            ("v2.activate_integration".to_owned(), false),
             ("v2.attach_linear_issue".to_owned(), false),
             (
                 "v2.batch_get_security_monitoring_dataset_dependencies".to_owned(),
@@ -339,6 +340,7 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.deactivate_content_pack".to_owned(), false),
+            ("v2.deactivate_integration".to_owned(), false),
             ("v2.delete_historical_job".to_owned(), false),
             (
                 "v2.delete_sample_log_generation_subscription".to_owned(),
@@ -367,6 +369,7 @@ impl Default for Configuration {
             ),
             ("v2.get_content_packs_states".to_owned(), false),
             ("v2.get_entity_context".to_owned(), false),
+            ("v2.get_entra_id_azure_app_registrations".to_owned(), false),
             ("v2.get_finding".to_owned(), false),
             ("v2.get_historical_job".to_owned(), false),
             ("v2.get_indicator_of_compromise".to_owned(), false),
