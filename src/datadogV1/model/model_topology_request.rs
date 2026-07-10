@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TopologyRequest {
-    /// Query to service-based topology data sources like the service map or data streams.
+    /// A topology data source query.
     #[serde(rename = "query")]
     pub query: Option<crate::datadogV1::model::TopologyQuery>,
     /// Widget request type.
@@ -91,6 +91,16 @@ impl<'de> Deserialize<'de> for TopologyRequest {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _query) = query {
+                                match _query {
+                                    crate::datadogV1::model::TopologyQuery::UnparsedObject(
+                                        _query,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         "request_type" => {
                             if v.is_null() {
