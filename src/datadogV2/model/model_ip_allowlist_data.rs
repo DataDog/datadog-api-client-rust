@@ -14,7 +14,7 @@ pub struct IPAllowlistData {
     /// Attributes of the IP allowlist.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::IPAllowlistAttributes>,
-    /// The unique identifier of the org.
+    /// The unique identifier of the organization.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// IP allowlist type.
