@@ -58,6 +58,9 @@ pub struct SyntheticsTestOptions {
     /// Ignore server certificate error for browser tests.
     #[serde(rename = "ignoreServerCertificateError")]
     pub ignore_server_certificate_error: Option<bool>,
+    /// For SSL tests, whether or not the test should ignore certificate validation.
+    #[serde(rename = "ignore_certificate_validation")]
+    pub ignore_certificate_validation: Option<bool>,
     /// Timeout before declaring the initial step as failed (in seconds) for browser tests.
     #[serde(rename = "initialNavigationTimeout")]
     pub initial_navigation_timeout: Option<i64>,
@@ -133,6 +136,7 @@ impl SyntheticsTestOptions {
             follow_redirects: None,
             http_version: None,
             ignore_server_certificate_error: None,
+            ignore_certificate_validation: None,
             initial_navigation_timeout: None,
             min_failure_duration: None,
             min_location_failed: None,
@@ -240,6 +244,12 @@ impl SyntheticsTestOptions {
     #[allow(deprecated)]
     pub fn ignore_server_certificate_error(mut self, value: bool) -> Self {
         self.ignore_server_certificate_error = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn ignore_certificate_validation(mut self, value: bool) -> Self {
+        self.ignore_certificate_validation = Some(value);
         self
     }
 
@@ -373,6 +383,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                     crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
                 > = None;
                 let mut ignore_server_certificate_error: Option<bool> = None;
+                let mut ignore_certificate_validation: Option<bool> = None;
                 let mut initial_navigation_timeout: Option<i64> = None;
                 let mut min_failure_duration: Option<i64> = None;
                 let mut min_location_failed: Option<i64> = None;
@@ -510,6 +521,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                             ignore_server_certificate_error =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "ignore_certificate_validation" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ignore_certificate_validation =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "initialNavigationTimeout" => {
                             if v.is_null() {
                                 continue;
@@ -616,6 +634,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                     follow_redirects,
                     http_version,
                     ignore_server_certificate_error,
+                    ignore_certificate_validation,
                     initial_navigation_timeout,
                     min_failure_duration,
                     min_location_failed,

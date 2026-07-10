@@ -43,6 +43,7 @@ async fn main() {
             .accept_self_signed(true)
             .check_certificate_revocation(true)
             .disable_aia_intermediate_fetching(true)
+            .ignore_certificate_validation(true)
             .tick_every(60),
         SyntheticsAPITestType::API,
     )
