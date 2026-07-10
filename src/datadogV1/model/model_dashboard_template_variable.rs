@@ -18,6 +18,13 @@ pub struct DashboardTemplateVariable {
         with = "::serde_with::rust::double_option"
     )]
     pub available_values: Option<Option<Vec<String>>>,
+    /// A query that dynamically computes the list of values available for this template variable.
+    #[serde(rename = "available_values_query")]
+    pub available_values_query:
+        Option<crate::datadogV1::model::DashboardTemplateVariableAvailableValuesQuery>,
+    /// A mapping from data source type to the variable value to use for that data source.
+    #[serde(rename = "data_source_mappings")]
+    pub data_source_mappings: Option<std::collections::BTreeMap<String, String>>,
     /// (deprecated) The default value for the template variable on dashboard load. Cannot be used in conjunction with `defaults`.
     #[deprecated]
     #[serde(
@@ -50,6 +57,8 @@ impl DashboardTemplateVariable {
         #[allow(deprecated)]
         DashboardTemplateVariable {
             available_values: None,
+            available_values_query: None,
+            data_source_mappings: None,
             default: None,
             defaults: None,
             name,
@@ -63,6 +72,24 @@ impl DashboardTemplateVariable {
     #[allow(deprecated)]
     pub fn available_values(mut self, value: Option<Vec<String>>) -> Self {
         self.available_values = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn available_values_query(
+        mut self,
+        value: crate::datadogV1::model::DashboardTemplateVariableAvailableValuesQuery,
+    ) -> Self {
+        self.available_values_query = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn data_source_mappings(
+        mut self,
+        value: std::collections::BTreeMap<String, String>,
+    ) -> Self {
+        self.data_source_mappings = Some(value);
         self
     }
 
@@ -117,6 +144,11 @@ impl<'de> Deserialize<'de> for DashboardTemplateVariable {
                 M: MapAccess<'a>,
             {
                 let mut available_values: Option<Option<Vec<String>>> = None;
+                let mut available_values_query: Option<
+                    crate::datadogV1::model::DashboardTemplateVariableAvailableValuesQuery,
+                > = None;
+                let mut data_source_mappings: Option<std::collections::BTreeMap<String, String>> =
+                    None;
                 let mut default: Option<Option<String>> = None;
                 let mut defaults: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
@@ -132,6 +164,28 @@ impl<'de> Deserialize<'de> for DashboardTemplateVariable {
                     match k.as_str() {
                         "available_values" => {
                             available_values =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "available_values_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            available_values_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _available_values_query) = available_values_query {
+                                match _available_values_query {
+                                    crate::datadogV1::model::DashboardTemplateVariableAvailableValuesQuery::UnparsedObject(_available_values_query) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "data_source_mappings" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_source_mappings =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "default" => {
@@ -164,6 +218,8 @@ impl<'de> Deserialize<'de> for DashboardTemplateVariable {
                 #[allow(deprecated)]
                 let content = DashboardTemplateVariable {
                     available_values,
+                    available_values_query,
+                    data_source_mappings,
                     default,
                     defaults,
                     name,
