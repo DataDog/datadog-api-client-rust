@@ -23,6 +23,9 @@ pub struct SecurityMonitoringCriticalAssetAttributes {
     /// A description of the critical asset.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// Whether the critical asset is editable.
+    #[serde(rename = "editable")]
+    pub editable: Option<bool>,
     /// Whether the critical asset is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
@@ -64,6 +67,7 @@ impl SecurityMonitoringCriticalAssetAttributes {
             creation_date: None,
             creator: None,
             description: None,
+            editable: None,
             enabled: None,
             query: None,
             rule_query: None,
@@ -95,6 +99,11 @@ impl SecurityMonitoringCriticalAssetAttributes {
 
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    pub fn editable(mut self, value: bool) -> Self {
+        self.editable = Some(value);
         self
     }
 
@@ -182,6 +191,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringCriticalAssetAttributes {
                 let mut creation_date: Option<i64> = None;
                 let mut creator: Option<crate::datadogV2::model::SecurityMonitoringUser> = None;
                 let mut description: Option<String> = None;
+                let mut editable: Option<bool> = None;
                 let mut enabled: Option<bool> = None;
                 let mut query: Option<String> = None;
                 let mut rule_query: Option<String> = None;
@@ -227,6 +237,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringCriticalAssetAttributes {
                             }
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "editable" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            editable = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "enabled" => {
                             if v.is_null() {
@@ -305,6 +321,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringCriticalAssetAttributes {
                     creation_date,
                     creator,
                     description,
+                    editable,
                     enabled,
                     query,
                     rule_query,
