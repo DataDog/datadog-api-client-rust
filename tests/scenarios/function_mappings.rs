@@ -219,6 +219,7 @@ pub struct ApiInstances {
         Option<datadogV2::api_reporting_and_sharing::ReportingAndSharingAPI>,
     pub v2_api_spa: Option<datadogV2::api_spa::SpaAPI>,
     pub v2_api_spans: Option<datadogV2::api_spans::SpansAPI>,
+    pub v2_api_specs: Option<datadogV2::api_specs::SpecsAPI>,
     pub v2_api_static_analysis: Option<datadogV2::api_static_analysis::StaticAnalysisAPI>,
     pub v2_api_status_pages: Option<datadogV2::api_status_pages::StatusPagesAPI>,
     pub v2_api_stegadography: Option<datadogV2::api_stegadography::StegadographyAPI>,
@@ -1393,6 +1394,13 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Spans" => {
             world.api_instances.v2_api_spans =
                 Some(datadogV2::api_spans::SpansAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ));
+        }
+        "Specs" => {
+            world.api_instances.v2_api_specs =
+                Some(datadogV2::api_specs::SpecsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
@@ -7105,6 +7113,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListSpansWithPagination".into(),
         test_v2_list_spans_with_pagination,
     );
+    world
+        .function_mappings
+        .insert("v2.ListSpecs".into(), test_v2_list_specs);
     world
         .function_mappings
         .insert("v2.CreateSCAResult".into(), test_v2_create_sca_result);
@@ -56200,6 +56211,30 @@ fn test_v2_list_spans_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_list_specs(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_specs
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_specs_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_create_sca_result(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
