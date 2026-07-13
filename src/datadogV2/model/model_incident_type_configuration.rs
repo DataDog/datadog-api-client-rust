@@ -20,9 +20,6 @@ pub struct IncidentTypeConfiguration {
     /// An optional message shown to users when they declare an incident of this type.
     #[serde(rename = "create_message")]
     pub create_message: Option<String>,
-    /// Whether the out-of-the-box postmortem template is disabled for incidents of this type.
-    #[serde(rename = "disable_out_of_the_box_postmortem_template")]
-    pub disable_out_of_the_box_postmortem_template: Option<bool>,
     /// Whether responders can edit incident timestamps for incidents of this type.
     #[serde(rename = "editable_timestamps")]
     pub editable_timestamps: Option<bool>,
@@ -51,7 +48,6 @@ impl IncidentTypeConfiguration {
             allow_incident_deletion: None,
             allow_workflows: None,
             create_message: None,
-            disable_out_of_the_box_postmortem_template: None,
             editable_timestamps: None,
             private_incidents: None,
             private_incidents_by_default: None,
@@ -74,11 +70,6 @@ impl IncidentTypeConfiguration {
 
     pub fn create_message(mut self, value: String) -> Self {
         self.create_message = Some(value);
-        self
-    }
-
-    pub fn disable_out_of_the_box_postmortem_template(mut self, value: bool) -> Self {
-        self.disable_out_of_the_box_postmortem_template = Some(value);
         self
     }
 
@@ -142,7 +133,6 @@ impl<'de> Deserialize<'de> for IncidentTypeConfiguration {
                 let mut allow_incident_deletion: Option<bool> = None;
                 let mut allow_workflows: Option<bool> = None;
                 let mut create_message: Option<String> = None;
-                let mut disable_out_of_the_box_postmortem_template: Option<bool> = None;
                 let mut editable_timestamps: Option<bool> = None;
                 let mut private_incidents: Option<bool> = None;
                 let mut private_incidents_by_default: Option<bool> = None;
@@ -175,13 +165,6 @@ impl<'de> Deserialize<'de> for IncidentTypeConfiguration {
                                 continue;
                             }
                             create_message =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "disable_out_of_the_box_postmortem_template" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            disable_out_of_the_box_postmortem_template =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "editable_timestamps" => {
@@ -239,7 +222,6 @@ impl<'de> Deserialize<'de> for IncidentTypeConfiguration {
                     allow_incident_deletion,
                     allow_workflows,
                     create_message,
-                    disable_out_of_the_box_postmortem_template,
                     editable_timestamps,
                     private_incidents,
                     private_incidents_by_default,
