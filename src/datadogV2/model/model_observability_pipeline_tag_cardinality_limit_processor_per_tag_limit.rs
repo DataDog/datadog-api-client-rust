@@ -11,13 +11,14 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineTagCardinalityLimitProcessorPerTagLimit {
-    /// How the per-tag override is applied. `limit_override` enforces a custom limit on the tag; `excluded` skips the tag from cardinality tracking.
-    #[serde(rename = "mode")]
-    pub mode: crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerTagMode,
+    /// How the override is applied. `limit_override` enforces a custom limit; `excluded` omits the metric or tag from cardinality tracking.
+    #[serde(rename = "override_type")]
+    pub override_type:
+        crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorOverrideType,
     /// The tag key this override applies to.
     #[serde(rename = "tag_key")]
     pub tag_key: String,
-    /// The maximum number of distinct values allowed for this tag. Required when `mode` is `limit_override`. Must be omitted when `mode` is `excluded`.
+    /// The maximum number of distinct values allowed for this tag. Required when `override_type` is `limit_override`. Must be omitted when `override_type` is `excluded`.
     #[serde(rename = "value_limit")]
     pub value_limit: Option<i64>,
     #[serde(flatten)]
@@ -29,11 +30,11 @@ pub struct ObservabilityPipelineTagCardinalityLimitProcessorPerTagLimit {
 
 impl ObservabilityPipelineTagCardinalityLimitProcessorPerTagLimit {
     pub fn new(
-        mode: crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerTagMode,
+        override_type: crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorOverrideType,
         tag_key: String,
     ) -> ObservabilityPipelineTagCardinalityLimitProcessorPerTagLimit {
         ObservabilityPipelineTagCardinalityLimitProcessorPerTagLimit {
-            mode,
+            override_type,
             tag_key,
             value_limit: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -72,7 +73,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTagCardinalityLimitProcessor
             where
                 M: MapAccess<'a>,
             {
-                let mut mode: Option<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerTagMode> = None;
+                let mut override_type: Option<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorOverrideType> = None;
                 let mut tag_key: Option<String> = None;
                 let mut value_limit: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -83,11 +84,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTagCardinalityLimitProcessor
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "mode" => {
-                            mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _mode) = mode {
-                                match _mode {
-                                    crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerTagMode::UnparsedObject(_mode) => {
+                        "override_type" => {
+                            override_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _override_type) = override_type {
+                                match _override_type {
+                                    crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorOverrideType::UnparsedObject(_override_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -111,11 +113,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTagCardinalityLimitProcessor
                         }
                     }
                 }
-                let mode = mode.ok_or_else(|| M::Error::missing_field("mode"))?;
+                let override_type =
+                    override_type.ok_or_else(|| M::Error::missing_field("override_type"))?;
                 let tag_key = tag_key.ok_or_else(|| M::Error::missing_field("tag_key"))?;
 
                 let content = ObservabilityPipelineTagCardinalityLimitProcessorPerTagLimit {
-                    mode,
+                    override_type,
                     tag_key,
                     value_limit,
                     additional_properties,
