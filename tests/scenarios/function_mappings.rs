@@ -5196,6 +5196,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.CreateAWSAccountCCMConfig".into(),
         test_v2_create_aws_account_ccm_config,
     );
+    world.function_mappings.insert(
+        "v2.GetAWSMetricNameFilterPreview".into(),
+        test_v2_get_aws_metric_name_filter_preview,
+    );
+    world.function_mappings.insert(
+        "v2.PreviewAWSMetricNameFilter".into(),
+        test_v2_preview_aws_metric_name_filter,
+    );
     world
         .function_mappings
         .insert("v2.ListAWSNamespaces".into(), test_v2_list_aws_namespaces);
@@ -40001,6 +40009,69 @@ fn test_v2_create_aws_account_ccm_config(
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(
         api.create_aws_account_ccm_config_with_http_info(aws_account_config_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_aws_metric_name_filter_preview(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_integration
+        .as_ref()
+        .expect("api instance not found");
+    let aws_account_config_id =
+        serde_json::from_value(_parameters.get("aws_account_config_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_aws_metric_name_filter_preview_with_http_info(aws_account_config_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_preview_aws_metric_name_filter(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_aws_integration
+        .as_ref()
+        .expect("api instance not found");
+    let aws_account_config_id =
+        serde_json::from_value(_parameters.get("aws_account_config_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.preview_aws_metric_name_filter_with_http_info(aws_account_config_id, body),
     ) {
         Ok(response) => response,
         Err(error) => {
