@@ -11,6 +11,7 @@ pub enum WidgetTime {
     WidgetLegacyLiveSpan(Box<crate::datadogV1::model::WidgetLegacyLiveSpan>),
     WidgetNewLiveSpan(Box<crate::datadogV1::model::WidgetNewLiveSpan>),
     WidgetNewFixedSpan(Box<crate::datadogV1::model::WidgetNewFixedSpan>),
+    WidgetCalendarAlignedSpan(Box<crate::datadogV1::model::WidgetCalendarAlignedSpan>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -39,6 +40,14 @@ impl<'de> Deserialize<'de> for WidgetTime {
         ) {
             if !_v._unparsed {
                 return Ok(WidgetTime::WidgetNewFixedSpan(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::WidgetCalendarAlignedSpan>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(WidgetTime::WidgetCalendarAlignedSpan(_v));
             }
         }
 
