@@ -23,6 +23,10 @@ pub struct AWSMetricsConfig {
     /// Enable AWS metrics collection. Defaults to `true`.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
+    /// AWS CloudWatch metric name filters. Each filter applies to a single namespace.
+    /// Exactly one of `include_only` or `exclude_only` must be set on each filter.
+    #[serde(rename = "metric_name_filters")]
+    pub metric_name_filters: Option<Vec<crate::datadogV2::model::AWSMetricNameFilters>>,
     /// AWS Metrics namespace filters. Defaults to `exclude_only`.
     #[serde(rename = "namespace_filters")]
     pub namespace_filters: Option<crate::datadogV2::model::AWSNamespaceFilters>,
@@ -43,6 +47,7 @@ impl AWSMetricsConfig {
             collect_cloudwatch_alarms: None,
             collect_custom_metrics: None,
             enabled: None,
+            metric_name_filters: None,
             namespace_filters: None,
             tag_filters: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -67,6 +72,14 @@ impl AWSMetricsConfig {
 
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
+        self
+    }
+
+    pub fn metric_name_filters(
+        mut self,
+        value: Vec<crate::datadogV2::model::AWSMetricNameFilters>,
+    ) -> Self {
+        self.metric_name_filters = Some(value);
         self
     }
 
@@ -122,6 +135,9 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                 let mut collect_cloudwatch_alarms: Option<bool> = None;
                 let mut collect_custom_metrics: Option<bool> = None;
                 let mut enabled: Option<bool> = None;
+                let mut metric_name_filters: Option<
+                    Vec<crate::datadogV2::model::AWSMetricNameFilters>,
+                > = None;
                 let mut namespace_filters: Option<crate::datadogV2::model::AWSNamespaceFilters> =
                     None;
                 let mut tag_filters: Option<Vec<crate::datadogV2::model::AWSNamespaceTagFilter>> =
@@ -161,6 +177,13 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "metric_name_filters" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            metric_name_filters =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "namespace_filters" => {
                             if v.is_null() {
                                 continue;
@@ -196,6 +219,7 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                     collect_cloudwatch_alarms,
                     collect_custom_metrics,
                     enabled,
+                    metric_name_filters,
                     namespace_filters,
                     tag_filters,
                     additional_properties,
