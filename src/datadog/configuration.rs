@@ -506,6 +506,7 @@ impl Default for Configuration {
             ),
             ("v2.get_cost_anomaly".to_owned(), false),
             ("v2.get_cost_tag_metadata_currency".to_owned(), false),
+            ("v2.get_custom_forecast".to_owned(), false),
             ("v2.list_cost_anomalies".to_owned(), false),
             ("v2.list_cost_tag_key_sources".to_owned(), false),
             ("v2.list_cost_tag_metadata".to_owned(), false),
