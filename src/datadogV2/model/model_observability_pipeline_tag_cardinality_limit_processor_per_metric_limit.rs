@@ -18,16 +18,16 @@ pub struct ObservabilityPipelineTagCardinalityLimitProcessorPerMetricLimit {
     /// The name of the metric this override applies to.
     #[serde(rename = "metric_name")]
     pub metric_name: String,
-    /// How the per-metric override is applied. `tracked` enforces a custom limit; `excluded` skips the metric entirely.
-    #[serde(rename = "mode")]
-    pub mode:
-        crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerMetricMode,
-    /// A list of per-tag cardinality overrides that apply within this metric. Must be omitted when `mode` is `excluded`.
+    /// How the override is applied. `limit_override` enforces a custom limit; `excluded` omits the metric or tag from cardinality tracking.
+    #[serde(rename = "override_type")]
+    pub override_type:
+        crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorOverrideType,
+    /// A list of per-tag cardinality overrides that apply within this metric. Must be omitted when `override_type` is `excluded`.
     #[serde(rename = "per_tag_limits")]
     pub per_tag_limits: Option<
         Vec<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerTagLimit>,
     >,
-    /// The maximum number of distinct tag value combinations allowed for this metric. Required when `mode` is `tracked`. Must be omitted when `mode` is `excluded`.
+    /// The maximum number of distinct tag value combinations allowed for this metric. Required when `override_type` is `limit_override`. Must be omitted when `override_type` is `excluded`.
     #[serde(rename = "value_limit")]
     pub value_limit: Option<i64>,
     #[serde(flatten)]
@@ -40,12 +40,12 @@ pub struct ObservabilityPipelineTagCardinalityLimitProcessorPerMetricLimit {
 impl ObservabilityPipelineTagCardinalityLimitProcessorPerMetricLimit {
     pub fn new(
         metric_name: String,
-        mode: crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerMetricMode,
+        override_type: crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorOverrideType,
     ) -> ObservabilityPipelineTagCardinalityLimitProcessorPerMetricLimit {
         ObservabilityPipelineTagCardinalityLimitProcessorPerMetricLimit {
             limit_exceeded_action: None,
             metric_name,
-            mode,
+            override_type,
             per_tag_limits: None,
             value_limit: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -104,7 +104,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTagCardinalityLimitProcessor
             {
                 let mut limit_exceeded_action: Option<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorAction> = None;
                 let mut metric_name: Option<String> = None;
-                let mut mode: Option<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerMetricMode> = None;
+                let mut override_type: Option<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorOverrideType> = None;
                 let mut per_tag_limits: Option<Vec<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerTagLimit>> = None;
                 let mut value_limit: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -134,11 +134,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTagCardinalityLimitProcessor
                             metric_name =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "mode" => {
-                            mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _mode) = mode {
-                                match _mode {
-                                    crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerMetricMode::UnparsedObject(_mode) => {
+                        "override_type" => {
+                            override_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _override_type) = override_type {
+                                match _override_type {
+                                    crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorOverrideType::UnparsedObject(_override_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -168,12 +169,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTagCardinalityLimitProcessor
                 }
                 let metric_name =
                     metric_name.ok_or_else(|| M::Error::missing_field("metric_name"))?;
-                let mode = mode.ok_or_else(|| M::Error::missing_field("mode"))?;
+                let override_type =
+                    override_type.ok_or_else(|| M::Error::missing_field("override_type"))?;
 
                 let content = ObservabilityPipelineTagCardinalityLimitProcessorPerMetricLimit {
                     limit_exceeded_action,
                     metric_name,
-                    mode,
+                    override_type,
                     per_tag_limits,
                     value_limit,
                     additional_properties,

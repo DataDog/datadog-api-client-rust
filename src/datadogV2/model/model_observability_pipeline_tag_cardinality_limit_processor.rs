@@ -31,6 +31,9 @@ pub struct ObservabilityPipelineTagCardinalityLimitProcessor {
     /// A list of per-metric cardinality overrides that take precedence over the default `value_limit`.
     #[serde(rename = "per_metric_limits")]
     pub per_metric_limits: Option<Vec<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerMetricLimit>>,
+    /// Controls whether the processor uses exact or probabilistic tag tracking.
+    #[serde(rename = "tracking_mode")]
+    pub tracking_mode: crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorTrackingMode,
     /// The processor type. The value must be `tag_cardinality_limit`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorType,
@@ -50,6 +53,7 @@ impl ObservabilityPipelineTagCardinalityLimitProcessor {
         id: String,
         include: String,
         limit_exceeded_action: crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorAction,
+        tracking_mode: crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorTrackingMode,
         type_: crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorType,
         value_limit: i64,
     ) -> ObservabilityPipelineTagCardinalityLimitProcessor {
@@ -60,6 +64,7 @@ impl ObservabilityPipelineTagCardinalityLimitProcessor {
             include,
             limit_exceeded_action,
             per_metric_limits: None,
+            tracking_mode,
             type_,
             value_limit,
             additional_properties: std::collections::BTreeMap::new(),
@@ -112,6 +117,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTagCardinalityLimitProcessor
                 let mut include: Option<String> = None;
                 let mut limit_exceeded_action: Option<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorAction> = None;
                 let mut per_metric_limits: Option<Vec<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorPerMetricLimit>> = None;
+                let mut tracking_mode: Option<crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorTrackingMode> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineTagCardinalityLimitProcessorType,
                 > = None;
@@ -159,6 +165,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTagCardinalityLimitProcessor
                             per_metric_limits =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tracking_mode" => {
+                            tracking_mode =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -186,6 +196,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTagCardinalityLimitProcessor
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
                 let limit_exceeded_action = limit_exceeded_action
                     .ok_or_else(|| M::Error::missing_field("limit_exceeded_action"))?;
+                let tracking_mode =
+                    tracking_mode.ok_or_else(|| M::Error::missing_field("tracking_mode"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
                 let value_limit =
                     value_limit.ok_or_else(|| M::Error::missing_field("value_limit"))?;
@@ -197,6 +209,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineTagCardinalityLimitProcessor
                     include,
                     limit_exceeded_action,
                     per_metric_limits,
+                    tracking_mode,
                     type_,
                     value_limit,
                     additional_properties,
