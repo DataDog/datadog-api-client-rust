@@ -230,6 +230,8 @@ pub struct ListDegradationsOptionalParams {
     pub include: Option<String>,
     /// Optional degradation status filter. Supported values: investigating, identified, monitoring, resolved.
     pub filter_status: Option<String>,
+    /// Optional source ID filter. Returns only degradations whose source matches this ID (e.g. an incident ID).
+    pub filter_source_id: Option<String>,
     /// Sort order. Prefix with '-' for descending. Supported values: created_at, -created_at, modified_at, -modified_at.
     pub sort: Option<String>,
 }
@@ -258,6 +260,11 @@ impl ListDegradationsOptionalParams {
     /// Optional degradation status filter. Supported values: investigating, identified, monitoring, resolved.
     pub fn filter_status(mut self, value: String) -> Self {
         self.filter_status = Some(value);
+        self
+    }
+    /// Optional source ID filter. Returns only degradations whose source matches this ID (e.g. an incident ID).
+    pub fn filter_source_id(mut self, value: String) -> Self {
+        self.filter_source_id = Some(value);
         self
     }
     /// Sort order. Prefix with '-' for descending. Supported values: created_at, -created_at, modified_at, -modified_at.
@@ -2776,7 +2783,7 @@ impl StatusPagesAPI {
         }
     }
 
-    /// Lists all degradations for the organization. Optionally filter by status and page.
+    /// Lists all degradations for the organization. Optionally filter by status, page, and source ID.
     pub async fn list_degradations(
         &self,
         params: ListDegradationsOptionalParams,
@@ -2796,7 +2803,7 @@ impl StatusPagesAPI {
         }
     }
 
-    /// Lists all degradations for the organization. Optionally filter by status and page.
+    /// Lists all degradations for the organization. Optionally filter by status, page, and source ID.
     pub async fn list_degradations_with_http_info(
         &self,
         params: ListDegradationsOptionalParams,
@@ -2813,6 +2820,7 @@ impl StatusPagesAPI {
         let page_limit = params.page_limit;
         let include = params.include;
         let filter_status = params.filter_status;
+        let filter_source_id = params.filter_source_id;
         let sort = params.sort;
 
         let local_client = &self.client;
@@ -2843,6 +2851,10 @@ impl StatusPagesAPI {
         if let Some(ref local_query_param) = filter_status {
             local_req_builder =
                 local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_source_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[source_id]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = sort {
             local_req_builder =

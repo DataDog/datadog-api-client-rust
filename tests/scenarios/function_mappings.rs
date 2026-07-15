@@ -57720,6 +57720,9 @@ fn test_v2_list_degradations(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let filter_status = _parameters
         .get("filter[status]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_source_id = _parameters
+        .get("filter[source_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let sort = _parameters
         .get("sort")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -57729,6 +57732,7 @@ fn test_v2_list_degradations(world: &mut DatadogWorld, _parameters: &HashMap<Str
     params.page_limit = page_limit;
     params.include = include;
     params.filter_status = filter_status;
+    params.filter_source_id = filter_source_id;
     params.sort = sort;
     let response = match block_on(api.list_degradations_with_http_info(params)) {
         Ok(response) => response,
