@@ -90,6 +90,36 @@ impl GetOnCallTeamRoutingRulesOptionalParams {
     }
 }
 
+/// GetScheduleOnCallRespondersOptionalParams is a struct for passing parameters to the method [`OnCallAPI::get_schedule_on_call_responders`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetScheduleOnCallRespondersOptionalParams {
+    /// Comma-separated list of included relationships to be returned. Allowed values: `schedule`, `responders`, `responders.shifts`, `responders.shifts.user`.
+    pub include: Option<String>,
+    /// Comma-separated list of positions to retrieve. Allowed values: `previous`, `current`, `next`. Defaults to `current` if omitted.
+    pub filter_position: Option<String>,
+    /// Retrieves the on-call responders at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01Z` or `2025-05-07T02:53:01+00:00`). When using timezone offsets with `+` or `-`, ensure proper URL encoding (`+` should be encoded as `%2B`). Defaults to the current time if omitted.
+    pub filter_at_ts: Option<String>,
+}
+
+impl GetScheduleOnCallRespondersOptionalParams {
+    /// Comma-separated list of included relationships to be returned. Allowed values: `schedule`, `responders`, `responders.shifts`, `responders.shifts.user`.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+    /// Comma-separated list of positions to retrieve. Allowed values: `previous`, `current`, `next`. Defaults to `current` if omitted.
+    pub fn filter_position(mut self, value: String) -> Self {
+        self.filter_position = Some(value);
+        self
+    }
+    /// Retrieves the on-call responders at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01Z` or `2025-05-07T02:53:01+00:00`). When using timezone offsets with `+` or `-`, ensure proper URL encoding (`+` should be encoded as `%2B`). Defaults to the current time if omitted.
+    pub fn filter_at_ts(mut self, value: String) -> Self {
+        self.filter_at_ts = Some(value);
+        self
+    }
+}
+
 /// GetScheduleOnCallUserOptionalParams is a struct for passing parameters to the method [`OnCallAPI::get_schedule_on_call_user`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -309,6 +339,14 @@ pub enum GetOnCallScheduleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOnCallTeamRoutingRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetScheduleOnCallRespondersError is a struct for typed errors of method [`OnCallAPI::get_schedule_on_call_responders`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetScheduleOnCallRespondersError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1851,7 +1889,139 @@ impl OnCallAPI {
         }
     }
 
-    /// Retrieves the user who is on-call for the specified schedule at a given time.
+    /// Retrieves the on-call responders for the specified schedule, grouped by position (previous, current, next), at a given time. Supports schedules with multiple concurrent on-call responders at a position, by returning a list of shifts per position.
+    pub async fn get_schedule_on_call_responders(
+        &self,
+        schedule_id: String,
+        params: GetScheduleOnCallRespondersOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::ScheduleOnCallResponders,
+        datadog::Error<GetScheduleOnCallRespondersError>,
+    > {
+        match self
+            .get_schedule_on_call_responders_with_http_info(schedule_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieves the on-call responders for the specified schedule, grouped by position (previous, current, next), at a given time. Supports schedules with multiple concurrent on-call responders at a position, by returning a list of shifts per position.
+    pub async fn get_schedule_on_call_responders_with_http_info(
+        &self,
+        schedule_id: String,
+        params: GetScheduleOnCallRespondersOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::ScheduleOnCallResponders>,
+        datadog::Error<GetScheduleOnCallRespondersError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_schedule_on_call_responders";
+
+        // unbox and build optional parameters
+        let include = params.include;
+        let filter_position = params.filter_position;
+        let filter_at_ts = params.filter_at_ts;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/on-call/schedules/{schedule_id}/responders",
+            local_configuration.get_operation_host(operation_id),
+            schedule_id = datadog::urlencode(schedule_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_position {
+            local_req_builder =
+                local_req_builder.query(&[("filter[position]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_at_ts {
+            local_req_builder =
+                local_req_builder.query(&[("filter[at_ts]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::ScheduleOnCallResponders>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetScheduleOnCallRespondersError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieves the user who is on-call for the specified schedule at a given time. This endpoint does not support schedules with multiple concurrent on-call responders at a position. Deprecated. Use `Get on-call responders for a schedule` instead.
     pub async fn get_schedule_on_call_user(
         &self,
         schedule_id: String,
@@ -1874,7 +2044,7 @@ impl OnCallAPI {
         }
     }
 
-    /// Retrieves the user who is on-call for the specified schedule at a given time.
+    /// Retrieves the user who is on-call for the specified schedule at a given time. This endpoint does not support schedules with multiple concurrent on-call responders at a position. Deprecated. Use `Get on-call responders for a schedule` instead.
     pub async fn get_schedule_on_call_user_with_http_info(
         &self,
         schedule_id: String,

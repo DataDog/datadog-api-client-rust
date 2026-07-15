@@ -6176,6 +6176,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_schedule_on_call_user,
     );
     world.function_mappings.insert(
+        "v2.GetScheduleOnCallResponders".into(),
+        test_v2_get_schedule_on_call_responders,
+    );
+    world.function_mappings.insert(
         "v2.GetTeamOnCallUsers".into(),
         test_v2_get_team_on_call_users,
     );
@@ -47871,6 +47875,49 @@ fn test_v2_get_schedule_on_call_user(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_schedule_on_call_responders(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_id =
+        serde_json::from_value(_parameters.get("schedule_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_position = _parameters
+        .get("filter[position]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_at_ts = _parameters
+        .get("filter[at_ts]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::GetScheduleOnCallRespondersOptionalParams::default();
+    params.include = include;
+    params.filter_position = filter_position;
+    params.filter_at_ts = filter_at_ts;
+    let response =
+        match block_on(api.get_schedule_on_call_responders_with_http_info(schedule_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
