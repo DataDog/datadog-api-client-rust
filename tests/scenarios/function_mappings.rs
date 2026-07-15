@@ -4132,6 +4132,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListContainersWithPagination".into(),
         test_v2_list_containers_with_pagination,
     );
+    world.function_mappings.insert(
+        "v2.GetCostAccountFilters".into(),
+        test_v2_get_cost_account_filters,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateCostAccountFilters".into(),
+        test_v2_update_cost_account_filters,
+    );
     world
         .function_mappings
         .insert("v2.ListCostAnomalies".into(), test_v2_list_cost_anomalies);
@@ -30923,6 +30931,66 @@ fn test_v2_list_containers_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_get_cost_account_filters(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let cloud_account_id =
+        serde_json::from_value(_parameters.get("cloud_account_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_cost_account_filters_with_http_info(cloud_account_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_cost_account_filters(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_cost_management
+        .as_ref()
+        .expect("api instance not found");
+    let cloud_account_id =
+        serde_json::from_value(_parameters.get("cloud_account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_cost_account_filters_with_http_info(cloud_account_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_list_cost_anomalies(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
