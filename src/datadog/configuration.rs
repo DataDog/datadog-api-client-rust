@@ -728,6 +728,7 @@ impl Default for Configuration {
             ("v2.list_org_group_policies".to_owned(), false),
             ("v2.list_org_group_policy_configs".to_owned(), false),
             ("v2.list_org_group_policy_overrides".to_owned(), false),
+            ("v2.list_org_group_policy_suggestions".to_owned(), false),
             ("v2.list_org_groups".to_owned(), false),
             ("v2.update_org_group".to_owned(), false),
             ("v2.update_org_group_membership".to_owned(), false),

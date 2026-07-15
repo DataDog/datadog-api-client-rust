@@ -6382,6 +6382,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateOrgGroupPolicyOverride".into(),
         test_v2_update_org_group_policy_override,
     );
+    world.function_mappings.insert(
+        "v2.ListOrgGroupPolicySuggestions".into(),
+        test_v2_list_org_group_policy_suggestions,
+    );
     world
         .function_mappings
         .insert("v2.ListOrgGroups".into(), test_v2_list_org_groups);
@@ -49757,6 +49761,36 @@ fn test_v2_update_org_group_policy_override(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_org_group_policy_suggestions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_groups
+        .as_ref()
+        .expect("api instance not found");
+    let filter_org_group_id =
+        serde_json::from_value(_parameters.get("filter[org_group_id]").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.list_org_group_policy_suggestions_with_http_info(filter_org_group_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
