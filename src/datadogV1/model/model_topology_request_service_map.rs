@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request that will return nodes and edges to be used by topology map.
+/// Request that returns nodes and edges from the service map data source.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TopologyRequest {
-    /// Query to service-based topology data sources like the service map or data streams.
+pub struct TopologyRequestServiceMap {
+    /// Query to the service map topology data source.
     #[serde(rename = "query")]
-    pub query: Option<crate::datadogV1::model::TopologyQuery>,
+    pub query: Option<crate::datadogV1::model::TopologyQueryServiceMap>,
     /// Widget request type.
     #[serde(rename = "request_type")]
     pub request_type: Option<crate::datadogV1::model::TopologyRequestType>,
@@ -24,9 +24,9 @@ pub struct TopologyRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl TopologyRequest {
-    pub fn new() -> TopologyRequest {
-        TopologyRequest {
+impl TopologyRequestServiceMap {
+    pub fn new() -> TopologyRequestServiceMap {
+        TopologyRequestServiceMap {
             query: None,
             request_type: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -34,7 +34,7 @@ impl TopologyRequest {
         }
     }
 
-    pub fn query(mut self, value: crate::datadogV1::model::TopologyQuery) -> Self {
+    pub fn query(mut self, value: crate::datadogV1::model::TopologyQueryServiceMap) -> Self {
         self.query = Some(value);
         self
     }
@@ -53,20 +53,20 @@ impl TopologyRequest {
     }
 }
 
-impl Default for TopologyRequest {
+impl Default for TopologyRequestServiceMap {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for TopologyRequest {
+impl<'de> Deserialize<'de> for TopologyRequestServiceMap {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TopologyRequestVisitor;
-        impl<'a> Visitor<'a> for TopologyRequestVisitor {
-            type Value = TopologyRequest;
+        struct TopologyRequestServiceMapVisitor;
+        impl<'a> Visitor<'a> for TopologyRequestServiceMapVisitor {
+            type Value = TopologyRequestServiceMap;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,7 +76,7 @@ impl<'de> Deserialize<'de> for TopologyRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut query: Option<crate::datadogV1::model::TopologyQuery> = None;
+                let mut query: Option<crate::datadogV1::model::TopologyQueryServiceMap> = None;
                 let mut request_type: Option<crate::datadogV1::model::TopologyRequestType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -115,7 +115,7 @@ impl<'de> Deserialize<'de> for TopologyRequest {
                     }
                 }
 
-                let content = TopologyRequest {
+                let content = TopologyRequestServiceMap {
                     query,
                     request_type,
                     additional_properties,
@@ -126,6 +126,6 @@ impl<'de> Deserialize<'de> for TopologyRequest {
             }
         }
 
-        deserializer.deserialize_any(TopologyRequestVisitor)
+        deserializer.deserialize_any(TopologyRequestServiceMapVisitor)
     }
 }

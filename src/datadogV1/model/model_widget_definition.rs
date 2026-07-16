@@ -357,8 +357,9 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
             Box<crate::datadogV1::model::TopologyMapWidgetDefinition>,
         >(value.clone())
         {
-            if !_v._unparsed {
-                return Ok(WidgetDefinition::TopologyMapWidgetDefinition(_v));
+            match *_v {
+                crate::datadogV1::model::TopologyMapWidgetDefinition::UnparsedObject(_v) => {}
+                _ => return Ok(WidgetDefinition::TopologyMapWidgetDefinition(_v)),
             }
         }
         if let Ok(_v) = serde_json::from_value::<
