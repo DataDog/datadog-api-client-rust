@@ -58,7 +58,7 @@ pub struct SyntheticsTestOptions {
     /// Ignore server certificate error for browser tests.
     #[serde(rename = "ignoreServerCertificateError")]
     pub ignore_server_certificate_error: Option<bool>,
-    /// For SSL tests, whether or not the test should ignore certificate validation.
+    /// For SSL tests, whether the test should ignore certificate validation.
     #[serde(rename = "ignore_certificate_validation")]
     pub ignore_certificate_validation: Option<bool>,
     /// Timeout before declaring the initial step as failed (in seconds) for browser tests.
