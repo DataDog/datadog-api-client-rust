@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum ApplicationSecurityWafCustomRuleConditionInputAddress {
     SERVER_DB_STATEMENT,
     SERVER_IO_FS_FILE,
+    SERVER_IO_FS_FILE_WRITE,
     SERVER_IO_NET_URL,
     SERVER_SYS_SHELL_CMD,
     SERVER_REQUEST_METHOD,
@@ -22,6 +23,7 @@ pub enum ApplicationSecurityWafCustomRuleConditionInputAddress {
     SERVER_REQUEST_TRAILERS,
     SERVER_REQUEST_BODY,
     SERVER_REQUEST_BODY_FILENAMES,
+    SERVER_REQUEST_BODY_FILES_CONTENT,
     SERVER_RESPONSE_STATUS,
     SERVER_RESPONSE_HEADERS_NO_COOKIES,
     SERVER_RESPONSE_TRAILERS,
@@ -46,6 +48,7 @@ impl ToString for ApplicationSecurityWafCustomRuleConditionInputAddress {
         match self {
             Self::SERVER_DB_STATEMENT => String::from("server.db.statement"),
             Self::SERVER_IO_FS_FILE => String::from("server.io.fs.file"),
+            Self::SERVER_IO_FS_FILE_WRITE => String::from("server.io.fs.file_write"),
             Self::SERVER_IO_NET_URL => String::from("server.io.net.url"),
             Self::SERVER_SYS_SHELL_CMD => String::from("server.sys.shell.cmd"),
             Self::SERVER_REQUEST_METHOD => String::from("server.request.method"),
@@ -61,6 +64,9 @@ impl ToString for ApplicationSecurityWafCustomRuleConditionInputAddress {
             Self::SERVER_REQUEST_TRAILERS => String::from("server.request.trailers"),
             Self::SERVER_REQUEST_BODY => String::from("server.request.body"),
             Self::SERVER_REQUEST_BODY_FILENAMES => String::from("server.request.body.filenames"),
+            Self::SERVER_REQUEST_BODY_FILES_CONTENT => {
+                String::from("server.request.body.files_content")
+            }
             Self::SERVER_RESPONSE_STATUS => String::from("server.response.status"),
             Self::SERVER_RESPONSE_HEADERS_NO_COOKIES => {
                 String::from("server.response.headers.no_cookies")
@@ -105,6 +111,7 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafCustomRuleConditionInputAdd
         Ok(match s.as_str() {
             "server.db.statement" => Self::SERVER_DB_STATEMENT,
             "server.io.fs.file" => Self::SERVER_IO_FS_FILE,
+            "server.io.fs.file_write" => Self::SERVER_IO_FS_FILE_WRITE,
             "server.io.net.url" => Self::SERVER_IO_NET_URL,
             "server.sys.shell.cmd" => Self::SERVER_SYS_SHELL_CMD,
             "server.request.method" => Self::SERVER_REQUEST_METHOD,
@@ -118,6 +125,7 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafCustomRuleConditionInputAdd
             "server.request.trailers" => Self::SERVER_REQUEST_TRAILERS,
             "server.request.body" => Self::SERVER_REQUEST_BODY,
             "server.request.body.filenames" => Self::SERVER_REQUEST_BODY_FILENAMES,
+            "server.request.body.files_content" => Self::SERVER_REQUEST_BODY_FILES_CONTENT,
             "server.response.status" => Self::SERVER_RESPONSE_STATUS,
             "server.response.headers.no_cookies" => Self::SERVER_RESPONSE_HEADERS_NO_COOKIES,
             "server.response.trailers" => Self::SERVER_RESPONSE_TRAILERS,
