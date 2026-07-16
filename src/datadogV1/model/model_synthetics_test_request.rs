@@ -70,6 +70,9 @@ pub struct SyntheticsTestRequest {
     /// HTTP version to use for a Synthetic test.
     #[serde(rename = "httpVersion")]
     pub http_version: Option<crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion>,
+    /// For SSL tests, whether the test should ignore certificate validation.
+    #[serde(rename = "ignore_certificate_validation")]
+    pub ignore_certificate_validation: Option<bool>,
     /// Whether the message is base64 encoded.
     #[serde(rename = "isMessageBase64Encoded")]
     pub is_message_base64_encoded: Option<bool>,
@@ -155,6 +158,7 @@ impl SyntheticsTestRequest {
             headers: None,
             host: None,
             http_version: None,
+            ignore_certificate_validation: None,
             is_message_base64_encoded: None,
             mcp_protocol_version: None,
             message: None,
@@ -285,6 +289,11 @@ impl SyntheticsTestRequest {
         value: crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
     ) -> Self {
         self.http_version = Some(value);
+        self
+    }
+
+    pub fn ignore_certificate_validation(mut self, value: bool) -> Self {
+        self.ignore_certificate_validation = Some(value);
         self
     }
 
@@ -443,6 +452,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut http_version: Option<
                     crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
                 > = None;
+                let mut ignore_certificate_validation: Option<bool> = None;
                 let mut is_message_base64_encoded: Option<bool> = None;
                 let mut mcp_protocol_version: Option<
                     crate::datadogV1::model::SyntheticsMCPProtocolVersion,
@@ -636,6 +646,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                 }
                             }
                         }
+                        "ignore_certificate_validation" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ignore_certificate_validation =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "isMessageBase64Encoded" => {
                             if v.is_null() {
                                 continue;
@@ -794,6 +811,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                     headers,
                     host,
                     http_version,
+                    ignore_certificate_validation,
                     is_message_base64_encoded,
                     mcp_protocol_version,
                     message,
