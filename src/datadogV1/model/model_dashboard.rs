@@ -25,6 +25,9 @@ pub struct Dashboard {
     /// Creation date of the dashboard.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// The default timeframe applied when opening the dashboard. Set to `null` to clear the dashboard's default timeframe.
+    #[serde(rename = "default_timeframe")]
+    pub default_timeframe: Option<crate::datadogV1::model::DashboardDefaultTimeframeSetting>,
     /// Description of the dashboard.
     #[serde(
         rename = "description",
@@ -110,6 +113,7 @@ impl Dashboard {
             author_handle: None,
             author_name: None,
             created_at: None,
+            default_timeframe: None,
             description: None,
             id: None,
             is_read_only: None,
@@ -145,6 +149,15 @@ impl Dashboard {
     #[allow(deprecated)]
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn default_timeframe(
+        mut self,
+        value: crate::datadogV1::model::DashboardDefaultTimeframeSetting,
+    ) -> Self {
+        self.default_timeframe = Some(value);
         self
     }
 
@@ -255,6 +268,9 @@ impl<'de> Deserialize<'de> for Dashboard {
                 let mut author_handle: Option<String> = None;
                 let mut author_name: Option<Option<String>> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut default_timeframe: Option<
+                    crate::datadogV1::model::DashboardDefaultTimeframeSetting,
+                > = None;
                 let mut description: Option<Option<String>> = None;
                 let mut id: Option<String> = None;
                 let mut is_read_only: Option<bool> = None;
@@ -298,6 +314,21 @@ impl<'de> Deserialize<'de> for Dashboard {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "default_timeframe" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            default_timeframe =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _default_timeframe) = default_timeframe {
+                                match _default_timeframe {
+                                    crate::datadogV1::model::DashboardDefaultTimeframeSetting::UnparsedObject(_default_timeframe) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "description" => {
                             description =
@@ -404,6 +435,7 @@ impl<'de> Deserialize<'de> for Dashboard {
                     author_handle,
                     author_name,
                     created_at,
+                    default_timeframe,
                     description,
                     id,
                     is_read_only,
