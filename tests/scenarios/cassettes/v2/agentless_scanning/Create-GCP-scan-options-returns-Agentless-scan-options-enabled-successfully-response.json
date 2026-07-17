@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"vuln_containers_os\":true,\"vuln_host_os\":true},\"id\":\"new-project\",\"type\":\"gcp_scan_options\"}}",
+          "string": "{\"data\":{\"attributes\":{\"cloud_function\":true,\"vuln_containers_os\":true,\"vuln_host_os\":true},\"id\":\"new-project\",\"type\":\"gcp_scan_options\"}}",
           "encoding": null
         },
         "headers": {
@@ -19,7 +19,7 @@
       },
       "response": {
         "body": {
-          "string": "{\"data\":{\"id\":\"new-project\",\"type\":\"gcp_scan_options\",\"attributes\":{\"vuln_containers_os\":true,\"vuln_host_os\":true}}}",
+          "string": "{\"data\":{\"id\":\"new-project\",\"type\":\"gcp_scan_options\",\"attributes\":{\"cloud_function\":true,\"compliance_host\":false,\"vuln_containers_os\":true,\"vuln_host_os\":true}}}",
           "encoding": null
         },
         "headers": {
@@ -32,7 +32,7 @@
           "message": "Created"
         }
       },
-      "recorded_at": "Thu, 23 Oct 2025 22:21:55 GMT"
+      "recorded_at": "Fri, 17 Jul 2026 06:38:47 GMT"
     },
     {
       "request": {
@@ -56,7 +56,7 @@
           "message": "No Content"
         }
       },
-      "recorded_at": "Thu, 23 Oct 2025 22:21:55 GMT"
+      "recorded_at": "Fri, 17 Jul 2026 06:38:47 GMT"
     }
   ],
   "recorded_with": "VCR 6.0.0"

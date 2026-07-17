@@ -14,6 +14,9 @@ pub struct AzureScanOptionsInputUpdateDataAttributes {
     /// Indicates whether host compliance scanning is enabled.
     #[serde(rename = "compliance_host")]
     pub compliance_host: Option<bool>,
+    /// Indicates if scanning of Azure Functions is enabled.
+    #[serde(rename = "function")]
+    pub function: Option<bool>,
     /// Indicates if scanning for vulnerabilities in containers is enabled.
     #[serde(rename = "vuln_containers_os")]
     pub vuln_containers_os: Option<bool>,
@@ -31,6 +34,7 @@ impl AzureScanOptionsInputUpdateDataAttributes {
     pub fn new() -> AzureScanOptionsInputUpdateDataAttributes {
         AzureScanOptionsInputUpdateDataAttributes {
             compliance_host: None,
+            function: None,
             vuln_containers_os: None,
             vuln_host_os: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -40,6 +44,11 @@ impl AzureScanOptionsInputUpdateDataAttributes {
 
     pub fn compliance_host(mut self, value: bool) -> Self {
         self.compliance_host = Some(value);
+        self
+    }
+
+    pub fn function(mut self, value: bool) -> Self {
+        self.function = Some(value);
         self
     }
 
@@ -86,6 +95,7 @@ impl<'de> Deserialize<'de> for AzureScanOptionsInputUpdateDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut compliance_host: Option<bool> = None;
+                let mut function: Option<bool> = None;
                 let mut vuln_containers_os: Option<bool> = None;
                 let mut vuln_host_os: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -102,6 +112,12 @@ impl<'de> Deserialize<'de> for AzureScanOptionsInputUpdateDataAttributes {
                             }
                             compliance_host =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "function" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            function = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "vuln_containers_os" => {
                             if v.is_null() {
@@ -127,6 +143,7 @@ impl<'de> Deserialize<'de> for AzureScanOptionsInputUpdateDataAttributes {
 
                 let content = AzureScanOptionsInputUpdateDataAttributes {
                     compliance_host,
+                    function,
                     vuln_containers_os,
                     vuln_host_os,
                     additional_properties,

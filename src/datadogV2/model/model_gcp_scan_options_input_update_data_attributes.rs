@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GcpScanOptionsInputUpdateDataAttributes {
+    /// Indicates if scanning of Cloud Functions is enabled.
+    #[serde(rename = "cloud_function")]
+    pub cloud_function: Option<bool>,
     /// Indicates whether host compliance scanning is enabled.
     #[serde(rename = "compliance_host")]
     pub compliance_host: Option<bool>,
@@ -30,12 +33,18 @@ pub struct GcpScanOptionsInputUpdateDataAttributes {
 impl GcpScanOptionsInputUpdateDataAttributes {
     pub fn new() -> GcpScanOptionsInputUpdateDataAttributes {
         GcpScanOptionsInputUpdateDataAttributes {
+            cloud_function: None,
             compliance_host: None,
             vuln_containers_os: None,
             vuln_host_os: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn cloud_function(mut self, value: bool) -> Self {
+        self.cloud_function = Some(value);
+        self
     }
 
     pub fn compliance_host(mut self, value: bool) -> Self {
@@ -85,6 +94,7 @@ impl<'de> Deserialize<'de> for GcpScanOptionsInputUpdateDataAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut cloud_function: Option<bool> = None;
                 let mut compliance_host: Option<bool> = None;
                 let mut vuln_containers_os: Option<bool> = None;
                 let mut vuln_host_os: Option<bool> = None;
@@ -96,6 +106,13 @@ impl<'de> Deserialize<'de> for GcpScanOptionsInputUpdateDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "cloud_function" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cloud_function =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "compliance_host" => {
                             if v.is_null() {
                                 continue;
@@ -126,6 +143,7 @@ impl<'de> Deserialize<'de> for GcpScanOptionsInputUpdateDataAttributes {
                 }
 
                 let content = GcpScanOptionsInputUpdateDataAttributes {
+                    cloud_function,
                     compliance_host,
                     vuln_containers_os,
                     vuln_host_os,
