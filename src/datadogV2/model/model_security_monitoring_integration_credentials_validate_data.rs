@@ -78,14 +78,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringIntegrationCredentialsValidateD
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _attributes) = attributes {
-                                match _attributes {
-                                    crate::datadogV2::model::SecurityMonitoringIntegrationCredentialsValidateAttributes::UnparsedObject(_attributes) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
