@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringIntegrationConfigUpdateData {
-    /// Fields to update on the entity context sync configuration. All fields are optional.
+    /// Fields to update on the entity context sync configuration. All fields other than the integration type are optional.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::SecurityMonitoringIntegrationConfigUpdateAttributes,
     /// The type of the resource. The value should always be `integration_config`.
@@ -79,6 +79,14 @@ impl<'de> Deserialize<'de> for SecurityMonitoringIntegrationConfigUpdateData {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _attributes) = attributes {
+                                match _attributes {
+                                    crate::datadogV2::model::SecurityMonitoringIntegrationConfigUpdateAttributes::UnparsedObject(_attributes) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
