@@ -16,6 +16,7 @@ async fn main() {
         )
         .attributes(
             GcpScanOptionsDataAttributes::new()
+                .cloud_function(true)
                 .vuln_containers_os(true)
                 .vuln_host_os(true),
         ),

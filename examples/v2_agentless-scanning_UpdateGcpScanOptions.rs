@@ -13,7 +13,11 @@ async fn main() {
             "api-spec-test".to_string(),
             GcpScanOptionsInputUpdateDataType::GCP_SCAN_OPTIONS,
         )
-        .attributes(GcpScanOptionsInputUpdateDataAttributes::new().vuln_containers_os(false)),
+        .attributes(
+            GcpScanOptionsInputUpdateDataAttributes::new()
+                .cloud_function(true)
+                .vuln_containers_os(false),
+        ),
     );
     let configuration = datadog::Configuration::new();
     let api = AgentlessScanningAPI::with_config(configuration);
