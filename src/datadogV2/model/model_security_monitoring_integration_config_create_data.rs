@@ -79,6 +79,14 @@ impl<'de> Deserialize<'de> for SecurityMonitoringIntegrationConfigCreateData {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _attributes) = attributes {
+                                match _attributes {
+                                    crate::datadogV2::model::SecurityMonitoringIntegrationConfigCreateAttributes::UnparsedObject(_attributes) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
