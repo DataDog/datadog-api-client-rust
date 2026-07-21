@@ -15,11 +15,9 @@ use uuid::Uuid;
 #[tokio::main]
 async fn main() {
     let body = IncidentUserDefinedRoleRequest::new(IncidentUserDefinedRoleDataRequest::new(
-        IncidentUserDefinedRoleDataAttributesRequest::new(
-            "Tech Lead".to_string(),
-            IncidentUserDefinedRolePolicy::new(true),
-        )
-        .description(Some("The technical lead for the incident.".to_string())),
+        IncidentUserDefinedRoleDataAttributesRequest::new("Tech Lead".to_string())
+            .description(Some("The technical lead for the incident.".to_string()))
+            .policy(IncidentUserDefinedRolePolicy::new(true)),
         IncidentUserDefinedRoleRelationshipsRequest::new(
             IncidentUserDefinedRoleIncidentTypeRelationship::new(
                 IncidentUserDefinedRoleIncidentTypeRelationshipData::new(
