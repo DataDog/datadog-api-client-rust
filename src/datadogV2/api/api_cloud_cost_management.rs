@@ -2726,14 +2726,6 @@ impl CloudCostManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCustomForecastError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_custom_forecast";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_custom_forecast' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -5469,14 +5461,6 @@ impl CloudCostManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_custom_forecast";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_custom_forecast' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -9909,14 +9893,6 @@ impl CloudCostManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.upsert_custom_forecast";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.upsert_custom_forecast' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
