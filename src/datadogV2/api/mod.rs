@@ -45,6 +45,7 @@ pub mod api_dashboards;
 pub mod api_data_deletion;
 pub mod api_data_observability;
 pub mod api_datasets;
+pub mod api_ddsql;
 pub mod api_deployment_gates;
 pub mod api_domain_allowlist;
 pub mod api_dora_metrics;

@@ -547,6 +547,8 @@ impl Default for Configuration {
             ("v2.get_all_datasets".to_owned(), false),
             ("v2.get_dataset".to_owned(), false),
             ("v2.update_dataset".to_owned(), false),
+            ("v2.execute_ddsql_tabular_query".to_owned(), false),
+            ("v2.fetch_ddsql_tabular_query".to_owned(), false),
             ("v2.cancel_data_deletion_request".to_owned(), false),
             ("v2.create_data_deletion_request".to_owned(), false),
             ("v2.get_data_deletion_requests".to_owned(), false),
