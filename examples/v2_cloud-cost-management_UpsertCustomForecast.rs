@@ -27,8 +27,7 @@ async fn main() {
         )
         .id("".to_string()),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpsertCustomForecast", true);
+    let configuration = datadog::Configuration::new();
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api.upsert_custom_forecast(body).await;
     if let Ok(value) = resp {
