@@ -2499,6 +2499,40 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     );
     world
         .function_mappings
+        .insert("v2.ListLLMObsPrompts".into(), test_v2_list_llm_obs_prompts);
+    world.function_mappings.insert(
+        "v2.CreateLLMObsPrompt".into(),
+        test_v2_create_llm_obs_prompt,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteLLMObsPrompt".into(),
+        test_v2_delete_llm_obs_prompt,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetLLMObsPrompt".into(), test_v2_get_llm_obs_prompt);
+    world.function_mappings.insert(
+        "v2.UpdateLLMObsPrompt".into(),
+        test_v2_update_llm_obs_prompt,
+    );
+    world.function_mappings.insert(
+        "v2.ListLLMObsPromptVersions".into(),
+        test_v2_list_llm_obs_prompt_versions,
+    );
+    world.function_mappings.insert(
+        "v2.CreateLLMObsPromptVersion".into(),
+        test_v2_create_llm_obs_prompt_version,
+    );
+    world.function_mappings.insert(
+        "v2.GetLLMObsPromptVersion".into(),
+        test_v2_get_llm_obs_prompt_version,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateLLMObsPromptVersion".into(),
+        test_v2_update_llm_obs_prompt_version,
+    );
+    world
+        .function_mappings
         .insert("v2.ListLLMObsSpans".into(), test_v2_list_llm_obs_spans);
     world
         .function_mappings
@@ -16515,6 +16549,261 @@ fn test_v2_update_llm_obs_project(world: &mut DatadogWorld, _parameters: &HashMa
         serde_json::from_value(_parameters.get("project_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_llm_obs_project_with_http_info(project_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_prompts(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let filter_prompt_id = _parameters
+        .get("filter[prompt_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_llm_observability::ListLLMObsPromptsOptionalParams::default();
+    params.filter_prompt_id = filter_prompt_id;
+    let response = match block_on(api.list_llm_obs_prompts_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_llm_obs_prompt_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_llm_obs_prompt_with_http_info(prompt_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
+    let label = _parameters
+        .get("label")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_llm_observability::GetLLMObsPromptOptionalParams::default();
+    params.label = label;
+    let response = match block_on(api.get_llm_obs_prompt_with_http_info(prompt_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_llm_obs_prompt_with_http_info(prompt_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_prompt_versions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_llm_obs_prompt_versions_with_http_info(prompt_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_llm_obs_prompt_version(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_llm_obs_prompt_version_with_http_info(prompt_id, body))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_llm_obs_prompt_version(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
+    let version = serde_json::from_value(_parameters.get("version").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_llm_obs_prompt_version_with_http_info(prompt_id, version))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_llm_obs_prompt_version(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
+    let version = serde_json::from_value(_parameters.get("version").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.update_llm_obs_prompt_version_with_http_info(prompt_id, version, body),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {
