@@ -8,7 +8,6 @@ use flate2::{
     Compression,
 };
 use futures_core::stream::Stream;
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -775,14 +774,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.add_case_insights";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.add_case_insights' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -935,14 +926,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.aggregate_cases";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.aggregate_cases' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1388,14 +1371,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<BulkUpdateCasesError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.bulk_update_cases";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.bulk_update_cases' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1694,14 +1669,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.count_cases";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.count_cases' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let query_filter = params.query_filter;
@@ -1980,14 +1947,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_case_automation_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_case_automation_rule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -2135,14 +2094,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseJiraIssueError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.create_case_jira_issue";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_case_jira_issue' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -2290,14 +2241,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_case_link";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_case_link' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -2443,14 +2386,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseNotebookError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.create_case_notebook";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_case_notebook' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -2591,14 +2526,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseServiceNowTicketError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.create_case_service_now_ticket";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_case_service_now_ticket' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -2746,14 +2673,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_case_view";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_case_view' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -2908,14 +2827,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.create_maintenance_window";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_maintenance_window' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -3373,14 +3284,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseAutomationRuleError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_case_automation_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_case_automation_rule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -3675,14 +3578,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseLinkError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_case_link";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_case_link' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -3771,14 +3666,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseViewError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_case_view";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_case_view' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -3870,14 +3757,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMaintenanceWindowError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.delete_maintenance_window";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_maintenance_window' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -4168,14 +4047,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.disable_case_automation_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.disable_case_automation_rule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -4291,14 +4162,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.enable_case_automation_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.enable_case_automation_rule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -4395,14 +4258,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<FavoriteCaseProjectError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.favorite_case_project";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.favorite_case_project' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -4613,14 +4468,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_case_automation_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_case_automation_rule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -4728,14 +4575,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.get_case_view";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_case_view' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -5158,14 +4997,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.link_incident";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.link_incident' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -5310,14 +5141,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<LinkJiraIssueToCaseError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.link_jira_issue_to_case";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.link_jira_issue_to_case' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -5470,14 +5293,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_case_automation_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_case_automation_rules' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -5592,14 +5407,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_case_links";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_case_links' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let relationship = params.relationship;
@@ -5720,14 +5527,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_case_timeline";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_case_timeline' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -5852,14 +5651,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_case_views";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_case_views' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -5967,14 +5758,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_case_watchers";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_case_watchers' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -6082,14 +5865,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_maintenance_windows";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_maintenance_windows' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -6196,14 +5971,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.list_user_case_project_favorites";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_user_case_project_favorites' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -6314,14 +6081,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.move_case_to_project";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.move_case_to_project' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -6479,14 +6238,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.remove_case_insights";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.remove_case_insights' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -7097,14 +6848,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnfavoriteCaseProjectError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.unfavorite_case_project";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.unfavorite_case_project' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -7193,14 +6936,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnlinkJiraIssueError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.unlink_jira_issue";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.unlink_jira_issue' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -7291,14 +7026,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnwatchCaseError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.unwatch_case";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.unwatch_case' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -7561,14 +7288,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_case_automation_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_case_automation_rule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -7719,14 +7438,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateCaseCommentError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.update_case_comment";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_case_comment' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -8196,14 +7907,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_case_due_date";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_case_due_date' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -8361,14 +8064,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_case_resolved_reason";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_case_resolved_reason' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -8676,14 +8371,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_case_view";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_case_view' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -8844,14 +8531,6 @@ impl CaseManagementAPI {
     > {
         let local_configuration = &self.config;
         let operation_id = "v2.update_maintenance_window";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_maintenance_window' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -9598,14 +9277,6 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<WatchCaseError>> {
         let local_configuration = &self.config;
         let operation_id = "v2.watch_case";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.watch_case' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 

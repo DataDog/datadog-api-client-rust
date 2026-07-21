@@ -8,8 +8,7 @@ use datadog_api_client::datadogV2::model::NotebookResourceType;
 #[tokio::main]
 async fn main() {
     let body = NotebookCreateRequest::new(NotebookCreateData::new(NotebookResourceType::NOTEBOOK));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateCaseNotebook", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.create_case_notebook("case_id".to_string(), body).await;
     if let Ok(value) = resp {

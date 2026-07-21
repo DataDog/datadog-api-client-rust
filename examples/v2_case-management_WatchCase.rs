@@ -4,8 +4,7 @@ use datadog_api_client::datadogV2::api_case_management::CaseManagementAPI;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.WatchCase", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api
         .watch_case("case_id".to_string(), "user_uuid".to_string())

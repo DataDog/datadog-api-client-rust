@@ -29,8 +29,7 @@ async fn main() {
             .state(CaseAutomationRuleState::ENABLED),
         ),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateCaseAutomationRule", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api
         .update_case_automation_rule("project_id".to_string(), "rule_id".to_string(), body)

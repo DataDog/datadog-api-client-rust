@@ -16,8 +16,7 @@ async fn main() {
         ),
         CaseAggregateResourceType::AGGREGATE,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.AggregateCases", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.aggregate_cases(body).await;
     if let Ok(value) = resp {

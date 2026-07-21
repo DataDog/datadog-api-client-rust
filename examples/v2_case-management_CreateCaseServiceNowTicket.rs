@@ -13,8 +13,7 @@ async fn main() {
             .assignment_group("IT Support".to_string()),
         ServiceNowTicketResourceType::TICKETS,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateCaseServiceNowTicket", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api
         .create_case_service_now_ticket("case_id".to_string(), body)

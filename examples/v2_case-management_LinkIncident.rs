@@ -11,8 +11,7 @@ async fn main() {
         "00000000-0000-0000-0000-000000000000".to_string(),
         IncidentResourceType::INCIDENTS,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.LinkIncident", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.link_incident("case_id".to_string(), body).await;
     if let Ok(value) = resp {

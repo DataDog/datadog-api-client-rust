@@ -12,8 +12,7 @@ async fn main() {
         CaseUpdateResolvedReasonAttributes::new("FALSE_POSITIVE".to_string()),
         CaseResourceType::CASE,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateCaseResolvedReason", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api
         .update_case_resolved_reason("case_id".to_string(), body)

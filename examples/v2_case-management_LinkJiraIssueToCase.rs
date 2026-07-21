@@ -12,8 +12,7 @@ async fn main() {
         JiraIssueLinkAttributes::new("https://jira.example.com/browse/PROJ-123".to_string()),
         JiraIssueResourceType::ISSUES,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.LinkJiraIssueToCase", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api
         .link_jira_issue_to_case("case_id".to_string(), body)

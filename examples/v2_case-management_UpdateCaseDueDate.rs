@@ -12,8 +12,7 @@ async fn main() {
         CaseUpdateDueDateAttributes::new("2026-12-31".to_string()),
         CaseResourceType::CASE,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateCaseDueDate", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.update_case_due_date("case_id".to_string(), body).await;
     if let Ok(value) = resp {

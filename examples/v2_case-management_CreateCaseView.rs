@@ -16,8 +16,7 @@ async fn main() {
         ),
         CaseViewResourceType::VIEW,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateCaseView", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.create_case_view(body).await;
     if let Ok(value) = resp {

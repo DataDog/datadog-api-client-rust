@@ -18,8 +18,7 @@ async fn main() {
         ),
         CaseLinkResourceType::LINK,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateCaseLink", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.create_case_link(body).await;
     if let Ok(value) = resp {
