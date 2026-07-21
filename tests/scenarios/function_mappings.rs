@@ -102,6 +102,7 @@ pub struct ApiInstances {
     pub v2_api_dashboards: Option<datadogV2::api_dashboards::DashboardsAPI>,
     pub v2_api_data_observability: Option<datadogV2::api_data_observability::DataObservabilityAPI>,
     pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
+    pub v2_api_ddsql: Option<datadogV2::api_ddsql::DDSQLAPI>,
     pub v2_api_data_deletion: Option<datadogV2::api_data_deletion::DataDeletionAPI>,
     pub v2_api_deployment_gates: Option<datadogV2::api_deployment_gates::DeploymentGatesAPI>,
     pub v2_api_domain_allowlist: Option<datadogV2::api_domain_allowlist::DomainAllowlistAPI>,
@@ -859,6 +860,13 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "DDSQL" => {
+            world.api_instances.v2_api_ddsql =
+                Some(datadogV2::api_ddsql::DDSQLAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ));
         }
         "DataDeletion" => {
             world.api_instances.v2_api_data_deletion = Some(
@@ -4589,6 +4597,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateDataset".into(), test_v2_update_dataset);
+    world.function_mappings.insert(
+        "v2.ExecuteDdsqlTabularQuery".into(),
+        test_v2_execute_ddsql_tabular_query,
+    );
+    world.function_mappings.insert(
+        "v2.FetchDdsqlTabularQuery".into(),
+        test_v2_fetch_ddsql_tabular_query,
+    );
     world.function_mappings.insert(
         "v2.CreateDataDeletionRequest".into(),
         test_v2_create_data_deletion_request,
@@ -34868,6 +34884,62 @@ fn test_v2_update_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String
         serde_json::from_value(_parameters.get("dataset_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_dataset_with_http_info(dataset_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_execute_ddsql_tabular_query(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ddsql
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.execute_ddsql_tabular_query_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_fetch_ddsql_tabular_query(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ddsql
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.fetch_ddsql_tabular_query_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
