@@ -23,7 +23,7 @@ pub struct IncidentUserDefinedRoleDataAttributesRequest {
     pub name: String,
     /// Policy configuration for a user-defined role.
     #[serde(rename = "policy")]
-    pub policy: crate::datadogV2::model::IncidentUserDefinedRolePolicy,
+    pub policy: Option<crate::datadogV2::model::IncidentUserDefinedRolePolicy>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -32,14 +32,11 @@ pub struct IncidentUserDefinedRoleDataAttributesRequest {
 }
 
 impl IncidentUserDefinedRoleDataAttributesRequest {
-    pub fn new(
-        name: String,
-        policy: crate::datadogV2::model::IncidentUserDefinedRolePolicy,
-    ) -> IncidentUserDefinedRoleDataAttributesRequest {
+    pub fn new(name: String) -> IncidentUserDefinedRoleDataAttributesRequest {
         IncidentUserDefinedRoleDataAttributesRequest {
             description: None,
             name,
-            policy,
+            policy: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -47,6 +44,11 @@ impl IncidentUserDefinedRoleDataAttributesRequest {
 
     pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    pub fn policy(mut self, value: crate::datadogV2::model::IncidentUserDefinedRolePolicy) -> Self {
+        self.policy = Some(value);
         self
     }
 
@@ -96,6 +98,9 @@ impl<'de> Deserialize<'de> for IncidentUserDefinedRoleDataAttributesRequest {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "policy" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             policy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -106,7 +111,6 @@ impl<'de> Deserialize<'de> for IncidentUserDefinedRoleDataAttributesRequest {
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let policy = policy.ok_or_else(|| M::Error::missing_field("policy"))?;
 
                 let content = IncidentUserDefinedRoleDataAttributesRequest {
                     description,
