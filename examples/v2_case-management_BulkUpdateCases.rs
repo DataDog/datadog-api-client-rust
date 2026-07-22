@@ -18,8 +18,7 @@ async fn main() {
         .payload(BTreeMap::from([("priority".to_string(), "P1".to_string())])),
         CaseBulkResourceType::BULK,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.BulkUpdateCases", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.bulk_update_cases(body).await;
     if let Ok(value) = resp {

@@ -22,8 +22,7 @@ async fn main() {
         ),
         MaintenanceWindowResourceType::MAINTENANCE_WINDOW,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateMaintenanceWindow", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.create_maintenance_window(body).await;
     if let Ok(value) = resp {

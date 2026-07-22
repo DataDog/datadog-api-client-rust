@@ -11,8 +11,7 @@ async fn main() {
     let body = CaseViewUpdateRequest::new(
         CaseViewUpdate::new(CaseViewResourceType::VIEW).attributes(CaseViewUpdateAttributes::new()),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateCaseView", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.update_case_view("view_id".to_string(), body).await;
     if let Ok(value) = resp {

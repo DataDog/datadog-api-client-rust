@@ -11,8 +11,7 @@ async fn main() {
         "e555e290-ed65-49bd-ae18-8acbfcf18db7".to_string(),
         ProjectResourceType::PROJECT,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.MoveCaseToProject", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.move_case_to_project("case_id".to_string(), body).await;
     if let Ok(value) = resp {

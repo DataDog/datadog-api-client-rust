@@ -23,8 +23,7 @@ async fn main() {
                     ])),
             ),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateCustomAttributeConfig", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAttributeAPI::with_config(configuration);
     let resp = api
         .update_custom_attribute_config(

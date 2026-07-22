@@ -5,8 +5,7 @@ use datadog_api_client::datadogV2::api_case_management::ListCaseTimelineOptional
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListCaseTimeline", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api
         .list_case_timeline(

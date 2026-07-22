@@ -12,8 +12,7 @@ async fn main() {
         CaseUpdateCommentAttributes::new("Updated comment text".to_string()),
         CaseResourceType::CASE,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateCaseComment", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api
         .update_case_comment("case_id".to_string(), "cell_id".to_string(), body)

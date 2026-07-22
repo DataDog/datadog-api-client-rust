@@ -14,8 +14,7 @@ async fn main() {
             .fields(BTreeMap::from([])),
         JiraIssueResourceType::ISSUES,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateCaseJiraIssue", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api
         .create_case_jira_issue("case_id".to_string(), body)

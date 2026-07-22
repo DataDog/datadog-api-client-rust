@@ -18,8 +18,7 @@ async fn main() {
         )]),
         CaseResourceType::CASE,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.AddCaseInsights", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementAPI::with_config(configuration);
     let resp = api.add_case_insights("case_id".to_string(), body).await;
     if let Ok(value) = resp {

@@ -15,8 +15,7 @@ async fn main() {
                 .emoji("🕵🏻‍♂️".to_string()),
         ),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateCaseType", true);
+    let configuration = datadog::Configuration::new();
     let api = CaseManagementTypeAPI::with_config(configuration);
     let resp = api.update_case_type("case_type_id".to_string(), body).await;
     if let Ok(value) = resp {
