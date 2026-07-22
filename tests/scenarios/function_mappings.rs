@@ -36643,17 +36643,17 @@ fn test_v2_list_feature_flags(world: &mut DatadogWorld, _parameters: &HashMap<St
     let is_archived = _parameters
         .get("is_archived")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let limit = _parameters
-        .get("limit")
+    let page_limit = _parameters
+        .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let offset = _parameters
-        .get("offset")
+    let page_offset = _parameters
+        .get("page[offset]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_feature_flags::ListFeatureFlagsOptionalParams::default();
     params.key = key;
     params.is_archived = is_archived;
-    params.limit = limit;
-    params.offset = offset;
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
     let response = match block_on(api.list_feature_flags_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
