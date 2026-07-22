@@ -185,6 +185,7 @@ pub struct ApiInstances {
     pub v2_api_rum_audience_management:
         Option<datadogV2::api_rum_audience_management::RumAudienceManagementAPI>,
     pub v2_api_apm_trace: Option<datadogV2::api_apm_trace::APMTraceAPI>,
+    pub v2_api_pup_bump_test: Option<datadogV2::api_pup_bump_test::PupBumpTestAPI>,
     pub v2_api_reference_tables: Option<datadogV2::api_reference_tables::ReferenceTablesAPI>,
     pub v2_api_application_security:
         Option<datadogV2::api_application_security::ApplicationSecurityAPI>,
@@ -1220,6 +1221,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "APMTrace" => {
             world.api_instances.v2_api_apm_trace = Some(
                 datadogV2::api_apm_trace::APMTraceAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "PupBumpTest" => {
+            world.api_instances.v2_api_pup_bump_test = Some(
+                datadogV2::api_pup_bump_test::PupBumpTestAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -6574,6 +6583,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetTraceByID".into(), test_v2_get_trace_by_id);
+    world
+        .function_mappings
+        .insert("v2.GetPupBumpTest".into(), test_v2_get_pup_bump_test);
     world
         .function_mappings
         .insert("v2.BatchRowsQuery".into(), test_v2_batch_rows_query);
@@ -51390,6 +51402,30 @@ fn test_v2_get_trace_by_id(world: &mut DatadogWorld, _parameters: &HashMap<Strin
     let mut params = datadogV2::api_apm_trace::GetTraceByIDOptionalParams::default();
     params.include_fields = include_fields;
     let response = match block_on(api.get_trace_by_id_with_http_info(trace_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_pup_bump_test(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_pup_bump_test
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_pup_bump_test_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {

@@ -96,6 +96,7 @@ pub use self::api::api_organizations;
 pub use self::api::api_powerpack;
 pub use self::api::api_processes;
 pub use self::api::api_product_analytics;
+pub use self::api::api_pup_bump_test;
 pub use self::api::api_reference_tables;
 pub use self::api::api_report_schedules;
 pub use self::api::api_reporting_and_sharing;

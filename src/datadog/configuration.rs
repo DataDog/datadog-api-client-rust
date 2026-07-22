@@ -712,6 +712,7 @@ impl Default for Configuration {
             ("v2.update_connection".to_owned(), false),
             ("v2.get_pruned_trace_by_id".to_owned(), false),
             ("v2.get_trace_by_id".to_owned(), false),
+            ("v2.get_pup_bump_test".to_owned(), false),
             ("v2.get_asm_service_by_name".to_owned(), false),
             ("v2.get_rum_sdk_config".to_owned(), false),
             ("v2.update_rum_sdk_config".to_owned(), false),
