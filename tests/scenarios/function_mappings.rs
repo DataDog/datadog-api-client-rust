@@ -7382,6 +7382,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateComponent".into(), test_v2_update_component);
+    world.function_mappings.insert(
+        "v2.ListDegradationTemplates".into(),
+        test_v2_list_degradation_templates,
+    );
+    world.function_mappings.insert(
+        "v2.CreateDegradationTemplate".into(),
+        test_v2_create_degradation_template,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteDegradationTemplate".into(),
+        test_v2_delete_degradation_template,
+    );
+    world.function_mappings.insert(
+        "v2.GetDegradationTemplate".into(),
+        test_v2_get_degradation_template,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateDegradationTemplate".into(),
+        test_v2_update_degradation_template,
+    );
     world
         .function_mappings
         .insert("v2.CreateDegradation".into(), test_v2_create_degradation);
@@ -7405,6 +7425,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.EditDegradationUpdate".into(),
         test_v2_edit_degradation_update,
+    );
+    world.function_mappings.insert(
+        "v2.ListMaintenanceTemplates".into(),
+        test_v2_list_maintenance_templates,
+    );
+    world.function_mappings.insert(
+        "v2.CreateMaintenanceTemplate".into(),
+        test_v2_create_maintenance_template,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteMaintenanceTemplate".into(),
+        test_v2_delete_maintenance_template,
+    );
+    world.function_mappings.insert(
+        "v2.GetMaintenanceTemplate".into(),
+        test_v2_get_maintenance_template,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateMaintenanceTemplate".into(),
+        test_v2_update_maintenance_template,
     );
     world
         .function_mappings
@@ -58274,6 +58314,9 @@ fn test_v2_list_degradations(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let sort = _parameters
         .get("sort")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_source_id = _parameters
+        .get("filter[source_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_status_pages::ListDegradationsOptionalParams::default();
     params.filter_page_id = filter_page_id;
     params.page_offset = page_offset;
@@ -58281,6 +58324,7 @@ fn test_v2_list_degradations(world: &mut DatadogWorld, _parameters: &HashMap<Str
     params.include = include;
     params.filter_status = filter_status;
     params.sort = sort;
+    params.filter_source_id = filter_source_id;
     let response = match block_on(api.list_degradations_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -58592,6 +58636,184 @@ fn test_v2_update_component(world: &mut DatadogWorld, _parameters: &HashMap<Stri
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_degradation_templates(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_status_pages::ListDegradationTemplatesOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.list_degradation_templates_with_http_info(page_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_degradation_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_status_pages::CreateDegradationTemplateOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.create_degradation_template_with_http_info(page_id, body, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_degradation_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let template_id =
+        serde_json::from_value(_parameters.get("template_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_degradation_template_with_http_info(page_id, template_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_degradation_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let template_id =
+        serde_json::from_value(_parameters.get("template_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_status_pages::GetDegradationTemplateOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.get_degradation_template_with_http_info(page_id, template_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_degradation_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let template_id =
+        serde_json::from_value(_parameters.get("template_id").unwrap().clone()).unwrap();
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_status_pages::UpdateDegradationTemplateOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.update_degradation_template_with_http_info(
+        template_id,
+        page_id,
+        body,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_create_degradation(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -58820,6 +59042,184 @@ fn test_v2_edit_degradation_update(world: &mut DatadogWorld, _parameters: &HashM
         degradation_id,
         page_id,
         update_id,
+        body,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_maintenance_templates(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_status_pages::ListMaintenanceTemplatesOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.list_maintenance_templates_with_http_info(page_id, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_maintenance_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_status_pages::CreateMaintenanceTemplateOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.create_maintenance_template_with_http_info(page_id, body, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_maintenance_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let template_id =
+        serde_json::from_value(_parameters.get("template_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_maintenance_template_with_http_info(page_id, template_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_maintenance_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let template_id =
+        serde_json::from_value(_parameters.get("template_id").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_status_pages::GetMaintenanceTemplateOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.get_maintenance_template_with_http_info(page_id, template_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_maintenance_template(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let template_id =
+        serde_json::from_value(_parameters.get("template_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_status_pages::UpdateMaintenanceTemplateOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.update_maintenance_template_with_http_info(
+        page_id,
+        template_id,
         body,
         params,
     )) {

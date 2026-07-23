@@ -81,6 +81,22 @@ impl CreateDegradationOptionalParams {
     }
 }
 
+/// CreateDegradationTemplateOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::create_degradation_template`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct CreateDegradationTemplateOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub include: Option<String>,
+}
+
+impl CreateDegradationTemplateOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// CreateMaintenanceOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::create_maintenance`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -97,6 +113,22 @@ impl CreateMaintenanceOptionalParams {
         self.notify_subscribers = Some(value);
         self
     }
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
+/// CreateMaintenanceTemplateOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::create_maintenance_template`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct CreateMaintenanceTemplateOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub include: Option<String>,
+}
+
+impl CreateMaintenanceTemplateOptionalParams {
     /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
@@ -168,6 +200,22 @@ impl GetDegradationOptionalParams {
     }
 }
 
+/// GetDegradationTemplateOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::get_degradation_template`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetDegradationTemplateOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub include: Option<String>,
+}
+
+impl GetDegradationTemplateOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// GetMaintenanceOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::get_maintenance`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -177,6 +225,22 @@ pub struct GetMaintenanceOptionalParams {
 }
 
 impl GetMaintenanceOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
+/// GetMaintenanceTemplateOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::get_maintenance_template`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetMaintenanceTemplateOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub include: Option<String>,
+}
+
+impl GetMaintenanceTemplateOptionalParams {
     /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
@@ -216,6 +280,22 @@ impl ListComponentsOptionalParams {
     }
 }
 
+/// ListDegradationTemplatesOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::list_degradation_templates`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListDegradationTemplatesOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub include: Option<String>,
+}
+
+impl ListDegradationTemplatesOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ListDegradationsOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::list_degradations`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -232,6 +312,8 @@ pub struct ListDegradationsOptionalParams {
     pub filter_status: Option<String>,
     /// Sort order. Prefix with '-' for descending. Supported values: created_at, -created_at, modified_at, -modified_at.
     pub sort: Option<String>,
+    /// Optional source ID filter. Returns only degradations whose source matches this ID (for example, an incident ID).
+    pub filter_source_id: Option<String>,
 }
 
 impl ListDegradationsOptionalParams {
@@ -263,6 +345,27 @@ impl ListDegradationsOptionalParams {
     /// Sort order. Prefix with '-' for descending. Supported values: created_at, -created_at, modified_at, -modified_at.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
+        self
+    }
+    /// Optional source ID filter. Returns only degradations whose source matches this ID (for example, an incident ID).
+    pub fn filter_source_id(mut self, value: String) -> Self {
+        self.filter_source_id = Some(value);
+        self
+    }
+}
+
+/// ListMaintenanceTemplatesOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::list_maintenance_templates`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListMaintenanceTemplatesOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub include: Option<String>,
+}
+
+impl ListMaintenanceTemplatesOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
         self
     }
 }
@@ -394,6 +497,22 @@ impl UpdateDegradationOptionalParams {
     }
 }
 
+/// UpdateDegradationTemplateOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::update_degradation_template`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct UpdateDegradationTemplateOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub include: Option<String>,
+}
+
+impl UpdateDegradationTemplateOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// UpdateMaintenanceOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::update_maintenance`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -410,6 +529,22 @@ impl UpdateMaintenanceOptionalParams {
         self.notify_subscribers = Some(value);
         self
     }
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
+/// UpdateMaintenanceTemplateOptionalParams is a struct for passing parameters to the method [`StatusPagesAPI::update_maintenance_template`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct UpdateMaintenanceTemplateOptionalParams {
+    /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
+    pub include: Option<String>,
+}
+
+impl UpdateMaintenanceTemplateOptionalParams {
     /// Comma-separated list of resources to include. Supported values: created_by_user, last_modified_by_user, status_page.
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
@@ -472,10 +607,26 @@ pub enum CreateDegradationError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateDegradationTemplateError is a struct for typed errors of method [`StatusPagesAPI::create_degradation_template`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateDegradationTemplateError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateMaintenanceError is a struct for typed errors of method [`StatusPagesAPI::create_maintenance`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateMaintenanceError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// CreateMaintenanceTemplateError is a struct for typed errors of method [`StatusPagesAPI::create_maintenance_template`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateMaintenanceTemplateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -500,6 +651,22 @@ pub enum DeleteComponentError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteDegradationError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteDegradationTemplateError is a struct for typed errors of method [`StatusPagesAPI::delete_degradation_template`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteDegradationTemplateError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteMaintenanceTemplateError is a struct for typed errors of method [`StatusPagesAPI::delete_maintenance_template`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteMaintenanceTemplateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -536,10 +703,26 @@ pub enum GetDegradationError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetDegradationTemplateError is a struct for typed errors of method [`StatusPagesAPI::get_degradation_template`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetDegradationTemplateError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetMaintenanceError is a struct for typed errors of method [`StatusPagesAPI::get_maintenance`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetMaintenanceError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetMaintenanceTemplateError is a struct for typed errors of method [`StatusPagesAPI::get_maintenance_template`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetMaintenanceTemplateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -560,10 +743,26 @@ pub enum ListComponentsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListDegradationTemplatesError is a struct for typed errors of method [`StatusPagesAPI::list_degradation_templates`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListDegradationTemplatesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListDegradationsError is a struct for typed errors of method [`StatusPagesAPI::list_degradations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListDegradationsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListMaintenanceTemplatesError is a struct for typed errors of method [`StatusPagesAPI::list_maintenance_templates`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListMaintenanceTemplatesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -624,10 +823,26 @@ pub enum UpdateDegradationError {
     UnknownValue(serde_json::Value),
 }
 
+/// UpdateDegradationTemplateError is a struct for typed errors of method [`StatusPagesAPI::update_degradation_template`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateDegradationTemplateError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// UpdateMaintenanceError is a struct for typed errors of method [`StatusPagesAPI::update_maintenance`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateMaintenanceError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateMaintenanceTemplateError is a struct for typed errors of method [`StatusPagesAPI::update_maintenance_template`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateMaintenanceTemplateError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1392,6 +1607,177 @@ impl StatusPagesAPI {
         }
     }
 
+    /// Creates a new degradation template.
+    pub async fn create_degradation_template(
+        &self,
+        page_id: uuid::Uuid,
+        body: crate::datadogV2::model::CreateDegradationTemplateRequest,
+        params: CreateDegradationTemplateOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::DegradationTemplate,
+        datadog::Error<CreateDegradationTemplateError>,
+    > {
+        match self
+            .create_degradation_template_with_http_info(page_id, body, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Creates a new degradation template.
+    pub async fn create_degradation_template_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        body: crate::datadogV2::model::CreateDegradationTemplateRequest,
+        params: CreateDegradationTemplateOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DegradationTemplate>,
+        datadog::Error<CreateDegradationTemplateError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_degradation_template";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/degradation_templates",
+            local_configuration.get_operation_host(operation_id),
+            page_id = datadog::urlencode(page_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DegradationTemplate>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateDegradationTemplateError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Schedules a new maintenance.
     pub async fn create_maintenance(
         &self,
@@ -1553,6 +1939,177 @@ impl StatusPagesAPI {
             };
         } else {
             let local_entity: Option<CreateMaintenanceError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Creates a new maintenance template.
+    pub async fn create_maintenance_template(
+        &self,
+        page_id: uuid::Uuid,
+        body: crate::datadogV2::model::CreateMaintenanceTemplateRequest,
+        params: CreateMaintenanceTemplateOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::MaintenanceTemplate,
+        datadog::Error<CreateMaintenanceTemplateError>,
+    > {
+        match self
+            .create_maintenance_template_with_http_info(page_id, body, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Creates a new maintenance template.
+    pub async fn create_maintenance_template_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        body: crate::datadogV2::model::CreateMaintenanceTemplateRequest,
+        params: CreateMaintenanceTemplateOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::MaintenanceTemplate>,
+        datadog::Error<CreateMaintenanceTemplateError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.create_maintenance_template";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/maintenance_templates",
+            local_configuration.get_operation_host(operation_id),
+            page_id = datadog::urlencode(page_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::MaintenanceTemplate>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateMaintenanceTemplateError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1901,6 +2458,194 @@ impl StatusPagesAPI {
             })
         } else {
             let local_entity: Option<DeleteDegradationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Deletes a degradation template by its ID (soft delete).
+    pub async fn delete_degradation_template(
+        &self,
+        page_id: uuid::Uuid,
+        template_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<DeleteDegradationTemplateError>> {
+        match self
+            .delete_degradation_template_with_http_info(page_id, template_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Deletes a degradation template by its ID (soft delete).
+    pub async fn delete_degradation_template_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        template_id: uuid::Uuid,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDegradationTemplateError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_degradation_template";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/degradation_templates/{template_id}",
+            local_configuration.get_operation_host(operation_id),
+            page_id = datadog::urlencode(page_id.to_string()),
+            template_id = datadog::urlencode(template_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteDegradationTemplateError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Deletes a maintenance template by its ID (soft delete).
+    pub async fn delete_maintenance_template(
+        &self,
+        page_id: uuid::Uuid,
+        template_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<DeleteMaintenanceTemplateError>> {
+        match self
+            .delete_maintenance_template_with_http_info(page_id, template_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Deletes a maintenance template by its ID (soft delete).
+    pub async fn delete_maintenance_template_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        template_id: uuid::Uuid,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMaintenanceTemplateError>> {
+        let local_configuration = &self.config;
+        let operation_id = "v2.delete_maintenance_template";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/maintenance_templates/{template_id}",
+            local_configuration.get_operation_host(operation_id),
+            page_id = datadog::urlencode(page_id.to_string()),
+            template_id = datadog::urlencode(template_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteMaintenanceTemplateError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -2423,6 +3168,131 @@ impl StatusPagesAPI {
         }
     }
 
+    /// Retrieves a specific degradation template by its ID.
+    pub async fn get_degradation_template(
+        &self,
+        page_id: uuid::Uuid,
+        template_id: uuid::Uuid,
+        params: GetDegradationTemplateOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::DegradationTemplate,
+        datadog::Error<GetDegradationTemplateError>,
+    > {
+        match self
+            .get_degradation_template_with_http_info(page_id, template_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieves a specific degradation template by its ID.
+    pub async fn get_degradation_template_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        template_id: uuid::Uuid,
+        params: GetDegradationTemplateOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DegradationTemplate>,
+        datadog::Error<GetDegradationTemplateError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_degradation_template";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/degradation_templates/{template_id}",
+            local_configuration.get_operation_host(operation_id),
+            page_id = datadog::urlencode(page_id.to_string()),
+            template_id = datadog::urlencode(template_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DegradationTemplate>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetDegradationTemplateError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Retrieves a specific maintenance by its ID.
     pub async fn get_maintenance(
         &self,
@@ -2533,6 +3403,131 @@ impl StatusPagesAPI {
             };
         } else {
             let local_entity: Option<GetMaintenanceError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieves a specific maintenance template by its ID.
+    pub async fn get_maintenance_template(
+        &self,
+        page_id: uuid::Uuid,
+        template_id: uuid::Uuid,
+        params: GetMaintenanceTemplateOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::MaintenanceTemplate,
+        datadog::Error<GetMaintenanceTemplateError>,
+    > {
+        match self
+            .get_maintenance_template_with_http_info(page_id, template_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieves a specific maintenance template by its ID.
+    pub async fn get_maintenance_template_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        template_id: uuid::Uuid,
+        params: GetMaintenanceTemplateOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::MaintenanceTemplate>,
+        datadog::Error<GetMaintenanceTemplateError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.get_maintenance_template";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/maintenance_templates/{template_id}",
+            local_configuration.get_operation_host(operation_id),
+            page_id = datadog::urlencode(page_id.to_string()),
+            template_id = datadog::urlencode(template_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::MaintenanceTemplate>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetMaintenanceTemplateError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -2776,6 +3771,128 @@ impl StatusPagesAPI {
         }
     }
 
+    /// Lists all degradation templates for a status page.
+    pub async fn list_degradation_templates(
+        &self,
+        page_id: uuid::Uuid,
+        params: ListDegradationTemplatesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::DegradationTemplateArray,
+        datadog::Error<ListDegradationTemplatesError>,
+    > {
+        match self
+            .list_degradation_templates_with_http_info(page_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Lists all degradation templates for a status page.
+    pub async fn list_degradation_templates_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        params: ListDegradationTemplatesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DegradationTemplateArray>,
+        datadog::Error<ListDegradationTemplatesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_degradation_templates";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/degradation_templates",
+            local_configuration.get_operation_host(operation_id),
+            page_id = datadog::urlencode(page_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DegradationTemplateArray>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListDegradationTemplatesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Lists all degradations for the organization. Optionally filter by status and page.
     pub async fn list_degradations(
         &self,
@@ -2814,6 +3931,7 @@ impl StatusPagesAPI {
         let include = params.include;
         let filter_status = params.filter_status;
         let sort = params.sort;
+        let filter_source_id = params.filter_source_id;
 
         let local_client = &self.client;
 
@@ -2847,6 +3965,10 @@ impl StatusPagesAPI {
         if let Some(ref local_query_param) = sort {
             local_req_builder =
                 local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_source_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[source_id]", &local_query_param.to_string())]);
         };
 
         // build headers
@@ -2904,6 +4026,128 @@ impl StatusPagesAPI {
             };
         } else {
             let local_entity: Option<ListDegradationsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Lists all maintenance templates for a status page.
+    pub async fn list_maintenance_templates(
+        &self,
+        page_id: uuid::Uuid,
+        params: ListMaintenanceTemplatesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::MaintenanceTemplateArray,
+        datadog::Error<ListMaintenanceTemplatesError>,
+    > {
+        match self
+            .list_maintenance_templates_with_http_info(page_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Lists all maintenance templates for a status page.
+    pub async fn list_maintenance_templates_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        params: ListMaintenanceTemplatesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::MaintenanceTemplateArray>,
+        datadog::Error<ListMaintenanceTemplatesError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.list_maintenance_templates";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/maintenance_templates",
+            local_configuration.get_operation_host(operation_id),
+            page_id = datadog::urlencode(page_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::MaintenanceTemplateArray>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListMaintenanceTemplatesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -3799,6 +5043,180 @@ impl StatusPagesAPI {
         }
     }
 
+    /// Updates an existing degradation template's attributes.
+    pub async fn update_degradation_template(
+        &self,
+        template_id: uuid::Uuid,
+        page_id: uuid::Uuid,
+        body: crate::datadogV2::model::PatchDegradationTemplateRequest,
+        params: UpdateDegradationTemplateOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::DegradationTemplate,
+        datadog::Error<UpdateDegradationTemplateError>,
+    > {
+        match self
+            .update_degradation_template_with_http_info(template_id, page_id, body, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Updates an existing degradation template's attributes.
+    pub async fn update_degradation_template_with_http_info(
+        &self,
+        template_id: uuid::Uuid,
+        page_id: uuid::Uuid,
+        body: crate::datadogV2::model::PatchDegradationTemplateRequest,
+        params: UpdateDegradationTemplateOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DegradationTemplate>,
+        datadog::Error<UpdateDegradationTemplateError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_degradation_template";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/degradation_templates/{template_id}",
+            local_configuration.get_operation_host(operation_id),
+            template_id = datadog::urlencode(template_id.to_string()),
+            page_id = datadog::urlencode(page_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DegradationTemplate>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateDegradationTemplateError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Updates an existing maintenance's attributes.
     pub async fn update_maintenance(
         &self,
@@ -3963,6 +5381,180 @@ impl StatusPagesAPI {
             };
         } else {
             let local_entity: Option<UpdateMaintenanceError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Updates an existing maintenance template's attributes.
+    pub async fn update_maintenance_template(
+        &self,
+        page_id: uuid::Uuid,
+        template_id: uuid::Uuid,
+        body: crate::datadogV2::model::PatchMaintenanceTemplateRequest,
+        params: UpdateMaintenanceTemplateOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::MaintenanceTemplate,
+        datadog::Error<UpdateMaintenanceTemplateError>,
+    > {
+        match self
+            .update_maintenance_template_with_http_info(page_id, template_id, body, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Updates an existing maintenance template's attributes.
+    pub async fn update_maintenance_template_with_http_info(
+        &self,
+        page_id: uuid::Uuid,
+        template_id: uuid::Uuid,
+        body: crate::datadogV2::model::PatchMaintenanceTemplateRequest,
+        params: UpdateMaintenanceTemplateOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::MaintenanceTemplate>,
+        datadog::Error<UpdateMaintenanceTemplateError>,
+    > {
+        let local_configuration = &self.config;
+        let operation_id = "v2.update_maintenance_template";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/statuspages/{page_id}/maintenance_templates/{template_id}",
+            local_configuration.get_operation_host(operation_id),
+            page_id = datadog::urlencode(page_id.to_string()),
+            template_id = datadog::urlencode(template_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::MaintenanceTemplate>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateMaintenanceTemplateError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

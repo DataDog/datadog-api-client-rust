@@ -14,6 +14,9 @@ pub struct CreateMaintenanceRequestData {
     /// The supported attributes for creating a maintenance.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CreateMaintenanceRequestDataAttributes,
+    /// The supported relationships for creating a maintenance.
+    #[serde(rename = "relationships")]
+    pub relationships: Option<crate::datadogV2::model::CreateMaintenanceRequestDataRelationships>,
     /// Maintenances resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::PatchMaintenanceRequestDataType,
@@ -31,10 +34,19 @@ impl CreateMaintenanceRequestData {
     ) -> CreateMaintenanceRequestData {
         CreateMaintenanceRequestData {
             attributes,
+            relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn relationships(
+        mut self,
+        value: crate::datadogV2::model::CreateMaintenanceRequestDataRelationships,
+    ) -> Self {
+        self.relationships = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -66,6 +78,9 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestData {
                 let mut attributes: Option<
                     crate::datadogV2::model::CreateMaintenanceRequestDataAttributes,
                 > = None;
+                let mut relationships: Option<
+                    crate::datadogV2::model::CreateMaintenanceRequestDataRelationships,
+                > = None;
                 let mut type_: Option<crate::datadogV2::model::PatchMaintenanceRequestDataType> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -78,6 +93,13 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestData {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "relationships" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            relationships =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -102,6 +124,7 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestData {
 
                 let content = CreateMaintenanceRequestData {
                     attributes,
+                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,
