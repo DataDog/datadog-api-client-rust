@@ -36,7 +36,7 @@ pub struct ObservabilityPipelineSocketDestination {
     pub mode: crate::datadogV2::model::ObservabilityPipelineSocketDestinationMode,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
-    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
+    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineClientTls>,
     /// The destination type. The value should always be `socket`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineSocketDestinationType,
@@ -84,7 +84,7 @@ impl ObservabilityPipelineSocketDestination {
         self
     }
 
-    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
+    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineClientTls) -> Self {
         self.tls = Some(value);
         self
     }
@@ -130,7 +130,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSocketDestination {
                 let mut mode: Option<
                     crate::datadogV2::model::ObservabilityPipelineSocketDestinationMode,
                 > = None;
-                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
+                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineClientTls> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineSocketDestinationType,
                 > = None;

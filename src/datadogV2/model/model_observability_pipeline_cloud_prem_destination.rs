@@ -27,7 +27,7 @@ pub struct ObservabilityPipelineCloudPremDestination {
     pub inputs: Vec<String>,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
-    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
+    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineClientTls>,
     /// The destination type. The value should always be `cloud_prem`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineCloudPremDestinationType,
@@ -69,7 +69,7 @@ impl ObservabilityPipelineCloudPremDestination {
         self
     }
 
-    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
+    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineClientTls) -> Self {
         self.tls = Some(value);
         self
     }
@@ -106,7 +106,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCloudPremDestination {
                 let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
-                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
+                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineClientTls> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineCloudPremDestinationType,
                 > = None;

@@ -30,7 +30,7 @@ pub struct ObservabilityPipelineSyslogNgDestination {
     pub keepalive: Option<i64>,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
-    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
+    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineClientTls>,
     /// The destination type. The value should always be `syslog_ng`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineSyslogNgDestinationType,
@@ -78,7 +78,7 @@ impl ObservabilityPipelineSyslogNgDestination {
         self
     }
 
-    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
+    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineClientTls) -> Self {
         self.tls = Some(value);
         self
     }
@@ -116,7 +116,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSyslogNgDestination {
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut keepalive: Option<i64> = None;
-                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
+                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineClientTls> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineSyslogNgDestinationType,
                 > = None;

@@ -40,7 +40,7 @@ pub struct ObservabilityPipelineHttpClientSource {
     pub scrape_timeout_secs: Option<i64>,
     /// Configuration for enabling TLS encryption between the pipeline component and external services.
     #[serde(rename = "tls")]
-    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
+    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineClientTls>,
     /// Name of the environment variable or secret that holds the bearer token (used when `auth_strategy` is `bearer`).
     #[serde(rename = "token_key")]
     pub token_key: Option<String>,
@@ -114,7 +114,7 @@ impl ObservabilityPipelineHttpClientSource {
         self
     }
 
-    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
+    pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineClientTls) -> Self {
         self.tls = Some(value);
         self
     }
@@ -166,7 +166,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpClientSource {
                 let mut password_key: Option<String> = None;
                 let mut scrape_interval_secs: Option<i64> = None;
                 let mut scrape_timeout_secs: Option<i64> = None;
-                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
+                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineClientTls> = None;
                 let mut token_key: Option<String> = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineHttpClientSourceType,
