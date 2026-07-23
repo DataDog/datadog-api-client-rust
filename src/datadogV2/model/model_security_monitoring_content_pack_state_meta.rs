@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Metadata for content pack states
+/// Metadata for content pack states.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringContentPackStateMeta {
-    /// Whether the cloud SIEM index configuration is incorrect at the organization level
+    /// Whether the Cloud SIEM index configuration is incorrect for the organization.
     #[serde(rename = "cloud_siem_index_incorrect")]
     pub cloud_siem_index_incorrect: bool,
+    /// The number of months that standard logs are retained for organizations on the standalone_indexed` pricing model. This field is omitted for other pricing models.
+    #[serde(rename = "retention_months")]
+    pub retention_months: Option<i32>,
     /// The Cloud SIEM pricing model (SKU) for the organization.
     #[serde(rename = "sku")]
     pub sku: crate::datadogV2::model::SecurityMonitoringSKU,
@@ -31,10 +34,16 @@ impl SecurityMonitoringContentPackStateMeta {
     ) -> SecurityMonitoringContentPackStateMeta {
         SecurityMonitoringContentPackStateMeta {
             cloud_siem_index_incorrect,
+            retention_months: None,
             sku,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn retention_months(mut self, value: i32) -> Self {
+        self.retention_months = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -64,6 +73,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStateMeta {
                 M: MapAccess<'a>,
             {
                 let mut cloud_siem_index_incorrect: Option<bool> = None;
+                let mut retention_months: Option<i32> = None;
                 let mut sku: Option<crate::datadogV2::model::SecurityMonitoringSKU> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -75,6 +85,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStateMeta {
                     match k.as_str() {
                         "cloud_siem_index_incorrect" => {
                             cloud_siem_index_incorrect =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "retention_months" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            retention_months =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "sku" => {
@@ -101,6 +118,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStateMeta {
 
                 let content = SecurityMonitoringContentPackStateMeta {
                     cloud_siem_index_incorrect,
+                    retention_months,
                     sku,
                     additional_properties,
                     _unparsed,

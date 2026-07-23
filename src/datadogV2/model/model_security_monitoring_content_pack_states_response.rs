@@ -14,7 +14,7 @@ pub struct SecurityMonitoringContentPackStatesResponse {
     /// Array of content pack states.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::SecurityMonitoringContentPackStateData>,
-    /// Metadata for content pack states
+    /// Metadata for content pack states.
     #[serde(rename = "meta")]
     pub meta: crate::datadogV2::model::SecurityMonitoringContentPackStateMeta,
     #[serde(flatten)]

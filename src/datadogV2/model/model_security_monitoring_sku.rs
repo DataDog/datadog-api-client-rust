@@ -10,6 +10,8 @@ pub enum SecurityMonitoringSKU {
     PER_GB_ANALYZED,
     PER_EVENT_IN_SIEM_INDEX_2023,
     ADD_ON_2024,
+    STANDALONE_INDEXED,
+    UNKNOWN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +21,8 @@ impl ToString for SecurityMonitoringSKU {
             Self::PER_GB_ANALYZED => String::from("per_gb_analyzed"),
             Self::PER_EVENT_IN_SIEM_INDEX_2023 => String::from("per_event_in_siem_index_2023"),
             Self::ADD_ON_2024 => String::from("add_on_2024"),
+            Self::STANDALONE_INDEXED => String::from("standalone_indexed"),
+            Self::UNKNOWN => String::from("unknown"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +50,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSKU {
             "per_gb_analyzed" => Self::PER_GB_ANALYZED,
             "per_event_in_siem_index_2023" => Self::PER_EVENT_IN_SIEM_INDEX_2023,
             "add_on_2024" => Self::ADD_ON_2024,
+            "standalone_indexed" => Self::STANDALONE_INDEXED,
+            "unknown" => Self::UNKNOWN,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
