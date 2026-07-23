@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScheduleTrigger {
+    /// Controls whether a scheduled workflow run may start while another instance is still running.
+    #[serde(rename = "overlapBehavior")]
+    pub overlap_behavior: Option<crate::datadogV2::model::ScheduleTriggerOverlapBehavior>,
     /// Recurrence rule expression for scheduling.
     #[serde(rename = "rruleExpression")]
     pub rrule_expression: String,
@@ -24,10 +27,19 @@ pub struct ScheduleTrigger {
 impl ScheduleTrigger {
     pub fn new(rrule_expression: String) -> ScheduleTrigger {
         ScheduleTrigger {
+            overlap_behavior: None,
             rrule_expression,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn overlap_behavior(
+        mut self,
+        value: crate::datadogV2::model::ScheduleTriggerOverlapBehavior,
+    ) -> Self {
+        self.overlap_behavior = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -56,6 +68,9 @@ impl<'de> Deserialize<'de> for ScheduleTrigger {
             where
                 M: MapAccess<'a>,
             {
+                let mut overlap_behavior: Option<
+                    crate::datadogV2::model::ScheduleTriggerOverlapBehavior,
+                > = None;
                 let mut rrule_expression: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -65,6 +80,21 @@ impl<'de> Deserialize<'de> for ScheduleTrigger {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "overlapBehavior" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            overlap_behavior =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _overlap_behavior) = overlap_behavior {
+                                match _overlap_behavior {
+                                    crate::datadogV2::model::ScheduleTriggerOverlapBehavior::UnparsedObject(_overlap_behavior) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "rruleExpression" => {
                             rrule_expression =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -80,6 +110,7 @@ impl<'de> Deserialize<'de> for ScheduleTrigger {
                     rrule_expression.ok_or_else(|| M::Error::missing_field("rrule_expression"))?;
 
                 let content = ScheduleTrigger {
+                    overlap_behavior,
                     rrule_expression,
                     additional_properties,
                     _unparsed,
