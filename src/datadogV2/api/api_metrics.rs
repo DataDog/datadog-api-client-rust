@@ -3677,6 +3677,7 @@ impl MetricsAPI {
 
     /// Atomically re-sequence the tag indexing rules for an org to match the supplied list of rule UUIDs.
     /// The server assigns `rule_order` 1, 2, … matching each rule UUID by position in the list.
+    /// The UUIDs of all active rules must be provided; omitting any active rule UUID returns a 400 error.
     /// Requires the `Manage Tags for Metrics` permission.
     pub async fn reorder_tag_indexing_rules(
         &self,
@@ -3690,6 +3691,7 @@ impl MetricsAPI {
 
     /// Atomically re-sequence the tag indexing rules for an org to match the supplied list of rule UUIDs.
     /// The server assigns `rule_order` 1, 2, … matching each rule UUID by position in the list.
+    /// The UUIDs of all active rules must be provided; omitting any active rule UUID returns a 400 error.
     /// Requires the `Manage Tags for Metrics` permission.
     pub async fn reorder_tag_indexing_rules_with_http_info(
         &self,
