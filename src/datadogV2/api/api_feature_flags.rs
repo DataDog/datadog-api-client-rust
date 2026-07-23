@@ -55,6 +55,8 @@ pub struct ListFeatureFlagsEnvironmentsOptionalParams {
     pub name: Option<String>,
     /// Filter environments by key (partial matching).
     pub key: Option<String>,
+    /// Filter environments by queries that contain the provided DD_ENV value.
+    pub dd_env: Option<String>,
     /// Maximum number of results to return.
     pub limit: Option<i64>,
     /// Number of results to skip.
@@ -70,6 +72,11 @@ impl ListFeatureFlagsEnvironmentsOptionalParams {
     /// Filter environments by key (partial matching).
     pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
+        self
+    }
+    /// Filter environments by queries that contain the provided DD_ENV value.
+    pub fn dd_env(mut self, value: String) -> Self {
+        self.dd_env = Some(value);
         self
     }
     /// Maximum number of results to return.
@@ -1829,7 +1836,7 @@ impl FeatureFlagsAPI {
     }
 
     /// Returns a list of environments for the organization.
-    /// Supports filtering by name and key.
+    /// Supports filtering by name, key, and DD_ENV.
     pub async fn list_feature_flags_environments(
         &self,
         params: ListFeatureFlagsEnvironmentsOptionalParams,
@@ -1855,7 +1862,7 @@ impl FeatureFlagsAPI {
     }
 
     /// Returns a list of environments for the organization.
-    /// Supports filtering by name and key.
+    /// Supports filtering by name, key, and DD_ENV.
     pub async fn list_feature_flags_environments_with_http_info(
         &self,
         params: ListFeatureFlagsEnvironmentsOptionalParams,
@@ -1869,6 +1876,7 @@ impl FeatureFlagsAPI {
         // unbox and build optional parameters
         let name = params.name;
         let key = params.key;
+        let dd_env = params.dd_env;
         let limit = params.limit;
         let offset = params.offset;
 
@@ -1887,6 +1895,10 @@ impl FeatureFlagsAPI {
         };
         if let Some(ref local_query_param) = key {
             local_req_builder = local_req_builder.query(&[("key", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = dd_env {
+            local_req_builder =
+                local_req_builder.query(&[("dd_env", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = limit {
             local_req_builder =

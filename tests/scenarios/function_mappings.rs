@@ -36800,6 +36800,9 @@ fn test_v2_list_feature_flags_environments(
     let key = _parameters
         .get("key")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let dd_env = _parameters
+        .get("dd_env")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let limit = _parameters
         .get("limit")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -36810,6 +36813,7 @@ fn test_v2_list_feature_flags_environments(
         datadogV2::api_feature_flags::ListFeatureFlagsEnvironmentsOptionalParams::default();
     params.name = name;
     params.key = key;
+    params.dd_env = dd_env;
     params.limit = limit;
     params.offset = offset;
     let response = match block_on(api.list_feature_flags_environments_with_http_info(params)) {
