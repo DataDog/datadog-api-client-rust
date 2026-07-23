@@ -14,7 +14,7 @@ pub struct LogsSchemaRemapper {
     /// Name of the logs schema remapper.
     #[serde(rename = "name")]
     pub name: String,
-    /// Override or not the target element if already set.
+    /// Whether to override the target element if it's already set.
     #[serde(rename = "override_on_conflict")]
     pub override_on_conflict: Option<bool>,
     /// Remove or preserve the remapped source element.

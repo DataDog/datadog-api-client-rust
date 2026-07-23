@@ -19,7 +19,7 @@ pub struct LogsAttributeRemapper {
     /// Name of the processor.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Override or not the target element if already set,
+    /// Whether to override the target element if it's already set.
     #[serde(rename = "override_on_conflict")]
     pub override_on_conflict: Option<bool>,
     /// Remove or preserve the remapped source element.
