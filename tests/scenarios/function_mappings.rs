@@ -39111,7 +39111,17 @@ fn test_v2_list_incident_postmortem_templates(
         .v2_api_incidents
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.list_incident_postmortem_templates_with_http_info()) {
+    let filter_incident_type = _parameters
+        .get("filter[incident-type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_incidents::ListIncidentPostmortemTemplatesOptionalParams::default();
+    params.filter_incident_type = filter_incident_type;
+    params.sort = sort;
+    let response = match block_on(api.list_incident_postmortem_templates_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
