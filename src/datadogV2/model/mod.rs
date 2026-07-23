@@ -13878,6 +13878,8 @@ pub mod model_schedule_trigger_wrapper;
 pub use self::model_schedule_trigger_wrapper::ScheduleTriggerWrapper;
 pub mod model_schedule_trigger;
 pub use self::model_schedule_trigger::ScheduleTrigger;
+pub mod model_schedule_trigger_overlap_behavior;
+pub use self::model_schedule_trigger_overlap_behavior::ScheduleTriggerOverlapBehavior;
 pub mod model_security_trigger_wrapper;
 pub use self::model_security_trigger_wrapper::SecurityTriggerWrapper;
 pub mod model_security_trigger;
