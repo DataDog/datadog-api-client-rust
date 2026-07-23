@@ -13,6 +13,7 @@ pub enum SecurityMonitoringContentPackStatus {
     ACTIVE,
     WARNING,
     BROKEN,
+    NOT_CONFIGURED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -25,6 +26,7 @@ impl ToString for SecurityMonitoringContentPackStatus {
             Self::ACTIVE => String::from("active"),
             Self::WARNING => String::from("warning"),
             Self::BROKEN => String::from("broken"),
+            Self::NOT_CONFIGURED => String::from("not_configured"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -55,6 +57,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStatus {
             "active" => Self::ACTIVE,
             "warning" => Self::WARNING,
             "broken" => Self::BROKEN,
+            "not_configured" => Self::NOT_CONFIGURED,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

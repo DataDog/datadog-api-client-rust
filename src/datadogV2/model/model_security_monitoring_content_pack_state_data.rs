@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringContentPackStateData {
-    /// Attributes of a content pack state
+    /// Attributes of a content pack state.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::SecurityMonitoringContentPackStateAttributes,
     /// The content pack identifier.
