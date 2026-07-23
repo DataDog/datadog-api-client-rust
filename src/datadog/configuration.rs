@@ -258,7 +258,6 @@ impl Default for Configuration {
             ("v2.list_aws_cloud_auth_persona_mappings".to_owned(), false),
             ("v2.activate_content_pack".to_owned(), false),
             ("v2.activate_integration".to_owned(), false),
-            ("v2.attach_linear_issue".to_owned(), false),
             (
                 "v2.batch_get_security_monitoring_dataset_dependencies".to_owned(),
                 false,
@@ -278,7 +277,6 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.create_io_c_triage_state".to_owned(), false),
-            ("v2.create_linear_issues".to_owned(), false),
             (
                 "v2.create_sample_log_generation_subscription".to_owned(),
                 false,

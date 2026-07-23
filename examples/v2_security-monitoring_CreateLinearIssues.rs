@@ -38,8 +38,7 @@ async fn main() {
             CaseManagementProjectDataType::PROJECTS,
         )),
     ))]);
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateLinearIssues", true);
+    let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_linear_issues(body).await;
     if let Ok(value) = resp {
