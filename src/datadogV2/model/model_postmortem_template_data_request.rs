@@ -14,7 +14,13 @@ pub struct PostmortemTemplateDataRequest {
     /// Attributes for creating or updating a postmortem template.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::PostmortemTemplateAttributesRequest,
-    /// Postmortem template resource type
+    /// The ID of the template. Required when updating.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
+    /// Relationships for a postmortem template. `incident_type` is required when creating a template and is immutable afterwards.
+    #[serde(rename = "relationships")]
+    pub relationships: Option<crate::datadogV2::model::PostmortemTemplateCreateRelationships>,
+    /// Postmortem template resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::PostmortemTemplateType,
     #[serde(flatten)]
@@ -31,10 +37,25 @@ impl PostmortemTemplateDataRequest {
     ) -> PostmortemTemplateDataRequest {
         PostmortemTemplateDataRequest {
             attributes,
+            id: None,
+            relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        mut self,
+        value: crate::datadogV2::model::PostmortemTemplateCreateRelationships,
+    ) -> Self {
+        self.relationships = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -66,6 +87,10 @@ impl<'de> Deserialize<'de> for PostmortemTemplateDataRequest {
                 let mut attributes: Option<
                     crate::datadogV2::model::PostmortemTemplateAttributesRequest,
                 > = None;
+                let mut id: Option<String> = None;
+                let mut relationships: Option<
+                    crate::datadogV2::model::PostmortemTemplateCreateRelationships,
+                > = None;
                 let mut type_: Option<crate::datadogV2::model::PostmortemTemplateType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -77,6 +102,19 @@ impl<'de> Deserialize<'de> for PostmortemTemplateDataRequest {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "relationships" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            relationships =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -101,6 +139,8 @@ impl<'de> Deserialize<'de> for PostmortemTemplateDataRequest {
 
                 let content = PostmortemTemplateDataRequest {
                     attributes,
+                    id,
+                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,

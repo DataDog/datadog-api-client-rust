@@ -7,14 +7,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum PostmortemTemplateType {
-    POSTMORTEM_TEMPLATE,
+    POSTMORTEM_TEMPLATES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for PostmortemTemplateType {
     fn to_string(&self) -> String {
         match self {
-            Self::POSTMORTEM_TEMPLATE => String::from("postmortem_template"),
+            Self::POSTMORTEM_TEMPLATES => String::from("postmortem_templates"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -39,7 +39,7 @@ impl<'de> Deserialize<'de> for PostmortemTemplateType {
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "postmortem_template" => Self::POSTMORTEM_TEMPLATE,
+            "postmortem_templates" => Self::POSTMORTEM_TEMPLATES,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
