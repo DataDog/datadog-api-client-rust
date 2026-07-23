@@ -33,7 +33,8 @@ pub struct FormDataAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub end_date: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// Whether the current user has already submitted this form. Only present for forms with `single_response` set to `true`.
+    /// Whether the current user has already submitted this form. Only present for forms with
+    /// `single_response` set to `true`.
     #[serde(
         rename = "has_submitted",
         default,
