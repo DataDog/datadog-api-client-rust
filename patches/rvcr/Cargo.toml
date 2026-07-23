@@ -28,7 +28,7 @@ anyhow = "^1"
 async-trait = "^0.1"
 base64 = "0.21.0"
 bytes = "1"
-zip = { version = "0.6", optional = true }
+zip = { version = "8.0", optional = true }
 chrono = { version = "0.4", features = ["serde"] }
 http = "1"
 lazy_static = "1.4"
