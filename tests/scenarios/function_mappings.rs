@@ -4514,6 +4514,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_csm_serverless_coverage_analysis,
     );
     world.function_mappings.insert(
+        "v2.GetOwnershipSettings".into(),
+        test_v2_get_ownership_settings,
+    );
+    world.function_mappings.insert(
+        "v2.PostOwnershipSettings".into(),
+        test_v2_post_ownership_settings,
+    );
+    world.function_mappings.insert(
+        "v2.GetOwnershipUntaggedFindings".into(),
+        test_v2_get_ownership_untagged_findings,
+    );
+    world.function_mappings.insert(
         "v2.ListOwnershipInferences".into(),
         test_v2_list_ownership_inferences,
     );
@@ -34165,6 +34177,82 @@ fn test_v2_get_csm_serverless_coverage_analysis(
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.get_csm_serverless_coverage_analysis_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ownership_settings(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_csm_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_ownership_settings_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_post_ownership_settings(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_csm_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.post_ownership_settings_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ownership_untagged_findings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_csm_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_ownership_untagged_findings_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {
