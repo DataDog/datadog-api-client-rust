@@ -6,20 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Content pack state data.
+/// Details for an entity or identity content pack.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SecurityMonitoringContentPackStateData {
-    /// Attributes of a content pack state.
-    #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::SecurityMonitoringContentPackStateAttributes,
-    /// The content pack identifier.
-    #[serde(rename = "id")]
-    pub id: String,
-    /// Type for content pack state object
+pub struct SecurityMonitoringContentPackEntityDetails {
+    /// The activation status of a content pack.
+    #[serde(rename = "cp_activation")]
+    pub cp_activation: crate::datadogV2::model::SecurityMonitoringContentPackActivation,
+    /// Type for entity content pack details.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::SecurityMonitoringContentPackStateType,
+    pub type_: crate::datadogV2::model::SecurityMonitoringContentPackEntityDetailsType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,15 +24,13 @@ pub struct SecurityMonitoringContentPackStateData {
     pub(crate) _unparsed: bool,
 }
 
-impl SecurityMonitoringContentPackStateData {
+impl SecurityMonitoringContentPackEntityDetails {
     pub fn new(
-        attributes: crate::datadogV2::model::SecurityMonitoringContentPackStateAttributes,
-        id: String,
-        type_: crate::datadogV2::model::SecurityMonitoringContentPackStateType,
-    ) -> SecurityMonitoringContentPackStateData {
-        SecurityMonitoringContentPackStateData {
-            attributes,
-            id,
+        cp_activation: crate::datadogV2::model::SecurityMonitoringContentPackActivation,
+        type_: crate::datadogV2::model::SecurityMonitoringContentPackEntityDetailsType,
+    ) -> SecurityMonitoringContentPackEntityDetails {
+        SecurityMonitoringContentPackEntityDetails {
+            cp_activation,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -51,14 +46,14 @@ impl SecurityMonitoringContentPackStateData {
     }
 }
 
-impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStateData {
+impl<'de> Deserialize<'de> for SecurityMonitoringContentPackEntityDetails {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SecurityMonitoringContentPackStateDataVisitor;
-        impl<'a> Visitor<'a> for SecurityMonitoringContentPackStateDataVisitor {
-            type Value = SecurityMonitoringContentPackStateData;
+        struct SecurityMonitoringContentPackEntityDetailsVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringContentPackEntityDetailsVisitor {
+            type Value = SecurityMonitoringContentPackEntityDetails;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,12 +63,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::SecurityMonitoringContentPackStateAttributes,
+                let mut cp_activation: Option<
+                    crate::datadogV2::model::SecurityMonitoringContentPackActivation,
                 > = None;
-                let mut id: Option<String> = None;
                 let mut type_: Option<
-                    crate::datadogV2::model::SecurityMonitoringContentPackStateType,
+                    crate::datadogV2::model::SecurityMonitoringContentPackEntityDetailsType,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -83,17 +77,23 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStateData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "cp_activation" => {
+                            cp_activation =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _cp_activation) = cp_activation {
+                                match _cp_activation {
+                                    crate::datadogV2::model::SecurityMonitoringContentPackActivation::UnparsedObject(_cp_activation) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::SecurityMonitoringContentPackStateType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::SecurityMonitoringContentPackEntityDetailsType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -107,13 +107,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStateData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let cp_activation =
+                    cp_activation.ok_or_else(|| M::Error::missing_field("cp_activation"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = SecurityMonitoringContentPackStateData {
-                    attributes,
-                    id,
+                let content = SecurityMonitoringContentPackEntityDetails {
+                    cp_activation,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -123,6 +122,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStateData {
             }
         }
 
-        deserializer.deserialize_any(SecurityMonitoringContentPackStateDataVisitor)
+        deserializer.deserialize_any(SecurityMonitoringContentPackEntityDetailsVisitor)
     }
 }

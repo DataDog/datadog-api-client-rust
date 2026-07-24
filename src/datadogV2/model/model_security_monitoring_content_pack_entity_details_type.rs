@@ -6,33 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum SecurityMonitoringContentPackStatus {
-    INSTALL,
-    ACTIVATE,
-    INITIALIZING,
-    ACTIVE,
-    WARNING,
-    BROKEN,
-    NOT_CONFIGURED,
+pub enum SecurityMonitoringContentPackEntityDetailsType {
+    ENTITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for SecurityMonitoringContentPackStatus {
+impl ToString for SecurityMonitoringContentPackEntityDetailsType {
     fn to_string(&self) -> String {
         match self {
-            Self::INSTALL => String::from("install"),
-            Self::ACTIVATE => String::from("activate"),
-            Self::INITIALIZING => String::from("initializing"),
-            Self::ACTIVE => String::from("active"),
-            Self::WARNING => String::from("warning"),
-            Self::BROKEN => String::from("broken"),
-            Self::NOT_CONFIGURED => String::from("not_configured"),
+            Self::ENTITY => String::from("entity"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for SecurityMonitoringContentPackStatus {
+impl Serialize for SecurityMonitoringContentPackEntityDetailsType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -44,20 +32,14 @@ impl Serialize for SecurityMonitoringContentPackStatus {
     }
 }
 
-impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStatus {
+impl<'de> Deserialize<'de> for SecurityMonitoringContentPackEntityDetailsType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "install" => Self::INSTALL,
-            "activate" => Self::ACTIVATE,
-            "initializing" => Self::INITIALIZING,
-            "active" => Self::ACTIVE,
-            "warning" => Self::WARNING,
-            "broken" => Self::BROKEN,
-            "not_configured" => Self::NOT_CONFIGURED,
+            "entity" => Self::ENTITY,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

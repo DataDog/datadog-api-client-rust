@@ -6,34 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a content pack state
+/// Attributes of a content pack state.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringContentPackStateAttributes {
-    /// Whether the cloud SIEM index configuration is incorrect (only applies to certain pricing models)
-    #[serde(rename = "cloud_siem_index_incorrect")]
-    pub cloud_siem_index_incorrect: bool,
-    /// The activation status of a content pack.
-    #[serde(rename = "cp_activation")]
-    pub cp_activation: crate::datadogV2::model::SecurityMonitoringContentPackActivation,
-    /// Whether filters (Security Filters or Index Query depending on the pricing model) are
-    /// present and correctly configured to route logs into Cloud SIEM.
-    #[serde(rename = "filters_configured_for_logs")]
-    pub filters_configured_for_logs: bool,
-    /// The installation status of the related integration.
-    #[serde(rename = "integration_installed_status")]
-    pub integration_installed_status:
-        Option<crate::datadogV2::model::SecurityMonitoringContentPackIntegrationStatus>,
-    /// Timestamp bucket indicating when logs were last collected.
-    #[serde(rename = "logs_last_collected")]
-    pub logs_last_collected: crate::datadogV2::model::SecurityMonitoringContentPackTimestampBucket,
-    /// Whether logs for this content pack have been seen in any Datadog index within the last 72 hours.
-    #[serde(rename = "logs_seen_from_any_index")]
-    pub logs_seen_from_any_index: bool,
+    /// Type-specific details for a content pack state. The set of fields present depends
+    /// on the content pack's `type`. When Cloud SIEM is inactive for the requesting organization, `onboarding` is returned instead of the content pack's usual type, such as `logs` or `vulnerability`.`
+    #[serde(rename = "details")]
+    pub details: crate::datadogV2::model::SecurityMonitoringContentPackStateDetails,
     /// The current operational status of a content pack.
-    #[serde(rename = "state")]
-    pub state: crate::datadogV2::model::SecurityMonitoringContentPackStatus,
+    #[serde(rename = "status")]
+    pub status: crate::datadogV2::model::SecurityMonitoringContentPackStatus,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -43,32 +27,15 @@ pub struct SecurityMonitoringContentPackStateAttributes {
 
 impl SecurityMonitoringContentPackStateAttributes {
     pub fn new(
-        cloud_siem_index_incorrect: bool,
-        cp_activation: crate::datadogV2::model::SecurityMonitoringContentPackActivation,
-        filters_configured_for_logs: bool,
-        logs_last_collected: crate::datadogV2::model::SecurityMonitoringContentPackTimestampBucket,
-        logs_seen_from_any_index: bool,
-        state: crate::datadogV2::model::SecurityMonitoringContentPackStatus,
+        details: crate::datadogV2::model::SecurityMonitoringContentPackStateDetails,
+        status: crate::datadogV2::model::SecurityMonitoringContentPackStatus,
     ) -> SecurityMonitoringContentPackStateAttributes {
         SecurityMonitoringContentPackStateAttributes {
-            cloud_siem_index_incorrect,
-            cp_activation,
-            filters_configured_for_logs,
-            integration_installed_status: None,
-            logs_last_collected,
-            logs_seen_from_any_index,
-            state,
+            details,
+            status,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn integration_installed_status(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringContentPackIntegrationStatus,
-    ) -> Self {
-        self.integration_installed_status = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -97,19 +64,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut cloud_siem_index_incorrect: Option<bool> = None;
-                let mut cp_activation: Option<
-                    crate::datadogV2::model::SecurityMonitoringContentPackActivation,
+                let mut details: Option<
+                    crate::datadogV2::model::SecurityMonitoringContentPackStateDetails,
                 > = None;
-                let mut filters_configured_for_logs: Option<bool> = None;
-                let mut integration_installed_status: Option<
-                    crate::datadogV2::model::SecurityMonitoringContentPackIntegrationStatus,
-                > = None;
-                let mut logs_last_collected: Option<
-                    crate::datadogV2::model::SecurityMonitoringContentPackTimestampBucket,
-                > = None;
-                let mut logs_seen_from_any_index: Option<bool> = None;
-                let mut state: Option<
+                let mut status: Option<
                     crate::datadogV2::model::SecurityMonitoringContentPackStatus,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -120,64 +78,22 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "cloud_siem_index_incorrect" => {
-                            cloud_siem_index_incorrect =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "cp_activation" => {
-                            cp_activation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _cp_activation) = cp_activation {
-                                match _cp_activation {
-                                    crate::datadogV2::model::SecurityMonitoringContentPackActivation::UnparsedObject(_cp_activation) => {
+                        "details" => {
+                            details = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _details) = details {
+                                match _details {
+                                    crate::datadogV2::model::SecurityMonitoringContentPackStateDetails::UnparsedObject(_details) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
                                 }
                             }
                         }
-                        "filters_configured_for_logs" => {
-                            filters_configured_for_logs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "integration_installed_status" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            integration_installed_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _integration_installed_status) =
-                                integration_installed_status
-                            {
-                                match _integration_installed_status {
-                                    crate::datadogV2::model::SecurityMonitoringContentPackIntegrationStatus::UnparsedObject(_integration_installed_status) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
-                        }
-                        "logs_last_collected" => {
-                            logs_last_collected =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _logs_last_collected) = logs_last_collected {
-                                match _logs_last_collected {
-                                    crate::datadogV2::model::SecurityMonitoringContentPackTimestampBucket::UnparsedObject(_logs_last_collected) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
-                        }
-                        "logs_seen_from_any_index" => {
-                            logs_seen_from_any_index =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "state" => {
-                            state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _state) = state {
-                                match _state {
-                                    crate::datadogV2::model::SecurityMonitoringContentPackStatus::UnparsedObject(_state) => {
+                        "status" => {
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _status) = status {
+                                match _status {
+                                    crate::datadogV2::model::SecurityMonitoringContentPackStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -191,26 +107,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStateAttributes {
                         }
                     }
                 }
-                let cloud_siem_index_incorrect = cloud_siem_index_incorrect
-                    .ok_or_else(|| M::Error::missing_field("cloud_siem_index_incorrect"))?;
-                let cp_activation =
-                    cp_activation.ok_or_else(|| M::Error::missing_field("cp_activation"))?;
-                let filters_configured_for_logs = filters_configured_for_logs
-                    .ok_or_else(|| M::Error::missing_field("filters_configured_for_logs"))?;
-                let logs_last_collected = logs_last_collected
-                    .ok_or_else(|| M::Error::missing_field("logs_last_collected"))?;
-                let logs_seen_from_any_index = logs_seen_from_any_index
-                    .ok_or_else(|| M::Error::missing_field("logs_seen_from_any_index"))?;
-                let state = state.ok_or_else(|| M::Error::missing_field("state"))?;
+                let details = details.ok_or_else(|| M::Error::missing_field("details"))?;
+                let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
 
                 let content = SecurityMonitoringContentPackStateAttributes {
-                    cloud_siem_index_incorrect,
-                    cp_activation,
-                    filters_configured_for_logs,
-                    integration_installed_status,
-                    logs_last_collected,
-                    logs_seen_from_any_index,
-                    state,
+                    details,
+                    status,
                     additional_properties,
                     _unparsed,
                 };
