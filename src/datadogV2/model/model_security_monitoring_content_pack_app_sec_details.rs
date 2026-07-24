@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing content pack states.
+/// Details for an Application Security content pack.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SecurityMonitoringContentPackStatesResponse {
-    /// Array of content pack states.
-    #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::SecurityMonitoringContentPackStateData>,
-    /// Metadata for content pack states.
-    #[serde(rename = "meta")]
-    pub meta: crate::datadogV2::model::SecurityMonitoringContentPackStateMeta,
+pub struct SecurityMonitoringContentPackAppSecDetails {
+    /// Type for Application Security content pack details.
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV2::model::SecurityMonitoringContentPackAppSecDetailsType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,14 +21,12 @@ pub struct SecurityMonitoringContentPackStatesResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl SecurityMonitoringContentPackStatesResponse {
+impl SecurityMonitoringContentPackAppSecDetails {
     pub fn new(
-        data: Vec<crate::datadogV2::model::SecurityMonitoringContentPackStateData>,
-        meta: crate::datadogV2::model::SecurityMonitoringContentPackStateMeta,
-    ) -> SecurityMonitoringContentPackStatesResponse {
-        SecurityMonitoringContentPackStatesResponse {
-            data,
-            meta,
+        type_: crate::datadogV2::model::SecurityMonitoringContentPackAppSecDetailsType,
+    ) -> SecurityMonitoringContentPackAppSecDetails {
+        SecurityMonitoringContentPackAppSecDetails {
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -46,14 +41,14 @@ impl SecurityMonitoringContentPackStatesResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStatesResponse {
+impl<'de> Deserialize<'de> for SecurityMonitoringContentPackAppSecDetails {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SecurityMonitoringContentPackStatesResponseVisitor;
-        impl<'a> Visitor<'a> for SecurityMonitoringContentPackStatesResponseVisitor {
-            type Value = SecurityMonitoringContentPackStatesResponse;
+        struct SecurityMonitoringContentPackAppSecDetailsVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringContentPackAppSecDetailsVisitor {
+            type Value = SecurityMonitoringContentPackAppSecDetails;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,11 +58,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStatesResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<
-                    Vec<crate::datadogV2::model::SecurityMonitoringContentPackStateData>,
-                > = None;
-                let mut meta: Option<
-                    crate::datadogV2::model::SecurityMonitoringContentPackStateMeta,
+                let mut type_: Option<
+                    crate::datadogV2::model::SecurityMonitoringContentPackAppSecDetailsType,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -77,11 +69,16 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStatesResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "meta" => {
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::SecurityMonitoringContentPackAppSecDetailsType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -90,12 +87,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStatesResponse {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
-                let meta = meta.ok_or_else(|| M::Error::missing_field("meta"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = SecurityMonitoringContentPackStatesResponse {
-                    data,
-                    meta,
+                let content = SecurityMonitoringContentPackAppSecDetails {
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -104,6 +99,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStatesResponse {
             }
         }
 
-        deserializer.deserialize_any(SecurityMonitoringContentPackStatesResponseVisitor)
+        deserializer.deserialize_any(SecurityMonitoringContentPackAppSecDetailsVisitor)
     }
 }
