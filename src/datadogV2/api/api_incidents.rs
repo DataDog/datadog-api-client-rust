@@ -324,6 +324,29 @@ impl ListIncidentNotificationTemplatesOptionalParams {
     }
 }
 
+/// ListIncidentPostmortemTemplatesOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::list_incident_postmortem_templates`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListIncidentPostmortemTemplatesOptionalParams {
+    /// Filter postmortem templates by the associated incident type ID.
+    pub filter_incident_type: Option<uuid::Uuid>,
+    /// The attribute to sort results by. Prefix with `-` for descending order.
+    pub sort: Option<String>,
+}
+
+impl ListIncidentPostmortemTemplatesOptionalParams {
+    /// Filter postmortem templates by the associated incident type ID.
+    pub fn filter_incident_type(mut self, value: uuid::Uuid) -> Self {
+        self.filter_incident_type = Some(value);
+        self
+    }
+    /// The attribute to sort results by. Prefix with `-` for descending order.
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
+        self
+    }
+}
+
 /// ListIncidentTypesOptionalParams is a struct for passing parameters to the method [`IncidentsAPI::list_incident_types`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -6798,12 +6821,13 @@ impl IncidentsAPI {
     /// Retrieve a list of all postmortem templates for incidents.
     pub async fn list_incident_postmortem_templates(
         &self,
+        params: ListIncidentPostmortemTemplatesOptionalParams,
     ) -> Result<
         crate::datadogV2::model::PostmortemTemplatesResponse,
         datadog::Error<ListIncidentPostmortemTemplatesError>,
     > {
         match self
-            .list_incident_postmortem_templates_with_http_info()
+            .list_incident_postmortem_templates_with_http_info(params)
             .await
         {
             Ok(response_content) => {
@@ -6822,6 +6846,7 @@ impl IncidentsAPI {
     /// Retrieve a list of all postmortem templates for incidents.
     pub async fn list_incident_postmortem_templates_with_http_info(
         &self,
+        params: ListIncidentPostmortemTemplatesOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::PostmortemTemplatesResponse>,
         datadog::Error<ListIncidentPostmortemTemplatesError>,
@@ -6837,6 +6862,10 @@ impl IncidentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        // unbox and build optional parameters
+        let filter_incident_type = params.filter_incident_type;
+        let sort = params.sort;
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -6845,6 +6874,15 @@ impl IncidentsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_incident_type {
+            local_req_builder = local_req_builder
+                .query(&[("filter[incident-type]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();

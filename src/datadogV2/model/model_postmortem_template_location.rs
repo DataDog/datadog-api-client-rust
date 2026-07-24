@@ -6,23 +6,25 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum PostmortemTemplateType {
-    POSTMORTEM_TEMPLATES,
-    POSTMORTEM_TEMPLATE,
+pub enum PostmortemTemplateLocation {
+    DATADOG_NOTEBOOKS,
+    CONFLUENCE,
+    GOOGLE_DOCS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for PostmortemTemplateType {
+impl ToString for PostmortemTemplateLocation {
     fn to_string(&self) -> String {
         match self {
-            Self::POSTMORTEM_TEMPLATES => String::from("postmortem_templates"),
-            Self::POSTMORTEM_TEMPLATE => String::from("postmortem_template"),
+            Self::DATADOG_NOTEBOOKS => String::from("datadog_notebooks"),
+            Self::CONFLUENCE => String::from("confluence"),
+            Self::GOOGLE_DOCS => String::from("google_docs"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for PostmortemTemplateType {
+impl Serialize for PostmortemTemplateLocation {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,15 +36,16 @@ impl Serialize for PostmortemTemplateType {
     }
 }
 
-impl<'de> Deserialize<'de> for PostmortemTemplateType {
+impl<'de> Deserialize<'de> for PostmortemTemplateLocation {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "postmortem_templates" => Self::POSTMORTEM_TEMPLATES,
-            "postmortem_template" => Self::POSTMORTEM_TEMPLATE,
+            "datadog_notebooks" => Self::DATADOG_NOTEBOOKS,
+            "confluence" => Self::CONFLUENCE,
+            "google_docs" => Self::GOOGLE_DOCS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

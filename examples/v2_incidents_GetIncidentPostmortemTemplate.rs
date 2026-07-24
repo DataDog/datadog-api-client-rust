@@ -8,7 +8,7 @@ async fn main() {
     configuration.set_unstable_operation_enabled("v2.GetIncidentPostmortemTemplate", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
-        .get_incident_postmortem_template("template-456".to_string())
+        .get_incident_postmortem_template("template_id".to_string())
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
