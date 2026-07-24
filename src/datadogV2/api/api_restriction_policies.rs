@@ -359,6 +359,7 @@ impl RestrictionPoliciesAPI {
     /// - Case Management Projects: `case-management-project`
     /// - Monitor Notification Rules: `monitor-notification-rule`
     /// - Status Pages: `status-page`
+    /// - Feature Flags: `feature-flag`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -389,6 +390,7 @@ impl RestrictionPoliciesAPI {
     /// Case Management Projects    | `viewer`, `contributor`, `manager`
     /// Monitor Notification Rules  | `viewer`, `editor`
     /// Status Pages                | `viewer`, `responder`, `manager`
+    /// Feature Flags               | `viewer`, `contributor`, `editor`
     pub async fn update_restriction_policy(
         &self,
         resource_id: String,
@@ -445,6 +447,7 @@ impl RestrictionPoliciesAPI {
     /// - Case Management Projects: `case-management-project`
     /// - Monitor Notification Rules: `monitor-notification-rule`
     /// - Status Pages: `status-page`
+    /// - Feature Flags: `feature-flag`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -475,6 +478,7 @@ impl RestrictionPoliciesAPI {
     /// Case Management Projects    | `viewer`, `contributor`, `manager`
     /// Monitor Notification Rules  | `viewer`, `editor`
     /// Status Pages                | `viewer`, `responder`, `manager`
+    /// Feature Flags               | `viewer`, `contributor`, `editor`
     pub async fn update_restriction_policy_with_http_info(
         &self,
         resource_id: String,
