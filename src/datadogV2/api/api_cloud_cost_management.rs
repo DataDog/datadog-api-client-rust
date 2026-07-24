@@ -471,12 +471,19 @@ impl ListCostTagMetadataOptionalParams {
 pub struct ListCostTagMetadataMetricsOptionalParams {
     /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
     pub filter_provider: Option<String>,
+    /// When `true`, only return metrics for currently enabled accounts. When omitted or `false`, return all metrics present in tag metadata. Metrics not recognized by Cloud Cost Management are always excluded.
+    pub filter_enabled_metrics_only: Option<bool>,
 }
 
 impl ListCostTagMetadataMetricsOptionalParams {
     /// Filter results to a specific provider. Common cloud values are `aws`, `azure`, `gcp`, `Oracle` (OCI), and `custom`. SaaS billing integrations (for example, `Snowflake`, `MongoDB`, `Databricks`) are also accepted using their display-name string. Values are case-sensitive.
     pub fn filter_provider(mut self, value: String) -> Self {
         self.filter_provider = Some(value);
+        self
+    }
+    /// When `true`, only return metrics for currently enabled accounts. When omitted or `false`, return all metrics present in tag metadata. Metrics not recognized by Cloud Cost Management are always excluded.
+    pub fn filter_enabled_metrics_only(mut self, value: bool) -> Self {
+        self.filter_enabled_metrics_only = Some(value);
         self
     }
 }
@@ -6910,6 +6917,7 @@ impl CloudCostManagementAPI {
 
         // unbox and build optional parameters
         let filter_provider = params.filter_provider;
+        let filter_enabled_metrics_only = params.filter_enabled_metrics_only;
 
         let local_client = &self.client;
 
@@ -6925,6 +6933,12 @@ impl CloudCostManagementAPI {
         if let Some(ref local_query_param) = filter_provider {
             local_req_builder =
                 local_req_builder.query(&[("filter[provider]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_enabled_metrics_only {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[enabled_metrics_only]",
+                &local_query_param.to_string(),
+            )]);
         };
 
         // build headers
