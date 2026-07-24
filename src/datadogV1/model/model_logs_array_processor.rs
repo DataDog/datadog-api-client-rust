@@ -11,6 +11,7 @@ use std::fmt::{self, Formatter};
 /// - Select value from matching element
 /// - Compute array length
 /// - Append a value to an array
+/// - Extract key-value pairs from an array
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

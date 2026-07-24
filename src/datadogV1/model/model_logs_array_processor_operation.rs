@@ -17,6 +17,9 @@ pub enum LogsArrayProcessorOperation {
     LogsArrayProcessorOperationSelect(
         Box<crate::datadogV1::model::LogsArrayProcessorOperationSelect>,
     ),
+    LogsArrayProcessorOperationExtractKeyValue(
+        Box<crate::datadogV1::model::LogsArrayProcessorOperationExtractKeyValue>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -48,6 +51,16 @@ impl<'de> Deserialize<'de> for LogsArrayProcessorOperation {
         {
             if !_v._unparsed {
                 return Ok(LogsArrayProcessorOperation::LogsArrayProcessorOperationSelect(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::LogsArrayProcessorOperationExtractKeyValue>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    LogsArrayProcessorOperation::LogsArrayProcessorOperationExtractKeyValue(_v),
+                );
             }
         }
 
