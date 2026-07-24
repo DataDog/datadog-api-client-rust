@@ -18,8 +18,8 @@ pub struct IncidentImpactCreateAttributes {
     #[serde(rename = "end_at", default, with = "::serde_with::rust::double_option")]
     pub end_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// An object mapping impact field names to field values.
-    #[serde(rename = "fields", default, with = "::serde_with::rust::double_option")]
-    pub fields: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>>,
+    #[serde(rename = "fields")]
+    pub fields: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Timestamp when the impact started.
     #[serde(rename = "start_at")]
     pub start_at: chrono::DateTime<chrono::Utc>,
@@ -50,10 +50,7 @@ impl IncidentImpactCreateAttributes {
         self
     }
 
-    pub fn fields(
-        mut self,
-        value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    ) -> Self {
+    pub fn fields(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.fields = Some(value);
         self
     }
@@ -86,9 +83,8 @@ impl<'de> Deserialize<'de> for IncidentImpactCreateAttributes {
             {
                 let mut description: Option<String> = None;
                 let mut end_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
-                let mut fields: Option<
-                    Option<std::collections::BTreeMap<String, serde_json::Value>>,
-                > = None;
+                let mut fields: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
                 let mut start_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -106,6 +102,9 @@ impl<'de> Deserialize<'de> for IncidentImpactCreateAttributes {
                             end_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "fields" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "start_at" => {

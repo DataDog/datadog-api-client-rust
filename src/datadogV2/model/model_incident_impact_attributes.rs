@@ -21,8 +21,8 @@ pub struct IncidentImpactAttributes {
     #[serde(rename = "end_at", default, with = "::serde_with::rust::double_option")]
     pub end_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// An object mapping impact field names to field values.
-    #[serde(rename = "fields", default, with = "::serde_with::rust::double_option")]
-    pub fields: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>>,
+    #[serde(rename = "fields")]
+    pub fields: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// The type of impact.
     #[serde(rename = "impact_type")]
     pub impact_type: Option<String>,
@@ -67,10 +67,7 @@ impl IncidentImpactAttributes {
         self
     }
 
-    pub fn fields(
-        mut self,
-        value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    ) -> Self {
+    pub fn fields(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.fields = Some(value);
         self
     }
@@ -114,9 +111,8 @@ impl<'de> Deserialize<'de> for IncidentImpactAttributes {
                 let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut description: Option<String> = None;
                 let mut end_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
-                let mut fields: Option<
-                    Option<std::collections::BTreeMap<String, serde_json::Value>>,
-                > = None;
+                let mut fields: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
                 let mut impact_type: Option<String> = None;
                 let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut start_at: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -142,6 +138,9 @@ impl<'de> Deserialize<'de> for IncidentImpactAttributes {
                             end_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "fields" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "impact_type" => {
