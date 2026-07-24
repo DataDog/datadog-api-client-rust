@@ -11,13 +11,31 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PostmortemTemplateAttributesResponse {
-    /// When the template was created
+    /// Settings for a postmortem template stored in Confluence. Required when `location` is `confluence`.
+    #[serde(rename = "confluence_postmortem_settings")]
+    pub confluence_postmortem_settings:
+        Option<crate::datadogV2::model::ConfluencePostmortemSettings>,
+    /// The templated content of the postmortem, supporting Markdown and incident template variables.
+    #[serde(rename = "content")]
+    pub content: String,
+    /// When the template was created.
     #[serde(rename = "createdAt")]
     pub created_at: chrono::DateTime<chrono::Utc>,
-    /// When the template was last modified
+    /// Settings for a postmortem template stored in Google Docs. Required when `location` is `google_docs`.
+    #[serde(rename = "google_docs_postmortem_settings")]
+    pub google_docs_postmortem_settings:
+        Option<crate::datadogV2::model::GoogleDocsPostmortemSettings>,
+    /// When set, marks this template as a default. The effective default for an incident type is the template with the most recent `is_default` timestamp.
+    #[serialize_always]
+    #[serde(rename = "is_default")]
+    pub is_default: Option<chrono::DateTime<chrono::Utc>>,
+    /// The location where the postmortem is created and stored.
+    #[serde(rename = "location")]
+    pub location: crate::datadogV2::model::PostmortemTemplateLocation,
+    /// When the template was last modified.
     #[serde(rename = "modifiedAt")]
     pub modified_at: chrono::DateTime<chrono::Utc>,
-    /// The name of the template
+    /// The name of the template.
     #[serde(rename = "name")]
     pub name: String,
     #[serde(flatten)]
@@ -29,17 +47,41 @@ pub struct PostmortemTemplateAttributesResponse {
 
 impl PostmortemTemplateAttributesResponse {
     pub fn new(
+        content: String,
         created_at: chrono::DateTime<chrono::Utc>,
+        is_default: Option<chrono::DateTime<chrono::Utc>>,
+        location: crate::datadogV2::model::PostmortemTemplateLocation,
         modified_at: chrono::DateTime<chrono::Utc>,
         name: String,
     ) -> PostmortemTemplateAttributesResponse {
         PostmortemTemplateAttributesResponse {
+            confluence_postmortem_settings: None,
+            content,
             created_at,
+            google_docs_postmortem_settings: None,
+            is_default,
+            location,
             modified_at,
             name,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn confluence_postmortem_settings(
+        mut self,
+        value: crate::datadogV2::model::ConfluencePostmortemSettings,
+    ) -> Self {
+        self.confluence_postmortem_settings = Some(value);
+        self
+    }
+
+    pub fn google_docs_postmortem_settings(
+        mut self,
+        value: crate::datadogV2::model::GoogleDocsPostmortemSettings,
+    ) -> Self {
+        self.google_docs_postmortem_settings = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -68,7 +110,17 @@ impl<'de> Deserialize<'de> for PostmortemTemplateAttributesResponse {
             where
                 M: MapAccess<'a>,
             {
+                let mut confluence_postmortem_settings: Option<
+                    crate::datadogV2::model::ConfluencePostmortemSettings,
+                > = None;
+                let mut content: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut google_docs_postmortem_settings: Option<
+                    crate::datadogV2::model::GoogleDocsPostmortemSettings,
+                > = None;
+                let mut is_default: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
+                let mut location: Option<crate::datadogV2::model::PostmortemTemplateLocation> =
+                    None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -79,8 +131,39 @@ impl<'de> Deserialize<'de> for PostmortemTemplateAttributesResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "confluence_postmortem_settings" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            confluence_postmortem_settings =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "content" => {
+                            content = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "createdAt" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "google_docs_postmortem_settings" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            google_docs_postmortem_settings =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_default" => {
+                            is_default = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "location" => {
+                            location = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _location) = location {
+                                match _location {
+                                    crate::datadogV2::model::PostmortemTemplateLocation::UnparsedObject(_location) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "modifiedAt" => {
                             modified_at =
@@ -96,13 +179,21 @@ impl<'de> Deserialize<'de> for PostmortemTemplateAttributesResponse {
                         }
                     }
                 }
+                let content = content.ok_or_else(|| M::Error::missing_field("content"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
+                let is_default = is_default.ok_or_else(|| M::Error::missing_field("is_default"))?;
+                let location = location.ok_or_else(|| M::Error::missing_field("location"))?;
                 let modified_at =
                     modified_at.ok_or_else(|| M::Error::missing_field("modified_at"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = PostmortemTemplateAttributesResponse {
+                    confluence_postmortem_settings,
+                    content,
                     created_at,
+                    google_docs_postmortem_settings,
+                    is_default,
+                    location,
                     modified_at,
                     name,
                     additional_properties,
