@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response for bulk deleting security monitoring rules.
+/// Attributes for the bulk delete response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SecurityMonitoringRuleBulkDeleteResponse {
-    /// Data for the bulk delete response.
-    #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteResponseData>,
+pub struct SecurityMonitoringRuleBulkDeleteResponseAttributes {
+    /// List of successfully deleted rule IDs.
+    #[serde(rename = "deletedRules")]
+    pub deleted_rules: Option<Vec<String>>,
+    /// List of rule IDs that could not be deleted.
+    #[serde(rename = "failedRules")]
+    pub failed_rules: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,20 +24,23 @@ pub struct SecurityMonitoringRuleBulkDeleteResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl SecurityMonitoringRuleBulkDeleteResponse {
-    pub fn new() -> SecurityMonitoringRuleBulkDeleteResponse {
-        SecurityMonitoringRuleBulkDeleteResponse {
-            data: None,
+impl SecurityMonitoringRuleBulkDeleteResponseAttributes {
+    pub fn new() -> SecurityMonitoringRuleBulkDeleteResponseAttributes {
+        SecurityMonitoringRuleBulkDeleteResponseAttributes {
+            deleted_rules: None,
+            failed_rules: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteResponseData,
-    ) -> Self {
-        self.data = Some(value);
+    pub fn deleted_rules(mut self, value: Vec<String>) -> Self {
+        self.deleted_rules = Some(value);
+        self
+    }
+
+    pub fn failed_rules(mut self, value: Vec<String>) -> Self {
+        self.failed_rules = Some(value);
         self
     }
 
@@ -47,20 +53,20 @@ impl SecurityMonitoringRuleBulkDeleteResponse {
     }
 }
 
-impl Default for SecurityMonitoringRuleBulkDeleteResponse {
+impl Default for SecurityMonitoringRuleBulkDeleteResponseAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteResponse {
+impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SecurityMonitoringRuleBulkDeleteResponseVisitor;
-        impl<'a> Visitor<'a> for SecurityMonitoringRuleBulkDeleteResponseVisitor {
-            type Value = SecurityMonitoringRuleBulkDeleteResponse;
+        struct SecurityMonitoringRuleBulkDeleteResponseAttributesVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringRuleBulkDeleteResponseAttributesVisitor {
+            type Value = SecurityMonitoringRuleBulkDeleteResponseAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,9 +76,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<
-                    crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteResponseData,
-                > = None;
+                let mut deleted_rules: Option<Vec<String>> = None;
+                let mut failed_rules: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,11 +86,19 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
+                        "deletedRules" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            deleted_rules =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "failedRules" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            failed_rules =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -95,8 +108,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteResponse {
                     }
                 }
 
-                let content = SecurityMonitoringRuleBulkDeleteResponse {
-                    data,
+                let content = SecurityMonitoringRuleBulkDeleteResponseAttributes {
+                    deleted_rules,
+                    failed_rules,
                     additional_properties,
                     _unparsed,
                 };
@@ -105,6 +119,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteResponse {
             }
         }
 
-        deserializer.deserialize_any(SecurityMonitoringRuleBulkDeleteResponseVisitor)
+        deserializer.deserialize_any(SecurityMonitoringRuleBulkDeleteResponseAttributesVisitor)
     }
 }
