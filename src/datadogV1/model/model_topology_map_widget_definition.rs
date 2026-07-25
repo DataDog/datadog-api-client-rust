@@ -17,7 +17,7 @@ pub struct TopologyMapWidgetDefinition {
     /// The description of the widget.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// One or more Topology requests.
+    /// One Topology request.
     #[serde(rename = "requests")]
     pub requests: Vec<crate::datadogV1::model::TopologyRequest>,
     /// Title of your widget.
