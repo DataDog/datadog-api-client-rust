@@ -4924,7 +4924,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .insert("v2.PublishForm".into(), test_v2_publish_form);
     world
         .function_mappings
+        .insert("v2.ListFormVersions".into(), test_v2_list_form_versions);
+    world
+        .function_mappings
         .insert("v2.UpsertFormVersion".into(), test_v2_upsert_form_version);
+    world
+        .function_mappings
+        .insert("v2.RevertFormVersion".into(), test_v2_revert_form_version);
     world.function_mappings.insert(
         "v2.UpsertAndPublishFormVersion".into(),
         test_v2_upsert_and_publish_form_version,
@@ -37617,6 +37623,31 @@ fn test_v2_publish_form(world: &mut DatadogWorld, _parameters: &HashMap<String, 
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_form_versions(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_forms
+        .as_ref()
+        .expect("api instance not found");
+    let form_id = serde_json::from_value(_parameters.get("form_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_form_versions_with_http_info(form_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_upsert_form_version(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -37626,6 +37657,32 @@ fn test_v2_upsert_form_version(world: &mut DatadogWorld, _parameters: &HashMap<S
     let form_id = serde_json::from_value(_parameters.get("form_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.upsert_form_version_with_http_info(form_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_revert_form_version(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_forms
+        .as_ref()
+        .expect("api instance not found");
+    let form_id = serde_json::from_value(_parameters.get("form_id").unwrap().clone()).unwrap();
+    let version = serde_json::from_value(_parameters.get("version").unwrap().clone()).unwrap();
+    let response = match block_on(api.revert_form_version_with_http_info(form_id, version)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
