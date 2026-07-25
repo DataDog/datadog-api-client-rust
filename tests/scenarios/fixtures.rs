@@ -57,6 +57,10 @@ pub struct DatadogWorld {
     pub api_name: Option<String>,
     pub api_instances: Box<ApiInstances>,
     undo_operations: Vec<UndoOperation>,
+    test_feature: String,
+    test_scenario: String,
+    test_server_session: Option<String>,
+    test_runner_plan: Option<Value>,
 }
 
 lazy_static! {
@@ -74,6 +78,430 @@ lazy_static! {
         env.add_function("timeISO", time_iso_helper);
         env
     };
+}
+
+fn test_runner_enabled() -> bool {
+    env::var("DD_TEST_RUNNER_DATA").is_ok()
+}
+
+fn test_server_enabled() -> bool {
+    env::var("DD_TEST_SERVER_URL").is_ok()
+}
+
+fn set_test_fixtures(
+    world: &mut DatadogWorld,
+    scenario: &Scenario,
+    prefix: &str,
+    frozen_time: Duration,
+) {
+    let escaped_name = NON_ALNUM_RE
+        .replace_all(scenario.name.as_str(), "_")
+        .to_string();
+    let name = match escaped_name.len() > 100 {
+        true => escaped_name[..100].to_string(),
+        false => escaped_name,
+    };
+    let unique = format!("{}-{}-{}", prefix, name, frozen_time.num_seconds());
+    let unique_alnum = NON_ALNUM_RE.replace_all(unique.as_str(), "").to_string();
+    let uuid_first = frozen_time.num_seconds().to_string();
+    let uuid = format!(
+        "{}-0000-0000-0000-{}00",
+        uuid_first[..8].to_string(),
+        uuid_first[..10].to_string()
+    );
+    world.fixtures = json!({
+        "unique": unique,
+        "unique_lower": unique.to_ascii_lowercase(),
+        "unique_upper": unique.to_ascii_uppercase(),
+        "unique_alnum": unique_alnum,
+        "unique_lower_alnum": unique_alnum.to_ascii_lowercase(),
+        "unique_upper_alnum": unique_alnum.to_ascii_uppercase(),
+        "unique_hash": digest(unique)[..16],
+        "now": frozen_time.num_seconds(),
+        "now_millis": frozen_time.num_milliseconds(),
+        "uuid": uuid,
+    });
+}
+
+async fn test_server_request(endpoint: &str, payload: Option<Value>) -> Value {
+    let client = reqwest::Client::new();
+    let mut request = client
+        .post(format!(
+            "{}/__openapi_transformer__{}",
+            env::var("DD_TEST_SERVER_URL").unwrap(),
+            endpoint
+        ))
+        .header("content-type", "application/json");
+    if let Some(value) = payload {
+        request = request.body(serde_json::to_vec(&value).unwrap());
+    }
+    let response = request.send().await.expect("test server request failed");
+    let status = response.status();
+    let body = response
+        .text()
+        .await
+        .expect("failed to read test server response");
+    assert!(
+        status.is_success(),
+        "Test server POST {endpoint} failed ({status}): {body}"
+    );
+    serde_json::from_str(&body).expect("failed to decode test server response")
+}
+
+async fn next_test_server_request(world: &DatadogWorld) -> Option<Value> {
+    let session = world.test_server_session.as_ref().unwrap();
+    let response = reqwest::Client::new()
+        .get(format!(
+            "{}/__openapi_transformer__/sessions/{session}/next-request",
+            env::var("DD_TEST_SERVER_URL").unwrap(),
+        ))
+        .send()
+        .await
+        .expect("failed to inspect the next test server request");
+    assert!(
+        response.status().is_success(),
+        "Test server next-request failed ({})",
+        response.status(),
+    );
+    serde_json::from_str::<Value>(
+        &response
+            .text()
+            .await
+            .expect("failed to read the next test server request"),
+    )
+    .expect("failed to decode the next test server request")["request"]
+        .as_object()
+        .map(|request| Value::Object(request.clone()))
+}
+
+async fn start_test_server_session(
+    feature: &Feature,
+    scenario: &Scenario,
+    world: &mut DatadogWorld,
+) -> Duration {
+    let root = PathBuf::from(env::var("DD_TEST_RUNNER_DATA").unwrap());
+    let manifest: Value =
+        serde_json::from_str(&read_to_string(root.join("manifest.json")).unwrap()).unwrap();
+    let version = format!("v{}", world.api_version);
+    let item = manifest["scenarios"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|item| {
+            item["version"] == version
+                && item["feature"] == feature.name
+                && item["scenario"] == scenario.name
+        })
+        .unwrap_or_else(|| {
+            panic!(
+                "Generated request plan not found for {}/{}/{}",
+                version, feature.name, scenario.name
+            )
+        });
+    world.test_feature = feature.name.clone();
+    world.test_scenario = scenario.name.clone();
+    world.test_runner_plan = Some(
+        serde_json::from_str(&read_to_string(root.join(item["file"].as_str().unwrap())).unwrap())
+            .unwrap(),
+    );
+    let session = test_server_request(
+        "/sessions",
+        Some(json!({
+            "version": version,
+            "feature": feature.name,
+            "scenario": scenario.name,
+        })),
+    )
+    .await;
+    world.test_server_session = Some(session["session"].as_str().unwrap().to_string());
+    DateTime::parse_from_rfc3339(session["frozen_at"].as_str().unwrap())
+        .expect("failed to parse generated test-server time")
+        .signed_duration_since(DateTime::UNIX_EPOCH)
+}
+
+async fn stop_test_server_session(world: &mut DatadogWorld) {
+    let Some(session) = world.test_server_session.take() else {
+        return;
+    };
+    let result = test_server_request(&format!("/sessions/{session}/stop"), None).await;
+    assert!(
+        result["complete"].as_bool().unwrap_or(true),
+        "Test server session consumed {} of {} interactions",
+        result["interactions"],
+        result["total_interactions"]
+    );
+}
+
+async fn mark_main_request_complete(world: &DatadogWorld) {
+    let Some(session) = world.test_server_session.as_ref() else {
+        return;
+    };
+    test_server_request(&format!("/sessions/{session}/main-complete"), None).await;
+}
+
+fn materialize_test_value(value: &Value, fixtures: &Value) -> Value {
+    match value {
+        Value::Object(map)
+            if map.len() == 1 && map.contains_key("$openapi_transformer_template") =>
+        {
+            let rendered = template(
+                map["$openapi_transformer_template"]
+                    .as_str()
+                    .unwrap()
+                    .to_string(),
+                fixtures,
+            );
+            serde_json::from_str(&rendered).expect("failed to decode rendered request value")
+        }
+        Value::Object(map) => Value::Object(
+            map.iter()
+                .map(|(key, item)| (key.clone(), materialize_test_value(item, fixtures)))
+                .collect(),
+        ),
+        Value::Array(items) => Value::Array(
+            items
+                .iter()
+                .map(|item| materialize_test_value(item, fixtures))
+                .collect(),
+        ),
+        Value::String(value) => {
+            let mut rendered = template(value.clone(), fixtures);
+            let trailing_newlines = value.len() - value.trim_end_matches('\n').len();
+            let rendered_newlines = rendered.len() - rendered.trim_end_matches('\n').len();
+            rendered.push_str(&"\n".repeat(trailing_newlines.saturating_sub(rendered_newlines)));
+            Value::String(rendered)
+        }
+        _ => value.clone(),
+    }
+}
+
+fn apply_test_runner_plan(world: &mut DatadogWorld, pagination: bool) {
+    if !test_runner_enabled() {
+        return;
+    }
+    let plan = world.test_runner_plan.clone().unwrap();
+    assert_eq!(plan["request"]["pagination"].as_bool().unwrap(), pagination);
+    let api_name = plan["api"].as_str().unwrap().replace('-', "");
+    initialize_api_instance(world, api_name.clone());
+    world.api_name = Some(api_name);
+    world.operation_id = plan["operation_id"].as_str().unwrap().to_string();
+    world.parameters.clear();
+    world.path_parameters.clear();
+
+    for parameter in plan["request"]["parameters"].as_array().unwrap() {
+        let name = parameter["name"].as_str().unwrap().to_string();
+        let source = &parameter["source"];
+        let value = if source["type"] == "fixture" {
+            lookup(
+                &source["path"].as_str().unwrap().to_string(),
+                &world.fixtures,
+            )
+            .expect("failed to lookup generated request fixture")
+        } else {
+            materialize_test_value(&source["value"], &world.fixtures)
+        };
+        world.parameters.insert(name.clone(), value.clone());
+        world.path_parameters.insert(name.clone(), value.clone());
+        world
+            .path_parameters
+            .insert(name.to_case(Case::Snake), value);
+    }
+    if !plan["request"]["body"].is_null() {
+        world.parameters.insert(
+            "body".to_string(),
+            materialize_test_value(&plan["request"]["body"]["value"], &world.fixtures),
+        );
+    }
+}
+
+fn test_value_as_string(value: &Value) -> String {
+    match value {
+        Value::String(value) => value.clone(),
+        Value::Array(values) => values
+            .iter()
+            .map(test_value_as_string)
+            .collect::<Vec<_>>()
+            .join(","),
+        Value::Null => String::new(),
+        _ => value.to_string(),
+    }
+}
+
+async fn send_test_runner_request(world: &mut DatadogWorld) {
+    let plan = world.test_runner_plan.clone().unwrap();
+    let request_plan = &plan["request"];
+    let mut path = request_plan["path"].as_str().unwrap().to_string();
+    let mut query = Vec::new();
+    let mut headers = reqwest::header::HeaderMap::new();
+
+    for parameter in request_plan["parameters"].as_array().unwrap() {
+        let name = parameter["name"].as_str().unwrap();
+        let value = world.parameters.get(name).unwrap();
+        match parameter["in"].as_str().unwrap() {
+            "path" => {
+                path = path.replace(&format!("{{{name}}}"), &test_value_as_string(value));
+            }
+            "query" => {
+                if let Some(values) = value.as_array() {
+                    if parameter["explode"].as_bool().unwrap_or(true) {
+                        query.extend(
+                            values
+                                .iter()
+                                .map(|value| (name.to_string(), test_value_as_string(value))),
+                        );
+                    } else {
+                        query.push((name.to_string(), test_value_as_string(value)));
+                    }
+                } else {
+                    query.push((name.to_string(), test_value_as_string(value)));
+                }
+            }
+            "header" => {
+                headers.insert(
+                    reqwest::header::HeaderName::from_str(name).unwrap(),
+                    reqwest::header::HeaderValue::from_str(&test_value_as_string(value)).unwrap(),
+                );
+            }
+            location => panic!("unsupported generated request parameter location: {location}"),
+        }
+    }
+    headers.insert(
+        "x-openapi-test-session",
+        world.test_server_session.as_ref().unwrap().parse().unwrap(),
+    );
+
+    let client = reqwest::Client::new();
+    let method =
+        reqwest::Method::from_bytes(request_plan["method"].as_str().unwrap().as_bytes()).unwrap();
+    let mut request = client
+        .request(
+            method,
+            format!("{}{}", env::var("DD_TEST_SERVER_URL").unwrap(), path),
+        )
+        .headers(headers)
+        .query(&query);
+    if let Some(content_type) = request_plan["content_type"].as_str() {
+        request = request.header("content-type", content_type);
+    }
+    if let Some(body) = world.parameters.get("body") {
+        request = request.body(serde_json::to_vec(body).unwrap());
+    }
+
+    let response = request.send().await.expect("generated test request failed");
+    world.response.code = response.status().as_u16();
+    let request_mismatch = response
+        .headers()
+        .get("x-openapi-test-error")
+        .is_some_and(|value| value == "request-mismatch");
+    let body = response
+        .bytes()
+        .await
+        .expect("failed to read generated test response");
+    assert!(
+        !request_mismatch,
+        "generated request did not match the test server: {}",
+        String::from_utf8_lossy(&body),
+    );
+    world.response.object = if body.is_empty() {
+        Value::Null
+    } else {
+        serde_json::from_slice(&body)
+            .unwrap_or_else(|_| Value::String(String::from_utf8_lossy(&body).into_owned()))
+    };
+}
+
+fn response_items(response: &Value) -> Vec<Value> {
+    if let Some(items) = response.as_array() {
+        return items.clone();
+    }
+    let object = response
+        .as_object()
+        .expect("paginated response must be an array or object");
+    if let Some(items) = object.get("data").and_then(Value::as_array) {
+        return items.clone();
+    }
+    object
+        .values()
+        .find_map(Value::as_array)
+        .expect("paginated response object has no array field")
+        .clone()
+}
+
+async fn send_test_runner_page(world: &mut DatadogWorld, request_plan: &Value) {
+    let session = world.test_server_session.as_ref().unwrap();
+    let method =
+        reqwest::Method::from_bytes(request_plan["method"].as_str().unwrap().as_bytes()).unwrap();
+    let mut request = reqwest::Client::new()
+        .request(
+            method,
+            format!(
+                "{}{}",
+                env::var("DD_TEST_SERVER_URL").unwrap(),
+                request_plan["path"].as_str().unwrap(),
+            ),
+        )
+        .header("x-openapi-test-session", session);
+    if let Some(content_type) = request_plan["content_type"].as_str() {
+        if !content_type.is_empty() {
+            request = request.header("content-type", content_type);
+        }
+    }
+    let query: Vec<(String, String)> = request_plan["query"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|item| {
+            let pair = item.as_array().unwrap();
+            (
+                pair[0].as_str().unwrap().to_string(),
+                pair[1].as_str().unwrap().to_string(),
+            )
+        })
+        .collect();
+    request = request.query(&query);
+    match request_plan["body"]["type"].as_str().unwrap() {
+        "empty" => {}
+        "json" => {
+            request = request.body(serde_json::to_vec(&request_plan["body"]["value"]).unwrap());
+        }
+        "text" => {
+            request = request.body(request_plan["body"]["value"].as_str().unwrap().to_string());
+        }
+        body_type => panic!("unsupported generated request body type: {body_type}"),
+    }
+    let response = request
+        .send()
+        .await
+        .expect("generated pagination request failed");
+    world.response.code = response.status().as_u16();
+    let body = response
+        .bytes()
+        .await
+        .expect("failed to read generated pagination response");
+    world.response.object = if body.is_empty() {
+        Value::Null
+    } else {
+        serde_json::from_slice(&body).unwrap()
+    };
+}
+
+async fn send_test_runner_paginated_request(world: &mut DatadogWorld) {
+    let first = next_test_server_request(world)
+        .await
+        .expect("generated pagination request not found");
+    let method = first["method"].as_str().unwrap().to_string();
+    let path = first["path"].as_str().unwrap().to_string();
+    send_test_runner_page(world, &first).await;
+    let mut items = response_items(&world.response.object);
+
+    while let Some(next) = next_test_server_request(world).await {
+        if next["method"] != method || next["path"] != path {
+            break;
+        }
+        send_test_runner_page(world, &next).await;
+        items.extend(response_items(&world.response.object));
+    }
+    world.response.object = Value::Array(items);
 }
 
 pub async fn before_scenario(
@@ -110,6 +538,35 @@ pub async fn before_scenario(
             prefix: "".to_owned(),
         },
     );
+
+    if test_server_enabled() {
+        let frozen_time = start_test_server_session(feature, scenario, world).await;
+        world.config.server_index = 1;
+        world.config.server_variables = HashMap::from([
+            ("protocol".to_string(), "http".to_string()),
+            (
+                "name".to_string(),
+                env::var("DD_TEST_SERVER_URL")
+                    .unwrap()
+                    .trim_start_matches("http://")
+                    .to_string(),
+            ),
+        ]);
+        world.config.set_retry(false, 0);
+
+        let mut headers = reqwest::header::HeaderMap::new();
+        headers.insert(
+            "x-openapi-test-session",
+            world.test_server_session.as_ref().unwrap().parse().unwrap(),
+        );
+        let client = reqwest::Client::builder()
+            .default_headers(headers)
+            .build()
+            .unwrap();
+        world.http_client = Some(ClientBuilder::new(client).build());
+        set_test_fixtures(world, scenario, "Test", frozen_time);
+        return;
+    }
     world.config.set_auth_key(
         "appKeyAuth",
         APIKey {
@@ -246,6 +703,10 @@ pub async fn after_scenario(
     world: Option<&mut DatadogWorld>,
 ) {
     if let Some(world) = world {
+        if test_server_enabled() {
+            stop_test_server_session(world).await;
+            return;
+        }
         for undo in world.undo_operations.clone().iter().rev() {
             if undo.tag.is_some() {
                 initialize_api_instance(world, undo.tag.clone().unwrap());
@@ -371,6 +832,24 @@ pub fn given_resource_in_system(
             }
         }
 
+        if test_runner_enabled() {
+            let request = next_test_server_request(world)
+                .await
+                .expect("generated setup request not found");
+            send_test_runner_page(world, &request).await;
+            if let Some(source) = given.get("source") {
+                let source_path = source.as_str().unwrap().to_string();
+                if let Some(fixture) = lookup(&source_path, &world.response.object) {
+                    if let Value::Object(ref mut map) = world.fixtures {
+                        map.insert(given_key, fixture);
+                    }
+                }
+            } else if let Value::Object(ref mut map) = world.fixtures {
+                map.insert(given_key, world.response.object.clone());
+            }
+            return;
+        }
+
         let api_name = if let Some(tag) = given.get("tag") {
             let mut api_name = tag
                 .as_str()
@@ -436,6 +915,9 @@ pub fn given_resource_in_system(
 
 #[given(expr = "new {string} request")]
 fn new_request(world: &mut DatadogWorld, operation_id: String) {
+    if test_runner_enabled() {
+        return;
+    }
     world.operation_id = operation_id
 }
 
@@ -454,6 +936,9 @@ fn enable_unstable(world: &mut DatadogWorld, operation_id: String) {
 
 #[given(regex = r"^body with value (.*)$")]
 fn body_with_value(world: &mut DatadogWorld, body: String) {
+    if test_runner_enabled() {
+        return;
+    }
     let rendered = template(body, &world.fixtures);
     let body_struct = serde_json::from_str(rendered.as_str()).unwrap();
     world.parameters.insert("body".to_string(), body_struct);
@@ -461,6 +946,9 @@ fn body_with_value(world: &mut DatadogWorld, body: String) {
 
 #[given(expr = "body from file {string}")]
 fn body_from_file(world: &mut DatadogWorld, path: String) {
+    if test_runner_enabled() {
+        return;
+    }
     let body = read_to_string(format!(
         "tests/scenarios/features/v{}/{}",
         world.api_version, path
@@ -473,6 +961,9 @@ fn body_from_file(world: &mut DatadogWorld, path: String) {
 
 #[given(expr = "request contains {string} parameter from {string}")]
 fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: String) {
+    if test_runner_enabled() {
+        return;
+    }
     let lookup = lookup(&path, &world.fixtures).expect("failed to lookup parameter");
     world.parameters.insert(param.clone(), lookup.clone());
     // Store path parameter for undo operations with naming variants
@@ -485,6 +976,9 @@ fn request_parameter_from_path(world: &mut DatadogWorld, param: String, path: St
 
 #[given(expr = "request contains {string} parameter with value {}")]
 fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: String) {
+    if test_runner_enabled() {
+        return;
+    }
     let trimmed_value = value.trim_matches('"').to_string();
     let rendered = template(trimmed_value.clone(), &world.fixtures);
     // check if the value was an explicit string
@@ -537,7 +1031,13 @@ fn request_parameter_with_value(world: &mut DatadogWorld, param: String, value: 
 }
 
 #[when(regex = r"^the request is sent$")]
-fn request_sent(world: &mut DatadogWorld) {
+async fn request_sent(world: &mut DatadogWorld) {
+    apply_test_runner_plan(world, false);
+    if test_runner_enabled() {
+        send_test_runner_request(world).await;
+        mark_main_request_complete(world).await;
+        return;
+    }
     world
         .function_mappings
         .get(&format!("v{}.{}", world.api_version, &world.operation_id))
@@ -545,6 +1045,7 @@ fn request_sent(world: &mut DatadogWorld) {
             "{:?} request operation id not found",
             world.operation_id
         ))(world, &world.parameters.clone());
+    mark_main_request_complete(world).await;
 
     match build_undo(
         world,
@@ -561,7 +1062,13 @@ fn request_sent(world: &mut DatadogWorld) {
 }
 
 #[when(regex = r"^the request with pagination is sent$")]
-fn request_with_pagination_sent(world: &mut DatadogWorld) {
+async fn request_with_pagination_sent(world: &mut DatadogWorld) {
+    apply_test_runner_plan(world, true);
+    if test_runner_enabled() {
+        send_test_runner_paginated_request(world).await;
+        mark_main_request_complete(world).await;
+        return;
+    }
     world
         .function_mappings
         .get(&format!(
@@ -572,6 +1079,7 @@ fn request_with_pagination_sent(world: &mut DatadogWorld) {
             "{:?} request operation id not found",
             world.operation_id
         ))(world, &world.parameters.clone());
+    mark_main_request_complete(world).await;
 }
 
 #[then(expr = "the response has {int} items")]

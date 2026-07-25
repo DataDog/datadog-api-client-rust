@@ -46,7 +46,7 @@ lazy_static! {
         merge(&mut undos, &undo_v2);
         undos
     };
-    static ref API_VERSION_RE: Regex = Regex::new(r"tests/scenarios/features/v(\d+)/").unwrap();
+    static ref API_VERSION_RE: Regex = Regex::new(r"/v(\d+)/").unwrap();
 }
 
 #[tokio::main]
@@ -91,8 +91,10 @@ async fn main() {
         }
     }
 
+    let features_root =
+        env::var("BDD_FEATURES_ROOT").unwrap_or("tests/scenarios/features/".to_string());
     if cucumber
-        .filter_run("tests/scenarios/features/".to_string(), move |_, _, sc| {
+        .filter_run(features_root, move |_, _, sc| {
             let name_re = parsed_cli.re_filter.clone();
             let name_match = name_re
                 .and_then(|filter| Some(filter.is_match(sc.name.as_str())))
