@@ -1,14 +1,14 @@
-// Create a new dashboard with topology_map widget
+// Create a new dashboard with topology_map data_streams widget
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
 use datadog_api_client::datadogV1::model::DashboardLayoutType;
 use datadog_api_client::datadogV1::model::TopologyMapWidgetDefinition;
-use datadog_api_client::datadogV1::model::TopologyMapWidgetDefinitionServiceMap;
+use datadog_api_client::datadogV1::model::TopologyMapWidgetDefinitionDataStreams;
 use datadog_api_client::datadogV1::model::TopologyMapWidgetDefinitionType;
-use datadog_api_client::datadogV1::model::TopologyQueryServiceMap;
-use datadog_api_client::datadogV1::model::TopologyQueryServiceMapDataSource;
-use datadog_api_client::datadogV1::model::TopologyRequestServiceMap;
+use datadog_api_client::datadogV1::model::TopologyQueryDataStreams;
+use datadog_api_client::datadogV1::model::TopologyQueryDataStreamsDataSource;
+use datadog_api_client::datadogV1::model::TopologyRequestDataStreams;
 use datadog_api_client::datadogV1::model::TopologyRequestType;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetDefinition;
@@ -22,14 +22,17 @@ async fn main() {
         "Example-Dashboard".to_string(),
         vec![
             Widget::new(WidgetDefinition::TopologyMapWidgetDefinition(Box::new(
-                TopologyMapWidgetDefinition::TopologyMapWidgetDefinitionServiceMap(Box::new(
-                    TopologyMapWidgetDefinitionServiceMap::new(
-                        vec![TopologyRequestServiceMap::new()
-                            .query(TopologyQueryServiceMap::new(
-                                TopologyQueryServiceMapDataSource::SERVICE_MAP,
-                                vec!["env:none".to_string(), "environment:*".to_string()],
-                                "".to_string(),
-                            ))
+                TopologyMapWidgetDefinition::TopologyMapWidgetDefinitionDataStreams(Box::new(
+                    TopologyMapWidgetDefinitionDataStreams::new(
+                        vec![TopologyRequestDataStreams::new()
+                            .query(
+                                TopologyQueryDataStreams::new(
+                                    TopologyQueryDataStreamsDataSource::DATA_STREAMS,
+                                    vec!["env:prod".to_string()],
+                                    "".to_string(),
+                                )
+                                .query_string("service:myservice".to_string()),
+                            )
                             .request_type(TopologyRequestType::TOPOLOGY)],
                         TopologyMapWidgetDefinitionType::TOPOLOGY_MAP,
                     )
