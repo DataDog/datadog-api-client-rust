@@ -6,20 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data for bulk deleting security monitoring rules.
+/// Data for the bulk delete response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SecurityMonitoringRuleBulkDeleteData {
-    /// Attributes for bulk deleting security monitoring rules.
+pub struct SecurityMonitoringRuleBulkDeleteResponseData {
+    /// Attributes for the bulk delete response.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteAttributes,
-    /// Request ID. This value is echoed back as the response's resource ID.
+    pub attributes:
+        Option<crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteResponseAttributes>,
+    /// The identifier of the bulk delete response.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// The resource type for a bulk delete request.
+    /// The resource type for a bulk delete response.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteRequestDataType,
+    pub type_: Option<crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteResponseDataType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,22 +28,35 @@ pub struct SecurityMonitoringRuleBulkDeleteData {
     pub(crate) _unparsed: bool,
 }
 
-impl SecurityMonitoringRuleBulkDeleteData {
-    pub fn new(
-        attributes: crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteAttributes,
-        type_: crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteRequestDataType,
-    ) -> SecurityMonitoringRuleBulkDeleteData {
-        SecurityMonitoringRuleBulkDeleteData {
-            attributes,
+impl SecurityMonitoringRuleBulkDeleteResponseData {
+    pub fn new() -> SecurityMonitoringRuleBulkDeleteResponseData {
+        SecurityMonitoringRuleBulkDeleteResponseData {
+            attributes: None,
             id: None,
-            type_,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteResponseAttributes,
+    ) -> Self {
+        self.attributes = Some(value);
+        self
+    }
+
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn type_(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteResponseDataType,
+    ) -> Self {
+        self.type_ = Some(value);
         self
     }
 
@@ -55,14 +69,20 @@ impl SecurityMonitoringRuleBulkDeleteData {
     }
 }
 
-impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteData {
+impl Default for SecurityMonitoringRuleBulkDeleteResponseData {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SecurityMonitoringRuleBulkDeleteDataVisitor;
-        impl<'a> Visitor<'a> for SecurityMonitoringRuleBulkDeleteDataVisitor {
-            type Value = SecurityMonitoringRuleBulkDeleteData;
+        struct SecurityMonitoringRuleBulkDeleteResponseDataVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringRuleBulkDeleteResponseDataVisitor {
+            type Value = SecurityMonitoringRuleBulkDeleteResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -73,11 +93,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteAttributes,
+                    crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteResponseAttributes,
                 > = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<
-                    crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteRequestDataType,
+                    crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteResponseDataType,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -88,6 +108,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
@@ -97,10 +120,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteData {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteRequestDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::SecurityMonitoringRuleBulkDeleteResponseDataType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -114,10 +140,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = SecurityMonitoringRuleBulkDeleteData {
+                let content = SecurityMonitoringRuleBulkDeleteResponseData {
                     attributes,
                     id,
                     type_,
@@ -129,6 +153,6 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleBulkDeleteData {
             }
         }
 
-        deserializer.deserialize_any(SecurityMonitoringRuleBulkDeleteDataVisitor)
+        deserializer.deserialize_any(SecurityMonitoringRuleBulkDeleteResponseDataVisitor)
     }
 }

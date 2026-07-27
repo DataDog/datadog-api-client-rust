@@ -8,14 +8,16 @@ use datadog_api_client::datadogV2::model::SecurityMonitoringRuleBulkDeleteReques
 
 #[tokio::main]
 async fn main() {
-    let body =
-        SecurityMonitoringRuleBulkDeletePayload::new(SecurityMonitoringRuleBulkDeleteData::new(
+    let body = SecurityMonitoringRuleBulkDeletePayload::new(
+        SecurityMonitoringRuleBulkDeleteData::new(
             SecurityMonitoringRuleBulkDeleteAttributes::new(vec![
                 "abc-000-u7q".to_string(),
                 "abc-000-7dd".to_string(),
             ]),
             SecurityMonitoringRuleBulkDeleteRequestDataType::BULK_DELETE_RULES,
-        ));
+        )
+        .id("bulk_delete".to_string()),
+    );
     let configuration = datadog::Configuration::new();
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.bulk_delete_security_monitoring_rules(body).await;
