@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TopologyQueryDataSource {
-    DATA_STREAMS,
+pub enum TopologyQueryServiceMapDataSource {
     SERVICE_MAP,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TopologyQueryDataSource {
+impl ToString for TopologyQueryServiceMapDataSource {
     fn to_string(&self) -> String {
         match self {
-            Self::DATA_STREAMS => String::from("data_streams"),
             Self::SERVICE_MAP => String::from("service_map"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TopologyQueryDataSource {
+impl Serialize for TopologyQueryServiceMapDataSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,14 +32,13 @@ impl Serialize for TopologyQueryDataSource {
     }
 }
 
-impl<'de> Deserialize<'de> for TopologyQueryDataSource {
+impl<'de> Deserialize<'de> for TopologyQueryServiceMapDataSource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "data_streams" => Self::DATA_STREAMS,
             "service_map" => Self::SERVICE_MAP,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
