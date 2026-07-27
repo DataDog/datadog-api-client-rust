@@ -185,6 +185,7 @@ impl Default for Configuration {
             ("v2.get_llm_obs_prompt".to_owned(), false),
             ("v2.get_llm_obs_prompt_version".to_owned(), false),
             ("v2.list_llm_obs_annotation_queues".to_owned(), false),
+            ("v2.list_llm_obs_custom_eval_configs".to_owned(), false),
             ("v2.list_llm_obs_dataset_records".to_owned(), false),
             ("v2.list_llm_obs_datasets".to_owned(), false),
             ("v2.list_llm_obs_dataset_versions".to_owned(), false),

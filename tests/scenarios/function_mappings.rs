@@ -2371,6 +2371,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.ListFleetTracers".into(), test_v2_list_fleet_tracers);
     world.function_mappings.insert(
+        "v2.ListLLMObsCustomEvalConfigs".into(),
+        test_v2_list_llm_obs_custom_eval_configs,
+    );
+    world.function_mappings.insert(
         "v2.DeleteLLMObsCustomEvalConfig".into(),
         test_v2_delete_llm_obs_custom_eval_config,
     );
@@ -15553,6 +15557,33 @@ fn test_v2_list_fleet_tracers(world: &mut DatadogWorld, _parameters: &HashMap<St
     params.sort_descending = sort_descending;
     params.filter = filter;
     let response = match block_on(api.list_fleet_tracers_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_llm_obs_custom_eval_configs(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_llm_observability
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_llm_obs_custom_eval_configs_with_http_info()) {
         Ok(response) => response,
         Err(error) => {
             return match error {

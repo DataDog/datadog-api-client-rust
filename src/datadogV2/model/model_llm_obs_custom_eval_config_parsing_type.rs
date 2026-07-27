@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum LLMObsCustomEvalConfigParsingType {
     STRUCTURED_OUTPUT,
     JSON,
+    KEYWORD_SEARCH,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for LLMObsCustomEvalConfigParsingType {
         match self {
             Self::STRUCTURED_OUTPUT => String::from("structured_output"),
             Self::JSON => String::from("json"),
+            Self::KEYWORD_SEARCH => String::from("keyword_search"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigParsingType {
         Ok(match s.as_str() {
             "structured_output" => Self::STRUCTURED_OUTPUT,
             "json" => Self::JSON,
+            "keyword_search" => Self::KEYWORD_SEARCH,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
