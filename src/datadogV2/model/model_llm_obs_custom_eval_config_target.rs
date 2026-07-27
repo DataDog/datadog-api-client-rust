@@ -20,6 +20,9 @@ pub struct LLMObsCustomEvalConfigTarget {
     /// Scope at which to evaluate spans.
     #[serde(rename = "eval_scope")]
     pub eval_scope: Option<crate::datadogV2::model::LLMObsCustomEvalConfigEvalScope>,
+    /// Experiment project IDs this evaluator is scoped to.
+    #[serde(rename = "experiment_project_ids")]
+    pub experiment_project_ids: Option<Vec<uuid::Uuid>>,
     /// Filter expression to select which spans to evaluate.
     #[serde(rename = "filter", default, with = "::serde_with::rust::double_option")]
     pub filter: Option<Option<String>>,
@@ -50,6 +53,7 @@ impl LLMObsCustomEvalConfigTarget {
             application_name,
             enabled,
             eval_scope: None,
+            experiment_project_ids: None,
             filter: None,
             root_spans_only: None,
             sampling_percentage: None,
@@ -63,6 +67,11 @@ impl LLMObsCustomEvalConfigTarget {
         value: crate::datadogV2::model::LLMObsCustomEvalConfigEvalScope,
     ) -> Self {
         self.eval_scope = Some(value);
+        self
+    }
+
+    pub fn experiment_project_ids(mut self, value: Vec<uuid::Uuid>) -> Self {
+        self.experiment_project_ids = Some(value);
         self
     }
 
@@ -112,6 +121,7 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigTarget {
                 let mut eval_scope: Option<
                     crate::datadogV2::model::LLMObsCustomEvalConfigEvalScope,
                 > = None;
+                let mut experiment_project_ids: Option<Vec<uuid::Uuid>> = None;
                 let mut filter: Option<Option<String>> = None;
                 let mut root_spans_only: Option<Option<bool>> = None;
                 let mut sampling_percentage: Option<Option<f64>> = None;
@@ -144,6 +154,13 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigTarget {
                                 }
                             }
                         }
+                        "experiment_project_ids" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            experiment_project_ids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "filter" => {
                             filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -173,6 +190,7 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigTarget {
                     application_name,
                     enabled,
                     eval_scope,
+                    experiment_project_ids,
                     filter,
                     root_spans_only,
                     sampling_percentage,

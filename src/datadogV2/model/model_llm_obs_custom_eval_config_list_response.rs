@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// AWS Bedrock-specific options for LLM provider configuration.
+/// Response containing a list of custom LLM Observability evaluator configurations.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct LLMObsCustomEvalConfigBedrockOptions {
-    /// Bedrock inference profile identifier, such as an application inference profile ARN.
-    #[serde(rename = "inference_profile")]
-    pub inference_profile: Option<String>,
-    /// AWS region for Bedrock.
-    #[serde(rename = "region")]
-    pub region: Option<String>,
+pub struct LLMObsCustomEvalConfigListResponse {
+    /// List of custom evaluator configuration data objects.
+    #[serde(rename = "data")]
+    pub data: Vec<crate::datadogV2::model::LLMObsCustomEvalConfigData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,24 +21,15 @@ pub struct LLMObsCustomEvalConfigBedrockOptions {
     pub(crate) _unparsed: bool,
 }
 
-impl LLMObsCustomEvalConfigBedrockOptions {
-    pub fn new() -> LLMObsCustomEvalConfigBedrockOptions {
-        LLMObsCustomEvalConfigBedrockOptions {
-            inference_profile: None,
-            region: None,
+impl LLMObsCustomEvalConfigListResponse {
+    pub fn new(
+        data: Vec<crate::datadogV2::model::LLMObsCustomEvalConfigData>,
+    ) -> LLMObsCustomEvalConfigListResponse {
+        LLMObsCustomEvalConfigListResponse {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn inference_profile(mut self, value: String) -> Self {
-        self.inference_profile = Some(value);
-        self
-    }
-
-    pub fn region(mut self, value: String) -> Self {
-        self.region = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -53,20 +41,14 @@ impl LLMObsCustomEvalConfigBedrockOptions {
     }
 }
 
-impl Default for LLMObsCustomEvalConfigBedrockOptions {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigBedrockOptions {
+impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigListResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct LLMObsCustomEvalConfigBedrockOptionsVisitor;
-        impl<'a> Visitor<'a> for LLMObsCustomEvalConfigBedrockOptionsVisitor {
-            type Value = LLMObsCustomEvalConfigBedrockOptions;
+        struct LLMObsCustomEvalConfigListResponseVisitor;
+        impl<'a> Visitor<'a> for LLMObsCustomEvalConfigListResponseVisitor {
+            type Value = LLMObsCustomEvalConfigListResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +58,8 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigBedrockOptions {
             where
                 M: MapAccess<'a>,
             {
-                let mut inference_profile: Option<String> = None;
-                let mut region: Option<String> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::LLMObsCustomEvalConfigData>> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,18 +68,8 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigBedrockOptions {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "inference_profile" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            inference_profile =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "region" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,10 +78,10 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigBedrockOptions {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = LLMObsCustomEvalConfigBedrockOptions {
-                    inference_profile,
-                    region,
+                let content = LLMObsCustomEvalConfigListResponse {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -118,6 +90,6 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigBedrockOptions {
             }
         }
 
-        deserializer.deserialize_any(LLMObsCustomEvalConfigBedrockOptionsVisitor)
+        deserializer.deserialize_any(LLMObsCustomEvalConfigListResponseVisitor)
     }
 }
