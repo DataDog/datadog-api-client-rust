@@ -296,10 +296,10 @@ impl {{ structName }} {
     {%- endif %}
     pub async fn {{operation.operationId | snake_case}}_with_http_info(&self{% for name, parameter in requiredParams %}, {{name|variable_name}}: {{ get_type_for_parameter(parameter, version) }}{% endfor %}{% if operation|has_optional_parameter %}, params: {{operation.operationId}}OptionalParams{% endif %}) -> Result<datadog::ResponseContent<{% if returnType %}{{returnType}}{% else %}(){% endif %}>, datadog::Error<{{operation.operationId}}Error>> {
         let local_configuration = &self.config;
-        let operation_id = "{{ version }}.{{ operation.operationId | snake_case }}";
+        let local_operation_id = "{{ version }}.{{ operation.operationId | snake_case }}";
         {%- if "x-unstable" in operation %}
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation '{{ version }}.{{ operation.operationId | snake_case }}' is not enabled".to_string(),
@@ -319,7 +319,7 @@ impl {{ structName }} {
 
         let local_uri_str = format!(
             "{}{{path}}",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
             {%- for name, parameter in operation|parameters if parameter.in == "path" %}, {{ name|variable_name }}=
             {%- if parameter.schema.type == "string" %}
             datadog::urlencode({{ name|variable_name }}{% if not parameter.required %}.unwrap(){% elif parameter.schema.nullable %}.unwrap(){% endif %}{% if parameter.schema.type == "array" %}.join(",").as_ref(){% endif %}{% if parameter.schema.format == "uuid" or parameter.schema.enum %}.to_string(){% endif %})
