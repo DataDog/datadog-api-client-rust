@@ -722,13 +722,13 @@ impl RUMAPI {
         datadog::Error<AggregateRUMEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.aggregate_rum_events";
+        let local_operation_id = "v2.aggregate_rum_events";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/analytics/aggregate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -877,13 +877,13 @@ impl RUMAPI {
         datadog::Error<CreateRUMApplicationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_rum_application";
+        let local_operation_id = "v2.create_rum_application";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1018,13 +1018,13 @@ impl RUMAPI {
         id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMApplicationError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_rum_application";
+        let local_operation_id = "v2.delete_rum_application";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -1129,9 +1129,9 @@ impl RUMAPI {
         datadog::Error<DeleteSourcemapsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_sourcemaps";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_sourcemaps";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_sourcemaps' is not enabled".to_string(),
@@ -1163,7 +1163,7 @@ impl RUMAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sourcemaps",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1365,13 +1365,13 @@ impl RUMAPI {
         datadog::Error<GetRUMApplicationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_rum_application";
+        let local_operation_id = "v2.get_rum_application";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -1472,13 +1472,13 @@ impl RUMAPI {
         datadog::Error<GetRUMApplicationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_rum_applications";
+        let local_operation_id = "v2.get_rum_applications";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1580,9 +1580,9 @@ impl RUMAPI {
         datadog::Error<GetServiceRepositoryInfoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_service_repository_info";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_service_repository_info";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_service_repository_info' is not enabled".to_string(),
@@ -1594,7 +1594,7 @@ impl RUMAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sourcemaps/service_repository_info",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1750,9 +1750,9 @@ impl RUMAPI {
         datadog::Error<GetSourcemapsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_sourcemaps";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_sourcemaps";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_sourcemaps' is not enabled".to_string(),
@@ -1764,7 +1764,7 @@ impl RUMAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sourcemaps",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1912,7 +1912,7 @@ impl RUMAPI {
         datadog::Error<ListRUMEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_rum_events";
+        let local_operation_id = "v2.list_rum_events";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -1926,7 +1926,7 @@ impl RUMAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/events",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2054,9 +2054,9 @@ impl RUMAPI {
         datadog::Error<ListSourcemapsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_sourcemaps";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_sourcemaps";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_sourcemaps' is not enabled".to_string(),
@@ -2091,7 +2091,7 @@ impl RUMAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sourcemaps/list",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2312,9 +2312,9 @@ impl RUMAPI {
         datadog::Error<RestoreSourcemapsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.restore_sourcemaps";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.restore_sourcemaps";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.restore_sourcemaps' is not enabled".to_string(),
@@ -2346,7 +2346,7 @@ impl RUMAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/sourcemaps/restore",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -2593,13 +2593,13 @@ impl RUMAPI {
         datadog::Error<SearchRUMEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_rum_events";
+        let local_operation_id = "v2.search_rum_events";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/events/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2749,13 +2749,13 @@ impl RUMAPI {
         datadog::Error<UpdateRUMApplicationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_rum_application";
+        let local_operation_id = "v2.update_rum_application";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =

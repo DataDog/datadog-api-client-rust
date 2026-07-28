@@ -476,9 +476,9 @@ impl StaticAnalysisAPI {
         datadog::Error<CreateAiCustomRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_ai_custom_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_ai_custom_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_ai_custom_rule' is not enabled".to_string(),
@@ -490,7 +490,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name)
         );
         let mut local_req_builder =
@@ -633,9 +633,9 @@ impl StaticAnalysisAPI {
         body: crate::datadogV2::model::AiCustomRuleRevisionRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateAiCustomRuleRevisionError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_ai_custom_rule_revision";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_ai_custom_rule_revision";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_ai_custom_rule_revision' is not enabled".to_string(),
@@ -647,7 +647,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules/{rule_name}/revisions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name),
             rule_name = datadog::urlencode(rule_name)
         );
@@ -791,9 +791,9 @@ impl StaticAnalysisAPI {
         datadog::Error<CreateAiCustomRulesetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_ai_custom_ruleset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_ai_custom_ruleset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_ai_custom_ruleset' is not enabled".to_string(),
@@ -805,7 +805,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -944,9 +944,9 @@ impl StaticAnalysisAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateAiMemoryViolationResultError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_ai_memory_violation_result";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_ai_memory_violation_result";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_ai_memory_violation_result' is not enabled".to_string(),
@@ -958,7 +958,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/memory",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1103,9 +1103,9 @@ impl StaticAnalysisAPI {
         datadog::Error<CreateCustomRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_custom_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_custom_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_custom_rule' is not enabled".to_string(),
@@ -1117,7 +1117,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name)
         );
         let mut local_req_builder =
@@ -1260,9 +1260,9 @@ impl StaticAnalysisAPI {
         body: crate::datadogV2::model::CustomRuleRevisionRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCustomRuleRevisionError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_custom_rule_revision";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_custom_rule_revision";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_custom_rule_revision' is not enabled".to_string(),
@@ -1274,7 +1274,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules/{rule_name}/revisions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name),
             rule_name = datadog::urlencode(rule_name)
         );
@@ -1418,9 +1418,9 @@ impl StaticAnalysisAPI {
         datadog::Error<CreateCustomRulesetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_custom_ruleset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_custom_ruleset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_custom_ruleset' is not enabled".to_string(),
@@ -1432,7 +1432,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -1582,9 +1582,9 @@ impl StaticAnalysisAPI {
         datadog::Error<CreateSCAResolveVulnerableSymbolsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_sca_resolve_vulnerable_symbols";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_sca_resolve_vulnerable_symbols";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_sca_resolve_vulnerable_symbols' is not enabled"
@@ -1597,7 +1597,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis-sca/vulnerabilities/resolve-vulnerable-symbols",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1730,9 +1730,9 @@ impl StaticAnalysisAPI {
         body: crate::datadogV2::model::ScaRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateSCAResultError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_sca_result";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_sca_result";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_sca_result' is not enabled".to_string(),
@@ -1744,7 +1744,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis-sca/dependencies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1882,9 +1882,9 @@ impl StaticAnalysisAPI {
         datadog::Error<CreateSCAScanError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_sca_scan";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_sca_scan";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_sca_scan' is not enabled".to_string(),
@@ -1896,7 +1896,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis-sca/dependencies/scan",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2036,9 +2036,9 @@ impl StaticAnalysisAPI {
         rule_name: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAiCustomRuleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_ai_custom_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_ai_custom_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_ai_custom_rule' is not enabled".to_string(),
@@ -2050,7 +2050,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules/{rule_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name),
             rule_name = datadog::urlencode(rule_name)
         );
@@ -2136,9 +2136,9 @@ impl StaticAnalysisAPI {
         ruleset_name: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAiCustomRulesetError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_ai_custom_ruleset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_ai_custom_ruleset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_ai_custom_ruleset' is not enabled".to_string(),
@@ -2150,7 +2150,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name)
         );
         let mut local_req_builder =
@@ -2236,9 +2236,9 @@ impl StaticAnalysisAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAiMemoryViolationResultError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_ai_memory_violation_result";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_ai_memory_violation_result";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_ai_memory_violation_result' is not enabled".to_string(),
@@ -2250,7 +2250,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/memory/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -2337,9 +2337,9 @@ impl StaticAnalysisAPI {
         rule_name: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCustomRuleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_custom_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_custom_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_custom_rule' is not enabled".to_string(),
@@ -2351,7 +2351,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules/{rule_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name),
             rule_name = datadog::urlencode(rule_name)
         );
@@ -2437,9 +2437,9 @@ impl StaticAnalysisAPI {
         ruleset_name: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCustomRulesetError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_custom_ruleset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_custom_ruleset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_custom_ruleset' is not enabled".to_string(),
@@ -2451,7 +2451,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name)
         );
         let mut local_req_builder =
@@ -2550,9 +2550,9 @@ impl StaticAnalysisAPI {
         datadog::Error<GetAiCustomRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_ai_custom_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_ai_custom_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_ai_custom_rule' is not enabled".to_string(),
@@ -2564,7 +2564,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules/{rule_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name),
             rule_name = datadog::urlencode(rule_name)
         );
@@ -2675,9 +2675,9 @@ impl StaticAnalysisAPI {
         datadog::Error<GetAiCustomRuleRevisionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_ai_custom_rule_revision";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_ai_custom_rule_revision";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_ai_custom_rule_revision' is not enabled".to_string(),
@@ -2689,7 +2689,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules/{rule_name}/revisions/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name),
             rule_name = datadog::urlencode(rule_name),
             id = datadog::urlencode(id)
@@ -2797,9 +2797,9 @@ impl StaticAnalysisAPI {
         datadog::Error<GetAiCustomRulesetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_ai_custom_ruleset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_ai_custom_ruleset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_ai_custom_ruleset' is not enabled".to_string(),
@@ -2811,7 +2811,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name)
         );
         let mut local_req_builder =
@@ -2917,9 +2917,9 @@ impl StaticAnalysisAPI {
         datadog::Error<GetCustomRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_custom_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_custom_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_custom_rule' is not enabled".to_string(),
@@ -2931,7 +2931,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules/{rule_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name),
             rule_name = datadog::urlencode(rule_name)
         );
@@ -3042,9 +3042,9 @@ impl StaticAnalysisAPI {
         datadog::Error<GetCustomRuleRevisionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_custom_rule_revision";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_custom_rule_revision";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_custom_rule_revision' is not enabled".to_string(),
@@ -3056,7 +3056,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules/{rule_name}/revisions/{id}",
-            local_configuration.get_operation_host(operation_id), ruleset_name=
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
             datadog::urlencode(ruleset_name)
             , rule_name=
             datadog::urlencode(rule_name)
@@ -3161,9 +3161,9 @@ impl StaticAnalysisAPI {
         datadog::Error<GetCustomRulesetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_custom_ruleset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_custom_ruleset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_custom_ruleset' is not enabled".to_string(),
@@ -3175,7 +3175,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name)
         );
         let mut local_req_builder =
@@ -3273,9 +3273,9 @@ impl StaticAnalysisAPI {
         datadog::Error<GetSCAScanError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_sca_scan";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_sca_scan";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_sca_scan' is not enabled".to_string(),
@@ -3287,7 +3287,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis-sca/dependencies/scan/{job_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             job_id = datadog::urlencode(job_id)
         );
         let mut local_req_builder =
@@ -3434,9 +3434,9 @@ impl StaticAnalysisAPI {
         datadog::Error<ListAiCustomRuleRevisionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_ai_custom_rule_revisions";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_ai_custom_rule_revisions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_ai_custom_rule_revisions' is not enabled".to_string(),
@@ -3452,7 +3452,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules/{rule_name}/revisions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name),
             rule_name = datadog::urlencode(rule_name)
         );
@@ -3565,9 +3565,9 @@ impl StaticAnalysisAPI {
         datadog::Error<ListAiCustomRulesetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_ai_custom_rulesets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_ai_custom_rulesets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_ai_custom_rulesets' is not enabled".to_string(),
@@ -3583,7 +3583,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3692,9 +3692,9 @@ impl StaticAnalysisAPI {
         datadog::Error<ListAiMemoryViolationResultsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_ai_memory_violation_results";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_ai_memory_violation_results";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_ai_memory_violation_results' is not enabled".to_string(),
@@ -3706,7 +3706,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/memory",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3804,9 +3804,9 @@ impl StaticAnalysisAPI {
         datadog::Error<ListAiPromptsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_ai_prompts";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_ai_prompts";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_ai_prompts' is not enabled".to_string(),
@@ -3818,7 +3818,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/prompts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3965,9 +3965,9 @@ impl StaticAnalysisAPI {
         datadog::Error<ListCustomRuleRevisionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_custom_rule_revisions";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_custom_rule_revisions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_custom_rule_revisions' is not enabled".to_string(),
@@ -3983,7 +3983,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules/{rule_name}/revisions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name),
             rule_name = datadog::urlencode(rule_name)
         );
@@ -4094,9 +4094,9 @@ impl StaticAnalysisAPI {
         datadog::Error<ListCustomRulesetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_custom_rulesets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_custom_rulesets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_custom_rulesets' is not enabled".to_string(),
@@ -4108,7 +4108,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4204,9 +4204,9 @@ impl StaticAnalysisAPI {
         datadog::Error<ListSCALicensesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_sca_licenses";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_sca_licenses";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_sca_licenses' is not enabled".to_string(),
@@ -4218,7 +4218,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis-sca/licenses/list",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4313,9 +4313,9 @@ impl StaticAnalysisAPI {
         body: crate::datadogV2::model::RevertCustomRuleRevisionRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RevertCustomRuleRevisionError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.revert_custom_rule_revision";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.revert_custom_rule_revision";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.revert_custom_rule_revision' is not enabled".to_string(),
@@ -4327,7 +4327,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules/{rule_name}/revisions/revert",
-            local_configuration.get_operation_host(operation_id), ruleset_name=
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
             datadog::urlencode(ruleset_name)
             , rule_name=
             datadog::urlencode(rule_name)
@@ -4463,9 +4463,9 @@ impl StaticAnalysisAPI {
         body: crate::datadogV2::model::AiCustomRulesetUpdateRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateAiCustomRulesetError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_ai_custom_ruleset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_ai_custom_ruleset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_ai_custom_ruleset' is not enabled".to_string(),
@@ -4477,7 +4477,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name)
         );
         let mut local_req_builder =
@@ -4625,9 +4625,9 @@ impl StaticAnalysisAPI {
         datadog::Error<UpdateCustomRulesetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_custom_ruleset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_custom_ruleset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_custom_ruleset' is not enabled".to_string(),
@@ -4639,7 +4639,7 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name)
         );
         let mut local_req_builder =

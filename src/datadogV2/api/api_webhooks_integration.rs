@@ -177,13 +177,13 @@ impl WebhooksIntegrationAPI {
         datadog::Error<CreateOAuth2ClientCredentialsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_o_auth2_client_credentials";
+        let local_operation_id = "v2.create_o_auth2_client_credentials";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/webhooks/configuration/auth-method/oauth2-client-credentials",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -323,13 +323,13 @@ impl WebhooksIntegrationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOAuth2ClientCredentialsError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_o_auth2_client_credentials";
+        let local_operation_id = "v2.delete_o_auth2_client_credentials";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/webhooks/configuration/auth-method/oauth2-client-credentials/{auth_method_id}",
-            local_configuration.get_operation_host(operation_id), auth_method_id=
+            local_configuration.get_operation_host(local_operation_id), auth_method_id=
             datadog::urlencode(auth_method_id)
             );
         let mut local_req_builder =
@@ -427,7 +427,7 @@ impl WebhooksIntegrationAPI {
         datadog::Error<GetAllAuthMethodsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_all_auth_methods";
+        let local_operation_id = "v2.get_all_auth_methods";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -436,7 +436,7 @@ impl WebhooksIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/webhooks/configuration/auth-method",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -546,13 +546,13 @@ impl WebhooksIntegrationAPI {
         datadog::Error<GetOAuth2ClientCredentialsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_o_auth2_client_credentials";
+        let local_operation_id = "v2.get_o_auth2_client_credentials";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/webhooks/configuration/auth-method/oauth2-client-credentials/{auth_method_id}",
-            local_configuration.get_operation_host(operation_id), auth_method_id=
+            local_configuration.get_operation_host(local_operation_id), auth_method_id=
             datadog::urlencode(auth_method_id)
             );
         let mut local_req_builder =
@@ -661,13 +661,13 @@ impl WebhooksIntegrationAPI {
         datadog::Error<UpdateOAuth2ClientCredentialsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_o_auth2_client_credentials";
+        let local_operation_id = "v2.update_o_auth2_client_credentials";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/webhooks/configuration/auth-method/oauth2-client-credentials/{auth_method_id}",
-            local_configuration.get_operation_host(operation_id), auth_method_id=
+            local_configuration.get_operation_host(local_operation_id), auth_method_id=
             datadog::urlencode(auth_method_id)
             );
         let mut local_req_builder =

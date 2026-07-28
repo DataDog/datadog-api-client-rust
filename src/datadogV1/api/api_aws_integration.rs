@@ -282,13 +282,13 @@ impl AWSIntegrationAPI {
         datadog::Error<CreateAWSAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_aws_account";
+        let local_operation_id = "v1.create_aws_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -440,13 +440,13 @@ impl AWSIntegrationAPI {
         datadog::Error<CreateAWSEventBridgeSourceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_aws_event_bridge_source";
+        let local_operation_id = "v1.create_aws_event_bridge_source";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -595,13 +595,13 @@ impl AWSIntegrationAPI {
         datadog::Error<CreateAWSTagFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_aws_tag_filter";
+        let local_operation_id = "v1.create_aws_tag_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -750,13 +750,13 @@ impl AWSIntegrationAPI {
         datadog::Error<CreateNewAWSExternalIDError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_new_aws_external_id";
+        let local_operation_id = "v1.create_new_aws_external_id";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/generate_new_external_id",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -905,13 +905,13 @@ impl AWSIntegrationAPI {
         datadog::Error<DeleteAWSAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_aws_account";
+        let local_operation_id = "v1.delete_aws_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1063,13 +1063,13 @@ impl AWSIntegrationAPI {
         datadog::Error<DeleteAWSEventBridgeSourceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_aws_event_bridge_source";
+        let local_operation_id = "v1.delete_aws_event_bridge_source";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1218,13 +1218,13 @@ impl AWSIntegrationAPI {
         datadog::Error<DeleteAWSTagFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_aws_tag_filter";
+        let local_operation_id = "v1.delete_aws_tag_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1371,7 +1371,7 @@ impl AWSIntegrationAPI {
         datadog::Error<ListAWSAccountsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_aws_accounts";
+        let local_operation_id = "v1.list_aws_accounts";
 
         // unbox and build optional parameters
         let account_id = params.account_id;
@@ -1382,7 +1382,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1495,13 +1495,13 @@ impl AWSIntegrationAPI {
         datadog::Error<ListAWSEventBridgeSourcesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_aws_event_bridge_sources";
+        let local_operation_id = "v1.list_aws_event_bridge_sources";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/event_bridge",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1603,13 +1603,13 @@ impl AWSIntegrationAPI {
         datadog::Error<ListAWSTagFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_aws_tag_filters";
+        let local_operation_id = "v1.list_aws_tag_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/filtering",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1708,13 +1708,13 @@ impl AWSIntegrationAPI {
         datadog::Error<ListAvailableAWSNamespacesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_available_aws_namespaces";
+        let local_operation_id = "v1.list_available_aws_namespaces";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/available_namespace_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1816,7 +1816,7 @@ impl AWSIntegrationAPI {
         datadog::Error<UpdateAWSAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_aws_account";
+        let local_operation_id = "v1.update_aws_account";
 
         // unbox and build optional parameters
         let account_id = params.account_id;
@@ -1827,7 +1827,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());

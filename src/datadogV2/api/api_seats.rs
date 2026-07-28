@@ -162,13 +162,13 @@ impl SeatsAPI {
         datadog::Error<AssignSeatsUserError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.assign_seats_user";
+        let local_operation_id = "v2.assign_seats_user";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/seats/users",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -320,7 +320,7 @@ impl SeatsAPI {
         datadog::Error<GetSeatsUsersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_seats_users";
+        let local_operation_id = "v2.get_seats_users";
 
         // unbox and build optional parameters
         let page_limit = params.page_limit;
@@ -330,7 +330,7 @@ impl SeatsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/seats/users",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -427,13 +427,13 @@ impl SeatsAPI {
         body: crate::datadogV2::model::UnassignSeatsUserRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnassignSeatsUserError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.unassign_seats_user";
+        let local_operation_id = "v2.unassign_seats_user";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/seats/users",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());

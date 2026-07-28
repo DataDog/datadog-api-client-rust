@@ -222,9 +222,9 @@ impl APIManagementAPI {
         datadog::Error<CreateOpenAPIError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_open_api";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_open_api";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_open_api' is not enabled".to_string(),
@@ -239,7 +239,7 @@ impl APIManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/openapi",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -354,9 +354,9 @@ impl APIManagementAPI {
         id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOpenAPIError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_open_api";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_open_api";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_open_api' is not enabled".to_string(),
@@ -368,7 +368,7 @@ impl APIManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/api/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
@@ -458,9 +458,9 @@ impl APIManagementAPI {
         id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<Vec<u8>>, datadog::Error<GetOpenAPIError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_open_api";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_open_api";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_open_api' is not enabled".to_string(),
@@ -472,7 +472,7 @@ impl APIManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/api/{id}/openapi",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
@@ -564,9 +564,9 @@ impl APIManagementAPI {
         datadog::Error<ListAPIsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_apis";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_apis";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_apis' is not enabled".to_string(),
@@ -583,7 +583,7 @@ impl APIManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/api",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -698,9 +698,9 @@ impl APIManagementAPI {
         datadog::Error<UpdateOpenAPIError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_open_api";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_open_api";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_open_api' is not enabled".to_string(),
@@ -715,7 +715,7 @@ impl APIManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/apicatalog/api/{id}/openapi",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =

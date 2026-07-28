@@ -175,9 +175,9 @@ impl BitsAIAPI {
         datadog::Error<GetInvestigationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_investigation";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_investigation";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_investigation' is not enabled".to_string(),
@@ -189,7 +189,7 @@ impl BitsAIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/bits-ai/investigations/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -328,9 +328,9 @@ impl BitsAIAPI {
         datadog::Error<ListInvestigationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_investigations";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_investigations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_investigations' is not enabled".to_string(),
@@ -347,7 +347,7 @@ impl BitsAIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/bits-ai/investigations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -462,9 +462,9 @@ impl BitsAIAPI {
         datadog::Error<TriggerInvestigationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.trigger_investigation";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.trigger_investigation";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.trigger_investigation' is not enabled".to_string(),
@@ -476,7 +476,7 @@ impl BitsAIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/bits-ai/investigations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

@@ -276,9 +276,9 @@ impl CSMSettingsAPI {
         datadog::Error<GetCSMAgentlessHostFacetInfoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_csm_agentless_host_facet_info";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_csm_agentless_host_facet_info";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_csm_agentless_host_facet_info' is not enabled".to_string(),
@@ -294,7 +294,7 @@ impl CSMSettingsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/agentless_hosts/facet_info",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -411,9 +411,9 @@ impl CSMSettingsAPI {
         datadog::Error<GetCSMUnifiedHostFacetInfoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_csm_unified_host_facet_info";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_csm_unified_host_facet_info";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_csm_unified_host_facet_info' is not enabled".to_string(),
@@ -429,7 +429,7 @@ impl CSMSettingsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/hosts/facet_info",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -539,9 +539,9 @@ impl CSMSettingsAPI {
         datadog::Error<ListCSMAgentlessHostFacetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_csm_agentless_host_facets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_csm_agentless_host_facets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_csm_agentless_host_facets' is not enabled".to_string(),
@@ -553,7 +553,7 @@ impl CSMSettingsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/agentless_hosts/facets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -655,9 +655,9 @@ impl CSMSettingsAPI {
         datadog::Error<ListCSMAgentlessHostsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_csm_agentless_hosts";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_csm_agentless_hosts";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_csm_agentless_hosts' is not enabled".to_string(),
@@ -674,7 +674,7 @@ impl CSMSettingsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/agentless_hosts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -787,9 +787,9 @@ impl CSMSettingsAPI {
         datadog::Error<ListCSMUnifiedHostFacetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_csm_unified_host_facets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_csm_unified_host_facets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_csm_unified_host_facets' is not enabled".to_string(),
@@ -801,7 +801,7 @@ impl CSMSettingsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/hosts/facets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -903,9 +903,9 @@ impl CSMSettingsAPI {
         datadog::Error<ListCSMUnifiedHostsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_csm_unified_hosts";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_csm_unified_hosts";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_csm_unified_hosts' is not enabled".to_string(),
@@ -922,7 +922,7 @@ impl CSMSettingsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/hosts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

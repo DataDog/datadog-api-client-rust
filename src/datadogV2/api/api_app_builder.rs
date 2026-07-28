@@ -449,13 +449,13 @@ impl AppBuilderAPI {
         datadog::Error<CreateAppError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_app";
+        let local_operation_id = "v2.create_app";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -607,13 +607,13 @@ impl AppBuilderAPI {
         datadog::Error<CreatePublishRequestError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_publish_request";
+        let local_operation_id = "v2.create_publish_request";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}/publish-request",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -760,13 +760,13 @@ impl AppBuilderAPI {
         datadog::Error<DeleteAppError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_app";
+        let local_operation_id = "v2.delete_app";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -864,13 +864,13 @@ impl AppBuilderAPI {
         datadog::Error<DeleteAppsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_apps";
+        let local_operation_id = "v2.delete_apps";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1017,7 +1017,7 @@ impl AppBuilderAPI {
         datadog::Error<GetAppError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_app";
+        let local_operation_id = "v2.get_app";
 
         // unbox and build optional parameters
         let version = params.version;
@@ -1026,7 +1026,7 @@ impl AppBuilderAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -1129,13 +1129,13 @@ impl AppBuilderAPI {
         datadog::Error<GetBlueprintError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_blueprint";
+        let local_operation_id = "v2.get_blueprint";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/blueprint/{blueprint_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             blueprint_id = datadog::urlencode(blueprint_id.to_string())
         );
         let mut local_req_builder =
@@ -1240,13 +1240,13 @@ impl AppBuilderAPI {
         datadog::Error<GetBlueprintsByIntegrationIdError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_blueprints_by_integration_id";
+        let local_operation_id = "v2.get_blueprints_by_integration_id";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/blueprints/integration-id/{integration_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_id = datadog::urlencode(integration_id)
         );
         let mut local_req_builder =
@@ -1349,13 +1349,13 @@ impl AppBuilderAPI {
         datadog::Error<GetBlueprintsBySlugsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_blueprints_by_slugs";
+        let local_operation_id = "v2.get_blueprints_by_slugs";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/blueprints/slugs/{slugs}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             slugs = datadog::urlencode(slugs)
         );
         let mut local_req_builder =
@@ -1460,7 +1460,7 @@ impl AppBuilderAPI {
         datadog::Error<ListAppVersionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_app_versions";
+        let local_operation_id = "v2.list_app_versions";
 
         // unbox and build optional parameters
         let limit = params.limit;
@@ -1470,7 +1470,7 @@ impl AppBuilderAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}/versions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -1579,7 +1579,7 @@ impl AppBuilderAPI {
         datadog::Error<ListAppsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_apps";
+        let local_operation_id = "v2.list_apps";
 
         // unbox and build optional parameters
         let limit = params.limit;
@@ -1598,7 +1598,7 @@ impl AppBuilderAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1748,7 +1748,7 @@ impl AppBuilderAPI {
         datadog::Error<ListBlueprintsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_blueprints";
+        let local_operation_id = "v2.list_blueprints";
 
         // unbox and build optional parameters
         let limit = params.limit;
@@ -1758,7 +1758,7 @@ impl AppBuilderAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/blueprints",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1865,13 +1865,13 @@ impl AppBuilderAPI {
         datadog::Error<ListTagsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tags";
+        let local_operation_id = "v2.list_tags";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/tags",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1969,13 +1969,13 @@ impl AppBuilderAPI {
         datadog::Error<PublishAppError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.publish_app";
+        let local_operation_id = "v2.publish_app";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}/deployment",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -2076,13 +2076,13 @@ impl AppBuilderAPI {
         datadog::Error<RevertAppError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.revert_app";
+        let local_operation_id = "v2.revert_app";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}/revert",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -2183,13 +2183,13 @@ impl AppBuilderAPI {
         datadog::Error<UnpublishAppError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.unpublish_app";
+        let local_operation_id = "v2.unpublish_app";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}/deployment",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -2290,13 +2290,13 @@ impl AppBuilderAPI {
         datadog::Error<UpdateAppError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_app";
+        let local_operation_id = "v2.update_app";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -2432,13 +2432,13 @@ impl AppBuilderAPI {
         body: crate::datadogV2::model::UpdateAppFavoriteRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateAppFavoriteError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_app_favorite";
+        let local_operation_id = "v2.update_app_favorite";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}/favorite",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -2572,13 +2572,13 @@ impl AppBuilderAPI {
         body: crate::datadogV2::model::UpdateAppSelfServiceRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateAppSelfServiceError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_app_self_service";
+        let local_operation_id = "v2.update_app_self_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}/self-service",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -2709,13 +2709,13 @@ impl AppBuilderAPI {
         body: crate::datadogV2::model::UpdateAppTagsRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateAppTagsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_app_tags";
+        let local_operation_id = "v2.update_app_tags";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}/tags",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -2851,13 +2851,13 @@ impl AppBuilderAPI {
         body: crate::datadogV2::model::UpdateAppVersionNameRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateAppVersionNameError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_app_version_name";
+        let local_operation_id = "v2.update_app_version_name";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}/version-name",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =
@@ -3007,13 +3007,13 @@ impl AppBuilderAPI {
         datadog::Error<UpdateProtectionLevelError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_protection_level";
+        let local_operation_id = "v2.update_protection_level";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/app-builder/apps/{app_id}/protection-level",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id.to_string())
         );
         let mut local_req_builder =

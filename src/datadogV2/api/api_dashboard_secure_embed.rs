@@ -164,9 +164,9 @@ impl DashboardSecureEmbedAPI {
         datadog::Error<CreateDashboardSecureEmbedError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_dashboard_secure_embed";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_dashboard_secure_embed";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_dashboard_secure_embed' is not enabled".to_string(),
@@ -178,7 +178,7 @@ impl DashboardSecureEmbedAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/dashboard/{dashboard_id}/shared/secure-embed",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dashboard_id = datadog::urlencode(dashboard_id)
         );
         let mut local_req_builder =
@@ -319,9 +319,9 @@ impl DashboardSecureEmbedAPI {
         token: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDashboardSecureEmbedError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_dashboard_secure_embed";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_dashboard_secure_embed";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_dashboard_secure_embed' is not enabled".to_string(),
@@ -333,7 +333,7 @@ impl DashboardSecureEmbedAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/dashboard/{dashboard_id}/shared/secure-embed/{token}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dashboard_id = datadog::urlencode(dashboard_id),
             token = datadog::urlencode(token)
         );
@@ -435,9 +435,9 @@ impl DashboardSecureEmbedAPI {
         datadog::Error<GetDashboardSecureEmbedError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_dashboard_secure_embed";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_dashboard_secure_embed";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_dashboard_secure_embed' is not enabled".to_string(),
@@ -449,7 +449,7 @@ impl DashboardSecureEmbedAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/dashboard/{dashboard_id}/shared/secure-embed/{token}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dashboard_id = datadog::urlencode(dashboard_id),
             token = datadog::urlencode(token)
         );
@@ -560,9 +560,9 @@ impl DashboardSecureEmbedAPI {
         datadog::Error<UpdateDashboardSecureEmbedError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_dashboard_secure_embed";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_dashboard_secure_embed";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_dashboard_secure_embed' is not enabled".to_string(),
@@ -574,7 +574,7 @@ impl DashboardSecureEmbedAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/dashboard/{dashboard_id}/shared/secure-embed/{token}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dashboard_id = datadog::urlencode(dashboard_id),
             token = datadog::urlencode(token)
         );

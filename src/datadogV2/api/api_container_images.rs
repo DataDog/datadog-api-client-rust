@@ -205,7 +205,7 @@ impl ContainerImagesAPI {
         datadog::Error<ListContainerImagesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_container_images";
+        let local_operation_id = "v2.list_container_images";
 
         // unbox and build optional parameters
         let filter_tags = params.filter_tags;
@@ -218,7 +218,7 @@ impl ContainerImagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/container_images",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

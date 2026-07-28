@@ -184,13 +184,13 @@ impl ObservabilityPipelinesAPI {
         datadog::Error<CreatePipelineError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_pipeline";
+        let local_operation_id = "v2.create_pipeline";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/obs-pipelines/pipelines",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -325,13 +325,13 @@ impl ObservabilityPipelinesAPI {
         pipeline_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeletePipelineError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_pipeline";
+        let local_operation_id = "v2.delete_pipeline";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/obs-pipelines/pipelines/{pipeline_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             pipeline_id = datadog::urlencode(pipeline_id)
         );
         let mut local_req_builder =
@@ -425,13 +425,13 @@ impl ObservabilityPipelinesAPI {
         datadog::Error<GetPipelineError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_pipeline";
+        let local_operation_id = "v2.get_pipeline";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/obs-pipelines/pipelines/{pipeline_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             pipeline_id = datadog::urlencode(pipeline_id)
         );
         let mut local_req_builder =
@@ -531,7 +531,7 @@ impl ObservabilityPipelinesAPI {
         datadog::Error<ListPipelinesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_pipelines";
+        let local_operation_id = "v2.list_pipelines";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -541,7 +541,7 @@ impl ObservabilityPipelinesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/obs-pipelines/pipelines",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -652,13 +652,13 @@ impl ObservabilityPipelinesAPI {
         datadog::Error<UpdatePipelineError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_pipeline";
+        let local_operation_id = "v2.update_pipeline";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/obs-pipelines/pipelines/{pipeline_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             pipeline_id = datadog::urlencode(pipeline_id)
         );
         let mut local_req_builder =
@@ -808,13 +808,13 @@ impl ObservabilityPipelinesAPI {
         datadog::Error<ValidatePipelineError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_pipeline";
+        let local_operation_id = "v2.validate_pipeline";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/obs-pipelines/pipelines/validate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

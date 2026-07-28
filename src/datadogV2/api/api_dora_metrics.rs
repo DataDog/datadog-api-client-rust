@@ -219,13 +219,13 @@ impl DORAMetricsAPI {
         datadog::Error<CreateDORADeploymentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_dora_deployment";
+        let local_operation_id = "v2.create_dora_deployment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployment",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -369,13 +369,13 @@ impl DORAMetricsAPI {
         datadog::Error<CreateDORAFailureError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_dora_failure";
+        let local_operation_id = "v2.create_dora_failure";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/failure",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -521,13 +521,13 @@ impl DORAMetricsAPI {
         datadog::Error<CreateDORAIncidentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_dora_incident";
+        let local_operation_id = "v2.create_dora_incident";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/incident",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -658,13 +658,13 @@ impl DORAMetricsAPI {
         deployment_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDORADeploymentError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_dora_deployment";
+        let local_operation_id = "v2.delete_dora_deployment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployment/{deployment_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             deployment_id = datadog::urlencode(deployment_id)
         );
         let mut local_req_builder =
@@ -746,13 +746,13 @@ impl DORAMetricsAPI {
         failure_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDORAFailureError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_dora_failure";
+        let local_operation_id = "v2.delete_dora_failure";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/failure/{failure_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             failure_id = datadog::urlencode(failure_id)
         );
         let mut local_req_builder =
@@ -848,13 +848,13 @@ impl DORAMetricsAPI {
         datadog::Error<GetDORADeploymentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_dora_deployment";
+        let local_operation_id = "v2.get_dora_deployment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployments/{deployment_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             deployment_id = datadog::urlencode(deployment_id)
         );
         let mut local_req_builder =
@@ -957,13 +957,13 @@ impl DORAMetricsAPI {
         datadog::Error<GetDORAFailureError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_dora_failure";
+        let local_operation_id = "v2.get_dora_failure";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/failures/{failure_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             failure_id = datadog::urlencode(failure_id)
         );
         let mut local_req_builder =
@@ -1066,13 +1066,13 @@ impl DORAMetricsAPI {
         datadog::Error<ListDORADeploymentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_dora_deployments";
+        let local_operation_id = "v2.list_dora_deployments";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployments",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1221,13 +1221,13 @@ impl DORAMetricsAPI {
         datadog::Error<ListDORAFailuresError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_dora_failures";
+        let local_operation_id = "v2.list_dora_failures";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/failures",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1367,13 +1367,13 @@ impl DORAMetricsAPI {
         body: crate::datadogV2::model::DORADeploymentPatchRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<PatchDORADeploymentError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.patch_dora_deployment";
+        let local_operation_id = "v2.patch_dora_deployment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/dora/deployments/{deployment_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             deployment_id = datadog::urlencode(deployment_id)
         );
         let mut local_req_builder =

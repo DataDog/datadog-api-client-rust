@@ -184,9 +184,9 @@ impl DataDeletionAPI {
         datadog::Error<CancelDataDeletionRequestError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.cancel_data_deletion_request";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.cancel_data_deletion_request";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.cancel_data_deletion_request' is not enabled".to_string(),
@@ -198,7 +198,7 @@ impl DataDeletionAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deletion/requests/{id}/cancel",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -306,9 +306,9 @@ impl DataDeletionAPI {
         datadog::Error<CreateDataDeletionRequestError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_data_deletion_request";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_data_deletion_request";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_data_deletion_request' is not enabled".to_string(),
@@ -320,7 +320,7 @@ impl DataDeletionAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deletion/data/{product}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             product = datadog::urlencode(product)
         );
         let mut local_req_builder =
@@ -470,9 +470,9 @@ impl DataDeletionAPI {
         datadog::Error<GetDataDeletionRequestsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_data_deletion_requests";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_data_deletion_requests";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_data_deletion_requests' is not enabled".to_string(),
@@ -491,7 +491,7 @@ impl DataDeletionAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deletion/requests",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

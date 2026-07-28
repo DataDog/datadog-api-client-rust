@@ -131,9 +131,9 @@ impl RumRateLimitAPI {
         scope_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumRateLimitConfigError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_rum_rate_limit_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_rum_rate_limit_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_rum_rate_limit_config' is not enabled".to_string(),
@@ -145,7 +145,7 @@ impl RumRateLimitAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/rate-limit/{scope_type}/{scope_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             scope_type = datadog::urlencode(scope_type.to_string()),
             scope_id = datadog::urlencode(scope_id)
         );
@@ -247,9 +247,9 @@ impl RumRateLimitAPI {
         datadog::Error<GetRumRateLimitConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_rum_rate_limit_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_rum_rate_limit_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_rum_rate_limit_config' is not enabled".to_string(),
@@ -261,7 +261,7 @@ impl RumRateLimitAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/rate-limit/{scope_type}/{scope_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             scope_type = datadog::urlencode(scope_type.to_string()),
             scope_id = datadog::urlencode(scope_id)
         );
@@ -374,9 +374,9 @@ impl RumRateLimitAPI {
         datadog::Error<UpdateRumRateLimitConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_rum_rate_limit_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_rum_rate_limit_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_rum_rate_limit_config' is not enabled".to_string(),
@@ -388,7 +388,7 @@ impl RumRateLimitAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/rate-limit/{scope_type}/{scope_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             scope_type = datadog::urlencode(scope_type.to_string()),
             scope_id = datadog::urlencode(scope_id)
         );

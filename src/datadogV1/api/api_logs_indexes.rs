@@ -174,13 +174,13 @@ impl LogsIndexesAPI {
         datadog::Error<CreateLogsIndexError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_logs_index";
+        let local_operation_id = "v1.create_logs_index";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -315,13 +315,13 @@ impl LogsIndexesAPI {
         name: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLogsIndexError>> {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_logs_index";
+        let local_operation_id = "v1.delete_logs_index";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes/{name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             name = datadog::urlencode(name)
         );
         let mut local_req_builder =
@@ -414,13 +414,13 @@ impl LogsIndexesAPI {
         datadog::Error<GetLogsIndexError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_logs_index";
+        let local_operation_id = "v1.get_logs_index";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes/{name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             name = datadog::urlencode(name)
         );
         let mut local_req_builder =
@@ -516,13 +516,13 @@ impl LogsIndexesAPI {
         datadog::Error<GetLogsIndexOrderError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_logs_index_order";
+        let local_operation_id = "v1.get_logs_index_order";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/index-order",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -621,13 +621,13 @@ impl LogsIndexesAPI {
         datadog::Error<ListLogIndexesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_log_indexes";
+        let local_operation_id = "v1.list_log_indexes";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -736,13 +736,13 @@ impl LogsIndexesAPI {
         datadog::Error<UpdateLogsIndexError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_logs_index";
+        let local_operation_id = "v1.update_logs_index";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/indexes/{name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             name = datadog::urlencode(name)
         );
         let mut local_req_builder =
@@ -890,13 +890,13 @@ impl LogsIndexesAPI {
         datadog::Error<UpdateLogsIndexOrderError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_logs_index_order";
+        let local_operation_id = "v1.update_logs_index_order";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/index-order",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());

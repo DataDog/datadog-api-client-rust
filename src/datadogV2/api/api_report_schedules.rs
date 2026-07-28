@@ -249,9 +249,9 @@ impl ReportSchedulesAPI {
         datadog::Error<CreateReportScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_report_schedule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_report_schedule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_report_schedule' is not enabled".to_string(),
@@ -263,7 +263,7 @@ impl ReportSchedulesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -417,13 +417,13 @@ impl ReportSchedulesAPI {
         datadog::Error<DeleteReportScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_report_schedule";
+        let local_operation_id = "v2.delete_report_schedule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/{schedule_uuid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             schedule_uuid = datadog::urlencode(schedule_uuid.to_string())
         );
         let mut local_req_builder =
@@ -528,13 +528,13 @@ impl ReportSchedulesAPI {
         datadog::Error<GetReportScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_report_schedule";
+        let local_operation_id = "v2.get_report_schedule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/{schedule_uuid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             schedule_uuid = datadog::urlencode(schedule_uuid.to_string())
         );
         let mut local_req_builder =
@@ -644,13 +644,13 @@ impl ReportSchedulesAPI {
         datadog::Error<GetReportSchedulesForResourceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_report_schedules_for_resource";
+        let local_operation_id = "v2.get_report_schedules_for_resource";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/{resource_type}/{resource_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_type = datadog::urlencode(resource_type.to_string()),
             resource_id = datadog::urlencode(resource_id)
         );
@@ -761,13 +761,13 @@ impl ReportSchedulesAPI {
         datadog::Error<ListDatasetReportSchedulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_dataset_report_schedules";
+        let local_operation_id = "v2.list_dataset_report_schedules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/dataset/{dataset_id}/schedules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
         let mut local_req_builder =
@@ -874,7 +874,7 @@ impl ReportSchedulesAPI {
         datadog::Error<ListReportSchedulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_report_schedules";
+        let local_operation_id = "v2.list_report_schedules";
 
         // unbox and build optional parameters
         let page_limit = params.page_limit;
@@ -887,7 +887,7 @@ impl ReportSchedulesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/list",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1021,9 +1021,9 @@ impl ReportSchedulesAPI {
         datadog::Error<PatchReportScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.patch_report_schedule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.patch_report_schedule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.patch_report_schedule' is not enabled".to_string(),
@@ -1035,7 +1035,7 @@ impl ReportSchedulesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/{schedule_uuid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             schedule_uuid = datadog::urlencode(schedule_uuid.to_string())
         );
         let mut local_req_builder =
@@ -1187,13 +1187,13 @@ impl ReportSchedulesAPI {
         datadog::Error<PrintReportError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.print_report";
+        let local_operation_id = "v2.print_report";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/print",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1348,13 +1348,13 @@ impl ReportSchedulesAPI {
         datadog::Error<ToggleReportScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.toggle_report_schedule";
+        let local_operation_id = "v2.toggle_report_schedule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reporting/schedule/{schedule_uuid}/toggle",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             schedule_uuid = datadog::urlencode(schedule_uuid.to_string())
         );
         let mut local_req_builder =

@@ -589,13 +589,13 @@ impl KeyManagementAPI {
         datadog::Error<CreateAPIKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_api_key";
+        let local_operation_id = "v2.create_api_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -744,13 +744,13 @@ impl KeyManagementAPI {
         datadog::Error<CreateCurrentUserApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_current_user_application_key";
+        let local_operation_id = "v2.create_current_user_application_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -899,13 +899,13 @@ impl KeyManagementAPI {
         datadog::Error<CreatePersonalAccessTokenError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_personal_access_token";
+        let local_operation_id = "v2.create_personal_access_token";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/personal_access_tokens",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1040,13 +1040,13 @@ impl KeyManagementAPI {
         api_key_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAPIKeyError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_api_key";
+        let local_operation_id = "v2.delete_api_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             api_key_id = datadog::urlencode(api_key_id)
         );
         let mut local_req_builder =
@@ -1127,13 +1127,13 @@ impl KeyManagementAPI {
         app_key_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteApplicationKeyError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_application_key";
+        let local_operation_id = "v2.delete_application_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
@@ -1219,13 +1219,13 @@ impl KeyManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCurrentUserApplicationKeyError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_current_user_application_key";
+        let local_operation_id = "v2.delete_current_user_application_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
@@ -1320,7 +1320,7 @@ impl KeyManagementAPI {
         datadog::Error<GetAPIKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_api_key";
+        let local_operation_id = "v2.get_api_key";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1329,7 +1329,7 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             api_key_id = datadog::urlencode(api_key_id)
         );
         let mut local_req_builder =
@@ -1439,7 +1439,7 @@ impl KeyManagementAPI {
         datadog::Error<GetApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_application_key";
+        let local_operation_id = "v2.get_application_key";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1448,7 +1448,7 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
@@ -1561,13 +1561,13 @@ impl KeyManagementAPI {
         datadog::Error<GetCurrentUserApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_current_user_application_key";
+        let local_operation_id = "v2.get_current_user_application_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
@@ -1673,13 +1673,13 @@ impl KeyManagementAPI {
         datadog::Error<GetPersonalAccessTokenError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_personal_access_token";
+        let local_operation_id = "v2.get_personal_access_token";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/personal_access_tokens/{token_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             token_id = datadog::urlencode(token_id)
         );
         let mut local_req_builder =
@@ -1779,7 +1779,7 @@ impl KeyManagementAPI {
         datadog::Error<ListAPIKeysError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_api_keys";
+        let local_operation_id = "v2.list_api_keys";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1798,7 +1798,7 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1944,7 +1944,7 @@ impl KeyManagementAPI {
         datadog::Error<ListApplicationKeysError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_application_keys";
+        let local_operation_id = "v2.list_application_keys";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1960,7 +1960,7 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2098,7 +2098,7 @@ impl KeyManagementAPI {
         datadog::Error<ListCurrentUserApplicationKeysError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_current_user_application_keys";
+        let local_operation_id = "v2.list_current_user_application_keys";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -2113,7 +2113,7 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2247,7 +2247,7 @@ impl KeyManagementAPI {
         datadog::Error<ListPersonalAccessTokensError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_personal_access_tokens";
+        let local_operation_id = "v2.list_personal_access_tokens";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -2260,7 +2260,7 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/personal_access_tokens",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2374,13 +2374,13 @@ impl KeyManagementAPI {
         token_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RevokePersonalAccessTokenError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.revoke_personal_access_token";
+        let local_operation_id = "v2.revoke_personal_access_token";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/personal_access_tokens/{token_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             token_id = datadog::urlencode(token_id)
         );
         let mut local_req_builder =
@@ -2475,13 +2475,13 @@ impl KeyManagementAPI {
         datadog::Error<UpdateAPIKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_api_key";
+        let local_operation_id = "v2.update_api_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             api_key_id = datadog::urlencode(api_key_id)
         );
         let mut local_req_builder =
@@ -2633,13 +2633,13 @@ impl KeyManagementAPI {
         datadog::Error<UpdateApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_application_key";
+        let local_operation_id = "v2.update_application_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
@@ -2796,13 +2796,13 @@ impl KeyManagementAPI {
         datadog::Error<UpdateCurrentUserApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_current_user_application_key";
+        let local_operation_id = "v2.update_current_user_application_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
@@ -2957,13 +2957,13 @@ impl KeyManagementAPI {
         datadog::Error<UpdatePersonalAccessTokenError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_personal_access_token";
+        let local_operation_id = "v2.update_personal_access_token";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/personal_access_tokens/{token_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             token_id = datadog::urlencode(token_id)
         );
         let mut local_req_builder =
@@ -3108,9 +3108,9 @@ impl KeyManagementAPI {
         datadog::Error<ValidateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.validate";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.validate' is not enabled".to_string(),
@@ -3122,7 +3122,7 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/validate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3218,13 +3218,13 @@ impl KeyManagementAPI {
         datadog::Error<ValidateAPIKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_api_key";
+        let local_operation_id = "v2.validate_api_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/validate_keys",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

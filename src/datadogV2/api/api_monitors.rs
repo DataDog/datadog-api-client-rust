@@ -342,13 +342,13 @@ impl MonitorsAPI {
         datadog::Error<CreateMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_monitor_config_policy";
+        let local_operation_id = "v2.create_monitor_config_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -500,13 +500,13 @@ impl MonitorsAPI {
         datadog::Error<CreateMonitorNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_monitor_notification_rule";
+        let local_operation_id = "v2.create_monitor_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/notification_rule",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -655,9 +655,9 @@ impl MonitorsAPI {
         datadog::Error<CreateMonitorUserTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_monitor_user_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_monitor_user_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_monitor_user_template' is not enabled".to_string(),
@@ -669,7 +669,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/template",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -807,13 +807,13 @@ impl MonitorsAPI {
         policy_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMonitorConfigPolicyError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_monitor_config_policy";
+        let local_operation_id = "v2.delete_monitor_config_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -899,13 +899,13 @@ impl MonitorsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMonitorNotificationRuleError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_monitor_notification_rule";
+        let local_operation_id = "v2.delete_monitor_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/notification_rule/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -990,9 +990,9 @@ impl MonitorsAPI {
         template_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMonitorUserTemplateError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_monitor_user_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_monitor_user_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_monitor_user_template' is not enabled".to_string(),
@@ -1004,7 +1004,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/template/{template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             template_id = datadog::urlencode(template_id)
         );
         let mut local_req_builder =
@@ -1103,13 +1103,13 @@ impl MonitorsAPI {
         datadog::Error<GetMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_monitor_config_policy";
+        let local_operation_id = "v2.get_monitor_config_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -1217,7 +1217,7 @@ impl MonitorsAPI {
         datadog::Error<GetMonitorNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_monitor_notification_rule";
+        let local_operation_id = "v2.get_monitor_notification_rule";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1226,7 +1226,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/notification_rule/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -1337,7 +1337,7 @@ impl MonitorsAPI {
         datadog::Error<GetMonitorNotificationRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_monitor_notification_rules";
+        let local_operation_id = "v2.get_monitor_notification_rules";
 
         // unbox and build optional parameters
         let page = params.page;
@@ -1350,7 +1350,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/notification_rule",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1478,9 +1478,9 @@ impl MonitorsAPI {
         datadog::Error<GetMonitorUserTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_monitor_user_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_monitor_user_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_monitor_user_template' is not enabled".to_string(),
@@ -1495,7 +1495,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/template/{template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             template_id = datadog::urlencode(template_id)
         );
         let mut local_req_builder =
@@ -1601,13 +1601,13 @@ impl MonitorsAPI {
         datadog::Error<ListMonitorConfigPoliciesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_monitor_config_policies";
+        let local_operation_id = "v2.list_monitor_config_policies";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1707,9 +1707,9 @@ impl MonitorsAPI {
         datadog::Error<ListMonitorUserTemplatesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_monitor_user_templates";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_monitor_user_templates";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_monitor_user_templates' is not enabled".to_string(),
@@ -1721,7 +1721,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/template",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1828,13 +1828,13 @@ impl MonitorsAPI {
         datadog::Error<UpdateMonitorConfigPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_monitor_config_policy";
+        let local_operation_id = "v2.update_monitor_config_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/policy/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -1989,13 +1989,13 @@ impl MonitorsAPI {
         datadog::Error<UpdateMonitorNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_monitor_notification_rule";
+        let local_operation_id = "v2.update_monitor_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/notification_rule/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -2150,9 +2150,9 @@ impl MonitorsAPI {
         datadog::Error<UpdateMonitorUserTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_monitor_user_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_monitor_user_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_monitor_user_template' is not enabled".to_string(),
@@ -2164,7 +2164,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/template/{template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             template_id = datadog::urlencode(template_id)
         );
         let mut local_req_builder =
@@ -2308,9 +2308,9 @@ impl MonitorsAPI {
         datadog::Error<ValidateExistingMonitorUserTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_existing_monitor_user_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.validate_existing_monitor_user_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.validate_existing_monitor_user_template' is not enabled"
@@ -2323,7 +2323,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/template/{template_id}/validate",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             template_id = datadog::urlencode(template_id)
         );
         let mut local_req_builder =
@@ -2456,9 +2456,9 @@ impl MonitorsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ValidateMonitorUserTemplateError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_monitor_user_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.validate_monitor_user_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.validate_monitor_user_template' is not enabled".to_string(),
@@ -2470,7 +2470,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/monitor/template/validate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

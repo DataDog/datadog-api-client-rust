@@ -236,13 +236,13 @@ impl NotebooksAPI {
         datadog::Error<CreateNotebookError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_notebook";
+        let local_operation_id = "v1.create_notebook";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -376,13 +376,13 @@ impl NotebooksAPI {
         notebook_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteNotebookError>> {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_notebook";
+        let local_operation_id = "v1.delete_notebook";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks/{notebook_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             notebook_id = notebook_id
         );
         let mut local_req_builder =
@@ -475,13 +475,13 @@ impl NotebooksAPI {
         datadog::Error<GetNotebookError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_notebook";
+        let local_operation_id = "v1.get_notebook";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks/{notebook_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             notebook_id = notebook_id
         );
         let mut local_req_builder =
@@ -619,7 +619,7 @@ impl NotebooksAPI {
         datadog::Error<ListNotebooksError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_notebooks";
+        let local_operation_id = "v1.list_notebooks";
 
         // unbox and build optional parameters
         let author_handle = params.author_handle;
@@ -637,7 +637,7 @@ impl NotebooksAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -779,13 +779,13 @@ impl NotebooksAPI {
         datadog::Error<UpdateNotebookError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_notebook";
+        let local_operation_id = "v1.update_notebook";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks/{notebook_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             notebook_id = notebook_id
         );
         let mut local_req_builder =

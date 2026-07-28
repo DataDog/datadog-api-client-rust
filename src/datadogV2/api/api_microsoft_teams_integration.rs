@@ -251,13 +251,13 @@ impl MicrosoftTeamsIntegrationAPI {
         datadog::Error<CreateTenantBasedHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_tenant_based_handle";
+        let local_operation_id = "v2.create_tenant_based_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/tenant-based-handles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -412,13 +412,13 @@ impl MicrosoftTeamsIntegrationAPI {
         datadog::Error<CreateWorkflowsWebhookHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_workflows_webhook_handle";
+        let local_operation_id = "v2.create_workflows_webhook_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/workflows-webhook-handles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -557,13 +557,13 @@ impl MicrosoftTeamsIntegrationAPI {
         tenant_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMSTeamsUserBindingError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_ms_teams_user_binding";
+        let local_operation_id = "v2.delete_ms_teams_user_binding";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/user-binding/{tenant_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             tenant_id = datadog::urlencode(tenant_id)
         );
         let mut local_req_builder =
@@ -648,13 +648,13 @@ impl MicrosoftTeamsIntegrationAPI {
         handle_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTenantBasedHandleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_tenant_based_handle";
+        let local_operation_id = "v2.delete_tenant_based_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/tenant-based-handles/{handle_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             handle_id = datadog::urlencode(handle_id)
         );
         let mut local_req_builder =
@@ -740,13 +740,13 @@ impl MicrosoftTeamsIntegrationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteWorkflowsWebhookHandleError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_workflows_webhook_handle";
+        let local_operation_id = "v2.delete_workflows_webhook_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/{handle_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             handle_id = datadog::urlencode(handle_id)
         );
         let mut local_req_builder =
@@ -849,13 +849,13 @@ impl MicrosoftTeamsIntegrationAPI {
         datadog::Error<GetChannelByNameError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_channel_by_name";
+        let local_operation_id = "v2.get_channel_by_name";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/channel/{tenant_name}/{team_name}/{channel_name}",
-            local_configuration.get_operation_host(operation_id), tenant_name=
+            local_configuration.get_operation_host(local_operation_id), tenant_name=
             datadog::urlencode(tenant_name)
             , team_name=
             datadog::urlencode(team_name)
@@ -963,13 +963,13 @@ impl MicrosoftTeamsIntegrationAPI {
         datadog::Error<GetTenantBasedHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_tenant_based_handle";
+        let local_operation_id = "v2.get_tenant_based_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/tenant-based-handles/{handle_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             handle_id = datadog::urlencode(handle_id)
         );
         let mut local_req_builder =
@@ -1078,13 +1078,13 @@ impl MicrosoftTeamsIntegrationAPI {
         datadog::Error<GetWorkflowsWebhookHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_workflows_webhook_handle";
+        let local_operation_id = "v2.get_workflows_webhook_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/{handle_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             handle_id = datadog::urlencode(handle_id)
         );
         let mut local_req_builder =
@@ -1188,7 +1188,7 @@ impl MicrosoftTeamsIntegrationAPI {
         datadog::Error<ListTenantBasedHandlesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tenant_based_handles";
+        let local_operation_id = "v2.list_tenant_based_handles";
 
         // unbox and build optional parameters
         let tenant_id = params.tenant_id;
@@ -1198,7 +1198,7 @@ impl MicrosoftTeamsIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/tenant-based-handles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1315,7 +1315,7 @@ impl MicrosoftTeamsIntegrationAPI {
         datadog::Error<ListWorkflowsWebhookHandlesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_workflows_webhook_handles";
+        let local_operation_id = "v2.list_workflows_webhook_handles";
 
         // unbox and build optional parameters
         let name = params.name;
@@ -1324,7 +1324,7 @@ impl MicrosoftTeamsIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/workflows-webhook-handles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1437,13 +1437,13 @@ impl MicrosoftTeamsIntegrationAPI {
         datadog::Error<UpdateTenantBasedHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_tenant_based_handle";
+        let local_operation_id = "v2.update_tenant_based_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/tenant-based-handles/{handle_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             handle_id = datadog::urlencode(handle_id)
         );
         let mut local_req_builder =
@@ -1601,13 +1601,13 @@ impl MicrosoftTeamsIntegrationAPI {
         datadog::Error<UpdateWorkflowsWebhookHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_workflows_webhook_handle";
+        let local_operation_id = "v2.update_workflows_webhook_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/ms-teams/configuration/workflows-webhook-handles/{handle_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             handle_id = datadog::urlencode(handle_id)
         );
         let mut local_req_builder =

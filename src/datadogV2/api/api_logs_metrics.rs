@@ -155,13 +155,13 @@ impl LogsMetricsAPI {
         datadog::Error<CreateLogsMetricError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_logs_metric";
+        let local_operation_id = "v2.create_logs_metric";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/metrics",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -296,13 +296,13 @@ impl LogsMetricsAPI {
         metric_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLogsMetricError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_logs_metric";
+        let local_operation_id = "v2.delete_logs_metric";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/metrics/{metric_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_id = datadog::urlencode(metric_id)
         );
         let mut local_req_builder =
@@ -396,13 +396,13 @@ impl LogsMetricsAPI {
         datadog::Error<GetLogsMetricError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_logs_metric";
+        let local_operation_id = "v2.get_logs_metric";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/metrics/{metric_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_id = datadog::urlencode(metric_id)
         );
         let mut local_req_builder =
@@ -501,13 +501,13 @@ impl LogsMetricsAPI {
         datadog::Error<ListLogsMetricsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_logs_metrics";
+        let local_operation_id = "v2.list_logs_metrics";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/metrics",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -614,13 +614,13 @@ impl LogsMetricsAPI {
         datadog::Error<UpdateLogsMetricError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_logs_metric";
+        let local_operation_id = "v2.update_logs_metric";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/metrics/{metric_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_id = datadog::urlencode(metric_id)
         );
         let mut local_req_builder =

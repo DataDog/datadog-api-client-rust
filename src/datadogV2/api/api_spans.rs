@@ -192,13 +192,13 @@ impl SpansAPI {
         datadog::Error<AggregateSpansError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.aggregate_spans";
+        let local_operation_id = "v2.aggregate_spans";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/spans/analytics/aggregate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -398,13 +398,13 @@ impl SpansAPI {
         datadog::Error<ListSpansError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_spans";
+        let local_operation_id = "v2.list_spans";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/spans/events/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -593,7 +593,7 @@ impl SpansAPI {
         datadog::Error<ListSpansGetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_spans_get";
+        let local_operation_id = "v2.list_spans_get";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -607,7 +607,7 @@ impl SpansAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/spans/events",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

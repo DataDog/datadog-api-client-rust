@@ -439,13 +439,13 @@ impl MonitorsAPI {
         datadog::Error<CheckCanDeleteMonitorError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.check_can_delete_monitor";
+        let local_operation_id = "v1.check_can_delete_monitor";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/can_delete",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1022,13 +1022,13 @@ impl MonitorsAPI {
         datadog::Error<CreateMonitorError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_monitor";
+        let local_operation_id = "v1.create_monitor";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1174,7 +1174,7 @@ impl MonitorsAPI {
         datadog::Error<DeleteMonitorError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_monitor";
+        let local_operation_id = "v1.delete_monitor";
 
         // unbox and build optional parameters
         let force = params.force;
@@ -1183,7 +1183,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/{monitor_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             monitor_id = monitor_id
         );
         let mut local_req_builder =
@@ -1288,7 +1288,7 @@ impl MonitorsAPI {
         datadog::Error<GetMonitorError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_monitor";
+        let local_operation_id = "v1.get_monitor";
 
         // unbox and build optional parameters
         let group_states = params.group_states;
@@ -1299,7 +1299,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/{monitor_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             monitor_id = monitor_id
         );
         let mut local_req_builder =
@@ -1441,7 +1441,7 @@ impl MonitorsAPI {
         datadog::Error<ListMonitorsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_monitors";
+        let local_operation_id = "v1.list_monitors";
 
         // unbox and build optional parameters
         let group_states = params.group_states;
@@ -1457,7 +1457,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/monitor",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1589,7 +1589,7 @@ impl MonitorsAPI {
         datadog::Error<SearchMonitorGroupsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.search_monitor_groups";
+        let local_operation_id = "v1.search_monitor_groups";
 
         // unbox and build optional parameters
         let query = params.query;
@@ -1601,7 +1601,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/groups/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1718,7 +1718,7 @@ impl MonitorsAPI {
         datadog::Error<SearchMonitorsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.search_monitors";
+        let local_operation_id = "v1.search_monitors";
 
         // unbox and build optional parameters
         let query = params.query;
@@ -1730,7 +1730,7 @@ impl MonitorsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1848,13 +1848,13 @@ impl MonitorsAPI {
         datadog::Error<UpdateMonitorError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_monitor";
+        let local_operation_id = "v1.update_monitor";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/{monitor_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             monitor_id = monitor_id
         );
         let mut local_req_builder =
@@ -2011,13 +2011,13 @@ impl MonitorsAPI {
         datadog::Error<ValidateExistingMonitorError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.validate_existing_monitor";
+        let local_operation_id = "v1.validate_existing_monitor";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/{monitor_id}/validate",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             monitor_id = monitor_id
         );
         let mut local_req_builder =
@@ -2171,13 +2171,13 @@ impl MonitorsAPI {
         datadog::Error<ValidateMonitorError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.validate_monitor";
+        let local_operation_id = "v1.validate_monitor";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/validate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

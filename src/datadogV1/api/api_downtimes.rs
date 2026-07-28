@@ -185,13 +185,13 @@ impl DowntimesAPI {
         downtime_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CancelDowntimeError>> {
         let local_configuration = &self.config;
-        let operation_id = "v1.cancel_downtime";
+        let local_operation_id = "v1.cancel_downtime";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/{downtime_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             downtime_id = downtime_id
         );
         let mut local_req_builder =
@@ -287,13 +287,13 @@ impl DowntimesAPI {
         datadog::Error<CancelDowntimesByScopeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.cancel_downtimes_by_scope";
+        let local_operation_id = "v1.cancel_downtimes_by_scope";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/cancel/by_scope",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -439,13 +439,13 @@ impl DowntimesAPI {
         datadog::Error<CreateDowntimeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_downtime";
+        let local_operation_id = "v1.create_downtime";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/downtime",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -589,13 +589,13 @@ impl DowntimesAPI {
         datadog::Error<GetDowntimeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_downtime";
+        let local_operation_id = "v1.get_downtime";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/{downtime_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             downtime_id = downtime_id
         );
         let mut local_req_builder =
@@ -692,7 +692,7 @@ impl DowntimesAPI {
         datadog::Error<ListDowntimesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_downtimes";
+        let local_operation_id = "v1.list_downtimes";
 
         // unbox and build optional parameters
         let current_only = params.current_only;
@@ -702,7 +702,7 @@ impl DowntimesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/downtime",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -809,13 +809,13 @@ impl DowntimesAPI {
         datadog::Error<ListMonitorDowntimesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_monitor_downtimes";
+        let local_operation_id = "v1.list_monitor_downtimes";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/monitor/{monitor_id}/downtimes",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             monitor_id = monitor_id
         );
         let mut local_req_builder =
@@ -915,13 +915,13 @@ impl DowntimesAPI {
         datadog::Error<UpdateDowntimeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_downtime";
+        let local_operation_id = "v1.update_downtime";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/downtime/{downtime_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             downtime_id = downtime_id
         );
         let mut local_req_builder =

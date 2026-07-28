@@ -540,13 +540,13 @@ impl UsageMeteringAPI {
         datadog::Error<GetActiveBillingDimensionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_active_billing_dimensions";
+        let local_operation_id = "v2.get_active_billing_dimensions";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost_by_tag/active_billing_dimensions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -660,7 +660,7 @@ impl UsageMeteringAPI {
         datadog::Error<GetBillingDimensionMappingError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_billing_dimension_mapping";
+        let local_operation_id = "v2.get_billing_dimension_mapping";
 
         // unbox and build optional parameters
         let filter_month = params.filter_month;
@@ -670,7 +670,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/billing_dimension_mapping",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -800,7 +800,7 @@ impl UsageMeteringAPI {
         datadog::Error<GetCostByOrgError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_cost_by_org";
+        let local_operation_id = "v2.get_cost_by_org";
 
         // unbox and build optional parameters
         let end_month = params.end_month;
@@ -809,7 +809,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/cost_by_org",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -933,7 +933,7 @@ impl UsageMeteringAPI {
         datadog::Error<GetEstimatedCostByOrgError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_estimated_cost_by_org";
+        let local_operation_id = "v2.get_estimated_cost_by_org";
 
         // unbox and build optional parameters
         let view = params.view;
@@ -948,7 +948,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/estimated_cost",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1100,7 +1100,7 @@ impl UsageMeteringAPI {
         datadog::Error<GetHistoricalCostByOrgError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_historical_cost_by_org";
+        let local_operation_id = "v2.get_historical_cost_by_org";
 
         // unbox and build optional parameters
         let view = params.view;
@@ -1111,7 +1111,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/historical_cost",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1243,7 +1243,7 @@ impl UsageMeteringAPI {
         datadog::Error<GetHourlyUsageError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_hourly_usage";
+        let local_operation_id = "v2.get_hourly_usage";
 
         // unbox and build optional parameters
         let filter_timestamp_end = params.filter_timestamp_end;
@@ -1258,7 +1258,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/hourly_usage",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1443,7 +1443,7 @@ impl UsageMeteringAPI {
         datadog::Error<GetMonthlyCostAttributionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_monthly_cost_attribution";
+        let local_operation_id = "v2.get_monthly_cost_attribution";
 
         // unbox and build optional parameters
         let end_month = params.end_month;
@@ -1457,7 +1457,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost_by_tag/monthly_cost_attribution",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1598,7 +1598,7 @@ impl UsageMeteringAPI {
         datadog::Error<GetProjectedCostError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_projected_cost";
+        let local_operation_id = "v2.get_projected_cost";
 
         // unbox and build optional parameters
         let view = params.view;
@@ -1608,7 +1608,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/projected_cost",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1731,7 +1731,7 @@ impl UsageMeteringAPI {
         datadog::Error<GetUsageApplicationSecurityMonitoringError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_usage_application_security_monitoring";
+        let local_operation_id = "v2.get_usage_application_security_monitoring";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -1740,7 +1740,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/application_security",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1855,13 +1855,13 @@ impl UsageMeteringAPI {
         datadog::Error<GetUsageAttributionTypesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_usage_attribution_types";
+        let local_operation_id = "v2.get_usage_attribution_types";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/usage-attribution-types",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1973,7 +1973,7 @@ impl UsageMeteringAPI {
         datadog::Error<GetUsageLambdaTracedInvocationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_usage_lambda_traced_invocations";
+        let local_operation_id = "v2.get_usage_lambda_traced_invocations";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -1982,7 +1982,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/lambda_traced_invocations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2106,7 +2106,7 @@ impl UsageMeteringAPI {
         datadog::Error<GetUsageObservabilityPipelinesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_usage_observability_pipelines";
+        let local_operation_id = "v2.get_usage_observability_pipelines";
 
         // unbox and build optional parameters
         let end_hr = params.end_hr;
@@ -2115,7 +2115,7 @@ impl UsageMeteringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/usage/observability_pipelines",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2306,13 +2306,13 @@ impl UsageMeteringAPI {
         datadog::Error<GetUsageSummaryAvailableFieldsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_usage_summary_available_fields";
+        let local_operation_id = "v2.get_usage_summary_available_fields";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/usage/summary/available_fields",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

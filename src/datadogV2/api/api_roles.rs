@@ -332,13 +332,13 @@ impl RolesAPI {
         datadog::Error<AddPermissionToRoleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.add_permission_to_role";
+        let local_operation_id = "v2.add_permission_to_role";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id)
         );
         let mut local_req_builder =
@@ -487,13 +487,13 @@ impl RolesAPI {
         datadog::Error<AddUserToRoleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.add_user_to_role";
+        let local_operation_id = "v2.add_user_to_role";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id)
         );
         let mut local_req_builder =
@@ -640,13 +640,13 @@ impl RolesAPI {
         datadog::Error<CloneRoleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.clone_role";
+        let local_operation_id = "v2.clone_role";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/clone",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id)
         );
         let mut local_req_builder =
@@ -816,13 +816,13 @@ impl RolesAPI {
         datadog::Error<CreateRoleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_role";
+        let local_operation_id = "v2.create_role";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -956,13 +956,13 @@ impl RolesAPI {
         role_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRoleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_role";
+        let local_operation_id = "v2.delete_role";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id)
         );
         let mut local_req_builder =
@@ -1054,13 +1054,13 @@ impl RolesAPI {
         datadog::Error<GetRoleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_role";
+        let local_operation_id = "v2.get_role";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id)
         );
         let mut local_req_builder =
@@ -1156,13 +1156,13 @@ impl RolesAPI {
         datadog::Error<ListPermissionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_permissions";
+        let local_operation_id = "v2.list_permissions";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/permissions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1264,13 +1264,13 @@ impl RolesAPI {
         datadog::Error<ListRolePermissionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_role_permissions";
+        let local_operation_id = "v2.list_role_permissions";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id)
         );
         let mut local_req_builder =
@@ -1369,9 +1369,9 @@ impl RolesAPI {
         datadog::Error<ListRoleTemplatesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_role_templates";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_role_templates";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_role_templates' is not enabled".to_string(),
@@ -1383,7 +1383,7 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/templates",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1483,7 +1483,7 @@ impl RolesAPI {
         datadog::Error<ListRoleUsersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_role_users";
+        let local_operation_id = "v2.list_role_users";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1495,7 +1495,7 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id)
         );
         let mut local_req_builder =
@@ -1610,7 +1610,7 @@ impl RolesAPI {
         datadog::Error<ListRolesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_roles";
+        let local_operation_id = "v2.list_roles";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1623,7 +1623,7 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1748,13 +1748,13 @@ impl RolesAPI {
         datadog::Error<RemovePermissionFromRoleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.remove_permission_from_role";
+        let local_operation_id = "v2.remove_permission_from_role";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id)
         );
         let mut local_req_builder =
@@ -1907,13 +1907,13 @@ impl RolesAPI {
         datadog::Error<RemoveUserFromRoleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.remove_user_from_role";
+        let local_operation_id = "v2.remove_user_from_role";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id)
         );
         let mut local_req_builder =
@@ -2060,13 +2060,13 @@ impl RolesAPI {
         datadog::Error<UpdateRoleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_role";
+        let local_operation_id = "v2.update_role";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id)
         );
         let mut local_req_builder =

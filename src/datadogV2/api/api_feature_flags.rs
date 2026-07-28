@@ -375,13 +375,13 @@ impl FeatureFlagsAPI {
         datadog::Error<ArchiveFeatureFlagError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.archive_feature_flag";
+        let local_operation_id = "v2.archive_feature_flag";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/archive",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
         );
         let mut local_req_builder =
@@ -495,13 +495,13 @@ impl FeatureFlagsAPI {
         datadog::Error<CreateAllocationsForFeatureFlagInEnvironmentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_allocations_for_feature_flag_in_environment";
+        let local_operation_id = "v2.create_allocations_for_feature_flag_in_environment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/environments/{environment_id}/allocations",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
             environment_id = datadog::urlencode(environment_id.to_string())
         );
@@ -650,13 +650,13 @@ impl FeatureFlagsAPI {
         datadog::Error<CreateFeatureFlagError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_feature_flag";
+        let local_operation_id = "v2.create_feature_flag";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -808,13 +808,13 @@ impl FeatureFlagsAPI {
         datadog::Error<CreateFeatureFlagsEnvironmentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_feature_flags_environment";
+        let local_operation_id = "v2.create_feature_flags_environment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/environments",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -978,13 +978,13 @@ impl FeatureFlagsAPI {
         datadog::Error<CreateVariantForFeatureFlagError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_variant_for_feature_flag";
+        let local_operation_id = "v2.create_variant_for_feature_flag";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/variants",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
         );
         let mut local_req_builder =
@@ -1122,13 +1122,13 @@ impl FeatureFlagsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteFeatureFlagsEnvironmentError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_feature_flags_environment";
+        let local_operation_id = "v2.delete_feature_flags_environment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/environments/{environment_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             environment_id = datadog::urlencode(environment_id.to_string())
         );
         let mut local_req_builder =
@@ -1220,13 +1220,13 @@ impl FeatureFlagsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteVariantFromFeatureFlagError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_variant_from_feature_flag";
+        let local_operation_id = "v2.delete_variant_from_feature_flag";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/variants/{variant_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
             variant_id = datadog::urlencode(variant_id.to_string())
         );
@@ -1315,13 +1315,13 @@ impl FeatureFlagsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DisableFeatureFlagEnvironmentError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.disable_feature_flag_environment";
+        let local_operation_id = "v2.disable_feature_flag_environment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/environments/{environment_id}/disable",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
             environment_id = datadog::urlencode(environment_id.to_string())
         );
@@ -1410,13 +1410,13 @@ impl FeatureFlagsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<EnableFeatureFlagEnvironmentError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.enable_feature_flag_environment";
+        let local_operation_id = "v2.enable_feature_flag_environment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/environments/{environment_id}/enable",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
             environment_id = datadog::urlencode(environment_id.to_string())
         );
@@ -1513,13 +1513,13 @@ impl FeatureFlagsAPI {
         datadog::Error<GetFeatureFlagError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_feature_flag";
+        let local_operation_id = "v2.get_feature_flag";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
         );
         let mut local_req_builder =
@@ -1625,13 +1625,13 @@ impl FeatureFlagsAPI {
         datadog::Error<GetFeatureFlagsEnvironmentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_feature_flags_environment";
+        let local_operation_id = "v2.get_feature_flags_environment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/environments/{environment_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             environment_id = datadog::urlencode(environment_id.to_string())
         );
         let mut local_req_builder =
@@ -1736,7 +1736,7 @@ impl FeatureFlagsAPI {
         datadog::Error<ListFeatureFlagsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_feature_flags";
+        let local_operation_id = "v2.list_feature_flags";
 
         // unbox and build optional parameters
         let key = params.key;
@@ -1748,7 +1748,7 @@ impl FeatureFlagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1871,7 +1871,7 @@ impl FeatureFlagsAPI {
         datadog::Error<ListFeatureFlagsEnvironmentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_feature_flags_environments";
+        let local_operation_id = "v2.list_feature_flags_environments";
 
         // unbox and build optional parameters
         let name = params.name;
@@ -1884,7 +1884,7 @@ impl FeatureFlagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/environments",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2009,13 +2009,13 @@ impl FeatureFlagsAPI {
         datadog::Error<PauseExposureScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.pause_exposure_schedule";
+        let local_operation_id = "v2.pause_exposure_schedule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/exposure-schedules/{exposure_schedule_id}/pause",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             exposure_schedule_id = datadog::urlencode(exposure_schedule_id.to_string())
         );
         let mut local_req_builder =
@@ -2121,13 +2121,13 @@ impl FeatureFlagsAPI {
         datadog::Error<ResumeExposureScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.resume_exposure_schedule";
+        let local_operation_id = "v2.resume_exposure_schedule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/exposure-schedules/{exposure_schedule_id}/resume",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             exposure_schedule_id = datadog::urlencode(exposure_schedule_id.to_string())
         );
         let mut local_req_builder =
@@ -2233,13 +2233,13 @@ impl FeatureFlagsAPI {
         datadog::Error<StartExposureScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.start_exposure_schedule";
+        let local_operation_id = "v2.start_exposure_schedule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/exposure-schedules/{exposure_schedule_id}/start",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             exposure_schedule_id = datadog::urlencode(exposure_schedule_id.to_string())
         );
         let mut local_req_builder =
@@ -2345,13 +2345,13 @@ impl FeatureFlagsAPI {
         datadog::Error<StopExposureScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.stop_exposure_schedule";
+        let local_operation_id = "v2.stop_exposure_schedule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/exposure-schedules/{exposure_schedule_id}/stop",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             exposure_schedule_id = datadog::urlencode(exposure_schedule_id.to_string())
         );
         let mut local_req_builder =
@@ -2459,13 +2459,13 @@ impl FeatureFlagsAPI {
         datadog::Error<UnarchiveFeatureFlagError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.unarchive_feature_flag";
+        let local_operation_id = "v2.unarchive_feature_flag";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/unarchive",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
         );
         let mut local_req_builder =
@@ -2581,13 +2581,13 @@ impl FeatureFlagsAPI {
         datadog::Error<UpdateAllocationsForFeatureFlagInEnvironmentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_allocations_for_feature_flag_in_environment";
+        let local_operation_id = "v2.update_allocations_for_feature_flag_in_environment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/environments/{environment_id}/allocations",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
             environment_id = datadog::urlencode(environment_id.to_string())
         );
@@ -2743,13 +2743,13 @@ impl FeatureFlagsAPI {
         datadog::Error<UpdateFeatureFlagError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_feature_flag";
+        let local_operation_id = "v2.update_feature_flag";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             feature_flag_id = datadog::urlencode(feature_flag_id.to_string())
         );
         let mut local_req_builder =
@@ -2906,13 +2906,13 @@ impl FeatureFlagsAPI {
         datadog::Error<UpdateFeatureFlagsEnvironmentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_feature_flags_environment";
+        let local_operation_id = "v2.update_feature_flags_environment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/environments/{environment_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             environment_id = datadog::urlencode(environment_id.to_string())
         );
         let mut local_req_builder =
@@ -3071,13 +3071,13 @@ impl FeatureFlagsAPI {
         datadog::Error<UpdateVariantForFeatureFlagError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_variant_for_feature_flag";
+        let local_operation_id = "v2.update_variant_for_feature_flag";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/feature-flags/{feature_flag_id}/variants/{variant_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             feature_flag_id = datadog::urlencode(feature_flag_id.to_string()),
             variant_id = datadog::urlencode(variant_id.to_string())
         );

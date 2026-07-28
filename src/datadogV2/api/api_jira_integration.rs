@@ -177,9 +177,9 @@ impl JiraIntegrationAPI {
         datadog::Error<CreateJiraIssueTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_jira_issue_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_jira_issue_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_jira_issue_template' is not enabled".to_string(),
@@ -191,7 +191,7 @@ impl JiraIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/jira/issue-templates",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -326,9 +326,9 @@ impl JiraIntegrationAPI {
         account_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteJiraAccountError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_jira_account";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_jira_account";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_jira_account' is not enabled".to_string(),
@@ -340,7 +340,7 @@ impl JiraIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/jira/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id.to_string())
         );
         let mut local_req_builder =
@@ -425,9 +425,9 @@ impl JiraIntegrationAPI {
         issue_template_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteJiraIssueTemplateError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_jira_issue_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_jira_issue_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_jira_issue_template' is not enabled".to_string(),
@@ -439,7 +439,7 @@ impl JiraIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/jira/issue-templates/{issue_template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             issue_template_id = datadog::urlencode(issue_template_id.to_string())
         );
         let mut local_req_builder =
@@ -538,9 +538,9 @@ impl JiraIntegrationAPI {
         datadog::Error<GetJiraIssueTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_jira_issue_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_jira_issue_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_jira_issue_template' is not enabled".to_string(),
@@ -552,7 +552,7 @@ impl JiraIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/jira/issue-templates/{issue_template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             issue_template_id = datadog::urlencode(issue_template_id.to_string())
         );
         let mut local_req_builder =
@@ -651,9 +651,9 @@ impl JiraIntegrationAPI {
         datadog::Error<ListJiraAccountsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_jira_accounts";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_jira_accounts";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_jira_accounts' is not enabled".to_string(),
@@ -665,7 +665,7 @@ impl JiraIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/jira/accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -765,9 +765,9 @@ impl JiraIntegrationAPI {
         datadog::Error<ListJiraIssueTemplatesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_jira_issue_templates";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_jira_issue_templates";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_jira_issue_templates' is not enabled".to_string(),
@@ -779,7 +779,7 @@ impl JiraIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/jira/issue-templates",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -886,9 +886,9 @@ impl JiraIntegrationAPI {
         datadog::Error<UpdateJiraIssueTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_jira_issue_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_jira_issue_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_jira_issue_template' is not enabled".to_string(),
@@ -900,7 +900,7 @@ impl JiraIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/jira/issue-templates/{issue_template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             issue_template_id = datadog::urlencode(issue_template_id.to_string())
         );
         let mut local_req_builder =

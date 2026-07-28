@@ -174,9 +174,9 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<CreateSLOReportJobError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_slo_report_job";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_slo_report_job";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_slo_report_job' is not enabled".to_string(),
@@ -188,7 +188,7 @@ impl ServiceLevelObjectivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/slo/report",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -335,9 +335,9 @@ impl ServiceLevelObjectivesAPI {
         report_id: String,
     ) -> Result<datadog::ResponseContent<String>, datadog::Error<GetSLOReportError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_slo_report";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_slo_report";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_slo_report' is not enabled".to_string(),
@@ -349,7 +349,7 @@ impl ServiceLevelObjectivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/slo/report/{report_id}/download",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             report_id = datadog::urlencode(report_id)
         );
         let mut local_req_builder =
@@ -452,9 +452,9 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<GetSLOReportJobStatusError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_slo_report_job_status";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_slo_report_job_status";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_slo_report_job_status' is not enabled".to_string(),
@@ -466,7 +466,7 @@ impl ServiceLevelObjectivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/slo/report/{report_id}/status",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             report_id = datadog::urlencode(report_id)
         );
         let mut local_req_builder =
@@ -579,9 +579,9 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<GetSloStatusError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_slo_status";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_slo_status";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_slo_status' is not enabled".to_string(),
@@ -596,7 +596,7 @@ impl ServiceLevelObjectivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/slo/{slo_id}/status",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             slo_id = datadog::urlencode(slo_id)
         );
         let mut local_req_builder =

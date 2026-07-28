@@ -217,13 +217,13 @@ impl CIVisibilityPipelinesAPI {
         datadog::Error<AggregateCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.aggregate_ci_app_pipeline_events";
+        let local_operation_id = "v2.aggregate_ci_app_pipeline_events";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/pipelines/analytics/aggregate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -383,13 +383,13 @@ impl CIVisibilityPipelinesAPI {
         datadog::Error<CreateCIAppPipelineEventError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_ci_app_pipeline_event";
+        let local_operation_id = "v2.create_ci_app_pipeline_event";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/pipeline",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -577,7 +577,7 @@ impl CIVisibilityPipelinesAPI {
         datadog::Error<ListCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_ci_app_pipeline_events";
+        let local_operation_id = "v2.list_ci_app_pipeline_events";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -591,7 +591,7 @@ impl CIVisibilityPipelinesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ci/pipelines/events",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -774,7 +774,7 @@ impl CIVisibilityPipelinesAPI {
         datadog::Error<SearchCIAppPipelineEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_ci_app_pipeline_events";
+        let local_operation_id = "v2.search_ci_app_pipeline_events";
 
         // unbox and build optional parameters
         let body = params.body;
@@ -783,7 +783,7 @@ impl CIVisibilityPipelinesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ci/pipelines/events/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

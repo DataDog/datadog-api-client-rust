@@ -577,13 +577,13 @@ impl ScorecardsAPI {
         datadog::Error<CreateScorecardCampaignError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_scorecard_campaign";
+        let local_operation_id = "v2.create_scorecard_campaign";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/campaigns",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -734,9 +734,9 @@ impl ScorecardsAPI {
         datadog::Error<CreateScorecardOutcomesBatchError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_scorecard_outcomes_batch";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_scorecard_outcomes_batch";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_scorecard_outcomes_batch' is not enabled".to_string(),
@@ -748,7 +748,7 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes/batch",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -895,13 +895,13 @@ impl ScorecardsAPI {
         datadog::Error<CreateScorecardRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_scorecard_rule";
+        let local_operation_id = "v2.create_scorecard_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1039,13 +1039,13 @@ impl ScorecardsAPI {
         campaign_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScorecardCampaignError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_scorecard_campaign";
+        let local_operation_id = "v2.delete_scorecard_campaign";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/campaigns/{campaign_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             campaign_id = datadog::urlencode(campaign_id)
         );
         let mut local_req_builder =
@@ -1127,13 +1127,13 @@ impl ScorecardsAPI {
         rule_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScorecardRuleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_scorecard_rule";
+        let local_operation_id = "v2.delete_scorecard_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -1232,7 +1232,7 @@ impl ScorecardsAPI {
         datadog::Error<GetScorecardCampaignError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_scorecard_campaign";
+        let local_operation_id = "v2.get_scorecard_campaign";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1242,7 +1242,7 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/campaigns/{campaign_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             campaign_id = datadog::urlencode(campaign_id)
         );
         let mut local_req_builder =
@@ -1353,7 +1353,7 @@ impl ScorecardsAPI {
         datadog::Error<ListScorecardCampaignsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_scorecard_campaigns";
+        let local_operation_id = "v2.list_scorecard_campaigns";
 
         // unbox and build optional parameters
         let page_limit = params.page_limit;
@@ -1366,7 +1366,7 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/campaigns",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1524,7 +1524,7 @@ impl ScorecardsAPI {
         datadog::Error<ListScorecardOutcomesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_scorecard_outcomes";
+        let local_operation_id = "v2.list_scorecard_outcomes";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1542,7 +1542,7 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1721,7 +1721,7 @@ impl ScorecardsAPI {
         datadog::Error<ListScorecardRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_scorecard_rules";
+        let local_operation_id = "v2.list_scorecard_rules";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1739,7 +1739,7 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1886,7 +1886,7 @@ impl ScorecardsAPI {
         datadog::Error<ListScorecardScoresError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_scorecard_scores";
+        let local_operation_id = "v2.list_scorecard_scores";
 
         // unbox and build optional parameters
         let filter_rule_id = params.filter_rule_id;
@@ -1903,7 +1903,7 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/scores/{aggregation}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             aggregation = datadog::urlencode(aggregation.to_string())
         );
         let mut local_req_builder =
@@ -2041,7 +2041,7 @@ impl ScorecardsAPI {
         datadog::Error<ListScorecardsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_scorecards";
+        let local_operation_id = "v2.list_scorecards";
 
         // unbox and build optional parameters
         let page_offset = params.page_offset;
@@ -2054,7 +2054,7 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/scorecards",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2184,13 +2184,13 @@ impl ScorecardsAPI {
         datadog::Error<UpdateScorecardCampaignError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_scorecard_campaign";
+        let local_operation_id = "v2.update_scorecard_campaign";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/campaigns/{campaign_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             campaign_id = datadog::urlencode(campaign_id)
         );
         let mut local_req_builder =
@@ -2325,13 +2325,13 @@ impl ScorecardsAPI {
         body: crate::datadogV2::model::UpdateOutcomesAsyncRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateScorecardOutcomesError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_scorecard_outcomes";
+        let local_operation_id = "v2.update_scorecard_outcomes";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2476,13 +2476,13 @@ impl ScorecardsAPI {
         datadog::Error<UpdateScorecardRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_scorecard_rule";
+        let local_operation_id = "v2.update_scorecard_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =

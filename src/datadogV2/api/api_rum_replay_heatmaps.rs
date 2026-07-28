@@ -178,13 +178,13 @@ impl RumReplayHeatmapsAPI {
         datadog::Error<CreateReplayHeatmapSnapshotError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_replay_heatmap_snapshot";
+        let local_operation_id = "v2.create_replay_heatmap_snapshot";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/replay/heatmap/snapshots",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -321,13 +321,13 @@ impl RumReplayHeatmapsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteReplayHeatmapSnapshotError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_replay_heatmap_snapshot";
+        let local_operation_id = "v2.delete_replay_heatmap_snapshot";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/replay/heatmap/snapshots/{snapshot_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             snapshot_id = datadog::urlencode(snapshot_id)
         );
         let mut local_req_builder =
@@ -428,7 +428,7 @@ impl RumReplayHeatmapsAPI {
         datadog::Error<ListReplayHeatmapSnapshotsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_replay_heatmap_snapshots";
+        let local_operation_id = "v2.list_replay_heatmap_snapshots";
 
         // unbox and build optional parameters
         let filter_device_type = params.filter_device_type;
@@ -439,7 +439,7 @@ impl RumReplayHeatmapsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/replay/heatmap/snapshots",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -557,13 +557,13 @@ impl RumReplayHeatmapsAPI {
         datadog::Error<UpdateReplayHeatmapSnapshotError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_replay_heatmap_snapshot";
+        let local_operation_id = "v2.update_replay_heatmap_snapshot";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/replay/heatmap/snapshots/{snapshot_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             snapshot_id = datadog::urlencode(snapshot_id)
         );
         let mut local_req_builder =

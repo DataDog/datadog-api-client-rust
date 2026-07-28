@@ -144,13 +144,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<AddSecurityMonitoringSignalToIncidentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.add_security_monitoring_signal_to_incident";
+        let local_operation_id = "v1.add_security_monitoring_signal_to_incident";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/add_to_incident",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             signal_id = datadog::urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -305,13 +305,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<EditSecurityMonitoringSignalAssigneeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.edit_security_monitoring_signal_assignee";
+        let local_operation_id = "v1.edit_security_monitoring_signal_assignee";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/assignee",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             signal_id = datadog::urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -466,13 +466,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<EditSecurityMonitoringSignalStateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.edit_security_monitoring_signal_state";
+        let local_operation_id = "v1.edit_security_monitoring_signal_state";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/security_analytics/signals/{signal_id}/state",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             signal_id = datadog::urlencode(signal_id)
         );
         let mut local_req_builder =

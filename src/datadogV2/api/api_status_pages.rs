@@ -752,7 +752,7 @@ impl StatusPagesAPI {
         datadog::Error<CreateBackfilledDegradationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_backfilled_degradation";
+        let local_operation_id = "v2.create_backfilled_degradation";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -761,7 +761,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/degradations/backfill",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -921,7 +921,7 @@ impl StatusPagesAPI {
         datadog::Error<CreateBackfilledMaintenanceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_backfilled_maintenance";
+        let local_operation_id = "v2.create_backfilled_maintenance";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -930,7 +930,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/maintenances/backfill",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -1088,7 +1088,7 @@ impl StatusPagesAPI {
         datadog::Error<CreateComponentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_component";
+        let local_operation_id = "v2.create_component";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1097,7 +1097,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/components",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -1256,7 +1256,7 @@ impl StatusPagesAPI {
         datadog::Error<CreateDegradationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_degradation";
+        let local_operation_id = "v2.create_degradation";
 
         // unbox and build optional parameters
         let notify_subscribers = params.notify_subscribers;
@@ -1266,7 +1266,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/degradations",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -1427,7 +1427,7 @@ impl StatusPagesAPI {
         datadog::Error<CreateMaintenanceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_maintenance";
+        let local_operation_id = "v2.create_maintenance";
 
         // unbox and build optional parameters
         let notify_subscribers = params.notify_subscribers;
@@ -1437,7 +1437,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/maintenances",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -1593,7 +1593,7 @@ impl StatusPagesAPI {
         datadog::Error<CreateStatusPageError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_status_page";
+        let local_operation_id = "v2.create_status_page";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1602,7 +1602,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1745,13 +1745,13 @@ impl StatusPagesAPI {
         component_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteComponentError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_component";
+        let local_operation_id = "v2.delete_component";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/components/{component_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string()),
             component_id = datadog::urlencode(component_id.to_string())
         );
@@ -1839,13 +1839,13 @@ impl StatusPagesAPI {
         degradation_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDegradationError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_degradation";
+        let local_operation_id = "v2.delete_degradation";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/degradations/{degradation_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string()),
             degradation_id = datadog::urlencode(degradation_id.to_string())
         );
@@ -1928,13 +1928,13 @@ impl StatusPagesAPI {
         page_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteStatusPageError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_status_page";
+        let local_operation_id = "v2.delete_status_page";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -2047,7 +2047,7 @@ impl StatusPagesAPI {
         datadog::Error<EditDegradationUpdateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.edit_degradation_update";
+        let local_operation_id = "v2.edit_degradation_update";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2056,7 +2056,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/degradations/{degradation_id}/updates/{update_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             degradation_id = datadog::urlencode(degradation_id.to_string()),
             page_id = datadog::urlencode(page_id.to_string()),
             update_id = datadog::urlencode(update_id.to_string())
@@ -2217,7 +2217,7 @@ impl StatusPagesAPI {
         datadog::Error<GetComponentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_component";
+        let local_operation_id = "v2.get_component";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2226,7 +2226,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/components/{component_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string()),
             component_id = datadog::urlencode(component_id.to_string())
         );
@@ -2338,7 +2338,7 @@ impl StatusPagesAPI {
         datadog::Error<GetDegradationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_degradation";
+        let local_operation_id = "v2.get_degradation";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2347,7 +2347,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/degradations/{degradation_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string()),
             degradation_id = datadog::urlencode(degradation_id.to_string())
         );
@@ -2458,7 +2458,7 @@ impl StatusPagesAPI {
         datadog::Error<GetMaintenanceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_maintenance";
+        let local_operation_id = "v2.get_maintenance";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2467,7 +2467,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/maintenances/{maintenance_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string()),
             maintenance_id = datadog::urlencode(maintenance_id.to_string())
         );
@@ -2573,7 +2573,7 @@ impl StatusPagesAPI {
         datadog::Error<GetStatusPageError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_status_page";
+        let local_operation_id = "v2.get_status_page";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2582,7 +2582,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -2690,7 +2690,7 @@ impl StatusPagesAPI {
         datadog::Error<ListComponentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_components";
+        let local_operation_id = "v2.list_components";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2699,7 +2699,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/components",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -2805,7 +2805,7 @@ impl StatusPagesAPI {
         datadog::Error<ListDegradationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_degradations";
+        let local_operation_id = "v2.list_degradations";
 
         // unbox and build optional parameters
         let filter_page_id = params.filter_page_id;
@@ -2819,7 +2819,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/degradations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2943,7 +2943,7 @@ impl StatusPagesAPI {
         datadog::Error<ListMaintenancesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_maintenances";
+        let local_operation_id = "v2.list_maintenances";
 
         // unbox and build optional parameters
         let filter_page_id = params.filter_page_id;
@@ -2957,7 +2957,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/maintenances",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3081,7 +3081,7 @@ impl StatusPagesAPI {
         datadog::Error<ListStatusPagesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_status_pages";
+        let local_operation_id = "v2.list_status_pages";
 
         // unbox and build optional parameters
         let page_offset = params.page_offset;
@@ -3093,7 +3093,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3196,13 +3196,13 @@ impl StatusPagesAPI {
         page_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<PublishStatusPageError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.publish_status_page";
+        let local_operation_id = "v2.publish_status_page";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/publish",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -3292,13 +3292,13 @@ impl StatusPagesAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<SoftDeleteDegradationUpdateError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.soft_delete_degradation_update";
+        let local_operation_id = "v2.soft_delete_degradation_update";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/degradations/{degradation_id}/updates/{update_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             degradation_id = datadog::urlencode(degradation_id.to_string()),
             page_id = datadog::urlencode(page_id.to_string()),
             update_id = datadog::urlencode(update_id.to_string())
@@ -3382,13 +3382,13 @@ impl StatusPagesAPI {
         page_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnpublishStatusPageError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.unpublish_status_page";
+        let local_operation_id = "v2.unpublish_status_page";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/unpublish",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -3491,7 +3491,7 @@ impl StatusPagesAPI {
         datadog::Error<UpdateComponentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_component";
+        let local_operation_id = "v2.update_component";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -3500,7 +3500,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/components/{component_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string()),
             component_id = datadog::urlencode(component_id.to_string())
         );
@@ -3662,7 +3662,7 @@ impl StatusPagesAPI {
         datadog::Error<UpdateDegradationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_degradation";
+        let local_operation_id = "v2.update_degradation";
 
         // unbox and build optional parameters
         let notify_subscribers = params.notify_subscribers;
@@ -3672,7 +3672,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/degradations/{degradation_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string()),
             degradation_id = datadog::urlencode(degradation_id.to_string())
         );
@@ -3836,7 +3836,7 @@ impl StatusPagesAPI {
         datadog::Error<UpdateMaintenanceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_maintenance";
+        let local_operation_id = "v2.update_maintenance";
 
         // unbox and build optional parameters
         let notify_subscribers = params.notify_subscribers;
@@ -3846,7 +3846,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}/maintenances/{maintenance_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string()),
             maintenance_id = datadog::urlencode(maintenance_id.to_string())
         );
@@ -4008,7 +4008,7 @@ impl StatusPagesAPI {
         datadog::Error<UpdateStatusPageError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_status_page";
+        let local_operation_id = "v2.update_status_page";
 
         // unbox and build optional parameters
         let delete_subscribers = params.delete_subscribers;
@@ -4018,7 +4018,7 @@ impl StatusPagesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/statuspages/{page_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =

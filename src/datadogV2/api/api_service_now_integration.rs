@@ -195,13 +195,13 @@ impl ServiceNowIntegrationAPI {
         datadog::Error<CreateServiceNowTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_service_now_template";
+        let local_operation_id = "v2.create_service_now_template";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/handles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -339,13 +339,13 @@ impl ServiceNowIntegrationAPI {
         template_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteServiceNowTemplateError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_service_now_template";
+        let local_operation_id = "v2.delete_service_now_template";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/handles/{template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             template_id = datadog::urlencode(template_id.to_string())
         );
         let mut local_req_builder =
@@ -444,13 +444,13 @@ impl ServiceNowIntegrationAPI {
         datadog::Error<GetServiceNowTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_service_now_template";
+        let local_operation_id = "v2.get_service_now_template";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/handles/{template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             template_id = datadog::urlencode(template_id.to_string())
         );
         let mut local_req_builder =
@@ -556,13 +556,13 @@ impl ServiceNowIntegrationAPI {
         datadog::Error<ListServiceNowAssignmentGroupsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_service_now_assignment_groups";
+        let local_operation_id = "v2.list_service_now_assignment_groups";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/assignment_groups/{instance_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             instance_id = datadog::urlencode(instance_id.to_string())
         );
         let mut local_req_builder =
@@ -668,13 +668,13 @@ impl ServiceNowIntegrationAPI {
         datadog::Error<ListServiceNowBusinessServicesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_service_now_business_services";
+        let local_operation_id = "v2.list_service_now_business_services";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/business_services/{instance_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             instance_id = datadog::urlencode(instance_id.to_string())
         );
         let mut local_req_builder =
@@ -775,13 +775,13 @@ impl ServiceNowIntegrationAPI {
         datadog::Error<ListServiceNowInstancesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_service_now_instances";
+        let local_operation_id = "v2.list_service_now_instances";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/instances",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -881,13 +881,13 @@ impl ServiceNowIntegrationAPI {
         datadog::Error<ListServiceNowTemplatesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_service_now_templates";
+        let local_operation_id = "v2.list_service_now_templates";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/handles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -992,13 +992,13 @@ impl ServiceNowIntegrationAPI {
         datadog::Error<ListServiceNowUsersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_service_now_users";
+        let local_operation_id = "v2.list_service_now_users";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/users/{instance_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             instance_id = datadog::urlencode(instance_id.to_string())
         );
         let mut local_req_builder =
@@ -1106,13 +1106,13 @@ impl ServiceNowIntegrationAPI {
         datadog::Error<UpdateServiceNowTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_service_now_template";
+        let local_operation_id = "v2.update_service_now_template";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/servicenow/handles/{template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             template_id = datadog::urlencode(template_id.to_string())
         );
         let mut local_req_builder =

@@ -195,13 +195,13 @@ impl FastlyIntegrationAPI {
         datadog::Error<CreateFastlyAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_fastly_account";
+        let local_operation_id = "v2.create_fastly_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -355,13 +355,13 @@ impl FastlyIntegrationAPI {
         datadog::Error<CreateFastlyServiceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_fastly_service";
+        let local_operation_id = "v2.create_fastly_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -497,13 +497,13 @@ impl FastlyIntegrationAPI {
         account_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteFastlyAccountError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_fastly_account";
+        let local_operation_id = "v2.delete_fastly_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -590,13 +590,13 @@ impl FastlyIntegrationAPI {
         service_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteFastlyServiceError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_fastly_service";
+        let local_operation_id = "v2.delete_fastly_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id),
             service_id = datadog::urlencode(service_id)
         );
@@ -691,13 +691,13 @@ impl FastlyIntegrationAPI {
         datadog::Error<GetFastlyAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_fastly_account";
+        let local_operation_id = "v2.get_fastly_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -803,13 +803,13 @@ impl FastlyIntegrationAPI {
         datadog::Error<GetFastlyServiceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_fastly_service";
+        let local_operation_id = "v2.get_fastly_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id),
             service_id = datadog::urlencode(service_id)
         );
@@ -911,13 +911,13 @@ impl FastlyIntegrationAPI {
         datadog::Error<ListFastlyAccountsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_fastly_accounts";
+        let local_operation_id = "v2.list_fastly_accounts";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1019,13 +1019,13 @@ impl FastlyIntegrationAPI {
         datadog::Error<ListFastlyServicesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_fastly_services";
+        let local_operation_id = "v2.list_fastly_services";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -1133,13 +1133,13 @@ impl FastlyIntegrationAPI {
         datadog::Error<UpdateFastlyAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_fastly_account";
+        let local_operation_id = "v2.update_fastly_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -1296,13 +1296,13 @@ impl FastlyIntegrationAPI {
         datadog::Error<UpdateFastlyServiceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_fastly_service";
+        let local_operation_id = "v2.update_fastly_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id),
             service_id = datadog::urlencode(service_id)
         );

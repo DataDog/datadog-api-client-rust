@@ -155,13 +155,13 @@ impl RumMetricsAPI {
         datadog::Error<CreateRumMetricError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_rum_metric";
+        let local_operation_id = "v2.create_rum_metric";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/metrics",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -295,13 +295,13 @@ impl RumMetricsAPI {
         metric_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumMetricError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_rum_metric";
+        let local_operation_id = "v2.delete_rum_metric";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/metrics/{metric_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_id = datadog::urlencode(metric_id)
         );
         let mut local_req_builder =
@@ -394,13 +394,13 @@ impl RumMetricsAPI {
         datadog::Error<GetRumMetricError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_rum_metric";
+        let local_operation_id = "v2.get_rum_metric";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/metrics/{metric_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_id = datadog::urlencode(metric_id)
         );
         let mut local_req_builder =
@@ -497,13 +497,13 @@ impl RumMetricsAPI {
         datadog::Error<ListRumMetricsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_rum_metrics";
+        let local_operation_id = "v2.list_rum_metrics";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/metrics",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -607,13 +607,13 @@ impl RumMetricsAPI {
         datadog::Error<UpdateRumMetricError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_rum_metric";
+        let local_operation_id = "v2.update_rum_metric";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/metrics/{metric_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_id = datadog::urlencode(metric_id)
         );
         let mut local_req_builder =

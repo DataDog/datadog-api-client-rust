@@ -164,9 +164,9 @@ impl SpaAPI {
         datadog::Error<GetSPARecommendationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_spa_recommendations";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_spa_recommendations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_spa_recommendations' is not enabled".to_string(),
@@ -181,7 +181,7 @@ impl SpaAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/spa/recommendations/{service}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service = datadog::urlencode(service)
         );
         let mut local_req_builder =
@@ -282,9 +282,9 @@ impl SpaAPI {
         datadog::Error<GetSPARecommendationsWithShardError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_spa_recommendations_with_shard";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_spa_recommendations_with_shard";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_spa_recommendations_with_shard' is not enabled".to_string(),
@@ -299,7 +299,7 @@ impl SpaAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/spa/recommendations/{service}/{shard}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             shard = datadog::urlencode(shard),
             service = datadog::urlencode(service)
         );

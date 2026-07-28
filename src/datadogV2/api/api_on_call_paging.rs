@@ -134,13 +134,13 @@ impl OnCallPagingAPI {
         page_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<AcknowledgeOnCallPageError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.acknowledge_on_call_page";
+        let local_operation_id = "v2.acknowledge_on_call_page";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/pages/{page_id}/acknowledge",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -234,13 +234,13 @@ impl OnCallPagingAPI {
         datadog::Error<CreateOnCallPageError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_on_call_page";
+        let local_operation_id = "v2.create_on_call_page";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/pages",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -375,13 +375,13 @@ impl OnCallPagingAPI {
         page_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<EscalateOnCallPageError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.escalate_on_call_page";
+        let local_operation_id = "v2.escalate_on_call_page";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/pages/{page_id}/escalate",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =
@@ -463,13 +463,13 @@ impl OnCallPagingAPI {
         page_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ResolveOnCallPageError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.resolve_on_call_page";
+        let local_operation_id = "v2.resolve_on_call_page";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/pages/{page_id}/resolve",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id.to_string())
         );
         let mut local_req_builder =

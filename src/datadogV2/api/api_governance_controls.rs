@@ -151,9 +151,9 @@ impl GovernanceControlsAPI {
         datadog::Error<GetGovernanceControlError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_governance_control";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_governance_control";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_governance_control' is not enabled".to_string(),
@@ -165,7 +165,7 @@ impl GovernanceControlsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/governance/control/{detection_type}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             detection_type = datadog::urlencode(detection_type)
         );
         let mut local_req_builder =
@@ -270,9 +270,9 @@ impl GovernanceControlsAPI {
         datadog::Error<ListGovernanceControlsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_governance_controls";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_governance_controls";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_governance_controls' is not enabled".to_string(),
@@ -284,7 +284,7 @@ impl GovernanceControlsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/governance/control",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -395,9 +395,9 @@ impl GovernanceControlsAPI {
         datadog::Error<UpdateGovernanceControlError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_governance_control";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_governance_control";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_governance_control' is not enabled".to_string(),
@@ -409,7 +409,7 @@ impl GovernanceControlsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/governance/control/{detection_type}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             detection_type = datadog::urlencode(detection_type)
         );
         let mut local_req_builder =

@@ -227,7 +227,7 @@ impl HostsAPI {
         datadog::Error<GetHostTotalsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_host_totals";
+        let local_operation_id = "v1.get_host_totals";
 
         // unbox and build optional parameters
         let from = params.from;
@@ -236,7 +236,7 @@ impl HostsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/hosts/totals",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -348,7 +348,7 @@ impl HostsAPI {
         datadog::Error<ListHostsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_hosts";
+        let local_operation_id = "v1.list_hosts";
 
         // unbox and build optional parameters
         let filter = params.filter;
@@ -364,7 +364,7 @@ impl HostsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/hosts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -496,13 +496,13 @@ impl HostsAPI {
         datadog::Error<MuteHostError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.mute_host";
+        let local_operation_id = "v1.mute_host";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/host/{host_name}/mute",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =
@@ -647,13 +647,13 @@ impl HostsAPI {
         datadog::Error<UnmuteHostError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.unmute_host";
+        let local_operation_id = "v1.unmute_host";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/host/{host_name}/unmute",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =

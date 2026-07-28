@@ -163,13 +163,13 @@ impl LogsCustomDestinationsAPI {
         datadog::Error<CreateLogsCustomDestinationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_logs_custom_destination";
+        let local_operation_id = "v2.create_logs_custom_destination";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/custom-destinations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -308,13 +308,13 @@ impl LogsCustomDestinationsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLogsCustomDestinationError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_logs_custom_destination";
+        let local_operation_id = "v2.delete_logs_custom_destination";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/custom-destinations/{custom_destination_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             custom_destination_id = datadog::urlencode(custom_destination_id)
         );
         let mut local_req_builder =
@@ -413,13 +413,13 @@ impl LogsCustomDestinationsAPI {
         datadog::Error<GetLogsCustomDestinationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_logs_custom_destination";
+        let local_operation_id = "v2.get_logs_custom_destination";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/custom-destinations/{custom_destination_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             custom_destination_id = datadog::urlencode(custom_destination_id)
         );
         let mut local_req_builder =
@@ -520,13 +520,13 @@ impl LogsCustomDestinationsAPI {
         datadog::Error<ListLogsCustomDestinationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_logs_custom_destinations";
+        let local_operation_id = "v2.list_logs_custom_destinations";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/custom-destinations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -633,13 +633,13 @@ impl LogsCustomDestinationsAPI {
         datadog::Error<UpdateLogsCustomDestinationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_logs_custom_destination";
+        let local_operation_id = "v2.update_logs_custom_destination";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/custom-destinations/{custom_destination_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             custom_destination_id = datadog::urlencode(custom_destination_id)
         );
         let mut local_req_builder =

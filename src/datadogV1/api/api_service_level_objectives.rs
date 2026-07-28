@@ -355,13 +355,13 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<CheckCanDeleteSLOError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.check_can_delete_slo";
+        let local_operation_id = "v1.check_can_delete_slo";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/can_delete",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -462,13 +462,13 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<CreateSLOError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_slo";
+        let local_operation_id = "v1.create_slo";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -619,7 +619,7 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<DeleteSLOError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_slo";
+        let local_operation_id = "v1.delete_slo";
 
         // unbox and build optional parameters
         let force = params.force;
@@ -628,7 +628,7 @@ impl ServiceLevelObjectivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             slo_id = datadog::urlencode(slo_id)
         );
         let mut local_req_builder =
@@ -742,13 +742,13 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<DeleteSLOTimeframeInBulkError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_slo_timeframe_in_bulk";
+        let local_operation_id = "v1.delete_slo_timeframe_in_bulk";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/bulk_delete",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -896,7 +896,7 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<GetSLOError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_slo";
+        let local_operation_id = "v1.get_slo";
 
         // unbox and build optional parameters
         let with_configured_alert_ids = params.with_configured_alert_ids;
@@ -905,7 +905,7 @@ impl ServiceLevelObjectivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             slo_id = datadog::urlencode(slo_id)
         );
         let mut local_req_builder =
@@ -1010,13 +1010,13 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<GetSLOCorrectionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_slo_corrections";
+        let local_operation_id = "v1.get_slo_corrections";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}/corrections",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             slo_id = datadog::urlencode(slo_id)
         );
         let mut local_req_builder =
@@ -1140,7 +1140,7 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<GetSLOHistoryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_slo_history";
+        let local_operation_id = "v1.get_slo_history";
 
         // unbox and build optional parameters
         let target = params.target;
@@ -1150,7 +1150,7 @@ impl ServiceLevelObjectivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}/history",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             slo_id = datadog::urlencode(slo_id)
         );
         let mut local_req_builder =
@@ -1298,7 +1298,7 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<ListSLOsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_slos";
+        let local_operation_id = "v1.list_slos";
 
         // unbox and build optional parameters
         let ids = params.ids;
@@ -1312,7 +1312,7 @@ impl ServiceLevelObjectivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/slo",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1432,7 +1432,7 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<SearchSLOError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.search_slo";
+        let local_operation_id = "v1.search_slo";
 
         // unbox and build optional parameters
         let query = params.query;
@@ -1444,7 +1444,7 @@ impl ServiceLevelObjectivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/slo/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1560,13 +1560,13 @@ impl ServiceLevelObjectivesAPI {
         datadog::Error<UpdateSLOError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_slo";
+        let local_operation_id = "v1.update_slo";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/{slo_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             slo_id = datadog::urlencode(slo_id)
         );
         let mut local_req_builder =

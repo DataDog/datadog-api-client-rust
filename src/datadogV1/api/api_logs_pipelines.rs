@@ -194,13 +194,13 @@ impl LogsPipelinesAPI {
         datadog::Error<CreateLogsPipelineError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_logs_pipeline";
+        let local_operation_id = "v1.create_logs_pipeline";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipelines",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -335,13 +335,13 @@ impl LogsPipelinesAPI {
         pipeline_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLogsPipelineError>> {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_logs_pipeline";
+        let local_operation_id = "v1.delete_logs_pipeline";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipelines/{pipeline_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             pipeline_id = datadog::urlencode(pipeline_id)
         );
         let mut local_req_builder =
@@ -436,13 +436,13 @@ impl LogsPipelinesAPI {
         datadog::Error<GetLogsPipelineError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_logs_pipeline";
+        let local_operation_id = "v1.get_logs_pipeline";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipelines/{pipeline_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             pipeline_id = datadog::urlencode(pipeline_id)
         );
         let mut local_req_builder =
@@ -543,13 +543,13 @@ impl LogsPipelinesAPI {
         datadog::Error<GetLogsPipelineOrderError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_logs_pipeline_order";
+        let local_operation_id = "v1.get_logs_pipeline_order";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipeline-order",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -649,13 +649,13 @@ impl LogsPipelinesAPI {
         datadog::Error<ListLogsPipelinesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_logs_pipelines";
+        let local_operation_id = "v1.list_logs_pipelines";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipelines",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -765,13 +765,13 @@ impl LogsPipelinesAPI {
         datadog::Error<UpdateLogsPipelineError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_logs_pipeline";
+        let local_operation_id = "v1.update_logs_pipeline";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipelines/{pipeline_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             pipeline_id = datadog::urlencode(pipeline_id)
         );
         let mut local_req_builder =
@@ -927,13 +927,13 @@ impl LogsPipelinesAPI {
         datadog::Error<UpdateLogsPipelineOrderError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_logs_pipeline_order";
+        let local_operation_id = "v1.update_logs_pipeline_order";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs/config/pipeline-order",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());

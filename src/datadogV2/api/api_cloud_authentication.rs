@@ -155,9 +155,9 @@ impl CloudAuthenticationAPI {
         datadog::Error<CreateAWSCloudAuthPersonaMappingError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_aws_cloud_auth_persona_mapping";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_aws_cloud_auth_persona_mapping";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_aws_cloud_auth_persona_mapping' is not enabled"
@@ -170,7 +170,7 @@ impl CloudAuthenticationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cloud_auth/aws/persona_mapping",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -309,9 +309,9 @@ impl CloudAuthenticationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSCloudAuthPersonaMappingError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_aws_cloud_auth_persona_mapping";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_aws_cloud_auth_persona_mapping";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_aws_cloud_auth_persona_mapping' is not enabled"
@@ -324,7 +324,7 @@ impl CloudAuthenticationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cloud_auth/aws/persona_mapping/{persona_mapping_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             persona_mapping_id = datadog::urlencode(persona_mapping_id)
         );
         let mut local_req_builder =
@@ -423,9 +423,9 @@ impl CloudAuthenticationAPI {
         datadog::Error<GetAWSCloudAuthPersonaMappingError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_aws_cloud_auth_persona_mapping";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_aws_cloud_auth_persona_mapping";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_aws_cloud_auth_persona_mapping' is not enabled".to_string(),
@@ -437,7 +437,7 @@ impl CloudAuthenticationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cloud_auth/aws/persona_mapping/{persona_mapping_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             persona_mapping_id = datadog::urlencode(persona_mapping_id)
         );
         let mut local_req_builder =
@@ -541,9 +541,9 @@ impl CloudAuthenticationAPI {
         datadog::Error<ListAWSCloudAuthPersonaMappingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_aws_cloud_auth_persona_mappings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_aws_cloud_auth_persona_mappings";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_aws_cloud_auth_persona_mappings' is not enabled"
@@ -556,7 +556,7 @@ impl CloudAuthenticationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cloud_auth/aws/persona_mapping",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

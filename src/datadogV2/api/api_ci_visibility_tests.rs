@@ -206,13 +206,13 @@ impl CIVisibilityTestsAPI {
         datadog::Error<AggregateCIAppTestEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.aggregate_ci_app_test_events";
+        let local_operation_id = "v2.aggregate_ci_app_test_events";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/tests/analytics/aggregate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -405,7 +405,7 @@ impl CIVisibilityTestsAPI {
         datadog::Error<ListCIAppTestEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_ci_app_test_events";
+        let local_operation_id = "v2.list_ci_app_test_events";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -419,7 +419,7 @@ impl CIVisibilityTestsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ci/tests/events",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -599,7 +599,7 @@ impl CIVisibilityTestsAPI {
         datadog::Error<SearchCIAppTestEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_ci_app_test_events";
+        let local_operation_id = "v2.search_ci_app_test_events";
 
         // unbox and build optional parameters
         let body = params.body;
@@ -608,7 +608,7 @@ impl CIVisibilityTestsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ci/tests/events/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

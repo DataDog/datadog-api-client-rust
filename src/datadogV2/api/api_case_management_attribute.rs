@@ -160,13 +160,13 @@ impl CaseManagementAttributeAPI {
         datadog::Error<CreateCustomAttributeConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_custom_attribute_config";
+        let local_operation_id = "v2.create_custom_attribute_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/types/{case_type_id}/custom_attributes",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_type_id = datadog::urlencode(case_type_id)
         );
         let mut local_req_builder =
@@ -308,13 +308,13 @@ impl CaseManagementAttributeAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCustomAttributeConfigError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_custom_attribute_config";
+        let local_operation_id = "v2.delete_custom_attribute_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/types/{case_type_id}/custom_attributes/{custom_attribute_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_type_id = datadog::urlencode(case_type_id),
             custom_attribute_id = datadog::urlencode(custom_attribute_id)
         );
@@ -414,13 +414,13 @@ impl CaseManagementAttributeAPI {
         datadog::Error<GetAllCustomAttributeConfigsByCaseTypeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_all_custom_attribute_configs_by_case_type";
+        let local_operation_id = "v2.get_all_custom_attribute_configs_by_case_type";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/types/{case_type_id}/custom_attributes",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_type_id = datadog::urlencode(case_type_id)
         );
         let mut local_req_builder =
@@ -521,13 +521,13 @@ impl CaseManagementAttributeAPI {
         datadog::Error<GetAllCustomAttributesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_all_custom_attributes";
+        let local_operation_id = "v2.get_all_custom_attributes";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/types/custom_attributes",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -636,13 +636,13 @@ impl CaseManagementAttributeAPI {
         datadog::Error<UpdateCustomAttributeConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_custom_attribute_config";
+        let local_operation_id = "v2.update_custom_attribute_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/types/{case_type_id}/custom_attributes/{custom_attribute_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_type_id = datadog::urlencode(case_type_id),
             custom_attribute_id = datadog::urlencode(custom_attribute_id)
         );

@@ -123,9 +123,9 @@ impl DashboardSharingAPI {
         datadog::Error<ListSharedDashboardsByDashboardIdError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_shared_dashboards_by_dashboard_id";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_shared_dashboards_by_dashboard_id";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_shared_dashboards_by_dashboard_id' is not enabled"
@@ -138,7 +138,7 @@ impl DashboardSharingAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/dashboard/{dashboard_id}/shared",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dashboard_id = datadog::urlencode(dashboard_id)
         );
         let mut local_req_builder =

@@ -249,13 +249,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<CreateGoogleChatTargetAudienceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_google_chat_target_audience";
+        let local_operation_id = "v2.create_google_chat_target_audience";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/target-audiences",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             );
         let mut local_req_builder =
@@ -410,13 +410,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<CreateOrganizationHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_organization_handle";
+        let local_operation_id = "v2.create_organization_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/organization-handles",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             );
         let mut local_req_builder =
@@ -557,13 +557,13 @@ impl GoogleChatIntegrationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGoogleChatDelegatedUserError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_google_chat_delegated_user";
+        let local_operation_id = "v2.delete_google_chat_delegated_user";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/delegated-user",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             );
         let mut local_req_builder =
@@ -649,13 +649,13 @@ impl GoogleChatIntegrationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGoogleChatOrganizationError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_google_chat_organization";
+        let local_operation_id = "v2.delete_google_chat_organization";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             organization_binding_id = datadog::urlencode(organization_binding_id)
         );
         let mut local_req_builder =
@@ -746,13 +746,13 @@ impl GoogleChatIntegrationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGoogleChatTargetAudienceError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_google_chat_target_audience";
+        let local_operation_id = "v2.delete_google_chat_target_audience";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/target-audiences/{target_audience_id}",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             , target_audience_id=
             datadog::urlencode(target_audience_id)
@@ -841,13 +841,13 @@ impl GoogleChatIntegrationAPI {
         handle_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrganizationHandleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_organization_handle";
+        let local_operation_id = "v2.delete_organization_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/organization-handles/{handle_id}",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             , handle_id=
             datadog::urlencode(handle_id)
@@ -948,13 +948,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<GetGoogleChatDelegatedUserError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_google_chat_delegated_user";
+        let local_operation_id = "v2.get_google_chat_delegated_user";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/delegated-user",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             );
         let mut local_req_builder =
@@ -1060,13 +1060,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<GetGoogleChatOrganizationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_google_chat_organization";
+        let local_operation_id = "v2.get_google_chat_organization";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             organization_binding_id = datadog::urlencode(organization_binding_id)
         );
         let mut local_req_builder =
@@ -1177,13 +1177,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<GetGoogleChatTargetAudienceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_google_chat_target_audience";
+        let local_operation_id = "v2.get_google_chat_target_audience";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/target-audiences/{target_audience_id}",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             , target_audience_id=
             datadog::urlencode(target_audience_id)
@@ -1293,13 +1293,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<GetOrganizationHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_organization_handle";
+        let local_operation_id = "v2.get_organization_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/organization-handles/{handle_id}",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             , handle_id=
             datadog::urlencode(handle_id)
@@ -1410,13 +1410,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<GetSpaceByDisplayNameError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_space_by_display_name";
+        let local_operation_id = "v2.get_space_by_display_name";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/app/named-spaces/{domain_name}/{space_display_name}",
-            local_configuration.get_operation_host(operation_id), domain_name=
+            local_configuration.get_operation_host(local_operation_id), domain_name=
             datadog::urlencode(domain_name)
             , space_display_name=
             datadog::urlencode(space_display_name)
@@ -1519,13 +1519,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<ListGoogleChatOrganizationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_google_chat_organizations";
+        let local_operation_id = "v2.list_google_chat_organizations";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1630,13 +1630,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<ListGoogleChatTargetAudiencesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_google_chat_target_audiences";
+        let local_operation_id = "v2.list_google_chat_target_audiences";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/target-audiences",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             );
         let mut local_req_builder =
@@ -1742,13 +1742,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<ListOrganizationHandlesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_organization_handles";
+        let local_operation_id = "v2.list_organization_handles";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/organization-handles",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             );
         let mut local_req_builder =
@@ -1863,13 +1863,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<UpdateGoogleChatTargetAudienceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_google_chat_target_audience";
+        let local_operation_id = "v2.update_google_chat_target_audience";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/target-audiences/{target_audience_id}",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             , target_audience_id=
             datadog::urlencode(target_audience_id)
@@ -2028,13 +2028,13 @@ impl GoogleChatIntegrationAPI {
         datadog::Error<UpdateOrganizationHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_organization_handle";
+        let local_operation_id = "v2.update_organization_handle";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/google-chat/organizations/{organization_binding_id}/organization-handles/{handle_id}",
-            local_configuration.get_operation_host(operation_id), organization_binding_id=
+            local_configuration.get_operation_host(local_operation_id), organization_binding_id=
             datadog::urlencode(organization_binding_id)
             , handle_id=
             datadog::urlencode(handle_id)

@@ -181,13 +181,13 @@ impl OrganizationsAPI {
         datadog::Error<CreateChildOrgError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_child_org";
+        let local_operation_id = "v1.create_child_org";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -334,13 +334,13 @@ impl OrganizationsAPI {
         datadog::Error<DowngradeOrgError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.downgrade_org";
+        let local_operation_id = "v1.downgrade_org";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}/downgrade",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -439,13 +439,13 @@ impl OrganizationsAPI {
         datadog::Error<GetOrgError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_org";
+        let local_operation_id = "v1.get_org";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -543,13 +543,13 @@ impl OrganizationsAPI {
         datadog::Error<ListOrgsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_orgs";
+        let local_operation_id = "v1.list_orgs";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -649,13 +649,13 @@ impl OrganizationsAPI {
         datadog::Error<UpdateOrgError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_org";
+        let local_operation_id = "v1.update_org";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -816,13 +816,13 @@ impl OrganizationsAPI {
         datadog::Error<UploadIdPForOrgError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.upload_idp_for_org";
+        let local_operation_id = "v1.upload_idp_for_org";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/org/{public_id}/idp_metadata",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =

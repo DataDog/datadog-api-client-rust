@@ -194,13 +194,13 @@ impl RumRetentionFiltersAPI {
         datadog::Error<CreateRetentionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_retention_filter";
+        let local_operation_id = "v2.create_retention_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{app_id}/retention_filters",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id)
         );
         let mut local_req_builder =
@@ -341,13 +341,13 @@ impl RumRetentionFiltersAPI {
         rf_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRetentionFilterError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_retention_filter";
+        let local_operation_id = "v2.delete_retention_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{app_id}/retention_filters/{rf_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id),
             rf_id = datadog::urlencode(rf_id)
         );
@@ -449,13 +449,13 @@ impl RumRetentionFiltersAPI {
         datadog::Error<GetPermanentRetentionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_permanent_retention_filter";
+        let local_operation_id = "v2.get_permanent_retention_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{app_id}/retention_filters/permanent/{permanent_rf_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id),
             permanent_rf_id = datadog::urlencode(permanent_rf_id.to_string())
         );
@@ -564,13 +564,13 @@ impl RumRetentionFiltersAPI {
         datadog::Error<GetRetentionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_retention_filter";
+        let local_operation_id = "v2.get_retention_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{app_id}/retention_filters/{rf_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id),
             rf_id = datadog::urlencode(rf_id)
         );
@@ -681,13 +681,13 @@ impl RumRetentionFiltersAPI {
         datadog::Error<ListPermanentRetentionFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_permanent_retention_filters";
+        let local_operation_id = "v2.list_permanent_retention_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{app_id}/retention_filters/permanent",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id)
         );
         let mut local_req_builder =
@@ -791,13 +791,13 @@ impl RumRetentionFiltersAPI {
         datadog::Error<ListRetentionFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_retention_filters";
+        let local_operation_id = "v2.list_retention_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{app_id}/retention_filters",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id)
         );
         let mut local_req_builder =
@@ -907,13 +907,13 @@ impl RumRetentionFiltersAPI {
         datadog::Error<OrderRetentionFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.order_retention_filters";
+        let local_operation_id = "v2.order_retention_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{app_id}/relationships/retention_filters",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id)
         );
         let mut local_req_builder =
@@ -1074,13 +1074,13 @@ impl RumRetentionFiltersAPI {
         datadog::Error<UpdatePermanentRetentionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_permanent_retention_filter";
+        let local_operation_id = "v2.update_permanent_retention_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{app_id}/retention_filters/permanent/{permanent_rf_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id),
             permanent_rf_id = datadog::urlencode(permanent_rf_id.to_string())
         );
@@ -1240,13 +1240,13 @@ impl RumRetentionFiltersAPI {
         datadog::Error<UpdateRetentionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_retention_filter";
+        let local_operation_id = "v2.update_retention_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/applications/{app_id}/retention_filters/{rf_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_id = datadog::urlencode(app_id),
             rf_id = datadog::urlencode(rf_id)
         );

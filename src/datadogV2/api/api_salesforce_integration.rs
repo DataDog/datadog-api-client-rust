@@ -166,13 +166,13 @@ impl SalesforceIntegrationAPI {
         datadog::Error<CreateIncidentTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_template";
+        let local_operation_id = "v2.create_incident_template";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/salesforce-incidents/incident-templates",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -310,13 +310,13 @@ impl SalesforceIntegrationAPI {
         incident_template_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentTemplateError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_template";
+        let local_operation_id = "v2.delete_incident_template";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/salesforce-incidents/incident-templates/{incident_template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_template_id = datadog::urlencode(incident_template_id)
         );
         let mut local_req_builder =
@@ -404,13 +404,13 @@ impl SalesforceIntegrationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSalesforceOrganizationError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_salesforce_organization";
+        let local_operation_id = "v2.delete_salesforce_organization";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/salesforce-incidents/organizations/{salesforce_org_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             salesforce_org_id = datadog::urlencode(salesforce_org_id)
         );
         let mut local_req_builder =
@@ -504,13 +504,13 @@ impl SalesforceIntegrationAPI {
         datadog::Error<GetIncidentTemplatesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_templates";
+        let local_operation_id = "v2.get_incident_templates";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/salesforce-incidents/incident-templates",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -615,13 +615,13 @@ impl SalesforceIntegrationAPI {
         datadog::Error<GetSalesforceOrganizationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_salesforce_organizations";
+        let local_operation_id = "v2.get_salesforce_organizations";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/salesforce-incidents/organizations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -729,13 +729,13 @@ impl SalesforceIntegrationAPI {
         datadog::Error<UpdateIncidentTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_template";
+        let local_operation_id = "v2.update_incident_template";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/salesforce-incidents/incident-templates/{incident_template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_template_id = datadog::urlencode(incident_template_id)
         );
         let mut local_req_builder =

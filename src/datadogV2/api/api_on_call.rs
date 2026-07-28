@@ -542,7 +542,7 @@ impl OnCallAPI {
         datadog::Error<CreateOnCallEscalationPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_on_call_escalation_policy";
+        let local_operation_id = "v2.create_on_call_escalation_policy";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -551,7 +551,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/escalation-policies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -706,7 +706,7 @@ impl OnCallAPI {
         datadog::Error<CreateOnCallScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_on_call_schedule";
+        let local_operation_id = "v2.create_on_call_schedule";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -715,7 +715,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -872,13 +872,13 @@ impl OnCallAPI {
         datadog::Error<CreateUserNotificationChannelError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_user_notification_channel";
+        let local_operation_id = "v2.create_user_notification_channel";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-channels",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_id = datadog::urlencode(user_id)
         );
         let mut local_req_builder =
@@ -1033,13 +1033,13 @@ impl OnCallAPI {
         datadog::Error<CreateUserNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_user_notification_rule";
+        let local_operation_id = "v2.create_user_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_id = datadog::urlencode(user_id)
         );
         let mut local_req_builder =
@@ -1179,13 +1179,13 @@ impl OnCallAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOnCallEscalationPolicyError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_on_call_escalation_policy";
+        let local_operation_id = "v2.delete_on_call_escalation_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/escalation-policies/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -1270,13 +1270,13 @@ impl OnCallAPI {
         schedule_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOnCallScheduleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_on_call_schedule";
+        let local_operation_id = "v2.delete_on_call_schedule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             schedule_id = datadog::urlencode(schedule_id)
         );
         let mut local_req_builder =
@@ -1364,13 +1364,13 @@ impl OnCallAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserNotificationChannelError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_user_notification_channel";
+        let local_operation_id = "v2.delete_user_notification_channel";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-channels/{channel_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_id = datadog::urlencode(user_id),
             channel_id = datadog::urlencode(channel_id)
         );
@@ -1458,13 +1458,13 @@ impl OnCallAPI {
         rule_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserNotificationRuleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_user_notification_rule";
+        let local_operation_id = "v2.delete_user_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_id = datadog::urlencode(user_id),
             rule_id = datadog::urlencode(rule_id)
         );
@@ -1566,7 +1566,7 @@ impl OnCallAPI {
         datadog::Error<GetOnCallEscalationPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_on_call_escalation_policy";
+        let local_operation_id = "v2.get_on_call_escalation_policy";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1575,7 +1575,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/escalation-policies/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -1684,7 +1684,7 @@ impl OnCallAPI {
         datadog::Error<GetOnCallScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_on_call_schedule";
+        let local_operation_id = "v2.get_on_call_schedule";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1693,7 +1693,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             schedule_id = datadog::urlencode(schedule_id)
         );
         let mut local_req_builder =
@@ -1804,7 +1804,7 @@ impl OnCallAPI {
         datadog::Error<GetOnCallTeamRoutingRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_on_call_team_routing_rules";
+        let local_operation_id = "v2.get_on_call_team_routing_rules";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1813,7 +1813,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/teams/{team_id}/routing-rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -1925,7 +1925,7 @@ impl OnCallAPI {
         datadog::Error<GetScheduleOnCallRespondersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_schedule_on_call_responders";
+        let local_operation_id = "v2.get_schedule_on_call_responders";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1936,7 +1936,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}/responders",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             schedule_id = datadog::urlencode(schedule_id)
         );
         let mut local_req_builder =
@@ -2054,7 +2054,7 @@ impl OnCallAPI {
         datadog::Error<GetScheduleOnCallUserError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_schedule_on_call_user";
+        let local_operation_id = "v2.get_schedule_on_call_user";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2064,7 +2064,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}/on-call",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             schedule_id = datadog::urlencode(schedule_id)
         );
         let mut local_req_builder =
@@ -2179,7 +2179,7 @@ impl OnCallAPI {
         datadog::Error<GetTeamOnCallUsersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_team_on_call_users";
+        let local_operation_id = "v2.get_team_on_call_users";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2188,7 +2188,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/teams/{team_id}/on-call",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -2301,13 +2301,13 @@ impl OnCallAPI {
         datadog::Error<GetUserNotificationChannelError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_user_notification_channel";
+        let local_operation_id = "v2.get_user_notification_channel";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-channels/{channel_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_id = datadog::urlencode(user_id),
             channel_id = datadog::urlencode(channel_id)
         );
@@ -2418,7 +2418,7 @@ impl OnCallAPI {
         datadog::Error<GetUserNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_user_notification_rule";
+        let local_operation_id = "v2.get_user_notification_rule";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2427,7 +2427,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_id = datadog::urlencode(user_id),
             rule_id = datadog::urlencode(rule_id)
         );
@@ -2539,13 +2539,13 @@ impl OnCallAPI {
         datadog::Error<ListUserNotificationChannelsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_user_notification_channels";
+        let local_operation_id = "v2.list_user_notification_channels";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-channels",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_id = datadog::urlencode(user_id)
         );
         let mut local_req_builder =
@@ -2653,7 +2653,7 @@ impl OnCallAPI {
         datadog::Error<ListUserNotificationRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_user_notification_rules";
+        let local_operation_id = "v2.list_user_notification_rules";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2662,7 +2662,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_id = datadog::urlencode(user_id)
         );
         let mut local_req_builder =
@@ -2777,7 +2777,7 @@ impl OnCallAPI {
         datadog::Error<SetOnCallTeamRoutingRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.set_on_call_team_routing_rules";
+        let local_operation_id = "v2.set_on_call_team_routing_rules";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2786,7 +2786,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/teams/{team_id}/routing-rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -2947,7 +2947,7 @@ impl OnCallAPI {
         datadog::Error<UpdateOnCallEscalationPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_on_call_escalation_policy";
+        let local_operation_id = "v2.update_on_call_escalation_policy";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -2956,7 +2956,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/escalation-policies/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -3114,7 +3114,7 @@ impl OnCallAPI {
         datadog::Error<UpdateOnCallScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_on_call_schedule";
+        let local_operation_id = "v2.update_on_call_schedule";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -3123,7 +3123,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             schedule_id = datadog::urlencode(schedule_id)
         );
         let mut local_req_builder =
@@ -3285,7 +3285,7 @@ impl OnCallAPI {
         datadog::Error<UpdateUserNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_user_notification_rule";
+        let local_operation_id = "v2.update_user_notification_rule";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -3294,7 +3294,7 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_id = datadog::urlencode(user_id),
             rule_id = datadog::urlencode(rule_id)
         );

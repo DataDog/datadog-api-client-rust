@@ -348,13 +348,13 @@ impl SoftwareCatalogAPI {
         entity_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCatalogEntityError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_catalog_entity";
+        let local_operation_id = "v2.delete_catalog_entity";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/entity/{entity_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             entity_id = datadog::urlencode(entity_id)
         );
         let mut local_req_builder =
@@ -436,13 +436,13 @@ impl SoftwareCatalogAPI {
         kind_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCatalogKindError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_catalog_kind";
+        let local_operation_id = "v2.delete_catalog_kind";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/kind/{kind_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             kind_id = datadog::urlencode(kind_id)
         );
         let mut local_req_builder =
@@ -572,7 +572,7 @@ impl SoftwareCatalogAPI {
         datadog::Error<ListCatalogEntityError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_catalog_entity";
+        let local_operation_id = "v2.list_catalog_entity";
 
         // unbox and build optional parameters
         let page_offset = params.page_offset;
@@ -591,7 +591,7 @@ impl SoftwareCatalogAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/entity",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -772,7 +772,7 @@ impl SoftwareCatalogAPI {
         datadog::Error<ListCatalogKindError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_catalog_kind";
+        let local_operation_id = "v2.list_catalog_kind";
 
         // unbox and build optional parameters
         let page_offset = params.page_offset;
@@ -784,7 +784,7 @@ impl SoftwareCatalogAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/kind",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -940,7 +940,7 @@ impl SoftwareCatalogAPI {
         datadog::Error<ListCatalogRelationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_catalog_relation";
+        let local_operation_id = "v2.list_catalog_relation";
 
         // unbox and build optional parameters
         let page_offset = params.page_offset;
@@ -955,7 +955,7 @@ impl SoftwareCatalogAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/relation",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1082,13 +1082,13 @@ impl SoftwareCatalogAPI {
         datadog::Error<PreviewCatalogEntitiesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.preview_catalog_entities";
+        let local_operation_id = "v2.preview_catalog_entities";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/entity/preview",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1190,13 +1190,13 @@ impl SoftwareCatalogAPI {
         datadog::Error<UpsertCatalogEntityError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_catalog_entity";
+        let local_operation_id = "v2.upsert_catalog_entity";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/entity",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1345,13 +1345,13 @@ impl SoftwareCatalogAPI {
         datadog::Error<UpsertCatalogKindError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_catalog_kind";
+        let local_operation_id = "v2.upsert_catalog_kind";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/kind",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

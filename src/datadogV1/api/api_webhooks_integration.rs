@@ -180,13 +180,13 @@ impl WebhooksIntegrationAPI {
         datadog::Error<CreateWebhooksIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_webhooks_integration";
+        let local_operation_id = "v1.create_webhooks_integration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/webhooks",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -340,13 +340,13 @@ impl WebhooksIntegrationAPI {
         datadog::Error<CreateWebhooksIntegrationCustomVariableError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_webhooks_integration_custom_variable";
+        let local_operation_id = "v1.create_webhooks_integration_custom_variable";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/custom-variables",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -485,13 +485,13 @@ impl WebhooksIntegrationAPI {
         webhook_name: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteWebhooksIntegrationError>> {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_webhooks_integration";
+        let local_operation_id = "v1.delete_webhooks_integration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/webhooks/{webhook_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             webhook_name = datadog::urlencode(webhook_name)
         );
         let mut local_req_builder =
@@ -579,13 +579,13 @@ impl WebhooksIntegrationAPI {
         datadog::Error<DeleteWebhooksIntegrationCustomVariableError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_webhooks_integration_custom_variable";
+        let local_operation_id = "v1.delete_webhooks_integration_custom_variable";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/custom-variables/{custom_variable_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             custom_variable_name = datadog::urlencode(custom_variable_name)
         );
         let mut local_req_builder =
@@ -684,13 +684,13 @@ impl WebhooksIntegrationAPI {
         datadog::Error<GetWebhooksIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_webhooks_integration";
+        let local_operation_id = "v1.get_webhooks_integration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/webhooks/{webhook_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             webhook_name = datadog::urlencode(webhook_name)
         );
         let mut local_req_builder =
@@ -804,13 +804,13 @@ impl WebhooksIntegrationAPI {
         datadog::Error<GetWebhooksIntegrationCustomVariableError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_webhooks_integration_custom_variable";
+        let local_operation_id = "v1.get_webhooks_integration_custom_variable";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/custom-variables/{custom_variable_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             custom_variable_name = datadog::urlencode(custom_variable_name)
         );
         let mut local_req_builder =
@@ -919,13 +919,13 @@ impl WebhooksIntegrationAPI {
         datadog::Error<UpdateWebhooksIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_webhooks_integration";
+        let local_operation_id = "v1.update_webhooks_integration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/webhooks/{webhook_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             webhook_name = datadog::urlencode(webhook_name)
         );
         let mut local_req_builder =
@@ -1082,13 +1082,13 @@ impl WebhooksIntegrationAPI {
         datadog::Error<UpdateWebhooksIntegrationCustomVariableError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_webhooks_integration_custom_variable";
+        let local_operation_id = "v1.update_webhooks_integration_custom_variable";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/webhooks/configuration/custom-variables/{custom_variable_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             custom_variable_name = datadog::urlencode(custom_variable_name)
         );
         let mut local_req_builder =

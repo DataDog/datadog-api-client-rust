@@ -156,9 +156,9 @@ impl DatasetsAPI {
         datadog::Error<CreateDatasetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_dataset' is not enabled".to_string(),
@@ -170,7 +170,7 @@ impl DatasetsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/datasets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -305,9 +305,9 @@ impl DatasetsAPI {
         dataset_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDatasetError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_dataset' is not enabled".to_string(),
@@ -319,7 +319,7 @@ impl DatasetsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/datasets/{dataset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
         let mut local_req_builder =
@@ -411,9 +411,9 @@ impl DatasetsAPI {
         datadog::Error<GetAllDatasetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_all_datasets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_all_datasets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_all_datasets' is not enabled".to_string(),
@@ -425,7 +425,7 @@ impl DatasetsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/datasets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -525,9 +525,9 @@ impl DatasetsAPI {
         datadog::Error<GetDatasetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_dataset' is not enabled".to_string(),
@@ -539,7 +539,7 @@ impl DatasetsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/datasets/{dataset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
         let mut local_req_builder =
@@ -641,9 +641,9 @@ impl DatasetsAPI {
         datadog::Error<UpdateDatasetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_dataset' is not enabled".to_string(),
@@ -655,7 +655,7 @@ impl DatasetsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/datasets/{dataset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
         let mut local_req_builder =

@@ -164,9 +164,9 @@ impl WebIntegrationsAPI {
         datadog::Error<CreateWebIntegrationAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_web_integration_account";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_web_integration_account";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_web_integration_account' is not enabled".to_string(),
@@ -178,7 +178,7 @@ impl WebIntegrationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/web-integrations/{integration_name}/accounts",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_name = datadog::urlencode(integration_name)
         );
         let mut local_req_builder =
@@ -320,9 +320,9 @@ impl WebIntegrationsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteWebIntegrationAccountError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_web_integration_account";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_web_integration_account";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_web_integration_account' is not enabled".to_string(),
@@ -334,7 +334,7 @@ impl WebIntegrationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/web-integrations/{integration_name}/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_name = datadog::urlencode(integration_name),
             account_id = datadog::urlencode(account_id)
         );
@@ -436,9 +436,9 @@ impl WebIntegrationsAPI {
         datadog::Error<GetWebIntegrationAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_web_integration_account";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_web_integration_account";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_web_integration_account' is not enabled".to_string(),
@@ -450,7 +450,7 @@ impl WebIntegrationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/web-integrations/{integration_name}/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_name = datadog::urlencode(integration_name),
             account_id = datadog::urlencode(account_id)
         );
@@ -557,9 +557,9 @@ impl WebIntegrationsAPI {
         datadog::Error<ListWebIntegrationAccountsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_web_integration_accounts";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_web_integration_accounts";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_web_integration_accounts' is not enabled".to_string(),
@@ -571,7 +571,7 @@ impl WebIntegrationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/web-integrations/{integration_name}/accounts",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_name = datadog::urlencode(integration_name)
         );
         let mut local_req_builder =
@@ -681,9 +681,9 @@ impl WebIntegrationsAPI {
         datadog::Error<UpdateWebIntegrationAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_web_integration_account";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_web_integration_account";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_web_integration_account' is not enabled".to_string(),
@@ -695,7 +695,7 @@ impl WebIntegrationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/web-integrations/{integration_name}/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_name = datadog::urlencode(integration_name),
             account_id = datadog::urlencode(account_id)
         );

@@ -324,13 +324,13 @@ impl CSMThreatsAPI {
         datadog::Error<CreateCSMThreatsAgentPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_csm_threats_agent_policy";
+        let local_operation_id = "v2.create_csm_threats_agent_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/policy",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -487,13 +487,13 @@ impl CSMThreatsAPI {
         datadog::Error<CreateCSMThreatsAgentRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_csm_threats_agent_rule";
+        let local_operation_id = "v2.create_csm_threats_agent_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/agent_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -650,13 +650,13 @@ impl CSMThreatsAPI {
         datadog::Error<CreateCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_cloud_workload_security_agent_rule";
+        let local_operation_id = "v2.create_cloud_workload_security_agent_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -800,13 +800,13 @@ impl CSMThreatsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCSMThreatsAgentPolicyError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_csm_threats_agent_policy";
+        let local_operation_id = "v2.delete_csm_threats_agent_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/policy/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -897,7 +897,7 @@ impl CSMThreatsAPI {
         params: DeleteCSMThreatsAgentRuleOptionalParams,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCSMThreatsAgentRuleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_csm_threats_agent_rule";
+        let local_operation_id = "v2.delete_csm_threats_agent_rule";
 
         // unbox and build optional parameters
         let policy_id = params.policy_id;
@@ -906,7 +906,7 @@ impl CSMThreatsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/agent_rules/{agent_rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =
@@ -1003,13 +1003,13 @@ impl CSMThreatsAPI {
         datadog::Error<DeleteCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_cloud_workload_security_agent_rule";
+        let local_operation_id = "v2.delete_cloud_workload_security_agent_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =
@@ -1106,13 +1106,13 @@ impl CSMThreatsAPI {
     ) -> Result<datadog::ResponseContent<Vec<u8>>, datadog::Error<DownloadCSMThreatsPolicyError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.download_csm_threats_policy";
+        let local_operation_id = "v2.download_csm_threats_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/policy/download",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1213,13 +1213,13 @@ impl CSMThreatsAPI {
         datadog::Error<DownloadCloudWorkloadPolicyFileError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.download_cloud_workload_policy_file";
+        let local_operation_id = "v2.download_cloud_workload_policy_file";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/cloud_workload/policy/download",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1321,13 +1321,13 @@ impl CSMThreatsAPI {
         datadog::Error<GetCSMThreatsAgentPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_csm_threats_agent_policy";
+        let local_operation_id = "v2.get_csm_threats_agent_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/policy/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -1440,7 +1440,7 @@ impl CSMThreatsAPI {
         datadog::Error<GetCSMThreatsAgentRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_csm_threats_agent_rule";
+        let local_operation_id = "v2.get_csm_threats_agent_rule";
 
         // unbox and build optional parameters
         let policy_id = params.policy_id;
@@ -1449,7 +1449,7 @@ impl CSMThreatsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/agent_rules/{agent_rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =
@@ -1565,13 +1565,13 @@ impl CSMThreatsAPI {
         datadog::Error<GetCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_cloud_workload_security_agent_rule";
+        let local_operation_id = "v2.get_cloud_workload_security_agent_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =
@@ -1679,13 +1679,13 @@ impl CSMThreatsAPI {
         datadog::Error<ListCSMThreatsAgentPoliciesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_csm_threats_agent_policies";
+        let local_operation_id = "v2.list_csm_threats_agent_policies";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/policy",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1797,7 +1797,7 @@ impl CSMThreatsAPI {
         datadog::Error<ListCSMThreatsAgentRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_csm_threats_agent_rules";
+        let local_operation_id = "v2.list_csm_threats_agent_rules";
 
         // unbox and build optional parameters
         let policy_id = params.policy_id;
@@ -1806,7 +1806,7 @@ impl CSMThreatsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/agent_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1921,13 +1921,13 @@ impl CSMThreatsAPI {
         datadog::Error<ListCloudWorkloadSecurityAgentRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cloud_workload_security_agent_rules";
+        let local_operation_id = "v2.list_cloud_workload_security_agent_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2041,13 +2041,13 @@ impl CSMThreatsAPI {
         datadog::Error<UpdateCSMThreatsAgentPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_csm_threats_agent_policy";
+        let local_operation_id = "v2.update_csm_threats_agent_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/policy/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -2211,7 +2211,7 @@ impl CSMThreatsAPI {
         datadog::Error<UpdateCSMThreatsAgentRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_csm_threats_agent_rule";
+        let local_operation_id = "v2.update_csm_threats_agent_rule";
 
         // unbox and build optional parameters
         let policy_id = params.policy_id;
@@ -2220,7 +2220,7 @@ impl CSMThreatsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/cws/agent_rules/{agent_rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =
@@ -2387,13 +2387,13 @@ impl CSMThreatsAPI {
         datadog::Error<UpdateCloudWorkloadSecurityAgentRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_cloud_workload_security_agent_rule";
+        let local_operation_id = "v2.update_cloud_workload_security_agent_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/cloud_workload_security/agent_rules/{agent_rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             agent_rule_id = datadog::urlencode(agent_rule_id)
         );
         let mut local_req_builder =

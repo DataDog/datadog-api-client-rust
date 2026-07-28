@@ -169,13 +169,13 @@ impl APMRetentionFiltersAPI {
         datadog::Error<CreateApmRetentionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_apm_retention_filter";
+        let local_operation_id = "v2.create_apm_retention_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -317,13 +317,13 @@ impl APMRetentionFiltersAPI {
         filter_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteApmRetentionFilterError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_apm_retention_filter";
+        let local_operation_id = "v2.delete_apm_retention_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters/{filter_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             filter_id = datadog::urlencode(filter_id)
         );
         let mut local_req_builder =
@@ -422,13 +422,13 @@ impl APMRetentionFiltersAPI {
         datadog::Error<GetApmRetentionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_apm_retention_filter";
+        let local_operation_id = "v2.get_apm_retention_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters/{filter_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             filter_id = datadog::urlencode(filter_id)
         );
         let mut local_req_builder =
@@ -529,13 +529,13 @@ impl APMRetentionFiltersAPI {
         datadog::Error<ListApmRetentionFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_apm_retention_filters";
+        let local_operation_id = "v2.list_apm_retention_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -626,13 +626,13 @@ impl APMRetentionFiltersAPI {
         body: crate::datadogV2::model::ReorderRetentionFiltersRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ReorderApmRetentionFiltersError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.reorder_apm_retention_filters";
+        let local_operation_id = "v2.reorder_apm_retention_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters-execution-order",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -783,13 +783,13 @@ impl APMRetentionFiltersAPI {
         datadog::Error<UpdateApmRetentionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_apm_retention_filter";
+        let local_operation_id = "v2.update_apm_retention_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/apm/config/retention-filters/{filter_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             filter_id = datadog::urlencode(filter_id)
         );
         let mut local_req_builder =

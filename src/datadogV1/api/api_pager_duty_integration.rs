@@ -151,13 +151,13 @@ impl PagerDutyIntegrationAPI {
         datadog::Error<CreatePagerDutyIntegrationServiceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_pager_duty_integration_service";
+        let local_operation_id = "v1.create_pager_duty_integration_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -296,13 +296,13 @@ impl PagerDutyIntegrationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeletePagerDutyIntegrationServiceError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_pager_duty_integration_service";
+        let local_operation_id = "v1.delete_pager_duty_integration_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_name = datadog::urlencode(service_name)
         );
         let mut local_req_builder =
@@ -401,13 +401,13 @@ impl PagerDutyIntegrationAPI {
         datadog::Error<GetPagerDutyIntegrationServiceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_pager_duty_integration_service";
+        let local_operation_id = "v1.get_pager_duty_integration_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_name = datadog::urlencode(service_name)
         );
         let mut local_req_builder =
@@ -502,13 +502,13 @@ impl PagerDutyIntegrationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdatePagerDutyIntegrationServiceError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_pager_duty_integration_service";
+        let local_operation_id = "v1.update_pager_duty_integration_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/pagerduty/configuration/services/{service_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_name = datadog::urlencode(service_name)
         );
         let mut local_req_builder =

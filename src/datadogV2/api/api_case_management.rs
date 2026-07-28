@@ -773,13 +773,13 @@ impl CaseManagementAPI {
         datadog::Error<AddCaseInsightsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.add_case_insights";
+        let local_operation_id = "v2.add_case_insights";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/insights",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -925,13 +925,13 @@ impl CaseManagementAPI {
         datadog::Error<AggregateCasesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.aggregate_cases";
+        let local_operation_id = "v2.aggregate_cases";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/aggregate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1079,13 +1079,13 @@ impl CaseManagementAPI {
         datadog::Error<ArchiveCaseError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.archive_case";
+        let local_operation_id = "v2.archive_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/archive",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -1231,13 +1231,13 @@ impl CaseManagementAPI {
         datadog::Error<AssignCaseError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.assign_case";
+        let local_operation_id = "v2.assign_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/assign",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -1370,13 +1370,13 @@ impl CaseManagementAPI {
         body: crate::datadogV2::model::CaseBulkUpdateRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<BulkUpdateCasesError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_update_cases";
+        let local_operation_id = "v2.bulk_update_cases";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/bulk",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1517,13 +1517,13 @@ impl CaseManagementAPI {
         datadog::Error<CommentCaseError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.comment_case";
+        let local_operation_id = "v2.comment_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/comment",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -1668,7 +1668,7 @@ impl CaseManagementAPI {
         datadog::Error<CountCasesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.count_cases";
+        let local_operation_id = "v2.count_cases";
 
         // unbox and build optional parameters
         let query_filter = params.query_filter;
@@ -1679,7 +1679,7 @@ impl CaseManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cases/count",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1789,13 +1789,13 @@ impl CaseManagementAPI {
         datadog::Error<CreateCaseError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_case";
+        let local_operation_id = "v2.create_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1946,13 +1946,13 @@ impl CaseManagementAPI {
         datadog::Error<CreateCaseAutomationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_case_automation_rule";
+        let local_operation_id = "v2.create_case_automation_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -2093,13 +2093,13 @@ impl CaseManagementAPI {
         body: crate::datadogV2::model::JiraIssueCreateRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseJiraIssueError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_case_jira_issue";
+        let local_operation_id = "v2.create_case_jira_issue";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/jira_issues",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -2240,13 +2240,13 @@ impl CaseManagementAPI {
         datadog::Error<CreateCaseLinkError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_case_link";
+        let local_operation_id = "v2.create_case_link";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/link",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2385,13 +2385,13 @@ impl CaseManagementAPI {
         body: crate::datadogV2::model::NotebookCreateRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseNotebookError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_case_notebook";
+        let local_operation_id = "v2.create_case_notebook";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/notebook",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -2525,13 +2525,13 @@ impl CaseManagementAPI {
         body: crate::datadogV2::model::ServiceNowTicketCreateRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseServiceNowTicketError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_case_service_now_ticket";
+        let local_operation_id = "v2.create_case_service_now_ticket";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/servicenow_tickets",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -2672,13 +2672,13 @@ impl CaseManagementAPI {
         datadog::Error<CreateCaseViewError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_case_view";
+        let local_operation_id = "v2.create_case_view";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/views",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2826,13 +2826,13 @@ impl CaseManagementAPI {
         datadog::Error<CreateMaintenanceWindowError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_maintenance_window";
+        let local_operation_id = "v2.create_maintenance_window";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/maintenance_windows",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2978,13 +2978,13 @@ impl CaseManagementAPI {
         datadog::Error<CreateProjectError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_project";
+        let local_operation_id = "v2.create_project";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -3136,13 +3136,13 @@ impl CaseManagementAPI {
         datadog::Error<CreateProjectNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_project_notification_rule";
+        let local_operation_id = "v2.create_project_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/notification_rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -3283,13 +3283,13 @@ impl CaseManagementAPI {
         rule_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseAutomationRuleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_case_automation_rule";
+        let local_operation_id = "v2.delete_case_automation_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             rule_id = datadog::urlencode(rule_id)
         );
@@ -3377,13 +3377,13 @@ impl CaseManagementAPI {
         cell_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseCommentError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_case_comment";
+        let local_operation_id = "v2.delete_case_comment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/comment/{cell_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id),
             cell_id = datadog::urlencode(cell_id)
         );
@@ -3483,13 +3483,13 @@ impl CaseManagementAPI {
         datadog::Error<DeleteCaseCustomAttributeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_case_custom_attribute";
+        let local_operation_id = "v2.delete_case_custom_attribute";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/custom_attributes/{custom_attribute_key}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id),
             custom_attribute_key = datadog::urlencode(custom_attribute_key)
         );
@@ -3577,13 +3577,13 @@ impl CaseManagementAPI {
         link_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseLinkError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_case_link";
+        let local_operation_id = "v2.delete_case_link";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/link/{link_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             link_id = datadog::urlencode(link_id)
         );
         let mut local_req_builder =
@@ -3665,13 +3665,13 @@ impl CaseManagementAPI {
         view_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCaseViewError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_case_view";
+        let local_operation_id = "v2.delete_case_view";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/views/{view_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             view_id = datadog::urlencode(view_id)
         );
         let mut local_req_builder =
@@ -3756,13 +3756,13 @@ impl CaseManagementAPI {
         maintenance_window_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMaintenanceWindowError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_maintenance_window";
+        let local_operation_id = "v2.delete_maintenance_window";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/maintenance_windows/{maintenance_window_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             maintenance_window_id = datadog::urlencode(maintenance_window_id)
         );
         let mut local_req_builder =
@@ -3844,13 +3844,13 @@ impl CaseManagementAPI {
         project_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteProjectError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_project";
+        let local_operation_id = "v2.delete_project";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -3938,13 +3938,13 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteProjectNotificationRuleError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_project_notification_rule";
+        let local_operation_id = "v2.delete_project_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/notification_rules/{notification_rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             notification_rule_id = datadog::urlencode(notification_rule_id)
         );
@@ -4046,13 +4046,13 @@ impl CaseManagementAPI {
         datadog::Error<DisableCaseAutomationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.disable_case_automation_rule";
+        let local_operation_id = "v2.disable_case_automation_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules/{rule_id}/disable",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             rule_id = datadog::urlencode(rule_id)
         );
@@ -4161,13 +4161,13 @@ impl CaseManagementAPI {
         datadog::Error<EnableCaseAutomationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.enable_case_automation_rule";
+        let local_operation_id = "v2.enable_case_automation_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules/{rule_id}/enable",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             rule_id = datadog::urlencode(rule_id)
         );
@@ -4257,13 +4257,13 @@ impl CaseManagementAPI {
         project_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<FavoriteCaseProjectError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.favorite_case_project";
+        let local_operation_id = "v2.favorite_case_project";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/favorites",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -4356,13 +4356,13 @@ impl CaseManagementAPI {
         datadog::Error<GetCaseError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_case";
+        let local_operation_id = "v2.get_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -4467,13 +4467,13 @@ impl CaseManagementAPI {
         datadog::Error<GetCaseAutomationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_case_automation_rule";
+        let local_operation_id = "v2.get_case_automation_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             rule_id = datadog::urlencode(rule_id)
         );
@@ -4574,13 +4574,13 @@ impl CaseManagementAPI {
         datadog::Error<GetCaseViewError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_case_view";
+        let local_operation_id = "v2.get_case_view";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/views/{view_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             view_id = datadog::urlencode(view_id)
         );
         let mut local_req_builder =
@@ -4678,13 +4678,13 @@ impl CaseManagementAPI {
         datadog::Error<GetProjectError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_project";
+        let local_operation_id = "v2.get_project";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -4787,13 +4787,13 @@ impl CaseManagementAPI {
         datadog::Error<GetProjectNotificationRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_project_notification_rules";
+        let local_operation_id = "v2.get_project_notification_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/notification_rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -4891,13 +4891,13 @@ impl CaseManagementAPI {
         datadog::Error<GetProjectsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_projects";
+        let local_operation_id = "v2.get_projects";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4996,13 +4996,13 @@ impl CaseManagementAPI {
         datadog::Error<LinkIncidentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.link_incident";
+        let local_operation_id = "v2.link_incident";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/incidents",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -5140,13 +5140,13 @@ impl CaseManagementAPI {
         body: crate::datadogV2::model::JiraIssueLinkRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<LinkJiraIssueToCaseError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.link_jira_issue_to_case";
+        let local_operation_id = "v2.link_jira_issue_to_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/jira_issues",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -5292,13 +5292,13 @@ impl CaseManagementAPI {
         datadog::Error<ListCaseAutomationRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_case_automation_rules";
+        let local_operation_id = "v2.list_case_automation_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -5406,7 +5406,7 @@ impl CaseManagementAPI {
         datadog::Error<ListCaseLinksError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_case_links";
+        let local_operation_id = "v2.list_case_links";
 
         // unbox and build optional parameters
         let relationship = params.relationship;
@@ -5415,7 +5415,7 @@ impl CaseManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cases/link",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -5526,7 +5526,7 @@ impl CaseManagementAPI {
         datadog::Error<ListCaseTimelineError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_case_timeline";
+        let local_operation_id = "v2.list_case_timeline";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -5537,7 +5537,7 @@ impl CaseManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/timelines",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -5650,13 +5650,13 @@ impl CaseManagementAPI {
         datadog::Error<ListCaseViewsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_case_views";
+        let local_operation_id = "v2.list_case_views";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/views",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -5757,13 +5757,13 @@ impl CaseManagementAPI {
         datadog::Error<ListCaseWatchersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_case_watchers";
+        let local_operation_id = "v2.list_case_watchers";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/watchers",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -5864,13 +5864,13 @@ impl CaseManagementAPI {
         datadog::Error<ListMaintenanceWindowsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_maintenance_windows";
+        let local_operation_id = "v2.list_maintenance_windows";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/maintenance_windows",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -5970,13 +5970,13 @@ impl CaseManagementAPI {
         datadog::Error<ListUserCaseProjectFavoritesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_user_case_project_favorites";
+        let local_operation_id = "v2.list_user_case_project_favorites";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/favorites",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6080,13 +6080,13 @@ impl CaseManagementAPI {
         datadog::Error<MoveCaseToProjectError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.move_case_to_project";
+        let local_operation_id = "v2.move_case_to_project";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/project",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -6237,13 +6237,13 @@ impl CaseManagementAPI {
         datadog::Error<RemoveCaseInsightsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.remove_case_insights";
+        let local_operation_id = "v2.remove_case_insights";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/insights",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -6420,7 +6420,7 @@ impl CaseManagementAPI {
         datadog::Error<SearchCasesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_cases";
+        let local_operation_id = "v2.search_cases";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -6433,7 +6433,7 @@ impl CaseManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cases",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6552,13 +6552,13 @@ impl CaseManagementAPI {
         datadog::Error<UnarchiveCaseError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.unarchive_case";
+        let local_operation_id = "v2.unarchive_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/unarchive",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -6705,13 +6705,13 @@ impl CaseManagementAPI {
         datadog::Error<UnassignCaseError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.unassign_case";
+        let local_operation_id = "v2.unassign_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/unassign",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -6847,13 +6847,13 @@ impl CaseManagementAPI {
         project_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnfavoriteCaseProjectError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.unfavorite_case_project";
+        let local_operation_id = "v2.unfavorite_case_project";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/favorites",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -6935,13 +6935,13 @@ impl CaseManagementAPI {
         case_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnlinkJiraIssueError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.unlink_jira_issue";
+        let local_operation_id = "v2.unlink_jira_issue";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/relationships/jira_issues",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -7025,13 +7025,13 @@ impl CaseManagementAPI {
         user_uuid: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnwatchCaseError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.unwatch_case";
+        let local_operation_id = "v2.unwatch_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/watchers/{user_uuid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id),
             user_uuid = datadog::urlencode(user_uuid)
         );
@@ -7126,13 +7126,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdateAttributesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_attributes";
+        let local_operation_id = "v2.update_attributes";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/attributes",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -7287,13 +7287,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdateCaseAutomationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_case_automation_rule";
+        let local_operation_id = "v2.update_case_automation_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             rule_id = datadog::urlencode(rule_id)
         );
@@ -7437,13 +7437,13 @@ impl CaseManagementAPI {
         body: crate::datadogV2::model::CaseUpdateCommentRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateCaseCommentError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_case_comment";
+        let local_operation_id = "v2.update_case_comment";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/comment/{cell_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id),
             cell_id = datadog::urlencode(cell_id)
         );
@@ -7592,13 +7592,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdateCaseCustomAttributeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_case_custom_attribute";
+        let local_operation_id = "v2.update_case_custom_attribute";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/custom_attributes/{custom_attribute_key}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id),
             custom_attribute_key = datadog::urlencode(custom_attribute_key)
         );
@@ -7750,13 +7750,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdateCaseDescriptionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_case_description";
+        let local_operation_id = "v2.update_case_description";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/description",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -7906,13 +7906,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdateCaseDueDateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_case_due_date";
+        let local_operation_id = "v2.update_case_due_date";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/due_date",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -8063,13 +8063,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdateCaseResolvedReasonError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_case_resolved_reason";
+        let local_operation_id = "v2.update_case_resolved_reason";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/resolved_reason",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -8216,13 +8216,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdateCaseTitleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_case_title";
+        let local_operation_id = "v2.update_case_title";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/title",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -8370,13 +8370,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdateCaseViewError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_case_view";
+        let local_operation_id = "v2.update_case_view";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/views/{view_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             view_id = datadog::urlencode(view_id)
         );
         let mut local_req_builder =
@@ -8530,13 +8530,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdateMaintenanceWindowError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_maintenance_window";
+        let local_operation_id = "v2.update_maintenance_window";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/maintenance_windows/{maintenance_window_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             maintenance_window_id = datadog::urlencode(maintenance_window_id)
         );
         let mut local_req_builder =
@@ -8685,13 +8685,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdatePriorityError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_priority";
+        let local_operation_id = "v2.update_priority";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/priority",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -8838,13 +8838,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdateProjectError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_project";
+        let local_operation_id = "v2.update_project";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -8986,13 +8986,13 @@ impl CaseManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateProjectNotificationRuleError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_project_notification_rule";
+        let local_operation_id = "v2.update_project_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/projects/{project_id}/notification_rules/{notification_rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             notification_rule_id = datadog::urlencode(notification_rule_id)
         );
@@ -9135,13 +9135,13 @@ impl CaseManagementAPI {
         datadog::Error<UpdateStatusError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_status";
+        let local_operation_id = "v2.update_status";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/status",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -9276,13 +9276,13 @@ impl CaseManagementAPI {
         user_uuid: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<WatchCaseError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.watch_case";
+        let local_operation_id = "v2.watch_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cases/{case_id}/watchers/{user_uuid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id),
             user_uuid = datadog::urlencode(user_uuid)
         );

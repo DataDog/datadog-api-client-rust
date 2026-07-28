@@ -231,13 +231,13 @@ impl EventsAPI {
         datadog::Error<CreateEventError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_event";
+        let local_operation_id = "v2.create_event";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/events",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -382,13 +382,13 @@ impl EventsAPI {
         datadog::Error<GetEventError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_event";
+        let local_operation_id = "v2.get_event";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/events/{event_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             event_id = datadog::urlencode(event_id)
         );
         let mut local_req_builder =
@@ -525,7 +525,7 @@ impl EventsAPI {
         datadog::Error<ListEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_events";
+        let local_operation_id = "v2.list_events";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -539,7 +539,7 @@ impl EventsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/events",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -709,7 +709,7 @@ impl EventsAPI {
         datadog::Error<SearchEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_events";
+        let local_operation_id = "v2.search_events";
 
         // unbox and build optional parameters
         let body = params.body;
@@ -718,7 +718,7 @@ impl EventsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/events/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

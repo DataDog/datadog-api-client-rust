@@ -198,9 +198,9 @@ impl EntityRiskScoresAPI {
         datadog::Error<GetEntityRiskScoreError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_entity_risk_score";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_entity_risk_score";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_entity_risk_score' is not enabled".to_string(),
@@ -212,7 +212,7 @@ impl EntityRiskScoresAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security-entities/risk-scores/{entity_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             entity_id = datadog::urlencode(entity_id)
         );
         let mut local_req_builder =
@@ -315,9 +315,9 @@ impl EntityRiskScoresAPI {
         datadog::Error<ListEntityRiskScoresError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_entity_risk_scores";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_entity_risk_scores";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_entity_risk_scores' is not enabled".to_string(),
@@ -339,7 +339,7 @@ impl EntityRiskScoresAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security-entities/risk-scores",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

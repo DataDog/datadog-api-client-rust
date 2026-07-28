@@ -240,7 +240,7 @@ impl AuditAPI {
         datadog::Error<ListAuditLogsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_audit_logs";
+        let local_operation_id = "v2.list_audit_logs";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -254,7 +254,7 @@ impl AuditAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/audit/events",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -438,7 +438,7 @@ impl AuditAPI {
         datadog::Error<SearchAuditLogsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_audit_logs";
+        let local_operation_id = "v2.search_audit_logs";
 
         // unbox and build optional parameters
         let body = params.body;
@@ -447,7 +447,7 @@ impl AuditAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/audit/events/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

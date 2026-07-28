@@ -295,9 +295,9 @@ impl CSMOwnershipAPI {
         datadog::Error<CreateOwnershipFeedbackError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_ownership_feedback";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_ownership_feedback";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_ownership_feedback' is not enabled".to_string(),
@@ -309,7 +309,7 @@ impl CSMOwnershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/ownership/{resource_id}/{owner_type}/feedback",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id),
             owner_type = datadog::urlencode(owner_type.to_string())
         );
@@ -471,9 +471,9 @@ impl CSMOwnershipAPI {
         datadog::Error<GetOwnershipEvidenceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_ownership_evidence";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_ownership_evidence";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_ownership_evidence' is not enabled".to_string(),
@@ -488,7 +488,7 @@ impl CSMOwnershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/ownership/{resource_id}/{owner_type}/evidence",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id),
             owner_type = datadog::urlencode(owner_type.to_string())
         );
@@ -613,9 +613,9 @@ impl CSMOwnershipAPI {
         datadog::Error<GetOwnershipInferenceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_ownership_inference";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_ownership_inference";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_ownership_inference' is not enabled".to_string(),
@@ -630,7 +630,7 @@ impl CSMOwnershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/ownership/{resource_id}/{owner_type}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id),
             owner_type = datadog::urlencode(owner_type.to_string())
         );
@@ -742,9 +742,9 @@ impl CSMOwnershipAPI {
         datadog::Error<GetOwnershipSettingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_ownership_settings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_ownership_settings";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_ownership_settings' is not enabled".to_string(),
@@ -756,7 +756,7 @@ impl CSMOwnershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/ownership/settings",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -856,9 +856,9 @@ impl CSMOwnershipAPI {
         datadog::Error<GetOwnershipUntaggedFindingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_ownership_untagged_findings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_ownership_untagged_findings";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_ownership_untagged_findings' is not enabled".to_string(),
@@ -870,7 +870,7 @@ impl CSMOwnershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/ownership/settings/untagged",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -977,9 +977,9 @@ impl CSMOwnershipAPI {
         datadog::Error<ListOwnershipHistoryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_ownership_history";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_ownership_history";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_ownership_history' is not enabled".to_string(),
@@ -995,7 +995,7 @@ impl CSMOwnershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/ownership/{resource_id}/history",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id)
         );
         let mut local_req_builder =
@@ -1114,9 +1114,9 @@ impl CSMOwnershipAPI {
         datadog::Error<ListOwnershipHistoryByOwnerTypeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_ownership_history_by_owner_type";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_ownership_history_by_owner_type";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_ownership_history_by_owner_type' is not enabled"
@@ -1133,7 +1133,7 @@ impl CSMOwnershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/ownership/{resource_id}/{owner_type}/history",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id),
             owner_type = datadog::urlencode(owner_type.to_string())
         );
@@ -1249,9 +1249,9 @@ impl CSMOwnershipAPI {
         datadog::Error<ListOwnershipInferencesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_ownership_inferences";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_ownership_inferences";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_ownership_inferences' is not enabled".to_string(),
@@ -1263,7 +1263,7 @@ impl CSMOwnershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/ownership/{resource_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id)
         );
         let mut local_req_builder =
@@ -1366,9 +1366,9 @@ impl CSMOwnershipAPI {
         datadog::Error<PostOwnershipSettingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.post_ownership_settings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.post_ownership_settings";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.post_ownership_settings' is not enabled".to_string(),
@@ -1380,7 +1380,7 @@ impl CSMOwnershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/ownership/settings",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

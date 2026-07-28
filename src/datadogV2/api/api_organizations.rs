@@ -262,13 +262,13 @@ impl OrganizationsAPI {
         datadog::Error<GetOrgConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_org_config";
+        let local_operation_id = "v2.get_org_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_configs/{org_config_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_config_name = datadog::urlencode(org_config_name)
         );
         let mut local_req_builder =
@@ -373,13 +373,13 @@ impl OrganizationsAPI {
         datadog::Error<GetSAMLConfigurationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_saml_configuration";
+        let local_operation_id = "v2.get_saml_configuration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/saml_configurations/{saml_config_uuid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             saml_config_uuid = datadog::urlencode(saml_config_uuid)
         );
         let mut local_req_builder =
@@ -519,7 +519,7 @@ impl OrganizationsAPI {
         datadog::Error<ListGlobalOrgsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_global_orgs";
+        let local_operation_id = "v2.list_global_orgs";
 
         // unbox and build optional parameters
         let page_limit = params.page_limit;
@@ -529,7 +529,7 @@ impl OrganizationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/global_orgs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -637,13 +637,13 @@ impl OrganizationsAPI {
         datadog::Error<ListOrgConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_org_configs";
+        let local_operation_id = "v2.list_org_configs";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_configs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -742,7 +742,7 @@ impl OrganizationsAPI {
         datadog::Error<ListOrgsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_orgs";
+        let local_operation_id = "v2.list_orgs";
 
         // unbox and build optional parameters
         let filter_name = params.filter_name;
@@ -751,7 +751,7 @@ impl OrganizationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -855,13 +855,13 @@ impl OrganizationsAPI {
         datadog::Error<ListSAMLConfigurationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_saml_configurations";
+        let local_operation_id = "v2.list_saml_configurations";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/saml_configurations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -957,13 +957,13 @@ impl OrganizationsAPI {
         datadog::Error<UpdateLoginOrgConfigsMaxSessionDurationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_login_org_configs_max_session_duration";
+        let local_operation_id = "v2.update_login_org_configs_max_session_duration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/login/org_configs/max_session_duration",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -1108,13 +1108,13 @@ impl OrganizationsAPI {
         datadog::Error<UpdateOrgConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_org_config";
+        let local_operation_id = "v2.update_org_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_configs/{org_config_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_config_name = datadog::urlencode(org_config_name)
         );
         let mut local_req_builder =
@@ -1260,9 +1260,9 @@ impl OrganizationsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateOrgSamlConfigurationsError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_org_saml_configurations";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_org_saml_configurations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_org_saml_configurations' is not enabled".to_string(),
@@ -1274,7 +1274,7 @@ impl OrganizationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org/saml_configurations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1429,13 +1429,13 @@ impl OrganizationsAPI {
         datadog::Error<UpdateSAMLConfigurationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_saml_configuration";
+        let local_operation_id = "v2.update_saml_configuration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/saml_configurations/{saml_config_uuid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             saml_config_uuid = datadog::urlencode(saml_config_uuid)
         );
         let mut local_req_builder =
@@ -1575,7 +1575,7 @@ impl OrganizationsAPI {
         params: UploadIdPMetadataOptionalParams,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UploadIdPMetadataError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.upload_idp_metadata";
+        let local_operation_id = "v2.upload_idp_metadata";
 
         // unbox and build optional parameters
         let idp_file = params.idp_file;
@@ -1584,7 +1584,7 @@ impl OrganizationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/saml_configurations/idp_metadata",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

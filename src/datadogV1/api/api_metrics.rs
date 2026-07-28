@@ -248,13 +248,13 @@ impl MetricsAPI {
         datadog::Error<GetMetricMetadataError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_metric_metadata";
+        let local_operation_id = "v1.get_metric_metadata";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/metrics/{metric_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -355,7 +355,7 @@ impl MetricsAPI {
         datadog::Error<ListActiveMetricsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_active_metrics";
+        let local_operation_id = "v1.list_active_metrics";
 
         // unbox and build optional parameters
         let host = params.host;
@@ -365,7 +365,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/metrics",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -479,13 +479,13 @@ impl MetricsAPI {
         datadog::Error<ListMetricsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_metrics";
+        let local_operation_id = "v1.list_metrics";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -590,13 +590,13 @@ impl MetricsAPI {
         datadog::Error<QueryMetricsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.query_metrics";
+        let local_operation_id = "v1.query_metrics";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/query",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -706,7 +706,7 @@ impl MetricsAPI {
         datadog::Error<SubmitDistributionPointsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.submit_distribution_points";
+        let local_operation_id = "v1.submit_distribution_points";
 
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
@@ -715,7 +715,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/distribution_points",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -887,7 +887,7 @@ impl MetricsAPI {
         datadog::Error<SubmitMetricsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.submit_metrics";
+        let local_operation_id = "v1.submit_metrics";
 
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
@@ -896,7 +896,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/series",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1051,13 +1051,13 @@ impl MetricsAPI {
         datadog::Error<UpdateMetricMetadataError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_metric_metadata";
+        let local_operation_id = "v1.update_metric_metadata";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/metrics/{metric_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =

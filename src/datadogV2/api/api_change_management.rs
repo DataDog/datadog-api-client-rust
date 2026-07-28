@@ -170,9 +170,9 @@ impl ChangeManagementAPI {
         datadog::Error<CreateChangeRequestError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_change_request";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_change_request";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_change_request' is not enabled".to_string(),
@@ -184,7 +184,7 @@ impl ChangeManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/change-management/change-request",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -338,9 +338,9 @@ impl ChangeManagementAPI {
         datadog::Error<CreateChangeRequestBranchError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_change_request_branch";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_change_request_branch";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_change_request_branch' is not enabled".to_string(),
@@ -352,7 +352,7 @@ impl ChangeManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/change-management/change-request/{change_request_id}/branch",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             change_request_id = datadog::urlencode(change_request_id)
         );
         let mut local_req_builder =
@@ -507,9 +507,9 @@ impl ChangeManagementAPI {
         datadog::Error<DeleteChangeRequestDecisionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_change_request_decision";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_change_request_decision";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_change_request_decision' is not enabled".to_string(),
@@ -521,7 +521,7 @@ impl ChangeManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/change-management/change-request/{change_request_id}/decisions/{decision_id}",
-            local_configuration.get_operation_host(operation_id), change_request_id=
+            local_configuration.get_operation_host(local_operation_id), change_request_id=
             datadog::urlencode(change_request_id)
             , decision_id=
             datadog::urlencode(decision_id)
@@ -627,9 +627,9 @@ impl ChangeManagementAPI {
         datadog::Error<GetChangeRequestError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_change_request";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_change_request";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_change_request' is not enabled".to_string(),
@@ -641,7 +641,7 @@ impl ChangeManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/change-management/change-request/{change_request_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             change_request_id = datadog::urlencode(change_request_id)
         );
         let mut local_req_builder =
@@ -749,9 +749,9 @@ impl ChangeManagementAPI {
         datadog::Error<UpdateChangeRequestError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_change_request";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_change_request";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_change_request' is not enabled".to_string(),
@@ -763,7 +763,7 @@ impl ChangeManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/change-management/change-request/{change_request_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             change_request_id = datadog::urlencode(change_request_id)
         );
         let mut local_req_builder =
@@ -920,9 +920,9 @@ impl ChangeManagementAPI {
         datadog::Error<UpdateChangeRequestDecisionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_change_request_decision";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_change_request_decision";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_change_request_decision' is not enabled".to_string(),
@@ -934,7 +934,7 @@ impl ChangeManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/change-management/change-request/{change_request_id}/decisions/{decision_id}",
-            local_configuration.get_operation_host(operation_id), change_request_id=
+            local_configuration.get_operation_host(local_operation_id), change_request_id=
             datadog::urlencode(change_request_id)
             , decision_id=
             datadog::urlencode(decision_id)

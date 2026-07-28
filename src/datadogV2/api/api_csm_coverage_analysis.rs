@@ -142,13 +142,13 @@ impl CSMCoverageAnalysisAPI {
         datadog::Error<GetCSMCloudAccountsCoverageAnalysisError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_csm_cloud_accounts_coverage_analysis";
+        let local_operation_id = "v2.get_csm_cloud_accounts_coverage_analysis";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/csm/onboarding/coverage_analysis/cloud_accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -258,13 +258,13 @@ impl CSMCoverageAnalysisAPI {
         datadog::Error<GetCSMHostsAndContainersCoverageAnalysisError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_csm_hosts_and_containers_coverage_analysis";
+        let local_operation_id = "v2.get_csm_hosts_and_containers_coverage_analysis";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/csm/onboarding/coverage_analysis/hosts_and_containers",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -372,13 +372,13 @@ impl CSMCoverageAnalysisAPI {
         datadog::Error<GetCSMServerlessCoverageAnalysisError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_csm_serverless_coverage_analysis";
+        let local_operation_id = "v2.get_csm_serverless_coverage_analysis";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/csm/onboarding/coverage_analysis/serverless",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

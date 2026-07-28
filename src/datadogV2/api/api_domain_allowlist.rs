@@ -131,13 +131,13 @@ impl DomainAllowlistAPI {
         datadog::Error<GetDomainAllowlistError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_domain_allowlist";
+        let local_operation_id = "v2.get_domain_allowlist";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/domain_allowlist",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -239,13 +239,13 @@ impl DomainAllowlistAPI {
         datadog::Error<PatchDomainAllowlistError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.patch_domain_allowlist";
+        let local_operation_id = "v2.patch_domain_allowlist";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/domain_allowlist",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());

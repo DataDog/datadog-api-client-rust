@@ -179,13 +179,13 @@ impl ErrorTrackingAPI {
         issue_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIssueAssigneeError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_issue_assignee";
+        let local_operation_id = "v2.delete_issue_assignee";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/error-tracking/issues/{issue_id}/assignee",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             issue_id = datadog::urlencode(issue_id)
         );
         let mut local_req_builder =
@@ -280,7 +280,7 @@ impl ErrorTrackingAPI {
         datadog::Error<GetIssueError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_issue";
+        let local_operation_id = "v2.get_issue";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -289,7 +289,7 @@ impl ErrorTrackingAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/error-tracking/issues/{issue_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             issue_id = datadog::urlencode(issue_id)
         );
         let mut local_req_builder =
@@ -401,7 +401,7 @@ impl ErrorTrackingAPI {
         datadog::Error<SearchIssuesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_issues";
+        let local_operation_id = "v2.search_issues";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -410,7 +410,7 @@ impl ErrorTrackingAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/error-tracking/issues/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -573,13 +573,13 @@ impl ErrorTrackingAPI {
         datadog::Error<UpdateIssueAssigneeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_issue_assignee";
+        let local_operation_id = "v2.update_issue_assignee";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/error-tracking/issues/{issue_id}/assignee",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             issue_id = datadog::urlencode(issue_id)
         );
         let mut local_req_builder =
@@ -726,13 +726,13 @@ impl ErrorTrackingAPI {
         datadog::Error<UpdateIssueStateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_issue_state";
+        let local_operation_id = "v2.update_issue_state";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/error-tracking/issues/{issue_id}/state",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             issue_id = datadog::urlencode(issue_id)
         );
         let mut local_req_builder =

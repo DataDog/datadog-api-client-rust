@@ -436,9 +436,9 @@ impl FleetAutomationAPI {
         deployment_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CancelFleetDeploymentError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.cancel_fleet_deployment";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.cancel_fleet_deployment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.cancel_fleet_deployment' is not enabled".to_string(),
@@ -450,7 +450,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/deployments/{deployment_id}/cancel",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             deployment_id = datadog::urlencode(deployment_id)
         );
         let mut local_req_builder =
@@ -569,9 +569,9 @@ impl FleetAutomationAPI {
         datadog::Error<CreateFleetDeploymentConfigureError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_fleet_deployment_configure";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_fleet_deployment_configure";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_fleet_deployment_configure' is not enabled".to_string(),
@@ -583,7 +583,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/deployments/configure",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -753,9 +753,9 @@ impl FleetAutomationAPI {
         datadog::Error<CreateFleetDeploymentUpgradeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_fleet_deployment_upgrade";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_fleet_deployment_upgrade";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_fleet_deployment_upgrade' is not enabled".to_string(),
@@ -767,7 +767,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/deployments/upgrade",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -934,9 +934,9 @@ impl FleetAutomationAPI {
         datadog::Error<CreateFleetScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_fleet_schedule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_fleet_schedule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_fleet_schedule' is not enabled".to_string(),
@@ -948,7 +948,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/schedules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1099,9 +1099,9 @@ impl FleetAutomationAPI {
         id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteFleetScheduleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_fleet_schedule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_fleet_schedule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_fleet_schedule' is not enabled".to_string(),
@@ -1113,7 +1113,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/schedules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -1219,9 +1219,9 @@ impl FleetAutomationAPI {
         datadog::Error<GetFleetAgentInfoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_fleet_agent_info";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_fleet_agent_info";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_fleet_agent_info' is not enabled".to_string(),
@@ -1233,7 +1233,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/agents/{agent_key}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             agent_key = datadog::urlencode(agent_key)
         );
         let mut local_req_builder =
@@ -1379,9 +1379,9 @@ impl FleetAutomationAPI {
         datadog::Error<GetFleetDeploymentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_fleet_deployment";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_fleet_deployment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_fleet_deployment' is not enabled".to_string(),
@@ -1397,7 +1397,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/deployments/{deployment_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             deployment_id = datadog::urlencode(deployment_id)
         );
         let mut local_req_builder =
@@ -1521,9 +1521,9 @@ impl FleetAutomationAPI {
         datadog::Error<GetFleetScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_fleet_schedule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_fleet_schedule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_fleet_schedule' is not enabled".to_string(),
@@ -1535,7 +1535,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/schedules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -1649,9 +1649,9 @@ impl FleetAutomationAPI {
         datadog::Error<ListFleetAgentTracersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_fleet_agent_tracers";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_fleet_agent_tracers";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_fleet_agent_tracers' is not enabled".to_string(),
@@ -1669,7 +1669,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/agents/{agent_key}/tracers",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             agent_key = datadog::urlencode(agent_key)
         );
         let mut local_req_builder =
@@ -1795,9 +1795,9 @@ impl FleetAutomationAPI {
         datadog::Error<ListFleetAgentVersionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_fleet_agent_versions";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_fleet_agent_versions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_fleet_agent_versions' is not enabled".to_string(),
@@ -1809,7 +1809,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/agent_versions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1913,9 +1913,9 @@ impl FleetAutomationAPI {
         datadog::Error<ListFleetAgentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_fleet_agents";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_fleet_agents";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_fleet_agents' is not enabled".to_string(),
@@ -1935,7 +1935,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/agents",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2064,9 +2064,9 @@ impl FleetAutomationAPI {
         datadog::Error<ListFleetDeploymentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_fleet_deployments";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_fleet_deployments";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_fleet_deployments' is not enabled".to_string(),
@@ -2082,7 +2082,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/deployments",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2199,9 +2199,9 @@ impl FleetAutomationAPI {
         datadog::Error<ListFleetSchedulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_fleet_schedules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_fleet_schedules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_fleet_schedules' is not enabled".to_string(),
@@ -2213,7 +2213,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/schedules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2323,9 +2323,9 @@ impl FleetAutomationAPI {
         datadog::Error<ListFleetTracersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_fleet_tracers";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_fleet_tracers";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_fleet_tracers' is not enabled".to_string(),
@@ -2344,7 +2344,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/tracers",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2497,9 +2497,9 @@ impl FleetAutomationAPI {
         datadog::Error<TriggerFleetScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.trigger_fleet_schedule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.trigger_fleet_schedule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.trigger_fleet_schedule' is not enabled".to_string(),
@@ -2511,7 +2511,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/schedules/{id}/trigger",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -2636,9 +2636,9 @@ impl FleetAutomationAPI {
         datadog::Error<UpdateFleetScheduleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_fleet_schedule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_fleet_schedule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_fleet_schedule' is not enabled".to_string(),
@@ -2650,7 +2650,7 @@ impl FleetAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/fleet/schedules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =

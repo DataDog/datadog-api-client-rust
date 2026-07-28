@@ -459,9 +459,9 @@ impl OrgGroupsAPI {
         datadog::Error<BulkUpdateOrgGroupMembershipsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_update_org_group_memberships";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.bulk_update_org_group_memberships";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.bulk_update_org_group_memberships' is not enabled".to_string(),
@@ -473,7 +473,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_memberships/bulk",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -620,9 +620,9 @@ impl OrgGroupsAPI {
         datadog::Error<CreateOrgGroupError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_org_group";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_org_group";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_org_group' is not enabled".to_string(),
@@ -634,7 +634,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_groups",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -782,9 +782,9 @@ impl OrgGroupsAPI {
         datadog::Error<CreateOrgGroupPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_org_group_policy";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_org_group_policy";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_org_group_policy' is not enabled".to_string(),
@@ -796,7 +796,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -948,9 +948,9 @@ impl OrgGroupsAPI {
         datadog::Error<CreateOrgGroupPolicyOverrideError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_org_group_policy_override";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_org_group_policy_override";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_org_group_policy_override' is not enabled".to_string(),
@@ -962,7 +962,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_overrides",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1097,9 +1097,9 @@ impl OrgGroupsAPI {
         org_group_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_org_group";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_org_group";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_org_group' is not enabled".to_string(),
@@ -1111,7 +1111,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_groups/{org_group_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_group_id = datadog::urlencode(org_group_id.to_string())
         );
         let mut local_req_builder =
@@ -1196,9 +1196,9 @@ impl OrgGroupsAPI {
         org_group_policy_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupPolicyError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_org_group_policy";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_org_group_policy";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_org_group_policy' is not enabled".to_string(),
@@ -1210,7 +1210,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policies/{org_group_policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_group_policy_id = datadog::urlencode(org_group_policy_id.to_string())
         );
         let mut local_req_builder =
@@ -1296,9 +1296,9 @@ impl OrgGroupsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupPolicyOverrideError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_org_group_policy_override";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_org_group_policy_override";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_org_group_policy_override' is not enabled".to_string(),
@@ -1310,7 +1310,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_overrides/{org_group_policy_override_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_group_policy_override_id =
                 datadog::urlencode(org_group_policy_override_id.to_string())
         );
@@ -1404,9 +1404,9 @@ impl OrgGroupsAPI {
         datadog::Error<GetOrgGroupError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_org_group";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_org_group";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_org_group' is not enabled".to_string(),
@@ -1418,7 +1418,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_groups/{org_group_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_group_id = datadog::urlencode(org_group_id.to_string())
         );
         let mut local_req_builder =
@@ -1522,9 +1522,9 @@ impl OrgGroupsAPI {
         datadog::Error<GetOrgGroupMembershipError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_org_group_membership";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_org_group_membership";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_org_group_membership' is not enabled".to_string(),
@@ -1536,7 +1536,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_memberships/{org_group_membership_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_group_membership_id = datadog::urlencode(org_group_membership_id.to_string())
         );
         let mut local_req_builder =
@@ -1642,9 +1642,9 @@ impl OrgGroupsAPI {
         datadog::Error<GetOrgGroupPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_org_group_policy";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_org_group_policy";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_org_group_policy' is not enabled".to_string(),
@@ -1656,7 +1656,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policies/{org_group_policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_group_policy_id = datadog::urlencode(org_group_policy_id.to_string())
         );
         let mut local_req_builder =
@@ -1762,9 +1762,9 @@ impl OrgGroupsAPI {
         datadog::Error<GetOrgGroupPolicyOverrideError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_org_group_policy_override";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_org_group_policy_override";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_org_group_policy_override' is not enabled".to_string(),
@@ -1776,7 +1776,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_overrides/{org_group_policy_override_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_group_policy_override_id =
                 datadog::urlencode(org_group_policy_override_id.to_string())
         );
@@ -1880,9 +1880,9 @@ impl OrgGroupsAPI {
         datadog::Error<ListOrgGroupMembershipsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_org_group_memberships";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_org_group_memberships";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_org_group_memberships' is not enabled".to_string(),
@@ -1901,7 +1901,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_memberships",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2029,9 +2029,9 @@ impl OrgGroupsAPI {
         datadog::Error<ListOrgGroupPoliciesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_org_group_policies";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_org_group_policies";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_org_group_policies' is not enabled".to_string(),
@@ -2049,7 +2049,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2168,9 +2168,9 @@ impl OrgGroupsAPI {
         datadog::Error<ListOrgGroupPolicyConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_org_group_policy_configs";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_org_group_policy_configs";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_org_group_policy_configs' is not enabled".to_string(),
@@ -2182,7 +2182,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_configs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2289,9 +2289,9 @@ impl OrgGroupsAPI {
         datadog::Error<ListOrgGroupPolicyOverridesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_org_group_policy_overrides";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_org_group_policy_overrides";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_org_group_policy_overrides' is not enabled".to_string(),
@@ -2309,7 +2309,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_overrides",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2433,9 +2433,9 @@ impl OrgGroupsAPI {
         datadog::Error<ListOrgGroupPolicySuggestionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_org_group_policy_suggestions";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_org_group_policy_suggestions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_org_group_policy_suggestions' is not enabled".to_string(),
@@ -2447,7 +2447,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_suggestions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2551,9 +2551,9 @@ impl OrgGroupsAPI {
         datadog::Error<ListOrgGroupsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_org_groups";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_org_groups";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_org_groups' is not enabled".to_string(),
@@ -2570,7 +2570,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_groups",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2688,9 +2688,9 @@ impl OrgGroupsAPI {
         datadog::Error<UpdateOrgGroupError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_org_group";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_org_group";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_org_group' is not enabled".to_string(),
@@ -2702,7 +2702,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_groups/{org_group_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_group_id = datadog::urlencode(org_group_id.to_string())
         );
         let mut local_req_builder =
@@ -2856,9 +2856,9 @@ impl OrgGroupsAPI {
         datadog::Error<UpdateOrgGroupMembershipError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_org_group_membership";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_org_group_membership";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_org_group_membership' is not enabled".to_string(),
@@ -2870,7 +2870,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_memberships/{org_group_membership_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_group_membership_id = datadog::urlencode(org_group_membership_id.to_string())
         );
         let mut local_req_builder =
@@ -3025,9 +3025,9 @@ impl OrgGroupsAPI {
         datadog::Error<UpdateOrgGroupPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_org_group_policy";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_org_group_policy";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_org_group_policy' is not enabled".to_string(),
@@ -3039,7 +3039,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policies/{org_group_policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_group_policy_id = datadog::urlencode(org_group_policy_id.to_string())
         );
         let mut local_req_builder =
@@ -3194,9 +3194,9 @@ impl OrgGroupsAPI {
         datadog::Error<UpdateOrgGroupPolicyOverrideError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_org_group_policy_override";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_org_group_policy_override";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_org_group_policy_override' is not enabled".to_string(),
@@ -3208,7 +3208,7 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_overrides/{org_group_policy_override_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_group_policy_override_id =
                 datadog::urlencode(org_group_policy_override_id.to_string())
         );

@@ -665,13 +665,13 @@ impl SyntheticsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<AbortTestFileMultipartUploadError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.abort_test_file_multipart_upload";
+        let local_operation_id = "v2.abort_test_file_multipart_upload";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/{public_id}/files/multipart-upload-abort",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -819,13 +819,13 @@ impl SyntheticsAPI {
         datadog::Error<AddTestToSyntheticsDowntimeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.add_test_to_synthetics_downtime";
+        let local_operation_id = "v2.add_test_to_synthetics_downtime";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/downtimes/{downtime_id}/tests/{test_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             downtime_id = datadog::urlencode(downtime_id),
             test_id = datadog::urlencode(test_id)
         );
@@ -923,13 +923,13 @@ impl SyntheticsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CompleteTestFileMultipartUploadError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.complete_test_file_multipart_upload";
+        let local_operation_id = "v2.complete_test_file_multipart_upload";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/{public_id}/files/multipart-upload-complete",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -1072,13 +1072,13 @@ impl SyntheticsAPI {
         datadog::Error<CreateSyntheticsDowntimeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_synthetics_downtime";
+        let local_operation_id = "v2.create_synthetics_downtime";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/downtimes",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1228,13 +1228,13 @@ impl SyntheticsAPI {
         datadog::Error<CreateSyntheticsNetworkTestError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_synthetics_network_test";
+        let local_operation_id = "v2.create_synthetics_network_test";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/network",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1381,13 +1381,13 @@ impl SyntheticsAPI {
         datadog::Error<CreateSyntheticsSuiteError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_synthetics_suite";
+        let local_operation_id = "v2.create_synthetics_suite";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/suites",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1525,13 +1525,13 @@ impl SyntheticsAPI {
         downtime_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSyntheticsDowntimeError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_synthetics_downtime";
+        let local_operation_id = "v2.delete_synthetics_downtime";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/downtimes/{downtime_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             downtime_id = datadog::urlencode(downtime_id)
         );
         let mut local_req_builder =
@@ -1625,13 +1625,13 @@ impl SyntheticsAPI {
         datadog::Error<DeleteSyntheticsSuitesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_synthetics_suites";
+        let local_operation_id = "v2.delete_synthetics_suites";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/suites/bulk-delete",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1778,13 +1778,13 @@ impl SyntheticsAPI {
         datadog::Error<DeleteSyntheticsTestsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_synthetics_tests";
+        let local_operation_id = "v2.delete_synthetics_tests";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/bulk-delete",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1936,13 +1936,13 @@ impl SyntheticsAPI {
         datadog::Error<EditSyntheticsSuiteError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.edit_synthetics_suite";
+        let local_operation_id = "v2.edit_synthetics_suite";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/suites/{public_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -2099,13 +2099,13 @@ impl SyntheticsAPI {
         datadog::Error<GetApiMultistepSubtestParentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_api_multistep_subtest_parents";
+        let local_operation_id = "v2.get_api_multistep_subtest_parents";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/api-multistep/subtests/{public_id}/parents",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -2214,13 +2214,13 @@ impl SyntheticsAPI {
         datadog::Error<GetApiMultistepSubtestsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_api_multistep_subtests";
+        let local_operation_id = "v2.get_api_multistep_subtests";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/api-multistep/subtests/{public_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -2322,13 +2322,13 @@ impl SyntheticsAPI {
         datadog::Error<GetOnDemandConcurrencyCapError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_on_demand_concurrency_cap";
+        let local_operation_id = "v2.get_on_demand_concurrency_cap";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/settings/on_demand_concurrency_cap",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2437,7 +2437,7 @@ impl SyntheticsAPI {
         datadog::Error<GetSyntheticsBrowserTestResultError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_synthetics_browser_test_result";
+        let local_operation_id = "v2.get_synthetics_browser_test_result";
 
         // unbox and build optional parameters
         let event_id = params.event_id;
@@ -2447,7 +2447,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/browser/{public_id}/results/{result_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id),
             result_id = datadog::urlencode(result_id)
         );
@@ -2563,13 +2563,13 @@ impl SyntheticsAPI {
         datadog::Error<GetSyntheticsDowntimeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_synthetics_downtime";
+        let local_operation_id = "v2.get_synthetics_downtime";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/downtimes/{downtime_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             downtime_id = datadog::urlencode(downtime_id)
         );
         let mut local_req_builder =
@@ -2673,13 +2673,13 @@ impl SyntheticsAPI {
         datadog::Error<GetSyntheticsFastTestResultError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_synthetics_fast_test_result";
+        let local_operation_id = "v2.get_synthetics_fast_test_result";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/fast/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -2783,13 +2783,13 @@ impl SyntheticsAPI {
         datadog::Error<GetSyntheticsNetworkTestError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_synthetics_network_test";
+        let local_operation_id = "v2.get_synthetics_network_test";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/network/{public_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -2890,13 +2890,13 @@ impl SyntheticsAPI {
         datadog::Error<GetSyntheticsSuiteError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_synthetics_suite";
+        let local_operation_id = "v2.get_synthetics_suite";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/suites/{public_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -3006,7 +3006,7 @@ impl SyntheticsAPI {
         datadog::Error<GetSyntheticsTestResultError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_synthetics_test_result";
+        let local_operation_id = "v2.get_synthetics_test_result";
 
         // unbox and build optional parameters
         let event_id = params.event_id;
@@ -3016,7 +3016,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/{public_id}/results/{result_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id),
             result_id = datadog::urlencode(result_id)
         );
@@ -3136,7 +3136,7 @@ impl SyntheticsAPI {
         datadog::Error<GetSyntheticsTestVersionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_synthetics_test_version";
+        let local_operation_id = "v2.get_synthetics_test_version";
 
         // unbox and build optional parameters
         let include_change_metadata = params.include_change_metadata;
@@ -3146,7 +3146,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/{public_id}/version_history/{version_number}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id),
             version_number = version_number
         );
@@ -3266,13 +3266,13 @@ impl SyntheticsAPI {
         datadog::Error<GetTestFileDownloadUrlError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_test_file_download_url";
+        let local_operation_id = "v2.get_test_file_download_url";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/{public_id}/files/download",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -3431,13 +3431,13 @@ impl SyntheticsAPI {
         datadog::Error<GetTestFileMultipartPresignedUrlsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_test_file_multipart_presigned_urls";
+        let local_operation_id = "v2.get_test_file_multipart_presigned_urls";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/{public_id}/files/multipart-presigned-urls",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -3588,13 +3588,13 @@ impl SyntheticsAPI {
         datadog::Error<GetTestParentSuitesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_test_parent_suites";
+        let local_operation_id = "v2.get_test_parent_suites";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/{public_id}/parent-suites",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -3702,7 +3702,7 @@ impl SyntheticsAPI {
         datadog::Error<ListSyntheticsBrowserTestLatestResultsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_synthetics_browser_test_latest_results";
+        let local_operation_id = "v2.list_synthetics_browser_test_latest_results";
 
         // unbox and build optional parameters
         let from_ts = params.from_ts;
@@ -3716,7 +3716,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/browser/{public_id}/results",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -3846,7 +3846,7 @@ impl SyntheticsAPI {
         datadog::Error<ListSyntheticsDowntimesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_synthetics_downtimes";
+        let local_operation_id = "v2.list_synthetics_downtimes";
 
         // unbox and build optional parameters
         let filter_test_ids = params.filter_test_ids;
@@ -3856,7 +3856,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/downtimes",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3972,7 +3972,7 @@ impl SyntheticsAPI {
         datadog::Error<ListSyntheticsTestLatestResultsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_synthetics_test_latest_results";
+        let local_operation_id = "v2.list_synthetics_test_latest_results";
 
         // unbox and build optional parameters
         let from_ts = params.from_ts;
@@ -3986,7 +3986,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/{public_id}/results",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -4121,7 +4121,7 @@ impl SyntheticsAPI {
         datadog::Error<ListSyntheticsTestVersionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_synthetics_test_versions";
+        let local_operation_id = "v2.list_synthetics_test_versions";
 
         // unbox and build optional parameters
         let last_version_number = params.last_version_number;
@@ -4131,7 +4131,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/{public_id}/version_history",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -4263,13 +4263,13 @@ impl SyntheticsAPI {
         datadog::Error<PatchGlobalVariableError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.patch_global_variable";
+        let local_operation_id = "v2.patch_global_variable";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/variables/{variable_id}/jsonpatch",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             variable_id = datadog::urlencode(variable_id)
         );
         let mut local_req_builder =
@@ -4431,13 +4431,13 @@ impl SyntheticsAPI {
         datadog::Error<PatchTestSuiteError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.patch_test_suite";
+        let local_operation_id = "v2.patch_test_suite";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/suites/{public_id}/jsonpatch",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
@@ -4592,13 +4592,13 @@ impl SyntheticsAPI {
         datadog::Error<PollSyntheticsTestResultsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.poll_synthetics_test_results";
+        let local_operation_id = "v2.poll_synthetics_test_results";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/poll_results",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4707,13 +4707,13 @@ impl SyntheticsAPI {
         datadog::Error<RemoveTestFromSyntheticsDowntimeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.remove_test_from_synthetics_downtime";
+        let local_operation_id = "v2.remove_test_from_synthetics_downtime";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/downtimes/{downtime_id}/tests/{test_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             downtime_id = datadog::urlencode(downtime_id),
             test_id = datadog::urlencode(test_id)
         );
@@ -4817,7 +4817,7 @@ impl SyntheticsAPI {
         datadog::Error<SearchSuitesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_suites";
+        let local_operation_id = "v2.search_suites";
 
         // unbox and build optional parameters
         let query = params.query;
@@ -4830,7 +4830,7 @@ impl SyntheticsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/suites/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4955,13 +4955,13 @@ impl SyntheticsAPI {
         datadog::Error<SetOnDemandConcurrencyCapError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.set_on_demand_concurrency_cap";
+        let local_operation_id = "v2.set_on_demand_concurrency_cap";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/settings/on_demand_concurrency_cap",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -5115,13 +5115,13 @@ impl SyntheticsAPI {
         datadog::Error<UpdateSyntheticsDowntimeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_synthetics_downtime";
+        let local_operation_id = "v2.update_synthetics_downtime";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/downtimes/{downtime_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             downtime_id = datadog::urlencode(downtime_id)
         );
         let mut local_req_builder =
@@ -5274,13 +5274,13 @@ impl SyntheticsAPI {
         datadog::Error<UpdateSyntheticsNetworkTestError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_synthetics_network_test";
+        let local_operation_id = "v2.update_synthetics_network_test";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/synthetics/tests/network/{public_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             public_id = datadog::urlencode(public_id)
         );
         let mut local_req_builder =
