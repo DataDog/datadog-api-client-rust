@@ -6,45 +6,50 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// ExecuteDdsqlTabularQueryError is a struct for typed errors of method [`DDSQLAPI::execute_ddsql_tabular_query`]
+/// CreateRumConfigError is a struct for typed errors of method [`RUMConfigAPI::create_rum_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ExecuteDdsqlTabularQueryError {
-    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+pub enum CreateRumConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// FetchDdsqlTabularQueryError is a struct for typed errors of method [`DDSQLAPI::fetch_ddsql_tabular_query`]
+/// GetRumConfigError is a struct for typed errors of method [`RUMConfigAPI::get_rum_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum FetchDdsqlTabularQueryError {
-    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+pub enum GetRumConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// Execute DDSQL queries against the Datadog data catalog and poll for their results.
-/// Queries are dispatched asynchronously: the initial request may return a `running` state with
-/// a `query_id`, and clients poll the fetch endpoint until the response transitions to
-/// `completed` with a column-major result set.
+/// UpdateRumConfigError is a struct for typed errors of method [`RUMConfigAPI::update_rum_config`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateRumConfigError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// Manage the [Real User Monitoring (RUM)](<https://docs.datadoghq.com/real_user_monitoring/>)
+/// configuration for your organization.
 #[derive(Debug, Clone)]
-pub struct DDSQLAPI {
+pub struct RUMConfigAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for DDSQLAPI {
+impl Default for RUMConfigAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl DDSQLAPI {
+impl RUMConfigAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -105,17 +110,14 @@ impl DDSQLAPI {
         Self { config, client }
     }
 
-    /// Submit a DDSQL statement and return either a `running` state with an opaque `query_id`
-    /// for the client to poll, or a `completed` state with the column-major result set inlined
-    /// when the query finishes quickly enough to be served synchronously.
-    pub async fn execute_ddsql_tabular_query(
+    /// Create the RUM configuration for your organization.
+    /// Returns the RUM configuration object from the request body when the request is successful.
+    pub async fn create_rum_config(
         &self,
-        body: crate::datadogV2::model::DdsqlTabularQueryRequest,
-    ) -> Result<
-        crate::datadogV2::model::DdsqlTabularQueryResponse,
-        datadog::Error<ExecuteDdsqlTabularQueryError>,
-    > {
-        match self.execute_ddsql_tabular_query_with_http_info(body).await {
+        body: crate::datadogV2::model::RumConfigCreateRequest,
+    ) -> Result<crate::datadogV2::model::RumConfigResponse, datadog::Error<CreateRumConfigError>>
+    {
+        match self.create_rum_config_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -129,23 +131,30 @@ impl DDSQLAPI {
         }
     }
 
-    /// Submit a DDSQL statement and return either a `running` state with an opaque `query_id`
-    /// for the client to poll, or a `completed` state with the column-major result set inlined
-    /// when the query finishes quickly enough to be served synchronously.
-    pub async fn execute_ddsql_tabular_query_with_http_info(
+    /// Create the RUM configuration for your organization.
+    /// Returns the RUM configuration object from the request body when the request is successful.
+    pub async fn create_rum_config_with_http_info(
         &self,
-        body: crate::datadogV2::model::DdsqlTabularQueryRequest,
+        body: crate::datadogV2::model::RumConfigCreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DdsqlTabularQueryResponse>,
-        datadog::Error<ExecuteDdsqlTabularQueryError>,
+        datadog::ResponseContent<crate::datadogV2::model::RumConfigResponse>,
+        datadog::Error<CreateRumConfigError>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.execute_ddsql_tabular_query";
+        let local_operation_id = "v2.create_rum_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_rum_config' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/ddsql/query/tabular",
+            "{}/api/v2/rum/config",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -240,9 +249,8 @@ impl DDSQLAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DdsqlTabularQueryResponse>(
-                &local_content,
-            ) {
+            match serde_json::from_str::<crate::datadogV2::model::RumConfigResponse>(&local_content)
+            {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -253,7 +261,7 @@ impl DDSQLAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ExecuteDdsqlTabularQueryError> =
+            let local_entity: Option<CreateRumConfigError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -264,18 +272,11 @@ impl DDSQLAPI {
         }
     }
 
-    /// Poll a previously submitted DDSQL query for results. Pass the opaque `query_id` returned
-    /// by a prior `ExecuteDdsqlTabularQuery` (or by a prior `FetchDdsqlTabularQuery` that
-    /// returned `state: running`) and the server returns either a `running` state to poll again
-    /// or a `completed` state with the column-major result set inlined.
-    pub async fn fetch_ddsql_tabular_query(
+    /// Get the RUM configuration for your organization.
+    pub async fn get_rum_config(
         &self,
-        body: crate::datadogV2::model::DdsqlTabularQueryFetchRequest,
-    ) -> Result<
-        crate::datadogV2::model::DdsqlTabularQueryResponse,
-        datadog::Error<FetchDdsqlTabularQueryError>,
-    > {
-        match self.fetch_ddsql_tabular_query_with_http_info(body).await {
+    ) -> Result<crate::datadogV2::model::RumConfigResponse, datadog::Error<GetRumConfigError>> {
+        match self.get_rum_config_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -289,28 +290,146 @@ impl DDSQLAPI {
         }
     }
 
-    /// Poll a previously submitted DDSQL query for results. Pass the opaque `query_id` returned
-    /// by a prior `ExecuteDdsqlTabularQuery` (or by a prior `FetchDdsqlTabularQuery` that
-    /// returned `state: running`) and the server returns either a `running` state to poll again
-    /// or a `completed` state with the column-major result set inlined.
-    pub async fn fetch_ddsql_tabular_query_with_http_info(
+    /// Get the RUM configuration for your organization.
+    pub async fn get_rum_config_with_http_info(
         &self,
-        body: crate::datadogV2::model::DdsqlTabularQueryFetchRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DdsqlTabularQueryResponse>,
-        datadog::Error<FetchDdsqlTabularQueryError>,
+        datadog::ResponseContent<crate::datadogV2::model::RumConfigResponse>,
+        datadog::Error<GetRumConfigError>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.fetch_ddsql_tabular_query";
+        let local_operation_id = "v2.get_rum_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_rum_config' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/ddsql/query/tabular/fetch",
+            "{}/api/v2/rum/config",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::RumConfigResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetRumConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update the RUM configuration for your organization.
+    /// Returns the RUM configuration object from the request body when the request is successful.
+    pub async fn update_rum_config(
+        &self,
+        body: crate::datadogV2::model::RumConfigUpdateRequest,
+    ) -> Result<crate::datadogV2::model::RumConfigResponse, datadog::Error<UpdateRumConfigError>>
+    {
+        match self.update_rum_config_with_http_info(body).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update the RUM configuration for your organization.
+    /// Returns the RUM configuration object from the request body when the request is successful.
+    pub async fn update_rum_config_with_http_info(
+        &self,
+        body: crate::datadogV2::model::RumConfigUpdateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::RumConfigResponse>,
+        datadog::Error<UpdateRumConfigError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.update_rum_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_rum_config' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/rum/config",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -401,9 +520,8 @@ impl DDSQLAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DdsqlTabularQueryResponse>(
-                &local_content,
-            ) {
+            match serde_json::from_str::<crate::datadogV2::model::RumConfigResponse>(&local_content)
+            {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -414,7 +532,7 @@ impl DDSQLAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<FetchDdsqlTabularQueryError> =
+            let local_entity: Option<UpdateRumConfigError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
