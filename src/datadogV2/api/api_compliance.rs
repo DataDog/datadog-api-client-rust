@@ -180,9 +180,9 @@ impl ComplianceAPI {
         datadog::Error<GetRuleBasedViewError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_rule_based_view";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_rule_based_view";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_rule_based_view' is not enabled".to_string(),
@@ -203,7 +203,7 @@ impl ComplianceAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/compliance_findings/rule_based_view",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

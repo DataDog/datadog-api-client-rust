@@ -254,13 +254,13 @@ impl ActionsDatastoresAPI {
         datadog::Error<BulkDeleteDatastoreItemsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_delete_datastore_items";
+        let local_operation_id = "v2.bulk_delete_datastore_items";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}/items/bulk",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             datastore_id = datadog::urlencode(datastore_id)
         );
         let mut local_req_builder =
@@ -416,13 +416,13 @@ impl ActionsDatastoresAPI {
         datadog::Error<BulkWriteDatastoreItemsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_write_datastore_items";
+        let local_operation_id = "v2.bulk_write_datastore_items";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}/items/bulk",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             datastore_id = datadog::urlencode(datastore_id)
         );
         let mut local_req_builder =
@@ -572,13 +572,13 @@ impl ActionsDatastoresAPI {
         datadog::Error<CreateDatastoreError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_datastore";
+        let local_operation_id = "v2.create_datastore";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -713,13 +713,13 @@ impl ActionsDatastoresAPI {
         datastore_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDatastoreError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_datastore";
+        let local_operation_id = "v2.delete_datastore";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             datastore_id = datadog::urlencode(datastore_id)
         );
         let mut local_req_builder =
@@ -820,13 +820,13 @@ impl ActionsDatastoresAPI {
         datadog::Error<DeleteDatastoreItemError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_datastore_item";
+        let local_operation_id = "v2.delete_datastore_item";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}/items",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             datastore_id = datadog::urlencode(datastore_id)
         );
         let mut local_req_builder =
@@ -973,13 +973,13 @@ impl ActionsDatastoresAPI {
         datadog::Error<GetDatastoreError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_datastore";
+        let local_operation_id = "v2.get_datastore";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             datastore_id = datadog::urlencode(datastore_id)
         );
         let mut local_req_builder =
@@ -1082,7 +1082,7 @@ impl ActionsDatastoresAPI {
         datadog::Error<ListDatastoreItemsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_datastore_items";
+        let local_operation_id = "v2.list_datastore_items";
 
         // unbox and build optional parameters
         let filter = params.filter;
@@ -1095,7 +1095,7 @@ impl ActionsDatastoresAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}/items",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             datastore_id = datadog::urlencode(datastore_id)
         );
         let mut local_req_builder =
@@ -1214,13 +1214,13 @@ impl ActionsDatastoresAPI {
         datadog::Error<ListDatastoresError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_datastores";
+        let local_operation_id = "v2.list_datastores";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1322,13 +1322,13 @@ impl ActionsDatastoresAPI {
         datadog::Error<UpdateDatastoreError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_datastore";
+        let local_operation_id = "v2.update_datastore";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             datastore_id = datadog::urlencode(datastore_id)
         );
         let mut local_req_builder =
@@ -1479,13 +1479,13 @@ impl ActionsDatastoresAPI {
         datadog::Error<UpdateDatastoreItemError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_datastore_item";
+        let local_operation_id = "v2.update_datastore_item";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions-datastores/{datastore_id}/items",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             datastore_id = datadog::urlencode(datastore_id)
         );
         let mut local_req_builder =

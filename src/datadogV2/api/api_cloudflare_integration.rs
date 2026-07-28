@@ -155,13 +155,13 @@ impl CloudflareIntegrationAPI {
         datadog::Error<CreateCloudflareAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_cloudflare_account";
+        let local_operation_id = "v2.create_cloudflare_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/cloudflare/accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -299,13 +299,13 @@ impl CloudflareIntegrationAPI {
         account_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCloudflareAccountError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_cloudflare_account";
+        let local_operation_id = "v2.delete_cloudflare_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/cloudflare/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -401,13 +401,13 @@ impl CloudflareIntegrationAPI {
         datadog::Error<GetCloudflareAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_cloudflare_account";
+        let local_operation_id = "v2.get_cloudflare_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/cloudflare/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -508,13 +508,13 @@ impl CloudflareIntegrationAPI {
         datadog::Error<ListCloudflareAccountsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cloudflare_accounts";
+        let local_operation_id = "v2.list_cloudflare_accounts";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/cloudflare/accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -621,13 +621,13 @@ impl CloudflareIntegrationAPI {
         datadog::Error<UpdateCloudflareAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_cloudflare_account";
+        let local_operation_id = "v2.update_cloudflare_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/cloudflare/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =

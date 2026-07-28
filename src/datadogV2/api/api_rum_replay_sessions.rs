@@ -148,7 +148,7 @@ impl RumReplaySessionsAPI {
         params: GetSegmentsOptionalParams,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<GetSegmentsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_segments";
+        let local_operation_id = "v2.get_segments";
 
         // unbox and build optional parameters
         let source = params.source;
@@ -160,7 +160,7 @@ impl RumReplaySessionsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/sessions/{session_id}/views/{view_id}/segments",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             view_id = datadog::urlencode(view_id),
             session_id = datadog::urlencode(session_id)
         );

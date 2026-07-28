@@ -150,9 +150,9 @@ impl OAuth2ClientPublicAPI {
         client_uuid: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScopesRestrictionError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_scopes_restriction";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_scopes_restriction";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_scopes_restriction' is not enabled".to_string(),
@@ -164,7 +164,7 @@ impl OAuth2ClientPublicAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/oauth2/clients/{client_uuid}/scopes_restriction",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             client_uuid = datadog::urlencode(client_uuid.to_string())
         );
         let mut local_req_builder =
@@ -258,9 +258,9 @@ impl OAuth2ClientPublicAPI {
         datadog::Error<GetOAuth2WellKnownSitesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_o_auth2_well_known_sites";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_o_auth2_well_known_sites";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_o_auth2_well_known_sites' is not enabled".to_string(),
@@ -272,7 +272,7 @@ impl OAuth2ClientPublicAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/oauth2/.well-known/sites",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -363,9 +363,9 @@ impl OAuth2ClientPublicAPI {
         datadog::Error<GetScopesRestrictionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_scopes_restriction";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_scopes_restriction";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_scopes_restriction' is not enabled".to_string(),
@@ -377,7 +377,7 @@ impl OAuth2ClientPublicAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/oauth2/clients/{client_uuid}/scopes_restriction",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             client_uuid = datadog::urlencode(client_uuid.to_string())
         );
         let mut local_req_builder =
@@ -480,9 +480,9 @@ impl OAuth2ClientPublicAPI {
         datadog::Error<RegisterOAuthClientError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.register_o_auth_client";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.register_o_auth_client";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.register_o_auth_client' is not enabled".to_string(),
@@ -494,7 +494,7 @@ impl OAuth2ClientPublicAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/oauth2/register",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -634,9 +634,9 @@ impl OAuth2ClientPublicAPI {
         datadog::Error<UpsertScopesRestrictionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_scopes_restriction";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.upsert_scopes_restriction";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.upsert_scopes_restriction' is not enabled".to_string(),
@@ -648,7 +648,7 @@ impl OAuth2ClientPublicAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/oauth2/clients/{client_uuid}/scopes_restriction",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             client_uuid = datadog::urlencode(client_uuid.to_string())
         );
         let mut local_req_builder =

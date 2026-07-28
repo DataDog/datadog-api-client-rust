@@ -600,9 +600,9 @@ impl TeamsAPI {
         body: crate::datadogV2::model::AddMemberTeamRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<AddMemberTeamError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.add_member_team";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.add_member_team";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.add_member_team' is not enabled".to_string(),
@@ -614,7 +614,7 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team/{super_team_id}/member_teams",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             super_team_id = datadog::urlencode(super_team_id)
         );
         let mut local_req_builder =
@@ -757,13 +757,13 @@ impl TeamsAPI {
         datadog::Error<AddTeamHierarchyLinkError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.add_team_hierarchy_link";
+        let local_operation_id = "v2.add_team_hierarchy_link";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team-hierarchy-links",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -911,13 +911,13 @@ impl TeamsAPI {
         datadog::Error<CreateTeamError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_team";
+        let local_operation_id = "v2.create_team";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1063,13 +1063,13 @@ impl TeamsAPI {
         datadog::Error<CreateTeamConnectionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_team_connections";
+        let local_operation_id = "v2.create_team_connections";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/connections",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1218,13 +1218,13 @@ impl TeamsAPI {
         datadog::Error<CreateTeamLinkError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_team_link";
+        let local_operation_id = "v2.create_team_link";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -1380,13 +1380,13 @@ impl TeamsAPI {
         datadog::Error<CreateTeamMembershipError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_team_membership";
+        let local_operation_id = "v2.create_team_membership";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -1538,13 +1538,13 @@ impl TeamsAPI {
         datadog::Error<CreateTeamNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_team_notification_rule";
+        let local_operation_id = "v2.create_team_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/notification-rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -1680,13 +1680,13 @@ impl TeamsAPI {
         team_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_team";
+        let local_operation_id = "v2.delete_team";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -1767,13 +1767,13 @@ impl TeamsAPI {
         body: crate::datadogV2::model::TeamConnectionDeleteRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamConnectionsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_team_connections";
+        let local_operation_id = "v2.delete_team_connections";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/connections",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1903,13 +1903,13 @@ impl TeamsAPI {
         link_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamLinkError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_team_link";
+        let local_operation_id = "v2.delete_team_link";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id),
             link_id = datadog::urlencode(link_id)
         );
@@ -2001,13 +2001,13 @@ impl TeamsAPI {
         user_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamMembershipError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_team_membership";
+        let local_operation_id = "v2.delete_team_membership";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id),
             user_id = datadog::urlencode(user_id)
         );
@@ -2093,13 +2093,13 @@ impl TeamsAPI {
         rule_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamNotificationRuleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_team_notification_rule";
+        let local_operation_id = "v2.delete_team_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id),
             rule_id = datadog::urlencode(rule_id)
         );
@@ -2193,13 +2193,13 @@ impl TeamsAPI {
         datadog::Error<GetTeamError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_team";
+        let local_operation_id = "v2.get_team";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -2299,13 +2299,13 @@ impl TeamsAPI {
         datadog::Error<GetTeamHierarchyLinkError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_team_hierarchy_link";
+        let local_operation_id = "v2.get_team_hierarchy_link";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team-hierarchy-links/{link_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             link_id = datadog::urlencode(link_id)
         );
         let mut local_req_builder =
@@ -2407,13 +2407,13 @@ impl TeamsAPI {
         datadog::Error<GetTeamLinkError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_team_link";
+        let local_operation_id = "v2.get_team_link";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id),
             link_id = datadog::urlencode(link_id)
         );
@@ -2512,13 +2512,13 @@ impl TeamsAPI {
         datadog::Error<GetTeamLinksError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_team_links";
+        let local_operation_id = "v2.get_team_links";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -2656,7 +2656,7 @@ impl TeamsAPI {
         datadog::Error<GetTeamMembershipsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_team_memberships";
+        let local_operation_id = "v2.get_team_memberships";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -2668,7 +2668,7 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -2790,13 +2790,13 @@ impl TeamsAPI {
         datadog::Error<GetTeamNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_team_notification_rule";
+        let local_operation_id = "v2.get_team_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id),
             rule_id = datadog::urlencode(rule_id)
         );
@@ -2901,13 +2901,13 @@ impl TeamsAPI {
         datadog::Error<GetTeamNotificationRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_team_notification_rules";
+        let local_operation_id = "v2.get_team_notification_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/notification-rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -3013,13 +3013,13 @@ impl TeamsAPI {
         datadog::Error<GetTeamPermissionSettingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_team_permission_settings";
+        let local_operation_id = "v2.get_team_permission_settings";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -3121,13 +3121,13 @@ impl TeamsAPI {
         datadog::Error<GetTeamSyncError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_team_sync";
+        let local_operation_id = "v2.get_team_sync";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/sync",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3228,13 +3228,13 @@ impl TeamsAPI {
         datadog::Error<GetUserMembershipsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_user_memberships";
+        let local_operation_id = "v2.get_user_memberships";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_uuid}/memberships",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_uuid = datadog::urlencode(user_uuid)
         );
         let mut local_req_builder =
@@ -3378,9 +3378,9 @@ impl TeamsAPI {
         datadog::Error<ListMemberTeamsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_member_teams";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_member_teams";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_member_teams' is not enabled".to_string(),
@@ -3397,7 +3397,7 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team/{super_team_id}/member_teams",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             super_team_id = datadog::urlencode(super_team_id)
         );
         let mut local_req_builder =
@@ -3554,7 +3554,7 @@ impl TeamsAPI {
         datadog::Error<ListTeamConnectionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_team_connections";
+        let local_operation_id = "v2.list_team_connections";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -3568,7 +3568,7 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team/connections",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3759,7 +3759,7 @@ impl TeamsAPI {
         datadog::Error<ListTeamHierarchyLinksError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_team_hierarchy_links";
+        let local_operation_id = "v2.list_team_hierarchy_links";
 
         // unbox and build optional parameters
         let page_number = params.page_number;
@@ -3771,7 +3771,7 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team-hierarchy-links",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3921,7 +3921,7 @@ impl TeamsAPI {
         datadog::Error<ListTeamsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_teams";
+        let local_operation_id = "v2.list_teams";
 
         // unbox and build optional parameters
         let page_number = params.page_number;
@@ -3936,7 +3936,7 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4067,9 +4067,9 @@ impl TeamsAPI {
         member_team_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveMemberTeamError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.remove_member_team";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.remove_member_team";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.remove_member_team' is not enabled".to_string(),
@@ -4081,7 +4081,7 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team/{super_team_id}/member_teams/{member_team_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             super_team_id = datadog::urlencode(super_team_id),
             member_team_id = datadog::urlencode(member_team_id)
         );
@@ -4167,13 +4167,13 @@ impl TeamsAPI {
         link_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveTeamHierarchyLinkError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.remove_team_hierarchy_link";
+        let local_operation_id = "v2.remove_team_hierarchy_link";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team-hierarchy-links/{link_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             link_id = datadog::urlencode(link_id)
         );
         let mut local_req_builder =
@@ -4283,13 +4283,13 @@ impl TeamsAPI {
         body: crate::datadogV2::model::TeamSyncRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<SyncTeamsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.sync_teams";
+        let local_operation_id = "v2.sync_teams";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/sync",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -4431,13 +4431,13 @@ impl TeamsAPI {
         datadog::Error<UpdateTeamError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_team";
+        let local_operation_id = "v2.update_team";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id)
         );
         let mut local_req_builder =
@@ -4589,13 +4589,13 @@ impl TeamsAPI {
         datadog::Error<UpdateTeamLinkError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_team_link";
+        let local_operation_id = "v2.update_team_link";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id),
             link_id = datadog::urlencode(link_id)
         );
@@ -4754,13 +4754,13 @@ impl TeamsAPI {
         datadog::Error<UpdateTeamMembershipError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_team_membership";
+        let local_operation_id = "v2.update_team_membership";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id),
             user_id = datadog::urlencode(user_id)
         );
@@ -4915,13 +4915,13 @@ impl TeamsAPI {
         datadog::Error<UpdateTeamNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_team_notification_rule";
+        let local_operation_id = "v2.update_team_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id),
             rule_id = datadog::urlencode(rule_id)
         );
@@ -5079,13 +5079,13 @@ impl TeamsAPI {
         datadog::Error<UpdateTeamPermissionSettingError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_team_permission_setting";
+        let local_operation_id = "v2.update_team_permission_setting";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings/{action}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             team_id = datadog::urlencode(team_id),
             action = datadog::urlencode(action)
         );

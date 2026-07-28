@@ -295,13 +295,13 @@ impl AWSIntegrationAPI {
         datadog::Error<CreateAWSAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_aws_account";
+        let local_operation_id = "v2.create_aws_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -457,9 +457,9 @@ impl AWSIntegrationAPI {
         datadog::Error<CreateAWSAccountCCMConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_aws_account_ccm_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_aws_account_ccm_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_aws_account_ccm_config' is not enabled".to_string(),
@@ -471,7 +471,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/ccm_config",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             aws_account_config_id = datadog::urlencode(aws_account_config_id)
         );
         let mut local_req_builder =
@@ -624,13 +624,13 @@ impl AWSIntegrationAPI {
         datadog::Error<CreateAWSEventBridgeSourceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_aws_event_bridge_source";
+        let local_operation_id = "v2.create_aws_event_bridge_source";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/event_bridge",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -777,13 +777,13 @@ impl AWSIntegrationAPI {
         datadog::Error<CreateNewAWSExternalIDError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_new_aws_external_id";
+        let local_operation_id = "v2.create_new_aws_external_id";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/generate_new_external_id",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -874,13 +874,13 @@ impl AWSIntegrationAPI {
         aws_account_config_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSAccountError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_aws_account";
+        let local_operation_id = "v2.delete_aws_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             aws_account_config_id = datadog::urlencode(aws_account_config_id)
         );
         let mut local_req_builder =
@@ -967,9 +967,9 @@ impl AWSIntegrationAPI {
         aws_account_config_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSAccountCCMConfigError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_aws_account_ccm_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_aws_account_ccm_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_aws_account_ccm_config' is not enabled".to_string(),
@@ -981,7 +981,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/ccm_config",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             aws_account_config_id = datadog::urlencode(aws_account_config_id)
         );
         let mut local_req_builder =
@@ -1080,13 +1080,13 @@ impl AWSIntegrationAPI {
         datadog::Error<DeleteAWSEventBridgeSourceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_aws_event_bridge_source";
+        let local_operation_id = "v2.delete_aws_event_bridge_source";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/event_bridge",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1236,13 +1236,13 @@ impl AWSIntegrationAPI {
         datadog::Error<GetAWSAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_aws_account";
+        let local_operation_id = "v2.get_aws_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             aws_account_config_id = datadog::urlencode(aws_account_config_id)
         );
         let mut local_req_builder =
@@ -1350,9 +1350,9 @@ impl AWSIntegrationAPI {
         datadog::Error<GetAWSAccountCCMConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_aws_account_ccm_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_aws_account_ccm_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_aws_account_ccm_config' is not enabled".to_string(),
@@ -1364,7 +1364,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/ccm_config",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             aws_account_config_id = datadog::urlencode(aws_account_config_id)
         );
         let mut local_req_builder =
@@ -1468,13 +1468,13 @@ impl AWSIntegrationAPI {
         datadog::Error<GetAWSIntegrationIAMPermissionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_aws_integration_iam_permissions";
+        let local_operation_id = "v2.get_aws_integration_iam_permissions";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/iam_permissions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1578,13 +1578,13 @@ impl AWSIntegrationAPI {
         datadog::Error<GetAWSIntegrationIAMPermissionsResourceCollectionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_aws_integration_iam_permissions_resource_collection";
+        let local_operation_id = "v2.get_aws_integration_iam_permissions_resource_collection";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/iam_permissions/resource_collection",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1688,13 +1688,13 @@ impl AWSIntegrationAPI {
         datadog::Error<GetAWSIntegrationIAMPermissionsStandardError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_aws_integration_iam_permissions_standard";
+        let local_operation_id = "v2.get_aws_integration_iam_permissions_standard";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/iam_permissions/standard",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1800,9 +1800,9 @@ impl AWSIntegrationAPI {
         datadog::Error<GetAWSMetricNameFilterPreviewError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_aws_metric_name_filter_preview";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_aws_metric_name_filter_preview";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_aws_metric_name_filter_preview' is not enabled".to_string(),
@@ -1814,7 +1814,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/metric_name_filter_preview",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             aws_account_config_id = datadog::urlencode(aws_account_config_id)
         );
         let mut local_req_builder =
@@ -1915,7 +1915,7 @@ impl AWSIntegrationAPI {
         datadog::Error<ListAWSAccountsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_aws_accounts";
+        let local_operation_id = "v2.list_aws_accounts";
 
         // unbox and build optional parameters
         let aws_account_id = params.aws_account_id;
@@ -1924,7 +1924,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2029,13 +2029,13 @@ impl AWSIntegrationAPI {
         datadog::Error<ListAWSEventBridgeSourcesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_aws_event_bridge_sources";
+        let local_operation_id = "v2.list_aws_event_bridge_sources";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/event_bridge",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2135,13 +2135,13 @@ impl AWSIntegrationAPI {
         datadog::Error<ListAWSNamespacesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_aws_namespaces";
+        let local_operation_id = "v2.list_aws_namespaces";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/available_namespaces",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2250,9 +2250,9 @@ impl AWSIntegrationAPI {
         datadog::Error<PreviewAWSMetricNameFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.preview_aws_metric_name_filter";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.preview_aws_metric_name_filter";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.preview_aws_metric_name_filter' is not enabled".to_string(),
@@ -2264,7 +2264,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/metric_name_filter_preview",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             aws_account_config_id = datadog::urlencode(aws_account_config_id)
         );
         let mut local_req_builder =
@@ -2417,13 +2417,13 @@ impl AWSIntegrationAPI {
         datadog::Error<UpdateAWSAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_aws_account";
+        let local_operation_id = "v2.update_aws_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             aws_account_config_id = datadog::urlencode(aws_account_config_id)
         );
         let mut local_req_builder =
@@ -2580,9 +2580,9 @@ impl AWSIntegrationAPI {
         datadog::Error<UpdateAWSAccountCCMConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_aws_account_ccm_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_aws_account_ccm_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_aws_account_ccm_config' is not enabled".to_string(),
@@ -2594,7 +2594,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/ccm_config",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             aws_account_config_id = datadog::urlencode(aws_account_config_id)
         );
         let mut local_req_builder =
@@ -2746,9 +2746,9 @@ impl AWSIntegrationAPI {
         datadog::Error<ValidateAWSCCMConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_awsccm_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.validate_awsccm_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.validate_awsccm_config' is not enabled".to_string(),
@@ -2760,7 +2760,7 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/validate_ccm_config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

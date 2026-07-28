@@ -161,13 +161,13 @@ impl SlackIntegrationAPI {
         datadog::Error<CreateSlackIntegrationChannelError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_slack_integration_channel";
+        let local_operation_id = "v1.create_slack_integration_channel";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_name = datadog::urlencode(account_name)
         );
         let mut local_req_builder =
@@ -322,13 +322,13 @@ impl SlackIntegrationAPI {
         datadog::Error<GetSlackIntegrationChannelError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_slack_integration_channel";
+        let local_operation_id = "v1.get_slack_integration_channel";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}",
-            local_configuration.get_operation_host(operation_id), account_name=
+            local_configuration.get_operation_host(local_operation_id), account_name=
             datadog::urlencode(account_name)
             , channel_name=
             datadog::urlencode(channel_name)
@@ -436,13 +436,13 @@ impl SlackIntegrationAPI {
         datadog::Error<GetSlackIntegrationChannelsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_slack_integration_channels";
+        let local_operation_id = "v1.get_slack_integration_channels";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_name = datadog::urlencode(account_name)
         );
         let mut local_req_builder =
@@ -537,13 +537,13 @@ impl SlackIntegrationAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveSlackIntegrationChannelError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v1.remove_slack_integration_channel";
+        let local_operation_id = "v1.remove_slack_integration_channel";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}",
-            local_configuration.get_operation_host(operation_id), account_name=
+            local_configuration.get_operation_host(local_operation_id), account_name=
             datadog::urlencode(account_name)
             , channel_name=
             datadog::urlencode(channel_name)
@@ -648,13 +648,13 @@ impl SlackIntegrationAPI {
         datadog::Error<UpdateSlackIntegrationChannelError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_slack_integration_channel";
+        let local_operation_id = "v1.update_slack_integration_channel";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/slack/configuration/accounts/{account_name}/channels/{channel_name}",
-            local_configuration.get_operation_host(operation_id), account_name=
+            local_configuration.get_operation_host(local_operation_id), account_name=
             datadog::urlencode(account_name)
             , channel_name=
             datadog::urlencode(channel_name)

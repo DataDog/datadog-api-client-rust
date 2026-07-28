@@ -169,9 +169,9 @@ impl DashboardsAPI {
         datadog::Error<GetDashboardUsageError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_dashboard_usage";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_dashboard_usage";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_dashboard_usage' is not enabled".to_string(),
@@ -183,7 +183,7 @@ impl DashboardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/dashboards/{dashboard_id}/usage",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dashboard_id = datadog::urlencode(dashboard_id)
         );
         let mut local_req_builder =
@@ -322,9 +322,9 @@ impl DashboardsAPI {
         datadog::Error<ListDashboardsUsageError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_dashboards_usage";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_dashboards_usage";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_dashboards_usage' is not enabled".to_string(),
@@ -342,7 +342,7 @@ impl DashboardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/dashboards/usage",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

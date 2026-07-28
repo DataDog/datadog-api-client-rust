@@ -164,9 +164,9 @@ impl NetworkHealthInsightsAPI {
         datadog::Error<ListNetworkHealthInsightsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_network_health_insights";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_network_health_insights";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_network_health_insights' is not enabled".to_string(),
@@ -182,7 +182,7 @@ impl NetworkHealthInsightsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/network-health-insights",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

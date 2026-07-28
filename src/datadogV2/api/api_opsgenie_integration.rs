@@ -189,13 +189,13 @@ impl OpsgenieIntegrationAPI {
         datadog::Error<CreateOpsgenieAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_opsgenie_account";
+        let local_operation_id = "v2.create_opsgenie_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -344,13 +344,13 @@ impl OpsgenieIntegrationAPI {
         datadog::Error<CreateOpsgenieServiceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_opsgenie_service";
+        let local_operation_id = "v2.create_opsgenie_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/services",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -488,13 +488,13 @@ impl OpsgenieIntegrationAPI {
         account_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOpsgenieAccountError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_opsgenie_account";
+        let local_operation_id = "v2.delete_opsgenie_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -579,13 +579,13 @@ impl OpsgenieIntegrationAPI {
         integration_service_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOpsgenieServiceError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_opsgenie_service";
+        let local_operation_id = "v2.delete_opsgenie_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/services/{integration_service_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_service_id = datadog::urlencode(integration_service_id)
         );
         let mut local_req_builder =
@@ -684,13 +684,13 @@ impl OpsgenieIntegrationAPI {
         datadog::Error<GetOpsgenieServiceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_opsgenie_service";
+        let local_operation_id = "v2.get_opsgenie_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/services/{integration_service_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_service_id = datadog::urlencode(integration_service_id)
         );
         let mut local_req_builder =
@@ -791,13 +791,13 @@ impl OpsgenieIntegrationAPI {
         datadog::Error<ListOpsgenieAccountsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_opsgenie_accounts";
+        let local_operation_id = "v2.list_opsgenie_accounts";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -897,13 +897,13 @@ impl OpsgenieIntegrationAPI {
         datadog::Error<ListOpsgenieServicesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_opsgenie_services";
+        let local_operation_id = "v2.list_opsgenie_services";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/services",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1010,13 +1010,13 @@ impl OpsgenieIntegrationAPI {
         datadog::Error<UpdateOpsgenieAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_opsgenie_account";
+        let local_operation_id = "v2.update_opsgenie_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -1171,13 +1171,13 @@ impl OpsgenieIntegrationAPI {
         datadog::Error<UpdateOpsgenieServiceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_opsgenie_service";
+        let local_operation_id = "v2.update_opsgenie_service";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/opsgenie/services/{integration_service_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_service_id = datadog::urlencode(integration_service_id)
         );
         let mut local_req_builder =

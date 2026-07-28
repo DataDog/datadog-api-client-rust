@@ -272,7 +272,7 @@ impl RumReplayPlaylistsAPI {
         datadog::Error<AddRumReplaySessionToPlaylistError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.add_rum_replay_session_to_playlist";
+        let local_operation_id = "v2.add_rum_replay_session_to_playlist";
 
         // unbox and build optional parameters
         let data_source = params.data_source;
@@ -281,7 +281,7 @@ impl RumReplayPlaylistsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/playlists/{playlist_id}/sessions/{session_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             playlist_id = playlist_id,
             session_id = datadog::urlencode(session_id)
         );
@@ -384,13 +384,13 @@ impl RumReplayPlaylistsAPI {
         datadog::Error<BulkRemoveRumReplayPlaylistSessionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_remove_rum_replay_playlist_sessions";
+        let local_operation_id = "v2.bulk_remove_rum_replay_playlist_sessions";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/playlists/{playlist_id}/sessions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             playlist_id = playlist_id
         );
         let mut local_req_builder =
@@ -531,13 +531,13 @@ impl RumReplayPlaylistsAPI {
         datadog::Error<CreateRumReplayPlaylistError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_rum_replay_playlist";
+        let local_operation_id = "v2.create_rum_replay_playlist";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/playlists",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -673,13 +673,13 @@ impl RumReplayPlaylistsAPI {
         playlist_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumReplayPlaylistError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_rum_replay_playlist";
+        let local_operation_id = "v2.delete_rum_replay_playlist";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/playlists/{playlist_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             playlist_id = playlist_id
         );
         let mut local_req_builder =
@@ -775,13 +775,13 @@ impl RumReplayPlaylistsAPI {
         datadog::Error<GetRumReplayPlaylistError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_rum_replay_playlist";
+        let local_operation_id = "v2.get_rum_replay_playlist";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/playlists/{playlist_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             playlist_id = playlist_id
         );
         let mut local_req_builder =
@@ -887,7 +887,7 @@ impl RumReplayPlaylistsAPI {
         datadog::Error<ListRumReplayPlaylistSessionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_rum_replay_playlist_sessions";
+        let local_operation_id = "v2.list_rum_replay_playlist_sessions";
 
         // unbox and build optional parameters
         let page_number = params.page_number;
@@ -897,7 +897,7 @@ impl RumReplayPlaylistsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/playlists/{playlist_id}/sessions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             playlist_id = playlist_id
         );
         let mut local_req_builder =
@@ -1007,7 +1007,7 @@ impl RumReplayPlaylistsAPI {
         datadog::Error<ListRumReplayPlaylistsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_rum_replay_playlists";
+        let local_operation_id = "v2.list_rum_replay_playlists";
 
         // unbox and build optional parameters
         let filter_created_by_uuid = params.filter_created_by_uuid;
@@ -1019,7 +1019,7 @@ impl RumReplayPlaylistsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/playlists",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1128,13 +1128,13 @@ impl RumReplayPlaylistsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveRumReplaySessionFromPlaylistError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.remove_rum_replay_session_from_playlist";
+        let local_operation_id = "v2.remove_rum_replay_session_from_playlist";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/playlists/{playlist_id}/sessions/{session_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             playlist_id = playlist_id,
             session_id = datadog::urlencode(session_id)
         );
@@ -1234,13 +1234,13 @@ impl RumReplayPlaylistsAPI {
         datadog::Error<UpdateRumReplayPlaylistError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_rum_replay_playlist";
+        let local_operation_id = "v2.update_rum_replay_playlist";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/playlists/{playlist_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             playlist_id = playlist_id
         );
         let mut local_req_builder =

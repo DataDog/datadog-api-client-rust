@@ -267,9 +267,9 @@ impl DeploymentGatesAPI {
         datadog::Error<CreateDeploymentGateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_deployment_gate";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_deployment_gate";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_deployment_gate' is not enabled".to_string(),
@@ -281,7 +281,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployment_gates",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -435,9 +435,9 @@ impl DeploymentGatesAPI {
         datadog::Error<CreateDeploymentRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_deployment_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_deployment_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_deployment_rule' is not enabled".to_string(),
@@ -449,7 +449,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployment_gates/{gate_id}/rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             gate_id = datadog::urlencode(gate_id)
         );
         let mut local_req_builder =
@@ -585,9 +585,9 @@ impl DeploymentGatesAPI {
         id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDeploymentGateError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_deployment_gate";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_deployment_gate";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_deployment_gate' is not enabled".to_string(),
@@ -599,7 +599,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployment_gates/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -686,9 +686,9 @@ impl DeploymentGatesAPI {
         id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDeploymentRuleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_deployment_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_deployment_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_deployment_rule' is not enabled".to_string(),
@@ -700,7 +700,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployment_gates/{gate_id}/rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             gate_id = datadog::urlencode(gate_id),
             id = datadog::urlencode(id)
         );
@@ -797,9 +797,9 @@ impl DeploymentGatesAPI {
         datadog::Error<GetDeploymentGateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_deployment_gate";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_deployment_gate";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_deployment_gate' is not enabled".to_string(),
@@ -811,7 +811,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployment_gates/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -914,9 +914,9 @@ impl DeploymentGatesAPI {
         datadog::Error<GetDeploymentGateRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_deployment_gate_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_deployment_gate_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_deployment_gate_rules' is not enabled".to_string(),
@@ -928,7 +928,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployment_gates/{gate_id}/rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             gate_id = datadog::urlencode(gate_id)
         );
         let mut local_req_builder =
@@ -1042,9 +1042,9 @@ impl DeploymentGatesAPI {
         datadog::Error<GetDeploymentGatesEvaluationResultError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_deployment_gates_evaluation_result";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_deployment_gates_evaluation_result";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_deployment_gates_evaluation_result' is not enabled"
@@ -1057,7 +1057,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployments/gates/evaluation/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
@@ -1163,9 +1163,9 @@ impl DeploymentGatesAPI {
         datadog::Error<GetDeploymentRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_deployment_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_deployment_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_deployment_rule' is not enabled".to_string(),
@@ -1177,7 +1177,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployment_gates/{gate_id}/rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             gate_id = datadog::urlencode(gate_id),
             id = datadog::urlencode(id)
         );
@@ -1283,9 +1283,9 @@ impl DeploymentGatesAPI {
         datadog::Error<ListDeploymentGatesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_deployment_gates";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_deployment_gates";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_deployment_gates' is not enabled".to_string(),
@@ -1301,7 +1301,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployment_gates",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1427,9 +1427,9 @@ impl DeploymentGatesAPI {
         datadog::Error<TriggerDeploymentGatesEvaluationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.trigger_deployment_gates_evaluation";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.trigger_deployment_gates_evaluation";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.trigger_deployment_gates_evaluation' is not enabled"
@@ -1442,7 +1442,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployments/gates/evaluation",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1593,9 +1593,9 @@ impl DeploymentGatesAPI {
         datadog::Error<UpdateDeploymentGateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_deployment_gate";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_deployment_gate";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_deployment_gate' is not enabled".to_string(),
@@ -1607,7 +1607,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployment_gates/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -1764,9 +1764,9 @@ impl DeploymentGatesAPI {
         datadog::Error<UpdateDeploymentRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_deployment_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_deployment_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_deployment_rule' is not enabled".to_string(),
@@ -1778,7 +1778,7 @@ impl DeploymentGatesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/deployment_gates/{gate_id}/rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             gate_id = datadog::urlencode(gate_id),
             id = datadog::urlencode(id)
         );

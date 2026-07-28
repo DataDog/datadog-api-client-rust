@@ -200,13 +200,13 @@ impl EventsAPI {
         datadog::Error<CreateEventError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_event";
+        let local_operation_id = "v1.create_event";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/events",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -350,13 +350,13 @@ impl EventsAPI {
         datadog::Error<GetEventError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_event";
+        let local_operation_id = "v1.get_event";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/events/{event_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             event_id = event_id
         );
         let mut local_req_builder =
@@ -473,7 +473,7 @@ impl EventsAPI {
         datadog::Error<ListEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_events";
+        let local_operation_id = "v1.list_events";
 
         // unbox and build optional parameters
         let priority = params.priority;
@@ -487,7 +487,7 @@ impl EventsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/events",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

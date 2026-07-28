@@ -243,7 +243,7 @@ impl IdentityProvidersAPI {
         datadog::Error<ListIdentityProviderUsersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_identity_provider_users";
+        let local_operation_id = "v2.list_identity_provider_users";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -257,7 +257,7 @@ impl IdentityProvidersAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/identity_providers/{idp_id}/users",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             idp_id = datadog::urlencode(idp_id)
         );
         let mut local_req_builder =
@@ -381,13 +381,13 @@ impl IdentityProvidersAPI {
         datadog::Error<ListIdentityProvidersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_identity_providers";
+        let local_operation_id = "v2.list_identity_providers";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/identity_providers",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -494,13 +494,13 @@ impl IdentityProvidersAPI {
         datadog::Error<UpdateIdentityProviderError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_identity_provider";
+        let local_operation_id = "v2.update_identity_provider";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/identity_providers/{idp_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             idp_id = datadog::urlencode(idp_id)
         );
         let mut local_req_builder =

@@ -158,13 +158,13 @@ impl UsersAPI {
         datadog::Error<CreateUserError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_user";
+        let local_operation_id = "v1.create_user";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/user",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -314,13 +314,13 @@ impl UsersAPI {
         datadog::Error<DisableUserError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.disable_user";
+        let local_operation_id = "v1.disable_user";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/user/{user_handle}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_handle = datadog::urlencode(user_handle)
         );
         let mut local_req_builder =
@@ -419,13 +419,13 @@ impl UsersAPI {
         datadog::Error<GetUserError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_user";
+        let local_operation_id = "v1.get_user";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/user/{user_handle}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_handle = datadog::urlencode(user_handle)
         );
         let mut local_req_builder =
@@ -520,13 +520,13 @@ impl UsersAPI {
         datadog::Error<ListUsersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_users";
+        let local_operation_id = "v1.list_users";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/user",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -629,13 +629,13 @@ impl UsersAPI {
         datadog::Error<UpdateUserError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_user";
+        let local_operation_id = "v1.update_user";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/user/{user_handle}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_handle = datadog::urlencode(user_handle)
         );
         let mut local_req_builder =

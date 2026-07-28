@@ -260,9 +260,9 @@ impl LogsRestrictionQueriesAPI {
         body: crate::datadogV2::model::RelationshipToRole,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<AddRoleToRestrictionQueryError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.add_role_to_restriction_query";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.add_role_to_restriction_query";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.add_role_to_restriction_query' is not enabled".to_string(),
@@ -274,7 +274,7 @@ impl LogsRestrictionQueriesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/restriction_queries/{restriction_query_id}/roles",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             restriction_query_id = datadog::urlencode(restriction_query_id)
         );
         let mut local_req_builder =
@@ -419,9 +419,9 @@ impl LogsRestrictionQueriesAPI {
         datadog::Error<CreateRestrictionQueryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_restriction_query";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_restriction_query";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_restriction_query' is not enabled".to_string(),
@@ -433,7 +433,7 @@ impl LogsRestrictionQueriesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/restriction_queries",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -572,9 +572,9 @@ impl LogsRestrictionQueriesAPI {
         restriction_query_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRestrictionQueryError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_restriction_query";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_restriction_query";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_restriction_query' is not enabled".to_string(),
@@ -586,7 +586,7 @@ impl LogsRestrictionQueriesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/restriction_queries/{restriction_query_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             restriction_query_id = datadog::urlencode(restriction_query_id)
         );
         let mut local_req_builder =
@@ -687,9 +687,9 @@ impl LogsRestrictionQueriesAPI {
         datadog::Error<GetRestrictionQueryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_restriction_query";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_restriction_query";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_restriction_query' is not enabled".to_string(),
@@ -701,7 +701,7 @@ impl LogsRestrictionQueriesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/restriction_queries/{restriction_query_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             restriction_query_id = datadog::urlencode(restriction_query_id)
         );
         let mut local_req_builder =
@@ -808,9 +808,9 @@ impl LogsRestrictionQueriesAPI {
         datadog::Error<GetRoleRestrictionQueryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_role_restriction_query";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_role_restriction_query";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_role_restriction_query' is not enabled".to_string(),
@@ -822,7 +822,7 @@ impl LogsRestrictionQueriesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/restriction_queries/role/{role_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id)
         );
         let mut local_req_builder =
@@ -925,9 +925,9 @@ impl LogsRestrictionQueriesAPI {
         datadog::Error<ListRestrictionQueriesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_restriction_queries";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_restriction_queries";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_restriction_queries' is not enabled".to_string(),
@@ -943,7 +943,7 @@ impl LogsRestrictionQueriesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/restriction_queries",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1059,9 +1059,9 @@ impl LogsRestrictionQueriesAPI {
         datadog::Error<ListRestrictionQueryRolesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_restriction_query_roles";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_restriction_query_roles";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_restriction_query_roles' is not enabled".to_string(),
@@ -1077,7 +1077,7 @@ impl LogsRestrictionQueriesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/restriction_queries/{restriction_query_id}/roles",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             restriction_query_id = datadog::urlencode(restriction_query_id)
         );
         let mut local_req_builder =
@@ -1192,9 +1192,9 @@ impl LogsRestrictionQueriesAPI {
         datadog::Error<ListUserRestrictionQueriesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_user_restriction_queries";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_user_restriction_queries";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_user_restriction_queries' is not enabled".to_string(),
@@ -1206,7 +1206,7 @@ impl LogsRestrictionQueriesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/restriction_queries/user/{user_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_id = datadog::urlencode(user_id)
         );
         let mut local_req_builder =
@@ -1301,9 +1301,9 @@ impl LogsRestrictionQueriesAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveRoleFromRestrictionQueryError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.remove_role_from_restriction_query";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.remove_role_from_restriction_query";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.remove_role_from_restriction_query' is not enabled".to_string(),
@@ -1315,7 +1315,7 @@ impl LogsRestrictionQueriesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/restriction_queries/{restriction_query_id}/roles",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             restriction_query_id = datadog::urlencode(restriction_query_id)
         );
         let mut local_req_builder =
@@ -1465,9 +1465,9 @@ impl LogsRestrictionQueriesAPI {
         datadog::Error<ReplaceRestrictionQueryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.replace_restriction_query";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.replace_restriction_query";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.replace_restriction_query' is not enabled".to_string(),
@@ -1479,7 +1479,7 @@ impl LogsRestrictionQueriesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/restriction_queries/{restriction_query_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             restriction_query_id = datadog::urlencode(restriction_query_id)
         );
         let mut local_req_builder =
@@ -1637,9 +1637,9 @@ impl LogsRestrictionQueriesAPI {
         datadog::Error<UpdateRestrictionQueryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_restriction_query";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_restriction_query";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_restriction_query' is not enabled".to_string(),
@@ -1651,7 +1651,7 @@ impl LogsRestrictionQueriesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/restriction_queries/{restriction_query_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             restriction_query_id = datadog::urlencode(restriction_query_id)
         );
         let mut local_req_builder =

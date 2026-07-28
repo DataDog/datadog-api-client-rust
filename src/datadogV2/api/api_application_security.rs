@@ -252,13 +252,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<CreateApplicationSecurityWafCustomRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_application_security_waf_custom_rule";
+        let local_operation_id = "v2.create_application_security_waf_custom_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/custom_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -419,13 +419,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<CreateApplicationSecurityWafExclusionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_application_security_waf_exclusion_filter";
+        let local_operation_id = "v2.create_application_security_waf_exclusion_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/exclusion_filters",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -578,13 +578,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<CreateApplicationSecurityWafPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_application_security_waf_policy";
+        let local_operation_id = "v2.create_application_security_waf_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/policies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -725,13 +725,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<DeleteApplicationSecurityWafCustomRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_application_security_waf_custom_rule";
+        let local_operation_id = "v2.delete_application_security_waf_custom_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/custom_rules/{custom_rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             custom_rule_id = datadog::urlencode(custom_rule_id)
         );
         let mut local_req_builder =
@@ -819,13 +819,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<DeleteApplicationSecurityWafExclusionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_application_security_waf_exclusion_filter";
+        let local_operation_id = "v2.delete_application_security_waf_exclusion_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/exclusion_filters/{exclusion_filter_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             exclusion_filter_id = datadog::urlencode(exclusion_filter_id)
         );
         let mut local_req_builder =
@@ -911,13 +911,13 @@ impl ApplicationSecurityAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteApplicationSecurityWafPolicyError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_application_security_waf_policy";
+        let local_operation_id = "v2.delete_application_security_waf_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/policies/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -1016,13 +1016,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<GetApplicationSecurityWafCustomRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_application_security_waf_custom_rule";
+        let local_operation_id = "v2.get_application_security_waf_custom_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/custom_rules/{custom_rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             custom_rule_id = datadog::urlencode(custom_rule_id)
         );
         let mut local_req_builder =
@@ -1131,13 +1131,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<GetApplicationSecurityWafExclusionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_application_security_waf_exclusion_filter";
+        let local_operation_id = "v2.get_application_security_waf_exclusion_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/exclusion_filters/{exclusion_filter_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             exclusion_filter_id = datadog::urlencode(exclusion_filter_id)
         );
         let mut local_req_builder =
@@ -1244,13 +1244,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<GetApplicationSecurityWafPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_application_security_waf_policy";
+        let local_operation_id = "v2.get_application_security_waf_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/policies/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -1362,9 +1362,9 @@ impl ApplicationSecurityAPI {
         datadog::Error<GetAsmServiceByNameError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_asm_service_by_name";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_asm_service_by_name";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_asm_service_by_name' is not enabled".to_string(),
@@ -1376,7 +1376,7 @@ impl ApplicationSecurityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/asm/services/{service_filter}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_filter = datadog::urlencode(service_filter)
         );
         let mut local_req_builder =
@@ -1482,13 +1482,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<ListApplicationSecurityWAFCustomRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_application_security_waf_custom_rules";
+        let local_operation_id = "v2.list_application_security_waf_custom_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/custom_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1592,13 +1592,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<ListApplicationSecurityWAFPoliciesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_application_security_waf_policies";
+        let local_operation_id = "v2.list_application_security_waf_policies";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/policies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1704,13 +1704,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<ListApplicationSecurityWafExclusionFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_application_security_waf_exclusion_filters";
+        let local_operation_id = "v2.list_application_security_waf_exclusion_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/exclusion_filters",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1820,13 +1820,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<UpdateApplicationSecurityWafCustomRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_application_security_waf_custom_rule";
+        let local_operation_id = "v2.update_application_security_waf_custom_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/custom_rules/{custom_rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             custom_rule_id = datadog::urlencode(custom_rule_id)
         );
         let mut local_req_builder =
@@ -1989,13 +1989,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<UpdateApplicationSecurityWafExclusionFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_application_security_waf_exclusion_filter";
+        let local_operation_id = "v2.update_application_security_waf_exclusion_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/exclusion_filters/{exclusion_filter_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             exclusion_filter_id = datadog::urlencode(exclusion_filter_id)
         );
         let mut local_req_builder =
@@ -2153,13 +2153,13 @@ impl ApplicationSecurityAPI {
         datadog::Error<UpdateApplicationSecurityWafPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_application_security_waf_policy";
+        let local_operation_id = "v2.update_application_security_waf_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/asm/waf/policies/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =

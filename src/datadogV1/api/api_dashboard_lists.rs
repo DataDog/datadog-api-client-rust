@@ -155,13 +155,13 @@ impl DashboardListsAPI {
         datadog::Error<CreateDashboardListError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_dashboard_list";
+        let local_operation_id = "v1.create_dashboard_list";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -308,13 +308,13 @@ impl DashboardListsAPI {
         datadog::Error<DeleteDashboardListError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_dashboard_list";
+        let local_operation_id = "v1.delete_dashboard_list";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             list_id = list_id
         );
         let mut local_req_builder =
@@ -414,13 +414,13 @@ impl DashboardListsAPI {
         datadog::Error<GetDashboardListError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_dashboard_list";
+        let local_operation_id = "v1.get_dashboard_list";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             list_id = list_id
         );
         let mut local_req_builder =
@@ -519,13 +519,13 @@ impl DashboardListsAPI {
         datadog::Error<ListDashboardListsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_dashboard_lists";
+        let local_operation_id = "v1.list_dashboard_lists";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -630,13 +630,13 @@ impl DashboardListsAPI {
         datadog::Error<UpdateDashboardListError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_dashboard_list";
+        let local_operation_id = "v1.update_dashboard_list";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             list_id = list_id
         );
         let mut local_req_builder =

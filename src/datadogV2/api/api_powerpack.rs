@@ -188,13 +188,13 @@ impl PowerpackAPI {
         datadog::Error<CreatePowerpackError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_powerpack";
+        let local_operation_id = "v2.create_powerpack";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -328,13 +328,13 @@ impl PowerpackAPI {
         powerpack_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeletePowerpackError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_powerpack";
+        let local_operation_id = "v2.delete_powerpack";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks/{powerpack_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             powerpack_id = datadog::urlencode(powerpack_id)
         );
         let mut local_req_builder =
@@ -427,13 +427,13 @@ impl PowerpackAPI {
         datadog::Error<GetPowerpackError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_powerpack";
+        let local_operation_id = "v2.get_powerpack";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks/{powerpack_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             powerpack_id = datadog::urlencode(powerpack_id)
         );
         let mut local_req_builder =
@@ -566,7 +566,7 @@ impl PowerpackAPI {
         datadog::Error<ListPowerpacksError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_powerpacks";
+        let local_operation_id = "v2.list_powerpacks";
 
         // unbox and build optional parameters
         let page_limit = params.page_limit;
@@ -576,7 +576,7 @@ impl PowerpackAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -690,13 +690,13 @@ impl PowerpackAPI {
         datadog::Error<UpdatePowerpackError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_powerpack";
+        let local_operation_id = "v2.update_powerpack";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/powerpacks/{powerpack_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             powerpack_id = datadog::urlencode(powerpack_id)
         );
         let mut local_req_builder =

@@ -134,9 +134,9 @@ impl CustomerOrgAPI {
         datadog::Error<DisableCustomerOrgError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.disable_customer_org";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.disable_customer_org";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.disable_customer_org' is not enabled".to_string(),
@@ -148,7 +148,7 @@ impl CustomerOrgAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org/disable",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

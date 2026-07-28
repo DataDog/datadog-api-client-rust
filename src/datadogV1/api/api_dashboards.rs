@@ -292,13 +292,13 @@ impl DashboardsAPI {
         datadog::Error<CreateDashboardError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_dashboard";
+        let local_operation_id = "v1.create_dashboard";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -443,13 +443,13 @@ impl DashboardsAPI {
         datadog::Error<CreatePublicDashboardError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_public_dashboard";
+        let local_operation_id = "v1.create_public_dashboard";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -596,13 +596,13 @@ impl DashboardsAPI {
         datadog::Error<DeleteDashboardError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_dashboard";
+        let local_operation_id = "v1.delete_dashboard";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/{dashboard_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dashboard_id = datadog::urlencode(dashboard_id)
         );
         let mut local_req_builder =
@@ -691,13 +691,13 @@ impl DashboardsAPI {
         body: crate::datadogV1::model::DashboardBulkDeleteRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteDashboardsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_dashboards";
+        let local_operation_id = "v1.delete_dashboards";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -839,13 +839,13 @@ impl DashboardsAPI {
         datadog::Error<DeletePublicDashboardError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_public_dashboard";
+        let local_operation_id = "v1.delete_public_dashboard";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             token = datadog::urlencode(token)
         );
         let mut local_req_builder =
@@ -940,13 +940,13 @@ impl DashboardsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeletePublicDashboardInvitationError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_public_dashboard_invitation";
+        let local_operation_id = "v1.delete_public_dashboard_invitation";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}/invitation",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             token = datadog::urlencode(token)
         );
         let mut local_req_builder =
@@ -1086,13 +1086,13 @@ impl DashboardsAPI {
         datadog::Error<GetDashboardError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_dashboard";
+        let local_operation_id = "v1.get_dashboard";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/{dashboard_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dashboard_id = datadog::urlencode(dashboard_id)
         );
         let mut local_req_builder =
@@ -1190,13 +1190,13 @@ impl DashboardsAPI {
         datadog::Error<GetPublicDashboardError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_public_dashboard";
+        let local_operation_id = "v1.get_public_dashboard";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             token = datadog::urlencode(token)
         );
         let mut local_req_builder =
@@ -1302,7 +1302,7 @@ impl DashboardsAPI {
         datadog::Error<GetPublicDashboardInvitationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_public_dashboard_invitations";
+        let local_operation_id = "v1.get_public_dashboard_invitations";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1312,7 +1312,7 @@ impl DashboardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}/invitation",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             token = datadog::urlencode(token)
         );
         let mut local_req_builder =
@@ -1465,7 +1465,7 @@ impl DashboardsAPI {
         datadog::Error<ListDashboardsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_dashboards";
+        let local_operation_id = "v1.list_dashboards";
 
         // unbox and build optional parameters
         let filter_shared = params.filter_shared;
@@ -1477,7 +1477,7 @@ impl DashboardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1581,13 +1581,13 @@ impl DashboardsAPI {
         body: crate::datadogV1::model::DashboardRestoreRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RestoreDashboardsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v1.restore_dashboards";
+        let local_operation_id = "v1.restore_dashboards";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1734,13 +1734,13 @@ impl DashboardsAPI {
         datadog::Error<SendPublicDashboardInvitationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.send_public_dashboard_invitation";
+        let local_operation_id = "v1.send_public_dashboard_invitation";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}/invitation",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             token = datadog::urlencode(token)
         );
         let mut local_req_builder =
@@ -1892,13 +1892,13 @@ impl DashboardsAPI {
         datadog::Error<UpdateDashboardError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_dashboard";
+        let local_operation_id = "v1.update_dashboard";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/{dashboard_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dashboard_id = datadog::urlencode(dashboard_id)
         );
         let mut local_req_builder =
@@ -2049,13 +2049,13 @@ impl DashboardsAPI {
         datadog::Error<UpdatePublicDashboardError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_public_dashboard";
+        let local_operation_id = "v1.update_public_dashboard";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/public/{token}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             token = datadog::urlencode(token)
         );
         let mut local_req_builder =

@@ -195,13 +195,13 @@ impl SensitiveDataScannerAPI {
         datadog::Error<CreateScanningGroupError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_scanning_group";
+        let local_operation_id = "v2.create_scanning_group";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/groups",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -359,13 +359,13 @@ impl SensitiveDataScannerAPI {
         datadog::Error<CreateScanningRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_scanning_rule";
+        let local_operation_id = "v2.create_scanning_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -520,13 +520,13 @@ impl SensitiveDataScannerAPI {
         datadog::Error<DeleteScanningGroupError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_scanning_group";
+        let local_operation_id = "v2.delete_scanning_group";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/groups/{group_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             group_id = datadog::urlencode(group_id)
         );
         let mut local_req_builder =
@@ -682,13 +682,13 @@ impl SensitiveDataScannerAPI {
         datadog::Error<DeleteScanningRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_scanning_rule";
+        let local_operation_id = "v2.delete_scanning_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -837,13 +837,13 @@ impl SensitiveDataScannerAPI {
         datadog::Error<ListScanningGroupsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_scanning_groups";
+        let local_operation_id = "v2.list_scanning_groups";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -946,13 +946,13 @@ impl SensitiveDataScannerAPI {
         datadog::Error<ListStandardPatternsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_standard_patterns";
+        let local_operation_id = "v2.list_standard_patterns";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/standard-patterns",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1057,13 +1057,13 @@ impl SensitiveDataScannerAPI {
         datadog::Error<ReorderScanningGroupsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.reorder_scanning_groups";
+        let local_operation_id = "v2.reorder_scanning_groups";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1224,13 +1224,13 @@ impl SensitiveDataScannerAPI {
         datadog::Error<UpdateScanningGroupError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_scanning_group";
+        let local_operation_id = "v2.update_scanning_group";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/groups/{group_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             group_id = datadog::urlencode(group_id)
         );
         let mut local_req_builder =
@@ -1392,13 +1392,13 @@ impl SensitiveDataScannerAPI {
         datadog::Error<UpdateScanningRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_scanning_rule";
+        let local_operation_id = "v2.update_scanning_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/sensitive-data-scanner/config/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =

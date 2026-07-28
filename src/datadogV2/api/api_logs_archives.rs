@@ -189,13 +189,13 @@ impl LogsArchivesAPI {
         body: crate::datadogV2::model::RelationshipToRole,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<AddReadRoleToArchiveError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.add_read_role_to_archive";
+        let local_operation_id = "v2.add_read_role_to_archive";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}/readers",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             archive_id = datadog::urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -335,13 +335,13 @@ impl LogsArchivesAPI {
         datadog::Error<CreateLogsArchiveError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_logs_archive";
+        let local_operation_id = "v2.create_logs_archive";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -474,13 +474,13 @@ impl LogsArchivesAPI {
         archive_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLogsArchiveError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_logs_archive";
+        let local_operation_id = "v2.delete_logs_archive";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             archive_id = datadog::urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -573,13 +573,13 @@ impl LogsArchivesAPI {
         datadog::Error<GetLogsArchiveError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_logs_archive";
+        let local_operation_id = "v2.get_logs_archive";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             archive_id = datadog::urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -678,13 +678,13 @@ impl LogsArchivesAPI {
         datadog::Error<GetLogsArchiveOrderError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_logs_archive_order";
+        let local_operation_id = "v2.get_logs_archive_order";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archive-order",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -786,13 +786,13 @@ impl LogsArchivesAPI {
         datadog::Error<ListArchiveReadRolesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_archive_read_roles";
+        let local_operation_id = "v2.list_archive_read_roles";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}/readers",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             archive_id = datadog::urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -888,13 +888,13 @@ impl LogsArchivesAPI {
         datadog::Error<ListLogsArchivesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_logs_archives";
+        let local_operation_id = "v2.list_logs_archives";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -985,13 +985,13 @@ impl LogsArchivesAPI {
         body: crate::datadogV2::model::RelationshipToRole,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveRoleFromArchiveError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.remove_role_from_archive";
+        let local_operation_id = "v2.remove_role_from_archive";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}/readers",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             archive_id = datadog::urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -1142,13 +1142,13 @@ impl LogsArchivesAPI {
         datadog::Error<UpdateLogsArchiveError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_logs_archive";
+        let local_operation_id = "v2.update_logs_archive";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archives/{archive_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             archive_id = datadog::urlencode(archive_id)
         );
         let mut local_req_builder =
@@ -1304,13 +1304,13 @@ impl LogsArchivesAPI {
         datadog::Error<UpdateLogsArchiveOrderError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_logs_archive_order";
+        let local_operation_id = "v2.update_logs_archive_order";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/config/archive-order",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());

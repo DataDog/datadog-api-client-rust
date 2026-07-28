@@ -179,9 +179,9 @@ impl AnnotationsAPI {
         datadog::Error<CreateAnnotationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_annotation";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_annotation";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_annotation' is not enabled".to_string(),
@@ -193,7 +193,7 @@ impl AnnotationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/annotation",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -330,9 +330,9 @@ impl AnnotationsAPI {
         annotation_id: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAnnotationError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_annotation";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_annotation";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_annotation' is not enabled".to_string(),
@@ -344,7 +344,7 @@ impl AnnotationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/annotation/{annotation_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             annotation_id = datadog::urlencode(annotation_id.to_string())
         );
         let mut local_req_builder =
@@ -451,9 +451,9 @@ impl AnnotationsAPI {
         datadog::Error<GetPageAnnotationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_page_annotations";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_page_annotations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_page_annotations' is not enabled".to_string(),
@@ -465,7 +465,7 @@ impl AnnotationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/annotation/page/{page_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             page_id = datadog::urlencode(page_id)
         );
         let mut local_req_builder =
@@ -578,9 +578,9 @@ impl AnnotationsAPI {
         datadog::Error<ListAnnotationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_annotations";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_annotations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_annotations' is not enabled".to_string(),
@@ -595,7 +595,7 @@ impl AnnotationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/annotation",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -712,9 +712,9 @@ impl AnnotationsAPI {
         datadog::Error<UpdateAnnotationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_annotation";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_annotation";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_annotation' is not enabled".to_string(),
@@ -726,7 +726,7 @@ impl AnnotationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/annotation/{annotation_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             annotation_id = datadog::urlencode(annotation_id.to_string())
         );
         let mut local_req_builder =

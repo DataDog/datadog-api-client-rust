@@ -238,13 +238,13 @@ impl WidgetsAPI {
         datadog::Error<CreateWidgetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_widget";
+        let local_operation_id = "v2.create_widget";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/widgets/{experience_type}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             experience_type = datadog::urlencode(experience_type.to_string())
         );
         let mut local_req_builder =
@@ -382,13 +382,13 @@ impl WidgetsAPI {
         uuid: uuid::Uuid,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteWidgetError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_widget";
+        let local_operation_id = "v2.delete_widget";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/widgets/{experience_type}/{uuid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             experience_type = datadog::urlencode(experience_type.to_string()),
             uuid = datadog::urlencode(uuid.to_string())
         );
@@ -483,13 +483,13 @@ impl WidgetsAPI {
         datadog::Error<GetWidgetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_widget";
+        let local_operation_id = "v2.get_widget";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/widgets/{experience_type}/{uuid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             experience_type = datadog::urlencode(experience_type.to_string()),
             uuid = datadog::urlencode(uuid.to_string())
         );
@@ -611,7 +611,7 @@ impl WidgetsAPI {
         datadog::Error<SearchWidgetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_widgets";
+        let local_operation_id = "v2.search_widgets";
 
         // unbox and build optional parameters
         let filter_widget_type = params.filter_widget_type;
@@ -627,7 +627,7 @@ impl WidgetsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/widgets/{experience_type}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             experience_type = datadog::urlencode(experience_type.to_string())
         );
         let mut local_req_builder =
@@ -767,13 +767,13 @@ impl WidgetsAPI {
         datadog::Error<UpdateWidgetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_widget";
+        let local_operation_id = "v2.update_widget";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/widgets/{experience_type}/{uuid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             experience_type = datadog::urlencode(experience_type.to_string()),
             uuid = datadog::urlencode(uuid.to_string())
         );

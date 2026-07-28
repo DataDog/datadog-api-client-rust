@@ -296,9 +296,9 @@ impl TagPoliciesAPI {
         datadog::Error<CreateTagPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_tag_policy";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_tag_policy";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_tag_policy' is not enabled".to_string(),
@@ -310,7 +310,7 @@ impl TagPoliciesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/tag-policies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -453,9 +453,9 @@ impl TagPoliciesAPI {
         params: DeleteTagPolicyOptionalParams,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagPolicyError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_tag_policy";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_tag_policy";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_tag_policy' is not enabled".to_string(),
@@ -470,7 +470,7 @@ impl TagPoliciesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/tag-policies/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -574,9 +574,9 @@ impl TagPoliciesAPI {
         datadog::Error<GetTagPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_tag_policy";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_tag_policy";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_tag_policy' is not enabled".to_string(),
@@ -593,7 +593,7 @@ impl TagPoliciesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/tag-policies/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -718,9 +718,9 @@ impl TagPoliciesAPI {
         datadog::Error<GetTagPolicyScoreError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_tag_policy_score";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_tag_policy_score";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_tag_policy_score' is not enabled".to_string(),
@@ -736,7 +736,7 @@ impl TagPoliciesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/tag-policies/{policy_id}/score",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =
@@ -852,9 +852,9 @@ impl TagPoliciesAPI {
         datadog::Error<ListTagPoliciesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tag_policies";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_tag_policies";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_tag_policies' is not enabled".to_string(),
@@ -874,7 +874,7 @@ impl TagPoliciesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/tag-policies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1005,9 +1005,9 @@ impl TagPoliciesAPI {
         datadog::Error<UpdateTagPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_tag_policy";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_tag_policy";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_tag_policy' is not enabled".to_string(),
@@ -1019,7 +1019,7 @@ impl TagPoliciesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/tag-policies/{policy_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
         let mut local_req_builder =

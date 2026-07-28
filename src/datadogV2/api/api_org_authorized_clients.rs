@@ -322,13 +322,13 @@ impl OrgAuthorizedClientsAPI {
         org_authorized_client_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgAuthorizedClientError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_org_authorized_client";
+        let local_operation_id = "v2.delete_org_authorized_client";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients/{org_authorized_client_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_authorized_client_id = datadog::urlencode(org_authorized_client_id)
         );
         let mut local_req_builder =
@@ -421,13 +421,13 @@ impl OrgAuthorizedClientsAPI {
         datadog::Error<DeleteOrgAuthorizedClientAllUserAuthorizationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_org_authorized_client_all_user_authorizations";
+        let local_operation_id = "v2.delete_org_authorized_client_all_user_authorizations";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients/{org_authorized_client_id}/user/{user_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_authorized_client_id = datadog::urlencode(org_authorized_client_id),
             user_id = datadog::urlencode(user_id)
         );
@@ -521,13 +521,13 @@ impl OrgAuthorizedClientsAPI {
         datadog::Error<DeleteOrgAuthorizedClientUserAuthorizationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_org_authorized_client_user_authorization";
+        let local_operation_id = "v2.delete_org_authorized_client_user_authorization";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients/{org_authorized_client_id}/user_authorized_clients/{user_authorized_client_id}",
-            local_configuration.get_operation_host(operation_id), org_authorized_client_id=
+            local_configuration.get_operation_host(local_operation_id), org_authorized_client_id=
             datadog::urlencode(org_authorized_client_id)
             , user_authorized_client_id=
             datadog::urlencode(user_authorized_client_id)
@@ -630,7 +630,7 @@ impl OrgAuthorizedClientsAPI {
         datadog::Error<GetOrgAuthorizedClientError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_org_authorized_client";
+        let local_operation_id = "v2.get_org_authorized_client";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -643,7 +643,7 @@ impl OrgAuthorizedClientsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients/{org_authorized_client_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_authorized_client_id = datadog::urlencode(org_authorized_client_id)
         );
         let mut local_req_builder =
@@ -807,7 +807,7 @@ impl OrgAuthorizedClientsAPI {
         datadog::Error<ListOrgAuthorizedClientUserAuthorizationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_org_authorized_client_user_authorizations";
+        let local_operation_id = "v2.list_org_authorized_client_user_authorizations";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -822,7 +822,7 @@ impl OrgAuthorizedClientsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients/{org_authorized_client_id}/user_authorized_clients",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_authorized_client_id = datadog::urlencode(org_authorized_client_id)
         );
         let mut local_req_builder =
@@ -992,7 +992,7 @@ impl OrgAuthorizedClientsAPI {
         datadog::Error<ListOrgAuthorizedClientsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_org_authorized_clients";
+        let local_operation_id = "v2.list_org_authorized_clients";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1007,7 +1007,7 @@ impl OrgAuthorizedClientsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1145,13 +1145,13 @@ impl OrgAuthorizedClientsAPI {
         datadog::Error<UpdateOrgAuthorizedClientError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_org_authorized_client";
+        let local_operation_id = "v2.update_org_authorized_client";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients/{org_authorized_client_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             org_authorized_client_id = datadog::urlencode(org_authorized_client_id)
         );
         let mut local_req_builder =

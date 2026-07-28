@@ -185,13 +185,13 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         datadog::Error<CreateSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_slo_correction";
+        let local_operation_id = "v1.create_slo_correction";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -329,13 +329,13 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         slo_correction_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSLOCorrectionError>> {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_slo_correction";
+        let local_operation_id = "v1.delete_slo_correction";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             slo_correction_id = datadog::urlencode(slo_correction_id)
         );
         let mut local_req_builder =
@@ -432,13 +432,13 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         datadog::Error<GetSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_slo_correction";
+        let local_operation_id = "v1.get_slo_correction";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             slo_correction_id = datadog::urlencode(slo_correction_id)
         );
         let mut local_req_builder =
@@ -578,7 +578,7 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         datadog::Error<ListSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_slo_correction";
+        let local_operation_id = "v1.list_slo_correction";
 
         // unbox and build optional parameters
         let offset = params.offset;
@@ -588,7 +588,7 @@ impl ServiceLevelObjectiveCorrectionsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -704,13 +704,13 @@ impl ServiceLevelObjectiveCorrectionsAPI {
         datadog::Error<UpdateSLOCorrectionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_slo_correction";
+        let local_operation_id = "v1.update_slo_correction";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/slo/correction/{slo_correction_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             slo_correction_id = datadog::urlencode(slo_correction_id)
         );
         let mut local_req_builder =

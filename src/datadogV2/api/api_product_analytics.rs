@@ -151,13 +151,13 @@ impl ProductAnalyticsAPI {
         datadog::Error<QueryProductAnalyticsScalarError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.query_product_analytics_scalar";
+        let local_operation_id = "v2.query_product_analytics_scalar";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/analytics/scalar",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -313,13 +313,13 @@ impl ProductAnalyticsAPI {
         datadog::Error<QueryProductAnalyticsTimeseriesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.query_product_analytics_timeseries";
+        let local_operation_id = "v2.query_product_analytics_timeseries";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/analytics/timeseries",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -527,13 +527,13 @@ impl ProductAnalyticsAPI {
         datadog::Error<SubmitProductAnalyticsEventError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.submit_product_analytics_event";
+        let local_operation_id = "v2.submit_product_analytics_event";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/prodlytics",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

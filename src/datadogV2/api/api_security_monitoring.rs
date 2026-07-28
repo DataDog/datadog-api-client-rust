@@ -2994,9 +2994,9 @@ impl SecurityMonitoringAPI {
         content_pack_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ActivateContentPackError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.activate_content_pack";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.activate_content_pack";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.activate_content_pack' is not enabled".to_string(),
@@ -3008,7 +3008,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/content_packs/{content_pack_id}/activate",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             content_pack_id = datadog::urlencode(content_pack_id)
         );
         let mut local_req_builder =
@@ -3115,9 +3115,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ActivateIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.activate_integration";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.activate_integration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.activate_integration' is not enabled".to_string(),
@@ -3132,7 +3132,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/integration_config/{integration_type}/activate",
-            local_configuration.get_operation_host(operation_id), integration_type=
+            local_configuration.get_operation_host(local_operation_id), integration_type=
             datadog::urlencode(integration_type)
             );
         let mut local_req_builder =
@@ -3284,13 +3284,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<AttachCaseError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.attach_case";
+        let local_operation_id = "v2.attach_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/cases/{case_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             case_id = datadog::urlencode(case_id)
         );
         let mut local_req_builder =
@@ -3439,13 +3439,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<AttachJiraIssueError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.attach_jira_issue";
+        let local_operation_id = "v2.attach_jira_issue";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/jira_issues",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -3594,13 +3594,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<AttachLinearIssueError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.attach_linear_issue";
+        let local_operation_id = "v2.attach_linear_issue";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/linear_issues",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -3751,13 +3751,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<AttachServiceNowTicketError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.attach_service_now_ticket";
+        let local_operation_id = "v2.attach_service_now_ticket";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/servicenow_tickets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -3913,9 +3913,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<BatchGetSecurityMonitoringDatasetDependenciesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.batch_get_security_monitoring_dataset_dependencies";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.batch_get_security_monitoring_dataset_dependencies";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.batch_get_security_monitoring_dataset_dependencies' is not enabled".to_string(),
@@ -3927,7 +3927,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/datasets/dependencies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -4087,13 +4087,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<BulkConvertExistingSecurityMonitoringRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_convert_existing_security_monitoring_rules";
+        let local_operation_id = "v2.bulk_convert_existing_security_monitoring_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/convert/bulk",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -4252,9 +4252,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<BulkCreateSampleLogGenerationSubscriptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_create_sample_log_generation_subscriptions";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.bulk_create_sample_log_generation_subscriptions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg:
@@ -4268,7 +4268,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/sample_log_generation/subscriptions/bulk",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -4421,13 +4421,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<BulkDeleteSecurityMonitoringRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_delete_security_monitoring_rules";
+        let local_operation_id = "v2.bulk_delete_security_monitoring_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/bulk_delete",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -4584,13 +4584,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<BulkEditSecurityMonitoringSignalsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_edit_security_monitoring_signals";
+        let local_operation_id = "v2.bulk_edit_security_monitoring_signals";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/bulk/update",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -4747,13 +4747,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<BulkEditSecurityMonitoringSignalsAssigneeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_edit_security_monitoring_signals_assignee";
+        let local_operation_id = "v2.bulk_edit_security_monitoring_signals_assignee";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/bulk/assignee",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -4910,13 +4910,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<BulkEditSecurityMonitoringSignalsStateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_edit_security_monitoring_signals_state";
+        let local_operation_id = "v2.bulk_edit_security_monitoring_signals_state";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/bulk/state",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -5070,13 +5070,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<BulkExportSecurityMonitoringRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_export_security_monitoring_rules";
+        let local_operation_id = "v2.bulk_export_security_monitoring_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/bulk_export",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -5228,9 +5228,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<BulkExportSecurityMonitoringTerraformResourcesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.bulk_export_security_monitoring_terraform_resources";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.bulk_export_security_monitoring_terraform_resources";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.bulk_export_security_monitoring_terraform_resources' is not enabled".to_string(),
@@ -5242,7 +5242,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/terraform/{resource_type}/bulk",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_type = datadog::urlencode(resource_type.to_string())
         );
         let mut local_req_builder =
@@ -5371,9 +5371,9 @@ impl SecurityMonitoringAPI {
         job_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CancelHistoricalJobError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.cancel_historical_job";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.cancel_historical_job";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.cancel_historical_job' is not enabled".to_string(),
@@ -5385,7 +5385,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/siem-historical-detections/jobs/{job_id}/cancel",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             job_id = datadog::urlencode(job_id)
         );
         let mut local_req_builder =
@@ -5496,13 +5496,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<ConvertExistingSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.convert_existing_security_monitoring_rule";
+        let local_operation_id = "v2.convert_existing_security_monitoring_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}/convert",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -5592,9 +5592,9 @@ impl SecurityMonitoringAPI {
         body: crate::datadogV2::model::ConvertJobResultsToSignalsRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ConvertJobResultToSignalError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.convert_job_result_to_signal";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.convert_job_result_to_signal";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.convert_job_result_to_signal' is not enabled".to_string(),
@@ -5606,7 +5606,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/siem-historical-detections/jobs/signal_convert",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -5763,13 +5763,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<ConvertSecurityMonitoringRuleFromJSONToTerraformError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.convert_security_monitoring_rule_from_json_to_terraform";
+        let local_operation_id = "v2.convert_security_monitoring_rule_from_json_to_terraform";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/convert",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -5930,9 +5930,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ConvertSecurityMonitoringTerraformResourceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.convert_security_monitoring_terraform_resource";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.convert_security_monitoring_terraform_resource";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.convert_security_monitoring_terraform_resource' is not enabled"
@@ -5945,7 +5945,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/terraform/{resource_type}/convert",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_type = datadog::urlencode(resource_type.to_string())
         );
         let mut local_req_builder =
@@ -6096,13 +6096,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateCasesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_cases";
+        let local_operation_id = "v2.create_cases";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/cases",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -6250,13 +6250,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateCustomFrameworkError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_custom_framework";
+        let local_operation_id = "v2.create_custom_framework";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cloud_security_management/custom_frameworks",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -6407,9 +6407,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateIoCTriageStateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_io_c_triage_state";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_io_c_triage_state";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_io_c_triage_state' is not enabled".to_string(),
@@ -6421,7 +6421,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/siem/ioc-explorer/triage",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -6572,13 +6572,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateJiraIssuesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_jira_issues";
+        let local_operation_id = "v2.create_jira_issues";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/jira_issues",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -6729,13 +6729,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateLinearIssuesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_linear_issues";
+        let local_operation_id = "v2.create_linear_issues";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/linear_issues",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -6899,9 +6899,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateSampleLogGenerationSubscriptionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_sample_log_generation_subscription";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_sample_log_generation_subscription";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_sample_log_generation_subscription' is not enabled"
@@ -6914,7 +6914,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/sample_log_generation/subscriptions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -7070,13 +7070,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateSecurityFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_security_filter";
+        let local_operation_id = "v2.create_security_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -7228,9 +7228,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateSecurityFindingsAutomationDueDateRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_security_findings_automation_due_date_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_security_findings_automation_due_date_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_security_findings_automation_due_date_rule' is not enabled".to_string(),
@@ -7242,7 +7242,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/due_date_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -7394,9 +7394,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateSecurityFindingsAutomationMuteRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_security_findings_automation_mute_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_security_findings_automation_mute_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_security_findings_automation_mute_rule' is not enabled"
@@ -7409,7 +7409,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/mute_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -7560,9 +7560,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateSecurityFindingsAutomationTicketCreationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_security_findings_automation_ticket_creation_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_security_findings_automation_ticket_creation_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_security_findings_automation_ticket_creation_rule' is not enabled".to_string(),
@@ -7574,7 +7574,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/ticket_creation_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -7726,13 +7726,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateSecurityMonitoringCriticalAssetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_security_monitoring_critical_asset";
+        let local_operation_id = "v2.create_security_monitoring_critical_asset";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/critical_assets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -7887,9 +7887,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateSecurityMonitoringDatasetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_security_monitoring_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_security_monitoring_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_security_monitoring_dataset' is not enabled".to_string(),
@@ -7901,7 +7901,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/datasets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -8060,9 +8060,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateSecurityMonitoringIntegrationConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_security_monitoring_integration_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_security_monitoring_integration_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_security_monitoring_integration_config' is not enabled"
@@ -8075,7 +8075,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/integration_config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -8228,13 +8228,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_security_monitoring_rule";
+        let local_operation_id = "v2.create_security_monitoring_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -8386,13 +8386,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateSecurityMonitoringSuppressionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_security_monitoring_suppression";
+        let local_operation_id = "v2.create_security_monitoring_suppression";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/suppressions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -8544,13 +8544,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateServiceNowTicketsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_service_now_tickets";
+        let local_operation_id = "v2.create_service_now_tickets";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/servicenow_tickets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -8702,13 +8702,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateSignalNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_signal_notification_rule";
+        let local_operation_id = "v2.create_signal_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/signals/notification_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -8855,9 +8855,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateStaticAnalysisAstError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_static_analysis_ast";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_static_analysis_ast";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_static_analysis_ast' is not enabled".to_string(),
@@ -8869,7 +8869,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/static-analysis-server/get-ast",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -9019,9 +9019,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateStaticAnalysisServerAnalysisError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_static_analysis_server_analysis";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_static_analysis_server_analysis";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_static_analysis_server_analysis' is not enabled"
@@ -9034,7 +9034,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/static-analysis-server/analyze",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -9185,13 +9185,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<CreateVulnerabilityNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_vulnerability_notification_rule";
+        let local_operation_id = "v2.create_vulnerability_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/vulnerabilities/notification_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -9331,9 +9331,9 @@ impl SecurityMonitoringAPI {
         content_pack_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeactivateContentPackError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.deactivate_content_pack";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.deactivate_content_pack";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.deactivate_content_pack' is not enabled".to_string(),
@@ -9345,7 +9345,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/content_packs/{content_pack_id}/deactivate",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             content_pack_id = datadog::urlencode(content_pack_id)
         );
         let mut local_req_builder =
@@ -9446,9 +9446,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<DeactivateIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.deactivate_integration";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.deactivate_integration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.deactivate_integration' is not enabled".to_string(),
@@ -9460,7 +9460,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/integration_config/{integration_type}/deactivate",
-            local_configuration.get_operation_host(operation_id), integration_type=
+            local_configuration.get_operation_host(local_operation_id), integration_type=
             datadog::urlencode(integration_type)
             );
         let mut local_req_builder =
@@ -9569,13 +9569,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<DeleteCustomFrameworkError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_custom_framework";
+        let local_operation_id = "v2.delete_custom_framework";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cloud_security_management/custom_frameworks/{handle}/{version}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             handle = datadog::urlencode(handle),
             version = datadog::urlencode(version)
         );
@@ -9665,9 +9665,9 @@ impl SecurityMonitoringAPI {
         job_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteHistoricalJobError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_historical_job";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_historical_job";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_historical_job' is not enabled".to_string(),
@@ -9679,7 +9679,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/siem-historical-detections/jobs/{job_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             job_id = datadog::urlencode(job_id)
         );
         let mut local_req_builder =
@@ -9788,9 +9788,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<DeleteSampleLogGenerationSubscriptionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_sample_log_generation_subscription";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_sample_log_generation_subscription";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_sample_log_generation_subscription' is not enabled"
@@ -9803,7 +9803,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/sample_log_generation/subscriptions/{content_pack_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             content_pack_id = datadog::urlencode(content_pack_id)
         );
         let mut local_req_builder =
@@ -9896,13 +9896,13 @@ impl SecurityMonitoringAPI {
         security_filter_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSecurityFilterError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_security_filter";
+        let local_operation_id = "v2.delete_security_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             security_filter_id = datadog::urlencode(security_filter_id)
         );
         let mut local_req_builder =
@@ -9990,9 +9990,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<DeleteSecurityFindingsAutomationDueDateRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_security_findings_automation_due_date_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_security_findings_automation_due_date_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_security_findings_automation_due_date_rule' is not enabled".to_string(),
@@ -10004,7 +10004,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/due_date_rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id.to_string())
         );
         let mut local_req_builder =
@@ -10092,9 +10092,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<DeleteSecurityFindingsAutomationMuteRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_security_findings_automation_mute_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_security_findings_automation_mute_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_security_findings_automation_mute_rule' is not enabled"
@@ -10107,7 +10107,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/mute_rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id.to_string())
         );
         let mut local_req_builder =
@@ -10195,9 +10195,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<DeleteSecurityFindingsAutomationTicketCreationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_security_findings_automation_ticket_creation_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_security_findings_automation_ticket_creation_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_security_findings_automation_ticket_creation_rule' is not enabled".to_string(),
@@ -10209,7 +10209,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/ticket_creation_rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id.to_string())
         );
         let mut local_req_builder =
@@ -10297,13 +10297,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<DeleteSecurityMonitoringCriticalAssetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_security_monitoring_critical_asset";
+        let local_operation_id = "v2.delete_security_monitoring_critical_asset";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/critical_assets/{critical_asset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             critical_asset_id = datadog::urlencode(critical_asset_id)
         );
         let mut local_req_builder =
@@ -10391,9 +10391,9 @@ impl SecurityMonitoringAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSecurityMonitoringDatasetError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_security_monitoring_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_security_monitoring_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_security_monitoring_dataset' is not enabled".to_string(),
@@ -10405,7 +10405,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/datasets/{dataset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
         let mut local_req_builder =
@@ -10495,9 +10495,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<DeleteSecurityMonitoringIntegrationConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_security_monitoring_integration_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_security_monitoring_integration_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_security_monitoring_integration_config' is not enabled"
@@ -10510,7 +10510,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/integration_config/{integration_config_id}",
-            local_configuration.get_operation_host(operation_id), integration_config_id=
+            local_configuration.get_operation_host(local_operation_id), integration_config_id=
             datadog::urlencode(integration_config_id)
             );
         let mut local_req_builder =
@@ -10596,13 +10596,13 @@ impl SecurityMonitoringAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSecurityMonitoringRuleError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_security_monitoring_rule";
+        let local_operation_id = "v2.delete_security_monitoring_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -10690,13 +10690,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<DeleteSecurityMonitoringSuppressionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_security_monitoring_suppression";
+        let local_operation_id = "v2.delete_security_monitoring_suppression";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/suppressions/{suppression_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             suppression_id = datadog::urlencode(suppression_id)
         );
         let mut local_req_builder =
@@ -10782,13 +10782,13 @@ impl SecurityMonitoringAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSignalNotificationRuleError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_signal_notification_rule";
+        let local_operation_id = "v2.delete_signal_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/signals/notification_rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -10876,13 +10876,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<DeleteVulnerabilityNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_vulnerability_notification_rule";
+        let local_operation_id = "v2.delete_vulnerability_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/vulnerabilities/notification_rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -10966,13 +10966,13 @@ impl SecurityMonitoringAPI {
         body: crate::datadogV2::model::DetachCaseRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DetachCaseError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.detach_case";
+        let local_operation_id = "v2.detach_case";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/cases",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -11120,13 +11120,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<EditSecurityMonitoringSignalError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.edit_security_monitoring_signal";
+        let local_operation_id = "v2.edit_security_monitoring_signal";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/update",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             signal_id = datadog::urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -11284,13 +11284,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<EditSecurityMonitoringSignalAssigneeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.edit_security_monitoring_signal_assignee";
+        let local_operation_id = "v2.edit_security_monitoring_signal_assignee";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/assignee",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             signal_id = datadog::urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -11448,13 +11448,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<EditSecurityMonitoringSignalIncidentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.edit_security_monitoring_signal_incidents";
+        let local_operation_id = "v2.edit_security_monitoring_signal_incidents";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/incidents",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             signal_id = datadog::urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -11612,13 +11612,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<EditSecurityMonitoringSignalStateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.edit_security_monitoring_signal_state";
+        let local_operation_id = "v2.edit_security_monitoring_signal_state";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/state",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             signal_id = datadog::urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -11785,9 +11785,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ExportSecurityMonitoringTerraformResourceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.export_security_monitoring_terraform_resource";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.export_security_monitoring_terraform_resource";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.export_security_monitoring_terraform_resource' is not enabled"
@@ -11800,7 +11800,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/terraform/{resource_type}/{resource_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_type = datadog::urlencode(resource_type.to_string()),
             resource_id = datadog::urlencode(resource_id)
         );
@@ -11907,9 +11907,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetContentPacksStatesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_content_packs_states";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_content_packs_states";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_content_packs_states' is not enabled".to_string(),
@@ -11921,7 +11921,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/content_packs/states",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -12027,13 +12027,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetCriticalAssetsAffectingRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_critical_assets_affecting_rule";
+        let local_operation_id = "v2.get_critical_assets_affecting_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/critical_assets/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -12142,13 +12142,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetCustomFrameworkError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_custom_framework";
+        let local_operation_id = "v2.get_custom_framework";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cloud_security_management/custom_frameworks/{handle}/{version}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             handle = datadog::urlencode(handle),
             version = datadog::urlencode(version)
         );
@@ -12256,9 +12256,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetEntityContextError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_entity_context";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_entity_context";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_entity_context' is not enabled".to_string(),
@@ -12278,7 +12278,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/entity_context",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -12409,9 +12409,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetEntraIdAzureAppRegistrationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_entra_id_azure_app_registrations";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_entra_id_azure_app_registrations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_entra_id_azure_app_registrations' is not enabled"
@@ -12424,7 +12424,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/integration_config/entra_id/azure_app_registrations",
-            local_configuration.get_operation_host(operation_id));
+            local_configuration.get_operation_host(local_operation_id));
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
@@ -12525,9 +12525,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetFindingError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_finding";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_finding";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_finding' is not enabled".to_string(),
@@ -12542,7 +12542,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings/{finding_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             finding_id = datadog::urlencode(finding_id)
         );
         let mut local_req_builder =
@@ -12647,9 +12647,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetHistoricalJobError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_historical_job";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_historical_job";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_historical_job' is not enabled".to_string(),
@@ -12661,7 +12661,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/siem-historical-detections/jobs/{job_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             job_id = datadog::urlencode(job_id)
         );
         let mut local_req_builder =
@@ -12769,9 +12769,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetIndicatorOfCompromiseError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_indicator_of_compromise";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_indicator_of_compromise";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_indicator_of_compromise' is not enabled".to_string(),
@@ -12789,7 +12789,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/siem/ioc-explorer/indicator",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -12914,13 +12914,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetInvestigationLogQueriesMatchingSignalError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_investigation_log_queries_matching_signal";
+        let local_operation_id = "v2.get_investigation_log_queries_matching_signal";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/investigation_queries",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             signal_id = datadog::urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -13027,7 +13027,7 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetResourceEvaluationFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_resource_evaluation_filters";
+        let local_operation_id = "v2.get_resource_evaluation_filters";
 
         // unbox and build optional parameters
         let cloud_provider = params.cloud_provider;
@@ -13038,7 +13038,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cloud_security_management/resource_filters",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -13159,9 +13159,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetRuleVersionHistoryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_rule_version_history";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_rule_version_history";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_rule_version_history' is not enabled".to_string(),
@@ -13177,7 +13177,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}/version_history",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -13293,7 +13293,7 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSBOMError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_sbom";
+        let local_operation_id = "v2.get_sbom";
 
         // unbox and build optional parameters
         let filter_repo_digest = params.filter_repo_digest;
@@ -13303,7 +13303,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/sboms/{asset_type}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             asset_type = datadog::urlencode(asset_type.to_string())
         );
         let mut local_req_builder =
@@ -13410,9 +13410,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecretsRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_secrets_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_secrets_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_secrets_rules' is not enabled".to_string(),
@@ -13424,7 +13424,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/secrets/rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -13533,13 +13533,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_filter";
+        let local_operation_id = "v2.get_security_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             security_filter_id = datadog::urlencode(security_filter_id)
         );
         let mut local_req_builder =
@@ -13645,9 +13645,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityFindingsAutomationDueDateRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_findings_automation_due_date_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_security_findings_automation_due_date_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_security_findings_automation_due_date_rule' is not enabled"
@@ -13660,7 +13660,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/due_date_rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id.to_string())
         );
         let mut local_req_builder =
@@ -13766,9 +13766,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityFindingsAutomationMuteRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_findings_automation_mute_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_security_findings_automation_mute_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_security_findings_automation_mute_rule' is not enabled"
@@ -13781,7 +13781,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/mute_rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id.to_string())
         );
         let mut local_req_builder =
@@ -13886,9 +13886,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityFindingsAutomationTicketCreationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_findings_automation_ticket_creation_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_security_findings_automation_ticket_creation_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_security_findings_automation_ticket_creation_rule' is not enabled".to_string(),
@@ -13900,7 +13900,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/ticket_creation_rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id.to_string())
         );
         let mut local_req_builder =
@@ -14006,13 +14006,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityMonitoringCriticalAssetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_monitoring_critical_asset";
+        let local_operation_id = "v2.get_security_monitoring_critical_asset";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/critical_assets/{critical_asset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             critical_asset_id = datadog::urlencode(critical_asset_id)
         );
         let mut local_req_builder =
@@ -14119,9 +14119,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityMonitoringDatasetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_monitoring_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_security_monitoring_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_security_monitoring_dataset' is not enabled".to_string(),
@@ -14133,7 +14133,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/datasets/{dataset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
         let mut local_req_builder =
@@ -14241,9 +14241,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityMonitoringDatasetByVersionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_monitoring_dataset_by_version";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_security_monitoring_dataset_by_version";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_security_monitoring_dataset_by_version' is not enabled"
@@ -14256,7 +14256,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/datasets/{dataset_id}/version/{version}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dataset_id = datadog::urlencode(dataset_id),
             version = version
         );
@@ -14367,9 +14367,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityMonitoringDatasetVersionHistoryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_monitoring_dataset_version_history";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_security_monitoring_dataset_version_history";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg:
@@ -14387,7 +14387,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/datasets/{dataset_id}/version_history",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
         let mut local_req_builder =
@@ -14503,9 +14503,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityMonitoringHistsignalError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_monitoring_histsignal";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_security_monitoring_histsignal";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_security_monitoring_histsignal' is not enabled".to_string(),
@@ -14517,7 +14517,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/siem-historical-detections/histsignals/{histsignal_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             histsignal_id = datadog::urlencode(histsignal_id)
         );
         let mut local_req_builder =
@@ -14625,9 +14625,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityMonitoringHistsignalsByJobIdError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_monitoring_histsignals_by_job_id";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_security_monitoring_histsignals_by_job_id";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_security_monitoring_histsignals_by_job_id' is not enabled"
@@ -14648,7 +14648,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/siem-historical-detections/jobs/{job_id}/histsignals",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             job_id = datadog::urlencode(job_id)
         );
         let mut local_req_builder =
@@ -14786,9 +14786,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityMonitoringIntegrationConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_monitoring_integration_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_security_monitoring_integration_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_security_monitoring_integration_config' is not enabled"
@@ -14801,7 +14801,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/integration_config/{integration_config_id}",
-            local_configuration.get_operation_host(operation_id), integration_config_id=
+            local_configuration.get_operation_host(local_operation_id), integration_config_id=
             datadog::urlencode(integration_config_id)
             );
         let mut local_req_builder =
@@ -14908,13 +14908,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_monitoring_rule";
+        let local_operation_id = "v2.get_security_monitoring_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -15020,13 +15020,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityMonitoringSignalError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_monitoring_signal";
+        let local_operation_id = "v2.get_security_monitoring_signal";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             signal_id = datadog::urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -15132,13 +15132,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSecurityMonitoringSuppressionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_security_monitoring_suppression";
+        let local_operation_id = "v2.get_security_monitoring_suppression";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/suppressions/{suppression_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             suppression_id = datadog::urlencode(suppression_id)
         );
         let mut local_req_builder =
@@ -15247,9 +15247,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSignalEntitiesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_signal_entities";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_signal_entities";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_signal_entities' is not enabled".to_string(),
@@ -15264,7 +15264,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/entities",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             signal_id = datadog::urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -15372,13 +15372,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSignalNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_signal_notification_rule";
+        let local_operation_id = "v2.get_signal_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/signals/notification_rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -15479,13 +15479,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSignalNotificationRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_signal_notification_rules";
+        let local_operation_id = "v2.get_signal_notification_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/signals/notification_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -15598,9 +15598,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSingleEntityContextError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_single_entity_context";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_single_entity_context";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_single_entity_context' is not enabled".to_string(),
@@ -15617,7 +15617,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/entity_context/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -15735,9 +15735,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetStaticAnalysisDefaultRulesetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_static_analysis_default_rulesets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_static_analysis_default_rulesets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_static_analysis_default_rulesets' is not enabled"
@@ -15750,7 +15750,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/default-rulesets/{language}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             language = datadog::urlencode(language)
         );
         let mut local_req_builder =
@@ -15856,9 +15856,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetStaticAnalysisNodeTypesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_static_analysis_node_types";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_static_analysis_node_types";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_static_analysis_node_types' is not enabled".to_string(),
@@ -15870,7 +15870,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/static-analysis-server/node-types/{language}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             language = datadog::urlencode(language)
         );
         let mut local_req_builder =
@@ -15977,9 +15977,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetStaticAnalysisRulesetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_static_analysis_ruleset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_static_analysis_ruleset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_static_analysis_ruleset' is not enabled".to_string(),
@@ -15995,7 +15995,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_name = datadog::urlencode(ruleset_name)
         );
         let mut local_req_builder =
@@ -16107,9 +16107,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetStaticAnalysisTreeSitterWasmError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_static_analysis_tree_sitter_wasm";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_static_analysis_tree_sitter_wasm";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_static_analysis_tree_sitter_wasm' is not enabled"
@@ -16122,7 +16122,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/static-analysis-server/tree-sitter-wasm/{file}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             file = datadog::urlencode(file)
         );
         let mut local_req_builder =
@@ -16223,13 +16223,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSuggestedActionsMatchingSignalError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_suggested_actions_matching_signal";
+        let local_operation_id = "v2.get_suggested_actions_matching_signal";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/{signal_id}/suggested_actions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             signal_id = datadog::urlencode(signal_id)
         );
         let mut local_req_builder =
@@ -16338,7 +16338,7 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSuppressionVersionHistoryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_suppression_version_history";
+        let local_operation_id = "v2.get_suppression_version_history";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -16348,7 +16348,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/suppressions/{suppression_id}/version_history",
-            local_configuration.get_operation_host(operation_id), suppression_id=
+            local_configuration.get_operation_host(local_operation_id), suppression_id=
             datadog::urlencode(suppression_id)
             );
         let mut local_req_builder =
@@ -16464,13 +16464,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSuppressionsAffectingFutureRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_suppressions_affecting_future_rule";
+        let local_operation_id = "v2.get_suppressions_affecting_future_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/suppressions/rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -16623,13 +16623,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetSuppressionsAffectingRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_suppressions_affecting_rule";
+        let local_operation_id = "v2.get_suppressions_affecting_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/suppressions/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -16736,13 +16736,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetVulnerabilityNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_vulnerability_notification_rule";
+        let local_operation_id = "v2.get_vulnerability_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/vulnerabilities/notification_rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -16846,13 +16846,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<GetVulnerabilityNotificationRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_vulnerability_notification_rules";
+        let local_operation_id = "v2.get_vulnerability_notification_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/vulnerabilities/notification_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -16974,9 +16974,9 @@ impl SecurityMonitoringAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ImportSecurityVulnerabilitiesError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.import_security_vulnerabilities";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.import_security_vulnerabilities";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.import_security_vulnerabilities' is not enabled".to_string(),
@@ -16988,7 +16988,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/vulnerabilities",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -17164,7 +17164,7 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListAssetsSBOMsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_assets_sbo_ms";
+        let local_operation_id = "v2.list_assets_sbo_ms";
 
         // unbox and build optional parameters
         let page_token = params.page_token;
@@ -17180,7 +17180,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/sboms",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -17431,9 +17431,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListFindingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_findings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_findings";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_findings' is not enabled".to_string(),
@@ -17462,7 +17462,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/posture_management/findings",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -17630,9 +17630,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListHistoricalJobsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_historical_jobs";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_historical_jobs";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_historical_jobs' is not enabled".to_string(),
@@ -17650,7 +17650,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/siem-historical-detections/jobs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -17772,9 +17772,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListIndicatorsOfCompromiseError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_indicators_of_compromise";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_indicators_of_compromise";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_indicators_of_compromise' is not enabled".to_string(),
@@ -17796,7 +17796,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/siem/ioc-explorer",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -17931,9 +17931,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListMultipleRulesetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_multiple_rulesets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_multiple_rulesets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_multiple_rulesets' is not enabled".to_string(),
@@ -17945,7 +17945,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/rulesets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -18109,9 +18109,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSampleLogGenerationSubscriptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_sample_log_generation_subscriptions";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_sample_log_generation_subscriptions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_sample_log_generation_subscriptions' is not enabled"
@@ -18129,7 +18129,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/sample_log_generation/subscriptions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -18338,9 +18338,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListScannedAssetsMetadataError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_scanned_assets_metadata";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_scanned_assets_metadata";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_scanned_assets_metadata' is not enabled".to_string(),
@@ -18360,7 +18360,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/scanned-assets-metadata",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -18491,13 +18491,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityFilterVersionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_filter_versions";
+        let local_operation_id = "v2.list_security_filter_versions";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/versions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -18597,13 +18597,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_filters";
+        let local_operation_id = "v2.list_security_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -18754,7 +18754,7 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityFindingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_findings";
+        let local_operation_id = "v2.list_security_findings";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -18766,7 +18766,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -18888,9 +18888,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityFindingsAutomationDueDateRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_findings_automation_due_date_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_security_findings_automation_due_date_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg:
@@ -18908,7 +18908,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/due_date_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -19022,9 +19022,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityFindingsAutomationMuteRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_findings_automation_mute_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_security_findings_automation_mute_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_security_findings_automation_mute_rules' is not enabled"
@@ -19041,7 +19041,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/mute_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -19154,9 +19154,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityFindingsAutomationTicketCreationRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_findings_automation_ticket_creation_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_security_findings_automation_ticket_creation_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_security_findings_automation_ticket_creation_rules' is not enabled".to_string(),
@@ -19172,7 +19172,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/ticket_creation_rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -19284,13 +19284,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityMonitoringCriticalAssetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_monitoring_critical_assets";
+        let local_operation_id = "v2.list_security_monitoring_critical_assets";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/critical_assets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -19398,9 +19398,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityMonitoringDatasetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_monitoring_datasets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_security_monitoring_datasets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_security_monitoring_datasets' is not enabled".to_string(),
@@ -19418,7 +19418,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/datasets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -19541,9 +19541,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityMonitoringHistsignalsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_monitoring_histsignals";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_security_monitoring_histsignals";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_security_monitoring_histsignals' is not enabled"
@@ -19564,7 +19564,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/siem-historical-detections/histsignals",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -19705,9 +19705,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityMonitoringIntegrationConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_monitoring_integration_configs";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_security_monitoring_integration_configs";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_security_monitoring_integration_configs' is not enabled"
@@ -19723,7 +19723,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/integration_config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -19834,7 +19834,7 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityMonitoringRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_monitoring_rules";
+        let local_operation_id = "v2.list_security_monitoring_rules";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -19846,7 +19846,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -20009,7 +20009,7 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityMonitoringSignalsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_monitoring_signals";
+        let local_operation_id = "v2.list_security_monitoring_signals";
 
         // unbox and build optional parameters
         let filter_query = params.filter_query;
@@ -20023,7 +20023,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -20160,7 +20160,7 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListSecurityMonitoringSuppressionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_security_monitoring_suppressions";
+        let local_operation_id = "v2.list_security_monitoring_suppressions";
 
         // unbox and build optional parameters
         let query = params.query;
@@ -20172,7 +20172,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/suppressions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -20293,9 +20293,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListStaticAnalysisCodegenRulesetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_static_analysis_codegen_rulesets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_static_analysis_codegen_rulesets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_static_analysis_codegen_rulesets' is not enabled"
@@ -20308,7 +20308,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/codegen/rulesets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -20586,9 +20586,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListVulnerabilitiesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_vulnerabilities";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_vulnerabilities";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_vulnerabilities' is not enabled".to_string(),
@@ -20648,7 +20648,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/vulnerabilities",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -20989,9 +20989,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ListVulnerableAssetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_vulnerable_assets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_vulnerable_assets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_vulnerable_assets' is not enabled".to_string(),
@@ -21023,7 +21023,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/vulnerable-assets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -21212,13 +21212,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<MuteSecurityFindingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.mute_security_findings";
+        let local_operation_id = "v2.mute_security_findings";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/mute",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -21372,13 +21372,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<PatchSignalNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.patch_signal_notification_rule";
+        let local_operation_id = "v2.patch_signal_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/signals/notification_rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -21533,13 +21533,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<PatchVulnerabilityNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.patch_vulnerability_notification_rule";
+        let local_operation_id = "v2.patch_vulnerability_notification_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/vulnerabilities/notification_rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -21692,9 +21692,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ReorderSecurityFindingsAutomationDueDateRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.reorder_security_findings_automation_due_date_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.reorder_security_findings_automation_due_date_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.reorder_security_findings_automation_due_date_rules' is not enabled".to_string(),
@@ -21706,7 +21706,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/due_date_rules/reorder",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -21858,9 +21858,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ReorderSecurityFindingsAutomationMuteRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.reorder_security_findings_automation_mute_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.reorder_security_findings_automation_mute_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg:
@@ -21874,7 +21874,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/mute_rules/reorder",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -22026,9 +22026,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ReorderSecurityFindingsAutomationTicketCreationRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.reorder_security_findings_automation_ticket_creation_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.reorder_security_findings_automation_ticket_creation_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.reorder_security_findings_automation_ticket_creation_rules' is not enabled".to_string(),
@@ -22040,7 +22040,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/ticket_creation_rules/reorder",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -22198,9 +22198,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<RestoreSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.restore_security_monitoring_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.restore_security_monitoring_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.restore_security_monitoring_rule' is not enabled".to_string(),
@@ -22212,7 +22212,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}/restore/{version}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id),
             version = version
         );
@@ -22314,9 +22314,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<RunHistoricalJobError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.run_historical_job";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.run_historical_job";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.run_historical_job' is not enabled".to_string(),
@@ -22328,7 +22328,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/siem-historical-detections/jobs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -22534,13 +22534,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<SearchSecurityFindingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_security_findings";
+        let local_operation_id = "v2.search_security_findings";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -22692,9 +22692,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<SearchSecurityMonitoringHistsignalsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_security_monitoring_histsignals";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.search_security_monitoring_histsignals";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.search_security_monitoring_histsignals' is not enabled"
@@ -22710,7 +22710,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/siem-historical-detections/histsignals/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -22910,7 +22910,7 @@ impl SecurityMonitoringAPI {
         datadog::Error<SearchSecurityMonitoringSignalsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_security_monitoring_signals";
+        let local_operation_id = "v2.search_security_monitoring_signals";
 
         // unbox and build optional parameters
         let body = params.body;
@@ -22919,7 +22919,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/signals/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -23072,13 +23072,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<SendSecurityMonitoringNotificationPreviewError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.send_security_monitoring_notification_preview";
+        let local_operation_id = "v2.send_security_monitoring_notification_preview";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/notification_rules/send_notification_preview",
-            local_configuration.get_operation_host(operation_id));
+            local_configuration.get_operation_host(local_operation_id));
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
@@ -23231,13 +23231,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<TestExistingSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.test_existing_security_monitoring_rule";
+        let local_operation_id = "v2.test_existing_security_monitoring_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}/test",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -23390,13 +23390,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<TestSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.test_security_monitoring_rule";
+        let local_operation_id = "v2.test_security_monitoring_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/test",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -23552,13 +23552,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<UpdateCustomFrameworkError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_custom_framework";
+        let local_operation_id = "v2.update_custom_framework";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cloud_security_management/custom_frameworks/{handle}/{version}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             handle = datadog::urlencode(handle),
             version = datadog::urlencode(version)
         );
@@ -23711,9 +23711,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<UpdateFindingsAssigneeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_findings_assignee";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_findings_assignee";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_findings_assignee' is not enabled".to_string(),
@@ -23725,7 +23725,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/assignee",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -23876,13 +23876,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<UpdateResourceEvaluationFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_resource_evaluation_filters";
+        let local_operation_id = "v2.update_resource_evaluation_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cloud_security_management/resource_filters",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -24039,13 +24039,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<UpdateSecurityFilterError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_security_filter";
+        let local_operation_id = "v2.update_security_filter";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/security_filters/{security_filter_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             security_filter_id = datadog::urlencode(security_filter_id)
         );
         let mut local_req_builder =
@@ -24200,9 +24200,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<UpdateSecurityFindingsAutomationDueDateRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_security_findings_automation_due_date_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_security_findings_automation_due_date_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_security_findings_automation_due_date_rule' is not enabled".to_string(),
@@ -24214,7 +24214,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/due_date_rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id.to_string())
         );
         let mut local_req_builder =
@@ -24369,9 +24369,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<UpdateSecurityFindingsAutomationMuteRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_security_findings_automation_mute_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_security_findings_automation_mute_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_security_findings_automation_mute_rule' is not enabled"
@@ -24384,7 +24384,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/mute_rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id.to_string())
         );
         let mut local_req_builder =
@@ -24538,9 +24538,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<UpdateSecurityFindingsAutomationTicketCreationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_security_findings_automation_ticket_creation_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_security_findings_automation_ticket_creation_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_security_findings_automation_ticket_creation_rule' is not enabled".to_string(),
@@ -24552,7 +24552,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security/findings/automation/ticket_creation_rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id.to_string())
         );
         let mut local_req_builder =
@@ -24707,13 +24707,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<UpdateSecurityMonitoringCriticalAssetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_security_monitoring_critical_asset";
+        let local_operation_id = "v2.update_security_monitoring_critical_asset";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/critical_assets/{critical_asset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             critical_asset_id = datadog::urlencode(critical_asset_id)
         );
         let mut local_req_builder =
@@ -24858,9 +24858,9 @@ impl SecurityMonitoringAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateSecurityMonitoringDatasetError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_security_monitoring_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_security_monitoring_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_security_monitoring_dataset' is not enabled".to_string(),
@@ -24872,7 +24872,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/datasets/{dataset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
         let mut local_req_builder =
@@ -25025,9 +25025,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<UpdateSecurityMonitoringIntegrationConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_security_monitoring_integration_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_security_monitoring_integration_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_security_monitoring_integration_config' is not enabled"
@@ -25040,7 +25040,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/integration_config/{integration_config_id}",
-            local_configuration.get_operation_host(operation_id), integration_config_id=
+            local_configuration.get_operation_host(local_operation_id), integration_config_id=
             datadog::urlencode(integration_config_id)
             );
         let mut local_req_builder =
@@ -25202,13 +25202,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<UpdateSecurityMonitoringRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_security_monitoring_rule";
+        let local_operation_id = "v2.update_security_monitoring_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
@@ -25363,13 +25363,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<UpdateSecurityMonitoringSuppressionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_security_monitoring_suppression";
+        let local_operation_id = "v2.update_security_monitoring_suppression";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/suppressions/{suppression_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             suppression_id = datadog::urlencode(suppression_id)
         );
         let mut local_req_builder =
@@ -25514,9 +25514,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ValidateSecurityMonitoringIntegrationConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_security_monitoring_integration_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.validate_security_monitoring_integration_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg:
@@ -25530,7 +25530,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/integration_config/{integration_config_id}/validate",
-            local_configuration.get_operation_host(operation_id), integration_config_id=
+            local_configuration.get_operation_host(local_operation_id), integration_config_id=
             datadog::urlencode(integration_config_id)
             );
         let mut local_req_builder =
@@ -25620,9 +25620,9 @@ impl SecurityMonitoringAPI {
         datadog::Error<ValidateSecurityMonitoringIntegrationCredentialsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_security_monitoring_integration_credentials";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.validate_security_monitoring_integration_credentials";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.validate_security_monitoring_integration_credentials' is not enabled".to_string(),
@@ -25634,7 +25634,7 @@ impl SecurityMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/integration_config/validate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -25766,13 +25766,13 @@ impl SecurityMonitoringAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ValidateSecurityMonitoringRuleError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_security_monitoring_rule";
+        let local_operation_id = "v2.validate_security_monitoring_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/rules/validation",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -25906,13 +25906,13 @@ impl SecurityMonitoringAPI {
         datadog::Error<ValidateSecurityMonitoringSuppressionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_security_monitoring_suppression";
+        let local_operation_id = "v2.validate_security_monitoring_suppression";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/security_monitoring/configuration/suppressions/validation",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

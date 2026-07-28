@@ -209,13 +209,13 @@ impl ActionConnectionAPI {
         datadog::Error<CreateActionConnectionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_action_connection";
+        let local_operation_id = "v2.create_action_connection";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions/connections",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -353,13 +353,13 @@ impl ActionConnectionAPI {
         connection_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteActionConnectionError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_action_connection";
+        let local_operation_id = "v2.delete_action_connection";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions/connections/{connection_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             connection_id = datadog::urlencode(connection_id)
         );
         let mut local_req_builder =
@@ -458,13 +458,13 @@ impl ActionConnectionAPI {
         datadog::Error<GetActionConnectionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_action_connection";
+        let local_operation_id = "v2.get_action_connection";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions/connections/{connection_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             connection_id = datadog::urlencode(connection_id)
         );
         let mut local_req_builder =
@@ -570,13 +570,13 @@ impl ActionConnectionAPI {
         datadog::Error<GetAppKeyRegistrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_app_key_registration";
+        let local_operation_id = "v2.get_app_key_registration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions/app_key_registrations/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
@@ -679,7 +679,7 @@ impl ActionConnectionAPI {
         datadog::Error<ListAppKeyRegistrationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_app_key_registrations";
+        let local_operation_id = "v2.list_app_key_registrations";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -689,7 +689,7 @@ impl ActionConnectionAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/actions/app_key_registrations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -798,13 +798,13 @@ impl ActionConnectionAPI {
         datadog::Error<RegisterAppKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.register_app_key";
+        let local_operation_id = "v2.register_app_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions/app_key_registrations/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
@@ -893,13 +893,13 @@ impl ActionConnectionAPI {
         app_key_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnregisterAppKeyError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.unregister_app_key";
+        let local_operation_id = "v2.unregister_app_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions/app_key_registrations/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             app_key_id = datadog::urlencode(app_key_id)
         );
         let mut local_req_builder =
@@ -1000,13 +1000,13 @@ impl ActionConnectionAPI {
         datadog::Error<UpdateActionConnectionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_action_connection";
+        let local_operation_id = "v2.update_action_connection";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/actions/connections/{connection_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             connection_id = datadog::urlencode(connection_id)
         );
         let mut local_req_builder =

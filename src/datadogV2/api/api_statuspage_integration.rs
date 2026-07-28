@@ -182,13 +182,13 @@ impl StatuspageIntegrationAPI {
         datadog::Error<CreateStatuspageAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_statuspage_account";
+        let local_operation_id = "v2.create_statuspage_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/statuspage/account",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -340,13 +340,13 @@ impl StatuspageIntegrationAPI {
         datadog::Error<CreateStatuspageUrlSettingError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_statuspage_url_setting";
+        let local_operation_id = "v2.create_statuspage_url_setting";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/statuspage/url_settings",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -479,13 +479,13 @@ impl StatuspageIntegrationAPI {
         &self,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteStatuspageAccountError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_statuspage_account";
+        let local_operation_id = "v2.delete_statuspage_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/statuspage/account",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -569,13 +569,13 @@ impl StatuspageIntegrationAPI {
         statuspage_url_setting_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteStatuspageUrlSettingError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_statuspage_url_setting";
+        let local_operation_id = "v2.delete_statuspage_url_setting";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/statuspage/url_settings/{statuspage_url_setting_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             statuspage_url_setting_id = datadog::urlencode(statuspage_url_setting_id)
         );
         let mut local_req_builder =
@@ -669,13 +669,13 @@ impl StatuspageIntegrationAPI {
         datadog::Error<GetStatuspageAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_statuspage_account";
+        let local_operation_id = "v2.get_statuspage_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/statuspage/account",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -775,13 +775,13 @@ impl StatuspageIntegrationAPI {
         datadog::Error<ListStatuspageUrlSettingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_statuspage_url_settings";
+        let local_operation_id = "v2.list_statuspage_url_settings";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/statuspage/url_settings",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -883,13 +883,13 @@ impl StatuspageIntegrationAPI {
         datadog::Error<UpdateStatuspageAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_statuspage_account";
+        let local_operation_id = "v2.update_statuspage_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/statuspage/account",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1043,13 +1043,13 @@ impl StatuspageIntegrationAPI {
         datadog::Error<UpdateStatuspageUrlSettingError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_statuspage_url_setting";
+        let local_operation_id = "v2.update_statuspage_url_setting";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/statuspage/url_settings/{statuspage_url_setting_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             statuspage_url_setting_id = datadog::urlencode(statuspage_url_setting_id)
         );
         let mut local_req_builder =

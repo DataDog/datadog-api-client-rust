@@ -186,13 +186,13 @@ impl AWSLogsIntegrationAPI {
         datadog::Error<CheckAWSLogsLambdaAsyncError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.check_aws_logs_lambda_async";
+        let local_operation_id = "v1.check_aws_logs_lambda_async";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/check_async",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -362,13 +362,13 @@ impl AWSLogsIntegrationAPI {
         datadog::Error<CheckAWSLogsServicesAsyncError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.check_aws_logs_services_async";
+        let local_operation_id = "v1.check_aws_logs_services_async";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/services_async",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -517,13 +517,13 @@ impl AWSLogsIntegrationAPI {
         datadog::Error<CreateAWSLambdaARNError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_aws_lambda_arn";
+        let local_operation_id = "v1.create_aws_lambda_arn";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -672,13 +672,13 @@ impl AWSLogsIntegrationAPI {
         datadog::Error<DeleteAWSLambdaARNError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_aws_lambda_arn";
+        let local_operation_id = "v1.delete_aws_lambda_arn";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -827,13 +827,13 @@ impl AWSLogsIntegrationAPI {
         datadog::Error<EnableAWSLogServicesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.enable_aws_log_services";
+        let local_operation_id = "v1.enable_aws_log_services";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/services",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -980,13 +980,13 @@ impl AWSLogsIntegrationAPI {
         datadog::Error<ListAWSLogsIntegrationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_aws_logs_integrations";
+        let local_operation_id = "v1.list_aws_logs_integrations";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1086,13 +1086,13 @@ impl AWSLogsIntegrationAPI {
         datadog::Error<ListAWSLogsServicesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_aws_logs_services";
+        let local_operation_id = "v1.list_aws_logs_services";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/services",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

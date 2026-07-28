@@ -228,7 +228,7 @@ impl CloudNetworkMonitoringAPI {
         datadog::Error<GetAggregatedConnectionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_aggregated_connections";
+        let local_operation_id = "v2.get_aggregated_connections";
 
         // unbox and build optional parameters
         let from = params.from;
@@ -242,7 +242,7 @@ impl CloudNetworkMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/network/connections/aggregate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -369,7 +369,7 @@ impl CloudNetworkMonitoringAPI {
         datadog::Error<GetAggregatedDnsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_aggregated_dns";
+        let local_operation_id = "v2.get_aggregated_dns";
 
         // unbox and build optional parameters
         let from = params.from;
@@ -383,7 +383,7 @@ impl CloudNetworkMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/network/dns/aggregate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

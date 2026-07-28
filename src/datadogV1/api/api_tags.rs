@@ -251,7 +251,7 @@ impl TagsAPI {
         datadog::Error<CreateHostTagsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_host_tags";
+        let local_operation_id = "v1.create_host_tags";
 
         // unbox and build optional parameters
         let source = params.source;
@@ -260,7 +260,7 @@ impl TagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =
@@ -406,7 +406,7 @@ impl TagsAPI {
         params: DeleteHostTagsOptionalParams,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteHostTagsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_host_tags";
+        let local_operation_id = "v1.delete_host_tags";
 
         // unbox and build optional parameters
         let source = params.source;
@@ -415,7 +415,7 @@ impl TagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =
@@ -515,7 +515,7 @@ impl TagsAPI {
         datadog::Error<GetHostTagsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_host_tags";
+        let local_operation_id = "v1.get_host_tags";
 
         // unbox and build optional parameters
         let source = params.source;
@@ -524,7 +524,7 @@ impl TagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =
@@ -626,7 +626,7 @@ impl TagsAPI {
         datadog::Error<ListHostTagsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_host_tags";
+        let local_operation_id = "v1.list_host_tags";
 
         // unbox and build optional parameters
         let source = params.source;
@@ -635,7 +635,7 @@ impl TagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -745,7 +745,7 @@ impl TagsAPI {
         datadog::Error<UpdateHostTagsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_host_tags";
+        let local_operation_id = "v1.update_host_tags";
 
         // unbox and build optional parameters
         let source = params.source;
@@ -754,7 +754,7 @@ impl TagsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/tags/hosts/{host_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             host_name = datadog::urlencode(host_name)
         );
         let mut local_req_builder =

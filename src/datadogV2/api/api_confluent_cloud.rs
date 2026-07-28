@@ -195,13 +195,13 @@ impl ConfluentCloudAPI {
         datadog::Error<CreateConfluentAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_confluent_account";
+        let local_operation_id = "v2.create_confluent_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -355,13 +355,13 @@ impl ConfluentCloudAPI {
         datadog::Error<CreateConfluentResourceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_confluent_resource";
+        let local_operation_id = "v2.create_confluent_resource";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -500,13 +500,13 @@ impl ConfluentCloudAPI {
         account_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteConfluentAccountError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_confluent_account";
+        let local_operation_id = "v2.delete_confluent_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -593,13 +593,13 @@ impl ConfluentCloudAPI {
         resource_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteConfluentResourceError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_confluent_resource";
+        let local_operation_id = "v2.delete_confluent_resource";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources/{resource_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id),
             resource_id = datadog::urlencode(resource_id)
         );
@@ -696,13 +696,13 @@ impl ConfluentCloudAPI {
         datadog::Error<GetConfluentAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_confluent_account";
+        let local_operation_id = "v2.get_confluent_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -810,13 +810,13 @@ impl ConfluentCloudAPI {
         datadog::Error<GetConfluentResourceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_confluent_resource";
+        let local_operation_id = "v2.get_confluent_resource";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources/{resource_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id),
             resource_id = datadog::urlencode(resource_id)
         );
@@ -918,13 +918,13 @@ impl ConfluentCloudAPI {
         datadog::Error<ListConfluentAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_confluent_account";
+        let local_operation_id = "v2.list_confluent_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1029,13 +1029,13 @@ impl ConfluentCloudAPI {
         datadog::Error<ListConfluentResourceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_confluent_resource";
+        let local_operation_id = "v2.list_confluent_resource";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -1143,13 +1143,13 @@ impl ConfluentCloudAPI {
         datadog::Error<UpdateConfluentAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_confluent_account";
+        let local_operation_id = "v2.update_confluent_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -1306,13 +1306,13 @@ impl ConfluentCloudAPI {
         datadog::Error<UpdateConfluentResourceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_confluent_resource";
+        let local_operation_id = "v2.update_confluent_resource";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources/{resource_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id),
             resource_id = datadog::urlencode(resource_id)
         );

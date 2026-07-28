@@ -143,9 +143,9 @@ impl RUMInsightsAPI {
         datadog::Error<QueryAggregatedLongTasksError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.query_aggregated_long_tasks";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.query_aggregated_long_tasks";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.query_aggregated_long_tasks' is not enabled".to_string(),
@@ -157,7 +157,7 @@ impl RUMInsightsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/query/insight/aggregated_long_tasks",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -309,9 +309,9 @@ impl RUMInsightsAPI {
         datadog::Error<QueryAggregatedSignalsProblemsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.query_aggregated_signals_problems";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.query_aggregated_signals_problems";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.query_aggregated_signals_problems' is not enabled".to_string(),
@@ -323,7 +323,7 @@ impl RUMInsightsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/query/insight/aggregated_signals_problems",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -472,9 +472,9 @@ impl RUMInsightsAPI {
         datadog::Error<QueryAggregatedWaterfallError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.query_aggregated_waterfall";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.query_aggregated_waterfall";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.query_aggregated_waterfall' is not enabled".to_string(),
@@ -486,7 +486,7 @@ impl RUMInsightsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/query/insight/aggregated_waterfall",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

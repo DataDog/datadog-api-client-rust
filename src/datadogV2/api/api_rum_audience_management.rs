@@ -184,9 +184,9 @@ impl RumAudienceManagementAPI {
         body: crate::datadogV2::model::CreateConnectionRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateConnectionError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_connection";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_connection";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_connection' is not enabled".to_string(),
@@ -198,7 +198,7 @@ impl RumAudienceManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/{entity}/mapping/connection",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             entity = datadog::urlencode(entity)
         );
         let mut local_req_builder =
@@ -329,9 +329,9 @@ impl RumAudienceManagementAPI {
         entity: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteConnectionError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_connection";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_connection";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_connection' is not enabled".to_string(),
@@ -343,7 +343,7 @@ impl RumAudienceManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/{entity}/mapping/connection/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id),
             entity = datadog::urlencode(entity)
         );
@@ -438,9 +438,9 @@ impl RumAudienceManagementAPI {
         datadog::Error<GetAccountFacetInfoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_account_facet_info";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_account_facet_info";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_account_facet_info' is not enabled".to_string(),
@@ -452,7 +452,7 @@ impl RumAudienceManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/accounts/facet_info",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -597,9 +597,9 @@ impl RumAudienceManagementAPI {
         datadog::Error<GetMappingError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_mapping";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_mapping";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_mapping' is not enabled".to_string(),
@@ -611,7 +611,7 @@ impl RumAudienceManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/{entity}/mapping",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             entity = datadog::urlencode(entity)
         );
         let mut local_req_builder =
@@ -711,9 +711,9 @@ impl RumAudienceManagementAPI {
         datadog::Error<GetUserFacetInfoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_user_facet_info";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_user_facet_info";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_user_facet_info' is not enabled".to_string(),
@@ -725,7 +725,7 @@ impl RumAudienceManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/users/facet_info",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -873,9 +873,9 @@ impl RumAudienceManagementAPI {
         datadog::Error<ListConnectionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_connections";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_connections";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_connections' is not enabled".to_string(),
@@ -887,7 +887,7 @@ impl RumAudienceManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/{entity}/mapping/connections",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             entity = datadog::urlencode(entity)
         );
         let mut local_req_builder =
@@ -987,9 +987,9 @@ impl RumAudienceManagementAPI {
         datadog::Error<QueryAccountsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.query_accounts";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.query_accounts";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.query_accounts' is not enabled".to_string(),
@@ -1001,7 +1001,7 @@ impl RumAudienceManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/accounts/query",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1146,9 +1146,9 @@ impl RumAudienceManagementAPI {
         datadog::Error<QueryEventFilteredUsersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.query_event_filtered_users";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.query_event_filtered_users";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.query_event_filtered_users' is not enabled".to_string(),
@@ -1160,7 +1160,7 @@ impl RumAudienceManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/users/event_filtered_query",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1304,9 +1304,9 @@ impl RumAudienceManagementAPI {
         datadog::Error<QueryUsersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.query_users";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.query_users";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.query_users' is not enabled".to_string(),
@@ -1318,7 +1318,7 @@ impl RumAudienceManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/users/query",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1452,9 +1452,9 @@ impl RumAudienceManagementAPI {
         body: crate::datadogV2::model::UpdateConnectionRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateConnectionError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_connection";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_connection";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_connection' is not enabled".to_string(),
@@ -1466,7 +1466,7 @@ impl RumAudienceManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/product-analytics/{entity}/mapping/connection",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             entity = datadog::urlencode(entity)
         );
         let mut local_req_builder =

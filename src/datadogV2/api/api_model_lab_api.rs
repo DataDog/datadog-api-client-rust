@@ -415,9 +415,9 @@ impl ModelLabAPIAPI {
         run_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteModelLabRunError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_model_lab_run";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_model_lab_run";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_model_lab_run' is not enabled".to_string(),
@@ -429,7 +429,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs/{run_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             run_id = run_id
         );
         let mut local_req_builder =
@@ -525,9 +525,9 @@ impl ModelLabAPIAPI {
     ) -> Result<datadog::ResponseContent<Vec<u8>>, datadog::Error<GetModelLabArtifactContentError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_model_lab_artifact_content";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_model_lab_artifact_content";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_model_lab_artifact_content' is not enabled".to_string(),
@@ -539,7 +539,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/artifacts/content",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -638,9 +638,9 @@ impl ModelLabAPIAPI {
         datadog::Error<GetModelLabProjectError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_model_lab_project";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_model_lab_project";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_model_lab_project' is not enabled".to_string(),
@@ -652,7 +652,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects/{project_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = project_id
         );
         let mut local_req_builder =
@@ -753,9 +753,9 @@ impl ModelLabAPIAPI {
         datadog::Error<GetModelLabRunError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_model_lab_run";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_model_lab_run";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_model_lab_run' is not enabled".to_string(),
@@ -767,7 +767,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs/{run_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             run_id = run_id
         );
         let mut local_req_builder =
@@ -873,9 +873,9 @@ impl ModelLabAPIAPI {
         datadog::Error<ListModelLabProjectArtifactsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_model_lab_project_artifacts";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_model_lab_project_artifacts";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_model_lab_project_artifacts' is not enabled".to_string(),
@@ -887,7 +887,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects/{project_id}/artifacts",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = project_id
         );
         let mut local_req_builder =
@@ -991,9 +991,9 @@ impl ModelLabAPIAPI {
         datadog::Error<ListModelLabProjectFacetKeysError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_model_lab_project_facet_keys";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_model_lab_project_facet_keys";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_model_lab_project_facet_keys' is not enabled".to_string(),
@@ -1005,7 +1005,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/project-facet-keys",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1112,9 +1112,9 @@ impl ModelLabAPIAPI {
         datadog::Error<ListModelLabProjectFacetValuesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_model_lab_project_facet_values";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_model_lab_project_facet_values";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_model_lab_project_facet_values' is not enabled"
@@ -1127,7 +1127,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/project-facet-values",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1232,9 +1232,9 @@ impl ModelLabAPIAPI {
         datadog::Error<ListModelLabProjectsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_model_lab_projects";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_model_lab_projects";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_model_lab_projects' is not enabled".to_string(),
@@ -1254,7 +1254,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1386,9 +1386,9 @@ impl ModelLabAPIAPI {
         datadog::Error<ListModelLabRunArtifactsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_model_lab_run_artifacts";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_model_lab_run_artifacts";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_model_lab_run_artifacts' is not enabled".to_string(),
@@ -1403,7 +1403,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs/{run_id}/artifacts",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             run_id = run_id
         );
         let mut local_req_builder =
@@ -1514,9 +1514,9 @@ impl ModelLabAPIAPI {
         datadog::Error<ListModelLabRunFacetKeysError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_model_lab_run_facet_keys";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_model_lab_run_facet_keys";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_model_lab_run_facet_keys' is not enabled".to_string(),
@@ -1528,7 +1528,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/facet-keys",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1644,9 +1644,9 @@ impl ModelLabAPIAPI {
         datadog::Error<ListModelLabRunFacetValuesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_model_lab_run_facet_values";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_model_lab_run_facet_values";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_model_lab_run_facet_values' is not enabled".to_string(),
@@ -1658,7 +1658,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/facet-values",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1763,9 +1763,9 @@ impl ModelLabAPIAPI {
         datadog::Error<ListModelLabRunsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_model_lab_runs";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_model_lab_runs";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_model_lab_runs' is not enabled".to_string(),
@@ -1793,7 +1793,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1938,9 +1938,9 @@ impl ModelLabAPIAPI {
         run_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<PinModelLabRunError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.pin_model_lab_run";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.pin_model_lab_run";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.pin_model_lab_run' is not enabled".to_string(),
@@ -1952,7 +1952,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs/{run_id}/pin",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             run_id = run_id
         );
         let mut local_req_builder =
@@ -2034,9 +2034,9 @@ impl ModelLabAPIAPI {
         project_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<StarModelLabProjectError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.star_model_lab_project";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.star_model_lab_project";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.star_model_lab_project' is not enabled".to_string(),
@@ -2048,7 +2048,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects/{project_id}/star",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = project_id
         );
         let mut local_req_builder =
@@ -2130,9 +2130,9 @@ impl ModelLabAPIAPI {
         run_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnpinModelLabRunError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.unpin_model_lab_run";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.unpin_model_lab_run";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.unpin_model_lab_run' is not enabled".to_string(),
@@ -2144,7 +2144,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/runs/{run_id}/pin",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             run_id = run_id
         );
         let mut local_req_builder =
@@ -2229,9 +2229,9 @@ impl ModelLabAPIAPI {
         project_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnstarModelLabProjectError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.unstar_model_lab_project";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.unstar_model_lab_project";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.unstar_model_lab_project' is not enabled".to_string(),
@@ -2243,7 +2243,7 @@ impl ModelLabAPIAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/model-lab-api/projects/{project_id}/star",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = project_id
         );
         let mut local_req_builder =

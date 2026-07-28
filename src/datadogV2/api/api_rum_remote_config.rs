@@ -132,9 +132,9 @@ impl RUMRemoteConfigAPI {
         datadog::Error<GetRumSdkConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_rum_sdk_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_rum_sdk_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_rum_sdk_config' is not enabled".to_string(),
@@ -146,7 +146,7 @@ impl RUMRemoteConfigAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/rum/configs/{config_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             config_id = datadog::urlencode(config_id)
         );
         let mut local_req_builder =
@@ -256,9 +256,9 @@ impl RUMRemoteConfigAPI {
         datadog::Error<UpdateRumSdkConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_rum_sdk_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_rum_sdk_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_rum_sdk_config' is not enabled".to_string(),
@@ -270,7 +270,7 @@ impl RUMRemoteConfigAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/remote_config/products/rum/configs/{config_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             config_id = datadog::urlencode(config_id)
         );
         let mut local_req_builder =

@@ -226,9 +226,9 @@ impl APMTraceAPI {
         datadog::Error<GetPrunedTraceByIDError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_pruned_trace_by_id";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_pruned_trace_by_id";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_pruned_trace_by_id' is not enabled".to_string(),
@@ -249,7 +249,7 @@ impl APMTraceAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/pruned_trace/{trace_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             trace_id = datadog::urlencode(trace_id)
         );
         let mut local_req_builder =
@@ -388,9 +388,9 @@ impl APMTraceAPI {
         datadog::Error<GetTraceByIDError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_trace_by_id";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_trace_by_id";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_trace_by_id' is not enabled".to_string(),
@@ -405,7 +405,7 @@ impl APMTraceAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/trace/{trace_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             trace_id = datadog::urlencode(trace_id)
         );
         let mut local_req_builder =

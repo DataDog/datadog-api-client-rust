@@ -231,13 +231,13 @@ impl RumReplayViewershipAPI {
         datadog::Error<CreateRumReplaySessionWatchError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_rum_replay_session_watch";
+        let local_operation_id = "v2.create_rum_replay_session_watch";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/sessions/{session_id}/watches",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             session_id = datadog::urlencode(session_id)
         );
         let mut local_req_builder =
@@ -375,13 +375,13 @@ impl RumReplayViewershipAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumReplaySessionWatchError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_rum_replay_session_watch";
+        let local_operation_id = "v2.delete_rum_replay_session_watch";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/sessions/{session_id}/watches",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             session_id = datadog::urlencode(session_id)
         );
         let mut local_req_builder =
@@ -482,7 +482,7 @@ impl RumReplayViewershipAPI {
         datadog::Error<ListRumReplaySessionWatchersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_rum_replay_session_watchers";
+        let local_operation_id = "v2.list_rum_replay_session_watchers";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -492,7 +492,7 @@ impl RumReplayViewershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/sessions/{session_id}/watchers",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             session_id = datadog::urlencode(session_id)
         );
         let mut local_req_builder =
@@ -605,7 +605,7 @@ impl RumReplayViewershipAPI {
         datadog::Error<ListRumReplayViewershipHistorySessionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_rum_replay_viewership_history_sessions";
+        let local_operation_id = "v2.list_rum_replay_viewership_history_sessions";
 
         // unbox and build optional parameters
         let filter_watched_at_start = params.filter_watched_at_start;
@@ -620,7 +620,7 @@ impl RumReplayViewershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/viewership-history/sessions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

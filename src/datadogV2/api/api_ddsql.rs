@@ -141,9 +141,9 @@ impl DDSQLAPI {
         datadog::Error<ExecuteDdsqlTabularQueryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.execute_ddsql_tabular_query";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.execute_ddsql_tabular_query";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.execute_ddsql_tabular_query' is not enabled".to_string(),
@@ -155,7 +155,7 @@ impl DDSQLAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ddsql/query/tabular",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -310,9 +310,9 @@ impl DDSQLAPI {
         datadog::Error<FetchDdsqlTabularQueryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.fetch_ddsql_tabular_query";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.fetch_ddsql_tabular_query";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.fetch_ddsql_tabular_query' is not enabled".to_string(),
@@ -324,7 +324,7 @@ impl DDSQLAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ddsql/query/tabular/fetch",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

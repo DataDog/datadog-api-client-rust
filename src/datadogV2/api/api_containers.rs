@@ -198,7 +198,7 @@ impl ContainersAPI {
         datadog::Error<ListContainersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_containers";
+        let local_operation_id = "v2.list_containers";
 
         // unbox and build optional parameters
         let filter_tags = params.filter_tags;
@@ -211,7 +211,7 @@ impl ContainersAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/containers",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

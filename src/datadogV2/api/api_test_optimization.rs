@@ -179,13 +179,13 @@ impl TestOptimizationAPI {
         datadog::Error<DeleteTestOptimizationServiceSettingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_test_optimization_service_settings";
+        let local_operation_id = "v2.delete_test_optimization_service_settings";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/test-optimization/settings/service",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -332,13 +332,13 @@ impl TestOptimizationAPI {
         datadog::Error<GetFlakyTestsManagementPoliciesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_flaky_tests_management_policies";
+        let local_operation_id = "v2.get_flaky_tests_management_policies";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/test-optimization/settings/policies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -491,13 +491,13 @@ impl TestOptimizationAPI {
         datadog::Error<GetTestOptimizationServiceSettingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_test_optimization_service_settings";
+        let local_operation_id = "v2.get_test_optimization_service_settings";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/test-optimization/settings/service",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -719,7 +719,7 @@ impl TestOptimizationAPI {
         datadog::Error<SearchFlakyTestsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_flaky_tests";
+        let local_operation_id = "v2.search_flaky_tests";
 
         // unbox and build optional parameters
         let body = params.body;
@@ -728,7 +728,7 @@ impl TestOptimizationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/test/flaky-test-management/tests",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -877,13 +877,13 @@ impl TestOptimizationAPI {
         datadog::Error<UpdateFlakyTestsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_flaky_tests";
+        let local_operation_id = "v2.update_flaky_tests";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/test/flaky-test-management/tests",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1039,13 +1039,13 @@ impl TestOptimizationAPI {
         datadog::Error<UpdateFlakyTestsManagementPoliciesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_flaky_tests_management_policies";
+        let local_operation_id = "v2.update_flaky_tests_management_policies";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/test-optimization/settings/policies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1204,13 +1204,13 @@ impl TestOptimizationAPI {
         datadog::Error<UpdateTestOptimizationServiceSettingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_test_optimization_service_settings";
+        let local_operation_id = "v2.update_test_optimization_service_settings";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/test-optimization/settings/service",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());

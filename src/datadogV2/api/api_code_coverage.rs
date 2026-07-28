@@ -139,9 +139,9 @@ impl CodeCoverageAPI {
         datadog::Error<GetCodeCoverageBranchSummaryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_code_coverage_branch_summary";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_code_coverage_branch_summary";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_code_coverage_branch_summary' is not enabled".to_string(),
@@ -153,7 +153,7 @@ impl CodeCoverageAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/code-coverage/branch/summary",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -313,9 +313,9 @@ impl CodeCoverageAPI {
         datadog::Error<GetCodeCoverageCommitSummaryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_code_coverage_commit_summary";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_code_coverage_commit_summary";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_code_coverage_commit_summary' is not enabled".to_string(),
@@ -327,7 +327,7 @@ impl CodeCoverageAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/code-coverage/commit/summary",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

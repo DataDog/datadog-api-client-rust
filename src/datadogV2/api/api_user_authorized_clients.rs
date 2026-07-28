@@ -181,13 +181,13 @@ impl UserAuthorizedClientsAPI {
         user_authorized_client_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserAuthorizedClientError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_user_authorized_client";
+        let local_operation_id = "v2.delete_user_authorized_client";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/user_authorized_clients/{user_authorized_client_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_authorized_client_id = datadog::urlencode(user_authorized_client_id)
         );
         let mut local_req_builder =
@@ -275,13 +275,13 @@ impl UserAuthorizedClientsAPI {
         datadog::Error<DeleteUserAuthorizedClientsByClientError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_user_authorized_clients_by_client";
+        let local_operation_id = "v2.delete_user_authorized_clients_by_client";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/user_authorized_clients/client/{client_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             client_id = datadog::urlencode(client_id)
         );
         let mut local_req_builder =
@@ -380,13 +380,13 @@ impl UserAuthorizedClientsAPI {
         datadog::Error<GetUserAuthorizedClientError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_user_authorized_client";
+        let local_operation_id = "v2.get_user_authorized_client";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/user_authorized_clients/{user_authorized_client_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             user_authorized_client_id = datadog::urlencode(user_authorized_client_id)
         );
         let mut local_req_builder =
@@ -527,7 +527,7 @@ impl UserAuthorizedClientsAPI {
         datadog::Error<ListUserAuthorizedClientsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_user_authorized_clients";
+        let local_operation_id = "v2.list_user_authorized_clients";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -540,7 +540,7 @@ impl UserAuthorizedClientsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/user_authorized_clients",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

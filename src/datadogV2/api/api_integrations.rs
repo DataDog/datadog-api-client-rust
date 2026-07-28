@@ -115,13 +115,13 @@ impl IntegrationsAPI {
         datadog::Error<ListIntegrationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_integrations";
+        let local_operation_id = "v2.list_integrations";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

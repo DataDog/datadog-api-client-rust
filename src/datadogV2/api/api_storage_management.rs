@@ -119,13 +119,13 @@ impl StorageManagementAPI {
         id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSyncConfigError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_sync_config";
+        let local_operation_id = "v2.delete_sync_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cloudinventoryservice/syncconfigs/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -221,13 +221,13 @@ impl StorageManagementAPI {
         datadog::Error<UpsertSyncConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_sync_config";
+        let local_operation_id = "v2.upsert_sync_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cloudinventoryservice/syncconfigs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());

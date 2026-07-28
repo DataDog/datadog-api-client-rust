@@ -1296,13 +1296,13 @@ impl CloudCostManagementAPI {
         datadog::Error<CreateCostAWSCURConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_cost_awscur_config";
+        let local_operation_id = "v2.create_cost_awscur_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1451,13 +1451,13 @@ impl CloudCostManagementAPI {
         datadog::Error<CreateCostAzureUCConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_cost_azure_uc_configs";
+        let local_operation_id = "v2.create_cost_azure_uc_configs";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1609,13 +1609,13 @@ impl CloudCostManagementAPI {
         datadog::Error<CreateCostGCPUsageCostConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_cost_gcp_usage_cost_config";
+        let local_operation_id = "v2.create_cost_gcp_usage_cost_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/gcp_uc_config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1791,13 +1791,13 @@ impl CloudCostManagementAPI {
         datadog::Error<CreateCustomAllocationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_custom_allocation_rule";
+        let local_operation_id = "v2.create_custom_allocation_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/arbitrary_rule",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1944,13 +1944,13 @@ impl CloudCostManagementAPI {
         datadog::Error<CreateTagPipelinesRulesetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_tag_pipelines_ruleset";
+        let local_operation_id = "v2.create_tag_pipelines_ruleset";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/tags/enrichment",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2083,13 +2083,13 @@ impl CloudCostManagementAPI {
         budget_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteBudgetError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_budget";
+        let local_operation_id = "v2.delete_budget";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/budget/{budget_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             budget_id = datadog::urlencode(budget_id)
         );
         let mut local_req_builder =
@@ -2173,13 +2173,13 @@ impl CloudCostManagementAPI {
         cloud_account_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCostAWSCURConfigError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_cost_awscur_config";
+        let local_operation_id = "v2.delete_cost_awscur_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config/{cloud_account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
@@ -2264,13 +2264,13 @@ impl CloudCostManagementAPI {
         cloud_account_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCostAzureUCConfigError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_cost_azure_uc_config";
+        let local_operation_id = "v2.delete_cost_azure_uc_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config/{cloud_account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
@@ -2356,13 +2356,13 @@ impl CloudCostManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCostGCPUsageCostConfigError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_cost_gcp_usage_cost_config";
+        let local_operation_id = "v2.delete_cost_gcp_usage_cost_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/gcp_uc_config/{cloud_account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
@@ -2450,7 +2450,7 @@ impl CloudCostManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCostTagDescriptionByKeyError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_cost_tag_description_by_key";
+        let local_operation_id = "v2.delete_cost_tag_description_by_key";
 
         // unbox and build optional parameters
         let cloud = params.cloud;
@@ -2459,7 +2459,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_descriptions/{tag_key}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             tag_key = datadog::urlencode(tag_key)
         );
         let mut local_req_builder =
@@ -2549,13 +2549,13 @@ impl CloudCostManagementAPI {
         rule_id: i64,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCustomAllocationRuleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_custom_allocation_rule";
+        let local_operation_id = "v2.delete_custom_allocation_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/arbitrary_rule/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = rule_id
         );
         let mut local_req_builder =
@@ -2637,13 +2637,13 @@ impl CloudCostManagementAPI {
         file_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCustomCostsFileError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_custom_costs_file";
+        let local_operation_id = "v2.delete_custom_costs_file";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/custom_costs/{file_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             file_id = datadog::urlencode(file_id)
         );
         let mut local_req_builder =
@@ -2725,13 +2725,13 @@ impl CloudCostManagementAPI {
         budget_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCustomForecastError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_custom_forecast";
+        let local_operation_id = "v2.delete_custom_forecast";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/budget/{budget_id}/custom-forecast",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             budget_id = datadog::urlencode(budget_id)
         );
         let mut local_req_builder =
@@ -2816,13 +2816,13 @@ impl CloudCostManagementAPI {
         ruleset_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagPipelinesRulesetError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_tag_pipelines_ruleset";
+        let local_operation_id = "v2.delete_tag_pipelines_ruleset";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/tags/enrichment/{ruleset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_id = datadog::urlencode(ruleset_id)
         );
         let mut local_req_builder =
@@ -2921,13 +2921,13 @@ impl CloudCostManagementAPI {
         datadog::Error<GenerateCostTagDescriptionByKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.generate_cost_tag_description_by_key";
+        let local_operation_id = "v2.generate_cost_tag_description_by_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_descriptions/{tag_key}/generate",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             tag_key = datadog::urlencode(tag_key)
         );
         let mut local_req_builder =
@@ -3029,7 +3029,7 @@ impl CloudCostManagementAPI {
         datadog::Error<GetBudgetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_budget";
+        let local_operation_id = "v2.get_budget";
 
         // unbox and build optional parameters
         let actual = params.actual;
@@ -3041,7 +3041,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/budget/{budget_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             budget_id = datadog::urlencode(budget_id)
         );
         let mut local_req_builder =
@@ -3169,9 +3169,9 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCommitmentsCommitmentListError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_commitments_commitment_list";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_commitments_commitment_list";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_commitments_commitment_list' is not enabled".to_string(),
@@ -3187,7 +3187,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/commitments/commitment-list",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3313,9 +3313,9 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCommitmentsCoverageScalarError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_commitments_coverage_scalar";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_commitments_coverage_scalar";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_commitments_coverage_scalar' is not enabled".to_string(),
@@ -3330,7 +3330,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/commitments/coverage/scalar",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3454,9 +3454,9 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCommitmentsCoverageTimeseriesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_commitments_coverage_timeseries";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_commitments_coverage_timeseries";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_commitments_coverage_timeseries' is not enabled"
@@ -3472,7 +3472,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/commitments/coverage/timeseries",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3599,9 +3599,9 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCommitmentsOnDemandHotspotsScalarError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_commitments_on_demand_hotspots_scalar";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_commitments_on_demand_hotspots_scalar";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_commitments_on_demand_hotspots_scalar' is not enabled"
@@ -3617,7 +3617,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/commitments/on-demand-hot-spots/scalar",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3740,9 +3740,9 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCommitmentsSavingsScalarError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_commitments_savings_scalar";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_commitments_savings_scalar";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_commitments_savings_scalar' is not enabled".to_string(),
@@ -3757,7 +3757,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/commitments/savings/scalar",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -3881,9 +3881,9 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCommitmentsSavingsTimeseriesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_commitments_savings_timeseries";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_commitments_savings_timeseries";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_commitments_savings_timeseries' is not enabled".to_string(),
@@ -3898,7 +3898,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/commitments/savings/timeseries",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4023,9 +4023,9 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCommitmentsUtilizationScalarError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_commitments_utilization_scalar";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_commitments_utilization_scalar";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_commitments_utilization_scalar' is not enabled".to_string(),
@@ -4041,7 +4041,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/commitments/utilization/scalar",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4170,9 +4170,9 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCommitmentsUtilizationTimeseriesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_commitments_utilization_timeseries";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_commitments_utilization_timeseries";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_commitments_utilization_timeseries' is not enabled"
@@ -4189,7 +4189,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/commitments/utilization/timeseries",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4308,13 +4308,13 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCostAWSCURConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_cost_awscur_config";
+        let local_operation_id = "v2.get_cost_awscur_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config/{cloud_account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
@@ -4420,13 +4420,13 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCostAccountFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_cost_account_filters";
+        let local_operation_id = "v2.get_cost_account_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/account_filters/{cloud_account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
@@ -4527,9 +4527,9 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCostAnomalyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_cost_anomaly";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_cost_anomaly";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_cost_anomaly' is not enabled".to_string(),
@@ -4541,7 +4541,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/anomalies/{anomaly_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             anomaly_id = datadog::urlencode(anomaly_id)
         );
         let mut local_req_builder =
@@ -4645,13 +4645,13 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCostAzureUCConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_cost_azure_uc_config";
+        let local_operation_id = "v2.get_cost_azure_uc_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config/{cloud_account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
@@ -4755,13 +4755,13 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCostGCPUsageCostConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_cost_gcp_usage_cost_config";
+        let local_operation_id = "v2.get_cost_gcp_usage_cost_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/gcp_uc_config/{cloud_account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
@@ -4869,7 +4869,7 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCostTagDescriptionByKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_cost_tag_description_by_key";
+        let local_operation_id = "v2.get_cost_tag_description_by_key";
 
         // unbox and build optional parameters
         let filter_cloud = params.filter_cloud;
@@ -4878,7 +4878,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_descriptions/{tag_key}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             tag_key = datadog::urlencode(tag_key)
         );
         let mut local_req_builder =
@@ -4986,7 +4986,7 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCostTagKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_cost_tag_key";
+        let local_operation_id = "v2.get_cost_tag_key";
 
         // unbox and build optional parameters
         let filter_metric = params.filter_metric;
@@ -4996,7 +4996,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_keys/{tag_key}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             tag_key = datadog::urlencode(tag_key)
         );
         let mut local_req_builder =
@@ -5113,9 +5113,9 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCostTagMetadataCurrencyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_cost_tag_metadata_currency";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_cost_tag_metadata_currency";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_cost_tag_metadata_currency' is not enabled".to_string(),
@@ -5130,7 +5130,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_metadata/currency",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -5242,13 +5242,13 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCustomAllocationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_custom_allocation_rule";
+        let local_operation_id = "v2.get_custom_allocation_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/arbitrary_rule/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = rule_id
         );
         let mut local_req_builder =
@@ -5351,13 +5351,13 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCustomCostsFileError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_custom_costs_file";
+        let local_operation_id = "v2.get_custom_costs_file";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/custom_costs/{file_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             file_id = datadog::urlencode(file_id)
         );
         let mut local_req_builder =
@@ -5460,13 +5460,13 @@ impl CloudCostManagementAPI {
         datadog::Error<GetCustomForecastError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_custom_forecast";
+        let local_operation_id = "v2.get_custom_forecast";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/budget/{budget_id}/custom-forecast",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             budget_id = datadog::urlencode(budget_id)
         );
         let mut local_req_builder =
@@ -5570,13 +5570,13 @@ impl CloudCostManagementAPI {
         datadog::Error<GetTagPipelinesRulesetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_tag_pipelines_ruleset";
+        let local_operation_id = "v2.get_tag_pipelines_ruleset";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/tags/enrichment/{ruleset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_id = datadog::urlencode(ruleset_id)
         );
         let mut local_req_builder =
@@ -5672,13 +5672,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ListBudgetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_budgets";
+        let local_operation_id = "v2.list_budgets";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/budgets",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -5775,13 +5775,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostAWSCURConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_awscur_configs";
+        let local_operation_id = "v2.list_cost_awscur_configs";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -5883,9 +5883,9 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostAnomaliesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_anomalies";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_cost_anomalies";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_cost_anomalies' is not enabled".to_string(),
@@ -5910,7 +5910,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/anomalies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6056,13 +6056,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostAzureUCConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_azure_uc_configs";
+        let local_operation_id = "v2.list_cost_azure_uc_configs";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6162,13 +6162,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostGCPUsageCostConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_gcp_usage_cost_configs";
+        let local_operation_id = "v2.list_cost_gcp_usage_cost_configs";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/gcp_uc_config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6266,13 +6266,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostOCIConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_oci_configs";
+        let local_operation_id = "v2.list_cost_oci_configs";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/oci_config",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6374,7 +6374,7 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostTagDescriptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_tag_descriptions";
+        let local_operation_id = "v2.list_cost_tag_descriptions";
 
         // unbox and build optional parameters
         let filter_cloud = params.filter_cloud;
@@ -6383,7 +6383,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_descriptions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6495,9 +6495,9 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostTagKeySourcesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_tag_key_sources";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_cost_tag_key_sources";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_cost_tag_key_sources' is not enabled".to_string(),
@@ -6513,7 +6513,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_metadata/tag_sources",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6624,7 +6624,7 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostTagKeysError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_tag_keys";
+        let local_operation_id = "v2.list_cost_tag_keys";
 
         // unbox and build optional parameters
         let filter_metric = params.filter_metric;
@@ -6634,7 +6634,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_keys",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6752,9 +6752,9 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostTagMetadataError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_tag_metadata";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_cost_tag_metadata";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_cost_tag_metadata' is not enabled".to_string(),
@@ -6772,7 +6772,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_metadata",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6898,9 +6898,9 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostTagMetadataMetricsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_tag_metadata_metrics";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_cost_tag_metadata_metrics";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_cost_tag_metadata_metrics' is not enabled".to_string(),
@@ -6915,7 +6915,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_metadata/metrics",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7029,9 +7029,9 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostTagMetadataMonthsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_tag_metadata_months";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_cost_tag_metadata_months";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_cost_tag_metadata_months' is not enabled".to_string(),
@@ -7043,7 +7043,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_metadata/months",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7153,9 +7153,9 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostTagMetadataOrchestratorsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_tag_metadata_orchestrators";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_cost_tag_metadata_orchestrators";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_cost_tag_metadata_orchestrators' is not enabled"
@@ -7171,7 +7171,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_metadata/orchestrators",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7277,7 +7277,7 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCostTagsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_cost_tags";
+        let local_operation_id = "v2.list_cost_tags";
 
         // unbox and build optional parameters
         let filter_metric = params.filter_metric;
@@ -7290,7 +7290,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tags",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7413,13 +7413,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCustomAllocationRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_custom_allocation_rules";
+        let local_operation_id = "v2.list_custom_allocation_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/arbitrary_rule",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7522,13 +7522,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCustomAllocationRulesStatusError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_custom_allocation_rules_status";
+        let local_operation_id = "v2.list_custom_allocation_rules_status";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/arbitrary_rule/status",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7630,7 +7630,7 @@ impl CloudCostManagementAPI {
         datadog::Error<ListCustomCostsFilesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_custom_costs_files";
+        let local_operation_id = "v2.list_custom_costs_files";
 
         // unbox and build optional parameters
         let page_number = params.page_number;
@@ -7644,7 +7644,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/custom_costs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7771,13 +7771,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ListTagPipelinesRulesetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tag_pipelines_rulesets";
+        let local_operation_id = "v2.list_tag_pipelines_rulesets";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/tags/enrichment",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7879,13 +7879,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ListTagPipelinesRulesetsStatusError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tag_pipelines_rulesets_status";
+        let local_operation_id = "v2.list_tag_pipelines_rulesets_status";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/tags/enrichment/status",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7989,13 +7989,13 @@ impl CloudCostManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ReorderCustomAllocationRulesError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.reorder_custom_allocation_rules";
+        let local_operation_id = "v2.reorder_custom_allocation_rules";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/arbitrary_rule/reorder",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -8127,13 +8127,13 @@ impl CloudCostManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ReorderTagPipelinesRulesetsError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.reorder_tag_pipelines_rulesets";
+        let local_operation_id = "v2.reorder_tag_pipelines_rulesets";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/tags/enrichment/reorder",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -8280,9 +8280,9 @@ impl CloudCostManagementAPI {
         datadog::Error<SearchCostRecommendationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_cost_recommendations";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.search_cost_recommendations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.search_cost_recommendations' is not enabled".to_string(),
@@ -8298,7 +8298,7 @@ impl CloudCostManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/cost/recommendations",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -8461,13 +8461,13 @@ impl CloudCostManagementAPI {
         datadog::Error<UpdateCostAWSCURConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_cost_awscur_config";
+        let local_operation_id = "v2.update_cost_awscur_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/aws_cur_config/{cloud_account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
@@ -8622,13 +8622,13 @@ impl CloudCostManagementAPI {
         datadog::Error<UpdateCostAccountFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_cost_account_filters";
+        let local_operation_id = "v2.update_cost_account_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/account_filters/{cloud_account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
@@ -8783,13 +8783,13 @@ impl CloudCostManagementAPI {
         datadog::Error<UpdateCostAzureUCConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_cost_azure_uc_configs";
+        let local_operation_id = "v2.update_cost_azure_uc_configs";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/azure_uc_config/{cloud_account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
@@ -8944,13 +8944,13 @@ impl CloudCostManagementAPI {
         datadog::Error<UpdateCostGCPUsageCostConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_cost_gcp_usage_cost_config";
+        let local_operation_id = "v2.update_cost_gcp_usage_cost_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/gcp_uc_config/{cloud_account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             cloud_account_id = cloud_account_id
         );
         let mut local_req_builder =
@@ -9131,13 +9131,13 @@ impl CloudCostManagementAPI {
         datadog::Error<UpdateCustomAllocationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_custom_allocation_rule";
+        let local_operation_id = "v2.update_custom_allocation_rule";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/arbitrary_rule/{rule_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             rule_id = rule_id
         );
         let mut local_req_builder =
@@ -9290,13 +9290,13 @@ impl CloudCostManagementAPI {
         datadog::Error<UpdateTagPipelinesRulesetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_tag_pipelines_ruleset";
+        let local_operation_id = "v2.update_tag_pipelines_ruleset";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/tags/enrichment/{ruleset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             ruleset_id = datadog::urlencode(ruleset_id)
         );
         let mut local_req_builder =
@@ -9444,13 +9444,13 @@ impl CloudCostManagementAPI {
         datadog::Error<UploadCustomCostsFileError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.upload_custom_costs_file";
+        let local_operation_id = "v2.upload_custom_costs_file";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/custom_costs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -9596,13 +9596,13 @@ impl CloudCostManagementAPI {
         datadog::Error<UpsertBudgetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_budget";
+        let local_operation_id = "v2.upsert_budget";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/budget",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -9741,13 +9741,13 @@ impl CloudCostManagementAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpsertCostTagDescriptionByKeyError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_cost_tag_description_by_key";
+        let local_operation_id = "v2.upsert_cost_tag_description_by_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/tag_descriptions/{tag_key}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             tag_key = datadog::urlencode(tag_key)
         );
         let mut local_req_builder =
@@ -9892,13 +9892,13 @@ impl CloudCostManagementAPI {
         datadog::Error<UpsertCustomForecastError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_custom_forecast";
+        let local_operation_id = "v2.upsert_custom_forecast";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/budget/custom-forecast",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -10047,13 +10047,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ValidateBudgetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_budget";
+        let local_operation_id = "v2.validate_budget";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/budget/validate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -10196,13 +10196,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ValidateCsvBudgetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_csv_budget";
+        let local_operation_id = "v2.validate_csv_budget";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cost/budget/csv/validate",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -10290,13 +10290,13 @@ impl CloudCostManagementAPI {
         datadog::Error<ValidateQueryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.validate_query";
+        let local_operation_id = "v2.validate_query";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/tags/enrichment/validate-query",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

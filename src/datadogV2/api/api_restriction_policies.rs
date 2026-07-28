@@ -146,13 +146,13 @@ impl RestrictionPoliciesAPI {
         resource_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRestrictionPolicyError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_restriction_policy";
+        let local_operation_id = "v2.delete_restriction_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/restriction_policy/{resource_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id)
         );
         let mut local_req_builder =
@@ -251,13 +251,13 @@ impl RestrictionPoliciesAPI {
         datadog::Error<GetRestrictionPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_restriction_policy";
+        let local_operation_id = "v2.get_restriction_policy";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/restriction_policy/{resource_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id)
         );
         let mut local_req_builder =
@@ -489,7 +489,7 @@ impl RestrictionPoliciesAPI {
         datadog::Error<UpdateRestrictionPolicyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_restriction_policy";
+        let local_operation_id = "v2.update_restriction_policy";
 
         // unbox and build optional parameters
         let allow_self_lockout = params.allow_self_lockout;
@@ -498,7 +498,7 @@ impl RestrictionPoliciesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/restriction_policy/{resource_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id)
         );
         let mut local_req_builder =

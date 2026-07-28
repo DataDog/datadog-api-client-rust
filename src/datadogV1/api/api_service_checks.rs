@@ -147,13 +147,13 @@ impl ServiceChecksAPI {
         datadog::Error<SubmitServiceCheckError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.submit_service_check";
+        let local_operation_id = "v1.submit_service_check";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/check_run",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

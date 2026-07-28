@@ -297,13 +297,13 @@ impl ServiceAccountsAPI {
         datadog::Error<CreateServiceAccountError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_service_account";
+        let local_operation_id = "v2.create_service_account";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -455,13 +455,13 @@ impl ServiceAccountsAPI {
         datadog::Error<CreateServiceAccountAccessTokenError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_service_account_access_token";
+        let local_operation_id = "v2.create_service_account_access_token";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/access_tokens",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_account_id = datadog::urlencode(service_account_id)
         );
         let mut local_req_builder =
@@ -616,13 +616,13 @@ impl ServiceAccountsAPI {
         datadog::Error<CreateServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_service_account_application_key";
+        let local_operation_id = "v2.create_service_account_application_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_account_id = datadog::urlencode(service_account_id)
         );
         let mut local_req_builder =
@@ -764,13 +764,13 @@ impl ServiceAccountsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteServiceAccountApplicationKeyError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_service_account_application_key";
+        let local_operation_id = "v2.delete_service_account_application_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_account_id = datadog::urlencode(service_account_id),
             app_key_id = datadog::urlencode(app_key_id)
         );
@@ -872,13 +872,13 @@ impl ServiceAccountsAPI {
         datadog::Error<GetServiceAccountAccessTokenError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_service_account_access_token";
+        let local_operation_id = "v2.get_service_account_access_token";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/access_tokens/{token_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_account_id = datadog::urlencode(service_account_id),
             token_id = datadog::urlencode(token_id)
         );
@@ -987,13 +987,13 @@ impl ServiceAccountsAPI {
         datadog::Error<GetServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_service_account_application_key";
+        let local_operation_id = "v2.get_service_account_application_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_account_id = datadog::urlencode(service_account_id),
             app_key_id = datadog::urlencode(app_key_id)
         );
@@ -1102,7 +1102,7 @@ impl ServiceAccountsAPI {
         datadog::Error<ListServiceAccountAccessTokensError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_service_account_access_tokens";
+        let local_operation_id = "v2.list_service_account_access_tokens";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1114,7 +1114,7 @@ impl ServiceAccountsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/access_tokens",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_account_id = datadog::urlencode(service_account_id)
         );
         let mut local_req_builder =
@@ -1239,7 +1239,7 @@ impl ServiceAccountsAPI {
         datadog::Error<ListServiceAccountApplicationKeysError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_service_account_application_keys";
+        let local_operation_id = "v2.list_service_account_application_keys";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1253,7 +1253,7 @@ impl ServiceAccountsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_account_id = datadog::urlencode(service_account_id)
         );
         let mut local_req_builder =
@@ -1373,13 +1373,13 @@ impl ServiceAccountsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RevokeServiceAccountAccessTokenError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.revoke_service_account_access_token";
+        let local_operation_id = "v2.revoke_service_account_access_token";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/access_tokens/{token_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_account_id = datadog::urlencode(service_account_id),
             token_id = datadog::urlencode(token_id)
         );
@@ -1483,13 +1483,13 @@ impl ServiceAccountsAPI {
         datadog::Error<UpdateServiceAccountAccessTokenError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_service_account_access_token";
+        let local_operation_id = "v2.update_service_account_access_token";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/access_tokens/{token_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_account_id = datadog::urlencode(service_account_id),
             token_id = datadog::urlencode(token_id)
         );
@@ -1651,13 +1651,13 @@ impl ServiceAccountsAPI {
         datadog::Error<UpdateServiceAccountApplicationKeyError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_service_account_application_key";
+        let local_operation_id = "v2.update_service_account_application_key";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/service_accounts/{service_account_id}/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             service_account_id = datadog::urlencode(service_account_id),
             app_key_id = datadog::urlencode(app_key_id)
         );

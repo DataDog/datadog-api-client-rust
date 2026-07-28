@@ -275,13 +275,13 @@ impl ReferenceTablesAPI {
         datadog::Error<BatchRowsQueryError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.batch_rows_query";
+        let local_operation_id = "v2.batch_rows_query";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/queries/batch-rows",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -436,13 +436,13 @@ impl ReferenceTablesAPI {
         datadog::Error<CreateReferenceTableError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_reference_table";
+        let local_operation_id = "v2.create_reference_table";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -592,13 +592,13 @@ impl ReferenceTablesAPI {
         datadog::Error<CreateReferenceTableUploadError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_reference_table_upload";
+        let local_operation_id = "v2.create_reference_table_upload";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/uploads",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -735,13 +735,13 @@ impl ReferenceTablesAPI {
         body: crate::datadogV2::model::BatchDeleteRowsRequestArray,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRowsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_rows";
+        let local_operation_id = "v2.delete_rows";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}/rows",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -866,13 +866,13 @@ impl ReferenceTablesAPI {
         id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTableError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_table";
+        let local_operation_id = "v2.delete_table";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -967,13 +967,13 @@ impl ReferenceTablesAPI {
         datadog::Error<GetRowsByIDError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_rows_by_id";
+        let local_operation_id = "v2.get_rows_by_id";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}/rows",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -1082,13 +1082,13 @@ impl ReferenceTablesAPI {
         datadog::Error<GetTableError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_table";
+        let local_operation_id = "v2.get_table";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -1193,7 +1193,7 @@ impl ReferenceTablesAPI {
         datadog::Error<ListReferenceTableRowsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_reference_table_rows";
+        let local_operation_id = "v2.list_reference_table_rows";
 
         // unbox and build optional parameters
         let page_limit = params.page_limit;
@@ -1203,7 +1203,7 @@ impl ReferenceTablesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}/rows/list",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -1311,7 +1311,7 @@ impl ReferenceTablesAPI {
         datadog::Error<ListTablesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tables";
+        let local_operation_id = "v2.list_tables";
 
         // unbox and build optional parameters
         let page_limit = params.page_limit;
@@ -1325,7 +1325,7 @@ impl ReferenceTablesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1441,13 +1441,13 @@ impl ReferenceTablesAPI {
         body: crate::datadogV2::model::PatchTableRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateReferenceTableError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_reference_table";
+        let local_operation_id = "v2.update_reference_table";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -1578,13 +1578,13 @@ impl ReferenceTablesAPI {
         body: crate::datadogV2::model::BatchUpsertRowsRequestArray,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpsertRowsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_rows";
+        let local_operation_id = "v2.upsert_rows";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}/rows",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =

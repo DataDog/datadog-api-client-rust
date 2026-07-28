@@ -201,7 +201,7 @@ impl CSMAgentsAPI {
         datadog::Error<ListAllCSMAgentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_all_csm_agents";
+        let local_operation_id = "v2.list_all_csm_agents";
 
         // unbox and build optional parameters
         let page = params.page;
@@ -213,7 +213,7 @@ impl CSMAgentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/onboarding/agents",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -334,7 +334,7 @@ impl CSMAgentsAPI {
         datadog::Error<ListAllCSMServerlessAgentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_all_csm_serverless_agents";
+        let local_operation_id = "v2.list_all_csm_serverless_agents";
 
         // unbox and build optional parameters
         let page = params.page;
@@ -346,7 +346,7 @@ impl CSMAgentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/onboarding/serverless/agents",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

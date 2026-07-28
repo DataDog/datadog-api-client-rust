@@ -133,9 +133,9 @@ impl EntityIntegrationConfigsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteEntityIntegrationConfigError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_entity_integration_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_entity_integration_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_entity_integration_config' is not enabled".to_string(),
@@ -147,7 +147,7 @@ impl EntityIntegrationConfigsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/idp/entity_integrations/{integration_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_id = datadog::urlencode(integration_id)
         );
         let mut local_req_builder =
@@ -246,9 +246,9 @@ impl EntityIntegrationConfigsAPI {
         datadog::Error<GetEntityIntegrationConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_entity_integration_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_entity_integration_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_entity_integration_config' is not enabled".to_string(),
@@ -260,7 +260,7 @@ impl EntityIntegrationConfigsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/idp/entity_integrations/{integration_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_id = datadog::urlencode(integration_id)
         );
         let mut local_req_builder =
@@ -376,9 +376,9 @@ impl EntityIntegrationConfigsAPI {
         datadog::Error<UpdateEntityIntegrationConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_entity_integration_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_entity_integration_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_entity_integration_config' is not enabled".to_string(),
@@ -390,7 +390,7 @@ impl EntityIntegrationConfigsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/idp/entity_integrations/{integration_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration_id = datadog::urlencode(integration_id)
         );
         let mut local_req_builder =

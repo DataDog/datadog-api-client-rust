@@ -223,13 +223,13 @@ impl NetworkDeviceMonitoringAPI {
         datadog::Error<GetDeviceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_device";
+        let local_operation_id = "v2.get_device";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/devices/{device_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             device_id = datadog::urlencode(device_id)
         );
         let mut local_req_builder =
@@ -330,7 +330,7 @@ impl NetworkDeviceMonitoringAPI {
         datadog::Error<GetInterfacesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_interfaces";
+        let local_operation_id = "v2.get_interfaces";
 
         // unbox and build optional parameters
         let get_ip_addresses = params.get_ip_addresses;
@@ -339,7 +339,7 @@ impl NetworkDeviceMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/interfaces",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -445,13 +445,13 @@ impl NetworkDeviceMonitoringAPI {
         datadog::Error<ListDeviceUserTagsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_device_user_tags";
+        let local_operation_id = "v2.list_device_user_tags";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/tags/devices/{device_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             device_id = datadog::urlencode(device_id)
         );
         let mut local_req_builder =
@@ -584,7 +584,7 @@ impl NetworkDeviceMonitoringAPI {
         datadog::Error<ListDevicesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_devices";
+        let local_operation_id = "v2.list_devices";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -596,7 +596,7 @@ impl NetworkDeviceMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/devices",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -717,13 +717,13 @@ impl NetworkDeviceMonitoringAPI {
         datadog::Error<ListInterfaceUserTagsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_interface_user_tags";
+        let local_operation_id = "v2.list_interface_user_tags";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/tags/interfaces/{interface_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             interface_id = datadog::urlencode(interface_id)
         );
         let mut local_req_builder =
@@ -829,13 +829,13 @@ impl NetworkDeviceMonitoringAPI {
         datadog::Error<UpdateDeviceUserTagsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_device_user_tags";
+        let local_operation_id = "v2.update_device_user_tags";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/tags/devices/{device_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             device_id = datadog::urlencode(device_id)
         );
         let mut local_req_builder =
@@ -989,13 +989,13 @@ impl NetworkDeviceMonitoringAPI {
         datadog::Error<UpdateInterfaceUserTagsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_interface_user_tags";
+        let local_operation_id = "v2.update_interface_user_tags";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/tags/interfaces/{interface_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             interface_id = datadog::urlencode(interface_id)
         );
         let mut local_req_builder =

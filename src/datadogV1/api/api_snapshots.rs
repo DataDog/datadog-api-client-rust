@@ -181,7 +181,7 @@ impl SnapshotsAPI {
         datadog::Error<GetGraphSnapshotError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.get_graph_snapshot";
+        let local_operation_id = "v1.get_graph_snapshot";
 
         // unbox and build optional parameters
         let metric_query = params.metric_query;
@@ -195,7 +195,7 @@ impl SnapshotsAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/graph/snapshot",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

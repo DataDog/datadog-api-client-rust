@@ -162,9 +162,9 @@ impl OCIIntegrationAPI {
         datadog::Error<CreateTenancyConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_tenancy_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_tenancy_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_tenancy_config' is not enabled".to_string(),
@@ -176,7 +176,7 @@ impl OCIIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/oci/tenancies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -312,13 +312,13 @@ impl OCIIntegrationAPI {
         tenancy_ocid: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTenancyConfigError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_tenancy_config";
+        let local_operation_id = "v2.delete_tenancy_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/oci/tenancies/{tenancy_ocid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             tenancy_ocid = datadog::urlencode(tenancy_ocid)
         );
         let mut local_req_builder =
@@ -411,13 +411,13 @@ impl OCIIntegrationAPI {
         datadog::Error<GetTenancyConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_tenancy_config";
+        let local_operation_id = "v2.get_tenancy_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/oci/tenancies/{tenancy_ocid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             tenancy_ocid = datadog::urlencode(tenancy_ocid)
         );
         let mut local_req_builder =
@@ -514,9 +514,9 @@ impl OCIIntegrationAPI {
         datadog::Error<GetTenancyConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_tenancy_configs";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_tenancy_configs";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_tenancy_configs' is not enabled".to_string(),
@@ -528,7 +528,7 @@ impl OCIIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/oci/tenancies",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -632,13 +632,13 @@ impl OCIIntegrationAPI {
         datadog::Error<ListTenancyProductsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tenancy_products";
+        let local_operation_id = "v2.list_tenancy_products";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/oci/products",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -745,13 +745,13 @@ impl OCIIntegrationAPI {
         datadog::Error<UpdateTenancyConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_tenancy_config";
+        let local_operation_id = "v2.update_tenancy_config";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/oci/tenancies/{tenancy_ocid}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             tenancy_ocid = datadog::urlencode(tenancy_ocid)
         );
         let mut local_req_builder =

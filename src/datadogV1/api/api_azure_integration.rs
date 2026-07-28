@@ -168,13 +168,13 @@ impl AzureIntegrationAPI {
         datadog::Error<CreateAzureIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.create_azure_integration";
+        let local_operation_id = "v1.create_azure_integration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/azure",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -323,13 +323,13 @@ impl AzureIntegrationAPI {
         datadog::Error<DeleteAzureIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.delete_azure_integration";
+        let local_operation_id = "v1.delete_azure_integration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/azure",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -474,13 +474,13 @@ impl AzureIntegrationAPI {
         datadog::Error<ListAzureIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_azure_integration";
+        let local_operation_id = "v1.list_azure_integration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/azure",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -581,13 +581,13 @@ impl AzureIntegrationAPI {
         datadog::Error<UpdateAzureHostFiltersError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_azure_host_filters";
+        let local_operation_id = "v1.update_azure_host_filters";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/azure/host_filters",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -740,13 +740,13 @@ impl AzureIntegrationAPI {
         datadog::Error<UpdateAzureIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.update_azure_integration";
+        let local_operation_id = "v1.update_azure_integration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/azure",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());

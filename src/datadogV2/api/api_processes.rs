@@ -213,7 +213,7 @@ impl ProcessesAPI {
         datadog::Error<ListProcessesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_processes";
+        let local_operation_id = "v2.list_processes";
 
         // unbox and build optional parameters
         let search = params.search;
@@ -227,7 +227,7 @@ impl ProcessesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/processes",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());

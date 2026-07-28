@@ -263,13 +263,13 @@ impl AgentlessScanningAPI {
         datadog::Error<CreateAwsOnDemandTaskError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_aws_on_demand_task";
+        let local_operation_id = "v2.create_aws_on_demand_task";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/ondemand/aws",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -418,13 +418,13 @@ impl AgentlessScanningAPI {
         datadog::Error<CreateAwsScanOptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_aws_scan_options";
+        let local_operation_id = "v2.create_aws_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/aws",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -573,13 +573,13 @@ impl AgentlessScanningAPI {
         datadog::Error<CreateAzureScanOptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_azure_scan_options";
+        let local_operation_id = "v2.create_azure_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/azure",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -725,13 +725,13 @@ impl AgentlessScanningAPI {
         datadog::Error<CreateGcpScanOptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_gcp_scan_options";
+        let local_operation_id = "v2.create_gcp_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/gcp",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -867,13 +867,13 @@ impl AgentlessScanningAPI {
         account_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAwsScanOptionsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_aws_scan_options";
+        let local_operation_id = "v2.delete_aws_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/aws/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -958,13 +958,13 @@ impl AgentlessScanningAPI {
         subscription_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAzureScanOptionsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_azure_scan_options";
+        let local_operation_id = "v2.delete_azure_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/azure/{subscription_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             subscription_id = datadog::urlencode(subscription_id)
         );
         let mut local_req_builder =
@@ -1049,13 +1049,13 @@ impl AgentlessScanningAPI {
         project_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGcpScanOptionsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_gcp_scan_options";
+        let local_operation_id = "v2.delete_gcp_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/gcp/{project_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -1149,13 +1149,13 @@ impl AgentlessScanningAPI {
         datadog::Error<GetAwsOnDemandTaskError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_aws_on_demand_task";
+        let local_operation_id = "v2.get_aws_on_demand_task";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/ondemand/aws/{task_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             task_id = datadog::urlencode(task_id)
         );
         let mut local_req_builder =
@@ -1258,13 +1258,13 @@ impl AgentlessScanningAPI {
         datadog::Error<GetAwsScanOptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_aws_scan_options";
+        let local_operation_id = "v2.get_aws_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/aws/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -1368,13 +1368,13 @@ impl AgentlessScanningAPI {
         datadog::Error<GetAzureScanOptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_azure_scan_options";
+        let local_operation_id = "v2.get_azure_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/azure/{subscription_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             subscription_id = datadog::urlencode(subscription_id)
         );
         let mut local_req_builder =
@@ -1474,13 +1474,13 @@ impl AgentlessScanningAPI {
         datadog::Error<GetGcpScanOptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_gcp_scan_options";
+        let local_operation_id = "v2.get_gcp_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/gcp/{project_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -1579,13 +1579,13 @@ impl AgentlessScanningAPI {
         datadog::Error<ListAwsOnDemandTasksError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_aws_on_demand_tasks";
+        let local_operation_id = "v2.list_aws_on_demand_tasks";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/ondemand/aws",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1685,13 +1685,13 @@ impl AgentlessScanningAPI {
         datadog::Error<ListAwsScanOptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_aws_scan_options";
+        let local_operation_id = "v2.list_aws_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/aws",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1791,13 +1791,13 @@ impl AgentlessScanningAPI {
         datadog::Error<ListAzureScanOptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_azure_scan_options";
+        let local_operation_id = "v2.list_azure_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/azure",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1895,13 +1895,13 @@ impl AgentlessScanningAPI {
         datadog::Error<ListGcpScanOptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_gcp_scan_options";
+        let local_operation_id = "v2.list_gcp_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/gcp",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1994,13 +1994,13 @@ impl AgentlessScanningAPI {
         body: crate::datadogV2::model::AwsScanOptionsUpdateRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateAwsScanOptionsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_aws_scan_options";
+        let local_operation_id = "v2.update_aws_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/aws/{account_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
         let mut local_req_builder =
@@ -2148,13 +2148,13 @@ impl AgentlessScanningAPI {
         datadog::Error<UpdateAzureScanOptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_azure_scan_options";
+        let local_operation_id = "v2.update_azure_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/azure/{subscription_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             subscription_id = datadog::urlencode(subscription_id)
         );
         let mut local_req_builder =
@@ -2306,13 +2306,13 @@ impl AgentlessScanningAPI {
         datadog::Error<UpdateGcpScanOptionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_gcp_scan_options";
+        let local_operation_id = "v2.update_gcp_scan_options";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/gcp/{project_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =

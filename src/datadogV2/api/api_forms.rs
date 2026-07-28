@@ -222,9 +222,9 @@ impl FormsAPI {
         datadog::Error<CloneFormError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.clone_form";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.clone_form";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.clone_form' is not enabled".to_string(),
@@ -236,7 +236,7 @@ impl FormsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/forms/{form_id}/clone",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             form_id = datadog::urlencode(form_id.to_string())
         );
         let mut local_req_builder =
@@ -381,9 +381,9 @@ impl FormsAPI {
         datadog::Error<CreateAndPublishFormError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_and_publish_form";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_and_publish_form";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_and_publish_form' is not enabled".to_string(),
@@ -395,7 +395,7 @@ impl FormsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/forms/create_and_publish",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -539,9 +539,9 @@ impl FormsAPI {
         datadog::Error<CreateFormError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_form";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_form";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_form' is not enabled".to_string(),
@@ -553,7 +553,7 @@ impl FormsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/forms",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -696,9 +696,9 @@ impl FormsAPI {
         datadog::Error<DeleteFormError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_form";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_form";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_form' is not enabled".to_string(),
@@ -710,7 +710,7 @@ impl FormsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/forms/{form_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             form_id = datadog::urlencode(form_id.to_string())
         );
         let mut local_req_builder =
@@ -811,9 +811,9 @@ impl FormsAPI {
         datadog::Error<GetFormError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_form";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_form";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_form' is not enabled".to_string(),
@@ -828,7 +828,7 @@ impl FormsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/forms/{form_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             form_id = datadog::urlencode(form_id.to_string())
         );
         let mut local_req_builder =
@@ -928,9 +928,9 @@ impl FormsAPI {
         datadog::Error<ListFormsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_forms";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_forms";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_forms' is not enabled".to_string(),
@@ -942,7 +942,7 @@ impl FormsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/forms",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1041,9 +1041,9 @@ impl FormsAPI {
         datadog::Error<PublishFormError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.publish_form";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.publish_form";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.publish_form' is not enabled".to_string(),
@@ -1055,7 +1055,7 @@ impl FormsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/forms/{form_id}/publish",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             form_id = datadog::urlencode(form_id.to_string())
         );
         let mut local_req_builder =
@@ -1203,9 +1203,9 @@ impl FormsAPI {
         datadog::Error<UpdateFormError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_form";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_form";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_form' is not enabled".to_string(),
@@ -1217,7 +1217,7 @@ impl FormsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/forms/{form_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             form_id = datadog::urlencode(form_id.to_string())
         );
         let mut local_req_builder =
@@ -1369,9 +1369,9 @@ impl FormsAPI {
         datadog::Error<UpsertAndPublishFormVersionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_and_publish_form_version";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.upsert_and_publish_form_version";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.upsert_and_publish_form_version' is not enabled".to_string(),
@@ -1383,7 +1383,7 @@ impl FormsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/forms/{form_id}/versions/upsert_and_publish",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             form_id = datadog::urlencode(form_id.to_string())
         );
         let mut local_req_builder =
@@ -1533,9 +1533,9 @@ impl FormsAPI {
         datadog::Error<UpsertFormVersionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_form_version";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.upsert_form_version";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.upsert_form_version' is not enabled".to_string(),
@@ -1547,7 +1547,7 @@ impl FormsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/forms/{form_id}/versions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             form_id = datadog::urlencode(form_id.to_string())
         );
         let mut local_req_builder =

@@ -1229,9 +1229,9 @@ impl IncidentsAPI {
         datadog::Error<CreateGlobalIncidentHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_global_incident_handle";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_global_incident_handle";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_global_incident_handle' is not enabled".to_string(),
@@ -1246,7 +1246,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/incident-handles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1398,9 +1398,9 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_incident";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident' is not enabled".to_string(),
@@ -1412,7 +1412,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1565,9 +1565,9 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentAttachmentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_attachment";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_incident_attachment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_attachment' is not enabled".to_string(),
@@ -1582,7 +1582,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -1742,7 +1742,7 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentImpactError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_impact";
+        let local_operation_id = "v2.create_incident_impact";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -1751,7 +1751,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/impacts",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -1918,9 +1918,9 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_integration";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_incident_integration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_integration' is not enabled".to_string(),
@@ -1932,7 +1932,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -2085,9 +2085,9 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_notification_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_incident_notification_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_notification_rule' is not enabled".to_string(),
@@ -2099,7 +2099,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2251,9 +2251,9 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentNotificationTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_notification_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_incident_notification_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_notification_template' is not enabled"
@@ -2266,7 +2266,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-templates",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2428,9 +2428,9 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentPostmortemAttachmentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_postmortem_attachment";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_incident_postmortem_attachment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_postmortem_attachment' is not enabled"
@@ -2443,7 +2443,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments/postmortems",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -2594,9 +2594,9 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentPostmortemTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_postmortem_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_incident_postmortem_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_postmortem_template' is not enabled"
@@ -2609,7 +2609,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/postmortem-templates",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2763,9 +2763,9 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentTodoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_todo";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_incident_todo";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_todo' is not enabled".to_string(),
@@ -2777,7 +2777,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -2927,9 +2927,9 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentTypeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_type";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_incident_type";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_type' is not enabled".to_string(),
@@ -2941,7 +2941,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -3095,9 +3095,9 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentUserDefinedFieldError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_user_defined_field";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_incident_user_defined_field";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_user_defined_field' is not enabled".to_string(),
@@ -3112,7 +3112,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-fields",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -3271,9 +3271,9 @@ impl IncidentsAPI {
         datadog::Error<CreateIncidentUserDefinedRoleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_incident_user_defined_role";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_incident_user_defined_role";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_incident_user_defined_role' is not enabled".to_string(),
@@ -3288,7 +3288,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-roles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -3426,9 +3426,9 @@ impl IncidentsAPI {
         &self,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGlobalIncidentHandleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_global_incident_handle";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_global_incident_handle";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_global_incident_handle' is not enabled".to_string(),
@@ -3440,7 +3440,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/incident-handles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -3521,9 +3521,9 @@ impl IncidentsAPI {
         incident_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_incident";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident' is not enabled".to_string(),
@@ -3535,7 +3535,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -3620,9 +3620,9 @@ impl IncidentsAPI {
         attachment_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentAttachmentError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_attachment";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_incident_attachment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_attachment' is not enabled".to_string(),
@@ -3634,7 +3634,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments/{attachment_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id),
             attachment_id = datadog::urlencode(attachment_id)
         );
@@ -3722,13 +3722,13 @@ impl IncidentsAPI {
         impact_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentImpactError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_impact";
+        let local_operation_id = "v2.delete_incident_impact";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/impacts/{impact_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id),
             impact_id = datadog::urlencode(impact_id)
         );
@@ -3816,9 +3816,9 @@ impl IncidentsAPI {
         integration_metadata_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentIntegrationError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_integration";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_incident_integration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_integration' is not enabled".to_string(),
@@ -3830,7 +3830,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}",
-            local_configuration.get_operation_host(operation_id), incident_id=
+            local_configuration.get_operation_host(local_operation_id), incident_id=
             datadog::urlencode(incident_id)
             , integration_metadata_id=
             datadog::urlencode(integration_metadata_id)
@@ -3920,9 +3920,9 @@ impl IncidentsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentNotificationRuleError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_notification_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_incident_notification_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_notification_rule' is not enabled".to_string(),
@@ -3937,7 +3937,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
@@ -4030,9 +4030,9 @@ impl IncidentsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentNotificationTemplateError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_notification_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_incident_notification_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_notification_template' is not enabled"
@@ -4048,7 +4048,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-templates/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
@@ -4139,9 +4139,9 @@ impl IncidentsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentPostmortemTemplateError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_postmortem_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_incident_postmortem_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_postmortem_template' is not enabled"
@@ -4154,7 +4154,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/postmortem-templates/{template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             template_id = datadog::urlencode(template_id)
         );
         let mut local_req_builder =
@@ -4241,9 +4241,9 @@ impl IncidentsAPI {
         todo_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentTodoError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_todo";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_incident_todo";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_todo' is not enabled".to_string(),
@@ -4255,7 +4255,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id),
             todo_id = datadog::urlencode(todo_id)
         );
@@ -4341,9 +4341,9 @@ impl IncidentsAPI {
         incident_type_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentTypeError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_type";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_incident_type";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_type' is not enabled".to_string(),
@@ -4355,7 +4355,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types/{incident_type_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_type_id = datadog::urlencode(incident_type_id)
         );
         let mut local_req_builder =
@@ -4441,9 +4441,9 @@ impl IncidentsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentUserDefinedFieldError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_user_defined_field";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_incident_user_defined_field";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_user_defined_field' is not enabled".to_string(),
@@ -4455,7 +4455,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-fields/{field_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             field_id = datadog::urlencode(field_id)
         );
         let mut local_req_builder =
@@ -4541,9 +4541,9 @@ impl IncidentsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteIncidentUserDefinedRoleError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_incident_user_defined_role";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_incident_user_defined_role";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_incident_user_defined_role' is not enabled".to_string(),
@@ -4555,7 +4555,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-roles/{role_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id.to_string())
         );
         let mut local_req_builder =
@@ -4649,9 +4649,9 @@ impl IncidentsAPI {
         datadog::Error<GetGlobalIncidentSettingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_global_incident_settings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_global_incident_settings";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_global_incident_settings' is not enabled".to_string(),
@@ -4663,7 +4663,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/settings",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -4764,9 +4764,9 @@ impl IncidentsAPI {
         datadog::Error<GetIncidentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_incident";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident' is not enabled".to_string(),
@@ -4781,7 +4781,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -4899,9 +4899,9 @@ impl IncidentsAPI {
         datadog::Error<GetIncidentIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_integration";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_incident_integration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_integration' is not enabled".to_string(),
@@ -4913,7 +4913,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}",
-            local_configuration.get_operation_host(operation_id), incident_id=
+            local_configuration.get_operation_host(local_operation_id), incident_id=
             datadog::urlencode(incident_id)
             , integration_metadata_id=
             datadog::urlencode(integration_metadata_id)
@@ -5023,9 +5023,9 @@ impl IncidentsAPI {
         datadog::Error<GetIncidentNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_notification_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_incident_notification_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_notification_rule' is not enabled".to_string(),
@@ -5040,7 +5040,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
@@ -5153,9 +5153,9 @@ impl IncidentsAPI {
         datadog::Error<GetIncidentNotificationTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_notification_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_incident_notification_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_notification_template' is not enabled".to_string(),
@@ -5170,7 +5170,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-templates/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
@@ -5281,9 +5281,9 @@ impl IncidentsAPI {
         datadog::Error<GetIncidentPostmortemTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_postmortem_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_incident_postmortem_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_postmortem_template' is not enabled".to_string(),
@@ -5295,7 +5295,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/postmortem-templates/{template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             template_id = datadog::urlencode(template_id)
         );
         let mut local_req_builder =
@@ -5401,9 +5401,9 @@ impl IncidentsAPI {
         datadog::Error<GetIncidentTodoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_todo";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_incident_todo";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_todo' is not enabled".to_string(),
@@ -5415,7 +5415,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id),
             todo_id = datadog::urlencode(todo_id)
         );
@@ -5520,9 +5520,9 @@ impl IncidentsAPI {
         datadog::Error<GetIncidentTypeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_type";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_incident_type";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_type' is not enabled".to_string(),
@@ -5534,7 +5534,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types/{incident_type_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_type_id = datadog::urlencode(incident_type_id)
         );
         let mut local_req_builder =
@@ -5642,9 +5642,9 @@ impl IncidentsAPI {
         datadog::Error<GetIncidentUserDefinedFieldError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_user_defined_field";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_incident_user_defined_field";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_user_defined_field' is not enabled".to_string(),
@@ -5659,7 +5659,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-fields/{field_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             field_id = datadog::urlencode(field_id)
         );
         let mut local_req_builder =
@@ -5772,9 +5772,9 @@ impl IncidentsAPI {
         datadog::Error<GetIncidentUserDefinedRoleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_incident_user_defined_role";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_incident_user_defined_role";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_incident_user_defined_role' is not enabled".to_string(),
@@ -5789,7 +5789,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-roles/{role_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id.to_string())
         );
         let mut local_req_builder =
@@ -5901,9 +5901,9 @@ impl IncidentsAPI {
         datadog::Error<ImportIncidentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.import_incident";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.import_incident";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.import_incident' is not enabled".to_string(),
@@ -5918,7 +5918,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/import",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -6082,9 +6082,9 @@ impl IncidentsAPI {
         datadog::Error<ListGlobalIncidentHandlesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_global_incident_handles";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_global_incident_handles";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_global_incident_handles' is not enabled".to_string(),
@@ -6099,7 +6099,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/incident-handles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6211,9 +6211,9 @@ impl IncidentsAPI {
         datadog::Error<ListIncidentAttachmentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_attachments";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_incident_attachments";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_attachments' is not enabled".to_string(),
@@ -6229,7 +6229,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -6344,7 +6344,7 @@ impl IncidentsAPI {
         datadog::Error<ListIncidentImpactsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_impacts";
+        let local_operation_id = "v2.list_incident_impacts";
 
         // unbox and build optional parameters
         let include = params.include;
@@ -6353,7 +6353,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/impacts",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -6471,9 +6471,9 @@ impl IncidentsAPI {
         datadog::Error<ListIncidentIntegrationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_integrations";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_incident_integrations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_integrations' is not enabled".to_string(),
@@ -6485,7 +6485,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -6592,9 +6592,9 @@ impl IncidentsAPI {
         datadog::Error<ListIncidentNotificationRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_notification_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_incident_notification_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_notification_rules' is not enabled".to_string(),
@@ -6609,7 +6609,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6719,9 +6719,9 @@ impl IncidentsAPI {
         datadog::Error<ListIncidentNotificationTemplatesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_notification_templates";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_incident_notification_templates";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_notification_templates' is not enabled"
@@ -6738,7 +6738,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-templates",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6852,9 +6852,9 @@ impl IncidentsAPI {
         datadog::Error<ListIncidentPostmortemTemplatesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_postmortem_templates";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_incident_postmortem_templates";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_postmortem_templates' is not enabled".to_string(),
@@ -6870,7 +6870,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/postmortem-templates",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6981,9 +6981,9 @@ impl IncidentsAPI {
         datadog::Error<ListIncidentTodosError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_todos";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_incident_todos";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_todos' is not enabled".to_string(),
@@ -6995,7 +6995,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -7098,9 +7098,9 @@ impl IncidentsAPI {
         datadog::Error<ListIncidentTypesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_types";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_incident_types";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_types' is not enabled".to_string(),
@@ -7115,7 +7115,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7225,9 +7225,9 @@ impl IncidentsAPI {
         datadog::Error<ListIncidentUserDefinedFieldsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_user_defined_fields";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_incident_user_defined_fields";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_user_defined_fields' is not enabled".to_string(),
@@ -7246,7 +7246,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-fields",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7373,9 +7373,9 @@ impl IncidentsAPI {
         datadog::Error<ListIncidentUserDefinedRolesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incident_user_defined_roles";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_incident_user_defined_roles";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incident_user_defined_roles' is not enabled".to_string(),
@@ -7391,7 +7391,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-roles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7536,9 +7536,9 @@ impl IncidentsAPI {
         datadog::Error<ListIncidentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_incidents";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_incidents";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_incidents' is not enabled".to_string(),
@@ -7555,7 +7555,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7714,9 +7714,9 @@ impl IncidentsAPI {
         datadog::Error<SearchIncidentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_incidents";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.search_incidents";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.search_incidents' is not enabled".to_string(),
@@ -7734,7 +7734,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7859,9 +7859,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateGlobalIncidentHandleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_global_incident_handle";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_global_incident_handle";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_global_incident_handle' is not enabled".to_string(),
@@ -7876,7 +7876,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/incident-handles",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
@@ -8033,9 +8033,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateGlobalIncidentSettingsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_global_incident_settings";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_global_incident_settings";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_global_incident_settings' is not enabled".to_string(),
@@ -8047,7 +8047,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/global/settings",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -8201,9 +8201,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateIncidentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_incident";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident' is not enabled".to_string(),
@@ -8218,7 +8218,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id)
         );
         let mut local_req_builder =
@@ -8384,9 +8384,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateIncidentAttachmentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_attachment";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_incident_attachment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_attachment' is not enabled".to_string(),
@@ -8401,7 +8401,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/attachments/{attachment_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id),
             attachment_id = datadog::urlencode(attachment_id)
         );
@@ -8562,9 +8562,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateIncidentIntegrationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_integration";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_incident_integration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_integration' is not enabled".to_string(),
@@ -8576,7 +8576,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/integrations/{integration_metadata_id}",
-            local_configuration.get_operation_host(operation_id), incident_id=
+            local_configuration.get_operation_host(local_operation_id), incident_id=
             datadog::urlencode(incident_id)
             , integration_metadata_id=
             datadog::urlencode(integration_metadata_id)
@@ -8735,9 +8735,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateIncidentNotificationRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_notification_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_incident_notification_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_notification_rule' is not enabled".to_string(),
@@ -8752,7 +8752,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
@@ -8914,9 +8914,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateIncidentNotificationTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_notification_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_incident_notification_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_notification_template' is not enabled"
@@ -8932,7 +8932,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/notification-templates/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id.to_string())
         );
         let mut local_req_builder =
@@ -9092,9 +9092,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateIncidentPostmortemTemplateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_postmortem_template";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_incident_postmortem_template";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_postmortem_template' is not enabled"
@@ -9107,7 +9107,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/postmortem-templates/{template_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             template_id = datadog::urlencode(template_id)
         );
         let mut local_req_builder =
@@ -9264,9 +9264,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateIncidentTodoError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_todo";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_incident_todo";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_todo' is not enabled".to_string(),
@@ -9278,7 +9278,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/{incident_id}/relationships/todos/{todo_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_id = datadog::urlencode(incident_id),
             todo_id = datadog::urlencode(todo_id)
         );
@@ -9434,9 +9434,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateIncidentTypeError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_type";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_incident_type";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_type' is not enabled".to_string(),
@@ -9448,7 +9448,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/types/{incident_type_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             incident_type_id = datadog::urlencode(incident_type_id)
         );
         let mut local_req_builder =
@@ -9605,9 +9605,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateIncidentUserDefinedFieldError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_user_defined_field";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_incident_user_defined_field";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_user_defined_field' is not enabled".to_string(),
@@ -9622,7 +9622,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-fields/{field_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             field_id = datadog::urlencode(field_id)
         );
         let mut local_req_builder =
@@ -9784,9 +9784,9 @@ impl IncidentsAPI {
         datadog::Error<UpdateIncidentUserDefinedRoleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_incident_user_defined_role";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_incident_user_defined_role";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_incident_user_defined_role' is not enabled".to_string(),
@@ -9801,7 +9801,7 @@ impl IncidentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/incidents/config/user-defined-roles/{role_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             role_id = datadog::urlencode(role_id.to_string())
         );
         let mut local_req_builder =

@@ -275,13 +275,13 @@ impl WorkflowAutomationAPI {
         datadog::Error<CancelWorkflowInstanceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.cancel_workflow_instance";
+        let local_operation_id = "v2.cancel_workflow_instance";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}/instances/{instance_id}/cancel",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             workflow_id = datadog::urlencode(workflow_id),
             instance_id = datadog::urlencode(instance_id)
         );
@@ -383,13 +383,13 @@ impl WorkflowAutomationAPI {
         datadog::Error<CreateWorkflowError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_workflow";
+        let local_operation_id = "v2.create_workflow";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -543,13 +543,13 @@ impl WorkflowAutomationAPI {
         datadog::Error<CreateWorkflowInstanceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_workflow_instance";
+        let local_operation_id = "v2.create_workflow_instance";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}/instances",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             workflow_id = datadog::urlencode(workflow_id)
         );
         let mut local_req_builder =
@@ -685,13 +685,13 @@ impl WorkflowAutomationAPI {
         workflow_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteWorkflowError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_workflow";
+        let local_operation_id = "v2.delete_workflow";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             workflow_id = datadog::urlencode(workflow_id)
         );
         let mut local_req_builder =
@@ -785,13 +785,13 @@ impl WorkflowAutomationAPI {
         datadog::Error<GetWorkflowError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_workflow";
+        let local_operation_id = "v2.get_workflow";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             workflow_id = datadog::urlencode(workflow_id)
         );
         let mut local_req_builder =
@@ -898,13 +898,13 @@ impl WorkflowAutomationAPI {
         datadog::Error<GetWorkflowInstanceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_workflow_instance";
+        let local_operation_id = "v2.get_workflow_instance";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}/instances/{instance_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             workflow_id = datadog::urlencode(workflow_id),
             instance_id = datadog::urlencode(instance_id)
         );
@@ -1013,7 +1013,7 @@ impl WorkflowAutomationAPI {
         datadog::Error<ListWorkflowInstancesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_workflow_instances";
+        let local_operation_id = "v2.list_workflow_instances";
 
         // unbox and build optional parameters
         let page_size = params.page_size;
@@ -1023,7 +1023,7 @@ impl WorkflowAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}/instances",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             workflow_id = datadog::urlencode(workflow_id)
         );
         let mut local_req_builder =
@@ -1169,7 +1169,7 @@ impl WorkflowAutomationAPI {
         datadog::Error<ListWorkflowsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_workflows";
+        let local_operation_id = "v2.list_workflows";
 
         // unbox and build optional parameters
         let limit = params.limit;
@@ -1184,7 +1184,7 @@ impl WorkflowAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/workflows",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -1317,13 +1317,13 @@ impl WorkflowAutomationAPI {
         datadog::Error<UpdateWorkflowError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_workflow";
+        let local_operation_id = "v2.update_workflow";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             workflow_id = datadog::urlencode(workflow_id)
         );
         let mut local_req_builder =

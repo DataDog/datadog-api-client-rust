@@ -1310,9 +1310,9 @@ impl LLMObservabilityAPI {
         datadog::Error<AggregateLLMObsExperimentationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.aggregate_llm_obs_experimentation";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.aggregate_llm_obs_experimentation";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.aggregate_llm_obs_experimentation' is not enabled".to_string(),
@@ -1324,7 +1324,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experimentation/analytics",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1481,9 +1481,9 @@ impl LLMObservabilityAPI {
         datadog::Error<BatchUpdateLLMObsDatasetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.batch_update_llm_obs_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.batch_update_llm_obs_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.batch_update_llm_obs_dataset' is not enabled".to_string(),
@@ -1495,7 +1495,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/batch_update",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -1654,9 +1654,9 @@ impl LLMObservabilityAPI {
         datadog::Error<CloneLLMObsDatasetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.clone_llm_obs_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.clone_llm_obs_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.clone_llm_obs_dataset' is not enabled".to_string(),
@@ -1668,7 +1668,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/clone",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -1828,9 +1828,9 @@ impl LLMObservabilityAPI {
         datadog::Error<CreateLLMObsAnnotationQueueError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_llm_obs_annotation_queue";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_llm_obs_annotation_queue";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_llm_obs_annotation_queue' is not enabled".to_string(),
@@ -1842,7 +1842,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2016,9 +2016,9 @@ impl LLMObservabilityAPI {
         datadog::Error<CreateLLMObsAnnotationQueueInteractionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_llm_obs_annotation_queue_interactions";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_llm_obs_annotation_queue_interactions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_llm_obs_annotation_queue_interactions' is not enabled"
@@ -2031,7 +2031,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/interactions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             queue_id = datadog::urlencode(queue_id)
         );
         let mut local_req_builder =
@@ -2187,9 +2187,9 @@ impl LLMObservabilityAPI {
         datadog::Error<CreateLLMObsDatasetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_llm_obs_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_llm_obs_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_llm_obs_dataset' is not enabled".to_string(),
@@ -2201,7 +2201,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -2358,9 +2358,9 @@ impl LLMObservabilityAPI {
         datadog::Error<CreateLLMObsDatasetRecordsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_llm_obs_dataset_records";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_llm_obs_dataset_records";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_llm_obs_dataset_records' is not enabled".to_string(),
@@ -2372,7 +2372,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/records",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -2524,9 +2524,9 @@ impl LLMObservabilityAPI {
         datadog::Error<CreateLLMObsExperimentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_llm_obs_experiment";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_llm_obs_experiment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_llm_obs_experiment' is not enabled".to_string(),
@@ -2538,7 +2538,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -2679,9 +2679,9 @@ impl LLMObservabilityAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateLLMObsExperimentEventsError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_llm_obs_experiment_events";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_llm_obs_experiment_events";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_llm_obs_experiment_events' is not enabled".to_string(),
@@ -2693,7 +2693,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments/{experiment_id}/events",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             experiment_id = datadog::urlencode(experiment_id)
         );
         let mut local_req_builder =
@@ -2843,9 +2843,9 @@ impl LLMObservabilityAPI {
         datadog::Error<CreateLLMObsIntegrationInferenceError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_llm_obs_integration_inference";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_llm_obs_integration_inference";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_llm_obs_integration_inference' is not enabled"
@@ -2858,7 +2858,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/integrations/{integration}/{account_id}/inference",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration = datadog::urlencode(integration.to_string()),
             account_id = datadog::urlencode(account_id)
         );
@@ -3009,9 +3009,9 @@ impl LLMObservabilityAPI {
         datadog::Error<CreateLLMObsProjectError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_llm_obs_project";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_llm_obs_project";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_llm_obs_project' is not enabled".to_string(),
@@ -3023,7 +3023,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/projects",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -3172,9 +3172,9 @@ impl LLMObservabilityAPI {
         datadog::Error<CreateLLMObsPromptError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_llm_obs_prompt";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_llm_obs_prompt";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_llm_obs_prompt' is not enabled".to_string(),
@@ -3186,7 +3186,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -3340,9 +3340,9 @@ impl LLMObservabilityAPI {
         datadog::Error<CreateLLMObsPromptVersionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_llm_obs_prompt_version";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_llm_obs_prompt_version";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_llm_obs_prompt_version' is not enabled".to_string(),
@@ -3354,7 +3354,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}/versions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             prompt_id = datadog::urlencode(prompt_id)
         );
         let mut local_req_builder =
@@ -3494,9 +3494,9 @@ impl LLMObservabilityAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsAnnotationQueueError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_llm_obs_annotation_queue";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_llm_obs_annotation_queue";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_llm_obs_annotation_queue' is not enabled".to_string(),
@@ -3508,7 +3508,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             queue_id = datadog::urlencode(queue_id)
         );
         let mut local_req_builder =
@@ -3598,9 +3598,9 @@ impl LLMObservabilityAPI {
         datadog::Error<DeleteLLMObsAnnotationQueueInteractionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_llm_obs_annotation_queue_interactions";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_llm_obs_annotation_queue_interactions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_llm_obs_annotation_queue_interactions' is not enabled"
@@ -3613,7 +3613,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/interactions/delete",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             queue_id = datadog::urlencode(queue_id)
         );
         let mut local_req_builder =
@@ -3761,9 +3761,9 @@ impl LLMObservabilityAPI {
         datadog::Error<DeleteLLMObsAnnotationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_llm_obs_annotations";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_llm_obs_annotations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_llm_obs_annotations' is not enabled".to_string(),
@@ -3775,7 +3775,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/annotations/delete",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             queue_id = datadog::urlencode(queue_id)
         );
         let mut local_req_builder =
@@ -3915,9 +3915,9 @@ impl LLMObservabilityAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsCustomEvalConfigError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_llm_obs_custom_eval_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_llm_obs_custom_eval_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_llm_obs_custom_eval_config' is not enabled".to_string(),
@@ -3929,7 +3929,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/llm-obs/config/evaluators/custom/{eval_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             eval_name = datadog::urlencode(eval_name)
         );
         let mut local_req_builder =
@@ -4025,9 +4025,9 @@ impl LLMObservabilityAPI {
         datadog::Error<DeleteLLMObsDataError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_llm_obs_data";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_llm_obs_data";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_llm_obs_data' is not enabled".to_string(),
@@ -4039,7 +4039,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/deletion/data/llmobs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -4181,9 +4181,9 @@ impl LLMObservabilityAPI {
         body: crate::datadogV2::model::LLMObsDeleteDatasetRecordsRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsDatasetRecordsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_llm_obs_dataset_records";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_llm_obs_dataset_records";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_llm_obs_dataset_records' is not enabled".to_string(),
@@ -4195,7 +4195,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/records/delete",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -4330,9 +4330,9 @@ impl LLMObservabilityAPI {
         body: crate::datadogV2::model::LLMObsDeleteDatasetsRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsDatasetsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_llm_obs_datasets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_llm_obs_datasets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_llm_obs_datasets' is not enabled".to_string(),
@@ -4344,7 +4344,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/delete",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -4473,9 +4473,9 @@ impl LLMObservabilityAPI {
         body: crate::datadogV2::model::LLMObsDeleteExperimentsRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsExperimentsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_llm_obs_experiments";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_llm_obs_experiments";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_llm_obs_experiments' is not enabled".to_string(),
@@ -4487,7 +4487,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments/delete",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -4618,9 +4618,9 @@ impl LLMObservabilityAPI {
         config_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsPatternsConfigError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_llm_obs_patterns_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_llm_obs_patterns_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_llm_obs_patterns_config' is not enabled".to_string(),
@@ -4632,7 +4632,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-configs/{config_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             config_id = datadog::urlencode(config_id)
         );
         let mut local_req_builder =
@@ -4714,9 +4714,9 @@ impl LLMObservabilityAPI {
         body: crate::datadogV2::model::LLMObsDeleteProjectsRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsProjectsError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_llm_obs_projects";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_llm_obs_projects";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_llm_obs_projects' is not enabled".to_string(),
@@ -4728,7 +4728,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/projects/delete",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -4870,9 +4870,9 @@ impl LLMObservabilityAPI {
         datadog::Error<DeleteLLMObsPromptError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_llm_obs_prompt";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_llm_obs_prompt";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_llm_obs_prompt' is not enabled".to_string(),
@@ -4884,7 +4884,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             prompt_id = datadog::urlencode(prompt_id)
         );
         let mut local_req_builder =
@@ -4988,9 +4988,9 @@ impl LLMObservabilityAPI {
         params: ExportLLMObsDatasetOptionalParams,
     ) -> Result<datadog::ResponseContent<String>, datadog::Error<ExportLLMObsDatasetError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.export_llm_obs_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.export_llm_obs_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.export_llm_obs_dataset' is not enabled".to_string(),
@@ -5006,7 +5006,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/export",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -5120,9 +5120,9 @@ impl LLMObservabilityAPI {
         datadog::Error<GetLLMObsAnnotatedInteractionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_llm_obs_annotated_interactions";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_llm_obs_annotated_interactions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_llm_obs_annotated_interactions' is not enabled".to_string(),
@@ -5134,7 +5134,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/annotated-interactions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             queue_id = datadog::urlencode(queue_id)
         );
         let mut local_req_builder =
@@ -5246,9 +5246,9 @@ impl LLMObservabilityAPI {
         datadog::Error<GetLLMObsAnnotatedInteractionsByTraceIDsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_llm_obs_annotated_interactions_by_trace_i_ds";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_llm_obs_annotated_interactions_by_trace_i_ds";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg:
@@ -5266,7 +5266,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotated-interactions",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -5390,9 +5390,9 @@ impl LLMObservabilityAPI {
         datadog::Error<GetLLMObsAnnotationQueueLabelSchemaError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_llm_obs_annotation_queue_label_schema";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_llm_obs_annotation_queue_label_schema";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_llm_obs_annotation_queue_label_schema' is not enabled"
@@ -5405,7 +5405,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/label-schema",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             queue_id = datadog::urlencode(queue_id)
         );
         let mut local_req_builder =
@@ -5512,9 +5512,9 @@ impl LLMObservabilityAPI {
         datadog::Error<GetLLMObsCustomEvalConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_llm_obs_custom_eval_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_llm_obs_custom_eval_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_llm_obs_custom_eval_config' is not enabled".to_string(),
@@ -5526,7 +5526,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/llm-obs/config/evaluators/custom/{eval_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             eval_name = datadog::urlencode(eval_name)
         );
         let mut local_req_builder =
@@ -5634,9 +5634,9 @@ impl LLMObservabilityAPI {
         datadog::Error<GetLLMObsDatasetDraftStateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_llm_obs_dataset_draft_state";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_llm_obs_dataset_draft_state";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_llm_obs_dataset_draft_state' is not enabled".to_string(),
@@ -5648,7 +5648,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/draft_state",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -5750,9 +5750,9 @@ impl LLMObservabilityAPI {
         datadog::Error<GetLLMObsPatternsConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_llm_obs_patterns_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_llm_obs_patterns_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_llm_obs_patterns_config' is not enabled".to_string(),
@@ -5764,7 +5764,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-configs/latest",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -5871,9 +5871,9 @@ impl LLMObservabilityAPI {
         datadog::Error<GetLLMObsPatternsRunStatusError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_llm_obs_patterns_run_status";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_llm_obs_patterns_run_status";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_llm_obs_patterns_run_status' is not enabled".to_string(),
@@ -5885,7 +5885,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-runs/status",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -5994,9 +5994,9 @@ impl LLMObservabilityAPI {
         datadog::Error<GetLLMObsPromptError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_llm_obs_prompt";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_llm_obs_prompt";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_llm_obs_prompt' is not enabled".to_string(),
@@ -6011,7 +6011,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             prompt_id = datadog::urlencode(prompt_id)
         );
         let mut local_req_builder =
@@ -6124,9 +6124,9 @@ impl LLMObservabilityAPI {
         datadog::Error<GetLLMObsPromptVersionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_llm_obs_prompt_version";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_llm_obs_prompt_version";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_llm_obs_prompt_version' is not enabled".to_string(),
@@ -6138,7 +6138,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}/versions/{version}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             prompt_id = datadog::urlencode(prompt_id),
             version = version
         );
@@ -6247,9 +6247,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsAnnotationQueuesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_annotation_queues";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_annotation_queues";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_annotation_queues' is not enabled".to_string(),
@@ -6265,7 +6265,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6375,9 +6375,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsCustomEvalConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_custom_eval_configs";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_custom_eval_configs";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_custom_eval_configs' is not enabled".to_string(),
@@ -6389,7 +6389,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/llm-obs/config/evaluators/custom",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -6498,9 +6498,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsDatasetRecordsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_dataset_records";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_dataset_records";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_dataset_records' is not enabled".to_string(),
@@ -6517,7 +6517,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/records",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -6639,9 +6639,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsDatasetVersionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_dataset_versions";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_dataset_versions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_dataset_versions' is not enabled".to_string(),
@@ -6653,7 +6653,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/versions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -6762,9 +6762,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsDatasetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_datasets";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_datasets";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_datasets' is not enabled".to_string(),
@@ -6782,7 +6782,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -6907,9 +6907,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsExperimentEventsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_experiment_events";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_experiment_events";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_experiment_events' is not enabled".to_string(),
@@ -6925,7 +6925,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v3/experiments/{experiment_id}/events",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             experiment_id = datadog::urlencode(experiment_id)
         );
         let mut local_req_builder =
@@ -7040,9 +7040,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsExperimentEventsV1Error>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_experiment_events_v1";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_experiment_events_v1";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_experiment_events_v1' is not enabled".to_string(),
@@ -7054,7 +7054,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments/{experiment_id}/events",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             experiment_id = datadog::urlencode(experiment_id)
         );
         let mut local_req_builder =
@@ -7160,9 +7160,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsExperimentEventsV2Error>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_experiment_events_v2";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_experiment_events_v2";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_experiment_events_v2' is not enabled".to_string(),
@@ -7174,7 +7174,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v2/experiments/{experiment_id}/events",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             experiment_id = datadog::urlencode(experiment_id)
         );
         let mut local_req_builder =
@@ -7277,9 +7277,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsExperimentsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_experiments";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_experiments";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_experiments' is not enabled".to_string(),
@@ -7305,7 +7305,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7461,9 +7461,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsIntegrationAccountsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_integration_accounts";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_integration_accounts";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_integration_accounts' is not enabled".to_string(),
@@ -7475,7 +7475,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/integrations/{integration}/accounts",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration = datadog::urlencode(integration.to_string())
         );
         let mut local_req_builder =
@@ -7583,9 +7583,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsIntegrationModelsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_integration_models";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_integration_models";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_integration_models' is not enabled".to_string(),
@@ -7597,7 +7597,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/integrations/{integration}/{account_id}/models",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             integration = datadog::urlencode(integration.to_string()),
             account_id = datadog::urlencode(account_id)
         );
@@ -7708,9 +7708,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsPatternsClusteredPointsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_patterns_clustered_points";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_patterns_clustered_points";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_patterns_clustered_points' is not enabled"
@@ -7727,7 +7727,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-clustered-points",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7838,9 +7838,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsPatternsConfigsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_patterns_configs";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_patterns_configs";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_patterns_configs' is not enabled".to_string(),
@@ -7852,7 +7852,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-configs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -7957,9 +7957,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsPatternsRunsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_patterns_runs";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_patterns_runs";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_patterns_runs' is not enabled".to_string(),
@@ -7971,7 +7971,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-runs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -8082,9 +8082,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsPatternsTopicsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_patterns_topics";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_patterns_topics";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_patterns_topics' is not enabled".to_string(),
@@ -8099,7 +8099,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-topics",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -8218,9 +8218,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsPatternsTopicsWithClusteredPointsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_patterns_topics_with_clustered_points";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_patterns_topics_with_clustered_points";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_patterns_topics_with_clustered_points' is not enabled".to_string(),
@@ -8236,7 +8236,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-topics/with-cluster-points",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -8349,9 +8349,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsProjectsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_projects";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_projects";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_projects' is not enabled".to_string(),
@@ -8369,7 +8369,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/projects",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -8491,9 +8491,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsPromptVersionsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_prompt_versions";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_prompt_versions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_prompt_versions' is not enabled".to_string(),
@@ -8505,7 +8505,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}/versions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             prompt_id = datadog::urlencode(prompt_id)
         );
         let mut local_req_builder =
@@ -8608,9 +8608,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsPromptsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_prompts";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_prompts";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_prompts' is not enabled".to_string(),
@@ -8625,7 +8625,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -8730,9 +8730,9 @@ impl LLMObservabilityAPI {
         datadog::Error<ListLLMObsSpansError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_llm_obs_spans";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_llm_obs_spans";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_llm_obs_spans' is not enabled".to_string(),
@@ -8758,7 +8758,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/spans/events",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -8914,9 +8914,9 @@ impl LLMObservabilityAPI {
         datadog::Error<LockLLMObsDatasetDraftStateError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.lock_llm_obs_dataset_draft_state";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.lock_llm_obs_dataset_draft_state";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.lock_llm_obs_dataset_draft_state' is not enabled".to_string(),
@@ -8928,7 +8928,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/draft_state/lock",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -9026,9 +9026,9 @@ impl LLMObservabilityAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<RestoreLLMObsDatasetVersionError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.restore_llm_obs_dataset_version";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.restore_llm_obs_dataset_version";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.restore_llm_obs_dataset_version' is not enabled".to_string(),
@@ -9040,7 +9040,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/restore",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -9195,9 +9195,9 @@ impl LLMObservabilityAPI {
         datadog::Error<SearchLLMObsExperimentationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_llm_obs_experimentation";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.search_llm_obs_experimentation";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.search_llm_obs_experimentation' is not enabled".to_string(),
@@ -9209,7 +9209,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experimentation/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -9356,9 +9356,9 @@ impl LLMObservabilityAPI {
         datadog::Error<SearchLLMObsSpansError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.search_llm_obs_spans";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.search_llm_obs_spans";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.search_llm_obs_spans' is not enabled".to_string(),
@@ -9370,7 +9370,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/spans/events/search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -9530,9 +9530,9 @@ impl LLMObservabilityAPI {
         datadog::Error<SimpleSearchLLMObsExperimentationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.simple_search_llm_obs_experimentation";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.simple_search_llm_obs_experimentation";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.simple_search_llm_obs_experimentation' is not enabled"
@@ -9545,7 +9545,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experimentation/simple-search",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -9695,9 +9695,9 @@ impl LLMObservabilityAPI {
         datadog::Error<TriggerLLMObsPatternsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.trigger_llm_obs_patterns";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.trigger_llm_obs_patterns";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.trigger_llm_obs_patterns' is not enabled".to_string(),
@@ -9709,7 +9709,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-runs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -9850,9 +9850,9 @@ impl LLMObservabilityAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnlockLLMObsDatasetDraftStateError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.unlock_llm_obs_dataset_draft_state";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.unlock_llm_obs_dataset_draft_state";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.unlock_llm_obs_dataset_draft_state' is not enabled".to_string(),
@@ -9864,7 +9864,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/draft_state/unlock",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -9966,9 +9966,9 @@ impl LLMObservabilityAPI {
         datadog::Error<UpdateLLMObsAnnotationQueueError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_llm_obs_annotation_queue";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_llm_obs_annotation_queue";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_llm_obs_annotation_queue' is not enabled".to_string(),
@@ -9980,7 +9980,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             queue_id = datadog::urlencode(queue_id)
         );
         let mut local_req_builder =
@@ -10141,9 +10141,9 @@ impl LLMObservabilityAPI {
         datadog::Error<UpdateLLMObsAnnotationQueueLabelSchemaError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_llm_obs_annotation_queue_label_schema";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_llm_obs_annotation_queue_label_schema";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_llm_obs_annotation_queue_label_schema' is not enabled"
@@ -10156,7 +10156,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/label-schema",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             queue_id = datadog::urlencode(queue_id)
         );
         let mut local_req_builder =
@@ -10299,9 +10299,9 @@ impl LLMObservabilityAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateLLMObsCustomEvalConfigError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_llm_obs_custom_eval_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_llm_obs_custom_eval_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_llm_obs_custom_eval_config' is not enabled".to_string(),
@@ -10313,7 +10313,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/unstable/llm-obs/config/evaluators/custom/{eval_name}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             eval_name = datadog::urlencode(eval_name)
         );
         let mut local_req_builder =
@@ -10463,9 +10463,9 @@ impl LLMObservabilityAPI {
         datadog::Error<UpdateLLMObsDatasetError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_llm_obs_dataset";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_llm_obs_dataset";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_llm_obs_dataset' is not enabled".to_string(),
@@ -10477,7 +10477,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -10635,9 +10635,9 @@ impl LLMObservabilityAPI {
         datadog::Error<UpdateLLMObsDatasetRecordsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_llm_obs_dataset_records";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_llm_obs_dataset_records";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_llm_obs_dataset_records' is not enabled".to_string(),
@@ -10649,7 +10649,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/records",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -10806,9 +10806,9 @@ impl LLMObservabilityAPI {
         datadog::Error<UpdateLLMObsExperimentError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_llm_obs_experiment";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_llm_obs_experiment";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_llm_obs_experiment' is not enabled".to_string(),
@@ -10820,7 +10820,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments/{experiment_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             experiment_id = datadog::urlencode(experiment_id)
         );
         let mut local_req_builder =
@@ -10975,9 +10975,9 @@ impl LLMObservabilityAPI {
         datadog::Error<UpdateLLMObsProjectError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_llm_obs_project";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_llm_obs_project";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_llm_obs_project' is not enabled".to_string(),
@@ -10989,7 +10989,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/projects/{project_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id)
         );
         let mut local_req_builder =
@@ -11144,9 +11144,9 @@ impl LLMObservabilityAPI {
         datadog::Error<UpdateLLMObsPromptError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_llm_obs_prompt";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_llm_obs_prompt";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_llm_obs_prompt' is not enabled".to_string(),
@@ -11158,7 +11158,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             prompt_id = datadog::urlencode(prompt_id)
         );
         let mut local_req_builder =
@@ -11315,9 +11315,9 @@ impl LLMObservabilityAPI {
         datadog::Error<UpdateLLMObsPromptVersionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_llm_obs_prompt_version";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_llm_obs_prompt_version";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_llm_obs_prompt_version' is not enabled".to_string(),
@@ -11329,7 +11329,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}/versions/{version}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             prompt_id = datadog::urlencode(prompt_id),
             version = version
         );
@@ -11486,9 +11486,9 @@ impl LLMObservabilityAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<UploadLLMObsDatasetRecordsFileError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.upload_llm_obs_dataset_records_file";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.upload_llm_obs_dataset_records_file";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.upload_llm_obs_dataset_records_file' is not enabled"
@@ -11508,7 +11508,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v2/{project_id}/datasets/{dataset_id}/records/upload",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             project_id = datadog::urlencode(project_id),
             dataset_id = datadog::urlencode(dataset_id)
         );
@@ -11661,9 +11661,9 @@ impl LLMObservabilityAPI {
         datadog::Error<UpsertLLMObsAnnotationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_llm_obs_annotations";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.upsert_llm_obs_annotations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.upsert_llm_obs_annotations' is not enabled".to_string(),
@@ -11675,7 +11675,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/annotations",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             queue_id = datadog::urlencode(queue_id)
         );
         let mut local_req_builder =
@@ -11828,9 +11828,9 @@ impl LLMObservabilityAPI {
         datadog::Error<UpsertLLMObsPatternsConfigError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.upsert_llm_obs_patterns_config";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.upsert_llm_obs_patterns_config";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.upsert_llm_obs_patterns_config' is not enabled".to_string(),
@@ -11842,7 +11842,7 @@ impl LLMObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-configs",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());

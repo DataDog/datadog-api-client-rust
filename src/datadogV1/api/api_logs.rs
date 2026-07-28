@@ -173,13 +173,13 @@ impl LogsAPI {
         datadog::Error<ListLogsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.list_logs";
+        let local_operation_id = "v1.list_logs";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/logs-queries/list",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -362,7 +362,7 @@ impl LogsAPI {
         datadog::Error<SubmitLogError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v1.submit_log";
+        let local_operation_id = "v1.submit_log";
 
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
@@ -372,7 +372,7 @@ impl LogsAPI {
 
         let local_uri_str = format!(
             "{}/v1/input",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());

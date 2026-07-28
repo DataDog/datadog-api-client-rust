@@ -660,13 +660,13 @@ impl MetricsAPI {
         datadog::Error<CreateBulkTagsMetricsConfigurationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_bulk_tags_metrics_configuration";
+        let local_operation_id = "v2.create_bulk_tags_metrics_configuration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/config/bulk-tags",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -828,13 +828,13 @@ impl MetricsAPI {
         datadog::Error<CreateTagConfigurationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_tag_configuration";
+        let local_operation_id = "v2.create_tag_configuration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -988,9 +988,9 @@ impl MetricsAPI {
         datadog::Error<CreateTagIndexingRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_tag_indexing_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_tag_indexing_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_tag_indexing_rule' is not enabled".to_string(),
@@ -1002,7 +1002,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -1158,9 +1158,9 @@ impl MetricsAPI {
         datadog::Error<CreateTagIndexingRuleExemptionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.create_tag_indexing_rule_exemption";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.create_tag_indexing_rule_exemption";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.create_tag_indexing_rule_exemption' is not enabled".to_string(),
@@ -1172,7 +1172,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tag-indexing-rule-exemptions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -1335,13 +1335,13 @@ impl MetricsAPI {
         datadog::Error<DeleteBulkTagsMetricsConfigurationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_bulk_tags_metrics_configuration";
+        let local_operation_id = "v2.delete_bulk_tags_metrics_configuration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/config/bulk-tags",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1483,13 +1483,13 @@ impl MetricsAPI {
         metric_name: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagConfigurationError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_tag_configuration";
+        let local_operation_id = "v2.delete_tag_configuration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -1575,9 +1575,9 @@ impl MetricsAPI {
         id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagIndexingRuleError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_tag_indexing_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_tag_indexing_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_tag_indexing_rule' is not enabled".to_string(),
@@ -1589,7 +1589,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -1679,9 +1679,9 @@ impl MetricsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagIndexingRuleExemptionError>>
     {
         let local_configuration = &self.config;
-        let operation_id = "v2.delete_tag_indexing_rule_exemption";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.delete_tag_indexing_rule_exemption";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.delete_tag_indexing_rule_exemption' is not enabled".to_string(),
@@ -1693,7 +1693,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tag-indexing-rule-exemptions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -1794,7 +1794,7 @@ impl MetricsAPI {
         datadog::Error<EstimateMetricsOutputSeriesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.estimate_metrics_output_series";
+        let local_operation_id = "v2.estimate_metrics_output_series";
 
         // unbox and build optional parameters
         let filter_groups = params.filter_groups;
@@ -1807,7 +1807,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/estimate",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -1934,13 +1934,13 @@ impl MetricsAPI {
         datadog::Error<GetMetricTagCardinalityDetailsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_metric_tag_cardinality_details";
+        let local_operation_id = "v2.get_metric_tag_cardinality_details";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tag-cardinalities",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -2043,9 +2043,9 @@ impl MetricsAPI {
         datadog::Error<GetTagIndexingRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_tag_indexing_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_tag_indexing_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_tag_indexing_rule' is not enabled".to_string(),
@@ -2057,7 +2057,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =
@@ -2169,9 +2169,9 @@ impl MetricsAPI {
         datadog::Error<GetTagIndexingRuleExemptionError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_tag_indexing_rule_exemption";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_tag_indexing_rule_exemption";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_tag_indexing_rule_exemption' is not enabled".to_string(),
@@ -2183,7 +2183,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tag-indexing-rule-exemptions",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -2293,7 +2293,7 @@ impl MetricsAPI {
         datadog::Error<ListActiveMetricConfigurationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_active_metric_configurations";
+        let local_operation_id = "v2.list_active_metric_configurations";
 
         // unbox and build optional parameters
         let window_seconds = params.window_seconds;
@@ -2302,7 +2302,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/active-configurations",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -2409,13 +2409,13 @@ impl MetricsAPI {
         datadog::Error<ListMetricAssetsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_metric_assets";
+        let local_operation_id = "v2.list_metric_assets";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/assets",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -2521,13 +2521,13 @@ impl MetricsAPI {
         datadog::Error<ListTagConfigurationByNameError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tag_configuration_by_name";
+        let local_operation_id = "v2.list_tag_configuration_by_name";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -2673,7 +2673,7 @@ impl MetricsAPI {
         datadog::Error<ListTagConfigurationsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tag_configurations";
+        let local_operation_id = "v2.list_tag_configurations";
 
         // unbox and build optional parameters
         let filter_configured = params.filter_configured;
@@ -2695,7 +2695,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2859,9 +2859,9 @@ impl MetricsAPI {
         datadog::Error<ListTagIndexingRulesError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tag_indexing_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_tag_indexing_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_tag_indexing_rules' is not enabled".to_string(),
@@ -2878,7 +2878,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -2998,9 +2998,9 @@ impl MetricsAPI {
         datadog::Error<ListTagIndexingRulesForMetricError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tag_indexing_rules_for_metric";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.list_tag_indexing_rules_for_metric";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.list_tag_indexing_rules_for_metric' is not enabled".to_string(),
@@ -3012,7 +3012,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tag-indexing-rules",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -3122,7 +3122,7 @@ impl MetricsAPI {
         datadog::Error<ListTagsByMetricNameError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_tags_by_metric_name";
+        let local_operation_id = "v2.list_tags_by_metric_name";
 
         // unbox and build optional parameters
         let window_seconds = params.window_seconds;
@@ -3136,7 +3136,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/all-tags",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -3273,7 +3273,7 @@ impl MetricsAPI {
         datadog::Error<ListVolumesByMetricNameError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.list_volumes_by_metric_name";
+        let local_operation_id = "v2.list_volumes_by_metric_name";
 
         // unbox and build optional parameters
         let window_seconds = params.window_seconds;
@@ -3282,7 +3282,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/volumes",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -3394,13 +3394,13 @@ impl MetricsAPI {
         datadog::Error<QueryScalarDataError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.query_scalar_data";
+        let local_operation_id = "v2.query_scalar_data";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/query/scalar",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -3551,13 +3551,13 @@ impl MetricsAPI {
         datadog::Error<QueryTimeseriesDataError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.query_timeseries_data";
+        let local_operation_id = "v2.query_timeseries_data";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/query/timeseries",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -3698,9 +3698,9 @@ impl MetricsAPI {
         body: crate::datadogV2::model::TagIndexingRuleOrderRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<ReorderTagIndexingRulesError>> {
         let local_configuration = &self.config;
-        let operation_id = "v2.reorder_tag_indexing_rules";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.reorder_tag_indexing_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.reorder_tag_indexing_rules' is not enabled".to_string(),
@@ -3712,7 +3712,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules/order",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -3876,7 +3876,7 @@ impl MetricsAPI {
         datadog::Error<SubmitMetricsError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.submit_metrics";
+        let local_operation_id = "v2.submit_metrics";
 
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
@@ -3885,7 +3885,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/series",
-            local_configuration.get_operation_host(operation_id)
+            local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::POST, local_uri_str.as_str());
@@ -4050,13 +4050,13 @@ impl MetricsAPI {
         datadog::Error<UpdateTagConfigurationError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_tag_configuration";
+        let local_operation_id = "v2.update_tag_configuration";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/{metric_name}/tags",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             metric_name = datadog::urlencode(metric_name)
         );
         let mut local_req_builder =
@@ -4212,9 +4212,9 @@ impl MetricsAPI {
         datadog::Error<UpdateTagIndexingRuleError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.update_tag_indexing_rule";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.update_tag_indexing_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.update_tag_indexing_rule' is not enabled".to_string(),
@@ -4226,7 +4226,7 @@ impl MetricsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/metrics/tag-indexing-rules/{id}",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
         let mut local_req_builder =

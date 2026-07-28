@@ -134,9 +134,9 @@ impl DataObservabilityAPI {
         datadog::Error<GetDataObservabilityMonitorRunStatusError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.get_data_observability_monitor_run_status";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.get_data_observability_monitor_run_status";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.get_data_observability_monitor_run_status' is not enabled"
@@ -149,7 +149,7 @@ impl DataObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/data-observability/monitors/runs/{run_id}/status",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             run_id = datadog::urlencode(run_id)
         );
         let mut local_req_builder =
@@ -256,9 +256,9 @@ impl DataObservabilityAPI {
         datadog::Error<RunDataObservabilityMonitorError>,
     > {
         let local_configuration = &self.config;
-        let operation_id = "v2.run_data_observability_monitor";
-        if local_configuration.is_unstable_operation_enabled(operation_id) {
-            warn!("Using unstable operation {operation_id}");
+        let local_operation_id = "v2.run_data_observability_monitor";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
                 msg: "Operation 'v2.run_data_observability_monitor' is not enabled".to_string(),
@@ -270,7 +270,7 @@ impl DataObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/data-observability/monitors/{monitor_id}/run",
-            local_configuration.get_operation_host(operation_id),
+            local_configuration.get_operation_host(local_operation_id),
             monitor_id = monitor_id
         );
         let mut local_req_builder =
