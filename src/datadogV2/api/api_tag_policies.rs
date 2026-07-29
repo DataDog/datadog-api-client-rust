@@ -309,7 +309,7 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag-policies",
+            "{}/api/v2/tag_policies",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -469,7 +469,7 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag-policies/{policy_id}",
+            "{}/api/v2/tag_policies/{policy_id}",
             local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
@@ -592,7 +592,7 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag-policies/{policy_id}",
+            "{}/api/v2/tag_policies/{policy_id}",
             local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
@@ -735,7 +735,7 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag-policies/{policy_id}/score",
+            "{}/api/v2/tag_policies/{policy_id}/score",
             local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
@@ -873,7 +873,7 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag-policies",
+            "{}/api/v2/tag_policies",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -1018,7 +1018,7 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag-policies/{policy_id}",
+            "{}/api/v2/tag_policies/{policy_id}",
             local_configuration.get_operation_host(local_operation_id),
             policy_id = datadog::urlencode(policy_id)
         );
