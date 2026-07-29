@@ -6,34 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A single column of a DDSQL tabular query result.
+/// Object describing the RUM configuration to create.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DdsqlTabularQueryColumn {
-    /// Name of the column as projected by the SQL statement.
-    #[serde(rename = "name")]
-    pub name: String,
-    /// DDSQL data type of the column's values, for example `VARCHAR`, `BIGINT`,
-    /// `DECIMAL`, `BOOLEAN`, `TIMESTAMP`, `JSON`, or an array variant such as
-    /// `VARCHAR[]`. See the
-    /// [DDSQL data-types reference](<https://docs.datadoghq.com/ddsql_reference/#data-types>)
-    /// for the full, up-to-date list.
+pub struct RumConfigCreateData {
+    /// Attributes of the RUM configuration to create.
+    #[serde(rename = "attributes")]
+    pub attributes: crate::datadogV2::model::RumConfigCreateAttributes,
+    /// The type of the resource. The value should always be `rum_config`.
     #[serde(rename = "type")]
-    pub type_: String,
-    /// Column values in row order, one entry per result row. The element type
-    /// follows the column's `type`. The following serialization rules should be
-    /// taken into account:
-    ///
-    /// - `BIGINT` values are encoded as JSON numbers in the signed 64-bit integer range.
-    /// - `DECIMAL` values are encoded as JSON numbers with 64-bit double precision.
-    /// - `TIMESTAMP` and `DATE` values are encoded as Unix-millisecond integers; a
-    ///   `DATE` resolves to midnight UTC.
-    /// - `JSON` values are returned as a JSON-encoded string.
-    ///
-    /// `null` is allowed for any column type where a value is missing.
-    #[serde(rename = "values")]
-    pub values: Vec<serde_json::Value>,
+    pub type_: crate::datadogV2::model::RumConfigType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -41,16 +24,14 @@ pub struct DdsqlTabularQueryColumn {
     pub(crate) _unparsed: bool,
 }
 
-impl DdsqlTabularQueryColumn {
+impl RumConfigCreateData {
     pub fn new(
-        name: String,
-        type_: String,
-        values: Vec<serde_json::Value>,
-    ) -> DdsqlTabularQueryColumn {
-        DdsqlTabularQueryColumn {
-            name,
+        attributes: crate::datadogV2::model::RumConfigCreateAttributes,
+        type_: crate::datadogV2::model::RumConfigType,
+    ) -> RumConfigCreateData {
+        RumConfigCreateData {
+            attributes,
             type_,
-            values,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -65,14 +46,14 @@ impl DdsqlTabularQueryColumn {
     }
 }
 
-impl<'de> Deserialize<'de> for DdsqlTabularQueryColumn {
+impl<'de> Deserialize<'de> for RumConfigCreateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DdsqlTabularQueryColumnVisitor;
-        impl<'a> Visitor<'a> for DdsqlTabularQueryColumnVisitor {
-            type Value = DdsqlTabularQueryColumn;
+        struct RumConfigCreateDataVisitor;
+        impl<'a> Visitor<'a> for RumConfigCreateDataVisitor {
+            type Value = RumConfigCreateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -82,9 +63,9 @@ impl<'de> Deserialize<'de> for DdsqlTabularQueryColumn {
             where
                 M: MapAccess<'a>,
             {
-                let mut name: Option<String> = None;
-                let mut type_: Option<String> = None;
-                let mut values: Option<Vec<serde_json::Value>> = None;
+                let mut attributes: Option<crate::datadogV2::model::RumConfigCreateAttributes> =
+                    None;
+                let mut type_: Option<crate::datadogV2::model::RumConfigType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -93,14 +74,21 @@ impl<'de> Deserialize<'de> for DdsqlTabularQueryColumn {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "name" => {
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "attributes" => {
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "values" => {
-                            values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::RumConfigType::UnparsedObject(
+                                        _type_,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -109,14 +97,12 @@ impl<'de> Deserialize<'de> for DdsqlTabularQueryColumn {
                         }
                     }
                 }
-                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
-                let values = values.ok_or_else(|| M::Error::missing_field("values"))?;
 
-                let content = DdsqlTabularQueryColumn {
-                    name,
+                let content = RumConfigCreateData {
+                    attributes,
                     type_,
-                    values,
                     additional_properties,
                     _unparsed,
                 };
@@ -125,6 +111,6 @@ impl<'de> Deserialize<'de> for DdsqlTabularQueryColumn {
             }
         }
 
-        deserializer.deserialize_any(DdsqlTabularQueryColumnVisitor)
+        deserializer.deserialize_any(RumConfigCreateDataVisitor)
     }
 }
