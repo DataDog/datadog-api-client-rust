@@ -65,6 +65,7 @@ pub mod api_governance_insights;
 pub mod api_high_availability_multi_region;
 pub mod api_identity_providers;
 pub mod api_incidents;
+pub mod api_integration_accounts;
 pub mod api_integrations;
 pub mod api_ip_allowlist;
 pub mod api_jira_integration;

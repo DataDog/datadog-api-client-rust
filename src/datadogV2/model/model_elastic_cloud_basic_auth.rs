@@ -6,34 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A single column of a DDSQL tabular query result.
+/// Username & password authentication for Elastic Cloud.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DdsqlTabularQueryColumn {
-    /// Name of the column as projected by the SQL statement.
-    #[serde(rename = "name")]
-    pub name: String,
-    /// DDSQL data type of the column's values, for example `VARCHAR`, `BIGINT`,
-    /// `DECIMAL`, `BOOLEAN`, `TIMESTAMP`, `JSON`, or an array variant such as
-    /// `VARCHAR[]`. See the
-    /// [DDSQL data-types reference](<https://docs.datadoghq.com/ddsql_reference/#data-types>)
-    /// for the full, up-to-date list.
+pub struct ElasticCloudBasicAuth {
+    /// Password used to authenticate against the deployment.
+    #[serde(rename = "password")]
+    pub password: String,
+    /// Authentication method discriminator.
     #[serde(rename = "type")]
-    pub type_: String,
-    /// Column values in row order, one entry per result row. The element type
-    /// follows the column's `type`. The following serialization rules should be
-    /// taken into account:
-    ///
-    /// - `BIGINT` values are encoded as JSON numbers in the signed 64-bit integer range.
-    /// - `DECIMAL` values are encoded as JSON numbers with 64-bit double precision.
-    /// - `TIMESTAMP` and `DATE` values are encoded as Unix-millisecond integers; a
-    ///   `DATE` resolves to midnight UTC.
-    /// - `JSON` values are returned as a JSON-encoded string.
-    ///
-    /// `null` is allowed for any column type where a value is missing.
-    #[serde(rename = "values")]
-    pub values: Vec<serde_json::Value>,
+    pub type_: crate::datadogV2::model::ElasticCloudBasicAuthType,
+    /// Username used to authenticate against the deployment.
+    #[serde(rename = "username")]
+    pub username: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -41,16 +27,16 @@ pub struct DdsqlTabularQueryColumn {
     pub(crate) _unparsed: bool,
 }
 
-impl DdsqlTabularQueryColumn {
+impl ElasticCloudBasicAuth {
     pub fn new(
-        name: String,
-        type_: String,
-        values: Vec<serde_json::Value>,
-    ) -> DdsqlTabularQueryColumn {
-        DdsqlTabularQueryColumn {
-            name,
+        password: String,
+        type_: crate::datadogV2::model::ElasticCloudBasicAuthType,
+        username: String,
+    ) -> ElasticCloudBasicAuth {
+        ElasticCloudBasicAuth {
+            password,
             type_,
-            values,
+            username,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -65,14 +51,14 @@ impl DdsqlTabularQueryColumn {
     }
 }
 
-impl<'de> Deserialize<'de> for DdsqlTabularQueryColumn {
+impl<'de> Deserialize<'de> for ElasticCloudBasicAuth {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DdsqlTabularQueryColumnVisitor;
-        impl<'a> Visitor<'a> for DdsqlTabularQueryColumnVisitor {
-            type Value = DdsqlTabularQueryColumn;
+        struct ElasticCloudBasicAuthVisitor;
+        impl<'a> Visitor<'a> for ElasticCloudBasicAuthVisitor {
+            type Value = ElasticCloudBasicAuth;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -82,9 +68,9 @@ impl<'de> Deserialize<'de> for DdsqlTabularQueryColumn {
             where
                 M: MapAccess<'a>,
             {
-                let mut name: Option<String> = None;
-                let mut type_: Option<String> = None;
-                let mut values: Option<Vec<serde_json::Value>> = None;
+                let mut password: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::ElasticCloudBasicAuthType> = None;
+                let mut username: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -93,14 +79,22 @@ impl<'de> Deserialize<'de> for DdsqlTabularQueryColumn {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "name" => {
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "password" => {
+                            password = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::ElasticCloudBasicAuthType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
-                        "values" => {
-                            values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "username" => {
+                            username = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -109,14 +103,14 @@ impl<'de> Deserialize<'de> for DdsqlTabularQueryColumn {
                         }
                     }
                 }
-                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let password = password.ok_or_else(|| M::Error::missing_field("password"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
-                let values = values.ok_or_else(|| M::Error::missing_field("values"))?;
+                let username = username.ok_or_else(|| M::Error::missing_field("username"))?;
 
-                let content = DdsqlTabularQueryColumn {
-                    name,
+                let content = ElasticCloudBasicAuth {
+                    password,
                     type_,
-                    values,
+                    username,
                     additional_properties,
                     _unparsed,
                 };
@@ -125,6 +119,6 @@ impl<'de> Deserialize<'de> for DdsqlTabularQueryColumn {
             }
         }
 
-        deserializer.deserialize_any(DdsqlTabularQueryColumnVisitor)
+        deserializer.deserialize_any(ElasticCloudBasicAuthVisitor)
     }
 }
