@@ -66,6 +66,7 @@ pub use self::api::api_governance_insights;
 pub use self::api::api_high_availability_multi_region;
 pub use self::api::api_identity_providers;
 pub use self::api::api_incidents;
+pub use self::api::api_integration_accounts;
 pub use self::api::api_integrations;
 pub use self::api::api_ip_allowlist;
 pub use self::api::api_jira_integration;

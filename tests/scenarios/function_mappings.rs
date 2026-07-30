@@ -150,6 +150,8 @@ pub struct ApiInstances {
     pub v2_api_confluent_cloud: Option<datadogV2::api_confluent_cloud::ConfluentCloudAPI>,
     pub v2_api_fastly_integration: Option<datadogV2::api_fastly_integration::FastlyIntegrationAPI>,
     pub v2_api_okta_integration: Option<datadogV2::api_okta_integration::OktaIntegrationAPI>,
+    pub v2_api_integration_accounts:
+        Option<datadogV2::api_integration_accounts::IntegrationAccountsAPI>,
     pub v2_api_ip_allowlist: Option<datadogV2::api_ip_allowlist::IPAllowlistAPI>,
     pub v2_api_logs: Option<datadogV2::api_logs::LogsAPI>,
     pub v2_api_logs_archives: Option<datadogV2::api_logs_archives::LogsArchivesAPI>,
@@ -1056,6 +1058,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "OktaIntegration" => {
             world.api_instances.v2_api_okta_integration = Some(
                 datadogV2::api_okta_integration::OktaIntegrationAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "IntegrationAccounts" => {
+            world.api_instances.v2_api_integration_accounts = Some(
+                datadogV2::api_integration_accounts::IntegrationAccountsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -5802,6 +5812,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateOktaAccount".into(), test_v2_update_okta_account);
+    world.function_mappings.insert(
+        "v2.ListIntegrationAccounts".into(),
+        test_v2_list_integration_accounts,
+    );
+    world.function_mappings.insert(
+        "v2.CreateIntegrationAccount".into(),
+        test_v2_create_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteIntegrationAccount".into(),
+        test_v2_delete_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.GetIntegrationAccount".into(),
+        test_v2_get_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateIntegrationAccount".into(),
+        test_v2_update_integration_account,
+    );
     world
         .function_mappings
         .insert("v2.GetIPAllowlist".into(), test_v2_get_ip_allowlist);
@@ -44507,6 +44537,185 @@ fn test_v2_update_okta_account(world: &mut DatadogWorld, _parameters: &HashMap<S
         serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_okta_account_with_http_info(account_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_integration_accounts(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let integration_id =
+        serde_json::from_value(_parameters.get("integration_id").unwrap().clone()).unwrap();
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.list_integration_accounts_with_http_info(integration_id, interface_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let integration_id =
+        serde_json::from_value(_parameters.get("integration_id").unwrap().clone()).unwrap();
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_integration_account_with_http_info(
+        integration_id,
+        interface_id,
+        body,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let integration_id =
+        serde_json::from_value(_parameters.get("integration_id").unwrap().clone()).unwrap();
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_integration_account_with_http_info(
+        integration_id,
+        interface_id,
+        account_id,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_integration_account(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let integration_id =
+        serde_json::from_value(_parameters.get("integration_id").unwrap().clone()).unwrap();
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_integration_account_with_http_info(
+        integration_id,
+        interface_id,
+        account_id,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let integration_id =
+        serde_json::from_value(_parameters.get("integration_id").unwrap().clone()).unwrap();
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_integration_account_with_http_info(
+        integration_id,
+        interface_id,
+        account_id,
+        body,
+    )) {
         Ok(response) => response,
         Err(error) => {
             return match error {
