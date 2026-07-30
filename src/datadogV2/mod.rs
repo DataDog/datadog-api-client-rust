@@ -137,6 +137,7 @@ pub use self::api::api_synthetics;
 pub use self::api::api_tag_policies;
 pub use self::api::api_teams;
 pub use self::api::api_test_optimization;
+pub use self::api::api_threat_intelligence;
 pub use self::api::api_usage_metering;
 pub use self::api::api_user_authorized_clients;
 pub use self::api::api_users;
