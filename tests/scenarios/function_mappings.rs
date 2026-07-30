@@ -148,8 +148,13 @@ pub struct ApiInstances {
     pub v2_api_cloudflare_integration:
         Option<datadogV2::api_cloudflare_integration::CloudflareIntegrationAPI>,
     pub v2_api_confluent_cloud: Option<datadogV2::api_confluent_cloud::ConfluentCloudAPI>,
+    pub v2_api_elastic_cloud_integration_accounts: Option<
+        datadogV2::api_elastic_cloud_integration_accounts::ElasticCloudIntegrationAccountsAPI,
+    >,
     pub v2_api_fastly_integration: Option<datadogV2::api_fastly_integration::FastlyIntegrationAPI>,
     pub v2_api_okta_integration: Option<datadogV2::api_okta_integration::OktaIntegrationAPI>,
+    pub v2_api_twilio_integration_accounts:
+        Option<datadogV2::api_twilio_integration_accounts::TwilioIntegrationAccountsAPI>,
     pub v2_api_ip_allowlist: Option<datadogV2::api_ip_allowlist::IPAllowlistAPI>,
     pub v2_api_logs: Option<datadogV2::api_logs::LogsAPI>,
     pub v2_api_logs_archives: Option<datadogV2::api_logs_archives::LogsArchivesAPI>,
@@ -1045,6 +1050,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
+        "ElasticCloudIntegrationAccounts" => {
+            world.api_instances.v2_api_elastic_cloud_integration_accounts = Some(datadogV2::api_elastic_cloud_integration_accounts::ElasticCloudIntegrationAccountsAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
+        }
         "FastlyIntegration" => {
             world.api_instances.v2_api_fastly_integration = Some(
                 datadogV2::api_fastly_integration::FastlyIntegrationAPI::with_client_and_config(
@@ -1060,6 +1071,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "TwilioIntegrationAccounts" => {
+            world.api_instances.v2_api_twilio_integration_accounts = Some(datadogV2::api_twilio_integration_accounts::TwilioIntegrationAccountsAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "IPAllowlist" => {
             world.api_instances.v2_api_ip_allowlist = Some(
@@ -5751,6 +5768,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateConfluentResource".into(),
         test_v2_update_confluent_resource,
     );
+    world.function_mappings.insert(
+        "v2.ListElasticCloudIntegrationAccounts".into(),
+        test_v2_list_elastic_cloud_integration_accounts,
+    );
+    world.function_mappings.insert(
+        "v2.CreateElasticCloudIntegrationAccount".into(),
+        test_v2_create_elastic_cloud_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteElasticCloudIntegrationAccount".into(),
+        test_v2_delete_elastic_cloud_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.GetElasticCloudIntegrationAccount".into(),
+        test_v2_get_elastic_cloud_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateElasticCloudIntegrationAccount".into(),
+        test_v2_update_elastic_cloud_integration_account,
+    );
     world
         .function_mappings
         .insert("v2.ListFastlyAccounts".into(), test_v2_list_fastly_accounts);
@@ -5802,6 +5839,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateOktaAccount".into(), test_v2_update_okta_account);
+    world.function_mappings.insert(
+        "v2.ListTwilioIntegrationAccounts".into(),
+        test_v2_list_twilio_integration_accounts,
+    );
+    world.function_mappings.insert(
+        "v2.CreateTwilioIntegrationAccount".into(),
+        test_v2_create_twilio_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteTwilioIntegrationAccount".into(),
+        test_v2_delete_twilio_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.GetTwilioIntegrationAccount".into(),
+        test_v2_get_twilio_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateTwilioIntegrationAccount".into(),
+        test_v2_update_twilio_integration_account,
+    );
     world
         .function_mappings
         .insert("v2.GetIPAllowlist".into(), test_v2_get_ip_allowlist);
@@ -44128,6 +44185,170 @@ fn test_v2_update_confluent_resource(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_list_elastic_cloud_integration_accounts(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_elastic_cloud_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.list_elastic_cloud_integration_accounts_with_http_info(interface_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_elastic_cloud_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_elastic_cloud_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.create_elastic_cloud_integration_account_with_http_info(interface_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_elastic_cloud_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_elastic_cloud_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_elastic_cloud_integration_account_with_http_info(interface_id, account_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_elastic_cloud_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_elastic_cloud_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_elastic_cloud_integration_account_with_http_info(interface_id, account_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_elastic_cloud_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_elastic_cloud_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_elastic_cloud_integration_account_with_http_info(
+        interface_id,
+        account_id,
+        body,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_fastly_accounts(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -44507,6 +44728,169 @@ fn test_v2_update_okta_account(world: &mut DatadogWorld, _parameters: &HashMap<S
         serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_okta_account_with_http_info(account_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_twilio_integration_accounts(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_twilio_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_twilio_integration_accounts_with_http_info(interface_id))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_twilio_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_twilio_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_twilio_integration_account_with_http_info(interface_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_twilio_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_twilio_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_twilio_integration_account_with_http_info(interface_id, account_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_twilio_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_twilio_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_twilio_integration_account_with_http_info(interface_id, account_id))
+        {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_twilio_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_twilio_integration_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let interface_id =
+        serde_json::from_value(_parameters.get("interface_id").unwrap().clone()).unwrap();
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_twilio_integration_account_with_http_info(
+        interface_id,
+        account_id,
+        body,
+    )) {
         Ok(response) => response,
         Err(error) => {
             return match error {
