@@ -18,6 +18,7 @@ async fn main() {
         )
         .account_id("1000000001".to_string())
         .config_id("a7c8d9e0-1234-5678-9abc-def012345678".to_string())
+        .curation_enabled(true)
         .integration_provider("openai".to_string())
         .model_name("gpt-4o".to_string())
         .scope("".to_string())

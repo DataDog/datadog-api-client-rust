@@ -17,6 +17,11 @@ pub struct LLMObsPatternsConfigUpsertRequestAttributes {
     /// The ID of an existing configuration to update. If omitted, a new configuration is created.
     #[serde(rename = "config_id")]
     pub config_id: Option<String>,
+    /// When true, Datadog automatically provisions a managed project and dataset
+    /// (`{pattern-name}-pattern-curated`) to receive suggested interactions after
+    /// each run. Defaults to true for new patterns.
+    #[serde(rename = "curation_enabled")]
+    pub curation_enabled: Option<bool>,
     /// Query that selects the spans the patterns run analyzes.
     #[serde(rename = "evp_query")]
     pub evp_query: String,
@@ -62,6 +67,7 @@ impl LLMObsPatternsConfigUpsertRequestAttributes {
         LLMObsPatternsConfigUpsertRequestAttributes {
             account_id: None,
             config_id: None,
+            curation_enabled: None,
             evp_query,
             hierarchy_depth,
             integration_provider: None,
@@ -83,6 +89,11 @@ impl LLMObsPatternsConfigUpsertRequestAttributes {
 
     pub fn config_id(mut self, value: String) -> Self {
         self.config_id = Some(value);
+        self
+    }
+
+    pub fn curation_enabled(mut self, value: bool) -> Self {
+        self.curation_enabled = Some(value);
         self
     }
 
@@ -134,6 +145,7 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigUpsertRequestAttributes {
             {
                 let mut account_id: Option<String> = None;
                 let mut config_id: Option<String> = None;
+                let mut curation_enabled: Option<bool> = None;
                 let mut evp_query: Option<String> = None;
                 let mut hierarchy_depth: Option<i32> = None;
                 let mut integration_provider: Option<String> = None;
@@ -162,6 +174,13 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigUpsertRequestAttributes {
                                 continue;
                             }
                             config_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "curation_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            curation_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "evp_query" => {
                             evp_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -225,6 +244,7 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigUpsertRequestAttributes {
                 let content = LLMObsPatternsConfigUpsertRequestAttributes {
                     account_id,
                     config_id,
+                    curation_enabled,
                     evp_query,
                     hierarchy_depth,
                     integration_provider,
