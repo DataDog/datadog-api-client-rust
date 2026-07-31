@@ -212,6 +212,8 @@ pub struct ApiInstances {
     pub v2_api_scorecards: Option<datadogV2::api_scorecards::ScorecardsAPI>,
     pub v2_api_seats: Option<datadogV2::api_seats::SeatsAPI>,
     pub v2_api_entity_risk_scores: Option<datadogV2::api_entity_risk_scores::EntityRiskScoresAPI>,
+    pub v2_api_threat_intelligence:
+        Option<datadogV2::api_threat_intelligence::ThreatIntelligenceAPI>,
     pub v2_api_sensitive_data_scanner:
         Option<datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI>,
     pub v2_api_service_accounts: Option<datadogV2::api_service_accounts::ServiceAccountsAPI>,
@@ -1376,6 +1378,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "EntityRiskScores" => {
             world.api_instances.v2_api_entity_risk_scores = Some(
                 datadogV2::api_entity_risk_scores::EntityRiskScoresAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "ThreatIntelligence" => {
+            world.api_instances.v2_api_threat_intelligence = Some(
+                datadogV2::api_threat_intelligence::ThreatIntelligenceAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -7278,6 +7288,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.GetEntityRiskScore".into(),
         test_v2_get_entity_risk_score,
+    );
+    world.function_mappings.insert(
+        "v2.IngestStixThreatIntel".into(),
+        test_v2_ingest_stix_threat_intel,
     );
     world
         .function_mappings
@@ -57607,6 +57621,42 @@ fn test_v2_get_entity_risk_score(world: &mut DatadogWorld, _parameters: &HashMap
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_ingest_stix_threat_intel(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_threat_intelligence
+        .as_ref()
+        .expect("api instance not found");
+    let ti_vendor = serde_json::from_value(_parameters.get("ti_vendor").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let content_encoding = _parameters
+        .get("Content-Encoding")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_threat_intelligence::IngestStixThreatIntelOptionalParams::default();
+    params.content_encoding = content_encoding;
+    let response =
+        match block_on(api.ingest_stix_threat_intel_with_http_info(ti_vendor, body, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
