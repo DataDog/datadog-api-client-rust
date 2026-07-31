@@ -667,6 +667,28 @@ impl Default for Configuration {
             ("v2.update_jira_issue_template".to_owned(), false),
             ("v2.create_tenancy_config".to_owned(), false),
             ("v2.get_tenancy_configs".to_owned(), false),
+            (
+                "v2.create_elastic_cloud_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.delete_elastic_cloud_integration_account".to_owned(),
+                false,
+            ),
+            ("v2.get_elastic_cloud_integration_account".to_owned(), false),
+            (
+                "v2.list_elastic_cloud_integration_accounts".to_owned(),
+                false,
+            ),
+            (
+                "v2.update_elastic_cloud_integration_account".to_owned(),
+                false,
+            ),
+            ("v2.create_twilio_integration_account".to_owned(), false),
+            ("v2.delete_twilio_integration_account".to_owned(), false),
+            ("v2.get_twilio_integration_account".to_owned(), false),
+            ("v2.list_twilio_integration_accounts".to_owned(), false),
+            ("v2.update_twilio_integration_account".to_owned(), false),
             ("v2.add_role_to_restriction_query".to_owned(), false),
             ("v2.create_restriction_query".to_owned(), false),
             ("v2.delete_restriction_query".to_owned(), false),
