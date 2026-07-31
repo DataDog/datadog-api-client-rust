@@ -11,13 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AutomationRuleActionData {
-    /// The type of AI agent to assign. Required when the action type is `assign_agent`.
+    /// The type of AI agent to assign. Required when the action type is `ASSIGN_AGENT`.
     #[serde(rename = "agent_type")]
     pub agent_type: Option<String>,
-    /// The identifier of the AI agent to assign to the case. Required when the action type is `assign_agent`.
+    /// The identifier of the AI agent to assign to the case. Required when the action type is `ASSIGN_AGENT`.
     #[serde(rename = "assigned_agent_id")]
     pub assigned_agent_id: Option<String>,
-    /// The handle of the Datadog workflow to execute. Required when the action type is `execute_workflow`.
+    /// The handle of the Datadog workflow to execute. Required when the action type is `EXECUTE_WORKFLOW`.
     #[serde(rename = "handle")]
     pub handle: Option<String>,
     #[serde(flatten)]

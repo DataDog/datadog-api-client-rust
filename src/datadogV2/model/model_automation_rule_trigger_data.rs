@@ -6,24 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Additional configuration for the trigger, dependent on the trigger type. For `status_transitioned` triggers, specify `from_status_name` and `to_status_name`. For `attribute_value_changed` triggers, specify `field` and `change_type`.
+/// Additional configuration for the trigger, dependent on the trigger type. For `STATUS_TRANSITIONED` triggers, specify `from_status_name` and `to_status_name`. For `ATTRIBUTE_VALUE_CHANGED` triggers, specify `field` and `change_type`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AutomationRuleTriggerData {
-    /// The approval outcome to match. Used with `case_review_approved` triggers.
+    /// The approval outcome to match. Used with `CASE_REVIEW_APPROVED` triggers.
     #[serde(rename = "approval_type")]
     pub approval_type: Option<String>,
-    /// The kind of attribute change to match. Allowed values: `VALUE_ADDED`, `VALUE_DELETED`, `ANY_CHANGES`. Used with `attribute_value_changed` triggers.
+    /// The kind of attribute change to match. Allowed values: `VALUE_ADDED`, `VALUE_DELETED`, `ANY_CHANGES`. Used with `ATTRIBUTE_VALUE_CHANGED` triggers.
     #[serde(rename = "change_type")]
     pub change_type: Option<String>,
-    /// The case attribute field name to monitor for changes. Used with `attribute_value_changed` triggers.
+    /// The case attribute field name to monitor for changes. Used with `ATTRIBUTE_VALUE_CHANGED` triggers.
     #[serde(rename = "field")]
     pub field: Option<String>,
-    /// The originating status name. Used with `status_transitioned` triggers to match transitions from this status.
+    /// The originating status name. Used with `STATUS_TRANSITIONED` triggers to match transitions from this status.
     #[serde(rename = "from_status_name")]
     pub from_status_name: Option<String>,
-    /// The destination status name. Used with `status_transitioned` triggers to match transitions to this status.
+    /// The destination status name. Used with `STATUS_TRANSITIONED` triggers to match transitions to this status.
     #[serde(rename = "to_status_name")]
     pub to_status_name: Option<String>,
     #[serde(flatten)]
