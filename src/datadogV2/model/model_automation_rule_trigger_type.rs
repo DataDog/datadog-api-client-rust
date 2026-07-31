@@ -19,14 +19,14 @@ pub enum AutomationRuleTriggerType {
 impl ToString for AutomationRuleTriggerType {
     fn to_string(&self) -> String {
         match self {
-            Self::CASE_CREATED => String::from("case_created"),
-            Self::STATUS_TRANSITIONED => String::from("status_transitioned"),
-            Self::ATTRIBUTE_VALUE_CHANGED => String::from("attribute_value_changed"),
+            Self::CASE_CREATED => String::from("CASE_CREATED"),
+            Self::STATUS_TRANSITIONED => String::from("STATUS_TRANSITIONED"),
+            Self::ATTRIBUTE_VALUE_CHANGED => String::from("ATTRIBUTE_VALUE_CHANGED"),
             Self::EVENT_CORRELATION_SIGNAL_CORRELATED => {
-                String::from("event_correlation_signal_correlated")
+                String::from("EVENT_CORRELATION_SIGNAL_CORRELATED")
             }
-            Self::CASE_REVIEW_APPROVED => String::from("case_review_approved"),
-            Self::COMMENT_ADDED => String::from("comment_added"),
+            Self::CASE_REVIEW_APPROVED => String::from("CASE_REVIEW_APPROVED"),
+            Self::COMMENT_ADDED => String::from("COMMENT_ADDED"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -51,12 +51,12 @@ impl<'de> Deserialize<'de> for AutomationRuleTriggerType {
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "case_created" => Self::CASE_CREATED,
-            "status_transitioned" => Self::STATUS_TRANSITIONED,
-            "attribute_value_changed" => Self::ATTRIBUTE_VALUE_CHANGED,
-            "event_correlation_signal_correlated" => Self::EVENT_CORRELATION_SIGNAL_CORRELATED,
-            "case_review_approved" => Self::CASE_REVIEW_APPROVED,
-            "comment_added" => Self::COMMENT_ADDED,
+            "CASE_CREATED" => Self::CASE_CREATED,
+            "STATUS_TRANSITIONED" => Self::STATUS_TRANSITIONED,
+            "ATTRIBUTE_VALUE_CHANGED" => Self::ATTRIBUTE_VALUE_CHANGED,
+            "EVENT_CORRELATION_SIGNAL_CORRELATED" => Self::EVENT_CORRELATION_SIGNAL_CORRELATED,
+            "CASE_REVIEW_APPROVED" => Self::CASE_REVIEW_APPROVED,
+            "COMMENT_ADDED" => Self::COMMENT_ADDED,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

@@ -15,8 +15,8 @@ pub enum AutomationRuleActionType {
 impl ToString for AutomationRuleActionType {
     fn to_string(&self) -> String {
         match self {
-            Self::EXECUTE_WORKFLOW => String::from("execute_workflow"),
-            Self::ASSIGN_AGENT => String::from("assign_agent"),
+            Self::EXECUTE_WORKFLOW => String::from("EXECUTE_WORKFLOW"),
+            Self::ASSIGN_AGENT => String::from("ASSIGN_AGENT"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -41,8 +41,8 @@ impl<'de> Deserialize<'de> for AutomationRuleActionType {
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "execute_workflow" => Self::EXECUTE_WORKFLOW,
-            "assign_agent" => Self::ASSIGN_AGENT,
+            "EXECUTE_WORKFLOW" => Self::EXECUTE_WORKFLOW,
+            "ASSIGN_AGENT" => Self::ASSIGN_AGENT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

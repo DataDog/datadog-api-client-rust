@@ -14,7 +14,7 @@ pub struct AutomationRuleAction {
     /// Configuration for the action to execute, dependent on the action type.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::AutomationRuleActionData,
-    /// The type of automated action to perform when the rule triggers. `execute_workflow` runs a Datadog workflow; `assign_agent` assigns an AI agent to the case.
+    /// The type of automated action to perform when the rule triggers. `EXECUTE_WORKFLOW` runs a Datadog workflow; `ASSIGN_AGENT` assigns an AI agent to the case.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AutomationRuleActionType,
     #[serde(flatten)]
