@@ -27,6 +27,11 @@ pub struct MonitorFormulaAndFunctionDataQualityMonitorOptions {
     #[serde(rename = "model_type_override")]
     pub model_type_override:
         Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride>,
+    /// Sensitivity of the anomaly detection model, expressed as a multiplier on the width
+    /// of the predicted bounds. Higher values widen the bounds and produce fewer alerts;
+    /// lower values tighten them and produce more alerts. Defaults to `3.0`.
+    #[serde(rename = "sensitivity")]
+    pub sensitivity: Option<f64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -42,6 +47,7 @@ impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
             custom_where: None,
             group_by_columns: None,
             model_type_override: None,
+            sensitivity: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -72,6 +78,11 @@ impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
         value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride,
     ) -> Self {
         self.model_type_override = Some(value);
+        self
+    }
+
+    pub fn sensitivity(mut self, value: f64) -> Self {
+        self.sensitivity = Some(value);
         self
     }
 
@@ -114,6 +125,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                 let mut model_type_override: Option<
                     crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride,
                 > = None;
+                let mut sensitivity: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -164,6 +176,13 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                                 }
                             }
                         }
+                        "sensitivity" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            sensitivity =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -178,6 +197,7 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                     custom_where,
                     group_by_columns,
                     model_type_override,
+                    sensitivity,
                     additional_properties,
                     _unparsed,
                 };
