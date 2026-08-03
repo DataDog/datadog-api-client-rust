@@ -21,6 +21,9 @@ pub enum ListStreamSource {
     RUM_STREAM,
     LLM_OBSERVABILITY_STREAM,
     ISSUE_STREAM,
+    SECURITY_RUNTIME_STREAM,
+    SECURITY_SIGNALS_STREAM,
+    INCIDENTS_STREAM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -41,6 +44,9 @@ impl ToString for ListStreamSource {
             Self::RUM_STREAM => String::from("rum_stream"),
             Self::LLM_OBSERVABILITY_STREAM => String::from("llm_observability_stream"),
             Self::ISSUE_STREAM => String::from("issue_stream"),
+            Self::SECURITY_RUNTIME_STREAM => String::from("security_runtime_stream"),
+            Self::SECURITY_SIGNALS_STREAM => String::from("security_signals_stream"),
+            Self::INCIDENTS_STREAM => String::from("incidents_stream"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -79,6 +85,9 @@ impl<'de> Deserialize<'de> for ListStreamSource {
             "rum_stream" => Self::RUM_STREAM,
             "llm_observability_stream" => Self::LLM_OBSERVABILITY_STREAM,
             "issue_stream" => Self::ISSUE_STREAM,
+            "security_runtime_stream" => Self::SECURITY_RUNTIME_STREAM,
+            "security_signals_stream" => Self::SECURITY_SIGNALS_STREAM,
+            "incidents_stream" => Self::INCIDENTS_STREAM,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
