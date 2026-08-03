@@ -46,6 +46,16 @@ pub struct FlakyTestAttributes {
     /// Includes state transitions like new -> quarantined -> fixed, along with the associated commit SHA when available.
     #[serde(rename = "history")]
     pub history: Option<Vec<crate::datadogV2::model::FlakyTestHistory>>,
+    /// The impact level of the flaky test, derived from its impact score.
+    #[serde(rename = "impact_level")]
+    pub impact_level: Option<crate::datadogV2::model::FlakyTestImpactLevel>,
+    /// A score from 0 to 1 indicating the impact of this flaky test, based on factors such as how often it fails and how many pipelines it affects.
+    #[serde(
+        rename = "impact_score",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub impact_score: Option<Option<f64>>,
     /// The branch name where the test exhibited flakiness for the last time.
     #[serde(rename = "last_flaked_branch")]
     pub last_flaked_branch: Option<String>,
@@ -103,6 +113,8 @@ impl FlakyTestAttributes {
             flaky_category: None,
             flaky_state: None,
             history: None,
+            impact_level: None,
+            impact_score: None,
             last_flaked_branch: None,
             last_flaked_sha: None,
             last_flaked_ts: None,
@@ -163,6 +175,16 @@ impl FlakyTestAttributes {
 
     pub fn history(mut self, value: Vec<crate::datadogV2::model::FlakyTestHistory>) -> Self {
         self.history = Some(value);
+        self
+    }
+
+    pub fn impact_level(mut self, value: crate::datadogV2::model::FlakyTestImpactLevel) -> Self {
+        self.impact_level = Some(value);
+        self
+    }
+
+    pub fn impact_score(mut self, value: Option<f64>) -> Self {
+        self.impact_score = Some(value);
         self
     }
 
@@ -265,6 +287,8 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                     crate::datadogV2::model::FlakyTestAttributesFlakyState,
                 > = None;
                 let mut history: Option<Vec<crate::datadogV2::model::FlakyTestHistory>> = None;
+                let mut impact_level: Option<crate::datadogV2::model::FlakyTestImpactLevel> = None;
+                let mut impact_score: Option<Option<f64>> = None;
                 let mut last_flaked_branch: Option<String> = None;
                 let mut last_flaked_sha: Option<String> = None;
                 let mut last_flaked_ts: Option<i64> = None;
@@ -350,6 +374,28 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                             }
                             history = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "impact_level" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            impact_level =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _impact_level) = impact_level {
+                                match _impact_level {
+                                    crate::datadogV2::model::FlakyTestImpactLevel::UnparsedObject(_impact_level) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "impact_score" => {
+                            if v.as_str() == Some("") {
+                                continue;
+                            }
+                            impact_score =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "last_flaked_branch" => {
                             if v.is_null() {
                                 continue;
@@ -430,6 +476,8 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                     flaky_category,
                     flaky_state,
                     history,
+                    impact_level,
+                    impact_score,
                     last_flaked_branch,
                     last_flaked_sha,
                     last_flaked_ts,
