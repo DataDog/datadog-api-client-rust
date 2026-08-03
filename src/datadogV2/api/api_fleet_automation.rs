@@ -11,25 +11,18 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// GetFleetDeploymentOptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::get_fleet_deployment`]
+/// GetFleetAgentDetailV2OptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::get_fleet_agent_detail_v2`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct GetFleetDeploymentOptionalParams {
-    /// Maximum number of hosts to return per page. Default is 50, maximum is 100.
-    pub limit: Option<i64>,
-    /// Page index for pagination (zero-based). Use this to retrieve subsequent pages of hosts.
-    pub page: Option<i64>,
+pub struct GetFleetAgentDetailV2OptionalParams {
+    /// Comma-separated list of additional fields to include in the response. Valid values are `integrations` and `configuration_files`. Omitting this parameter returns only `agent_infos`. Unrecognized values are silently ignored rather than causing an error.
+    pub include: Option<String>,
 }
 
-impl GetFleetDeploymentOptionalParams {
-    /// Maximum number of hosts to return per page. Default is 50, maximum is 100.
-    pub fn limit(mut self, value: i64) -> Self {
-        self.limit = Some(value);
-        self
-    }
-    /// Page index for pagination (zero-based). Use this to retrieve subsequent pages of hosts.
-    pub fn page(mut self, value: i64) -> Self {
-        self.page = Some(value);
+impl GetFleetAgentDetailV2OptionalParams {
+    /// Comma-separated list of additional fields to include in the response. Valid values are `integrations` and `configuration_files`. Omitting this parameter returns only `agent_infos`. Unrecognized values are silently ignored rather than causing an error.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
         self
     }
 }
@@ -71,76 +64,109 @@ impl ListFleetAgentTracersOptionalParams {
     }
 }
 
-/// ListFleetAgentsOptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::list_fleet_agents`]
+/// ListFleetAgentsV2OptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::list_fleet_agents_v2`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct ListFleetAgentsOptionalParams {
-    /// Page number for pagination (starts at 0).
+pub struct ListFleetAgentsV2OptionalParams {
+    /// Page number for pagination, starting at 0.
     pub page_number: Option<i64>,
-    /// Number of results per page (must be greater than 0 and less than or equal to 100).
+    /// Number of agents to return per page. Maximum value is 100. Defaults to 10.
     pub page_size: Option<i64>,
-    /// Attribute to sort by.
-    pub sort_attribute: Option<String>,
-    /// Sort order (true for descending, false for ascending).
-    pub sort_descending: Option<bool>,
-    /// Comma-separated list of tags to filter agents.
-    pub tags: Option<String>,
-    /// Filter string for narrowing down agent results.
+    /// Filter string to narrow down agent results.
     pub filter: Option<String>,
+    /// Comma-separated list of tag keys to select which tags are included in each agent's `tags` attribute. Does not filter which agents are returned.
+    pub tags: Option<String>,
+    /// Agent attribute to sort results by. Must be a supported attribute name; unsupported values return a 400 error.
+    pub sort_attribute: Option<String>,
+    /// Set to `true` to sort results in descending order. Defaults to ascending.
+    pub sort_descending: Option<bool>,
 }
 
-impl ListFleetAgentsOptionalParams {
-    /// Page number for pagination (starts at 0).
+impl ListFleetAgentsV2OptionalParams {
+    /// Page number for pagination, starting at 0.
     pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
         self
     }
-    /// Number of results per page (must be greater than 0 and less than or equal to 100).
+    /// Number of agents to return per page. Maximum value is 100. Defaults to 10.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
-    /// Attribute to sort by.
-    pub fn sort_attribute(mut self, value: String) -> Self {
-        self.sort_attribute = Some(value);
-        self
-    }
-    /// Sort order (true for descending, false for ascending).
-    pub fn sort_descending(mut self, value: bool) -> Self {
-        self.sort_descending = Some(value);
-        self
-    }
-    /// Comma-separated list of tags to filter agents.
-    pub fn tags(mut self, value: String) -> Self {
-        self.tags = Some(value);
-        self
-    }
-    /// Filter string for narrowing down agent results.
+    /// Filter string to narrow down agent results.
     pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
         self
     }
+    /// Comma-separated list of tag keys to select which tags are included in each agent's `tags` attribute. Does not filter which agents are returned.
+    pub fn tags(mut self, value: String) -> Self {
+        self.tags = Some(value);
+        self
+    }
+    /// Agent attribute to sort results by. Must be a supported attribute name; unsupported values return a 400 error.
+    pub fn sort_attribute(mut self, value: String) -> Self {
+        self.sort_attribute = Some(value);
+        self
+    }
+    /// Set to `true` to sort results in descending order. Defaults to ascending.
+    pub fn sort_descending(mut self, value: bool) -> Self {
+        self.sort_descending = Some(value);
+        self
+    }
 }
 
-/// ListFleetDeploymentsOptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::list_fleet_deployments`]
+/// ListFleetDeploymentsV2OptionalParams is a struct for passing parameters to the method [`FleetAutomationAPI::list_fleet_deployments_v2`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct ListFleetDeploymentsOptionalParams {
+pub struct ListFleetDeploymentsV2OptionalParams {
     /// Number of deployments to return per page. Maximum value is 100.
     pub page_size: Option<i64>,
-    /// Index of the first deployment to return. Use this with `page_size` to paginate through results.
-    pub page_offset: Option<i64>,
+    /// Page number for pagination, starting at 0.
+    pub page_number: Option<i64>,
+    /// Field to sort results by (for example, `start_date`). Must be a supported field
+    /// name; unsupported values return a 400 error.
+    pub sort: Option<String>,
+    /// Set to `true` to sort in ascending order. This setting has no effect unless `sort` is also set.
+    /// Defaults to descending order.
+    pub ascending: Option<bool>,
+    /// Query used to filter deployments. Uses the Datadog query syntax. Filtering on an
+    /// unsupported field returns a 400 error. For example:
+    /// - `status:failed` or `status:done_with_errors`: deployments that need investigation.
+    /// - `status:running`: deployments currently in flight.
+    /// - `update_type:update_package` or `update_type:update_config_operations`: deployments of a given type.
+    pub filter: Option<String>,
 }
 
-impl ListFleetDeploymentsOptionalParams {
+impl ListFleetDeploymentsV2OptionalParams {
     /// Number of deployments to return per page. Maximum value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
     }
-    /// Index of the first deployment to return. Use this with `page_size` to paginate through results.
-    pub fn page_offset(mut self, value: i64) -> Self {
-        self.page_offset = Some(value);
+    /// Page number for pagination, starting at 0.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Field to sort results by (for example, `start_date`). Must be a supported field
+    /// name; unsupported values return a 400 error.
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Set to `true` to sort in ascending order. This setting has no effect unless `sort` is also set.
+    /// Defaults to descending order.
+    pub fn ascending(mut self, value: bool) -> Self {
+        self.ascending = Some(value);
+        self
+    }
+    /// Query used to filter deployments. Uses the Datadog query syntax. Filtering on an
+    /// unsupported field returns a 400 error. For example:
+    /// - `status:failed` or `status:done_with_errors`: deployments that need investigation.
+    /// - `status:running`: deployments currently in flight.
+    /// - `update_type:update_package` or `update_type:update_config_operations`: deployments of a given type.
+    pub fn filter(mut self, value: String) -> Self {
+        self.filter = Some(value);
         self
     }
 }
@@ -189,26 +215,26 @@ impl ListFleetTracersOptionalParams {
     }
 }
 
-/// CancelFleetDeploymentError is a struct for typed errors of method [`FleetAutomationAPI::cancel_fleet_deployment`]
+/// CancelFleetDeploymentV2Error is a struct for typed errors of method [`FleetAutomationAPI::cancel_fleet_deployment_v2`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CancelFleetDeploymentError {
+pub enum CancelFleetDeploymentV2Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// CreateFleetDeploymentConfigureError is a struct for typed errors of method [`FleetAutomationAPI::create_fleet_deployment_configure`]
+/// CreateFleetDeploymentConfigureV2Error is a struct for typed errors of method [`FleetAutomationAPI::create_fleet_deployment_configure_v2`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateFleetDeploymentConfigureError {
+pub enum CreateFleetDeploymentConfigureV2Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// CreateFleetDeploymentUpgradeError is a struct for typed errors of method [`FleetAutomationAPI::create_fleet_deployment_upgrade`]
+/// CreateFleetDeploymentUpgradeV2Error is a struct for typed errors of method [`FleetAutomationAPI::create_fleet_deployment_upgrade_v2`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateFleetDeploymentUpgradeError {
+pub enum CreateFleetDeploymentUpgradeV2Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -229,26 +255,26 @@ pub enum DeleteFleetScheduleError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetFleetAgentInfoError is a struct for typed errors of method [`FleetAutomationAPI::get_fleet_agent_info`]
+/// GetFleetAgentDetailV2Error is a struct for typed errors of method [`FleetAutomationAPI::get_fleet_agent_detail_v2`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetFleetAgentInfoError {
+pub enum GetFleetAgentDetailV2Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// GetFleetDeploymentError is a struct for typed errors of method [`FleetAutomationAPI::get_fleet_deployment`]
+/// GetFleetDeploymentV2Error is a struct for typed errors of method [`FleetAutomationAPI::get_fleet_deployment_v2`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetFleetDeploymentError {
+pub enum GetFleetDeploymentV2Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// GetFleetScheduleError is a struct for typed errors of method [`FleetAutomationAPI::get_fleet_schedule`]
+/// GetFleetScheduleV2Error is a struct for typed errors of method [`FleetAutomationAPI::get_fleet_schedule_v2`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetFleetScheduleError {
+pub enum GetFleetScheduleV2Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -261,34 +287,34 @@ pub enum ListFleetAgentTracersError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListFleetAgentVersionsError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_agent_versions`]
+/// ListFleetAgentVersionsV2Error is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_agent_versions_v2`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListFleetAgentVersionsError {
+pub enum ListFleetAgentVersionsV2Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// ListFleetAgentsError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_agents`]
+/// ListFleetAgentsV2Error is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_agents_v2`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListFleetAgentsError {
+pub enum ListFleetAgentsV2Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// ListFleetDeploymentsError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_deployments`]
+/// ListFleetDeploymentsV2Error is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_deployments_v2`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListFleetDeploymentsError {
+pub enum ListFleetDeploymentsV2Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// ListFleetSchedulesError is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_schedules`]
+/// ListFleetSchedulesV2Error is a struct for typed errors of method [`FleetAutomationAPI::list_fleet_schedules_v2`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListFleetSchedulesError {
+pub enum ListFleetSchedulesV2Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -404,52 +430,62 @@ impl FleetAutomationAPI {
 
     /// Cancel an active deployment and stop all pending operations.
     /// When you cancel a deployment:
-    /// - All pending operations on hosts that haven't started yet are stopped
-    /// - Operations currently in progress on hosts may complete or be interrupted, depending on their current state
-    /// - Configuration changes or package upgrades already applied to hosts are not rolled back
+    /// - All pending operations on hosts that haven't started yet are stopped.
+    /// - Operations currently in progress on hosts may complete or be interrupted, depending on their current status.
+    /// - Configuration changes or package upgrades already applied to hosts are not rolled back.
     ///
     /// After cancellation, you can view the final state of the deployment using the GET endpoint to see which hosts
     /// were successfully updated before the cancellation.
-    pub async fn cancel_fleet_deployment(
+    ///
+    /// Only deployments with a `pending` or `running` status can be canceled. Returns a 400 if the deployment is not in a cancelable status. Returns a 404 if no deployment matches the specified ID or if you do not have access to it.
+    pub async fn cancel_fleet_deployment_v2(
         &self,
         deployment_id: String,
-    ) -> Result<(), datadog::Error<CancelFleetDeploymentError>> {
+    ) -> Result<
+        crate::datadogV2::model::FleetDeploymentV2CancelResponse,
+        datadog::Error<CancelFleetDeploymentV2Error>,
+    > {
         match self
-            .cancel_fleet_deployment_with_http_info(deployment_id)
+            .cancel_fleet_deployment_v2_with_http_info(deployment_id)
             .await
         {
-            Ok(_) => Ok(()),
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
             Err(err) => Err(err),
         }
     }
 
     /// Cancel an active deployment and stop all pending operations.
     /// When you cancel a deployment:
-    /// - All pending operations on hosts that haven't started yet are stopped
-    /// - Operations currently in progress on hosts may complete or be interrupted, depending on their current state
-    /// - Configuration changes or package upgrades already applied to hosts are not rolled back
+    /// - All pending operations on hosts that haven't started yet are stopped.
+    /// - Operations currently in progress on hosts may complete or be interrupted, depending on their current status.
+    /// - Configuration changes or package upgrades already applied to hosts are not rolled back.
     ///
     /// After cancellation, you can view the final state of the deployment using the GET endpoint to see which hosts
     /// were successfully updated before the cancellation.
-    pub async fn cancel_fleet_deployment_with_http_info(
+    ///
+    /// Only deployments with a `pending` or `running` status can be canceled. Returns a 400 if the deployment is not in a cancelable status. Returns a 404 if no deployment matches the specified ID or if you do not have access to it.
+    pub async fn cancel_fleet_deployment_v2_with_http_info(
         &self,
         deployment_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CancelFleetDeploymentError>> {
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FleetDeploymentV2CancelResponse>,
+        datadog::Error<CancelFleetDeploymentV2Error>,
+    > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.cancel_fleet_deployment";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.cancel_fleet_deployment' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
+        let local_operation_id = "v2.cancel_fleet_deployment_v2";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/unstable/fleet/deployments/{deployment_id}/cancel",
+            "{}/api/v2/fleet/deployments/{deployment_id}/cancel",
             local_configuration.get_operation_host(local_operation_id),
             deployment_id = datadog::urlencode(deployment_id)
         );
@@ -458,7 +494,7 @@ impl FleetAutomationAPI {
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert("Accept", HeaderValue::from_static("*/*"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -498,13 +534,20 @@ impl FleetAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            Ok(datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: None,
-            })
+            match serde_json::from_str::<crate::datadogV2::model::FleetDeploymentV2CancelResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
         } else {
-            let local_entity: Option<CancelFleetDeploymentError> =
+            let local_entity: Option<CancelFleetDeploymentV2Error> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -520,21 +563,27 @@ impl FleetAutomationAPI {
     ///
     /// This endpoint supports two types of configuration operations:
     /// - `merge-patch`: Merges the provided patch data with the existing configuration file,
-    ///   creating the file if it doesn't exist
-    /// - `delete`: Removes the specified configuration file from the target hosts
+    ///   creating the file if it doesn't exist.
+    /// - `delete`: Removes the specified configuration file from the target hosts.
+    ///
+    /// You can optionally use `target_packages` to apply the configuration change only to specific package versions.
     ///
     /// The deployment is created and started automatically. You can specify multiple configuration
-    /// operations that will be executed in order on each target host. Use the filter query to target
+    /// operations to execute in order on each target host. Use the filter query to target
     /// specific hosts using the Datadog query syntax.
-    pub async fn create_fleet_deployment_configure(
+    ///
+    /// Set `dry_run` to `true` to validate the configuration and resolve target hosts and packages without deploying anything. A dry run returns a 200 with the validation result instead of creating and starting a deployment.
+    ///
+    /// Returns a 400 if `filter_query` or `config_operations` is missing, a target package is missing a name or version or cannot be resolved, the configuration fails validation, or the filter query does not match any host eligible for the deployment.
+    pub async fn create_fleet_deployment_configure_v2(
         &self,
-        body: crate::datadogV2::model::FleetDeploymentConfigureCreateRequest,
+        body: crate::datadogV2::model::FleetDeploymentConfigureV2CreateRequest,
     ) -> Result<
-        crate::datadogV2::model::FleetDeploymentResponse,
-        datadog::Error<CreateFleetDeploymentConfigureError>,
+        crate::datadogV2::model::FleetDeploymentConfigureV2DryRunResponse,
+        datadog::Error<CreateFleetDeploymentConfigureV2Error>,
     > {
         match self
-            .create_fleet_deployment_configure_with_http_info(body)
+            .create_fleet_deployment_configure_v2_with_http_info(body)
             .await
         {
             Ok(response_content) => {
@@ -555,34 +604,32 @@ impl FleetAutomationAPI {
     ///
     /// This endpoint supports two types of configuration operations:
     /// - `merge-patch`: Merges the provided patch data with the existing configuration file,
-    ///   creating the file if it doesn't exist
-    /// - `delete`: Removes the specified configuration file from the target hosts
+    ///   creating the file if it doesn't exist.
+    /// - `delete`: Removes the specified configuration file from the target hosts.
+    ///
+    /// You can optionally use `target_packages` to apply the configuration change only to specific package versions.
     ///
     /// The deployment is created and started automatically. You can specify multiple configuration
-    /// operations that will be executed in order on each target host. Use the filter query to target
+    /// operations to execute in order on each target host. Use the filter query to target
     /// specific hosts using the Datadog query syntax.
-    pub async fn create_fleet_deployment_configure_with_http_info(
+    ///
+    /// Set `dry_run` to `true` to validate the configuration and resolve target hosts and packages without deploying anything. A dry run returns a 200 with the validation result instead of creating and starting a deployment.
+    ///
+    /// Returns a 400 if `filter_query` or `config_operations` is missing, a target package is missing a name or version or cannot be resolved, the configuration fails validation, or the filter query does not match any host eligible for the deployment.
+    pub async fn create_fleet_deployment_configure_v2_with_http_info(
         &self,
-        body: crate::datadogV2::model::FleetDeploymentConfigureCreateRequest,
+        body: crate::datadogV2::model::FleetDeploymentConfigureV2CreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FleetDeploymentResponse>,
-        datadog::Error<CreateFleetDeploymentConfigureError>,
+        datadog::ResponseContent<crate::datadogV2::model::FleetDeploymentConfigureV2DryRunResponse>,
+        datadog::Error<CreateFleetDeploymentConfigureV2Error>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.create_fleet_deployment_configure";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_fleet_deployment_configure' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
+        let local_operation_id = "v2.create_fleet_deployment_configure_v2";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/unstable/fleet/deployments/configure",
+            "{}/api/v2/fleet/deployments/configure",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -677,9 +724,10 @@ impl FleetAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FleetDeploymentResponse>(
-                &local_content,
-            ) {
+            match serde_json::from_str::<
+                crate::datadogV2::model::FleetDeploymentConfigureV2DryRunResponse,
+            >(&local_content)
+            {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -690,7 +738,7 @@ impl FleetAutomationAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateFleetDeploymentConfigureError> =
+            let local_entity: Option<CreateFleetDeploymentConfigureV2Error> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -707,19 +755,21 @@ impl FleetAutomationAPI {
     /// This endpoint allows you to upgrade the Datadog Agent to a specific version
     /// on hosts matching the specified filter query.
     ///
-    /// The deployment is created and started automatically. The system will:
-    /// 1. Identify all hosts matching the filter query
-    /// 2. Validate that the specified version is available
-    /// 3. Begin rolling out the package upgrade to the target hosts
-    pub async fn create_fleet_deployment_upgrade(
+    /// The deployment is created and started automatically. The system:
+    /// 1. Identifies all hosts matching the filter query.
+    /// 2. Validates that the specified version is available.
+    /// 3. Begins rolling out the package upgrade to the target hosts.
+    ///
+    /// Returns a 400 if `filter_query` or `target_packages` is missing, a target package is missing a name or version, or the filter query does not match any host eligible for the upgrade. Returns a 409 if a conflicting upgrade is already running on one or more target hosts.
+    pub async fn create_fleet_deployment_upgrade_v2(
         &self,
-        body: crate::datadogV2::model::FleetDeploymentPackageUpgradeCreateRequest,
+        body: crate::datadogV2::model::FleetDeploymentPackageUpgradeV2CreateRequest,
     ) -> Result<
-        crate::datadogV2::model::FleetDeploymentResponse,
-        datadog::Error<CreateFleetDeploymentUpgradeError>,
+        crate::datadogV2::model::FleetDeploymentV2CreateResponse,
+        datadog::Error<CreateFleetDeploymentUpgradeV2Error>,
     > {
         match self
-            .create_fleet_deployment_upgrade_with_http_info(body)
+            .create_fleet_deployment_upgrade_v2_with_http_info(body)
             .await
         {
             Ok(response_content) => {
@@ -741,32 +791,26 @@ impl FleetAutomationAPI {
     /// This endpoint allows you to upgrade the Datadog Agent to a specific version
     /// on hosts matching the specified filter query.
     ///
-    /// The deployment is created and started automatically. The system will:
-    /// 1. Identify all hosts matching the filter query
-    /// 2. Validate that the specified version is available
-    /// 3. Begin rolling out the package upgrade to the target hosts
-    pub async fn create_fleet_deployment_upgrade_with_http_info(
+    /// The deployment is created and started automatically. The system:
+    /// 1. Identifies all hosts matching the filter query.
+    /// 2. Validates that the specified version is available.
+    /// 3. Begins rolling out the package upgrade to the target hosts.
+    ///
+    /// Returns a 400 if `filter_query` or `target_packages` is missing, a target package is missing a name or version, or the filter query does not match any host eligible for the upgrade. Returns a 409 if a conflicting upgrade is already running on one or more target hosts.
+    pub async fn create_fleet_deployment_upgrade_v2_with_http_info(
         &self,
-        body: crate::datadogV2::model::FleetDeploymentPackageUpgradeCreateRequest,
+        body: crate::datadogV2::model::FleetDeploymentPackageUpgradeV2CreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FleetDeploymentResponse>,
-        datadog::Error<CreateFleetDeploymentUpgradeError>,
+        datadog::ResponseContent<crate::datadogV2::model::FleetDeploymentV2CreateResponse>,
+        datadog::Error<CreateFleetDeploymentUpgradeV2Error>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.create_fleet_deployment_upgrade";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_fleet_deployment_upgrade' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
+        let local_operation_id = "v2.create_fleet_deployment_upgrade_v2";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/unstable/fleet/deployments/upgrade",
+            "{}/api/v2/fleet/deployments/upgrade",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -861,7 +905,7 @@ impl FleetAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FleetDeploymentResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::FleetDeploymentV2CreateResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -874,7 +918,7 @@ impl FleetAutomationAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateFleetDeploymentUpgradeError> =
+            let local_entity: Option<CreateFleetDeploymentUpgradeV2Error> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1179,162 +1223,19 @@ impl FleetAutomationAPI {
     }
 
     /// Retrieve detailed information about a specific Datadog Agent.
-    /// This endpoint returns comprehensive information about an agent including:
-    /// - Agent details and metadata
-    /// - Configured integrations organized by status (working, warning, error, missing)
-    /// - Detected integrations
-    /// - Configuration files and layers
-    pub async fn get_fleet_agent_info(
+    ///
+    /// By default, only `agent_infos` is returned. Use the `include` query parameter to
+    /// request additional data: `integrations` and/or `configuration_files`.
+    pub async fn get_fleet_agent_detail_v2(
         &self,
         agent_key: String,
+        params: GetFleetAgentDetailV2OptionalParams,
     ) -> Result<
-        crate::datadogV2::model::FleetAgentInfoResponse,
-        datadog::Error<GetFleetAgentInfoError>,
-    > {
-        match self.get_fleet_agent_info_with_http_info(agent_key).await {
-            Ok(response_content) => {
-                if let Some(e) = response_content.entity {
-                    Ok(e)
-                } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
-                }
-            }
-            Err(err) => Err(err),
-        }
-    }
-
-    /// Retrieve detailed information about a specific Datadog Agent.
-    /// This endpoint returns comprehensive information about an agent including:
-    /// - Agent details and metadata
-    /// - Configured integrations organized by status (working, warning, error, missing)
-    /// - Detected integrations
-    /// - Configuration files and layers
-    pub async fn get_fleet_agent_info_with_http_info(
-        &self,
-        agent_key: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FleetAgentInfoResponse>,
-        datadog::Error<GetFleetAgentInfoError>,
-    > {
-        let local_configuration = &self.config;
-        let local_operation_id = "v2.get_fleet_agent_info";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_fleet_agent_info' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
-
-        let local_client = &self.client;
-
-        let local_uri_str = format!(
-            "{}/api/unstable/fleet/agents/{agent_key}",
-            local_configuration.get_operation_host(local_operation_id),
-            agent_key = datadog::urlencode(agent_key)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
-
-        // build headers
-        let mut headers = HeaderMap::new();
-        headers.insert("Accept", HeaderValue::from_static("application/json"));
-
-        // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
-            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
-            Err(e) => {
-                log::warn!("Failed to parse user agent header: {e}, falling back to default");
-                headers.insert(
-                    reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
-                )
-            }
-        };
-
-        // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
-
-        local_req_builder = local_req_builder.headers(headers);
-        let local_req = local_req_builder.build()?;
-        log::debug!("request content: {:?}", local_req.body());
-        let local_resp = local_client.execute(local_req).await?;
-
-        let local_status = local_resp.status();
-        let local_content = local_resp.text().await?;
-        log::debug!("response content: {}", local_content);
-
-        if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FleetAgentInfoResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
-                Err(e) => return Err(datadog::Error::Serde(e)),
-            };
-        } else {
-            let local_entity: Option<GetFleetAgentInfoError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
-            Err(datadog::Error::ResponseError(local_error))
-        }
-    }
-
-    /// Retrieve detailed information about a specific deployment using its unique identifier.
-    /// This endpoint returns comprehensive information about a deployment, including:
-    /// - Deployment metadata (ID, type, filter query)
-    /// - Total number of target hosts
-    /// - Current high-level status (pending, running, succeeded, failed)
-    /// - Estimated completion time
-    /// - Configuration operations that were or are being applied
-    /// - Detailed host list: A paginated array of hosts included in this deployment with individual
-    ///   host status, current package versions, and any errors
-    ///
-    /// The host list provides visibility into the per-host execution status, allowing you to:
-    /// - Monitor which hosts have completed successfully
-    /// - Identify hosts that are still in progress
-    /// - Investigate failures on specific hosts
-    /// - View current package versions installed on each host (including initial, target, and current
-    ///   versions for each package)
-    ///
-    /// Pagination: Use the `limit` and `page` query parameters to paginate through hosts. The response
-    /// includes pagination metadata in the `meta.hosts` field with information about the current page,
-    /// total pages, and total host count. The default page size is 50 hosts, with a maximum of 100.
-    pub async fn get_fleet_deployment(
-        &self,
-        deployment_id: String,
-        params: GetFleetDeploymentOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::FleetDeploymentResponse,
-        datadog::Error<GetFleetDeploymentError>,
+        crate::datadogV2::model::FleetAgentDetailV2Response,
+        datadog::Error<GetFleetAgentDetailV2Error>,
     > {
         match self
-            .get_fleet_deployment_with_http_info(deployment_id, params)
+            .get_fleet_agent_detail_v2_with_http_info(agent_key, params)
             .await
         {
             Ok(response_content) => {
@@ -1350,66 +1251,37 @@ impl FleetAutomationAPI {
         }
     }
 
-    /// Retrieve detailed information about a specific deployment using its unique identifier.
-    /// This endpoint returns comprehensive information about a deployment, including:
-    /// - Deployment metadata (ID, type, filter query)
-    /// - Total number of target hosts
-    /// - Current high-level status (pending, running, succeeded, failed)
-    /// - Estimated completion time
-    /// - Configuration operations that were or are being applied
-    /// - Detailed host list: A paginated array of hosts included in this deployment with individual
-    ///   host status, current package versions, and any errors
+    /// Retrieve detailed information about a specific Datadog Agent.
     ///
-    /// The host list provides visibility into the per-host execution status, allowing you to:
-    /// - Monitor which hosts have completed successfully
-    /// - Identify hosts that are still in progress
-    /// - Investigate failures on specific hosts
-    /// - View current package versions installed on each host (including initial, target, and current
-    ///   versions for each package)
-    ///
-    /// Pagination: Use the `limit` and `page` query parameters to paginate through hosts. The response
-    /// includes pagination metadata in the `meta.hosts` field with information about the current page,
-    /// total pages, and total host count. The default page size is 50 hosts, with a maximum of 100.
-    pub async fn get_fleet_deployment_with_http_info(
+    /// By default, only `agent_infos` is returned. Use the `include` query parameter to
+    /// request additional data: `integrations` and/or `configuration_files`.
+    pub async fn get_fleet_agent_detail_v2_with_http_info(
         &self,
-        deployment_id: String,
-        params: GetFleetDeploymentOptionalParams,
+        agent_key: String,
+        params: GetFleetAgentDetailV2OptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FleetDeploymentResponse>,
-        datadog::Error<GetFleetDeploymentError>,
+        datadog::ResponseContent<crate::datadogV2::model::FleetAgentDetailV2Response>,
+        datadog::Error<GetFleetAgentDetailV2Error>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.get_fleet_deployment";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_fleet_deployment' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
+        let local_operation_id = "v2.get_fleet_agent_detail_v2";
 
         // unbox and build optional parameters
-        let limit = params.limit;
-        let page = params.page;
+        let include = params.include;
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/unstable/fleet/deployments/{deployment_id}",
+            "{}/api/v2/fleet/agents/{agent_key}",
             local_configuration.get_operation_host(local_operation_id),
-            deployment_id = datadog::urlencode(deployment_id)
+            agent_key = datadog::urlencode(agent_key)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local_query_param) = limit {
+        if let Some(ref local_query_param) = include {
             local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = page {
-            local_req_builder =
-                local_req_builder.query(&[("page", &local_query_param.to_string())]);
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
         };
 
         // build headers
@@ -1454,7 +1326,7 @@ impl FleetAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FleetDeploymentResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::FleetAgentDetailV2Response>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -1467,7 +1339,7 @@ impl FleetAutomationAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetFleetDeploymentError> =
+            let local_entity: Option<GetFleetAgentDetailV2Error> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1478,20 +1350,21 @@ impl FleetAutomationAPI {
         }
     }
 
-    /// Retrieve detailed information about a specific schedule using its unique identifier.
+    /// Retrieve detailed information about a specific deployment, including its current status,
+    /// configuration operations, and per-host execution status.
     ///
-    /// This endpoint returns comprehensive information about a schedule, including:
-    /// - Schedule metadata (ID, name, creation/update timestamps)
-    /// - Filter query for selecting target hosts
-    /// - Recurrence rule defining when deployments are triggered
-    /// - Version strategy for package upgrades
-    /// - Current status (active or inactive)
-    pub async fn get_fleet_schedule(
+    /// Returns a 404 if no deployment matches the given ID or if you do not have access to it.
+    pub async fn get_fleet_deployment_v2(
         &self,
-        id: String,
-    ) -> Result<crate::datadogV2::model::FleetScheduleResponse, datadog::Error<GetFleetScheduleError>>
-    {
-        match self.get_fleet_schedule_with_http_info(id).await {
+        deployment_id: String,
+    ) -> Result<
+        crate::datadogV2::model::FleetDeploymentV2DetailResponse,
+        datadog::Error<GetFleetDeploymentV2Error>,
+    > {
+        match self
+            .get_fleet_deployment_v2_with_http_info(deployment_id)
+            .await
+        {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -1505,36 +1378,133 @@ impl FleetAutomationAPI {
         }
     }
 
-    /// Retrieve detailed information about a specific schedule using its unique identifier.
+    /// Retrieve detailed information about a specific deployment, including its current status,
+    /// configuration operations, and per-host execution status.
     ///
-    /// This endpoint returns comprehensive information about a schedule, including:
-    /// - Schedule metadata (ID, name, creation/update timestamps)
-    /// - Filter query for selecting target hosts
-    /// - Recurrence rule defining when deployments are triggered
-    /// - Version strategy for package upgrades
-    /// - Current status (active or inactive)
-    pub async fn get_fleet_schedule_with_http_info(
+    /// Returns a 404 if no deployment matches the given ID or if you do not have access to it.
+    pub async fn get_fleet_deployment_v2_with_http_info(
         &self,
-        id: String,
+        deployment_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FleetScheduleResponse>,
-        datadog::Error<GetFleetScheduleError>,
+        datadog::ResponseContent<crate::datadogV2::model::FleetDeploymentV2DetailResponse>,
+        datadog::Error<GetFleetDeploymentV2Error>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.get_fleet_schedule";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_fleet_schedule' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
+        let local_operation_id = "v2.get_fleet_deployment_v2";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/unstable/fleet/schedules/{id}",
+            "{}/api/v2/fleet/deployments/{deployment_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            deployment_id = datadog::urlencode(deployment_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FleetDeploymentV2DetailResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetFleetDeploymentV2Error> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieve detailed information about a specific schedule by its unique identifier.
+    pub async fn get_fleet_schedule_v2(
+        &self,
+        id: String,
+    ) -> Result<
+        crate::datadogV2::model::FleetScheduleV2Response,
+        datadog::Error<GetFleetScheduleV2Error>,
+    > {
+        match self.get_fleet_schedule_v2_with_http_info(id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieve detailed information about a specific schedule by its unique identifier.
+    pub async fn get_fleet_schedule_v2_with_http_info(
+        &self,
+        id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FleetScheduleV2Response>,
+        datadog::Error<GetFleetScheduleV2Error>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_fleet_schedule_v2";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/fleet/schedules/{id}",
             local_configuration.get_operation_host(local_operation_id),
             id = datadog::urlencode(id)
         );
@@ -1583,7 +1553,7 @@ impl FleetAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FleetScheduleResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::FleetScheduleV2Response>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -1596,7 +1566,7 @@ impl FleetAutomationAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetFleetScheduleError> =
+            let local_entity: Option<GetFleetScheduleV2Error> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1758,18 +1728,18 @@ impl FleetAutomationAPI {
         }
     }
 
-    /// Retrieve a list of all available Datadog Agent versions.
+    /// Retrieve the list of Datadog Agent versions available for deployment.
     ///
-    /// This endpoint returns the available Agent versions that can be deployed to your fleet.
-    /// These versions are used when creating deployments or configuring schedules for
-    /// automated Agent upgrades.
-    pub async fn list_fleet_agent_versions(
+    /// Returns `200` with an empty `data` array if the Agent package exists in the catalog
+    /// but has no available versions, and `404` only if the Agent package itself is absent
+    /// from the catalog.
+    pub async fn list_fleet_agent_versions_v2(
         &self,
     ) -> Result<
-        crate::datadogV2::model::FleetAgentVersionsResponse,
-        datadog::Error<ListFleetAgentVersionsError>,
+        crate::datadogV2::model::FleetAgentVersionsV2Response,
+        datadog::Error<ListFleetAgentVersionsV2Error>,
     > {
-        match self.list_fleet_agent_versions_with_http_info().await {
+        match self.list_fleet_agent_versions_v2_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -1783,32 +1753,24 @@ impl FleetAutomationAPI {
         }
     }
 
-    /// Retrieve a list of all available Datadog Agent versions.
+    /// Retrieve the list of Datadog Agent versions available for deployment.
     ///
-    /// This endpoint returns the available Agent versions that can be deployed to your fleet.
-    /// These versions are used when creating deployments or configuring schedules for
-    /// automated Agent upgrades.
-    pub async fn list_fleet_agent_versions_with_http_info(
+    /// Returns `200` with an empty `data` array if the Agent package exists in the catalog
+    /// but has no available versions, and `404` only if the Agent package itself is absent
+    /// from the catalog.
+    pub async fn list_fleet_agent_versions_v2_with_http_info(
         &self,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FleetAgentVersionsResponse>,
-        datadog::Error<ListFleetAgentVersionsError>,
+        datadog::ResponseContent<crate::datadogV2::model::FleetAgentVersionsV2Response>,
+        datadog::Error<ListFleetAgentVersionsV2Error>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.list_fleet_agent_versions";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_fleet_agent_versions' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
+        let local_operation_id = "v2.list_fleet_agent_versions_v2";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/unstable/fleet/agent_versions",
+            "{}/api/v2/fleet/agent_versions",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -1856,7 +1818,7 @@ impl FleetAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FleetAgentVersionsResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::FleetAgentVersionsV2Response>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -1869,7 +1831,7 @@ impl FleetAutomationAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListFleetAgentVersionsError> =
+            let local_entity: Option<ListFleetAgentVersionsV2Error> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1880,15 +1842,19 @@ impl FleetAutomationAPI {
         }
     }
 
-    /// Retrieve a paginated list of all Datadog Agents.
-    /// This endpoint returns a paginated list of all Datadog Agents with support for pagination, sorting, and filtering.
-    /// Use the `page_number` and `page_size` query parameters to paginate through results.
-    pub async fn list_fleet_agents(
+    /// Retrieve a paginated list of Datadog Agents.
+    ///
+    /// Returns agents with support for pagination, sorting, and filtering.
+    /// Use `page_number` and `page_size` to navigate pages, `filter` to narrow by field values,
+    /// and `tags` to filter by agent tags.
+    pub async fn list_fleet_agents_v2(
         &self,
-        params: ListFleetAgentsOptionalParams,
-    ) -> Result<crate::datadogV2::model::FleetAgentsResponse, datadog::Error<ListFleetAgentsError>>
-    {
-        match self.list_fleet_agents_with_http_info(params).await {
+        params: ListFleetAgentsV2OptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::FleetAgentsV2Response,
+        datadog::Error<ListFleetAgentsV2Error>,
+    > {
+        match self.list_fleet_agents_v2_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -1902,39 +1868,33 @@ impl FleetAutomationAPI {
         }
     }
 
-    /// Retrieve a paginated list of all Datadog Agents.
-    /// This endpoint returns a paginated list of all Datadog Agents with support for pagination, sorting, and filtering.
-    /// Use the `page_number` and `page_size` query parameters to paginate through results.
-    pub async fn list_fleet_agents_with_http_info(
+    /// Retrieve a paginated list of Datadog Agents.
+    ///
+    /// Returns agents with support for pagination, sorting, and filtering.
+    /// Use `page_number` and `page_size` to navigate pages, `filter` to narrow by field values,
+    /// and `tags` to filter by agent tags.
+    pub async fn list_fleet_agents_v2_with_http_info(
         &self,
-        params: ListFleetAgentsOptionalParams,
+        params: ListFleetAgentsV2OptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FleetAgentsResponse>,
-        datadog::Error<ListFleetAgentsError>,
+        datadog::ResponseContent<crate::datadogV2::model::FleetAgentsV2Response>,
+        datadog::Error<ListFleetAgentsV2Error>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.list_fleet_agents";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_fleet_agents' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
+        let local_operation_id = "v2.list_fleet_agents_v2";
 
         // unbox and build optional parameters
         let page_number = params.page_number;
         let page_size = params.page_size;
+        let filter = params.filter;
+        let tags = params.tags;
         let sort_attribute = params.sort_attribute;
         let sort_descending = params.sort_descending;
-        let tags = params.tags;
-        let filter = params.filter;
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/unstable/fleet/agents",
+            "{}/api/v2/fleet/agents",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -1948,6 +1908,14 @@ impl FleetAutomationAPI {
             local_req_builder =
                 local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
         };
+        if let Some(ref local_query_param) = filter {
+            local_req_builder =
+                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = tags {
+            local_req_builder =
+                local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+        };
         if let Some(ref local_query_param) = sort_attribute {
             local_req_builder =
                 local_req_builder.query(&[("sort_attribute", &local_query_param.to_string())]);
@@ -1956,9 +1924,137 @@ impl FleetAutomationAPI {
             local_req_builder =
                 local_req_builder.query(&[("sort_descending", &local_query_param.to_string())]);
         };
-        if let Some(ref local_query_param) = tags {
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::FleetAgentsV2Response>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListFleetAgentsV2Error> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieve a paginated list of all deployments for fleet automation.
+    pub async fn list_fleet_deployments_v2(
+        &self,
+        params: ListFleetDeploymentsV2OptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::FleetDeploymentsV2Response,
+        datadog::Error<ListFleetDeploymentsV2Error>,
+    > {
+        match self.list_fleet_deployments_v2_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Retrieve a paginated list of all deployments for fleet automation.
+    pub async fn list_fleet_deployments_v2_with_http_info(
+        &self,
+        params: ListFleetDeploymentsV2OptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::FleetDeploymentsV2Response>,
+        datadog::Error<ListFleetDeploymentsV2Error>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_fleet_deployments_v2";
+
+        // unbox and build optional parameters
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+        let sort = params.sort;
+        let ascending = params.ascending;
+        let filter = params.filter;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/fleet/deployments",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_size {
             local_req_builder =
-                local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+                local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page_number", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = ascending {
+            local_req_builder =
+                local_req_builder.query(&[("ascending", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter {
             local_req_builder =
@@ -2007,7 +2103,7 @@ impl FleetAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FleetAgentsResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::FleetDeploymentsV2Response>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -2020,7 +2116,7 @@ impl FleetAutomationAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListFleetAgentsError> =
+            let local_entity: Option<ListFleetDeploymentsV2Error> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -2031,16 +2127,17 @@ impl FleetAutomationAPI {
         }
     }
 
-    /// Retrieve a list of all deployments for fleet automation.
-    /// Use the `page_size` and `page_offset` parameters to paginate results.
-    pub async fn list_fleet_deployments(
+    /// Retrieve all upgrade schedules for the organization.
+    ///
+    /// Schedules automate package upgrades by defining maintenance windows and recurrence rules.
+    /// Each schedule automatically creates deployments based on its configuration.
+    pub async fn list_fleet_schedules_v2(
         &self,
-        params: ListFleetDeploymentsOptionalParams,
     ) -> Result<
-        crate::datadogV2::model::FleetDeploymentsResponse,
-        datadog::Error<ListFleetDeploymentsError>,
+        crate::datadogV2::model::FleetSchedulesV2Response,
+        datadog::Error<ListFleetSchedulesV2Error>,
     > {
-        match self.list_fleet_deployments_with_http_info(params).await {
+        match self.list_fleet_schedules_v2_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -2054,165 +2151,23 @@ impl FleetAutomationAPI {
         }
     }
 
-    /// Retrieve a list of all deployments for fleet automation.
-    /// Use the `page_size` and `page_offset` parameters to paginate results.
-    pub async fn list_fleet_deployments_with_http_info(
+    /// Retrieve all upgrade schedules for the organization.
+    ///
+    /// Schedules automate package upgrades by defining maintenance windows and recurrence rules.
+    /// Each schedule automatically creates deployments based on its configuration.
+    pub async fn list_fleet_schedules_v2_with_http_info(
         &self,
-        params: ListFleetDeploymentsOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FleetDeploymentsResponse>,
-        datadog::Error<ListFleetDeploymentsError>,
+        datadog::ResponseContent<crate::datadogV2::model::FleetSchedulesV2Response>,
+        datadog::Error<ListFleetSchedulesV2Error>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.list_fleet_deployments";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_fleet_deployments' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
-
-        // unbox and build optional parameters
-        let page_size = params.page_size;
-        let page_offset = params.page_offset;
+        let local_operation_id = "v2.list_fleet_schedules_v2";
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/unstable/fleet/deployments",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
-
-        if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
-        };
-        if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page_offset", &local_query_param.to_string())]);
-        };
-
-        // build headers
-        let mut headers = HeaderMap::new();
-        headers.insert("Accept", HeaderValue::from_static("application/json"));
-
-        // build user agent
-        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
-            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
-            Err(e) => {
-                log::warn!("Failed to parse user agent header: {e}, falling back to default");
-                headers.insert(
-                    reqwest::header::USER_AGENT,
-                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
-                )
-            }
-        };
-
-        // build auth
-        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
-        };
-        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
-        };
-
-        local_req_builder = local_req_builder.headers(headers);
-        let local_req = local_req_builder.build()?;
-        log::debug!("request content: {:?}", local_req.body());
-        let local_resp = local_client.execute(local_req).await?;
-
-        let local_status = local_resp.status();
-        let local_content = local_resp.text().await?;
-        log::debug!("response content: {}", local_content);
-
-        if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FleetDeploymentsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
-                Err(e) => return Err(datadog::Error::Serde(e)),
-            };
-        } else {
-            let local_entity: Option<ListFleetDeploymentsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
-            Err(datadog::Error::ResponseError(local_error))
-        }
-    }
-
-    /// Retrieve a list of all schedules for automated fleet deployments.
-    ///
-    /// Schedules allow you to automate package upgrades by defining maintenance windows
-    /// and recurrence rules. Each schedule automatically creates deployments based on its
-    /// configuration.
-    pub async fn list_fleet_schedules(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::FleetSchedulesResponse,
-        datadog::Error<ListFleetSchedulesError>,
-    > {
-        match self.list_fleet_schedules_with_http_info().await {
-            Ok(response_content) => {
-                if let Some(e) = response_content.entity {
-                    Ok(e)
-                } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
-                }
-            }
-            Err(err) => Err(err),
-        }
-    }
-
-    /// Retrieve a list of all schedules for automated fleet deployments.
-    ///
-    /// Schedules allow you to automate package upgrades by defining maintenance windows
-    /// and recurrence rules. Each schedule automatically creates deployments based on its
-    /// configuration.
-    pub async fn list_fleet_schedules_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FleetSchedulesResponse>,
-        datadog::Error<ListFleetSchedulesError>,
-    > {
-        let local_configuration = &self.config;
-        let local_operation_id = "v2.list_fleet_schedules";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_fleet_schedules' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
-
-        let local_client = &self.client;
-
-        let local_uri_str = format!(
-            "{}/api/unstable/fleet/schedules",
+            "{}/api/v2/fleet/schedules",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -2260,7 +2215,7 @@ impl FleetAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FleetSchedulesResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::FleetSchedulesV2Response>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -2273,7 +2228,7 @@ impl FleetAutomationAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListFleetSchedulesError> =
+            let local_entity: Option<ListFleetSchedulesV2Error> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
