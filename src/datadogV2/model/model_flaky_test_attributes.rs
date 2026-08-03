@@ -17,6 +17,9 @@ pub struct FlakyTestAttributes {
     /// Test runs are tagged with @test.test_management.attempt_to_fix_passed and @test.test_management.is_attempt_to_fix when the attempt to fix workflow is triggered.
     #[serde(rename = "attempt_to_fix_id")]
     pub attempt_to_fix_id: Option<String>,
+    /// Whether every non-skipped run of the test failed over the last 7 days.
+    #[serde(rename = "broken_test")]
+    pub broken_test: Option<bool>,
     /// The name of the test's code owners as inferred from the repository configuration.
     #[serde(rename = "codeowners")]
     pub codeowners: Option<Vec<String>>,
@@ -105,6 +108,7 @@ impl FlakyTestAttributes {
     pub fn new() -> FlakyTestAttributes {
         FlakyTestAttributes {
             attempt_to_fix_id: None,
+            broken_test: None,
             codeowners: None,
             envs: None,
             first_flaked_branch: None,
@@ -132,6 +136,11 @@ impl FlakyTestAttributes {
 
     pub fn attempt_to_fix_id(mut self, value: String) -> Self {
         self.attempt_to_fix_id = Some(value);
+        self
+    }
+
+    pub fn broken_test(mut self, value: bool) -> Self {
+        self.broken_test = Some(value);
         self
     }
 
@@ -277,6 +286,7 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                 M: MapAccess<'a>,
             {
                 let mut attempt_to_fix_id: Option<String> = None;
+                let mut broken_test: Option<bool> = None;
                 let mut codeowners: Option<Vec<String>> = None;
                 let mut envs: Option<Vec<String>> = None;
                 let mut first_flaked_branch: Option<String> = None;
@@ -314,6 +324,13 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
                                 continue;
                             }
                             attempt_to_fix_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "broken_test" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            broken_test =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "codeowners" => {
@@ -468,6 +485,7 @@ impl<'de> Deserialize<'de> for FlakyTestAttributes {
 
                 let content = FlakyTestAttributes {
                     attempt_to_fix_id,
+                    broken_test,
                     codeowners,
                     envs,
                     first_flaked_branch,
