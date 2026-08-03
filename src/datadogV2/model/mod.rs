@@ -13972,6 +13972,8 @@ pub mod model_flaky_test_history_policy_meta;
 pub use self::model_flaky_test_history_policy_meta::FlakyTestHistoryPolicyMeta;
 pub mod model_flaky_test_history_policy_meta_config;
 pub use self::model_flaky_test_history_policy_meta_config::FlakyTestHistoryPolicyMetaConfig;
+pub mod model_flaky_test_impact_level;
+pub use self::model_flaky_test_impact_level::FlakyTestImpactLevel;
 pub mod model_flaky_test_pipeline_stats;
 pub use self::model_flaky_test_pipeline_stats::FlakyTestPipelineStats;
 pub mod model_flaky_test_run_metadata;
