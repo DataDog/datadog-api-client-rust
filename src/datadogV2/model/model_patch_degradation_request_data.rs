@@ -17,6 +17,9 @@ pub struct PatchDegradationRequestData {
     /// The ID of the degradation.
     #[serde(rename = "id")]
     pub id: uuid::Uuid,
+    /// The supported relationships for updating a degradation.
+    #[serde(rename = "relationships")]
+    pub relationships: Option<crate::datadogV2::model::PatchDegradationRequestDataRelationships>,
     /// Degradations resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::PatchDegradationRequestDataType,
@@ -36,10 +39,19 @@ impl PatchDegradationRequestData {
         PatchDegradationRequestData {
             attributes,
             id,
+            relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn relationships(
+        mut self,
+        value: crate::datadogV2::model::PatchDegradationRequestDataRelationships,
+    ) -> Self {
+        self.relationships = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -72,6 +84,9 @@ impl<'de> Deserialize<'de> for PatchDegradationRequestData {
                     crate::datadogV2::model::PatchDegradationRequestDataAttributes,
                 > = None;
                 let mut id: Option<uuid::Uuid> = None;
+                let mut relationships: Option<
+                    crate::datadogV2::model::PatchDegradationRequestDataRelationships,
+                > = None;
                 let mut type_: Option<crate::datadogV2::model::PatchDegradationRequestDataType> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -87,6 +102,13 @@ impl<'de> Deserialize<'de> for PatchDegradationRequestData {
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "relationships" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            relationships =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -113,6 +135,7 @@ impl<'de> Deserialize<'de> for PatchDegradationRequestData {
                 let content = PatchDegradationRequestData {
                     attributes,
                     id,
+                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,
