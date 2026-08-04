@@ -281,6 +281,10 @@ impl Default for Configuration {
                 false,
             ),
             (
+                "v2.create_security_findings_automation_severity_modifier_rule".to_owned(),
+                false,
+            ),
+            (
                 "v2.create_security_findings_automation_ticket_creation_rule".to_owned(),
                 false,
             ),
@@ -310,6 +314,10 @@ impl Default for Configuration {
                 false,
             ),
             (
+                "v2.delete_security_findings_automation_severity_modifier_rule".to_owned(),
+                false,
+            ),
+            (
                 "v2.delete_security_findings_automation_ticket_creation_rule".to_owned(),
                 false,
             ),
@@ -336,6 +344,10 @@ impl Default for Configuration {
             ),
             (
                 "v2.get_security_findings_automation_mute_rule".to_owned(),
+                false,
+            ),
+            (
+                "v2.get_security_findings_automation_severity_modifier_rule".to_owned(),
                 false,
             ),
             (
