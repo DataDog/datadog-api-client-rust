@@ -20,9 +20,6 @@ pub struct GovernanceControlParameterDefinition {
     /// The human-readable name of the parameter.
     #[serde(rename = "display_name")]
     pub display_name: String,
-    /// Whether the parameter is hidden from the UI.
-    #[serde(rename = "hidden")]
-    pub hidden: bool,
     /// The machine-readable name of the parameter.
     #[serde(rename = "name")]
     pub name: String,
@@ -47,7 +44,6 @@ impl GovernanceControlParameterDefinition {
         default_value: serde_json::Value,
         description: String,
         display_name: String,
-        hidden: bool,
         name: String,
         required: bool,
         supported_values: Vec<crate::datadogV2::model::GovernanceControlSupportedValue>,
@@ -57,7 +53,6 @@ impl GovernanceControlParameterDefinition {
             default_value,
             description,
             display_name,
-            hidden,
             name,
             required,
             supported_values,
@@ -96,7 +91,6 @@ impl<'de> Deserialize<'de> for GovernanceControlParameterDefinition {
                 let mut default_value: Option<serde_json::Value> = None;
                 let mut description: Option<String> = None;
                 let mut display_name: Option<String> = None;
-                let mut hidden: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut required: Option<bool> = None;
                 let mut supported_values: Option<
@@ -122,9 +116,6 @@ impl<'de> Deserialize<'de> for GovernanceControlParameterDefinition {
                         "display_name" => {
                             display_name =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "hidden" => {
-                            hidden = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -152,7 +143,6 @@ impl<'de> Deserialize<'de> for GovernanceControlParameterDefinition {
                     description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let display_name =
                     display_name.ok_or_else(|| M::Error::missing_field("display_name"))?;
-                let hidden = hidden.ok_or_else(|| M::Error::missing_field("hidden"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let required = required.ok_or_else(|| M::Error::missing_field("required"))?;
                 let supported_values =
@@ -163,7 +153,6 @@ impl<'de> Deserialize<'de> for GovernanceControlParameterDefinition {
                     default_value,
                     description,
                     display_name,
-                    hidden,
                     name,
                     required,
                     supported_values,

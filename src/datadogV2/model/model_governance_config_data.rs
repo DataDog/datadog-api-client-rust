@@ -6,22 +6,22 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A governance insight resource.
+/// A Governance Console configuration resource.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct GovernanceInsightData {
-    /// The attributes of a governance insight. Exactly one of `metric_query`, `event_query`,
-    /// `usage_query`, `audit_query`, or `percentage_query` is populated, depending on the data
-    /// source the insight is computed from; the rest are `null`.
+pub struct GovernanceConfigData {
+    /// The attributes of a Governance Console configuration.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::GovernanceInsightAttributes,
-    /// The unique identifier of the insight.
+    pub attributes: crate::datadogV2::model::GovernanceConfigAttributes,
+    /// The unique identifier of the organization the Governance Console configuration applies
+    /// to. May be the nil UUID (`00000000-0000-0000-0000-000000000000`) when the configuration
+    /// is not tied to a specific organization record.
     #[serde(rename = "id")]
     pub id: String,
-    /// JSON:API resource type for a governance insight.
+    /// Governance console config resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::GovernanceInsightResourceType,
+    pub type_: crate::datadogV2::model::GovernanceConsoleConfigResourceType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,13 +29,13 @@ pub struct GovernanceInsightData {
     pub(crate) _unparsed: bool,
 }
 
-impl GovernanceInsightData {
+impl GovernanceConfigData {
     pub fn new(
-        attributes: crate::datadogV2::model::GovernanceInsightAttributes,
+        attributes: crate::datadogV2::model::GovernanceConfigAttributes,
         id: String,
-        type_: crate::datadogV2::model::GovernanceInsightResourceType,
-    ) -> GovernanceInsightData {
-        GovernanceInsightData {
+        type_: crate::datadogV2::model::GovernanceConsoleConfigResourceType,
+    ) -> GovernanceConfigData {
+        GovernanceConfigData {
             attributes,
             id,
             type_,
@@ -53,14 +53,14 @@ impl GovernanceInsightData {
     }
 }
 
-impl<'de> Deserialize<'de> for GovernanceInsightData {
+impl<'de> Deserialize<'de> for GovernanceConfigData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct GovernanceInsightDataVisitor;
-        impl<'a> Visitor<'a> for GovernanceInsightDataVisitor {
-            type Value = GovernanceInsightData;
+        struct GovernanceConfigDataVisitor;
+        impl<'a> Visitor<'a> for GovernanceConfigDataVisitor {
+            type Value = GovernanceConfigData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,11 +70,12 @@ impl<'de> Deserialize<'de> for GovernanceInsightData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::GovernanceInsightAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::GovernanceConfigAttributes> =
                     None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::GovernanceInsightResourceType> =
-                    None;
+                let mut type_: Option<
+                    crate::datadogV2::model::GovernanceConsoleConfigResourceType,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -93,7 +94,7 @@ impl<'de> Deserialize<'de> for GovernanceInsightData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::GovernanceInsightResourceType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::GovernanceConsoleConfigResourceType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -111,7 +112,7 @@ impl<'de> Deserialize<'de> for GovernanceInsightData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = GovernanceInsightData {
+                let content = GovernanceConfigData {
                     attributes,
                     id,
                     type_,
@@ -123,6 +124,6 @@ impl<'de> Deserialize<'de> for GovernanceInsightData {
             }
         }
 
-        deserializer.deserialize_any(GovernanceInsightDataVisitor)
+        deserializer.deserialize_any(GovernanceConfigDataVisitor)
     }
 }
