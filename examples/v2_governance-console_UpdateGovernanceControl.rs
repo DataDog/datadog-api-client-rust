@@ -1,6 +1,6 @@
-// Update a governance control returns "OK" response
+// Update a control returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_governance_controls::GovernanceControlsAPI;
+use datadog_api_client::datadogV2::api_governance_console::GovernanceConsoleAPI;
 use datadog_api_client::datadogV2::model::GovernanceControlResourceType;
 use datadog_api_client::datadogV2::model::GovernanceControlUpdateAttributes;
 use datadog_api_client::datadogV2::model::GovernanceControlUpdateData;
@@ -13,16 +13,12 @@ async fn main() {
             .attributes(
                 GovernanceControlUpdateAttributes::new()
                     .detection_frequency("daily".to_string())
-                    .mitigation_type("revoke_api_key".to_string())
-                    .name("Unused API Keys".to_string())
-                    .notification_frequency("daily".to_string())
-                    .notification_type("slack".to_string()),
-            )
-            .id("0d4e6f8a-1b2c-3d4e-5f6a-7b8c9d0e1f2a".to_string()),
+                    .mitigation_type("revoke_api_key".to_string()),
+            ),
     );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateGovernanceControl", true);
-    let api = GovernanceControlsAPI::with_config(configuration);
+    let api = GovernanceConsoleAPI::with_config(configuration);
     let resp = api
         .update_governance_control("detection_type".to_string(), body)
         .await;

@@ -6,24 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Query execution context that allows the frontend to execute insight queries directly.
+/// Query execution context for running insight queries directly.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GovernanceInsightQueryConfig {
-    /// The chart type the frontend should use to render the insight.
+    /// The chart type used to render the insight.
     #[serde(rename = "chart_type")]
     pub chart_type: Option<String>,
-    /// The window used for the previous value comparison, for example `week` or `month`.
+    /// The window used for the previous value comparison; for example, `week` or `month`.
     #[serde(rename = "comparison_shift")]
     pub comparison_shift: String,
     /// The default value to display when no data is available.
     #[serde(rename = "default_value")]
     pub default_value: Option<i64>,
-    /// Whether an increase in the value is good, bad, or neutral. One of `neutral`,
-    /// `increase_better`, or `decrease_better`.
+    /// Whether an increase in the insight's value is good, bad, or neutral.
     #[serde(rename = "directionality")]
-    pub directionality: Option<String>,
+    pub directionality: Option<crate::datadogV2::model::GovernanceInsightDirectionality>,
     /// The number of days the insight value is computed over.
     #[serde(rename = "effective_time_window_days")]
     pub effective_time_window_days: i64,
@@ -60,7 +59,10 @@ impl GovernanceInsightQueryConfig {
         self
     }
 
-    pub fn directionality(mut self, value: String) -> Self {
+    pub fn directionality(
+        mut self,
+        value: crate::datadogV2::model::GovernanceInsightDirectionality,
+    ) -> Self {
         self.directionality = Some(value);
         self
     }
@@ -94,7 +96,9 @@ impl<'de> Deserialize<'de> for GovernanceInsightQueryConfig {
                 let mut chart_type: Option<String> = None;
                 let mut comparison_shift: Option<String> = None;
                 let mut default_value: Option<i64> = None;
-                let mut directionality: Option<String> = None;
+                let mut directionality: Option<
+                    crate::datadogV2::model::GovernanceInsightDirectionality,
+                > = None;
                 let mut effective_time_window_days: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -127,6 +131,14 @@ impl<'de> Deserialize<'de> for GovernanceInsightQueryConfig {
                             }
                             directionality =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _directionality) = directionality {
+                                match _directionality {
+                                    crate::datadogV2::model::GovernanceInsightDirectionality::UnparsedObject(_directionality) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "effective_time_window_days" => {
                             effective_time_window_days =

@@ -32,12 +32,6 @@ pub struct GovernanceControlAttributes {
     /// A free-form map of parameter names to their configured values.
     #[serde(rename = "detection_parameters")]
     pub detection_parameters: std::collections::BTreeMap<String, serde_json::Value>,
-    /// The detection type that uniquely identifies the control.
-    #[serde(rename = "detection_type")]
-    pub detection_type: String,
-    /// The feature flags that gate the control.
-    #[serde(rename = "feature_flags")]
-    pub feature_flags: Vec<String>,
     /// The insight slugs associated with the control.
     #[serde(rename = "insights")]
     pub insights: Vec<String>,
@@ -60,27 +54,12 @@ pub struct GovernanceControlAttributes {
     /// Human-readable name of the control.
     #[serde(rename = "name")]
     pub name: String,
-    /// Guidance on the next steps to remediate detections for the control.
-    #[serde(rename = "next_steps")]
-    pub next_steps: String,
-    /// The configured notification frequency for the control. Empty when not configured.
-    #[serde(rename = "notification_frequency")]
-    pub notification_frequency: String,
-    /// A free-form map of parameter names to their configured values.
-    #[serde(rename = "notification_parameters")]
-    pub notification_parameters: std::collections::BTreeMap<String, serde_json::Value>,
-    /// The configured notification type for the control. Empty when not configured.
-    #[serde(rename = "notification_type")]
-    pub notification_type: String,
     /// The priority of the control, such as `High`.
     #[serde(rename = "priority")]
     pub priority: String,
     /// The product the control belongs to.
     #[serde(rename = "product")]
     pub product: String,
-    /// The release status of the control, such as `prod` or `beta`.
-    #[serde(rename = "release_status")]
-    pub release_status: String,
     /// The type of resource the control evaluates.
     #[serde(rename = "resource_type")]
     pub resource_type: String,
@@ -91,19 +70,9 @@ pub struct GovernanceControlAttributes {
     #[serde(rename = "supported_detection_parameters")]
     pub supported_detection_parameters:
         Vec<crate::datadogV2::model::GovernanceControlParameterDefinition>,
-    /// An array of parameter definitions.
-    #[serde(rename = "supported_notification_parameters")]
-    pub supported_notification_parameters:
-        Vec<crate::datadogV2::model::GovernanceControlParameterDefinition>,
-    /// A short description of the remediation task for the control.
-    #[serde(rename = "task")]
-    pub task: String,
     /// The control type, such as `Proactive` or `Detection`.
     #[serde(rename = "type")]
     pub type_: String,
-    /// The usage concern the control addresses, such as `Security` or `Cost Optimization`.
-    #[serde(rename = "usage_concern")]
-    pub usage_concern: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -120,8 +89,6 @@ impl GovernanceControlAttributes {
         description: String,
         detection_frequency: String,
         detection_parameters: std::collections::BTreeMap<String, serde_json::Value>,
-        detection_type: String,
-        feature_flags: Vec<String>,
         insights: Vec<String>,
         last_detection_at: Option<chrono::DateTime<chrono::Utc>>,
         mitigated_detections_count: i64,
@@ -129,24 +96,14 @@ impl GovernanceControlAttributes {
         mitigation_type: String,
         mitigations: Vec<crate::datadogV2::model::GovernanceControlMitigationDefinition>,
         name: String,
-        next_steps: String,
-        notification_frequency: String,
-        notification_parameters: std::collections::BTreeMap<String, serde_json::Value>,
-        notification_type: String,
         priority: String,
         product: String,
-        release_status: String,
         resource_type: String,
         resource_type_display_name: String,
         supported_detection_parameters: Vec<
             crate::datadogV2::model::GovernanceControlParameterDefinition,
         >,
-        supported_notification_parameters: Vec<
-            crate::datadogV2::model::GovernanceControlParameterDefinition,
-        >,
-        task: String,
         type_: String,
-        usage_concern: String,
     ) -> GovernanceControlAttributes {
         GovernanceControlAttributes {
             active_detections_count,
@@ -156,8 +113,6 @@ impl GovernanceControlAttributes {
             description,
             detection_frequency,
             detection_parameters,
-            detection_type,
-            feature_flags,
             insights,
             last_detection_at,
             mitigated_detections_count,
@@ -165,20 +120,12 @@ impl GovernanceControlAttributes {
             mitigation_type,
             mitigations,
             name,
-            next_steps,
-            notification_frequency,
-            notification_parameters,
-            notification_type,
             priority,
             product,
-            release_status,
             resource_type,
             resource_type_display_name,
             supported_detection_parameters,
-            supported_notification_parameters,
-            task,
             type_,
-            usage_concern,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -219,8 +166,6 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                 let mut detection_parameters: Option<
                     std::collections::BTreeMap<String, serde_json::Value>,
                 > = None;
-                let mut detection_type: Option<String> = None;
-                let mut feature_flags: Option<Vec<String>> = None;
                 let mut insights: Option<Vec<String>> = None;
                 let mut last_detection_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut mitigated_detections_count: Option<i64> = None;
@@ -232,26 +177,14 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                     Vec<crate::datadogV2::model::GovernanceControlMitigationDefinition>,
                 > = None;
                 let mut name: Option<String> = None;
-                let mut next_steps: Option<String> = None;
-                let mut notification_frequency: Option<String> = None;
-                let mut notification_parameters: Option<
-                    std::collections::BTreeMap<String, serde_json::Value>,
-                > = None;
-                let mut notification_type: Option<String> = None;
                 let mut priority: Option<String> = None;
                 let mut product: Option<String> = None;
-                let mut release_status: Option<String> = None;
                 let mut resource_type: Option<String> = None;
                 let mut resource_type_display_name: Option<String> = None;
                 let mut supported_detection_parameters: Option<
                     Vec<crate::datadogV2::model::GovernanceControlParameterDefinition>,
                 > = None;
-                let mut supported_notification_parameters: Option<
-                    Vec<crate::datadogV2::model::GovernanceControlParameterDefinition>,
-                > = None;
-                let mut task: Option<String> = None;
                 let mut type_: Option<String> = None;
-                let mut usage_concern: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -285,14 +218,6 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                             detection_parameters =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "detection_type" => {
-                            detection_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "feature_flags" => {
-                            feature_flags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "insights" => {
                             insights = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -319,30 +244,11 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "next_steps" => {
-                            next_steps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "notification_frequency" => {
-                            notification_frequency =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "notification_parameters" => {
-                            notification_parameters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "notification_type" => {
-                            notification_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "priority" => {
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "product" => {
                             product = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "release_status" => {
-                            release_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "resource_type" => {
                             resource_type =
@@ -356,19 +262,8 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                             supported_detection_parameters =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "supported_notification_parameters" => {
-                            supported_notification_parameters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "task" => {
-                            task = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "usage_concern" => {
-                            usage_concern =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -388,10 +283,6 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                     .ok_or_else(|| M::Error::missing_field("detection_frequency"))?;
                 let detection_parameters = detection_parameters
                     .ok_or_else(|| M::Error::missing_field("detection_parameters"))?;
-                let detection_type =
-                    detection_type.ok_or_else(|| M::Error::missing_field("detection_type"))?;
-                let feature_flags =
-                    feature_flags.ok_or_else(|| M::Error::missing_field("feature_flags"))?;
                 let insights = insights.ok_or_else(|| M::Error::missing_field("insights"))?;
                 let last_detection_at = last_detection_at
                     .ok_or_else(|| M::Error::missing_field("last_detection_at"))?;
@@ -404,29 +295,15 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                 let mitigations =
                     mitigations.ok_or_else(|| M::Error::missing_field("mitigations"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let next_steps = next_steps.ok_or_else(|| M::Error::missing_field("next_steps"))?;
-                let notification_frequency = notification_frequency
-                    .ok_or_else(|| M::Error::missing_field("notification_frequency"))?;
-                let notification_parameters = notification_parameters
-                    .ok_or_else(|| M::Error::missing_field("notification_parameters"))?;
-                let notification_type = notification_type
-                    .ok_or_else(|| M::Error::missing_field("notification_type"))?;
                 let priority = priority.ok_or_else(|| M::Error::missing_field("priority"))?;
                 let product = product.ok_or_else(|| M::Error::missing_field("product"))?;
-                let release_status =
-                    release_status.ok_or_else(|| M::Error::missing_field("release_status"))?;
                 let resource_type =
                     resource_type.ok_or_else(|| M::Error::missing_field("resource_type"))?;
                 let resource_type_display_name = resource_type_display_name
                     .ok_or_else(|| M::Error::missing_field("resource_type_display_name"))?;
                 let supported_detection_parameters = supported_detection_parameters
                     .ok_or_else(|| M::Error::missing_field("supported_detection_parameters"))?;
-                let supported_notification_parameters = supported_notification_parameters
-                    .ok_or_else(|| M::Error::missing_field("supported_notification_parameters"))?;
-                let task = task.ok_or_else(|| M::Error::missing_field("task"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
-                let usage_concern =
-                    usage_concern.ok_or_else(|| M::Error::missing_field("usage_concern"))?;
 
                 let content = GovernanceControlAttributes {
                     active_detections_count,
@@ -436,8 +313,6 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                     description,
                     detection_frequency,
                     detection_parameters,
-                    detection_type,
-                    feature_flags,
                     insights,
                     last_detection_at,
                     mitigated_detections_count,
@@ -445,20 +320,12 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                     mitigation_type,
                     mitigations,
                     name,
-                    next_steps,
-                    notification_frequency,
-                    notification_parameters,
-                    notification_type,
                     priority,
                     product,
-                    release_status,
                     resource_type,
                     resource_type_display_name,
                     supported_detection_parameters,
-                    supported_notification_parameters,
-                    task,
                     type_,
-                    usage_concern,
                     additional_properties,
                     _unparsed,
                 };

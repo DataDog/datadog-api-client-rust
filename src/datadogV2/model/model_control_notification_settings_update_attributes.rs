@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The data of a governance control update request.
+/// The attributes of a governance control's notification settings that can be updated.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct GovernanceControlUpdateData {
-    /// The attributes of a governance control that can be updated. Only the attributes present in the request are modified.
-    #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::GovernanceControlUpdateAttributes>,
-    /// JSON:API resource type for a governance control.
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::GovernanceControlResourceType,
+pub struct ControlNotificationSettingsUpdateAttributes {
+    /// The notification settings for each supported event type on the control.
+    #[serde(rename = "event_settings")]
+    pub event_settings: Option<Vec<crate::datadogV2::model::ControlNotificationEventSetting>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,20 @@ pub struct GovernanceControlUpdateData {
     pub(crate) _unparsed: bool,
 }
 
-impl GovernanceControlUpdateData {
-    pub fn new(
-        type_: crate::datadogV2::model::GovernanceControlResourceType,
-    ) -> GovernanceControlUpdateData {
-        GovernanceControlUpdateData {
-            attributes: None,
-            type_,
+impl ControlNotificationSettingsUpdateAttributes {
+    pub fn new() -> ControlNotificationSettingsUpdateAttributes {
+        ControlNotificationSettingsUpdateAttributes {
+            event_settings: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn attributes(
+    pub fn event_settings(
         mut self,
-        value: crate::datadogV2::model::GovernanceControlUpdateAttributes,
+        value: Vec<crate::datadogV2::model::ControlNotificationEventSetting>,
     ) -> Self {
-        self.attributes = Some(value);
+        self.event_settings = Some(value);
         self
     }
 
@@ -53,14 +47,20 @@ impl GovernanceControlUpdateData {
     }
 }
 
-impl<'de> Deserialize<'de> for GovernanceControlUpdateData {
+impl Default for ControlNotificationSettingsUpdateAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for ControlNotificationSettingsUpdateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct GovernanceControlUpdateDataVisitor;
-        impl<'a> Visitor<'a> for GovernanceControlUpdateDataVisitor {
-            type Value = GovernanceControlUpdateData;
+        struct ControlNotificationSettingsUpdateAttributesVisitor;
+        impl<'a> Visitor<'a> for ControlNotificationSettingsUpdateAttributesVisitor {
+            type Value = ControlNotificationSettingsUpdateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,11 +70,9 @@ impl<'de> Deserialize<'de> for GovernanceControlUpdateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::GovernanceControlUpdateAttributes,
+                let mut event_settings: Option<
+                    Vec<crate::datadogV2::model::ControlNotificationEventSetting>,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::GovernanceControlResourceType> =
-                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -83,22 +81,12 @@ impl<'de> Deserialize<'de> for GovernanceControlUpdateData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "attributes" => {
+                        "event_settings" => {
                             if v.is_null() {
                                 continue;
                             }
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::GovernanceControlResourceType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                            event_settings =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -107,11 +95,9 @@ impl<'de> Deserialize<'de> for GovernanceControlUpdateData {
                         }
                     }
                 }
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = GovernanceControlUpdateData {
-                    attributes,
-                    type_,
+                let content = ControlNotificationSettingsUpdateAttributes {
+                    event_settings,
                     additional_properties,
                     _unparsed,
                 };
@@ -120,6 +106,6 @@ impl<'de> Deserialize<'de> for GovernanceControlUpdateData {
             }
         }
 
-        deserializer.deserialize_any(GovernanceControlUpdateDataVisitor)
+        deserializer.deserialize_any(ControlNotificationSettingsUpdateAttributesVisitor)
     }
 }
