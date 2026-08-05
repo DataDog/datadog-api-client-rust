@@ -78,9 +78,6 @@ pub struct FleetAgentV2Attributes {
     /// OpenTelemetry collector distributions associated with the agent.
     #[serde(rename = "otel_collector_distributions")]
     pub otel_collector_distributions: Option<Vec<String>>,
-    /// The primary OpenTelemetry collector version, if applicable.
-    #[serde(rename = "otel_collector_version")]
-    pub otel_collector_version: Option<String>,
     /// All OpenTelemetry collector versions associated with the agent.
     #[serde(rename = "otel_collector_versions")]
     pub otel_collector_versions: Option<Vec<String>>,
@@ -137,7 +134,6 @@ impl FleetAgentV2Attributes {
             os: None,
             otel_collector_deployment_types: None,
             otel_collector_distributions: None,
-            otel_collector_version: None,
             otel_collector_versions: None,
             otel_resource_attributes: None,
             pod_name: None,
@@ -264,11 +260,6 @@ impl FleetAgentV2Attributes {
         self
     }
 
-    pub fn otel_collector_version(mut self, value: String) -> Self {
-        self.otel_collector_version = Some(value);
-        self
-    }
-
     pub fn otel_collector_versions(mut self, value: Vec<String>) -> Self {
         self.otel_collector_versions = Some(value);
         self
@@ -368,7 +359,6 @@ impl<'de> Deserialize<'de> for FleetAgentV2Attributes {
                 let mut os: Option<String> = None;
                 let mut otel_collector_deployment_types: Option<Vec<String>> = None;
                 let mut otel_collector_distributions: Option<Vec<String>> = None;
-                let mut otel_collector_version: Option<String> = None;
                 let mut otel_collector_versions: Option<Vec<String>> = None;
                 let mut otel_resource_attributes: Option<Vec<String>> = None;
                 let mut pod_name: Option<String> = None;
@@ -545,13 +535,6 @@ impl<'de> Deserialize<'de> for FleetAgentV2Attributes {
                             otel_collector_distributions =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "otel_collector_version" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            otel_collector_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "otel_collector_versions" => {
                             if v.is_null() {
                                 continue;
@@ -635,7 +618,6 @@ impl<'de> Deserialize<'de> for FleetAgentV2Attributes {
                     os,
                     otel_collector_deployment_types,
                     otel_collector_distributions,
-                    otel_collector_version,
                     otel_collector_versions,
                     otel_resource_attributes,
                     pod_name,

@@ -11,21 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FleetIntegrationsByStatusV2 {
-    /// The Kubernetes cluster name, if the agent runs in a cluster.
-    #[serde(rename = "cluster_name")]
-    pub cluster_name: Option<String>,
     /// Configuration files for integrations.
     #[serde(rename = "configuration_files")]
     pub configuration_files: Option<Vec<crate::datadogV2::model::FleetConfigurationFileV2>>,
-    /// The unique agent key identifier.
-    #[serde(rename = "datadog_agent_key")]
-    pub datadog_agent_key: Option<String>,
     /// Integrations with errors.
     #[serde(rename = "error_integrations")]
     pub error_integrations: Option<Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>>,
-    /// The Kubernetes cluster key, if the agent runs in a cluster.
-    #[serde(rename = "k8s_cluster_key")]
-    pub k8s_cluster_key: Option<String>,
     /// Detected but not configured integrations.
     #[serde(rename = "missing_integrations")]
     pub missing_integrations: Option<Vec<crate::datadogV2::model::FleetDetectedIntegration>>,
@@ -45,22 +36,14 @@ pub struct FleetIntegrationsByStatusV2 {
 impl FleetIntegrationsByStatusV2 {
     pub fn new() -> FleetIntegrationsByStatusV2 {
         FleetIntegrationsByStatusV2 {
-            cluster_name: None,
             configuration_files: None,
-            datadog_agent_key: None,
             error_integrations: None,
-            k8s_cluster_key: None,
             missing_integrations: None,
             warning_integrations: None,
             working_integrations: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn cluster_name(mut self, value: String) -> Self {
-        self.cluster_name = Some(value);
-        self
     }
 
     pub fn configuration_files(
@@ -71,21 +54,11 @@ impl FleetIntegrationsByStatusV2 {
         self
     }
 
-    pub fn datadog_agent_key(mut self, value: String) -> Self {
-        self.datadog_agent_key = Some(value);
-        self
-    }
-
     pub fn error_integrations(
         mut self,
         value: Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>,
     ) -> Self {
         self.error_integrations = Some(value);
-        self
-    }
-
-    pub fn k8s_cluster_key(mut self, value: String) -> Self {
-        self.k8s_cluster_key = Some(value);
         self
     }
 
@@ -145,15 +118,12 @@ impl<'de> Deserialize<'de> for FleetIntegrationsByStatusV2 {
             where
                 M: MapAccess<'a>,
             {
-                let mut cluster_name: Option<String> = None;
                 let mut configuration_files: Option<
                     Vec<crate::datadogV2::model::FleetConfigurationFileV2>,
                 > = None;
-                let mut datadog_agent_key: Option<String> = None;
                 let mut error_integrations: Option<
                     Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>,
                 > = None;
-                let mut k8s_cluster_key: Option<String> = None;
                 let mut missing_integrations: Option<
                     Vec<crate::datadogV2::model::FleetDetectedIntegration>,
                 > = None;
@@ -171,13 +141,6 @@ impl<'de> Deserialize<'de> for FleetIntegrationsByStatusV2 {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "cluster_name" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            cluster_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "configuration_files" => {
                             if v.is_null() {
                                 continue;
@@ -185,25 +148,11 @@ impl<'de> Deserialize<'de> for FleetIntegrationsByStatusV2 {
                             configuration_files =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "datadog_agent_key" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            datadog_agent_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "error_integrations" => {
                             if v.is_null() {
                                 continue;
                             }
                             error_integrations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "k8s_cluster_key" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            k8s_cluster_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "missing_integrations" => {
@@ -236,11 +185,8 @@ impl<'de> Deserialize<'de> for FleetIntegrationsByStatusV2 {
                 }
 
                 let content = FleetIntegrationsByStatusV2 {
-                    cluster_name,
                     configuration_files,
-                    datadog_agent_key,
                     error_integrations,
-                    k8s_cluster_key,
                     missing_integrations,
                     warning_integrations,
                     working_integrations,

@@ -22,7 +22,7 @@ pub struct FleetScheduleV2RecurrenceRule {
     /// Duration of the maintenance window in minutes.
     #[serde(rename = "maintenance_window_duration")]
     pub maintenance_window_duration: Option<i64>,
-    /// Start time of the maintenance window in 24-hour clock format (HH:MM).
+    /// Start time of the maintenance window in 24-hour clock format (HHMM).
     /// Deployments are triggered at this time on the specified days.
     #[serde(rename = "start_maintenance_window")]
     pub start_maintenance_window: Option<String>,
