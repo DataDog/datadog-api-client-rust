@@ -34,6 +34,18 @@ pub struct CreateFeatureFlagAttributes {
     /// The name of the feature flag.
     #[serde(rename = "name")]
     pub name: String,
+    /// Query used to determine which change events on this feature flag trigger notifications to `rule_targets`. Uses Datadog's standard log search syntax (`AND`, `OR`, `NOT`, parentheses) to match against the `notification_type` facet.
+    ///
+    /// Supported `notification_type` values for a feature flag are: `flag_enabled_disabled`, `flag_archived`, `flag_approval_required`, `rollout_started`, `rollout_scheduled`, `rollout_step_started`, `rollout_paused_guardrail`, `rollout_paused_user`, `rollout_aborted_guardrail`, `rollout_aborted_user`, `targeting_rule_created`, `targeting_rule_updated`, `targeting_rule_updated_via_filter`, and `targeting_rule_deleted`.
+    #[serde(
+        rename = "notification_rule_query",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub notification_rule_query: Option<Option<String>>,
+    /// Targets to notify about changes to this feature flag that match `notification_rule_query`.
+    #[serde(rename = "rule_targets")]
+    pub rule_targets: Option<Vec<crate::datadogV2::model::NotificationRuleTarget>>,
     /// The type of values for the feature flag variants.
     #[serde(rename = "value_type")]
     pub value_type: crate::datadogV2::model::ValueType,
@@ -61,6 +73,8 @@ impl CreateFeatureFlagAttributes {
             json_schema: None,
             key,
             name,
+            notification_rule_query: None,
+            rule_targets: None,
             value_type,
             variants,
             additional_properties: std::collections::BTreeMap::new(),
@@ -75,6 +89,19 @@ impl CreateFeatureFlagAttributes {
 
     pub fn json_schema(mut self, value: Option<String>) -> Self {
         self.json_schema = Some(value);
+        self
+    }
+
+    pub fn notification_rule_query(mut self, value: Option<String>) -> Self {
+        self.notification_rule_query = Some(value);
+        self
+    }
+
+    pub fn rule_targets(
+        mut self,
+        value: Vec<crate::datadogV2::model::NotificationRuleTarget>,
+    ) -> Self {
+        self.rule_targets = Some(value);
         self
     }
 
@@ -109,6 +136,9 @@ impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
                 let mut json_schema: Option<Option<String>> = None;
                 let mut key: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut notification_rule_query: Option<Option<String>> = None;
+                let mut rule_targets: Option<Vec<crate::datadogV2::model::NotificationRuleTarget>> =
+                    None;
                 let mut value_type: Option<crate::datadogV2::model::ValueType> = None;
                 let mut variants: Option<Vec<crate::datadogV2::model::CreateVariant>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -136,6 +166,17 @@ impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "notification_rule_query" => {
+                            notification_rule_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "rule_targets" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rule_targets =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "value_type" => {
                             value_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -173,6 +214,8 @@ impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
                     json_schema,
                     key,
                     name,
+                    notification_rule_query,
+                    rule_targets,
                     value_type,
                     variants,
                     additional_properties,
