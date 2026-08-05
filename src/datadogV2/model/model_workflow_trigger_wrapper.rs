@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct WorkflowTriggerWrapper {
-    /// A list of steps that run first after a trigger fires.
+    /// Names of existing workflow steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
-    /// Trigger a workflow from the Datadog UI. Only required if no other trigger exists.
+    /// Trigger a workflow from the Datadog UI. When present, this must be the workflow's only trigger.
     #[serde(rename = "workflowTrigger")]
     pub workflow_trigger: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(flatten)]

@@ -14,7 +14,7 @@ pub struct ScheduleTriggerWrapper {
     /// Trigger a workflow from a Schedule. The workflow must be published.
     #[serde(rename = "scheduleTrigger")]
     pub schedule_trigger: crate::datadogV2::model::ScheduleTrigger,
-    /// A list of steps that run first after a trigger fires.
+    /// Names of existing workflow steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
     #[serde(flatten)]

@@ -14,7 +14,7 @@ pub struct AppTriggerWrapper {
     /// Trigger a workflow from an App.
     #[serde(rename = "appTrigger")]
     pub app_trigger: std::collections::BTreeMap<String, serde_json::Value>,
-    /// A list of steps that run first after a trigger fires.
+    /// Names of existing workflow steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
     #[serde(flatten)]

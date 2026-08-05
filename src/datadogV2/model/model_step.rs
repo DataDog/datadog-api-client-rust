@@ -20,7 +20,8 @@ pub struct Step {
     /// The unique identifier of a connection defined in the spec.
     #[serde(rename = "connectionLabel")]
     pub connection_label: Option<String>,
-    /// The definition of `StepDisplay` object.
+    /// The position of a step on the workflow canvas. Omit `display` from every step to use
+    /// automatic layout, or provide it for every step to preserve a manual layout.
     #[serde(rename = "display")]
     pub display: Option<crate::datadogV2::model::StepDisplay>,
     /// The `Step` `errorHandlers`.
@@ -29,7 +30,7 @@ pub struct Step {
     /// Name of the step.
     #[serde(rename = "name")]
     pub name: String,
-    /// A list of subsequent actions to run.
+    /// A list of subsequent actions to run. This list is empty for a terminal step.
     #[serde(rename = "outboundEdges")]
     pub outbound_edges: Option<Vec<crate::datadogV2::model::OutboundEdge>>,
     /// A list of inputs for an action.
