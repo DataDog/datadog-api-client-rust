@@ -23,9 +23,6 @@ pub struct FleetConfigurationFileV2 {
     /// Name of the configuration file.
     #[serde(rename = "filename")]
     pub filename: Option<String>,
-    /// Hash of the configuration file as applied by fleet management.
-    #[serde(rename = "fleet_hash")]
-    pub fleet_hash: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -40,7 +37,6 @@ impl FleetConfigurationFileV2 {
             file_content: None,
             file_path: None,
             filename: None,
-            fleet_hash: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -63,11 +59,6 @@ impl FleetConfigurationFileV2 {
 
     pub fn filename(mut self, value: String) -> Self {
         self.filename = Some(value);
-        self
-    }
-
-    pub fn fleet_hash(mut self, value: String) -> Self {
-        self.fleet_hash = Some(value);
         self
     }
 
@@ -107,7 +98,6 @@ impl<'de> Deserialize<'de> for FleetConfigurationFileV2 {
                 let mut file_content: Option<String> = None;
                 let mut file_path: Option<String> = None;
                 let mut filename: Option<String> = None;
-                let mut fleet_hash: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -141,12 +131,6 @@ impl<'de> Deserialize<'de> for FleetConfigurationFileV2 {
                             }
                             filename = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "fleet_hash" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            fleet_hash = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -160,7 +144,6 @@ impl<'de> Deserialize<'de> for FleetConfigurationFileV2 {
                     file_content,
                     file_path,
                     filename,
-                    fleet_hash,
                     additional_properties,
                     _unparsed,
                 };

@@ -17,7 +17,7 @@ pub struct FleetDeploymentConfigureV2DryRunAttributes {
     /// Query used to filter and select target hosts for the deployment.
     #[serde(rename = "query")]
     pub query: Option<String>,
-    /// Total number of hosts targeted by the dry run.
+    /// Total number of hosts targeted by this deployment.
     #[serde(rename = "total_hosts")]
     pub total_hosts: Option<i64>,
     #[serde(flatten)]

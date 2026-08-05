@@ -20,9 +20,6 @@ pub struct FleetConfigurationLayer {
     /// Configuration from files.
     #[serde(rename = "file_configuration")]
     pub file_configuration: Option<String>,
-    /// Parsed configuration output.
-    #[serde(rename = "parsed_configuration")]
-    pub parsed_configuration: Option<String>,
     /// Remote configuration settings.
     #[serde(rename = "remote_configuration")]
     pub remote_configuration: Option<String>,
@@ -42,7 +39,6 @@ impl FleetConfigurationLayer {
             compiled_configuration: None,
             env_configuration: None,
             file_configuration: None,
-            parsed_configuration: None,
             remote_configuration: None,
             runtime_configuration: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -62,11 +58,6 @@ impl FleetConfigurationLayer {
 
     pub fn file_configuration(mut self, value: String) -> Self {
         self.file_configuration = Some(value);
-        self
-    }
-
-    pub fn parsed_configuration(mut self, value: String) -> Self {
-        self.parsed_configuration = Some(value);
         self
     }
 
@@ -115,7 +106,6 @@ impl<'de> Deserialize<'de> for FleetConfigurationLayer {
                 let mut compiled_configuration: Option<String> = None;
                 let mut env_configuration: Option<String> = None;
                 let mut file_configuration: Option<String> = None;
-                let mut parsed_configuration: Option<String> = None;
                 let mut remote_configuration: Option<String> = None;
                 let mut runtime_configuration: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -147,13 +137,6 @@ impl<'de> Deserialize<'de> for FleetConfigurationLayer {
                             file_configuration =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "parsed_configuration" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            parsed_configuration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "remote_configuration" => {
                             if v.is_null() {
                                 continue;
@@ -180,7 +163,6 @@ impl<'de> Deserialize<'de> for FleetConfigurationLayer {
                     compiled_configuration,
                     env_configuration,
                     file_configuration,
-                    parsed_configuration,
                     remote_configuration,
                     runtime_configuration,
                     additional_properties,

@@ -18,9 +18,6 @@ pub struct FleetAgentConfigurationFilesV2 {
     #[serde(rename = "application_monitoring_configuration")]
     pub application_monitoring_configuration:
         Option<crate::datadogV2::model::FleetConfigurationLayer>,
-    /// The unique agent key identifier.
-    #[serde(rename = "datadog_agent_key")]
-    pub datadog_agent_key: Option<String>,
     /// Configuration for OpenTelemetry collectors associated with the agent. Present only when the agent has associated OpenTelemetry collectors.
     #[serde(rename = "otel_collectors_configuration")]
     pub otel_collectors_configuration:
@@ -31,9 +28,6 @@ pub struct FleetAgentConfigurationFilesV2 {
     /// Configuration information organized by layers.
     #[serde(rename = "system_probe_configuration")]
     pub system_probe_configuration: Option<crate::datadogV2::model::FleetConfigurationLayer>,
-    /// The configuration version.
-    #[serde(rename = "version")]
-    pub version: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -46,11 +40,9 @@ impl FleetAgentConfigurationFilesV2 {
         FleetAgentConfigurationFilesV2 {
             agent_configuration: None,
             application_monitoring_configuration: None,
-            datadog_agent_key: None,
             otel_collectors_configuration: None,
             security_agent_configuration: None,
             system_probe_configuration: None,
-            version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -69,11 +61,6 @@ impl FleetAgentConfigurationFilesV2 {
         value: crate::datadogV2::model::FleetConfigurationLayer,
     ) -> Self {
         self.application_monitoring_configuration = Some(value);
-        self
-    }
-
-    pub fn datadog_agent_key(mut self, value: String) -> Self {
-        self.datadog_agent_key = Some(value);
         self
     }
 
@@ -98,11 +85,6 @@ impl FleetAgentConfigurationFilesV2 {
         value: crate::datadogV2::model::FleetConfigurationLayer,
     ) -> Self {
         self.system_probe_configuration = Some(value);
-        self
-    }
-
-    pub fn version(mut self, value: String) -> Self {
-        self.version = Some(value);
         self
     }
 
@@ -144,7 +126,6 @@ impl<'de> Deserialize<'de> for FleetAgentConfigurationFilesV2 {
                 let mut application_monitoring_configuration: Option<
                     crate::datadogV2::model::FleetConfigurationLayer,
                 > = None;
-                let mut datadog_agent_key: Option<String> = None;
                 let mut otel_collectors_configuration: Option<
                     Vec<crate::datadogV2::model::FleetOtelCollectorConfigurationV2>,
                 > = None;
@@ -154,7 +135,6 @@ impl<'de> Deserialize<'de> for FleetAgentConfigurationFilesV2 {
                 let mut system_probe_configuration: Option<
                     crate::datadogV2::model::FleetConfigurationLayer,
                 > = None;
-                let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -175,13 +155,6 @@ impl<'de> Deserialize<'de> for FleetAgentConfigurationFilesV2 {
                                 continue;
                             }
                             application_monitoring_configuration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "datadog_agent_key" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            datadog_agent_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "otel_collectors_configuration" => {
@@ -205,12 +178,6 @@ impl<'de> Deserialize<'de> for FleetAgentConfigurationFilesV2 {
                             system_probe_configuration =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "version" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -222,11 +189,9 @@ impl<'de> Deserialize<'de> for FleetAgentConfigurationFilesV2 {
                 let content = FleetAgentConfigurationFilesV2 {
                     agent_configuration,
                     application_monitoring_configuration,
-                    datadog_agent_key,
                     otel_collectors_configuration,
                     security_agent_configuration,
                     system_probe_configuration,
-                    version,
                     additional_properties,
                     _unparsed,
                 };
