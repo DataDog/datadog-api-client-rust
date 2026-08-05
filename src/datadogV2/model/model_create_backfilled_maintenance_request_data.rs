@@ -15,6 +15,10 @@ pub struct CreateBackfilledMaintenanceRequestData {
     #[serde(rename = "attributes")]
     pub attributes:
         Option<crate::datadogV2::model::CreateBackfilledMaintenanceRequestDataAttributes>,
+    /// The supported relationships for creating a backfilled maintenance.
+    #[serde(rename = "relationships")]
+    pub relationships:
+        Option<crate::datadogV2::model::CreateBackfilledMaintenanceRequestDataRelationships>,
     /// Maintenances resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::PatchMaintenanceRequestDataType,
@@ -31,6 +35,7 @@ impl CreateBackfilledMaintenanceRequestData {
     ) -> CreateBackfilledMaintenanceRequestData {
         CreateBackfilledMaintenanceRequestData {
             attributes: None,
+            relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -42,6 +47,14 @@ impl CreateBackfilledMaintenanceRequestData {
         value: crate::datadogV2::model::CreateBackfilledMaintenanceRequestDataAttributes,
     ) -> Self {
         self.attributes = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        mut self,
+        value: crate::datadogV2::model::CreateBackfilledMaintenanceRequestDataRelationships,
+    ) -> Self {
+        self.relationships = Some(value);
         self
     }
 
@@ -74,6 +87,9 @@ impl<'de> Deserialize<'de> for CreateBackfilledMaintenanceRequestData {
                 let mut attributes: Option<
                     crate::datadogV2::model::CreateBackfilledMaintenanceRequestDataAttributes,
                 > = None;
+                let mut relationships: Option<
+                    crate::datadogV2::model::CreateBackfilledMaintenanceRequestDataRelationships,
+                > = None;
                 let mut type_: Option<crate::datadogV2::model::PatchMaintenanceRequestDataType> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -89,6 +105,13 @@ impl<'de> Deserialize<'de> for CreateBackfilledMaintenanceRequestData {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "relationships" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            relationships =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -112,6 +135,7 @@ impl<'de> Deserialize<'de> for CreateBackfilledMaintenanceRequestData {
 
                 let content = CreateBackfilledMaintenanceRequestData {
                     attributes,
+                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,

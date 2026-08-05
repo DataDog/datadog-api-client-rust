@@ -21,6 +21,9 @@ pub struct DegradationDataRelationships {
     /// The status page the degradation belongs to.
     #[serde(rename = "status_page")]
     pub status_page: Option<crate::datadogV2::model::DegradationDataRelationshipsStatusPage>,
+    /// The template the degradation was created from.
+    #[serde(rename = "template")]
+    pub template: Option<crate::datadogV2::model::DegradationDataRelationshipsTemplate>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,6 +37,7 @@ impl DegradationDataRelationships {
             created_by_user: None,
             last_modified_by_user: None,
             status_page: None,
+            template: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -60,6 +64,14 @@ impl DegradationDataRelationships {
         value: crate::datadogV2::model::DegradationDataRelationshipsStatusPage,
     ) -> Self {
         self.status_page = Some(value);
+        self
+    }
+
+    pub fn template(
+        mut self,
+        value: crate::datadogV2::model::DegradationDataRelationshipsTemplate,
+    ) -> Self {
+        self.template = Some(value);
         self
     }
 
@@ -104,6 +116,9 @@ impl<'de> Deserialize<'de> for DegradationDataRelationships {
                 let mut status_page: Option<
                     crate::datadogV2::model::DegradationDataRelationshipsStatusPage,
                 > = None;
+                let mut template: Option<
+                    crate::datadogV2::model::DegradationDataRelationshipsTemplate,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -133,6 +148,12 @@ impl<'de> Deserialize<'de> for DegradationDataRelationships {
                             status_page =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "template" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            template = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -145,6 +166,7 @@ impl<'de> Deserialize<'de> for DegradationDataRelationships {
                     created_by_user,
                     last_modified_by_user,
                     status_page,
+                    template,
                     additional_properties,
                     _unparsed,
                 };
