@@ -964,658 +964,804 @@ lazy_static! {
     };
     static ref OPERATION_SERVERS: HashMap<String, Vec<ServerConfiguration>> = {
         HashMap::from([
+            
             (
                 "v1.get_ip_ranges".into(),
                 vec![
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "The regional site for Datadog customers.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![
-                                        "datadoghq.com".into(),
-                                        "us3.datadoghq.com".into(),
-                                        "us5.datadoghq.com".into(),
-                                        "ap1.datadoghq.com".into(),
-                                        "ap2.datadoghq.com".into(),
-                                        "uk1.datadoghq.com".into(),
-                                        "datadoghq.eu".into(),
-                                        "ddog-gov.com".into(),
-                                        "us2.ddog-gov.com".into(),
-                                    ],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "ip-ranges".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "{protocol}://{name}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "name".into(),
-                                ServerVariable {
-                                    description: "Full site DNS name.".into(),
-                                    default_value: "ip-ranges.datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "protocol".into(),
-                                ServerVariable {
-                                    description: "The protocol for accessing the API.".into(),
-                                    default_value: "https".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "https://{subdomain}.datadoghq.com".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([(
-                            "subdomain".into(),
-                            ServerVariable {
-                                description: "The subdomain where the API is deployed.".into(),
-                                default_value: "ip-ranges".into(),
-                                enum_values: vec![],
-                            },
-                        )]),
-                    },
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The regional site for Datadog customers.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                    "datadoghq.com".into(),
+                    "us3.datadoghq.com".into(),
+                    "us5.datadoghq.com".into(),
+                    "ap1.datadoghq.com".into(),
+                    "ap2.datadoghq.com".into(),
+                    "uk1.datadoghq.com".into(),
+                    "datadoghq.eu".into(),
+                    "ddog-gov.com".into(),
+                    "us2.ddog-gov.com".into(),
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The subdomain where the API is deployed.".into(),
+                default_value: "ip-ranges".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "{protocol}://{name}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "name".into(),
+            ServerVariable {
+                description: "Full site DNS name.".into(),
+                default_value: "ip-ranges.datadoghq.com".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+        (
+            "protocol".into(),
+            ServerVariable {
+                description: "The protocol for accessing the API.".into(),
+                default_value: "https".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "https://{subdomain}.datadoghq.com".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The subdomain where the API is deployed.".into(),
+                default_value: "ip-ranges".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
                 ],
             ),
+            
             (
                 "v1.submit_log".into(),
                 vec![
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "The regional site for Datadog customers.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![
-                                        "datadoghq.com".into(),
-                                        "us3.datadoghq.com".into(),
-                                        "us5.datadoghq.com".into(),
-                                        "ap1.datadoghq.com".into(),
-                                        "ap2.datadoghq.com".into(),
-                                        "uk1.datadoghq.com".into(),
-                                        "datadoghq.eu".into(),
-                                        "ddog-gov.com".into(),
-                                        "us2.ddog-gov.com".into(),
-                                    ],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "http-intake.logs".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "{protocol}://{name}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "name".into(),
-                                ServerVariable {
-                                    description: "Full site DNS name.".into(),
-                                    default_value: "http-intake.logs.datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "protocol".into(),
-                                ServerVariable {
-                                    description: "The protocol for accessing the API.".into(),
-                                    default_value: "https".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "Any Datadog deployment.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "http-intake.logs".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The regional site for Datadog customers.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                    "datadoghq.com".into(),
+                    "us3.datadoghq.com".into(),
+                    "us5.datadoghq.com".into(),
+                    "ap1.datadoghq.com".into(),
+                    "ap2.datadoghq.com".into(),
+                    "uk1.datadoghq.com".into(),
+                    "datadoghq.eu".into(),
+                    "ddog-gov.com".into(),
+                    "us2.ddog-gov.com".into(),
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The subdomain where the API is deployed.".into(),
+                default_value: "http-intake.logs".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "{protocol}://{name}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "name".into(),
+            ServerVariable {
+                description: "Full site DNS name.".into(),
+                default_value: "http-intake.logs.datadoghq.com".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+        (
+            "protocol".into(),
+            ServerVariable {
+                description: "The protocol for accessing the API.".into(),
+                default_value: "https".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "Any Datadog deployment.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The subdomain where the API is deployed.".into(),
+                default_value: "http-intake.logs".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
                 ],
             ),
+            
             (
                 "v2.create_event".into(),
                 vec![
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "The regional site for customers.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![
-                                        "datadoghq.com".into(),
-                                        "us3.datadoghq.com".into(),
-                                        "us5.datadoghq.com".into(),
-                                        "ap1.datadoghq.com".into(),
-                                        "ap2.datadoghq.com".into(),
-                                        "uk1.datadoghq.com".into(),
-                                        "datadoghq.eu".into(),
-                                        "ddog-gov.com".into(),
-                                        "us2.ddog-gov.com".into(),
-                                    ],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "event-management-intake".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "{protocol}://{name}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "name".into(),
-                                ServerVariable {
-                                    description: "Full site DNS name.".into(),
-                                    default_value: "event-management-intake.datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "protocol".into(),
-                                ServerVariable {
-                                    description: "The protocol for accessing the API.".into(),
-                                    default_value: "https".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "Any Datadog deployment.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "event-management-intake".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The regional site for customers.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                    "datadoghq.com".into(),
+                    "us3.datadoghq.com".into(),
+                    "us5.datadoghq.com".into(),
+                    "ap1.datadoghq.com".into(),
+                    "ap2.datadoghq.com".into(),
+                    "uk1.datadoghq.com".into(),
+                    "datadoghq.eu".into(),
+                    "ddog-gov.com".into(),
+                    "us2.ddog-gov.com".into(),
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The subdomain where the API is deployed.".into(),
+                default_value: "event-management-intake".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "{protocol}://{name}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "name".into(),
+            ServerVariable {
+                description: "Full site DNS name.".into(),
+                default_value: "event-management-intake.datadoghq.com".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+        (
+            "protocol".into(),
+            ServerVariable {
+                description: "The protocol for accessing the API.".into(),
+                default_value: "https".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "Any Datadog deployment.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The subdomain where the API is deployed.".into(),
+                default_value: "event-management-intake".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
                 ],
             ),
+            
             (
                 "v2.submit_log".into(),
                 vec![
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "The regional site for customers.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![
-                                        "datadoghq.com".into(),
-                                        "us3.datadoghq.com".into(),
-                                        "us5.datadoghq.com".into(),
-                                        "ap1.datadoghq.com".into(),
-                                        "ap2.datadoghq.com".into(),
-                                        "uk1.datadoghq.com".into(),
-                                        "datadoghq.eu".into(),
-                                        "ddog-gov.com".into(),
-                                        "us2.ddog-gov.com".into(),
-                                    ],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "http-intake.logs".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "{protocol}://{name}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "name".into(),
-                                ServerVariable {
-                                    description: "Full site DNS name.".into(),
-                                    default_value: "http-intake.logs.datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "protocol".into(),
-                                ServerVariable {
-                                    description: "The protocol for accessing the API.".into(),
-                                    default_value: "https".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "Any Datadog deployment.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "http-intake.logs".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The regional site for customers.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                    "datadoghq.com".into(),
+                    "us3.datadoghq.com".into(),
+                    "us5.datadoghq.com".into(),
+                    "ap1.datadoghq.com".into(),
+                    "ap2.datadoghq.com".into(),
+                    "uk1.datadoghq.com".into(),
+                    "datadoghq.eu".into(),
+                    "ddog-gov.com".into(),
+                    "us2.ddog-gov.com".into(),
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The subdomain where the API is deployed.".into(),
+                default_value: "http-intake.logs".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "{protocol}://{name}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "name".into(),
+            ServerVariable {
+                description: "Full site DNS name.".into(),
+                default_value: "http-intake.logs.datadoghq.com".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+        (
+            "protocol".into(),
+            ServerVariable {
+                description: "The protocol for accessing the API.".into(),
+                default_value: "https".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "Any Datadog deployment.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The subdomain where the API is deployed.".into(),
+                default_value: "http-intake.logs".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
                 ],
             ),
+            
             (
                 "v2.create_on_call_page".into(),
                 vec![
-                    ServerConfiguration {
-                        url: "https://{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([(
-                            "site".into(),
-                            ServerVariable {
-                                description: "The globally available endpoint for On-Call.".into(),
-                                default_value: "navy.oncall.datadoghq.com".into(),
-                                enum_values: vec![
-                                    "lava.oncall.datadoghq.com".into(),
-                                    "saffron.oncall.datadoghq.com".into(),
-                                    "navy.oncall.datadoghq.com".into(),
-                                    "coral.oncall.datadoghq.com".into(),
-                                    "teal.oncall.datadoghq.com".into(),
-                                    "beige.oncall.datadoghq.eu".into(),
-                                ],
-                            },
-                        )]),
-                    },
-                    ServerConfiguration {
-                        url: "{protocol}://{name}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "name".into(),
-                                ServerVariable {
-                                    description: "Full site DNS name.".into(),
-                                    default_value: "api.datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "protocol".into(),
-                                ServerVariable {
-                                    description: "The protocol for accessing the API.".into(),
-                                    default_value: "https".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "Any Datadog deployment.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "api".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
+                ServerConfiguration {
+    url: "https://{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The globally available endpoint for On-Call.".into(),
+                default_value: "navy.oncall.datadoghq.com".into(),
+                enum_values: vec![
+                    "lava.oncall.datadoghq.com".into(),
+                    "saffron.oncall.datadoghq.com".into(),
+                    "navy.oncall.datadoghq.com".into(),
+                    "coral.oncall.datadoghq.com".into(),
+                    "teal.oncall.datadoghq.com".into(),
+                    "beige.oncall.datadoghq.eu".into(),
+                    "scarlet.oncall.datadoghq.com".into(),
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "{protocol}://{name}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "name".into(),
+            ServerVariable {
+                description: "The full DNS name of the On-Call paging endpoint.".into(),
+                default_value: "navy.oncall.datadoghq.com".into(),
+                enum_values: vec![
+                    "lava.oncall.datadoghq.com".into(),
+                    "saffron.oncall.datadoghq.com".into(),
+                    "navy.oncall.datadoghq.com".into(),
+                    "coral.oncall.datadoghq.com".into(),
+                    "teal.oncall.datadoghq.com".into(),
+                    "beige.oncall.datadoghq.eu".into(),
+                    "scarlet.oncall.datadoghq.com".into(),
+                ],
+            },
+        ),
+        (
+            "protocol".into(),
+            ServerVariable {
+                description: "The protocol for accessing the API.".into(),
+                default_value: "https".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The Datadog site where the On-Call paging endpoint is deployed.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                    "datadoghq.com".into(),
+                    "datadoghq.eu".into(),
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The On-Call paging subdomain.".into(),
+                default_value: "navy.oncall".into(),
+                enum_values: vec![
+                    "lava.oncall".into(),
+                    "saffron.oncall".into(),
+                    "navy.oncall".into(),
+                    "coral.oncall".into(),
+                    "teal.oncall".into(),
+                    "beige.oncall".into(),
+                    "scarlet.oncall".into(),
+                ],
+            },
+        ),
+    ]),
+},
                 ],
             ),
+            
             (
                 "v2.acknowledge_on_call_page".into(),
                 vec![
-                    ServerConfiguration {
-                        url: "https://{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([(
-                            "site".into(),
-                            ServerVariable {
-                                description: "The globally available endpoint for On-Call.".into(),
-                                default_value: "navy.oncall.datadoghq.com".into(),
-                                enum_values: vec![
-                                    "lava.oncall.datadoghq.com".into(),
-                                    "saffron.oncall.datadoghq.com".into(),
-                                    "navy.oncall.datadoghq.com".into(),
-                                    "coral.oncall.datadoghq.com".into(),
-                                    "teal.oncall.datadoghq.com".into(),
-                                    "beige.oncall.datadoghq.eu".into(),
-                                ],
-                            },
-                        )]),
-                    },
-                    ServerConfiguration {
-                        url: "{protocol}://{name}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "name".into(),
-                                ServerVariable {
-                                    description: "Full site DNS name.".into(),
-                                    default_value: "api.datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "protocol".into(),
-                                ServerVariable {
-                                    description: "The protocol for accessing the API.".into(),
-                                    default_value: "https".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "Any Datadog deployment.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "api".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
+                ServerConfiguration {
+    url: "https://{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The globally available endpoint for On-Call.".into(),
+                default_value: "navy.oncall.datadoghq.com".into(),
+                enum_values: vec![
+                    "lava.oncall.datadoghq.com".into(),
+                    "saffron.oncall.datadoghq.com".into(),
+                    "navy.oncall.datadoghq.com".into(),
+                    "coral.oncall.datadoghq.com".into(),
+                    "teal.oncall.datadoghq.com".into(),
+                    "beige.oncall.datadoghq.eu".into(),
+                    "scarlet.oncall.datadoghq.com".into(),
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "{protocol}://{name}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "name".into(),
+            ServerVariable {
+                description: "The full DNS name of the On-Call paging endpoint.".into(),
+                default_value: "navy.oncall.datadoghq.com".into(),
+                enum_values: vec![
+                    "lava.oncall.datadoghq.com".into(),
+                    "saffron.oncall.datadoghq.com".into(),
+                    "navy.oncall.datadoghq.com".into(),
+                    "coral.oncall.datadoghq.com".into(),
+                    "teal.oncall.datadoghq.com".into(),
+                    "beige.oncall.datadoghq.eu".into(),
+                    "scarlet.oncall.datadoghq.com".into(),
+                ],
+            },
+        ),
+        (
+            "protocol".into(),
+            ServerVariable {
+                description: "The protocol for accessing the API.".into(),
+                default_value: "https".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The Datadog site where the On-Call paging endpoint is deployed.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                    "datadoghq.com".into(),
+                    "datadoghq.eu".into(),
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The On-Call paging subdomain.".into(),
+                default_value: "navy.oncall".into(),
+                enum_values: vec![
+                    "lava.oncall".into(),
+                    "saffron.oncall".into(),
+                    "navy.oncall".into(),
+                    "coral.oncall".into(),
+                    "teal.oncall".into(),
+                    "beige.oncall".into(),
+                    "scarlet.oncall".into(),
+                ],
+            },
+        ),
+    ]),
+},
                 ],
             ),
+            
             (
                 "v2.escalate_on_call_page".into(),
                 vec![
-                    ServerConfiguration {
-                        url: "https://{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([(
-                            "site".into(),
-                            ServerVariable {
-                                description: "The globally available endpoint for On-Call.".into(),
-                                default_value: "navy.oncall.datadoghq.com".into(),
-                                enum_values: vec![
-                                    "lava.oncall.datadoghq.com".into(),
-                                    "saffron.oncall.datadoghq.com".into(),
-                                    "navy.oncall.datadoghq.com".into(),
-                                    "coral.oncall.datadoghq.com".into(),
-                                    "teal.oncall.datadoghq.com".into(),
-                                    "beige.oncall.datadoghq.eu".into(),
-                                ],
-                            },
-                        )]),
-                    },
-                    ServerConfiguration {
-                        url: "{protocol}://{name}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "name".into(),
-                                ServerVariable {
-                                    description: "Full site DNS name.".into(),
-                                    default_value: "api.datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "protocol".into(),
-                                ServerVariable {
-                                    description: "The protocol for accessing the API.".into(),
-                                    default_value: "https".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "Any Datadog deployment.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "api".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
+                ServerConfiguration {
+    url: "https://{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The globally available endpoint for On-Call.".into(),
+                default_value: "navy.oncall.datadoghq.com".into(),
+                enum_values: vec![
+                    "lava.oncall.datadoghq.com".into(),
+                    "saffron.oncall.datadoghq.com".into(),
+                    "navy.oncall.datadoghq.com".into(),
+                    "coral.oncall.datadoghq.com".into(),
+                    "teal.oncall.datadoghq.com".into(),
+                    "beige.oncall.datadoghq.eu".into(),
+                    "scarlet.oncall.datadoghq.com".into(),
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "{protocol}://{name}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "name".into(),
+            ServerVariable {
+                description: "The full DNS name of the On-Call paging endpoint.".into(),
+                default_value: "navy.oncall.datadoghq.com".into(),
+                enum_values: vec![
+                    "lava.oncall.datadoghq.com".into(),
+                    "saffron.oncall.datadoghq.com".into(),
+                    "navy.oncall.datadoghq.com".into(),
+                    "coral.oncall.datadoghq.com".into(),
+                    "teal.oncall.datadoghq.com".into(),
+                    "beige.oncall.datadoghq.eu".into(),
+                    "scarlet.oncall.datadoghq.com".into(),
+                ],
+            },
+        ),
+        (
+            "protocol".into(),
+            ServerVariable {
+                description: "The protocol for accessing the API.".into(),
+                default_value: "https".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The Datadog site where the On-Call paging endpoint is deployed.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                    "datadoghq.com".into(),
+                    "datadoghq.eu".into(),
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The On-Call paging subdomain.".into(),
+                default_value: "navy.oncall".into(),
+                enum_values: vec![
+                    "lava.oncall".into(),
+                    "saffron.oncall".into(),
+                    "navy.oncall".into(),
+                    "coral.oncall".into(),
+                    "teal.oncall".into(),
+                    "beige.oncall".into(),
+                    "scarlet.oncall".into(),
+                ],
+            },
+        ),
+    ]),
+},
                 ],
             ),
+            
             (
                 "v2.resolve_on_call_page".into(),
                 vec![
-                    ServerConfiguration {
-                        url: "https://{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([(
-                            "site".into(),
-                            ServerVariable {
-                                description: "The globally available endpoint for On-Call.".into(),
-                                default_value: "navy.oncall.datadoghq.com".into(),
-                                enum_values: vec![
-                                    "lava.oncall.datadoghq.com".into(),
-                                    "saffron.oncall.datadoghq.com".into(),
-                                    "navy.oncall.datadoghq.com".into(),
-                                    "coral.oncall.datadoghq.com".into(),
-                                    "teal.oncall.datadoghq.com".into(),
-                                    "beige.oncall.datadoghq.eu".into(),
-                                ],
-                            },
-                        )]),
-                    },
-                    ServerConfiguration {
-                        url: "{protocol}://{name}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "name".into(),
-                                ServerVariable {
-                                    description: "Full site DNS name.".into(),
-                                    default_value: "api.datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "protocol".into(),
-                                ServerVariable {
-                                    description: "The protocol for accessing the API.".into(),
-                                    default_value: "https".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "Any Datadog deployment.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "api".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
+                ServerConfiguration {
+    url: "https://{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The globally available endpoint for On-Call.".into(),
+                default_value: "navy.oncall.datadoghq.com".into(),
+                enum_values: vec![
+                    "lava.oncall.datadoghq.com".into(),
+                    "saffron.oncall.datadoghq.com".into(),
+                    "navy.oncall.datadoghq.com".into(),
+                    "coral.oncall.datadoghq.com".into(),
+                    "teal.oncall.datadoghq.com".into(),
+                    "beige.oncall.datadoghq.eu".into(),
+                    "scarlet.oncall.datadoghq.com".into(),
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "{protocol}://{name}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "name".into(),
+            ServerVariable {
+                description: "The full DNS name of the On-Call paging endpoint.".into(),
+                default_value: "navy.oncall.datadoghq.com".into(),
+                enum_values: vec![
+                    "lava.oncall.datadoghq.com".into(),
+                    "saffron.oncall.datadoghq.com".into(),
+                    "navy.oncall.datadoghq.com".into(),
+                    "coral.oncall.datadoghq.com".into(),
+                    "teal.oncall.datadoghq.com".into(),
+                    "beige.oncall.datadoghq.eu".into(),
+                    "scarlet.oncall.datadoghq.com".into(),
+                ],
+            },
+        ),
+        (
+            "protocol".into(),
+            ServerVariable {
+                description: "The protocol for accessing the API.".into(),
+                default_value: "https".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The Datadog site where the On-Call paging endpoint is deployed.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                    "datadoghq.com".into(),
+                    "datadoghq.eu".into(),
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The On-Call paging subdomain.".into(),
+                default_value: "navy.oncall".into(),
+                enum_values: vec![
+                    "lava.oncall".into(),
+                    "saffron.oncall".into(),
+                    "navy.oncall".into(),
+                    "coral.oncall".into(),
+                    "teal.oncall".into(),
+                    "beige.oncall".into(),
+                    "scarlet.oncall".into(),
+                ],
+            },
+        ),
+    ]),
+},
                 ],
             ),
+            
             (
                 "v2.submit_product_analytics_event".into(),
                 vec![
-                    ServerConfiguration {
-                        url: "https://{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([(
-                            "site".into(),
-                            ServerVariable {
-                                description: "The intake domain for the regional site.".into(),
-                                default_value: "browser-intake-datadoghq.com".into(),
-                                enum_values: vec![
-                                    "browser-intake-datadoghq.com".into(),
-                                    "browser-intake-us3-datadoghq.com".into(),
-                                    "browser-intake-us5-datadoghq.com".into(),
-                                    "browser-intake-ap1-datadoghq.com".into(),
-                                    "browser-intake-ap2-datadoghq.com".into(),
-                                    "browser-intake-datadoghq.eu".into(),
-                                ],
-                            },
-                        )]),
-                    },
-                    ServerConfiguration {
-                        url: "{protocol}://{name}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "name".into(),
-                                ServerVariable {
-                                    description: "Full site DNS name.".into(),
-                                    default_value: "browser-intake-datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "protocol".into(),
-                                ServerVariable {
-                                    description: "The protocol for accessing the API.".into(),
-                                    default_value: "https".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
-                    ServerConfiguration {
-                        url: "https://{subdomain}.{site}".into(),
-                        description: "No description provided".into(),
-                        variables: HashMap::from([
-                            (
-                                "site".into(),
-                                ServerVariable {
-                                    description: "Any Datadog deployment.".into(),
-                                    default_value: "datadoghq.com".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                            (
-                                "subdomain".into(),
-                                ServerVariable {
-                                    description: "The subdomain where the API is deployed.".into(),
-                                    default_value: "api".into(),
-                                    enum_values: vec![],
-                                },
-                            ),
-                        ]),
-                    },
+                ServerConfiguration {
+    url: "https://{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The intake domain for the regional site.".into(),
+                default_value: "browser-intake-datadoghq.com".into(),
+                enum_values: vec![
+                    "browser-intake-datadoghq.com".into(),
+                    "browser-intake-us3-datadoghq.com".into(),
+                    "browser-intake-us5-datadoghq.com".into(),
+                    "browser-intake-ap1-datadoghq.com".into(),
+                    "browser-intake-ap2-datadoghq.com".into(),
+                    "browser-intake-datadoghq.eu".into(),
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "{protocol}://{name}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "name".into(),
+            ServerVariable {
+                description: "Full site DNS name.".into(),
+                default_value: "browser-intake-datadoghq.com".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+        (
+            "protocol".into(),
+            ServerVariable {
+                description: "The protocol for accessing the API.".into(),
+                default_value: "https".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+            
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "Any Datadog deployment.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The subdomain where the API is deployed.".into(),
+                default_value: "api".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
                 ],
             ),
         ])
