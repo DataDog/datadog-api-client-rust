@@ -964,7 +964,6 @@ lazy_static! {
     };
     static ref OPERATION_SERVERS: HashMap<String, Vec<ServerConfiguration>> = {
         HashMap::from([
-            
             (
                 "v1.get_ip_ranges".into(),
                 vec![
@@ -1001,7 +1000,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "{protocol}://{name}".into(),
     description: "No description provided".into(),
@@ -1026,7 +1024,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "https://{subdomain}.datadoghq.com".into(),
     description: "No description provided".into(),
@@ -1044,7 +1041,6 @@ lazy_static! {
 },
                 ],
             ),
-            
             (
                 "v1.submit_log".into(),
                 vec![
@@ -1081,7 +1077,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "{protocol}://{name}".into(),
     description: "No description provided".into(),
@@ -1106,7 +1101,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "https://{subdomain}.{site}".into(),
     description: "No description provided".into(),
@@ -1133,7 +1127,6 @@ lazy_static! {
 },
                 ],
             ),
-            
             (
                 "v2.create_event".into(),
                 vec![
@@ -1170,7 +1163,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "{protocol}://{name}".into(),
     description: "No description provided".into(),
@@ -1195,7 +1187,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "https://{subdomain}.{site}".into(),
     description: "No description provided".into(),
@@ -1222,7 +1213,6 @@ lazy_static! {
 },
                 ],
             ),
-            
             (
                 "v2.submit_log".into(),
                 vec![
@@ -1259,7 +1249,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "{protocol}://{name}".into(),
     description: "No description provided".into(),
@@ -1284,7 +1273,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "https://{subdomain}.{site}".into(),
     description: "No description provided".into(),
@@ -1311,7 +1299,6 @@ lazy_static! {
 },
                 ],
             ),
-            
             (
                 "v2.create_on_call_page".into(),
                 vec![
@@ -1337,7 +1324,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "{protocol}://{name}".into(),
     description: "No description provided".into(),
@@ -1369,7 +1355,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "https://{subdomain}.{site}".into(),
     description: "No description provided".into(),
@@ -1405,7 +1390,6 @@ lazy_static! {
 },
                 ],
             ),
-            
             (
                 "v2.acknowledge_on_call_page".into(),
                 vec![
@@ -1431,7 +1415,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "{protocol}://{name}".into(),
     description: "No description provided".into(),
@@ -1463,7 +1446,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "https://{subdomain}.{site}".into(),
     description: "No description provided".into(),
@@ -1499,7 +1481,6 @@ lazy_static! {
 },
                 ],
             ),
-            
             (
                 "v2.escalate_on_call_page".into(),
                 vec![
@@ -1525,7 +1506,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "{protocol}://{name}".into(),
     description: "No description provided".into(),
@@ -1557,7 +1537,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "https://{subdomain}.{site}".into(),
     description: "No description provided".into(),
@@ -1593,7 +1572,6 @@ lazy_static! {
 },
                 ],
             ),
-            
             (
                 "v2.resolve_on_call_page".into(),
                 vec![
@@ -1619,7 +1597,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "{protocol}://{name}".into(),
     description: "No description provided".into(),
@@ -1651,7 +1628,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "https://{subdomain}.{site}".into(),
     description: "No description provided".into(),
@@ -1687,7 +1663,6 @@ lazy_static! {
 },
                 ],
             ),
-            
             (
                 "v2.submit_product_analytics_event".into(),
                 vec![
@@ -1712,7 +1687,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "{protocol}://{name}".into(),
     description: "No description provided".into(),
@@ -1737,7 +1711,6 @@ lazy_static! {
         ),
     ]),
 },
-            
                 ServerConfiguration {
     url: "https://{subdomain}.{site}".into(),
     description: "No description provided".into(),
