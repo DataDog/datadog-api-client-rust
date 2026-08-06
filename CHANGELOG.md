@@ -1,5 +1,82 @@
 # CHANGELOG
 
+## 0.34.0/2026-08-06
+
+### Fixed
+* Fleet Automation v2 remove deprecated or redundant agent detail fields [#1903](https://github.com/DataDog/datadog-api-client-rust/pull/1903)
+* Uppercase automation rule trigger and action type enum values [#1896](https://github.com/DataDog/datadog-api-client-rust/pull/1896)
+* Fix broken JSON API shape for security monitoring rules bulk delete [#1870](https://github.com/DataDog/datadog-api-client-rust/pull/1870)
+* Document CNM API authorization requirements [#1867](https://github.com/DataDog/datadog-api-client-rust/pull/1867)
+* Fix incident user-defined role policy not required on create [#1855](https://github.com/DataDog/datadog-api-client-rust/pull/1855)
+* Document 409 and 412 error codes for UpsertRows/DeleteRows [#1839](https://github.com/DataDog/datadog-api-client-rust/pull/1839)
+* Add `template_variables` to Notebooks v1 API spec [#1811](https://github.com/DataDog/datadog-api-client-rust/pull/1811)
+
+### Added
+* data quality monitor sensitivity definition [#1898](https://github.com/DataDog/datadog-api-client-rust/pull/1898)
+* Add SSE-KMS encryption fields to ObservabilityPipelineAmazonS3Destination for datadog_archives [#1887](https://github.com/DataDog/datadog-api-client-rust/pull/1887)
+* Adds documentation for historical metrics endpoints [#1885](https://github.com/DataDog/datadog-api-client-rust/pull/1885)
+* Promote RUM Operations endpoints from private to public [#1882](https://github.com/DataDog/datadog-api-client-rust/pull/1882)
+* Remove unit conversion notes from usage metering descriptions [#1879](https://github.com/DataDog/datadog-api-client-rust/pull/1879)
+* Add impact_score and impact_level to Flaky Test Management API spec [#1874](https://github.com/DataDog/datadog-api-client-rust/pull/1874)
+* Add list custom LLM Obs evaluator configs endpoint [#1872](https://github.com/DataDog/datadog-api-client-rust/pull/1872)
+* Add TLS support and server_name SNI option to Observability Pipelines client components [#1866](https://github.com/DataDog/datadog-api-client-rust/pull/1866)
+* Add workflow schedule overlap behavior [#1865](https://github.com/DataDog/datadog-api-client-rust/pull/1865)
+* Add notice templates to the Status Pages API spec [#1864](https://github.com/DataDog/datadog-api-client-rust/pull/1864)
+* Add `key-value` type in Logs Array processor [#1863](https://github.com/DataDog/datadog-api-client-rust/pull/1863)
+* Expand incidents postmortem-templates spec to full CRUD contract [#1857](https://github.com/DataDog/datadog-api-client-rust/pull/1857)
+* Remove unstable tags from Case Management APIs [#1856](https://github.com/DataDog/datadog-api-client-rust/pull/1856)
+* Add CSM Ownership settings endpoints [#1853](https://github.com/DataDog/datadog-api-client-rust/pull/1853)
+* Add DD_ENV filter to Feature Flags environments API [#1852](https://github.com/DataDog/datadog-api-client-rust/pull/1852)
+* Add feature-flag type to restriction policies [#1847](https://github.com/DataDog/datadog-api-client-rust/pull/1847)
+* Add Exclude-mode tag usage fields to tag indexing rules [#1846](https://github.com/DataDog/datadog-api-client-rust/pull/1846)
+* Add public API spec for LLM Observability prompt registry CRUD endpoints [#1845](https://github.com/DataDog/datadog-api-client-rust/pull/1845)
+* Add public DDSQL tabular query endpoints [#1844](https://github.com/DataDog/datadog-api-client-rust/pull/1844)
+* Add function and cloud_function fields to Azure and GCP scan options [#1842](https://github.com/DataDog/datadog-api-client-rust/pull/1842)
+* Add WAF custom rule file addresses [#1841](https://github.com/DataDog/datadog-api-client-rust/pull/1841)
+* Make incident user-defined-roles API public but keep it unstable [#1838](https://github.com/DataDog/datadog-api-client-rust/pull/1838)
+* Add OpenAPI spec for GET /api/v2/org_group_policy_suggestions [#1837](https://github.com/DataDog/datadog-api-client-rust/pull/1837)
+* Add cloud-agnostic account filters endpoints to Cloud Cost Management [#1836](https://github.com/DataDog/datadog-api-client-rust/pull/1836)
+* Add GET endpoint for custom forecast [#1832](https://github.com/DataDog/datadog-api-client-rust/pull/1832)
+* Add OpenAPI specs for ListDatasetReportSchedules and PrintReport [#1830](https://github.com/DataDog/datadog-api-client-rust/pull/1830)
+* Add editable field to critical assets attributes [#1829](https://github.com/DataDog/datadog-api-client-rust/pull/1829)
+* Add GET /api/v2/on-call/schedules/schedule_id/responders spec [#1827](https://github.com/DataDog/datadog-api-client-rust/pull/1827)
+* Add OpenAPI spec for hostmap widgwet DDSQL request shape, deprecate legacy metric shape [#1819](https://github.com/DataDog/datadog-api-client-rust/pull/1819)
+* Document secmon-public-api Entra ID integration endpoints [#1817](https://github.com/DataDog/datadog-api-client-rust/pull/1817)
+* Add AWS integration metric name filters and preview endpoints [#1815](https://github.com/DataDog/datadog-api-client-rust/pull/1815)
+* Add public unstable spec for Security Findings Linear endpoints [#1810](https://github.com/DataDog/datadog-api-client-rust/pull/1810)
+* Add workload activity rule type to notification rules [#1808](https://github.com/DataDog/datadog-api-client-rust/pull/1808)
+* Add configuration attribute to incident type schema [#1807](https://github.com/DataDog/datadog-api-client-rust/pull/1807)
+* Add OpenAPI spec for POST /api/v2/snapshot [#1806](https://github.com/DataDog/datadog-api-client-rust/pull/1806)
+* Add SSE-KMS encryption fields to ObservabilityPipelineAmazonS3GenericDestination [#1805](https://github.com/DataDog/datadog-api-client-rust/pull/1805)
+* Add included rows to batchrowsquery and pagination meta to listrows for reference tables responses [#1802](https://github.com/DataDog/datadog-api-client-rust/pull/1802)
+* security-monitoring - add description field to critical assets API spec [#1801](https://github.com/DataDog/datadog-api-client-rust/pull/1801)
+* Mark ServiceNow triage endpoints as stable [#1799](https://github.com/DataDog/datadog-api-client-rust/pull/1799)
+* Add OpenAPI spec `version` attribute for Logs Transactions V2 Preview [#1797](https://github.com/DataDog/datadog-api-client-rust/pull/1797)
+* Page related updates to synthetics  [#1796](https://github.com/DataDog/datadog-api-client-rust/pull/1796)
+* Add Obs Pipeline Grok processor updates to OpenAPI Spec [#1794](https://github.com/DataDog/datadog-api-client-rust/pull/1794)
+* Add public v2 OpenAPI operations for governance console [#1787](https://github.com/DataDog/datadog-api-client-rust/pull/1787)
+* Add UK1 [#1782](https://github.com/DataDog/datadog-api-client-rust/pull/1782)
+* Add OpenAPI spec for identity providers and Authorized client apis [#1745](https://github.com/DataDog/datadog-api-client-rust/pull/1745)
+* Add DashboardDefaultTimeframe schema and default_timeframe to Dashboard [#1703](https://github.com/DataDog/datadog-api-client-rust/pull/1703)
+* Add OpenAPI spec for api v2 rum config [#1701](https://github.com/DataDog/datadog-api-client-rust/pull/1701)
+* Add OpenAPI specifications for incidents-rapid-api endpoints [#1677](https://github.com/DataDog/datadog-api-client-rust/pull/1677)
+
+### Changed
+* Fleet Automation promote ready v2 endpoints to public [#1891](https://github.com/DataDog/datadog-api-client-rust/pull/1891)
+* Migrate tag-policies routes to snake_case [#1873](https://github.com/DataDog/datadog-api-client-rust/pull/1873)
+* Deprecate report-related endpoints from SLO documentation [#1871](https://github.com/DataDog/datadog-api-client-rust/pull/1871)
+* Update documentation according to new content pack states endpoint response shape [#1854](https://github.com/DataDog/datadog-api-client-rust/pull/1854)
+* Mark Linear security findings endpoints as stable [#1849](https://github.com/DataDog/datadog-api-client-rust/pull/1849)
+* Mark custom forecast endpoints as generally available [#1848](https://github.com/DataDog/datadog-api-client-rust/pull/1848)
+* Change TopologyMapWidgetDefinition to oneOf with TopologyMapServiceMapDefinitionServiceMap [#1820](https://github.com/DataDog/datadog-api-client-rust/pull/1820)
+* Update ListAssetsSBOMs spec - require asset_type on first page, add ServerlessFunction asset type [#1813](https://github.com/DataDog/datadog-api-client-rust/pull/1813)
+* Fix DORA deployment and incident read responses to use date-time timestamps [#1812](https://github.com/DataDog/datadog-api-client-rust/pull/1812)
+* Allow using access key to specify AWS s3 integration in create / update logs archives [#1753](https://github.com/DataDog/datadog-api-client-rust/pull/1753)
+* Add saved filters endpoints to the Feature Flags API [#1732](https://github.com/DataDog/datadog-api-client-rust/pull/1732)
+
+### Removed
+* Remove prerequisite, table_id, and attached_to fields from incident user-defined field API [#1816](https://github.com/DataDog/datadog-api-client-rust/pull/1816)
+
 ## 0.33.0/2026-06-30
 
 ### Added
