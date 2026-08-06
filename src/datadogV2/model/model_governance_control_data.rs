@@ -14,7 +14,7 @@ pub struct GovernanceControlData {
     /// The attributes of a governance control.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::GovernanceControlAttributes,
-    /// The unique identifier of the control.
+    /// The detection type that uniquely identifies the control.
     #[serde(rename = "id")]
     pub id: String,
     /// JSON:API resource type for a governance control.

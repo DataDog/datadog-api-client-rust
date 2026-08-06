@@ -6,22 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A governance insight resource.
+/// The data of a governance control detection update request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct GovernanceInsightData {
-    /// The attributes of a governance insight. Exactly one of `metric_query`, `event_query`,
-    /// `usage_query`, `audit_query`, or `percentage_query` is populated, depending on the data
-    /// source the insight is computed from; the rest are `null`.
+pub struct GovernanceControlDetectionUpdateData {
+    /// The attributes of a governance control detection that can be updated. Only the attributes present in the request are modified.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::GovernanceInsightAttributes,
-    /// The unique identifier of the insight.
-    #[serde(rename = "id")]
-    pub id: String,
-    /// JSON:API resource type for a governance insight.
+    pub attributes: Option<crate::datadogV2::model::GovernanceControlDetectionUpdateAttributes>,
+    /// Governance control detection resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::GovernanceInsightResourceType,
+    pub type_: crate::datadogV2::model::GovernanceControlDetectionResourceType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,19 +24,24 @@ pub struct GovernanceInsightData {
     pub(crate) _unparsed: bool,
 }
 
-impl GovernanceInsightData {
+impl GovernanceControlDetectionUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::GovernanceInsightAttributes,
-        id: String,
-        type_: crate::datadogV2::model::GovernanceInsightResourceType,
-    ) -> GovernanceInsightData {
-        GovernanceInsightData {
-            attributes,
-            id,
+        type_: crate::datadogV2::model::GovernanceControlDetectionResourceType,
+    ) -> GovernanceControlDetectionUpdateData {
+        GovernanceControlDetectionUpdateData {
+            attributes: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(
+        mut self,
+        value: crate::datadogV2::model::GovernanceControlDetectionUpdateAttributes,
+    ) -> Self {
+        self.attributes = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -53,14 +53,14 @@ impl GovernanceInsightData {
     }
 }
 
-impl<'de> Deserialize<'de> for GovernanceInsightData {
+impl<'de> Deserialize<'de> for GovernanceControlDetectionUpdateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct GovernanceInsightDataVisitor;
-        impl<'a> Visitor<'a> for GovernanceInsightDataVisitor {
-            type Value = GovernanceInsightData;
+        struct GovernanceControlDetectionUpdateDataVisitor;
+        impl<'a> Visitor<'a> for GovernanceControlDetectionUpdateDataVisitor {
+            type Value = GovernanceControlDetectionUpdateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,11 +70,12 @@ impl<'de> Deserialize<'de> for GovernanceInsightData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::GovernanceInsightAttributes> =
-                    None;
-                let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::GovernanceInsightResourceType> =
-                    None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::GovernanceControlDetectionUpdateAttributes,
+                > = None;
+                let mut type_: Option<
+                    crate::datadogV2::model::GovernanceControlDetectionResourceType,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -84,16 +85,16 @@ impl<'de> Deserialize<'de> for GovernanceInsightData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::GovernanceInsightResourceType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::GovernanceControlDetectionResourceType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -107,13 +108,10 @@ impl<'de> Deserialize<'de> for GovernanceInsightData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = GovernanceInsightData {
+                let content = GovernanceControlDetectionUpdateData {
                     attributes,
-                    id,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -123,6 +121,6 @@ impl<'de> Deserialize<'de> for GovernanceInsightData {
             }
         }
 
-        deserializer.deserialize_any(GovernanceInsightDataVisitor)
+        deserializer.deserialize_any(GovernanceControlDetectionUpdateDataVisitor)
     }
 }
