@@ -211,7 +211,7 @@ lazy_static! {
             {%- for path in spec.paths.values() %}
             {%- for operation in path.values() %}
             {%- for server in operation.servers %}
-            {% if loop.first %}
+            {%- if loop.first %}
             (
                 "{{ version }}.{{ operation.operationId | snake_case }}".into(),
                 vec![
