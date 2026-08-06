@@ -23,7 +23,7 @@ pub struct WorkflowDataAttributes {
     /// Set the workflow to published or unpublished. Workflows in an unpublished state will only be executable via manual runs. Automatic triggers such as Schedule will not execute the workflow until it is published.
     #[serde(rename = "published")]
     pub published: Option<bool>,
-    /// The spec defines what the workflow does.
+    /// A complete Workflow Automation definition, including its triggers, steps, and connections.
     #[serde(rename = "spec")]
     pub spec: crate::datadogV2::model::Spec,
     /// Tags of the workflow.
