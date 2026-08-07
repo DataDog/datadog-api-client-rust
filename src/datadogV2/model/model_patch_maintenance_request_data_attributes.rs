@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PatchMaintenanceRequestDataAttributes {
+    /// The description shown when the maintenance is canceled.
+    #[serde(rename = "canceled_description")]
+    pub canceled_description: Option<String>,
     /// Timestamp of when the maintenance was completed.
     #[serde(rename = "completed_date")]
     pub completed_date: Option<chrono::DateTime<chrono::Utc>>,
@@ -47,6 +50,7 @@ pub struct PatchMaintenanceRequestDataAttributes {
 impl PatchMaintenanceRequestDataAttributes {
     pub fn new() -> PatchMaintenanceRequestDataAttributes {
         PatchMaintenanceRequestDataAttributes {
+            canceled_description: None,
             completed_date: None,
             completed_description: None,
             components_affected: None,
@@ -58,6 +62,11 @@ impl PatchMaintenanceRequestDataAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn canceled_description(mut self, value: String) -> Self {
+        self.canceled_description = Some(value);
+        self
     }
 
     pub fn completed_date(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
@@ -140,6 +149,7 @@ impl<'de> Deserialize<'de> for PatchMaintenanceRequestDataAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut canceled_description: Option<String> = None;
                 let mut completed_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut completed_description: Option<String> = None;
                 let mut components_affected: Option<Vec<crate::datadogV2::model::PatchMaintenanceRequestDataAttributesComponentsAffectedItems>> = None;
@@ -157,6 +167,13 @@ impl<'de> Deserialize<'de> for PatchMaintenanceRequestDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "canceled_description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            canceled_description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "completed_date" => {
                             if v.is_null() {
                                 continue;
@@ -227,6 +244,7 @@ impl<'de> Deserialize<'de> for PatchMaintenanceRequestDataAttributes {
                 }
 
                 let content = PatchMaintenanceRequestDataAttributes {
+                    canceled_description,
                     completed_date,
                     completed_description,
                     components_affected,

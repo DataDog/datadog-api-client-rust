@@ -7684,6 +7684,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateMaintenance".into(), test_v2_update_maintenance);
+    world.function_mappings.insert(
+        "v2.PatchMaintenanceUpdate".into(),
+        test_v2_patch_maintenance_update,
+    );
     world
         .function_mappings
         .insert("v2.PublishStatusPage".into(), test_v2_publish_status_page);
@@ -61354,6 +61358,43 @@ fn test_v2_update_maintenance(world: &mut DatadogWorld, _parameters: &HashMap<St
         maintenance_id,
         body,
         params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_patch_maintenance_update(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_status_pages
+        .as_ref()
+        .expect("api instance not found");
+    let page_id = serde_json::from_value(_parameters.get("page_id").unwrap().clone()).unwrap();
+    let maintenance_id =
+        serde_json::from_value(_parameters.get("maintenance_id").unwrap().clone()).unwrap();
+    let update_id = serde_json::from_value(_parameters.get("update_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.patch_maintenance_update_with_http_info(
+        page_id,
+        maintenance_id,
+        update_id,
+        body,
     )) {
         Ok(response) => response,
         Err(error) => {
