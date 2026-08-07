@@ -11,9 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GovernanceControlUpdateAttributes {
-    /// How often detections should be evaluated for the control.
-    #[serde(rename = "detection_frequency")]
-    pub detection_frequency: Option<String>,
     /// A free-form map of parameter names to their configured values.
     #[serde(rename = "detection_parameters")]
     pub detection_parameters: Option<std::collections::BTreeMap<String, serde_json::Value>>,
@@ -33,18 +30,12 @@ pub struct GovernanceControlUpdateAttributes {
 impl GovernanceControlUpdateAttributes {
     pub fn new() -> GovernanceControlUpdateAttributes {
         GovernanceControlUpdateAttributes {
-            detection_frequency: None,
             detection_parameters: None,
             mitigation_parameters: None,
             mitigation_type: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn detection_frequency(mut self, value: String) -> Self {
-        self.detection_frequency = Some(value);
-        self
     }
 
     pub fn detection_parameters(
@@ -100,7 +91,6 @@ impl<'de> Deserialize<'de> for GovernanceControlUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut detection_frequency: Option<String> = None;
                 let mut detection_parameters: Option<
                     std::collections::BTreeMap<String, serde_json::Value>,
                 > = None;
@@ -116,13 +106,6 @@ impl<'de> Deserialize<'de> for GovernanceControlUpdateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "detection_frequency" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            detection_frequency =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "detection_parameters" => {
                             if v.is_null() {
                                 continue;
@@ -153,7 +136,6 @@ impl<'de> Deserialize<'de> for GovernanceControlUpdateAttributes {
                 }
 
                 let content = GovernanceControlUpdateAttributes {
-                    detection_frequency,
                     detection_parameters,
                     mitigation_parameters,
                     mitigation_type,

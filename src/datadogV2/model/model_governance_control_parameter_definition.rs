@@ -26,9 +26,10 @@ pub struct GovernanceControlParameterDefinition {
     /// Whether the parameter must be provided.
     #[serde(rename = "required")]
     pub required: bool,
-    /// The supported values for an enumerated parameter.
+    /// The supported values for an enumerated parameter. `null` when the parameter is not an enumerated type.
+    #[serialize_always]
     #[serde(rename = "supported_values")]
-    pub supported_values: Vec<crate::datadogV2::model::GovernanceControlSupportedValue>,
+    pub supported_values: Option<Vec<crate::datadogV2::model::GovernanceControlSupportedValue>>,
     /// The type of the parameter, such as `integer`, `string`, `boolean`, `enum`, or `pattern_list`.
     #[serde(rename = "type")]
     pub type_: String,
@@ -46,7 +47,7 @@ impl GovernanceControlParameterDefinition {
         display_name: String,
         name: String,
         required: bool,
-        supported_values: Vec<crate::datadogV2::model::GovernanceControlSupportedValue>,
+        supported_values: Option<Vec<crate::datadogV2::model::GovernanceControlSupportedValue>>,
         type_: String,
     ) -> GovernanceControlParameterDefinition {
         GovernanceControlParameterDefinition {
@@ -94,7 +95,7 @@ impl<'de> Deserialize<'de> for GovernanceControlParameterDefinition {
                 let mut name: Option<String> = None;
                 let mut required: Option<bool> = None;
                 let mut supported_values: Option<
-                    Vec<crate::datadogV2::model::GovernanceControlSupportedValue>,
+                    Option<Vec<crate::datadogV2::model::GovernanceControlSupportedValue>>,
                 > = None;
                 let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<

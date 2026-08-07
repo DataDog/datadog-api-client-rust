@@ -12,7 +12,6 @@ async fn main() {
         GovernanceControlUpdateData::new(GovernanceControlResourceType::GOVERNANCE_CONTROL)
             .attributes(
                 GovernanceControlUpdateAttributes::new()
-                    .detection_frequency("daily".to_string())
                     .mitigation_type("revoke_api_key".to_string()),
             ),
     );
