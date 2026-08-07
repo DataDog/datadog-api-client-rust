@@ -14,6 +14,9 @@ pub struct CreateDegradationRequestData {
     /// The supported attributes for creating a degradation.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CreateDegradationRequestDataAttributes,
+    /// The supported metadata for a degradation request.
+    #[serde(rename = "meta")]
+    pub meta: Option<crate::datadogV2::model::DegradationRequestDataMeta>,
     /// The supported relationships for creating a degradation.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::CreateDegradationRequestDataRelationships>,
@@ -34,11 +37,17 @@ impl CreateDegradationRequestData {
     ) -> CreateDegradationRequestData {
         CreateDegradationRequestData {
             attributes,
+            meta: None,
             relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn meta(mut self, value: crate::datadogV2::model::DegradationRequestDataMeta) -> Self {
+        self.meta = Some(value);
+        self
     }
 
     pub fn relationships(
@@ -78,6 +87,7 @@ impl<'de> Deserialize<'de> for CreateDegradationRequestData {
                 let mut attributes: Option<
                     crate::datadogV2::model::CreateDegradationRequestDataAttributes,
                 > = None;
+                let mut meta: Option<crate::datadogV2::model::DegradationRequestDataMeta> = None;
                 let mut relationships: Option<
                     crate::datadogV2::model::CreateDegradationRequestDataRelationships,
                 > = None;
@@ -93,6 +103,12 @@ impl<'de> Deserialize<'de> for CreateDegradationRequestData {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relationships" => {
                             if v.is_null() {
@@ -124,6 +140,7 @@ impl<'de> Deserialize<'de> for CreateDegradationRequestData {
 
                 let content = CreateDegradationRequestData {
                     attributes,
+                    meta,
                     relationships,
                     type_,
                     additional_properties,

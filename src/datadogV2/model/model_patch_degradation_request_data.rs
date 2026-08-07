@@ -17,6 +17,9 @@ pub struct PatchDegradationRequestData {
     /// The ID of the degradation.
     #[serde(rename = "id")]
     pub id: uuid::Uuid,
+    /// The supported metadata for a degradation request.
+    #[serde(rename = "meta")]
+    pub meta: Option<crate::datadogV2::model::DegradationRequestDataMeta>,
     /// The supported relationships for updating a degradation.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::PatchDegradationRequestDataRelationships>,
@@ -39,11 +42,17 @@ impl PatchDegradationRequestData {
         PatchDegradationRequestData {
             attributes,
             id,
+            meta: None,
             relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn meta(mut self, value: crate::datadogV2::model::DegradationRequestDataMeta) -> Self {
+        self.meta = Some(value);
+        self
     }
 
     pub fn relationships(
@@ -84,6 +93,7 @@ impl<'de> Deserialize<'de> for PatchDegradationRequestData {
                     crate::datadogV2::model::PatchDegradationRequestDataAttributes,
                 > = None;
                 let mut id: Option<uuid::Uuid> = None;
+                let mut meta: Option<crate::datadogV2::model::DegradationRequestDataMeta> = None;
                 let mut relationships: Option<
                     crate::datadogV2::model::PatchDegradationRequestDataRelationships,
                 > = None;
@@ -102,6 +112,12 @@ impl<'de> Deserialize<'de> for PatchDegradationRequestData {
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relationships" => {
                             if v.is_null() {
@@ -135,6 +151,7 @@ impl<'de> Deserialize<'de> for PatchDegradationRequestData {
                 let content = PatchDegradationRequestData {
                     attributes,
                     id,
+                    meta,
                     relationships,
                     type_,
                     additional_properties,
