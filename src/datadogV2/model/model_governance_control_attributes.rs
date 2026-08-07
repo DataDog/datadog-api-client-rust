@@ -26,9 +26,6 @@ pub struct GovernanceControlAttributes {
     /// A human-readable description of what the control detects.
     #[serde(rename = "description")]
     pub description: String,
-    /// How often detections are evaluated for the control.
-    #[serde(rename = "detection_frequency")]
-    pub detection_frequency: String,
     /// A free-form map of parameter names to their configured values.
     #[serde(rename = "detection_parameters")]
     pub detection_parameters: std::collections::BTreeMap<String, serde_json::Value>,
@@ -87,7 +84,6 @@ impl GovernanceControlAttributes {
         created_at: chrono::DateTime<chrono::Utc>,
         created_by: String,
         description: String,
-        detection_frequency: String,
         detection_parameters: std::collections::BTreeMap<String, serde_json::Value>,
         insights: Vec<String>,
         last_detection_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -111,7 +107,6 @@ impl GovernanceControlAttributes {
             created_at,
             created_by,
             description,
-            detection_frequency,
             detection_parameters,
             insights,
             last_detection_at,
@@ -162,7 +157,6 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut description: Option<String> = None;
-                let mut detection_frequency: Option<String> = None;
                 let mut detection_parameters: Option<
                     std::collections::BTreeMap<String, serde_json::Value>,
                 > = None;
@@ -208,10 +202,6 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                         }
                         "description" => {
                             description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "detection_frequency" => {
-                            detection_frequency =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "detection_parameters" => {
@@ -279,8 +269,6 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
                 let description =
                     description.ok_or_else(|| M::Error::missing_field("description"))?;
-                let detection_frequency = detection_frequency
-                    .ok_or_else(|| M::Error::missing_field("detection_frequency"))?;
                 let detection_parameters = detection_parameters
                     .ok_or_else(|| M::Error::missing_field("detection_parameters"))?;
                 let insights = insights.ok_or_else(|| M::Error::missing_field("insights"))?;
@@ -311,7 +299,6 @@ impl<'de> Deserialize<'de> for GovernanceControlAttributes {
                     created_at,
                     created_by,
                     description,
-                    detection_frequency,
                     detection_parameters,
                     insights,
                     last_detection_at,
