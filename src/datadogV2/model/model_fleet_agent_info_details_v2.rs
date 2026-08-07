@@ -86,21 +86,9 @@ pub struct FleetAgentInfoDetailsV2 {
     /// The operating system version.
     #[serde(rename = "os_version")]
     pub os_version: Option<String>,
-    /// OpenTelemetry collector deployment types associated with the agent.
-    #[serde(rename = "otel_collector_deployment_types")]
-    pub otel_collector_deployment_types: Option<Vec<String>>,
-    /// OpenTelemetry collector distributions associated with the agent.
-    #[serde(rename = "otel_collector_distributions")]
-    pub otel_collector_distributions: Option<Vec<String>>,
-    /// List of OpenTelemetry collector versions (if applicable).
-    #[serde(rename = "otel_collector_versions")]
-    pub otel_collector_versions: Option<Vec<String>>,
     /// OpenTelemetry collectors associated with the agent (if applicable).
     #[serde(rename = "otel_collectors")]
     pub otel_collectors: Option<Vec<std::collections::BTreeMap<String, serde_json::Value>>>,
-    /// OpenTelemetry resource attributes reported by the agent.
-    #[serde(rename = "otel_resource_attributes")]
-    pub otel_resource_attributes: Option<Vec<String>>,
     /// Kubernetes pod name (if applicable).
     #[serde(rename = "pod_name")]
     pub pod_name: Option<String>,
@@ -166,11 +154,7 @@ impl FleetAgentInfoDetailsV2 {
             last_restart_at: None,
             os: None,
             os_version: None,
-            otel_collector_deployment_types: None,
-            otel_collector_distributions: None,
-            otel_collector_versions: None,
             otel_collectors: None,
-            otel_resource_attributes: None,
             pod_name: None,
             preferred_ha_active_agent: None,
             python_version: None,
@@ -311,31 +295,11 @@ impl FleetAgentInfoDetailsV2 {
         self
     }
 
-    pub fn otel_collector_deployment_types(mut self, value: Vec<String>) -> Self {
-        self.otel_collector_deployment_types = Some(value);
-        self
-    }
-
-    pub fn otel_collector_distributions(mut self, value: Vec<String>) -> Self {
-        self.otel_collector_distributions = Some(value);
-        self
-    }
-
-    pub fn otel_collector_versions(mut self, value: Vec<String>) -> Self {
-        self.otel_collector_versions = Some(value);
-        self
-    }
-
     pub fn otel_collectors(
         mut self,
         value: Vec<std::collections::BTreeMap<String, serde_json::Value>>,
     ) -> Self {
         self.otel_collectors = Some(value);
-        self
-    }
-
-    pub fn otel_resource_attributes(mut self, value: Vec<String>) -> Self {
-        self.otel_resource_attributes = Some(value);
         self
     }
 
@@ -446,13 +410,9 @@ impl<'de> Deserialize<'de> for FleetAgentInfoDetailsV2 {
                 let mut last_restart_at: Option<i64> = None;
                 let mut os: Option<String> = None;
                 let mut os_version: Option<String> = None;
-                let mut otel_collector_deployment_types: Option<Vec<String>> = None;
-                let mut otel_collector_distributions: Option<Vec<String>> = None;
-                let mut otel_collector_versions: Option<Vec<String>> = None;
                 let mut otel_collectors: Option<
                     Vec<std::collections::BTreeMap<String, serde_json::Value>>,
                 > = None;
-                let mut otel_resource_attributes: Option<Vec<String>> = None;
                 let mut pod_name: Option<String> = None;
                 let mut preferred_ha_active_agent: Option<String> = None;
                 let mut python_version: Option<String> = None;
@@ -641,39 +601,11 @@ impl<'de> Deserialize<'de> for FleetAgentInfoDetailsV2 {
                             }
                             os_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "otel_collector_deployment_types" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            otel_collector_deployment_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "otel_collector_distributions" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            otel_collector_distributions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "otel_collector_versions" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            otel_collector_versions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "otel_collectors" => {
                             if v.is_null() {
                                 continue;
                             }
                             otel_collectors =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "otel_resource_attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            otel_resource_attributes =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "pod_name" => {
@@ -775,11 +707,7 @@ impl<'de> Deserialize<'de> for FleetAgentInfoDetailsV2 {
                     last_restart_at,
                     os,
                     os_version,
-                    otel_collector_deployment_types,
-                    otel_collector_distributions,
-                    otel_collector_versions,
                     otel_collectors,
-                    otel_resource_attributes,
                     pod_name,
                     preferred_ha_active_agent,
                     python_version,
