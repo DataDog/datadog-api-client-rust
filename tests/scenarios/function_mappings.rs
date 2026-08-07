@@ -223,7 +223,7 @@ pub struct ApiInstances {
     pub v2_api_status_pages: Option<datadogV2::api_status_pages::StatusPagesAPI>,
     pub v2_api_stegadography: Option<datadogV2::api_stegadography::StegadographyAPI>,
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
-    pub v2_api_tag_policies: Option<datadogV2::api_tag_policies::TagPoliciesAPI>,
+    pub v2_api_tag_rules: Option<datadogV2::api_tag_rules::TagRulesAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
     pub v2_api_user_authorized_clients:
         Option<datadogV2::api_user_authorized_clients::UserAuthorizedClientsAPI>,
@@ -1436,9 +1436,9 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "TagPolicies" => {
-            world.api_instances.v2_api_tag_policies = Some(
-                datadogV2::api_tag_policies::TagPoliciesAPI::with_client_and_config(
+        "TagRules" => {
+            world.api_instances.v2_api_tag_rules = Some(
+                datadogV2::api_tag_rules::TagRulesAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -7834,22 +7834,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     );
     world
         .function_mappings
-        .insert("v2.ListTagPolicies".into(), test_v2_list_tag_policies);
+        .insert("v2.ListTagRules".into(), test_v2_list_tag_rules);
     world
         .function_mappings
-        .insert("v2.CreateTagPolicy".into(), test_v2_create_tag_policy);
+        .insert("v2.CreateTagRule".into(), test_v2_create_tag_rule);
     world
         .function_mappings
-        .insert("v2.DeleteTagPolicy".into(), test_v2_delete_tag_policy);
+        .insert("v2.DeleteTagRule".into(), test_v2_delete_tag_rule);
     world
         .function_mappings
-        .insert("v2.GetTagPolicy".into(), test_v2_get_tag_policy);
+        .insert("v2.GetTagRule".into(), test_v2_get_tag_rule);
     world
         .function_mappings
-        .insert("v2.UpdateTagPolicy".into(), test_v2_update_tag_policy);
+        .insert("v2.UpdateTagRule".into(), test_v2_update_tag_rule);
     world
         .function_mappings
-        .insert("v2.GetTagPolicyScore".into(), test_v2_get_tag_policy_score);
+        .insert("v2.GetTagRuleScore".into(), test_v2_get_tag_rule_score);
     world
         .function_mappings
         .insert("v2.ListTeams".into(), test_v2_list_teams);
@@ -62567,10 +62567,10 @@ fn test_v2_patch_global_variable(world: &mut DatadogWorld, _parameters: &HashMap
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_list_tag_policies(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_list_tag_rules(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_tag_policies
+        .v2_api_tag_rules
         .as_ref()
         .expect("api instance not found");
     let include_disabled = _parameters
@@ -62591,14 +62591,14 @@ fn test_v2_list_tag_policies(world: &mut DatadogWorld, _parameters: &HashMap<Str
     let ts_end = _parameters
         .get("ts_end")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_tag_policies::ListTagPoliciesOptionalParams::default();
+    let mut params = datadogV2::api_tag_rules::ListTagRulesOptionalParams::default();
     params.include_disabled = include_disabled;
     params.include_deleted = include_deleted;
     params.include = include;
     params.filter_source = filter_source;
     params.ts_start = ts_start;
     params.ts_end = ts_end;
-    let response = match block_on(api.list_tag_policies_with_http_info(params)) {
+    let response = match block_on(api.list_tag_rules_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -62616,14 +62616,14 @@ fn test_v2_list_tag_policies(world: &mut DatadogWorld, _parameters: &HashMap<Str
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_create_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_create_tag_rule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_tag_policies
+        .v2_api_tag_rules
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_tag_policy_with_http_info(body)) {
+    let response = match block_on(api.create_tag_rule_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -62641,19 +62641,19 @@ fn test_v2_create_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<Str
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_delete_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_delete_tag_rule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_tag_policies
+        .v2_api_tag_rules
         .as_ref()
         .expect("api instance not found");
     let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
     let hard_delete = _parameters
         .get("hard_delete")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_tag_policies::DeleteTagPolicyOptionalParams::default();
+    let mut params = datadogV2::api_tag_rules::DeleteTagRuleOptionalParams::default();
     params.hard_delete = hard_delete;
-    let response = match block_on(api.delete_tag_policy_with_http_info(policy_id, params)) {
+    let response = match block_on(api.delete_tag_rule_with_http_info(policy_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -62671,10 +62671,10 @@ fn test_v2_delete_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<Str
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_get_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_get_tag_rule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_tag_policies
+        .v2_api_tag_rules
         .as_ref()
         .expect("api instance not found");
     let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
@@ -62687,11 +62687,11 @@ fn test_v2_get_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<String
     let ts_end = _parameters
         .get("ts_end")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_tag_policies::GetTagPolicyOptionalParams::default();
+    let mut params = datadogV2::api_tag_rules::GetTagRuleOptionalParams::default();
     params.include = include;
     params.ts_start = ts_start;
     params.ts_end = ts_end;
-    let response = match block_on(api.get_tag_policy_with_http_info(policy_id, params)) {
+    let response = match block_on(api.get_tag_rule_with_http_info(policy_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -62709,15 +62709,15 @@ fn test_v2_get_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<String
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_update_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_update_tag_rule(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_tag_policies
+        .v2_api_tag_rules
         .as_ref()
         .expect("api instance not found");
     let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.update_tag_policy_with_http_info(policy_id, body)) {
+    let response = match block_on(api.update_tag_rule_with_http_info(policy_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -62735,10 +62735,10 @@ fn test_v2_update_tag_policy(world: &mut DatadogWorld, _parameters: &HashMap<Str
     world.response.code = response.status.as_u16();
 }
 
-fn test_v2_get_tag_policy_score(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+fn test_v2_get_tag_rule_score(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_tag_policies
+        .v2_api_tag_rules
         .as_ref()
         .expect("api instance not found");
     let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
@@ -62748,10 +62748,10 @@ fn test_v2_get_tag_policy_score(world: &mut DatadogWorld, _parameters: &HashMap<
     let ts_end = _parameters
         .get("ts_end")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_tag_policies::GetTagPolicyScoreOptionalParams::default();
+    let mut params = datadogV2::api_tag_rules::GetTagRuleScoreOptionalParams::default();
     params.ts_start = ts_start;
     params.ts_end = ts_end;
-    let response = match block_on(api.get_tag_policy_score_with_http_info(policy_id, params)) {
+    let response = match block_on(api.get_tag_rule_score_with_http_info(policy_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
