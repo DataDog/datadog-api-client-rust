@@ -20,9 +20,12 @@ pub struct ListStreamQuery {
     /// Compute configuration for the List Stream Widget. Compute can be used only with the logs_transaction_stream (from 1 to 5 items) list stream source.
     #[serde(rename = "compute")]
     pub compute: Option<Vec<crate::datadogV1::model::ListStreamComputeItems>>,
-    /// Source from which to query items to display in the stream. apm_issue_stream, rum_issue_stream, and logs_issue_stream are deprecated. Use issue_stream instead.
+    /// Source from which to query items to display in the stream. apm_issue_stream, rum_issue_stream, and logs_issue_stream are deprecated. Use issue_stream instead. apm_recommendations_stream is used to query APM recommendations, and supports filtering by environment, services, teams, recommendation types, and status.
     #[serde(rename = "data_source")]
     pub data_source: crate::datadogV1::model::ListStreamSource,
+    /// Filter by APM environment. Usable only with `apm_recommendations_stream`.
+    #[serde(rename = "env")]
+    pub env: Option<String>,
     /// Size to use to display an event.
     #[serde(rename = "event_size")]
     pub event_size: Option<crate::datadogV1::model::WidgetEventSize>,
@@ -38,12 +41,21 @@ pub struct ListStreamQuery {
     /// Widget query.
     #[serde(rename = "query_string")]
     pub query_string: String,
+    /// Filter by recommendation types. Usable only with `apm_recommendations_stream`.
+    #[serde(rename = "recommendation_types")]
+    pub recommendation_types: Option<Vec<String>>,
+    /// Filter by service names. Usable only with `apm_recommendations_stream`.
+    #[serde(rename = "services")]
+    pub services: Option<Vec<String>>,
     /// Which column and order to sort by
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV1::model::WidgetFieldSort>,
     /// Filter by issue states. Usable only with `issue_stream`.
     #[serde(rename = "states")]
     pub states: Option<Vec<crate::datadogV1::model::ListStreamIssueState>>,
+    /// Filter by recommendation statuses. Usable only with `apm_recommendations_stream`.
+    #[serde(rename = "statuses")]
+    pub statuses: Option<Vec<String>>,
     /// Option for storage location. Feature in Private Beta.
     #[serde(rename = "storage")]
     pub storage: Option<String>,
@@ -53,6 +65,9 @@ pub struct ListStreamQuery {
     /// Filter by team handles. Usable only with `issue_stream`.
     #[serde(rename = "team_handles")]
     pub team_handles: Option<Vec<String>>,
+    /// Filter by team handles. Usable only with `apm_recommendations_stream`.
+    #[serde(rename = "teams")]
+    pub teams: Option<Vec<String>>,
     /// Version of the query for the logs transaction stream widget. When omitted, v1 query behavior is
     /// preserved. Set to `sequential_query` to use v2 behavior. **This feature is in Preview.**
     #[serde(rename = "version")]
@@ -74,16 +89,21 @@ impl ListStreamQuery {
             clustering_pattern_field_path: None,
             compute: None,
             data_source,
+            env: None,
             event_size: None,
             group_by: None,
             indexes: None,
             persona: None,
             query_string,
+            recommendation_types: None,
+            services: None,
             sort: None,
             states: None,
+            statuses: None,
             storage: None,
             suspected_causes: None,
             team_handles: None,
+            teams: None,
             version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -102,6 +122,11 @@ impl ListStreamQuery {
 
     pub fn compute(mut self, value: Vec<crate::datadogV1::model::ListStreamComputeItems>) -> Self {
         self.compute = Some(value);
+        self
+    }
+
+    pub fn env(mut self, value: String) -> Self {
+        self.env = Some(value);
         self
     }
 
@@ -125,6 +150,16 @@ impl ListStreamQuery {
         self
     }
 
+    pub fn recommendation_types(mut self, value: Vec<String>) -> Self {
+        self.recommendation_types = Some(value);
+        self
+    }
+
+    pub fn services(mut self, value: Vec<String>) -> Self {
+        self.services = Some(value);
+        self
+    }
+
     pub fn sort(mut self, value: crate::datadogV1::model::WidgetFieldSort) -> Self {
         self.sort = Some(value);
         self
@@ -132,6 +167,11 @@ impl ListStreamQuery {
 
     pub fn states(mut self, value: Vec<crate::datadogV1::model::ListStreamIssueState>) -> Self {
         self.states = Some(value);
+        self
+    }
+
+    pub fn statuses(mut self, value: Vec<String>) -> Self {
+        self.statuses = Some(value);
         self
     }
 
@@ -147,6 +187,11 @@ impl ListStreamQuery {
 
     pub fn team_handles(mut self, value: Vec<String>) -> Self {
         self.team_handles = Some(value);
+        self
+    }
+
+    pub fn teams(mut self, value: Vec<String>) -> Self {
+        self.teams = Some(value);
         self
     }
 
@@ -186,17 +231,22 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                 let mut compute: Option<Vec<crate::datadogV1::model::ListStreamComputeItems>> =
                     None;
                 let mut data_source: Option<crate::datadogV1::model::ListStreamSource> = None;
+                let mut env: Option<String> = None;
                 let mut event_size: Option<crate::datadogV1::model::WidgetEventSize> = None;
                 let mut group_by: Option<Vec<crate::datadogV1::model::ListStreamGroupByItems>> =
                     None;
                 let mut indexes: Option<Vec<String>> = None;
                 let mut persona: Option<crate::datadogV1::model::ListStreamIssuePersona> = None;
                 let mut query_string: Option<String> = None;
+                let mut recommendation_types: Option<Vec<String>> = None;
+                let mut services: Option<Vec<String>> = None;
                 let mut sort: Option<crate::datadogV1::model::WidgetFieldSort> = None;
                 let mut states: Option<Vec<crate::datadogV1::model::ListStreamIssueState>> = None;
+                let mut statuses: Option<Vec<String>> = None;
                 let mut storage: Option<String> = None;
                 let mut suspected_causes: Option<Vec<String>> = None;
                 let mut team_handles: Option<Vec<String>> = None;
+                let mut teams: Option<Vec<String>> = None;
                 let mut version: Option<crate::datadogV1::model::ListStreamQueryVersion> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -239,6 +289,12 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                                     _ => {}
                                 }
                             }
+                        }
+                        "env" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "event_size" => {
                             if v.is_null() {
@@ -286,6 +342,19 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                             query_string =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "recommendation_types" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            recommendation_types =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "services" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            services = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "sort" => {
                             if v.is_null() {
                                 continue;
@@ -297,6 +366,12 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                                 continue;
                             }
                             states = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "statuses" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            statuses = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "storage" => {
                             if v.is_null() {
@@ -317,6 +392,12 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                             }
                             team_handles =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "teams" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            teams = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "version" => {
                             if v.is_null() {
@@ -349,16 +430,21 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                     clustering_pattern_field_path,
                     compute,
                     data_source,
+                    env,
                     event_size,
                     group_by,
                     indexes,
                     persona,
                     query_string,
+                    recommendation_types,
+                    services,
                     sort,
                     states,
+                    statuses,
                     storage,
                     suspected_causes,
                     team_handles,
+                    teams,
                     version,
                     additional_properties,
                     _unparsed,
