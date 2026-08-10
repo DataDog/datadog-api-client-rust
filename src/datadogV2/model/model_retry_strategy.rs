@@ -16,35 +16,22 @@ pub struct RetryStrategy {
     pub kind: crate::datadogV2::model::RetryStrategyKind,
     /// The definition of `RetryStrategyLinear` object.
     #[serde(rename = "linear")]
-    pub linear: Option<crate::datadogV2::model::RetryStrategyLinear>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    pub linear: crate::datadogV2::model::RetryStrategyLinear,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
 impl RetryStrategy {
-    pub fn new(kind: crate::datadogV2::model::RetryStrategyKind) -> RetryStrategy {
+    pub fn new(
+        kind: crate::datadogV2::model::RetryStrategyKind,
+        linear: crate::datadogV2::model::RetryStrategyLinear,
+    ) -> RetryStrategy {
         RetryStrategy {
             kind,
-            linear: None,
-            additional_properties: std::collections::BTreeMap::new(),
+            linear,
             _unparsed: false,
         }
-    }
-
-    pub fn linear(mut self, value: crate::datadogV2::model::RetryStrategyLinear) -> Self {
-        self.linear = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
     }
 }
 
@@ -67,10 +54,6 @@ impl<'de> Deserialize<'de> for RetryStrategy {
             {
                 let mut kind: Option<crate::datadogV2::model::RetryStrategyKind> = None;
                 let mut linear: Option<crate::datadogV2::model::RetryStrategyLinear> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -89,24 +72,21 @@ impl<'de> Deserialize<'de> for RetryStrategy {
                             }
                         }
                         "linear" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             linear = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
                 let kind = kind.ok_or_else(|| M::Error::missing_field("kind"))?;
+                let linear = linear.ok_or_else(|| M::Error::missing_field("linear"))?;
 
                 let content = RetryStrategy {
                     kind,
                     linear,
-                    additional_properties,
                     _unparsed,
                 };
 

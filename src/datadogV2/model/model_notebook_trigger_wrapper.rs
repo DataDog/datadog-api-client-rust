@@ -14,7 +14,7 @@ pub struct NotebookTriggerWrapper {
     /// Trigger a workflow from a Notebook.
     #[serde(rename = "notebookTrigger")]
     pub notebook_trigger: std::collections::BTreeMap<String, serde_json::Value>,
-    /// A list of steps that run first after a trigger fires.
+    /// Names of existing workflow steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
     #[serde(flatten)]

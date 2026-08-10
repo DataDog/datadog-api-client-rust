@@ -14,7 +14,7 @@ pub struct CaseTriggerWrapper {
     /// Trigger a workflow from a Case. For automatic triggering a handle must be configured and the workflow must be published.
     #[serde(rename = "caseTrigger")]
     pub case_trigger: crate::datadogV2::model::CaseTrigger,
-    /// A list of steps that run first after a trigger fires.
+    /// Names of existing workflow steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
     #[serde(flatten)]

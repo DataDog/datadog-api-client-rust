@@ -14,7 +14,7 @@ pub struct SoftwareCatalogTriggerWrapper {
     /// Trigger a workflow from Software Catalog.
     #[serde(rename = "softwareCatalogTrigger")]
     pub software_catalog_trigger: std::collections::BTreeMap<String, serde_json::Value>,
-    /// A list of steps that run first after a trigger fires.
+    /// Names of existing workflow steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
     #[serde(flatten)]

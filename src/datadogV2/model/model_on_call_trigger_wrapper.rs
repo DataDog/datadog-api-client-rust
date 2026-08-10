@@ -14,7 +14,7 @@ pub struct OnCallTriggerWrapper {
     /// Trigger a workflow from an On-Call Page or On-Call Handover. For automatic triggering a handle must be configured and the workflow must be published.
     #[serde(rename = "onCallTrigger")]
     pub on_call_trigger: crate::datadogV2::model::OnCallTrigger,
-    /// A list of steps that run first after a trigger fires.
+    /// Names of existing workflow steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
     #[serde(flatten)]
