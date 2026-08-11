@@ -34,6 +34,9 @@ pub struct LLMObsPatternsClusteredPointRef {
     /// Status of the source span. Included only when metrics are requested.
     #[serde(rename = "status")]
     pub status: Option<String>,
+    /// Unix timestamp of the source span in milliseconds. Included only when metrics are requested.
+    #[serde(rename = "timestamp")]
+    pub timestamp: Option<i64>,
     /// Total number of tokens of the source span. Included only when metrics are requested.
     #[serde(rename = "total_tokens")]
     pub total_tokens: Option<f64>,
@@ -54,6 +57,7 @@ impl LLMObsPatternsClusteredPointRef {
             output_tokens: None,
             span_id,
             status: None,
+            timestamp: None,
             total_tokens: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -90,6 +94,11 @@ impl LLMObsPatternsClusteredPointRef {
 
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
+        self
+    }
+
+    pub fn timestamp(mut self, value: i64) -> Self {
+        self.timestamp = Some(value);
         self
     }
 
@@ -132,6 +141,7 @@ impl<'de> Deserialize<'de> for LLMObsPatternsClusteredPointRef {
                 let mut output_tokens: Option<f64> = None;
                 let mut span_id: Option<String> = None;
                 let mut status: Option<String> = None;
+                let mut timestamp: Option<i64> = None;
                 let mut total_tokens: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -183,6 +193,12 @@ impl<'de> Deserialize<'de> for LLMObsPatternsClusteredPointRef {
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "timestamp" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "total_tokens" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
@@ -207,6 +223,7 @@ impl<'de> Deserialize<'de> for LLMObsPatternsClusteredPointRef {
                     output_tokens,
                     span_id,
                     status,
+                    timestamp,
                     total_tokens,
                     additional_properties,
                     _unparsed,
