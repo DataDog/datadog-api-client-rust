@@ -14,7 +14,7 @@ pub struct SecurityTriggerWrapper {
     /// Trigger a workflow from a Security Signal or Finding. For automatic triggering a handle must be configured and the workflow must be published.
     #[serde(rename = "securityTrigger")]
     pub security_trigger: crate::datadogV2::model::SecurityTrigger,
-    /// A list of steps that run first after a trigger fires.
+    /// Names of existing workflow steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
     #[serde(flatten)]

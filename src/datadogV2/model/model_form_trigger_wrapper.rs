@@ -14,7 +14,7 @@ pub struct FormTriggerWrapper {
     /// Trigger a workflow from a Form.
     #[serde(rename = "formTrigger")]
     pub form_trigger: crate::datadogV2::model::FormTrigger,
-    /// A list of steps that run first after a trigger fires.
+    /// Names of existing workflow steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
     #[serde(flatten)]

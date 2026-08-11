@@ -23,7 +23,7 @@ pub struct WorkflowListItemAttributes {
     /// Whether the workflow is published. Unpublished workflows can only be run manually. Automatic triggers such as Schedule do not fire until the workflow is published.
     #[serde(rename = "published")]
     pub published: Option<bool>,
-    /// The spec defines what the workflow does.
+    /// A complete Workflow Automation definition, including its triggers, steps, and connections.
     #[serde(rename = "spec")]
     pub spec: Option<crate::datadogV2::model::Spec>,
     /// Tags of the workflow.
