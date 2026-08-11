@@ -73,6 +73,8 @@ pub struct ApiInstances {
         Option<datadogV2::api_case_management_attribute::CaseManagementAttributeAPI>,
     pub v2_api_software_catalog: Option<datadogV2::api_software_catalog::SoftwareCatalogAPI>,
     pub v2_api_change_management: Option<datadogV2::api_change_management::ChangeManagementAPI>,
+    pub v2_api_ci_visibility_git_hub_accounts:
+        Option<datadogV2::api_ci_visibility_git_hub_accounts::CIVisibilityGitHubAccountsAPI>,
     pub v2_api_ci_visibility_pipelines:
         Option<datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI>,
     pub v2_api_test_optimization: Option<datadogV2::api_test_optimization::TestOptimizationAPI>,
@@ -722,6 +724,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "CIVisibilityGitHubAccounts" => {
+            world.api_instances.v2_api_ci_visibility_git_hub_accounts = Some(datadogV2::api_ci_visibility_git_hub_accounts::CIVisibilityGitHubAccountsAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "CIVisibilityPipelines" => {
             world.api_instances.v2_api_ci_visibility_pipelines = Some(datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI::with_client_and_config(
@@ -3428,6 +3436,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateChangeRequestDecision".into(),
         test_v2_update_change_request_decision,
+    );
+    world.function_mappings.insert(
+        "v2.ListCIAppGitHubAccounts".into(),
+        test_v2_list_ci_app_git_hub_accounts,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateCIAppGitHubAccount".into(),
+        test_v2_update_ci_app_git_hub_account,
     );
     world.function_mappings.insert(
         "v2.CreateCIAppPipelineEvent".into(),
@@ -24880,6 +24896,61 @@ fn test_v2_update_change_request_decision(
         decision_id,
         body,
     )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_ci_app_git_hub_accounts(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ci_visibility_git_hub_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_ci_app_git_hub_accounts_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_ci_app_git_hub_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ci_visibility_git_hub_accounts
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_ci_app_git_hub_account_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
