@@ -5739,7 +5739,7 @@ impl StatusPagesAPI {
         }
     }
 
-    /// Updates an existing status page's attributes. **Note**: Publishing and unpublishing via the `enabled` property will be deprecated on this endpoint. Use the dedicated [publish](#publish-status-page) and [unpublish](#unpublish-status-page) status page endpoints instead.
+    /// Updates an existing status page's attributes. To publish and unpublish status pages, use the dedicated [publish](#publish-status-page) and [unpublish](#unpublish-status-page) status page endpoints.
     pub async fn update_status_page(
         &self,
         page_id: uuid::Uuid,
@@ -5763,7 +5763,7 @@ impl StatusPagesAPI {
         }
     }
 
-    /// Updates an existing status page's attributes. **Note**: Publishing and unpublishing via the `enabled` property will be deprecated on this endpoint. Use the dedicated [publish](#publish-status-page) and [unpublish](#unpublish-status-page) status page endpoints instead.
+    /// Updates an existing status page's attributes. To publish and unpublish status pages, use the dedicated [publish](#publish-status-page) and [unpublish](#unpublish-status-page) status page endpoints.
     pub async fn update_status_page_with_http_info(
         &self,
         page_id: uuid::Uuid,
