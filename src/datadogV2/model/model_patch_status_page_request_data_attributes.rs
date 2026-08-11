@@ -20,9 +20,6 @@ pub struct PatchStatusPageRequestDataAttributes {
     /// The base64-encoded image data displayed in email notifications sent to status page subscribers.
     #[serde(rename = "email_header_image")]
     pub email_header_image: Option<String>,
-    /// Whether the status page is enabled.
-    #[serde(rename = "enabled")]
-    pub enabled: Option<bool>,
     /// The base64-encoded image data displayed in the browser tab.
     #[serde(rename = "favicon")]
     pub favicon: Option<String>,
@@ -58,7 +55,6 @@ impl PatchStatusPageRequestDataAttributes {
             company_logo: None,
             domain_prefix: None,
             email_header_image: None,
-            enabled: None,
             favicon: None,
             name: None,
             slack_app_icon: None,
@@ -83,11 +79,6 @@ impl PatchStatusPageRequestDataAttributes {
 
     pub fn email_header_image(mut self, value: String) -> Self {
         self.email_header_image = Some(value);
-        self
-    }
-
-    pub fn enabled(mut self, value: bool) -> Self {
-        self.enabled = Some(value);
         self
     }
 
@@ -167,7 +158,6 @@ impl<'de> Deserialize<'de> for PatchStatusPageRequestDataAttributes {
                 let mut company_logo: Option<String> = None;
                 let mut domain_prefix: Option<String> = None;
                 let mut email_header_image: Option<String> = None;
-                let mut enabled: Option<bool> = None;
                 let mut favicon: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut slack_app_icon: Option<String> = None;
@@ -207,12 +197,6 @@ impl<'de> Deserialize<'de> for PatchStatusPageRequestDataAttributes {
                             }
                             email_header_image =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "enabled" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "favicon" => {
                             if v.is_null() {
@@ -288,7 +272,6 @@ impl<'de> Deserialize<'de> for PatchStatusPageRequestDataAttributes {
                     company_logo,
                     domain_prefix,
                     email_header_image,
-                    enabled,
                     favicon,
                     name,
                     slack_app_icon,
