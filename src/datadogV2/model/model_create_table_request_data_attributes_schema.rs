@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateTableRequestDataAttributesSchema {
-    /// The schema fields.
+    /// The schema fields. Maximum of 200 columns.
     #[serde(rename = "fields")]
     pub fields: Vec<crate::datadogV2::model::CreateTableRequestDataAttributesSchemaFieldsItems>,
     /// List of field names that serve as primary keys for the table. Only one primary key is supported, and it is used as an ID to retrieve rows.
