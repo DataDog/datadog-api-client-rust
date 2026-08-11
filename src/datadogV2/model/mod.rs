@@ -13182,6 +13182,8 @@ pub mod model_create_degradation_request_data_relationships_template;
 pub use self::model_create_degradation_request_data_relationships_template::CreateDegradationRequestDataRelationshipsTemplate;
 pub mod model_create_degradation_request_data_relationships_template_data;
 pub use self::model_create_degradation_request_data_relationships_template_data::CreateDegradationRequestDataRelationshipsTemplateData;
+pub mod model_degradation_request_meta;
+pub use self::model_degradation_request_meta::DegradationRequestMeta;
 pub mod model_degradation;
 pub use self::model_degradation::Degradation;
 pub mod model_create_backfilled_degradation_request;

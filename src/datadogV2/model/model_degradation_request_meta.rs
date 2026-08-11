@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request object for creating a degradation.
+/// The supported metadata for a degradation request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct CreateDegradationRequest {
-    /// The data object for creating a degradation.
-    #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::CreateDegradationRequestData>,
-    /// The supported metadata for a degradation request.
-    #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::DegradationRequestMeta>,
+pub struct DegradationRequestMeta {
+    /// A unique key used to ensure idempotent requests.
+    #[serde(rename = "idempotency_key")]
+    pub idempotency_key: Option<uuid::Uuid>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,17 @@ pub struct CreateDegradationRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl CreateDegradationRequest {
-    pub fn new() -> CreateDegradationRequest {
-        CreateDegradationRequest {
-            data: None,
-            meta: None,
+impl DegradationRequestMeta {
+    pub fn new() -> DegradationRequestMeta {
+        DegradationRequestMeta {
+            idempotency_key: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::CreateDegradationRequestData) -> Self {
-        self.data = Some(value);
-        self
-    }
-
-    pub fn meta(mut self, value: crate::datadogV2::model::DegradationRequestMeta) -> Self {
-        self.meta = Some(value);
+    pub fn idempotency_key(mut self, value: uuid::Uuid) -> Self {
+        self.idempotency_key = Some(value);
         self
     }
 
@@ -53,20 +44,20 @@ impl CreateDegradationRequest {
     }
 }
 
-impl Default for CreateDegradationRequest {
+impl Default for DegradationRequestMeta {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for CreateDegradationRequest {
+impl<'de> Deserialize<'de> for DegradationRequestMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct CreateDegradationRequestVisitor;
-        impl<'a> Visitor<'a> for CreateDegradationRequestVisitor {
-            type Value = CreateDegradationRequest;
+        struct DegradationRequestMetaVisitor;
+        impl<'a> Visitor<'a> for DegradationRequestMetaVisitor {
+            type Value = DegradationRequestMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +67,7 @@ impl<'de> Deserialize<'de> for CreateDegradationRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::CreateDegradationRequestData> = None;
-                let mut meta: Option<crate::datadogV2::model::DegradationRequestMeta> = None;
+                let mut idempotency_key: Option<uuid::Uuid> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +76,12 @@ impl<'de> Deserialize<'de> for CreateDegradationRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
+                        "idempotency_key" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "meta" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            idempotency_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,9 +91,8 @@ impl<'de> Deserialize<'de> for CreateDegradationRequest {
                     }
                 }
 
-                let content = CreateDegradationRequest {
-                    data,
-                    meta,
+                let content = DegradationRequestMeta {
+                    idempotency_key,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +101,6 @@ impl<'de> Deserialize<'de> for CreateDegradationRequest {
             }
         }
 
-        deserializer.deserialize_any(CreateDegradationRequestVisitor)
+        deserializer.deserialize_any(DegradationRequestMetaVisitor)
     }
 }

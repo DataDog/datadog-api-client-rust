@@ -14,6 +14,9 @@ pub struct PatchDegradationRequest {
     /// The data object for updating a degradation.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::PatchDegradationRequestData>,
+    /// The supported metadata for a degradation request.
+    #[serde(rename = "meta")]
+    pub meta: Option<crate::datadogV2::model::DegradationRequestMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,6 +28,7 @@ impl PatchDegradationRequest {
     pub fn new() -> PatchDegradationRequest {
         PatchDegradationRequest {
             data: None,
+            meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -32,6 +36,11 @@ impl PatchDegradationRequest {
 
     pub fn data(mut self, value: crate::datadogV2::model::PatchDegradationRequestData) -> Self {
         self.data = Some(value);
+        self
+    }
+
+    pub fn meta(mut self, value: crate::datadogV2::model::DegradationRequestMeta) -> Self {
+        self.meta = Some(value);
         self
     }
 
@@ -68,6 +77,7 @@ impl<'de> Deserialize<'de> for PatchDegradationRequest {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<crate::datadogV2::model::PatchDegradationRequestData> = None;
+                let mut meta: Option<crate::datadogV2::model::DegradationRequestMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,6 +92,12 @@ impl<'de> Deserialize<'de> for PatchDegradationRequest {
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -92,6 +108,7 @@ impl<'de> Deserialize<'de> for PatchDegradationRequest {
 
                 let content = PatchDegradationRequest {
                     data,
+                    meta,
                     additional_properties,
                     _unparsed,
                 };
