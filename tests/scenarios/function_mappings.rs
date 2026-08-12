@@ -4747,6 +4747,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_delete_dora_deployment,
     );
     world.function_mappings.insert(
+        "v2.PatchDORADeploymentByVersion".into(),
+        test_v2_patch_dora_deployment_by_version,
+    );
+    world.function_mappings.insert(
         "v2.ListDORADeployments".into(),
         test_v2_list_dora_deployments,
     );
@@ -36210,6 +36214,34 @@ fn test_v2_delete_dora_deployment(world: &mut DatadogWorld, _parameters: &HashMa
     let deployment_id =
         serde_json::from_value(_parameters.get("deployment_id").unwrap().clone()).unwrap();
     let response = match block_on(api.delete_dora_deployment_with_http_info(deployment_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_patch_dora_deployment_by_version(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_dora_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.patch_dora_deployment_by_version_with_http_info(body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

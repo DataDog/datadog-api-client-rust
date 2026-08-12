@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Remediation details for the deployment. Optional, but required to calculate failed deployment recovery time.
+/// Remediation details for the deployment. Optional, but required to calculate failed deployment recovery time. Specify either `id` or `version` to identify the remediation deployment, but not both.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DORADeploymentPatchRemediation {
-    /// The ID of the remediation deployment. Required when the failed deployment must be linked to a remediation deployment.
+    /// The ID of the remediation deployment. Use this or `version` to identify the remediation deployment, but not both.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// The type of remediation action taken. Required when the failed deployment must be linked to a remediation deployment.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::DORADeploymentPatchRemediationType>,
+    /// The version of the remediation deployment, matched against the same service and environment as the failed deployment. Use this or `id` to identify the remediation deployment, but not both.
+    #[serde(rename = "version")]
+    pub version: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,6 +32,7 @@ impl DORADeploymentPatchRemediation {
         DORADeploymentPatchRemediation {
             id: None,
             type_: None,
+            version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -44,6 +48,11 @@ impl DORADeploymentPatchRemediation {
         value: crate::datadogV2::model::DORADeploymentPatchRemediationType,
     ) -> Self {
         self.type_ = Some(value);
+        self
+    }
+
+    pub fn version(mut self, value: String) -> Self {
+        self.version = Some(value);
         self
     }
 
@@ -82,6 +91,7 @@ impl<'de> Deserialize<'de> for DORADeploymentPatchRemediation {
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::DORADeploymentPatchRemediationType> =
                     None;
+                let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -110,6 +120,12 @@ impl<'de> Deserialize<'de> for DORADeploymentPatchRemediation {
                                 }
                             }
                         }
+                        "version" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -121,6 +137,7 @@ impl<'de> Deserialize<'de> for DORADeploymentPatchRemediation {
                 let content = DORADeploymentPatchRemediation {
                     id,
                     type_,
+                    version,
                     additional_properties,
                     _unparsed,
                 };
