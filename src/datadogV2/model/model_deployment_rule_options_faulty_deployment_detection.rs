@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeploymentRuleOptionsFaultyDeploymentDetection {
+    /// Resources to include in faulty deployment detection. Mutually exclusive with `excluded_resources`.
+    #[serde(rename = "allowed_resources")]
+    pub allowed_resources: Option<Vec<String>>,
     /// The duration for faulty deployment detection.
     #[serde(rename = "duration")]
     pub duration: Option<i64>,
@@ -25,10 +28,16 @@ pub struct DeploymentRuleOptionsFaultyDeploymentDetection {
 impl DeploymentRuleOptionsFaultyDeploymentDetection {
     pub fn new() -> DeploymentRuleOptionsFaultyDeploymentDetection {
         DeploymentRuleOptionsFaultyDeploymentDetection {
+            allowed_resources: None,
             duration: None,
             excluded_resources: None,
             _unparsed: false,
         }
+    }
+
+    pub fn allowed_resources(mut self, value: Vec<String>) -> Self {
+        self.allowed_resources = Some(value);
+        self
     }
 
     pub fn duration(mut self, value: i64) -> Self {
@@ -65,12 +74,20 @@ impl<'de> Deserialize<'de> for DeploymentRuleOptionsFaultyDeploymentDetection {
             where
                 M: MapAccess<'a>,
             {
+                let mut allowed_resources: Option<Vec<String>> = None;
                 let mut duration: Option<i64> = None;
                 let mut excluded_resources: Option<Vec<String>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "allowed_resources" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            allowed_resources =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "duration" => {
                             if v.is_null() {
                                 continue;
@@ -93,6 +110,7 @@ impl<'de> Deserialize<'de> for DeploymentRuleOptionsFaultyDeploymentDetection {
                 }
 
                 let content = DeploymentRuleOptionsFaultyDeploymentDetection {
+                    allowed_resources,
                     duration,
                     excluded_resources,
                     _unparsed,

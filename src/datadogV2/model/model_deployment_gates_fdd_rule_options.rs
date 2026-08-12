@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeploymentGatesFDDRuleOptions {
+    /// APM resource names to include in analysis. Mutually exclusive with `excluded_resources`.
+    #[serde(rename = "allowed_resources")]
+    pub allowed_resources: Option<Vec<String>>,
     /// Evaluation window in seconds. Maximum 7200 (2 hours).
     #[serde(rename = "duration")]
     pub duration: Option<i64>,
@@ -27,11 +30,17 @@ pub struct DeploymentGatesFDDRuleOptions {
 impl DeploymentGatesFDDRuleOptions {
     pub fn new() -> DeploymentGatesFDDRuleOptions {
         DeploymentGatesFDDRuleOptions {
+            allowed_resources: None,
             duration: None,
             excluded_resources: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn allowed_resources(mut self, value: Vec<String>) -> Self {
+        self.allowed_resources = Some(value);
+        self
     }
 
     pub fn duration(mut self, value: i64) -> Self {
@@ -76,6 +85,7 @@ impl<'de> Deserialize<'de> for DeploymentGatesFDDRuleOptions {
             where
                 M: MapAccess<'a>,
             {
+                let mut allowed_resources: Option<Vec<String>> = None;
                 let mut duration: Option<i64> = None;
                 let mut excluded_resources: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -86,6 +96,13 @@ impl<'de> Deserialize<'de> for DeploymentGatesFDDRuleOptions {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "allowed_resources" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            allowed_resources =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "duration" => {
                             if v.is_null() {
                                 continue;
@@ -108,6 +125,7 @@ impl<'de> Deserialize<'de> for DeploymentGatesFDDRuleOptions {
                 }
 
                 let content = DeploymentGatesFDDRuleOptions {
+                    allowed_resources,
                     duration,
                     excluded_resources,
                     additional_properties,
