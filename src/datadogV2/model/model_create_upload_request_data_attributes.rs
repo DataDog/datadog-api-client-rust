@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateUploadRequestDataAttributes {
-    /// The CSV file headers that define the schema fields, provided in the same order as the columns in the uploaded file.
+    /// The CSV file headers that define the schema fields, provided in the same order as the columns in the uploaded file. Maximum of 200 columns.
     #[serde(rename = "headers")]
     pub headers: Vec<String>,
     /// Number of parts to split the file into for multipart upload.
