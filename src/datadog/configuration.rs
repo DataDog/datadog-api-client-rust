@@ -520,6 +520,7 @@ impl Default for Configuration {
             ("v2.trigger_deployment_gates_evaluation".to_owned(), false),
             ("v2.update_deployment_gate".to_owned(), false),
             ("v2.update_deployment_rule".to_owned(), false),
+            ("v2.patch_dora_deployment_by_version".to_owned(), false),
             ("v2.clone_form".to_owned(), false),
             ("v2.create_and_publish_form".to_owned(), false),
             ("v2.create_form".to_owned(), false),
