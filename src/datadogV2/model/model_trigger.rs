@@ -8,6 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum Trigger {
+    AgentTriggerWrapper(Box<crate::datadogV2::model::AgentTriggerWrapper>),
     APITriggerWrapper(Box<crate::datadogV2::model::APITriggerWrapper>),
     AppTriggerWrapper(Box<crate::datadogV2::model::AppTriggerWrapper>),
     CaseTriggerWrapper(Box<crate::datadogV2::model::CaseTriggerWrapper>),
@@ -38,6 +39,13 @@ impl<'de> Deserialize<'de> for Trigger {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::AgentTriggerWrapper>>(
+            value.clone(),
+        ) {
+            if !_v._unparsed {
+                return Ok(Trigger::AgentTriggerWrapper(_v));
+            }
+        }
         if let Ok(_v) =
             serde_json::from_value::<Box<crate::datadogV2::model::APITriggerWrapper>>(value.clone())
         {
