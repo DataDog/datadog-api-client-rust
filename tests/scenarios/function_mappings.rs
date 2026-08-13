@@ -13516,6 +13516,9 @@ fn test_v1_list_slos(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
     let offset = _parameters
         .get("offset")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let is_deleted = _parameters
+        .get("is_deleted")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV1::api_service_level_objectives::ListSLOsOptionalParams::default();
     params.ids = ids;
     params.query = query;
@@ -13523,6 +13526,7 @@ fn test_v1_list_slos(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
     params.metrics_query = metrics_query;
     params.limit = limit;
     params.offset = offset;
+    params.is_deleted = is_deleted;
     let response = match block_on(api.list_slos_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -13567,6 +13571,9 @@ fn test_v1_list_slos_with_pagination(
     let offset = _parameters
         .get("offset")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let is_deleted = _parameters
+        .get("is_deleted")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV1::api_service_level_objectives::ListSLOsOptionalParams::default();
     params.ids = ids;
     params.query = query;
@@ -13574,6 +13581,7 @@ fn test_v1_list_slos_with_pagination(
     params.metrics_query = metrics_query;
     params.limit = limit;
     params.offset = offset;
+    params.is_deleted = is_deleted;
     let response = api.list_slos_with_pagination(params);
     let mut result = Vec::new();
 
