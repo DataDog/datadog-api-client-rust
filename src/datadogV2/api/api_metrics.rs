@@ -2922,6 +2922,10 @@ impl MetricsAPI {
     }
 
     /// Returns the tag configuration for the given metric name.
+    ///
+    /// A metric may exist and submit data without having a tag configuration. If no tag configuration exists
+    /// for the metric, this endpoint returns `404 Not Found`. This response does not indicate that the metric
+    /// itself is missing.
     pub async fn list_tag_configuration_by_name(
         &self,
         metric_name: String,
@@ -2947,6 +2951,10 @@ impl MetricsAPI {
     }
 
     /// Returns the tag configuration for the given metric name.
+    ///
+    /// A metric may exist and submit data without having a tag configuration. If no tag configuration exists
+    /// for the metric, this endpoint returns `404 Not Found`. This response does not indicate that the metric
+    /// itself is missing.
     pub async fn list_tag_configuration_by_name_with_http_info(
         &self,
         metric_name: String,
