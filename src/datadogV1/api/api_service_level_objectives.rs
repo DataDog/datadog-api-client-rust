@@ -85,6 +85,8 @@ pub struct ListSLOsOptionalParams {
     pub limit: Option<i64>,
     /// The specific offset to use as the beginning of the returned response.
     pub offset: Option<i64>,
+    /// Whether to return only deleted service level objective objects.
+    pub is_deleted: Option<bool>,
 }
 
 impl ListSLOsOptionalParams {
@@ -116,6 +118,11 @@ impl ListSLOsOptionalParams {
     /// The specific offset to use as the beginning of the returned response.
     pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
+        self
+    }
+    /// Whether to return only deleted service level objective objects.
+    pub fn is_deleted(mut self, value: bool) -> Self {
+        self.is_deleted = Some(value);
         self
     }
 }
@@ -1307,6 +1314,7 @@ impl ServiceLevelObjectivesAPI {
         let metrics_query = params.metrics_query;
         let limit = params.limit;
         let offset = params.offset;
+        let is_deleted = params.is_deleted;
 
         let local_client = &self.client;
 
@@ -1339,6 +1347,10 @@ impl ServiceLevelObjectivesAPI {
         if let Some(ref local_query_param) = offset {
             local_req_builder =
                 local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = is_deleted {
+            local_req_builder =
+                local_req_builder.query(&[("is_deleted", &local_query_param.to_string())]);
         };
 
         // build headers
