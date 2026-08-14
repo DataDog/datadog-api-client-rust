@@ -22,7 +22,7 @@ pub struct LLMObsAnnotationQueueDataAttributesRequest {
     pub name: String,
     /// Identifier of the project this queue belongs to.
     #[serde(rename = "project_id")]
-    pub project_id: String,
+    pub project_id: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -31,12 +31,12 @@ pub struct LLMObsAnnotationQueueDataAttributesRequest {
 }
 
 impl LLMObsAnnotationQueueDataAttributesRequest {
-    pub fn new(name: String, project_id: String) -> LLMObsAnnotationQueueDataAttributesRequest {
+    pub fn new(name: String) -> LLMObsAnnotationQueueDataAttributesRequest {
         LLMObsAnnotationQueueDataAttributesRequest {
             annotation_schema: None,
             description: None,
             name,
-            project_id,
+            project_id: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -52,6 +52,11 @@ impl LLMObsAnnotationQueueDataAttributesRequest {
 
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    pub fn project_id(mut self, value: String) -> Self {
+        self.project_id = Some(value);
         self
     }
 
@@ -112,6 +117,9 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesRequest {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "project_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -122,7 +130,6 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesRequest {
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let project_id = project_id.ok_or_else(|| M::Error::missing_field("project_id"))?;
 
                 let content = LLMObsAnnotationQueueDataAttributesRequest {
                     annotation_schema,
