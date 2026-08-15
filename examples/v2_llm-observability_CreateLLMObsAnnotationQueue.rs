@@ -12,29 +12,27 @@ use datadog_api_client::datadogV2::model::LLMObsLabelSchemaType;
 #[tokio::main]
 async fn main() {
     let body = LLMObsAnnotationQueueRequest::new(LLMObsAnnotationQueueDataRequest::new(
-        LLMObsAnnotationQueueDataAttributesRequest::new(
-            "My annotation queue".to_string(),
-            "00000000-0000-0000-0000-000000000002".to_string(),
-        )
-        .annotation_schema(LLMObsAnnotationSchema::new(vec![LLMObsLabelSchema::new(
-            "quality".to_string(),
-            LLMObsLabelSchemaType::SCORE,
-        )
-        .description("Rating of the response quality.".to_string())
-        .has_assessment(false)
-        .has_reasoning(false)
-        .id("abc-123".to_string())
-        .is_assessment(false)
-        .is_integer(false)
-        .is_required(true)
-        .max(5.0 as f64)
-        .min(0.0 as f64)
-        .values(vec![
-            "good".to_string(),
-            "bad".to_string(),
-            "neutral".to_string(),
-        ])]))
-        .description("Queue for annotating customer support traces".to_string()),
+        LLMObsAnnotationQueueDataAttributesRequest::new("My annotation queue".to_string())
+            .annotation_schema(LLMObsAnnotationSchema::new(vec![LLMObsLabelSchema::new(
+                "quality".to_string(),
+                LLMObsLabelSchemaType::SCORE,
+            )
+            .description("Rating of the response quality.".to_string())
+            .has_assessment(false)
+            .has_reasoning(false)
+            .id("abc-123".to_string())
+            .is_assessment(false)
+            .is_integer(false)
+            .is_required(true)
+            .max(5.0 as f64)
+            .min(0.0 as f64)
+            .values(vec![
+                "good".to_string(),
+                "bad".to_string(),
+                "neutral".to_string(),
+            ])]))
+            .description("Queue for annotating customer support traces".to_string())
+            .project_id("00000000-0000-0000-0000-000000000002".to_string()),
         LLMObsAnnotationQueueType::QUEUES,
     ));
     let mut configuration = datadog::Configuration::new();
