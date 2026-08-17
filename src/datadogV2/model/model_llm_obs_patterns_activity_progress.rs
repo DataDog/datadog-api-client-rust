@@ -14,6 +14,9 @@ pub struct LLMObsPatternsActivityProgress {
     /// Name of the step.
     #[serde(rename = "name")]
     pub name: String,
+    /// Number of completed work items.
+    #[serde(rename = "nb_completed")]
+    pub nb_completed: Option<i64>,
     /// Timestamp when the step started. Null if the step has not started.
     #[serde(
         rename = "started_at",
@@ -24,6 +27,12 @@ pub struct LLMObsPatternsActivityProgress {
     /// Status of the step.
     #[serde(rename = "status")]
     pub status: String,
+    /// Label of the current sub-step.
+    #[serde(rename = "sub_step")]
+    pub sub_step: Option<String>,
+    /// Total number of work items.
+    #[serde(rename = "target")]
+    pub target: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -35,15 +44,33 @@ impl LLMObsPatternsActivityProgress {
     pub fn new(name: String, status: String) -> LLMObsPatternsActivityProgress {
         LLMObsPatternsActivityProgress {
             name,
+            nb_completed: None,
             started_at: None,
             status,
+            sub_step: None,
+            target: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    pub fn nb_completed(mut self, value: i64) -> Self {
+        self.nb_completed = Some(value);
+        self
+    }
+
     pub fn started_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.started_at = Some(value);
+        self
+    }
+
+    pub fn sub_step(mut self, value: String) -> Self {
+        self.sub_step = Some(value);
+        self
+    }
+
+    pub fn target(mut self, value: i64) -> Self {
+        self.target = Some(value);
         self
     }
 
@@ -74,8 +101,11 @@ impl<'de> Deserialize<'de> for LLMObsPatternsActivityProgress {
                 M: MapAccess<'a>,
             {
                 let mut name: Option<String> = None;
+                let mut nb_completed: Option<i64> = None;
                 let mut started_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut status: Option<String> = None;
+                let mut sub_step: Option<String> = None;
+                let mut target: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -87,11 +117,30 @@ impl<'de> Deserialize<'de> for LLMObsPatternsActivityProgress {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "nb_completed" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            nb_completed =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "started_at" => {
                             started_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "sub_step" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sub_step = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "target" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -105,8 +154,11 @@ impl<'de> Deserialize<'de> for LLMObsPatternsActivityProgress {
 
                 let content = LLMObsPatternsActivityProgress {
                     name,
+                    nb_completed,
                     started_at,
                     status,
+                    sub_step,
+                    target,
                     additional_properties,
                     _unparsed,
                 };

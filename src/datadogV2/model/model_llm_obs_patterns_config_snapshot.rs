@@ -14,6 +14,9 @@ pub struct LLMObsPatternsConfigSnapshot {
     /// Integration account ID used for a bring-your-own-model run.
     #[serde(rename = "account_id")]
     pub account_id: Option<String>,
+    /// Whether automatic dataset curation was enabled for the run.
+    #[serde(rename = "curation_enabled")]
+    pub curation_enabled: Option<bool>,
     /// Query that selected the spans for the run.
     #[serde(rename = "evp_query")]
     pub evp_query: Option<String>,
@@ -43,6 +46,7 @@ impl LLMObsPatternsConfigSnapshot {
     pub fn new() -> LLMObsPatternsConfigSnapshot {
         LLMObsPatternsConfigSnapshot {
             account_id: None,
+            curation_enabled: None,
             evp_query: None,
             hierarchy_depth: None,
             integration_provider: None,
@@ -56,6 +60,11 @@ impl LLMObsPatternsConfigSnapshot {
 
     pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
+        self
+    }
+
+    pub fn curation_enabled(mut self, value: bool) -> Self {
+        self.curation_enabled = Some(value);
         self
     }
 
@@ -122,6 +131,7 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigSnapshot {
                 M: MapAccess<'a>,
             {
                 let mut account_id: Option<String> = None;
+                let mut curation_enabled: Option<bool> = None;
                 let mut evp_query: Option<String> = None;
                 let mut hierarchy_depth: Option<i32> = None;
                 let mut integration_provider: Option<String> = None;
@@ -141,6 +151,13 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigSnapshot {
                                 continue;
                             }
                             account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "curation_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            curation_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "evp_query" => {
                             if v.is_null() {
@@ -192,6 +209,7 @@ impl<'de> Deserialize<'de> for LLMObsPatternsConfigSnapshot {
 
                 let content = LLMObsPatternsConfigSnapshot {
                     account_id,
+                    curation_enabled,
                     evp_query,
                     hierarchy_depth,
                     integration_provider,
