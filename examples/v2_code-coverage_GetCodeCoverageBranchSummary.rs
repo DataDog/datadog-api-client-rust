@@ -14,8 +14,7 @@ async fn main() {
             .repository_url("https://github.com/datadog/shopist".to_string()),
         BranchCoverageSummaryRequestType::CI_APP_COVERAGE_BRANCH_SUMMARY_REQUEST,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetCodeCoverageBranchSummary", true);
+    let configuration = datadog::Configuration::new();
     let api = CodeCoverageAPI::with_config(configuration);
     let resp = api.get_code_coverage_branch_summary(body).await;
     if let Ok(value) = resp {
