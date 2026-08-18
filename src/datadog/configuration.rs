@@ -151,6 +151,7 @@ impl Default for Configuration {
             ),
             ("v2.delete_llm_obs_annotations".to_owned(), false),
             ("v2.delete_llm_obs_custom_eval_config".to_owned(), false),
+            ("v2.delete_llm_obs_data".to_owned(), false),
             ("v2.delete_llm_obs_dataset_records".to_owned(), false),
             ("v2.delete_llm_obs_datasets".to_owned(), false),
             ("v2.delete_llm_obs_experiments".to_owned(), false),
