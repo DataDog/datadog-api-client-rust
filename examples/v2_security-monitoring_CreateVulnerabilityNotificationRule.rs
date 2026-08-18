@@ -16,7 +16,7 @@ async fn main() {
     let body =
         CreateNotificationRuleParameters::new().data(CreateNotificationRuleParametersData::new(
             CreateNotificationRuleParametersDataAttributes::new(
-                "Rule 1".to_string(),
+                "Rule ".to_string(),
                 Selectors::new(TriggerSource::SECURITY_FINDINGS)
                     .query("(source:production_service OR env:prod)".to_string())
                     .rule_types(vec![

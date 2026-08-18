@@ -20,7 +20,7 @@ async fn main() {
         PatchNotificationRuleParameters::new().data(PatchNotificationRuleParametersData::new(
             PatchNotificationRuleParametersDataAttributes::new()
                 .enabled(true)
-                .name("Rule 1".to_string())
+                .name("Rule ".to_string())
                 .selectors(
                     Selectors::new(TriggerSource::SECURITY_FINDINGS)
                         .query("(source:production_service OR env:prod)".to_string())
