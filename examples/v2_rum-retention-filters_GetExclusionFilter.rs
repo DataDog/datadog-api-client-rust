@@ -1,0 +1,17 @@
+// Get a RUM exclusion filter returns "OK" response
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI;
+
+#[tokio::main]
+async fn main() {
+    let configuration = datadog::Configuration::new();
+    let api = RumRetentionFiltersAPI::with_config(configuration);
+    let resp = api
+        .get_exclusion_filter("app_id".to_string(), "ef_id".to_string())
+        .await;
+    if let Ok(value) = resp {
+        println!("{:#?}", value);
+    } else {
+        println!("{:#?}", resp.unwrap_err());
+    }
+}
