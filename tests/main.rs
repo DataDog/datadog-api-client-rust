@@ -7,7 +7,97 @@ use scenarios::fixtures::{
     after_scenario, before_scenario, given_resource_in_system, DatadogWorld,
 };
 use serde_json::Value;
-use std::{collections::HashMap, env, fs::File, io::BufReader};
+use std::{
+    collections::HashMap,
+    env,
+    fs::{File, OpenOptions},
+    io::BufReader,
+    path::PathBuf,
+    process::{Child, Command, Stdio},
+    time::Duration,
+};
+
+const GENERATED_TEST_ROOT: &str = "tests/scenarios/generated-test";
+const GENERATED_TEST_PORT: &str = "18086";
+
+struct GeneratedTestServer {
+    child: Option<Child>,
+}
+
+fn generated_tests_enabled() -> bool {
+    env::var("DD_USE_GENERATED_TESTS")
+        .unwrap_or_else(|_| "false".to_string())
+        .eq_ignore_ascii_case("true")
+}
+
+impl GeneratedTestServer {
+    async fn start(record_mode: &str) -> Self {
+        let server = PathBuf::from(GENERATED_TEST_ROOT).join("test-server");
+        if !generated_tests_enabled() || record_mode != "false" || !server.is_file() {
+            return Self { child: None };
+        }
+
+        if env::var("DD_TEST_RUNNER_DATA").is_err() {
+            env::set_var(
+                "DD_TEST_RUNNER_DATA",
+                PathBuf::from(GENERATED_TEST_ROOT).join("test-runner-data"),
+            );
+        }
+        if env::var("DD_TEST_SERVER_URL").is_ok() {
+            return Self { child: None };
+        }
+
+        let port =
+            env::var("DD_TEST_SERVER_PORT").unwrap_or_else(|_| GENERATED_TEST_PORT.to_string());
+        let url = format!("http://127.0.0.1:{port}");
+        env::set_var("DD_TEST_SERVER_URL", &url);
+        let log_path = env::var("DD_TEST_SERVER_LOG")
+            .unwrap_or_else(|_| "/tmp/datadog-rust-test-server.log".to_string());
+        let log = OpenOptions::new()
+            .create(true)
+            .truncate(true)
+            .write(true)
+            .open(&log_path)
+            .expect("failed to open generated test server log");
+        let child = Command::new(server)
+            .arg("--port")
+            .arg(&port)
+            .stdout(Stdio::from(log.try_clone().unwrap()))
+            .stderr(Stdio::from(log))
+            .spawn()
+            .expect("failed to start generated test server");
+        let mut guard = Self { child: Some(child) };
+        let health = format!("{url}/__openapi_transformer__/health");
+        for _ in 0..50 {
+            if let Ok(response) = reqwest::get(&health).await {
+                if response.status().is_success() {
+                    return guard;
+                }
+            }
+            if guard.child.as_mut().unwrap().try_wait().unwrap().is_some() {
+                panic!("generated test server exited early; see {log_path}");
+            }
+            tokio::time::sleep(Duration::from_millis(100)).await;
+        }
+        drop(guard);
+        panic!("generated test server failed to start; see {log_path}");
+    }
+}
+
+impl Drop for GeneratedTestServer {
+    fn drop(&mut self) {
+        if let Some(child) = self.child.as_mut() {
+            let _ = child.kill();
+            let _ = child.wait();
+        }
+    }
+}
+
+fn feature_data_path(version: &str, filename: &str) -> PathBuf {
+    PathBuf::from("tests/scenarios/features")
+        .join(version)
+        .join(filename)
+}
 
 fn merge(a: &mut Value, b: &Value) {
     match (a, b) {
@@ -27,26 +117,26 @@ fn merge(a: &mut Value, b: &Value) {
 
 lazy_static! {
     pub static ref GIVEN_MAP: HashMap<String, Value> = {
-        let given_v1_file = File::open("tests/scenarios/features/v1/given.json").unwrap();
+        let given_v1_file = File::open(feature_data_path("v1", "given.json")).unwrap();
         let givens_v1: Value = serde_json::from_reader(BufReader::new(given_v1_file))
             .expect("failed to deserialize given.json");
-        let given_v2_file = File::open("tests/scenarios/features/v2/given.json").unwrap();
+        let given_v2_file = File::open(feature_data_path("v2", "given.json")).unwrap();
         let given_v2: Value = serde_json::from_reader(BufReader::new(given_v2_file))
             .expect("failed to deserialize given.json");
 
         HashMap::from([("v1".to_string(), givens_v1), ("v2".to_string(), given_v2)])
     };
     pub static ref UNDO_MAP: Value = {
-        let undo_v1_file = File::open("tests/scenarios/features/v1/undo.json").unwrap();
+        let undo_v1_file = File::open(feature_data_path("v1", "undo.json")).unwrap();
         let mut undos: Value = serde_json::from_reader(BufReader::new(undo_v1_file))
             .expect("failed to deserialize undo.json");
-        let undo_v2_file = File::open("tests/scenarios/features/v2/undo.json").unwrap();
+        let undo_v2_file = File::open(feature_data_path("v2", "undo.json")).unwrap();
         let undo_v2: Value = serde_json::from_reader(BufReader::new(undo_v2_file))
             .expect("failed to deserialize undo.json");
         merge(&mut undos, &undo_v2);
         undos
     };
-    static ref API_VERSION_RE: Regex = Regex::new(r"tests/scenarios/features/v(\d+)/").unwrap();
+    static ref API_VERSION_RE: Regex = Regex::new(r"/v(\d+)/").unwrap();
 }
 
 #[tokio::main]
@@ -55,6 +145,10 @@ async fn main() {
     let record_mode = env::var("RECORD")
         .unwrap_or("false".to_string())
         .to_lowercase();
+    let generated_test_server = GeneratedTestServer::start(&record_mode).await;
+    if generated_tests_enabled() && env::var("DD_TEST_SERVER_URL").is_ok() {
+        println!("=== Using Generated Test Runner ===");
+    }
     let is_replay = !record_mode.eq("true") && !record_mode.eq("none");
     let concurrent_scenarios = match is_replay {
         true => 64,
@@ -91,8 +185,8 @@ async fn main() {
         }
     }
 
-    if cucumber
-        .filter_run("tests/scenarios/features/".to_string(), move |_, _, sc| {
+    let failed = cucumber
+        .filter_run("tests/scenarios/features/", move |_, _, sc| {
             let name_re = parsed_cli.re_filter.clone();
             let name_match = name_re
                 .and_then(|filter| Some(filter.is_match(sc.name.as_str())))
@@ -110,8 +204,9 @@ async fn main() {
             }
         })
         .await
-        .execution_has_failed()
-    {
+        .execution_has_failed();
+    drop(generated_test_server);
+    if failed {
         std::process::exit(1);
     }
 }
