@@ -17,6 +17,10 @@ pub struct ActionConnectionAttributes {
     /// Name of the connection
     #[serde(rename = "name")]
     pub name: String,
+    /// Tags associated with the connection. Each tag must follow the `key:value` format.
+    /// The `default` tag key is reserved.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -32,9 +36,15 @@ impl ActionConnectionAttributes {
         ActionConnectionAttributes {
             integration,
             name,
+            tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -66,6 +76,7 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributes {
                 let mut integration: Option<crate::datadogV2::model::ActionConnectionIntegration> =
                     None;
                 let mut name: Option<String> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,6 +100,12 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributes {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -103,6 +120,7 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributes {
                 let content = ActionConnectionAttributes {
                     integration,
                     name,
+                    tags,
                     additional_properties,
                     _unparsed,
                 };

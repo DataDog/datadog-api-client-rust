@@ -17,6 +17,10 @@ pub struct ActionConnectionAttributesUpdate {
     /// Name of the connection
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// Tags associated with the connection. Each tag must follow the `key:value` format.
+    /// The `default` tag key is reserved.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,6 +33,7 @@ impl ActionConnectionAttributesUpdate {
         ActionConnectionAttributesUpdate {
             integration: None,
             name: None,
+            tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -44,6 +49,11 @@ impl ActionConnectionAttributesUpdate {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
         self
     }
 
@@ -83,6 +93,7 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributesUpdate {
                     crate::datadogV2::model::ActionConnectionIntegrationUpdate,
                 > = None;
                 let mut name: Option<String> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -112,6 +123,12 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributesUpdate {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -123,6 +140,7 @@ impl<'de> Deserialize<'de> for ActionConnectionAttributesUpdate {
                 let content = ActionConnectionAttributesUpdate {
                     integration,
                     name,
+                    tags,
                     additional_properties,
                     _unparsed,
                 };
