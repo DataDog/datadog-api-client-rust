@@ -41,12 +41,12 @@ async fn main() {
                                                         FormulaAndFunctionApmResourceStatsDataSource
                                                         ::APM_RESOURCE_STATS,
                                                         "staging".to_string(),
+                                                        vec!["resource_name".to_string()],
                                                         "query1".to_string(),
+                                                        "universal.http.client".to_string(),
                                                         "azure-bill-import".to_string(),
                                                         FormulaAndFunctionApmResourceStatName::LATENCY_DISTRIBUTION,
                                                     )
-                                                        .group_by(vec!["resource_name".to_string()])
-                                                        .operation_name("universal.http.client".to_string())
                                                         .primary_tag_name("datacenter".to_string())
                                                         .primary_tag_value("*".to_string()),
                                                 ),

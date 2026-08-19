@@ -38,12 +38,12 @@ async fn main() {
                                                             FormulaAndFunctionApmResourceStatsDataSource
                                                             ::APM_RESOURCE_STATS,
                                                             "ci".to_string(),
+                                                            vec!["resource_name".to_string()],
                                                             "query1".to_string(),
+                                                            "cassandra.query".to_string(),
                                                             "cassandra".to_string(),
                                                             FormulaAndFunctionApmResourceStatName::HITS,
                                                         )
-                                                            .group_by(vec!["resource_name".to_string()])
-                                                            .operation_name("cassandra.query".to_string())
                                                             .primary_tag_name("datacenter".to_string())
                                                             .primary_tag_value("edge-eu1.prod.dog".to_string()),
                                                     ),

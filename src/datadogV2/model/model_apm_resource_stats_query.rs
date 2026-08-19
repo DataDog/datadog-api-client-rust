@@ -22,13 +22,13 @@ pub struct ApmResourceStatsQuery {
     pub env: String,
     /// Tag keys to group results by.
     #[serde(rename = "group_by")]
-    pub group_by: Option<Vec<String>>,
+    pub group_by: Vec<String>,
     /// The variable name for use in formulas.
     #[serde(rename = "name")]
     pub name: String,
     /// The APM operation name.
     #[serde(rename = "operation_name")]
-    pub operation_name: Option<String>,
+    pub operation_name: String,
     /// Name of the second primary tag used within APM. Required when `primary_tag_value` is specified. See <https://docs.datadoghq.com/tracing/guide/setting_primary_tags_to_scope/#add-a-second-primary-tag-in-datadog>
     #[serde(rename = "primary_tag_name")]
     pub primary_tag_name: Option<String>,
@@ -55,7 +55,9 @@ impl ApmResourceStatsQuery {
     pub fn new(
         data_source: crate::datadogV2::model::ApmResourceStatsDataSource,
         env: String,
+        group_by: Vec<String>,
         name: String,
+        operation_name: String,
         service: String,
         stat: crate::datadogV2::model::ApmResourceStatName,
     ) -> ApmResourceStatsQuery {
@@ -63,9 +65,9 @@ impl ApmResourceStatsQuery {
             cross_org_uuids: None,
             data_source,
             env,
-            group_by: None,
+            group_by,
             name,
-            operation_name: None,
+            operation_name,
             primary_tag_name: None,
             primary_tag_value: None,
             resource_name: None,
@@ -78,16 +80,6 @@ impl ApmResourceStatsQuery {
 
     pub fn cross_org_uuids(mut self, value: Vec<String>) -> Self {
         self.cross_org_uuids = Some(value);
-        self
-    }
-
-    pub fn group_by(mut self, value: Vec<String>) -> Self {
-        self.group_by = Some(value);
-        self
-    }
-
-    pub fn operation_name(mut self, value: String) -> Self {
-        self.operation_name = Some(value);
         self
     }
 
@@ -175,18 +167,12 @@ impl<'de> Deserialize<'de> for ApmResourceStatsQuery {
                             env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "group_by" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "operation_name" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             operation_name =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -235,7 +221,10 @@ impl<'de> Deserialize<'de> for ApmResourceStatsQuery {
                 let data_source =
                     data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let env = env.ok_or_else(|| M::Error::missing_field("env"))?;
+                let group_by = group_by.ok_or_else(|| M::Error::missing_field("group_by"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let operation_name =
+                    operation_name.ok_or_else(|| M::Error::missing_field("operation_name"))?;
                 let service = service.ok_or_else(|| M::Error::missing_field("service"))?;
                 let stat = stat.ok_or_else(|| M::Error::missing_field("stat"))?;
 
