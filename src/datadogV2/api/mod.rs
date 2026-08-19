@@ -55,6 +55,7 @@ pub mod api_entity_integration_configs;
 pub mod api_entity_risk_scores;
 pub mod api_error_tracking;
 pub mod api_events;
+pub mod api_execution_policy;
 pub mod api_fastly_integration;
 pub mod api_feature_flags;
 pub mod api_fleet_automation;

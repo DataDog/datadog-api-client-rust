@@ -56,6 +56,7 @@ pub use self::api::api_entity_integration_configs;
 pub use self::api::api_entity_risk_scores;
 pub use self::api::api_error_tracking;
 pub use self::api::api_events;
+pub use self::api::api_execution_policy;
 pub use self::api::api_fastly_integration;
 pub use self::api::api_feature_flags;
 pub use self::api::api_fleet_automation;

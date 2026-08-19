@@ -53,6 +53,7 @@ pub struct ApiInstances {
     pub v2_api_llm_observability: Option<datadogV2::api_llm_observability::LLMObservabilityAPI>,
     pub v2_api_actions_datastores: Option<datadogV2::api_actions_datastores::ActionsDatastoresAPI>,
     pub v2_api_action_connection: Option<datadogV2::api_action_connection::ActionConnectionAPI>,
+    pub v2_api_execution_policy: Option<datadogV2::api_execution_policy::ExecutionPolicyAPI>,
     pub v2_api_agentless_scanning: Option<datadogV2::api_agentless_scanning::AgentlessScanningAPI>,
     pub v2_api_annotations: Option<datadogV2::api_annotations::AnnotationsAPI>,
     pub v2_api_users: Option<datadogV2::api_users::UsersAPI>,
@@ -607,6 +608,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "ActionConnection" => {
             world.api_instances.v2_api_action_connection = Some(
                 datadogV2::api_action_connection::ActionConnectionAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "ExecutionPolicy" => {
+            world.api_instances.v2_api_execution_policy = Some(
+                datadogV2::api_execution_policy::ExecutionPolicyAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -2727,6 +2736,25 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateActionConnection".into(),
         test_v2_update_action_connection,
+    );
+    world.function_mappings.insert(
+        "v2.ListExecutionPolicies".into(),
+        test_v2_list_execution_policies,
+    );
+    world.function_mappings.insert(
+        "v2.CreateExecutionPolicy".into(),
+        test_v2_create_execution_policy,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteExecutionPolicy".into(),
+        test_v2_delete_execution_policy,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetExecutionPolicy".into(), test_v2_get_execution_policy);
+    world.function_mappings.insert(
+        "v2.UpdateExecutionPolicy".into(),
+        test_v2_update_execution_policy,
     );
     world.function_mappings.insert(
         "v2.ListAwsScanOptions".into(),
@@ -18713,6 +18741,165 @@ fn test_v2_update_action_connection(
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_action_connection_with_http_info(connection_id, body))
     {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_execution_policies(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_execution_policy
+        .as_ref()
+        .expect("api instance not found");
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_name = _parameters
+        .get("filter[name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_ids = _parameters
+        .get("filter[ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_integration = _parameters
+        .get("filter[integration]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_effects = _parameters
+        .get("filter[effects]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_creator_ids = _parameters
+        .get("filter[creator_ids]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_execution_policy::ListExecutionPoliciesOptionalParams::default();
+    params.page_size = page_size;
+    params.page_number = page_number;
+    params.filter_name = filter_name;
+    params.filter_ids = filter_ids;
+    params.filter_integration = filter_integration;
+    params.filter_effects = filter_effects;
+    params.filter_creator_ids = filter_creator_ids;
+    params.sort = sort;
+    let response = match block_on(api.list_execution_policies_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_execution_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_execution_policy
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_execution_policy_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_execution_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_execution_policy
+        .as_ref()
+        .expect("api instance not found");
+    let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_execution_policy_with_http_info(policy_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_execution_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_execution_policy
+        .as_ref()
+        .expect("api instance not found");
+    let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_execution_policy_with_http_info(policy_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_execution_policy(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_execution_policy
+        .as_ref()
+        .expect("api instance not found");
+    let policy_id = serde_json::from_value(_parameters.get("policy_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_execution_policy_with_http_info(policy_id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

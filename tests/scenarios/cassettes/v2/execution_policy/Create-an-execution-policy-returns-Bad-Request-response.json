@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"action_pattern\":{\"action_fqns\":[\"com.datadoghq.script.*\"],\"integration\":\"INTEGRATION_SCRIPT\"},\"effect\":\"invalid_effect\",\"name\":\"Cassette Execution Policy\"},\"type\":\"execution_policy\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "post",
+        "uri": "https://api.datadoghq.com/api/v2/actions/execution-policies"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"title\":\"Generic Error\",\"detail\":\"error creating execution policy\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 400,
+          "message": "Bad Request"
+        }
+      },
+      "recorded_at": "Fri, 14 Aug 2026 09:13:38 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}

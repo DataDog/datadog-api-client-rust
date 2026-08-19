@@ -1,0 +1,39 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "body": {
+          "string": "{\"data\":{\"attributes\":{\"action_pattern\":{\"action_fqns\":[\"com.datadoghq.script.*\"],\"integration\":\"INTEGRATION_SCRIPT\"},\"effect\":\"allow\",\"name\":\"Cassette Execution Policy Updated\"},\"id\":\"aaa11111-aa11-aa11-aaaa-aaaaaa111111\",\"type\":\"execution_policy\"}}",
+          "encoding": null
+        },
+        "headers": {
+          "Accept": [
+            "application/json"
+          ],
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "put",
+        "uri": "https://api.datadoghq.com/api/v2/actions/execution-policies/aaa11111-aa11-aa11-aaaa-aaaaaa111111"
+      },
+      "response": {
+        "body": {
+          "string": "{\"errors\":[{\"title\":\"Generic Error\",\"detail\":\"error updating execution policy\"}]}",
+          "encoding": null
+        },
+        "headers": {
+          "Content-Type": [
+            "application/vnd.api+json"
+          ]
+        },
+        "status": {
+          "code": 404,
+          "message": "Not Found"
+        }
+      },
+      "recorded_at": "Fri, 14 Aug 2026 09:13:46 GMT"
+    }
+  ],
+  "recorded_with": "VCR 6.0.0"
+}
