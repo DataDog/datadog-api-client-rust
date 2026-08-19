@@ -10,6 +10,14 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// CreateExclusionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::create_exclusion_filter`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateExclusionFilterError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateRetentionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::create_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -18,10 +26,26 @@ pub enum CreateRetentionFilterError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteExclusionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::delete_exclusion_filter`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteExclusionFilterError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteRetentionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::delete_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteRetentionFilterError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetExclusionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::get_exclusion_filter`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetExclusionFilterError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -38,6 +62,14 @@ pub enum GetPermanentRetentionFilterError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetRetentionFilterError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListExclusionFiltersError is a struct for typed errors of method [`RumRetentionFiltersAPI::list_exclusion_filters`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListExclusionFiltersError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -62,6 +94,14 @@ pub enum ListRetentionFiltersError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum OrderRetentionFiltersError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateExclusionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::update_exclusion_filter`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateExclusionFilterError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -154,6 +194,169 @@ impl RumRetentionFiltersAPI {
         client: reqwest_middleware::ClientWithMiddleware,
     ) -> Self {
         Self { config, client }
+    }
+
+    /// Create an exclusion filter for a RUM application.
+    /// Returns the created exclusion filter when the request is successful.
+    pub async fn create_exclusion_filter(
+        &self,
+        app_id: String,
+        body: crate::datadogV2::model::RumExclusionFilterCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::RumExclusionFilterResponse,
+        datadog::Error<CreateExclusionFilterError>,
+    > {
+        match self
+            .create_exclusion_filter_with_http_info(app_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create an exclusion filter for a RUM application.
+    /// Returns the created exclusion filter when the request is successful.
+    pub async fn create_exclusion_filter_with_http_info(
+        &self,
+        app_id: String,
+        body: crate::datadogV2::model::RumExclusionFilterCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::RumExclusionFilterResponse>,
+        datadog::Error<CreateExclusionFilterError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.create_exclusion_filter";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/rum/applications/{app_id}/retention_filters/exclusion",
+            local_configuration.get_operation_host(local_operation_id),
+            app_id = datadog::urlencode(app_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::RumExclusionFilterResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateExclusionFilterError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
     }
 
     /// Create a RUM retention filter for a RUM application.
@@ -319,6 +522,104 @@ impl RumRetentionFiltersAPI {
         }
     }
 
+    /// Delete an exclusion filter for a RUM application.
+    /// The built-in Error Tracking exclusion filter (`error_tracking_exclusion_filter`) cannot be deleted;
+    /// attempting to do so returns a `405 Method Not Allowed` response.
+    pub async fn delete_exclusion_filter(
+        &self,
+        app_id: String,
+        ef_id: String,
+    ) -> Result<(), datadog::Error<DeleteExclusionFilterError>> {
+        match self
+            .delete_exclusion_filter_with_http_info(app_id, ef_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete an exclusion filter for a RUM application.
+    /// The built-in Error Tracking exclusion filter (`error_tracking_exclusion_filter`) cannot be deleted;
+    /// attempting to do so returns a `405 Method Not Allowed` response.
+    pub async fn delete_exclusion_filter_with_http_info(
+        &self,
+        app_id: String,
+        ef_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteExclusionFilterError>> {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_exclusion_filter";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/rum/applications/{app_id}/retention_filters/exclusion/{ef_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            app_id = datadog::urlencode(app_id),
+            ef_id = datadog::urlencode(ef_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteExclusionFilterError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Delete a RUM retention filter for a RUM application.
     pub async fn delete_retention_filter(
         &self,
@@ -403,6 +704,121 @@ impl RumRetentionFiltersAPI {
             })
         } else {
             let local_entity: Option<DeleteRetentionFilterError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get a single exclusion filter for a RUM application.
+    pub async fn get_exclusion_filter(
+        &self,
+        app_id: String,
+        ef_id: String,
+    ) -> Result<
+        crate::datadogV2::model::RumExclusionFilterResponse,
+        datadog::Error<GetExclusionFilterError>,
+    > {
+        match self
+            .get_exclusion_filter_with_http_info(app_id, ef_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get a single exclusion filter for a RUM application.
+    pub async fn get_exclusion_filter_with_http_info(
+        &self,
+        app_id: String,
+        ef_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::RumExclusionFilterResponse>,
+        datadog::Error<GetExclusionFilterError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_exclusion_filter";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/rum/applications/{app_id}/retention_filters/exclusion/{ef_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            app_id = datadog::urlencode(app_id),
+            ef_id = datadog::urlencode(ef_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::RumExclusionFilterResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetExclusionFilterError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -633,6 +1049,117 @@ impl RumRetentionFiltersAPI {
             };
         } else {
             let local_entity: Option<GetRetentionFilterError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the list of exclusion filters for a RUM application.
+    /// The built-in Error Tracking exclusion filter (`error_tracking_exclusion_filter`) is always returned first.
+    pub async fn list_exclusion_filters(
+        &self,
+        app_id: String,
+    ) -> Result<
+        crate::datadogV2::model::RumExclusionFiltersResponse,
+        datadog::Error<ListExclusionFiltersError>,
+    > {
+        match self.list_exclusion_filters_with_http_info(app_id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the list of exclusion filters for a RUM application.
+    /// The built-in Error Tracking exclusion filter (`error_tracking_exclusion_filter`) is always returned first.
+    pub async fn list_exclusion_filters_with_http_info(
+        &self,
+        app_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::RumExclusionFiltersResponse>,
+        datadog::Error<ListExclusionFiltersError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_exclusion_filters";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/rum/applications/{app_id}/retention_filters/exclusion",
+            local_configuration.get_operation_host(local_operation_id),
+            app_id = datadog::urlencode(app_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::RumExclusionFiltersResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListExclusionFiltersError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1022,6 +1549,176 @@ impl RumRetentionFiltersAPI {
             };
         } else {
             let local_entity: Option<OrderRetentionFiltersError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update an exclusion filter for a RUM application.
+    /// For the built-in Error Tracking exclusion filter (`error_tracking_exclusion_filter`), only `enabled` can be
+    /// updated; `name`, `event_type`, and `query` must be omitted.
+    /// Returns the updated exclusion filter when the request is successful.
+    pub async fn update_exclusion_filter(
+        &self,
+        app_id: String,
+        ef_id: String,
+        body: crate::datadogV2::model::RumExclusionFilterUpdateRequest,
+    ) -> Result<
+        crate::datadogV2::model::RumExclusionFilterResponse,
+        datadog::Error<UpdateExclusionFilterError>,
+    > {
+        match self
+            .update_exclusion_filter_with_http_info(app_id, ef_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update an exclusion filter for a RUM application.
+    /// For the built-in Error Tracking exclusion filter (`error_tracking_exclusion_filter`), only `enabled` can be
+    /// updated; `name`, `event_type`, and `query` must be omitted.
+    /// Returns the updated exclusion filter when the request is successful.
+    pub async fn update_exclusion_filter_with_http_info(
+        &self,
+        app_id: String,
+        ef_id: String,
+        body: crate::datadogV2::model::RumExclusionFilterUpdateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::RumExclusionFilterResponse>,
+        datadog::Error<UpdateExclusionFilterError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.update_exclusion_filter";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/rum/applications/{app_id}/retention_filters/exclusion/{ef_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            app_id = datadog::urlencode(app_id),
+            ef_id = datadog::urlencode(ef_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::RumExclusionFilterResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateExclusionFilterError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
