@@ -6,6 +6,7 @@ repos:
     language: system
     entry: bash -c "./generate.sh"
     files: '^(\.generator/.*|\.pre-commit-config\.yaml|Makefile|\tests/scenarios/features/.*)'
+    stages: [manual]
     pass_filenames: false
     verbose: true
   - id: generator
@@ -29,9 +30,8 @@ repos:
   - id: format
     name: Format
     language: system
-    entry: cargo fmt
+    entry: ./format.sh
     pass_filenames: false
-    stages: [manual]
   - id: lint
     name: Lint
     entry: cargo check
