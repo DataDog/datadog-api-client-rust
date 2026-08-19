@@ -11,6 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorNotificationRuleResponseAttributes {
+    /// Use bundle config to enable alert bundling to reduce monitor signal noises. **Note**: This feature is in preview and is subject to change.
+    /// If you have any feedback, contact [Datadog support](<https://docs.datadoghq.com/help/>).
+    #[serde(rename = "bundle_config")]
+    pub bundle_config: Option<crate::datadogV2::model::MonitorNotificationRuleBundleConfig>,
     /// Use conditional recipients to define different recipients for different situations. Cannot be used with `recipients`.
     #[serde(rename = "conditional_recipients")]
     pub conditional_recipients:
@@ -40,6 +44,7 @@ pub struct MonitorNotificationRuleResponseAttributes {
 impl MonitorNotificationRuleResponseAttributes {
     pub fn new() -> MonitorNotificationRuleResponseAttributes {
         MonitorNotificationRuleResponseAttributes {
+            bundle_config: None,
             conditional_recipients: None,
             created: None,
             filter: None,
@@ -49,6 +54,14 @@ impl MonitorNotificationRuleResponseAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn bundle_config(
+        mut self,
+        value: crate::datadogV2::model::MonitorNotificationRuleBundleConfig,
+    ) -> Self {
+        self.bundle_config = Some(value);
+        self
     }
 
     pub fn conditional_recipients(
@@ -116,6 +129,9 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleResponseAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut bundle_config: Option<
+                    crate::datadogV2::model::MonitorNotificationRuleBundleConfig,
+                > = None;
                 let mut conditional_recipients: Option<
                     crate::datadogV2::model::MonitorNotificationRuleConditionalRecipients,
                 > = None;
@@ -133,6 +149,13 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleResponseAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "bundle_config" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bundle_config =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "conditional_recipients" => {
                             if v.is_null() {
                                 continue;
@@ -187,6 +210,7 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleResponseAttributes {
                 }
 
                 let content = MonitorNotificationRuleResponseAttributes {
+                    bundle_config,
                     conditional_recipients,
                     created,
                     filter,

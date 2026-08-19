@@ -7500,6 +7500,8 @@ pub mod model_monitor_notification_rule_data;
 pub use self::model_monitor_notification_rule_data::MonitorNotificationRuleData;
 pub mod model_monitor_notification_rule_response_attributes;
 pub use self::model_monitor_notification_rule_response_attributes::MonitorNotificationRuleResponseAttributes;
+pub mod model_monitor_notification_rule_bundle_config;
+pub use self::model_monitor_notification_rule_bundle_config::MonitorNotificationRuleBundleConfig;
 pub mod model_monitor_notification_rule_conditional_recipients;
 pub use self::model_monitor_notification_rule_conditional_recipients::MonitorNotificationRuleConditionalRecipients;
 pub mod model_monitor_notification_rule_condition;
