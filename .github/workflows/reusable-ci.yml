@@ -23,14 +23,6 @@ on:
         required: false
         type: string
         default: 'cargo check --examples'
-    secrets:
-      # Integration test secrets
-      DD_API_KEY:
-        required: false
-      DD_CLIENT_API_KEY:
-        required: false
-      DD_CLIENT_APP_KEY:
-        required: false
 
 jobs:
   pre-commit:
@@ -60,7 +52,3 @@ jobs:
     with:
       target-branch: ${{ inputs.target-branch }}
       has-integration-label: ${{ contains(github.event.pull_request.labels.*.name, 'ci/integrations') }}
-    secrets:
-      DD_API_KEY: ${{ secrets.DD_API_KEY }}
-      DD_CLIENT_API_KEY: ${{ secrets.DD_CLIENT_API_KEY }}
-      DD_CLIENT_APP_KEY: ${{ secrets.DD_CLIENT_APP_KEY }}
