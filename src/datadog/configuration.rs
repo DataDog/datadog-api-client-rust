@@ -789,6 +789,37 @@ impl Default for Configuration {
             ("v2.update_org_group_policy".to_owned(), false),
             ("v2.update_org_group_policy_override".to_owned(), false),
             ("v2.list_role_templates".to_owned(), false),
+            (
+                "v2.query_product_analytics_journey_funnel".to_owned(),
+                false,
+            ),
+            ("v2.query_product_analytics_journey_list".to_owned(), false),
+            (
+                "v2.query_product_analytics_journey_scalar".to_owned(),
+                false,
+            ),
+            (
+                "v2.query_product_analytics_journey_timeseries".to_owned(),
+                false,
+            ),
+            ("v2.query_product_analytics_list".to_owned(), false),
+            (
+                "v2.query_product_analytics_retention_grid".to_owned(),
+                false,
+            ),
+            (
+                "v2.query_product_analytics_retention_list".to_owned(),
+                false,
+            ),
+            (
+                "v2.query_product_analytics_retention_scalar".to_owned(),
+                false,
+            ),
+            (
+                "v2.query_product_analytics_retention_timeseries".to_owned(),
+                false,
+            ),
+            ("v2.query_product_analytics_sankey".to_owned(), false),
             ("v2.create_connection".to_owned(), false),
             ("v2.delete_connection".to_owned(), false),
             ("v2.get_account_facet_info".to_owned(), false),

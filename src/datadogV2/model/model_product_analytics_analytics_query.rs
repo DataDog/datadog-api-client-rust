@@ -20,7 +20,9 @@ pub struct ProductAnalyticsAnalyticsQuery {
     /// Group-by rules for segmenting results.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<crate::datadogV2::model::ProductAnalyticsGroupBy>>,
-    /// Restrict the query to specific indexes. Max 1 entry.
+    /// Deprecated. Index selection is a rollout detail and will be removed.
+    /// Do not set this field.
+    #[deprecated]
     #[serde(rename = "indexes")]
     pub indexes: Option<Vec<String>>,
     /// A query definition discriminated by the `data_source` field.
@@ -40,6 +42,7 @@ impl ProductAnalyticsAnalyticsQuery {
         compute: crate::datadogV2::model::ProductAnalyticsCompute,
         query: crate::datadogV2::model::ProductAnalyticsBaseQuery,
     ) -> ProductAnalyticsAnalyticsQuery {
+        #[allow(deprecated)]
         ProductAnalyticsAnalyticsQuery {
             audience_filters: None,
             compute,
@@ -51,6 +54,7 @@ impl ProductAnalyticsAnalyticsQuery {
         }
     }
 
+    #[allow(deprecated)]
     pub fn audience_filters(
         mut self,
         value: crate::datadogV2::model::ProductAnalyticsAudienceFilters,
@@ -59,6 +63,7 @@ impl ProductAnalyticsAnalyticsQuery {
         self
     }
 
+    #[allow(deprecated)]
     pub fn group_by(
         mut self,
         value: Vec<crate::datadogV2::model::ProductAnalyticsGroupBy>,
@@ -67,6 +72,7 @@ impl ProductAnalyticsAnalyticsQuery {
         self
     }
 
+    #[allow(deprecated)]
     pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
         self
@@ -157,6 +163,7 @@ impl<'de> Deserialize<'de> for ProductAnalyticsAnalyticsQuery {
                 let compute = compute.ok_or_else(|| M::Error::missing_field("compute"))?;
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 
+                #[allow(deprecated)]
                 let content = ProductAnalyticsAnalyticsQuery {
                     audience_filters,
                     compute,
