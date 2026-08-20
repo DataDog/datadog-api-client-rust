@@ -858,6 +858,29 @@ impl ListSecurityFindingsAutomationMuteRulesOptionalParams {
     }
 }
 
+/// ListSecurityFindingsAutomationSeverityModifierRulesOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_findings_automation_severity_modifier_rules`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSecurityFindingsAutomationSeverityModifierRulesOptionalParams {
+    /// The number of rules per page. Maximum is 1000.
+    pub page_size: Option<i64>,
+    /// The page number to return.
+    pub page_number: Option<i64>,
+}
+
+impl ListSecurityFindingsAutomationSeverityModifierRulesOptionalParams {
+    /// The number of rules per page. Maximum is 1000.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// The page number to return.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+}
+
 /// ListSecurityFindingsAutomationTicketCreationRulesOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_findings_automation_ticket_creation_rules`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -1839,6 +1862,15 @@ pub enum CreateSecurityFindingsAutomationMuteRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateSecurityFindingsAutomationSeverityModifierRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_findings_automation_severity_modifier_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateSecurityFindingsAutomationSeverityModifierRuleError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateSecurityFindingsAutomationTicketCreationRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_findings_automation_ticket_creation_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1993,6 +2025,15 @@ pub enum DeleteSecurityFindingsAutomationDueDateRuleError {
 #[serde(untagged)]
 pub enum DeleteSecurityFindingsAutomationMuteRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteSecurityFindingsAutomationSeverityModifierRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_security_findings_automation_severity_modifier_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteSecurityFindingsAutomationSeverityModifierRuleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -2237,6 +2278,15 @@ pub enum GetSecurityFindingsAutomationDueDateRuleError {
 #[serde(untagged)]
 pub enum GetSecurityFindingsAutomationMuteRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetSecurityFindingsAutomationSeverityModifierRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_findings_automation_severity_modifier_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSecurityFindingsAutomationSeverityModifierRuleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -2553,6 +2603,14 @@ pub enum ListSecurityFindingsAutomationMuteRulesError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListSecurityFindingsAutomationSeverityModifierRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_findings_automation_severity_modifier_rules`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSecurityFindingsAutomationSeverityModifierRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListSecurityFindingsAutomationTicketCreationRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_findings_automation_ticket_creation_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -2690,6 +2748,15 @@ pub enum ReorderSecurityFindingsAutomationMuteRulesError {
     UnknownValue(serde_json::Value),
 }
 
+/// ReorderSecurityFindingsAutomationSeverityModifierRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::reorder_security_findings_automation_severity_modifier_rules`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ReorderSecurityFindingsAutomationSeverityModifierRulesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ReorderSecurityFindingsAutomationTicketCreationRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::reorder_security_findings_automation_ticket_creation_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -2809,6 +2876,15 @@ pub enum UpdateSecurityFindingsAutomationDueDateRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateSecurityFindingsAutomationMuteRuleError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateSecurityFindingsAutomationSeverityModifierRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::update_security_findings_automation_severity_modifier_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateSecurityFindingsAutomationSeverityModifierRuleError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -7526,6 +7602,172 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Create a new severity modifier rule for the current organization.
+    pub async fn create_security_findings_automation_severity_modifier_rule(
+        &self,
+        body: crate::datadogV2::model::SeverityModifierRuleCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SeverityModifierRuleResponse,
+        datadog::Error<CreateSecurityFindingsAutomationSeverityModifierRuleError>,
+    > {
+        match self
+            .create_security_findings_automation_severity_modifier_rule_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create a new severity modifier rule for the current organization.
+    pub async fn create_security_findings_automation_severity_modifier_rule_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SeverityModifierRuleCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SeverityModifierRuleResponse>,
+        datadog::Error<CreateSecurityFindingsAutomationSeverityModifierRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.create_security_findings_automation_severity_modifier_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_security_findings_automation_severity_modifier_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/severity_modifier_rules",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SeverityModifierRuleResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateSecurityFindingsAutomationSeverityModifierRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Create a new ticket creation rule for the current organization.
     pub async fn create_security_findings_automation_ticket_creation_rule(
         &self,
@@ -10162,6 +10404,108 @@ impl SecurityMonitoringAPI {
             })
         } else {
             let local_entity: Option<DeleteSecurityFindingsAutomationMuteRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete an existing severity modifier rule by ID.
+    pub async fn delete_security_findings_automation_severity_modifier_rule(
+        &self,
+        rule_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<DeleteSecurityFindingsAutomationSeverityModifierRuleError>> {
+        match self
+            .delete_security_findings_automation_severity_modifier_rule_with_http_info(rule_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete an existing severity modifier rule by ID.
+    pub async fn delete_security_findings_automation_severity_modifier_rule_with_http_info(
+        &self,
+        rule_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<DeleteSecurityFindingsAutomationSeverityModifierRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_security_findings_automation_severity_modifier_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_security_findings_automation_severity_modifier_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/severity_modifier_rules/{rule_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            rule_id = datadog::urlencode(rule_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteSecurityFindingsAutomationSeverityModifierRuleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -13842,6 +14186,126 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<GetSecurityFindingsAutomationMuteRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the details of a severity modifier rule by ID.
+    pub async fn get_security_findings_automation_severity_modifier_rule(
+        &self,
+        rule_id: uuid::Uuid,
+    ) -> Result<
+        crate::datadogV2::model::SeverityModifierRuleResponse,
+        datadog::Error<GetSecurityFindingsAutomationSeverityModifierRuleError>,
+    > {
+        match self
+            .get_security_findings_automation_severity_modifier_rule_with_http_info(rule_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the details of a severity modifier rule by ID.
+    pub async fn get_security_findings_automation_severity_modifier_rule_with_http_info(
+        &self,
+        rule_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SeverityModifierRuleResponse>,
+        datadog::Error<GetSecurityFindingsAutomationSeverityModifierRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_security_findings_automation_severity_modifier_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_security_findings_automation_severity_modifier_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/severity_modifier_rules/{rule_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            rule_id = datadog::urlencode(rule_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SeverityModifierRuleResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSecurityFindingsAutomationSeverityModifierRuleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -19120,6 +19584,138 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get all severity modifier rules for the current organization.
+    pub async fn list_security_findings_automation_severity_modifier_rules(
+        &self,
+        params: ListSecurityFindingsAutomationSeverityModifierRulesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SeverityModifierRulesResponse,
+        datadog::Error<ListSecurityFindingsAutomationSeverityModifierRulesError>,
+    > {
+        match self
+            .list_security_findings_automation_severity_modifier_rules_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get all severity modifier rules for the current organization.
+    pub async fn list_security_findings_automation_severity_modifier_rules_with_http_info(
+        &self,
+        params: ListSecurityFindingsAutomationSeverityModifierRulesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SeverityModifierRulesResponse>,
+        datadog::Error<ListSecurityFindingsAutomationSeverityModifierRulesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_security_findings_automation_severity_modifier_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_security_findings_automation_severity_modifier_rules' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/severity_modifier_rules",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SeverityModifierRulesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSecurityFindingsAutomationSeverityModifierRulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get all ticket creation rules for the current organization.
     pub async fn list_security_findings_automation_ticket_creation_rules(
         &self,
@@ -21992,6 +22588,172 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Reorder the list of severity modifier rules for the current organization.
+    pub async fn reorder_security_findings_automation_severity_modifier_rules(
+        &self,
+        body: crate::datadogV2::model::SeverityModifierRuleReorderRequest,
+    ) -> Result<
+        crate::datadogV2::model::SeverityModifierRuleReorderResponse,
+        datadog::Error<ReorderSecurityFindingsAutomationSeverityModifierRulesError>,
+    > {
+        match self
+            .reorder_security_findings_automation_severity_modifier_rules_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Reorder the list of severity modifier rules for the current organization.
+    pub async fn reorder_security_findings_automation_severity_modifier_rules_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SeverityModifierRuleReorderRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SeverityModifierRuleReorderResponse>,
+        datadog::Error<ReorderSecurityFindingsAutomationSeverityModifierRulesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.reorder_security_findings_automation_severity_modifier_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.reorder_security_findings_automation_severity_modifier_rules' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/severity_modifier_rules/reorder",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SeverityModifierRuleReorderResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ReorderSecurityFindingsAutomationSeverityModifierRulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Reorder the list of ticket creation rules for the current organization.
     pub async fn reorder_security_findings_automation_ticket_creation_rules(
         &self,
@@ -24492,6 +25254,177 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<UpdateSecurityFindingsAutomationMuteRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update an existing severity modifier rule by ID.
+    pub async fn update_security_findings_automation_severity_modifier_rule(
+        &self,
+        rule_id: uuid::Uuid,
+        body: crate::datadogV2::model::SeverityModifierRuleUpdateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SeverityModifierRuleResponse,
+        datadog::Error<UpdateSecurityFindingsAutomationSeverityModifierRuleError>,
+    > {
+        match self
+            .update_security_findings_automation_severity_modifier_rule_with_http_info(
+                rule_id, body,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update an existing severity modifier rule by ID.
+    pub async fn update_security_findings_automation_severity_modifier_rule_with_http_info(
+        &self,
+        rule_id: uuid::Uuid,
+        body: crate::datadogV2::model::SeverityModifierRuleUpdateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SeverityModifierRuleResponse>,
+        datadog::Error<UpdateSecurityFindingsAutomationSeverityModifierRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.update_security_findings_automation_severity_modifier_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_security_findings_automation_severity_modifier_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/severity_modifier_rules/{rule_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            rule_id = datadog::urlencode(rule_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SeverityModifierRuleResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateSecurityFindingsAutomationSeverityModifierRuleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
