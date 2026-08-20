@@ -6322,6 +6322,8 @@ pub mod model_llm_obs_annotation_label_value_response;
 pub use self::model_llm_obs_annotation_label_value_response::LLMObsAnnotationLabelValueResponse;
 pub mod model_llm_obs_annotation_error;
 pub use self::model_llm_obs_annotation_error::LLMObsAnnotationError;
+pub mod model_llm_obs_annotation_error_code;
+pub use self::model_llm_obs_annotation_error_code::LLMObsAnnotationErrorCode;
 pub mod model_llm_obs_delete_annotations_request;
 pub use self::model_llm_obs_delete_annotations_request::LLMObsDeleteAnnotationsRequest;
 pub mod model_llm_obs_delete_annotations_data_request;

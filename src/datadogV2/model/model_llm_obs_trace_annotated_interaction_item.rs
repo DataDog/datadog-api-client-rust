@@ -14,6 +14,9 @@ pub struct LLMObsTraceAnnotatedInteractionItem {
     /// List of annotations for this interaction.
     #[serde(rename = "annotations")]
     pub annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItem>,
+    /// Whether the current caller can annotate this interaction.
+    #[serde(rename = "can_annotate")]
+    pub can_annotate: bool,
     /// Upstream entity identifier supplied by the caller.
     #[serde(rename = "content_id")]
     pub content_id: String,
@@ -39,6 +42,7 @@ pub struct LLMObsTraceAnnotatedInteractionItem {
 impl LLMObsTraceAnnotatedInteractionItem {
     pub fn new(
         annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItem>,
+        can_annotate: bool,
         content_id: String,
         created_at: chrono::DateTime<chrono::Utc>,
         id: String,
@@ -47,6 +51,7 @@ impl LLMObsTraceAnnotatedInteractionItem {
     ) -> LLMObsTraceAnnotatedInteractionItem {
         LLMObsTraceAnnotatedInteractionItem {
             annotations,
+            can_annotate,
             content_id,
             created_at,
             id,
@@ -85,6 +90,7 @@ impl<'de> Deserialize<'de> for LLMObsTraceAnnotatedInteractionItem {
             {
                 let mut annotations: Option<Vec<crate::datadogV2::model::LLMObsAnnotationItem>> =
                     None;
+                let mut can_annotate: Option<bool> = None;
                 let mut content_id: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut id: Option<String> = None;
@@ -100,6 +106,10 @@ impl<'de> Deserialize<'de> for LLMObsTraceAnnotatedInteractionItem {
                     match k.as_str() {
                         "annotations" => {
                             annotations =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "can_annotate" => {
+                            can_annotate =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "content_id" => {
@@ -135,6 +145,8 @@ impl<'de> Deserialize<'de> for LLMObsTraceAnnotatedInteractionItem {
                 }
                 let annotations =
                     annotations.ok_or_else(|| M::Error::missing_field("annotations"))?;
+                let can_annotate =
+                    can_annotate.ok_or_else(|| M::Error::missing_field("can_annotate"))?;
                 let content_id = content_id.ok_or_else(|| M::Error::missing_field("content_id"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
@@ -144,6 +156,7 @@ impl<'de> Deserialize<'de> for LLMObsTraceAnnotatedInteractionItem {
 
                 let content = LLMObsTraceAnnotatedInteractionItem {
                     annotations,
+                    can_annotate,
                     content_id,
                     created_at,
                     id,

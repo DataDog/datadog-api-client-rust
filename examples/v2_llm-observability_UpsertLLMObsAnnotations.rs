@@ -1,5 +1,5 @@
 // Create or update annotations returns "OK — annotations created or updated.
-// Per-item errors are listed in `errors`." response
+// Mixed batches list denied items and other per-item errors in `errors`" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
 use datadog_api_client::datadogV2::model::LLMObsAnnotationLabelValue;
