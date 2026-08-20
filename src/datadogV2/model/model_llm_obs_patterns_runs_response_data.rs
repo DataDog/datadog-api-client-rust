@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object of an LLM Observability patterns runs response.
+/// Data object of an Agent Observability patterns runs response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPatternsRunsResponseData {
-    /// Attributes of an LLM Observability patterns runs response.
+    /// Attributes of an Agent Observability patterns runs response.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsPatternsRunsResponseAttributes,
     /// Identifier of the configuration the runs belong to.
     #[serde(rename = "id")]
     pub id: String,
-    /// Resource type of a list of LLM Observability patterns runs.
+    /// Resource type of a list of Agent Observability patterns runs.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsPatternsRunsListType,
     #[serde(flatten)]

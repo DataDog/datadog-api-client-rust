@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request to delete one or more LLM Observability experiments.
+/// Request to delete one or more Agent Observability experiments.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsDeleteExperimentsRequest {
-    /// Data object for deleting LLM Observability experiments.
+    /// Data object for deleting Agent Observability experiments.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsDeleteExperimentsDataRequest,
     #[serde(flatten)]

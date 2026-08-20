@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request to batch-insert, update, and delete records in an LLM Observability dataset.
+/// Request to batch-insert, update, and delete records in an Agent Observability dataset.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsDatasetBatchUpdateRequest {
-    /// Data object for batch-updating records in an LLM Observability dataset.
+    /// Data object for batch-updating records in an Agent Observability dataset.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsDatasetBatchUpdateDataRequest,
     #[serde(flatten)]

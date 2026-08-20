@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request to update an LLM Observability prompt's metadata.
+/// Request to update an Agent Observability prompt's metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsUpdatePromptRequest {
-    /// Data object for updating an LLM Observability prompt.
+    /// Data object for updating an Agent Observability prompt.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsUpdatePromptData,
     #[serde(flatten)]

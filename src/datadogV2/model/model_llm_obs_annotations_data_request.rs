@@ -14,7 +14,7 @@ pub struct LLMObsAnnotationsDataRequest {
     /// Attributes for creating or updating annotations.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsAnnotationsDataAttributesRequest,
-    /// Resource type for LLM Observability annotations.
+    /// Resource type for Agent Observability annotations.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsAnnotationsType,
     #[serde(flatten)]

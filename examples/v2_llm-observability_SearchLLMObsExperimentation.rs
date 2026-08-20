@@ -1,6 +1,5 @@
-// Search LLM Observability experimentation entities returns "Partial Content —
-// more results are available. Use `meta.after` as the next `page.cursor`."
-// response
+// Search Agent Observability experimentation returns "Partial Content — more
+// results are available. Use `meta.after` as the next `page.cursor`." response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
 use datadog_api_client::datadogV2::model::LLMObsExperimentationContentPreview;

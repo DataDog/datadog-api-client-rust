@@ -1,4 +1,4 @@
-// Get an LLM Observability prompt returns "OK" response
+// Get an Agent Observability prompt returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::GetLLMObsPromptOptionalParams;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;

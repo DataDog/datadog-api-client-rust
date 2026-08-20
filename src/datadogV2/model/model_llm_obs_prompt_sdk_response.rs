@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing a flattened LLM Observability prompt version for SDK consumption.
+/// Response containing a flattened Agent Observability prompt version for SDK consumption.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPromptSDKResponse {
-    /// Data object for a flattened LLM Observability prompt version returned for SDK consumption.
+    /// Data object for a flattened Agent Observability prompt version returned for SDK consumption.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsPromptSDKData,
     #[serde(flatten)]

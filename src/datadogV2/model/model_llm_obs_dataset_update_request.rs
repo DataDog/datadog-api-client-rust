@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request to partially update an LLM Observability dataset.
+/// Request to partially update an Agent Observability dataset.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsDatasetUpdateRequest {
-    /// Data object for updating an LLM Observability dataset.
+    /// Data object for updating an Agent Observability dataset.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsDatasetUpdateDataRequest,
     #[serde(flatten)]

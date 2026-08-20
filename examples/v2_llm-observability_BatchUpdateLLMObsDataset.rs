@@ -1,4 +1,4 @@
-// Batch update LLM Observability dataset records returns "OK" response
+// Batch update Agent Observability dataset records returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
 use datadog_api_client::datadogV2::model::LLMObsDatasetBatchUpdateDataAttributesRequest;

@@ -1,4 +1,4 @@
-// Delete LLM Observability projects returns "No Content" response
+// Delete Agent Observability projects returns "No Content" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
 use datadog_api_client::datadogV2::model::LLMObsDeleteProjectsDataAttributesRequest;
