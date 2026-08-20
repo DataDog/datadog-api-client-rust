@@ -50,7 +50,8 @@ pub struct ApiInstances {
     pub v1_api_users: Option<datadogV1::api_users::UsersAPI>,
     pub v1_api_authentication: Option<datadogV1::api_authentication::AuthenticationAPI>,
     pub v2_api_fleet_automation: Option<datadogV2::api_fleet_automation::FleetAutomationAPI>,
-    pub v2_api_llm_observability: Option<datadogV2::api_llm_observability::LLMObservabilityAPI>,
+    pub v2_api_agent_observability:
+        Option<datadogV2::api_agent_observability::AgentObservabilityAPI>,
     pub v2_api_actions_datastores: Option<datadogV2::api_actions_datastores::ActionsDatastoresAPI>,
     pub v2_api_action_connection: Option<datadogV2::api_action_connection::ActionConnectionAPI>,
     pub v2_api_execution_policy: Option<datadogV2::api_execution_policy::ExecutionPolicyAPI>,
@@ -591,9 +592,9 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "LLMObservability" => {
-            world.api_instances.v2_api_llm_observability = Some(
-                datadogV2::api_llm_observability::LLMObservabilityAPI::with_client_and_config(
+        "AgentObservability" => {
+            world.api_instances.v2_api_agent_observability = Some(
+                datadogV2::api_agent_observability::AgentObservabilityAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -15941,7 +15942,7 @@ fn test_v2_list_llm_obs_custom_eval_configs(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.list_llm_obs_custom_eval_configs_with_http_info()) {
@@ -15968,7 +15969,7 @@ fn test_v2_delete_llm_obs_custom_eval_config(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let eval_name = serde_json::from_value(_parameters.get("eval_name").unwrap().clone()).unwrap();
@@ -15996,7 +15997,7 @@ fn test_v2_get_llm_obs_custom_eval_config(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let eval_name = serde_json::from_value(_parameters.get("eval_name").unwrap().clone()).unwrap();
@@ -16024,7 +16025,7 @@ fn test_v2_update_llm_obs_custom_eval_config(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let eval_name = serde_json::from_value(_parameters.get("eval_name").unwrap().clone()).unwrap();
@@ -16054,7 +16055,7 @@ fn test_v2_get_llm_obs_annotated_interactions_by_trace_i_ds(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let content_ids =
@@ -16065,7 +16066,7 @@ fn test_v2_get_llm_obs_annotated_interactions_by_trace_i_ds(
     let limit = _parameters
         .get("limit")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_llm_observability::GetLLMObsAnnotatedInteractionsByTraceIDsOptionalParams::default();
+    let mut params = datadogV2::api_agent_observability::GetLLMObsAnnotatedInteractionsByTraceIDsOptionalParams::default();
     params.offset = offset;
     params.limit = limit;
     let response = match block_on(
@@ -16094,7 +16095,7 @@ fn test_v2_list_llm_obs_annotation_queues(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id = _parameters
@@ -16104,7 +16105,7 @@ fn test_v2_list_llm_obs_annotation_queues(
         .get("queueIds")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_llm_observability::ListLLMObsAnnotationQueuesOptionalParams::default();
+        datadogV2::api_agent_observability::ListLLMObsAnnotationQueuesOptionalParams::default();
     params.project_id = project_id;
     params.queue_ids = queue_ids;
     let response = match block_on(api.list_llm_obs_annotation_queues_with_http_info(params)) {
@@ -16131,7 +16132,7 @@ fn test_v2_create_llm_obs_annotation_queue(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -16159,7 +16160,7 @@ fn test_v2_delete_llm_obs_annotation_queue(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
@@ -16187,7 +16188,7 @@ fn test_v2_update_llm_obs_annotation_queue(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
@@ -16217,7 +16218,7 @@ fn test_v2_get_llm_obs_annotated_interactions(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
@@ -16245,7 +16246,7 @@ fn test_v2_upsert_llm_obs_annotations(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
@@ -16274,7 +16275,7 @@ fn test_v2_delete_llm_obs_annotations(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
@@ -16303,7 +16304,7 @@ fn test_v2_create_llm_obs_annotation_queue_interactions(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
@@ -16334,7 +16335,7 @@ fn test_v2_delete_llm_obs_annotation_queue_interactions(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
@@ -16365,7 +16366,7 @@ fn test_v2_get_llm_obs_annotation_queue_label_schema(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
@@ -16394,7 +16395,7 @@ fn test_v2_update_llm_obs_annotation_queue_label_schema(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
@@ -16425,7 +16426,7 @@ fn test_v2_aggregate_llm_obs_experimentation(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -16453,7 +16454,7 @@ fn test_v2_search_llm_obs_experimentation(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -16481,7 +16482,7 @@ fn test_v2_simple_search_llm_obs_experimentation(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -16509,7 +16510,7 @@ fn test_v2_list_llm_obs_experiments(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let filter_project_id = _parameters
@@ -16549,7 +16550,7 @@ fn test_v2_list_llm_obs_experiments(
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_llm_observability::ListLLMObsExperimentsOptionalParams::default();
+        datadogV2::api_agent_observability::ListLLMObsExperimentsOptionalParams::default();
     params.filter_project_id = filter_project_id;
     params.filter_dataset_id = filter_dataset_id;
     params.filter_id = filter_id;
@@ -16586,7 +16587,7 @@ fn test_v2_create_llm_obs_experiment(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -16614,7 +16615,7 @@ fn test_v2_delete_llm_obs_experiments(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -16642,7 +16643,7 @@ fn test_v2_update_llm_obs_experiment(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let experiment_id =
@@ -16673,7 +16674,7 @@ fn test_v2_list_llm_obs_experiment_events_v1(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let experiment_id =
@@ -16703,7 +16704,7 @@ fn test_v2_create_llm_obs_experiment_events(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let experiment_id =
@@ -16734,7 +16735,7 @@ fn test_v2_list_llm_obs_integration_accounts(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let integration =
@@ -16764,7 +16765,7 @@ fn test_v2_create_llm_obs_integration_inference(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let integration =
@@ -16800,7 +16801,7 @@ fn test_v2_list_llm_obs_integration_models(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let integration =
@@ -16830,7 +16831,7 @@ fn test_v2_list_llm_obs_integration_models(
 fn test_v2_list_llm_obs_projects(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let filter_id = _parameters
@@ -16845,7 +16846,8 @@ fn test_v2_list_llm_obs_projects(world: &mut DatadogWorld, _parameters: &HashMap
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_llm_observability::ListLLMObsProjectsOptionalParams::default();
+    let mut params =
+        datadogV2::api_agent_observability::ListLLMObsProjectsOptionalParams::default();
     params.filter_id = filter_id;
     params.filter_name = filter_name;
     params.page_cursor = page_cursor;
@@ -16871,7 +16873,7 @@ fn test_v2_list_llm_obs_projects(world: &mut DatadogWorld, _parameters: &HashMap
 fn test_v2_create_llm_obs_project(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -16896,7 +16898,7 @@ fn test_v2_create_llm_obs_project(world: &mut DatadogWorld, _parameters: &HashMa
 fn test_v2_delete_llm_obs_projects(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -16921,7 +16923,7 @@ fn test_v2_delete_llm_obs_projects(world: &mut DatadogWorld, _parameters: &HashM
 fn test_v2_update_llm_obs_project(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -16948,13 +16950,13 @@ fn test_v2_update_llm_obs_project(world: &mut DatadogWorld, _parameters: &HashMa
 fn test_v2_list_llm_obs_prompts(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let filter_prompt_id = _parameters
         .get("filter[prompt_id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_llm_observability::ListLLMObsPromptsOptionalParams::default();
+    let mut params = datadogV2::api_agent_observability::ListLLMObsPromptsOptionalParams::default();
     params.filter_prompt_id = filter_prompt_id;
     let response = match block_on(api.list_llm_obs_prompts_with_http_info(params)) {
         Ok(response) => response,
@@ -16977,7 +16979,7 @@ fn test_v2_list_llm_obs_prompts(world: &mut DatadogWorld, _parameters: &HashMap<
 fn test_v2_create_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -17002,7 +17004,7 @@ fn test_v2_create_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap
 fn test_v2_delete_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
@@ -17027,14 +17029,14 @@ fn test_v2_delete_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap
 fn test_v2_get_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
     let label = _parameters
         .get("label")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_llm_observability::GetLLMObsPromptOptionalParams::default();
+    let mut params = datadogV2::api_agent_observability::GetLLMObsPromptOptionalParams::default();
     params.label = label;
     let response = match block_on(api.get_llm_obs_prompt_with_http_info(prompt_id, params)) {
         Ok(response) => response,
@@ -17057,7 +17059,7 @@ fn test_v2_get_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap<St
 fn test_v2_update_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
@@ -17086,7 +17088,7 @@ fn test_v2_list_llm_obs_prompt_versions(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
@@ -17114,7 +17116,7 @@ fn test_v2_create_llm_obs_prompt_version(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
@@ -17144,7 +17146,7 @@ fn test_v2_get_llm_obs_prompt_version(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
@@ -17174,7 +17176,7 @@ fn test_v2_update_llm_obs_prompt_version(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let prompt_id = serde_json::from_value(_parameters.get("prompt_id").unwrap().clone()).unwrap();
@@ -17203,7 +17205,7 @@ fn test_v2_update_llm_obs_prompt_version(
 fn test_v2_list_llm_obs_spans(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let filter_from = _parameters
@@ -17242,7 +17244,7 @@ fn test_v2_list_llm_obs_spans(world: &mut DatadogWorld, _parameters: &HashMap<St
     let include_attachments = _parameters
         .get("include_attachments")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_llm_observability::ListLLMObsSpansOptionalParams::default();
+    let mut params = datadogV2::api_agent_observability::ListLLMObsSpansOptionalParams::default();
     params.filter_from = filter_from;
     params.filter_to = filter_to;
     params.filter_query = filter_query;
@@ -17276,7 +17278,7 @@ fn test_v2_list_llm_obs_spans(world: &mut DatadogWorld, _parameters: &HashMap<St
 fn test_v2_search_llm_obs_spans(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -17304,7 +17306,7 @@ fn test_v2_list_llm_obs_patterns_clustered_points(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let topic_id = serde_json::from_value(_parameters.get("topic_id").unwrap().clone()).unwrap();
@@ -17314,9 +17316,7 @@ fn test_v2_list_llm_obs_patterns_clustered_points(
     let page_token = _parameters
         .get("page_token")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params =
-        datadogV2::api_llm_observability::ListLLMObsPatternsClusteredPointsOptionalParams::default(
-        );
+    let mut params = datadogV2::api_agent_observability::ListLLMObsPatternsClusteredPointsOptionalParams::default();
     params.page_size = page_size;
     params.page_token = page_token;
     let response =
@@ -17345,7 +17345,7 @@ fn test_v2_list_llm_obs_patterns_configs(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.list_llm_obs_patterns_configs_with_http_info()) {
@@ -17372,7 +17372,7 @@ fn test_v2_upsert_llm_obs_patterns_config(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -17400,7 +17400,7 @@ fn test_v2_get_llm_obs_patterns_config(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.get_llm_obs_patterns_config_with_http_info()) {
@@ -17427,7 +17427,7 @@ fn test_v2_delete_llm_obs_patterns_config(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
@@ -17455,7 +17455,7 @@ fn test_v2_list_llm_obs_patterns_runs(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
@@ -17483,7 +17483,7 @@ fn test_v2_trigger_llm_obs_patterns(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -17511,7 +17511,7 @@ fn test_v2_get_llm_obs_patterns_run_status(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
@@ -17539,7 +17539,7 @@ fn test_v2_list_llm_obs_patterns_topics(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
@@ -17547,7 +17547,7 @@ fn test_v2_list_llm_obs_patterns_topics(
         .get("run_id")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_llm_observability::ListLLMObsPatternsTopicsOptionalParams::default();
+        datadogV2::api_agent_observability::ListLLMObsPatternsTopicsOptionalParams::default();
     params.run_id = run_id;
     let response =
         match block_on(api.list_llm_obs_patterns_topics_with_http_info(config_id, params)) {
@@ -17574,7 +17574,7 @@ fn test_v2_list_llm_obs_patterns_topics_with_clustered_points(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let config_id = serde_json::from_value(_parameters.get("config_id").unwrap().clone()).unwrap();
@@ -17584,7 +17584,7 @@ fn test_v2_list_llm_obs_patterns_topics_with_clustered_points(
     let include_metrics = _parameters
         .get("include_metrics")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_llm_observability::ListLLMObsPatternsTopicsWithClusteredPointsOptionalParams::default();
+    let mut params = datadogV2::api_agent_observability::ListLLMObsPatternsTopicsWithClusteredPointsOptionalParams::default();
     params.run_id = run_id;
     params.include_metrics = include_metrics;
     let response = match block_on(
@@ -17610,7 +17610,7 @@ fn test_v2_list_llm_obs_patterns_topics_with_clustered_points(
 fn test_v2_list_llm_obs_datasets(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -17627,7 +17627,8 @@ fn test_v2_list_llm_obs_datasets(world: &mut DatadogWorld, _parameters: &HashMap
     let page_limit = _parameters
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_llm_observability::ListLLMObsDatasetsOptionalParams::default();
+    let mut params =
+        datadogV2::api_agent_observability::ListLLMObsDatasetsOptionalParams::default();
     params.filter_name = filter_name;
     params.filter_id = filter_id;
     params.page_cursor = page_cursor;
@@ -17653,7 +17654,7 @@ fn test_v2_list_llm_obs_datasets(world: &mut DatadogWorld, _parameters: &HashMap
 fn test_v2_create_llm_obs_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -17680,7 +17681,7 @@ fn test_v2_create_llm_obs_dataset(world: &mut DatadogWorld, _parameters: &HashMa
 fn test_v2_delete_llm_obs_datasets(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -17707,7 +17708,7 @@ fn test_v2_delete_llm_obs_datasets(world: &mut DatadogWorld, _parameters: &HashM
 fn test_v2_update_llm_obs_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -17740,7 +17741,7 @@ fn test_v2_batch_update_llm_obs_dataset(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -17771,7 +17772,7 @@ fn test_v2_batch_update_llm_obs_dataset(
 fn test_v2_clone_llm_obs_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -17804,7 +17805,7 @@ fn test_v2_get_llm_obs_dataset_draft_state(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -17837,7 +17838,7 @@ fn test_v2_lock_llm_obs_dataset_draft_state(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -17870,7 +17871,7 @@ fn test_v2_unlock_llm_obs_dataset_draft_state(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -17900,7 +17901,7 @@ fn test_v2_unlock_llm_obs_dataset_draft_state(
 fn test_v2_export_llm_obs_dataset(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -17913,7 +17914,8 @@ fn test_v2_export_llm_obs_dataset(world: &mut DatadogWorld, _parameters: &HashMa
     let version = _parameters
         .get("version")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_llm_observability::ExportLLMObsDatasetOptionalParams::default();
+    let mut params =
+        datadogV2::api_agent_observability::ExportLLMObsDatasetOptionalParams::default();
     params.format = format;
     params.version = version;
     let response =
@@ -17941,7 +17943,7 @@ fn test_v2_list_llm_obs_dataset_records(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -17958,7 +17960,7 @@ fn test_v2_list_llm_obs_dataset_records(
         .get("page[limit]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_llm_observability::ListLLMObsDatasetRecordsOptionalParams::default();
+        datadogV2::api_agent_observability::ListLLMObsDatasetRecordsOptionalParams::default();
     params.filter_version = filter_version;
     params.page_cursor = page_cursor;
     params.page_limit = page_limit;
@@ -17988,7 +17990,7 @@ fn test_v2_update_llm_obs_dataset_records(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -18022,7 +18024,7 @@ fn test_v2_create_llm_obs_dataset_records(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -18056,7 +18058,7 @@ fn test_v2_delete_llm_obs_dataset_records(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -18090,7 +18092,7 @@ fn test_v2_restore_llm_obs_dataset_version(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -18124,7 +18126,7 @@ fn test_v2_list_llm_obs_dataset_versions(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -18156,7 +18158,7 @@ fn test_v2_list_llm_obs_experiment_events_v2(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let experiment_id =
@@ -18186,7 +18188,7 @@ fn test_v2_upload_llm_obs_dataset_records_file(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let project_id =
@@ -18214,7 +18216,7 @@ fn test_v2_upload_llm_obs_dataset_records_file(
         .get("include[user_data]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_llm_observability::UploadLLMObsDatasetRecordsFileOptionalParams::default();
+        datadogV2::api_agent_observability::UploadLLMObsDatasetRecordsFileOptionalParams::default();
     params.file = file;
     params.deduplicate = deduplicate;
     params.overwrite = overwrite;
@@ -18246,7 +18248,7 @@ fn test_v2_list_llm_obs_experiment_events(
 ) {
     let api = world
         .api_instances
-        .v2_api_llm_observability
+        .v2_api_agent_observability
         .as_ref()
         .expect("api instance not found");
     let experiment_id =
@@ -18258,7 +18260,7 @@ fn test_v2_list_llm_obs_experiment_events(
         .get("page[cursor]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_llm_observability::ListLLMObsExperimentEventsOptionalParams::default();
+        datadogV2::api_agent_observability::ListLLMObsExperimentEventsOptionalParams::default();
     params.page_limit = page_limit;
     params.page_cursor = page_cursor;
     let response =
