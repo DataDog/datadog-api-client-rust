@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing the draft state of an LLM Observability dataset.
+/// Response containing the draft state of an Agent Observability dataset.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsDatasetDraftStateResponse {
-    /// Data object for an LLM Observability dataset draft state.
+    /// Data object for an Agent Observability dataset draft state.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsDatasetDraftStateData,
     #[serde(flatten)]

@@ -1,4 +1,4 @@
-// Export an LLM Observability dataset returns "OK" response
+// Export an Agent Observability dataset returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::ExportLLMObsDatasetOptionalParams;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;

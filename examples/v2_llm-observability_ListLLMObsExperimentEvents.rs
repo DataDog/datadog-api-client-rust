@@ -1,4 +1,4 @@
-// List events for an LLM Observability experiment returns "OK" response
+// List events for an Agent Observability experiment returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
 use datadog_api_client::datadogV2::api_llm_observability::ListLLMObsExperimentEventsOptionalParams;

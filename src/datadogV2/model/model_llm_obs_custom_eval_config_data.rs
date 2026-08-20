@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for a custom LLM Observability evaluator configuration.
+/// Data object for a custom Agent Observability evaluator configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsCustomEvalConfigData {
-    /// Attributes of a custom LLM Observability evaluator configuration.
+    /// Attributes of a custom Agent Observability evaluator configuration.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsCustomEvalConfigAttributes,
     /// Unique name identifier of the evaluator configuration.
     #[serde(rename = "id")]
     pub id: String,
-    /// Type of the custom LLM Observability evaluator configuration resource.
+    /// Type of the custom Agent Observability evaluator configuration resource.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsCustomEvalConfigType,
     #[serde(flatten)]

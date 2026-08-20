@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing the status of an LLM Observability patterns run.
+/// Response containing the status of an Agent Observability patterns run.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPatternsRunStatusResponse {
-    /// Data object of an LLM Observability patterns run status response.
+    /// Data object of an Agent Observability patterns run status response.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsPatternsRunStatusResponseData,
     #[serde(flatten)]

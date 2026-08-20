@@ -1,4 +1,4 @@
-// List versions of an LLM Observability prompt returns "OK" response
+// List versions of an Agent Observability prompt returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
 

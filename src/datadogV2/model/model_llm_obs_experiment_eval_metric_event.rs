@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsExperimentEvalMetricEvent {
-    /// Assessment result for an LLM Observability experiment metric.
+    /// Assessment result for an Agent Observability experiment metric.
     #[serde(rename = "assessment")]
     pub assessment: Option<crate::datadogV2::model::LLMObsMetricAssessment>,
     /// Boolean value. Present when `metric_type` is `boolean`.
@@ -54,7 +54,7 @@ pub struct LLMObsExperimentEvalMetricEvent {
     /// Source of the metric. Either `custom` (user-submitted) or `summary` (experiment-level aggregate).
     #[serde(rename = "metric_source")]
     pub metric_source: Option<String>,
-    /// Type of metric recorded for an LLM Observability experiment.
+    /// Type of metric recorded for an Agent Observability experiment.
     #[serde(rename = "metric_type")]
     pub metric_type: Option<crate::datadogV2::model::LLMObsMetricScoreType>,
     /// Human-readable reasoning for the metric value.

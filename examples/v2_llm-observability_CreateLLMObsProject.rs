@@ -1,4 +1,4 @@
-// Create an LLM Observability project returns "OK" response
+// Create an Agent Observability project returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
 use datadog_api_client::datadogV2::model::LLMObsProjectDataAttributesRequest;

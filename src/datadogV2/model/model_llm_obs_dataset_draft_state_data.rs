@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for an LLM Observability dataset draft state.
+/// Data object for an Agent Observability dataset draft state.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsDatasetDraftStateData {
-    /// Attributes of an LLM Observability dataset draft state.
+    /// Attributes of an Agent Observability dataset draft state.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsDatasetDraftStateDataAttributes,
     /// Unique identifier of the dataset draft state. Matches the dataset ID.
     #[serde(rename = "id")]
     pub id: String,
-    /// Resource type of an LLM Observability dataset draft state.
+    /// Resource type of an Agent Observability dataset draft state.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsDatasetDraftStateType,
     #[serde(flatten)]

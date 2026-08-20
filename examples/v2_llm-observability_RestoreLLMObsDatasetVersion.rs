@@ -1,4 +1,4 @@
-// Restore an LLM Observability dataset version returns "OK" response
+// Restore an Agent Observability dataset version returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
 use datadog_api_client::datadogV2::model::LLMObsDatasetRestoreVersionDataAttributesRequest;

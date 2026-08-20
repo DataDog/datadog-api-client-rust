@@ -1,4 +1,4 @@
-// Unlock LLM Observability dataset draft state returns "OK" response
+// Unlock Agent Observability dataset draft state returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
 

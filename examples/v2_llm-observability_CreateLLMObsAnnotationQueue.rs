@@ -1,4 +1,4 @@
-// Create an LLM Observability annotation queue returns "Created" response
+// Create an Agent Observability annotation queue returns "Created" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
 use datadog_api_client::datadogV2::model::LLMObsAnnotationQueueDataAttributesRequest;

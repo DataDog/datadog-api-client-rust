@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request to create or update an LLM Observability patterns configuration.
+/// Request to create or update an Agent Observability patterns configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPatternsConfigUpsertRequest {
-    /// Data object for creating or updating an LLM Observability patterns configuration.
+    /// Data object for creating or updating an Agent Observability patterns configuration.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsPatternsConfigUpsertRequestData,
     #[serde(flatten)]

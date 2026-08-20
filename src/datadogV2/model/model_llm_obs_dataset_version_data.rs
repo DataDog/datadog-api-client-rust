@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for an LLM Observability dataset version.
+/// Data object for an Agent Observability dataset version.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsDatasetVersionData {
-    /// Attributes of an LLM Observability dataset version.
+    /// Attributes of an Agent Observability dataset version.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsDatasetVersionDataAttributes,
     /// Unique identifier of the dataset version.
     #[serde(rename = "id")]
     pub id: String,
-    /// Resource type of an LLM Observability dataset version.
+    /// Resource type of an Agent Observability dataset version.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsDatasetVersionType,
     #[serde(flatten)]

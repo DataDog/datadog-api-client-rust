@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request to clone an LLM Observability dataset.
+/// Request to clone an Agent Observability dataset.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsDatasetCloneRequest {
-    /// Data object for cloning an LLM Observability dataset.
+    /// Data object for cloning an Agent Observability dataset.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsDatasetCloneDataRequest,
     #[serde(flatten)]

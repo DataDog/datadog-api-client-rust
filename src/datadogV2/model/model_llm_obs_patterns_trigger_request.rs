@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request to trigger an LLM Observability patterns run.
+/// Request to trigger an Agent Observability patterns run.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPatternsTriggerRequest {
-    /// Data object for triggering an LLM Observability patterns run.
+    /// Data object for triggering an Agent Observability patterns run.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsPatternsTriggerRequestData,
     #[serde(flatten)]

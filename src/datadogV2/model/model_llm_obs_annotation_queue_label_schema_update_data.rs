@@ -14,7 +14,7 @@ pub struct LLMObsAnnotationQueueLabelSchemaUpdateData {
     /// Attributes for updating an annotation queue label schema.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaUpdateAttributes,
-    /// Resource type of an LLM Observability annotation queue.
+    /// Resource type of an Agent Observability annotation queue.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsAnnotationQueueType,
     #[serde(flatten)]

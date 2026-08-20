@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of an LLM Observability spans search request.
+/// Attributes of an Agent Observability spans search request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsSearchSpansRequestAttributes {
-    /// Filter criteria for an LLM Observability span search.
+    /// Filter criteria for an Agent Observability span search.
     #[serde(rename = "filter")]
     pub filter: Option<crate::datadogV2::model::LLMObsSpanFilter>,
     /// Additional options for a span search request.

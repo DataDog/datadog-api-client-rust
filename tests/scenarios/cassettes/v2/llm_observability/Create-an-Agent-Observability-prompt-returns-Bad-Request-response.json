@@ -3,7 +3,7 @@
     {
       "request": {
         "body": {
-          "string": "{\"data\":{\"attributes\":{\"prompt_id\":\"Test-Create_an_LLM_Observability_prompt_returns_Bad_Request_response-1784543299\",\"template\":\" \"},\"type\":\"prompt-templates\"}}",
+          "string": "{\"data\":{\"attributes\":{\"prompt_id\":\"Test-Create_an_Agent_Observability_prompt_returns_Bad_Request_response-1784543299\",\"template\":\" \"},\"type\":\"prompt-templates\"}}",
           "encoding": null
         },
         "headers": {

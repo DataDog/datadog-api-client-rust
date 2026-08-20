@@ -410,7 +410,7 @@ pub struct ListLLMObsSpansOptionalParams {
     pub filter_from: Option<String>,
     /// End of the time range. Accepts ISO 8601 or relative format. Defaults to `now`.
     pub filter_to: Option<String>,
-    /// Search query using LLM Observability query syntax. Supports attribute filters using the field:value syntax (e.g. session_id, trace_id, ml_app, meta.span.kind). When provided, structured field filters (`filter[span_id]`, `filter[trace_id]`, etc.) are ignored.
+    /// Search query using Agent Observability query syntax. Supports attribute filters using the field:value syntax (e.g. session_id, trace_id, ml_app, meta.span.kind). When provided, structured field filters (`filter[span_id]`, `filter[trace_id]`, etc.) are ignored.
     pub filter_query: Option<String>,
     /// Filter by exact span ID.
     pub filter_span_id: Option<String>,
@@ -443,7 +443,7 @@ impl ListLLMObsSpansOptionalParams {
         self.filter_to = Some(value);
         self
     }
-    /// Search query using LLM Observability query syntax. Supports attribute filters using the field:value syntax (e.g. session_id, trace_id, ml_app, meta.span.kind). When provided, structured field filters (`filter[span_id]`, `filter[trace_id]`, etc.) are ignored.
+    /// Search query using Agent Observability query syntax. Supports attribute filters using the field:value syntax (e.g. session_id, trace_id, ml_app, meta.span.kind). When provided, structured field filters (`filter[span_id]`, `filter[trace_id]`, etc.) are ignored.
     pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
@@ -1187,7 +1187,7 @@ pub enum UpsertLLMObsPatternsConfigError {
     UnknownValue(serde_json::Value),
 }
 
-/// Manage LLM Observability spans, data, projects, datasets, dataset records, experiments, prompts, and annotations.
+/// Manage Agent Observability spans, data, projects, datasets, dataset records, experiments, prompts, and annotations.
 #[derive(Debug, Clone)]
 pub struct LLMObservabilityAPI {
     config: datadog::Configuration,
@@ -1261,7 +1261,7 @@ impl LLMObservabilityAPI {
         Self { config, client }
     }
 
-    /// Execute an analytics aggregation over LLM Observability experimentation data.
+    /// Execute an analytics aggregation over Agent Observability experimentation data.
     /// Use this endpoint to compute metrics (for example average eval scores) grouped by fields such as `span_id` or `experiment_id`.
     ///
     /// At least one `compute` definition and one `index` must be provided.
@@ -1289,7 +1289,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Execute an analytics aggregation over LLM Observability experimentation data.
+    /// Execute an analytics aggregation over Agent Observability experimentation data.
     /// Use this endpoint to compute metrics (for example average eval scores) grouped by fields such as `span_id` or `experiment_id`.
     ///
     /// At least one `compute` definition and one `index` must be provided.
@@ -2142,7 +2142,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create a new LLM Observability dataset within the specified project.
+    /// Create a new Agent Observability dataset within the specified project.
     pub async fn create_llm_obs_dataset(
         &self,
         project_id: String,
@@ -2168,7 +2168,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create a new LLM Observability dataset within the specified project.
+    /// Create a new Agent Observability dataset within the specified project.
     pub async fn create_llm_obs_dataset_with_http_info(
         &self,
         project_id: String,
@@ -2311,7 +2311,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Append one or more records to an LLM Observability dataset.
+    /// Append one or more records to an Agent Observability dataset.
     pub async fn create_llm_obs_dataset_records(
         &self,
         project_id: String,
@@ -2338,7 +2338,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Append one or more records to an LLM Observability dataset.
+    /// Append one or more records to an Agent Observability dataset.
     pub async fn create_llm_obs_dataset_records_with_http_info(
         &self,
         project_id: String,
@@ -2484,7 +2484,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create a new LLM Observability experiment.
+    /// Create a new Agent Observability experiment.
     pub async fn create_llm_obs_experiment(
         &self,
         body: crate::datadogV2::model::LLMObsExperimentRequest,
@@ -2506,7 +2506,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create a new LLM Observability experiment.
+    /// Create a new Agent Observability experiment.
     pub async fn create_llm_obs_experiment_with_http_info(
         &self,
         body: crate::datadogV2::model::LLMObsExperimentRequest,
@@ -2647,7 +2647,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Push spans and metrics for an LLM Observability experiment.
+    /// Push spans and metrics for an Agent Observability experiment.
     pub async fn create_llm_obs_experiment_events(
         &self,
         experiment_id: String,
@@ -2662,7 +2662,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Push spans and metrics for an LLM Observability experiment.
+    /// Push spans and metrics for an Agent Observability experiment.
     pub async fn create_llm_obs_experiment_events_with_http_info(
         &self,
         experiment_id: String,
@@ -2969,7 +2969,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create a new LLM Observability project. Returns the existing project if a name conflict occurs.
+    /// Create a new Agent Observability project. Returns the existing project if a name conflict occurs.
     pub async fn create_llm_obs_project(
         &self,
         body: crate::datadogV2::model::LLMObsProjectRequest,
@@ -2991,7 +2991,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create a new LLM Observability project. Returns the existing project if a name conflict occurs.
+    /// Create a new Agent Observability project. Returns the existing project if a name conflict occurs.
     pub async fn create_llm_obs_project_with_http_info(
         &self,
         body: crate::datadogV2::model::LLMObsProjectRequest,
@@ -3132,7 +3132,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create a new prompt (and its first version) in the LLM Observability prompt registry.
+    /// Create a new prompt (and its first version) in the Agent Observability prompt registry.
     pub async fn create_llm_obs_prompt(
         &self,
         body: crate::datadogV2::model::LLMObsCreatePromptRequest,
@@ -3154,7 +3154,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create a new prompt (and its first version) in the LLM Observability prompt registry.
+    /// Create a new prompt (and its first version) in the Agent Observability prompt registry.
     pub async fn create_llm_obs_prompt_with_http_info(
         &self,
         body: crate::datadogV2::model::LLMObsCreatePromptRequest,
@@ -3295,7 +3295,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create a new version of an existing LLM Observability prompt.
+    /// Create a new version of an existing Agent Observability prompt.
     pub async fn create_llm_obs_prompt_version(
         &self,
         prompt_id: String,
@@ -3321,7 +3321,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create a new version of an existing LLM Observability prompt.
+    /// Create a new version of an existing Agent Observability prompt.
     pub async fn create_llm_obs_prompt_version_with_http_info(
         &self,
         prompt_id: String,
@@ -3885,7 +3885,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Delete a custom LLM Observability evaluator configuration by its name.
+    /// Delete a custom Agent Observability evaluator configuration by its name.
     pub async fn delete_llm_obs_custom_eval_config(
         &self,
         eval_name: String,
@@ -3899,7 +3899,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Delete a custom LLM Observability evaluator configuration by its name.
+    /// Delete a custom Agent Observability evaluator configuration by its name.
     pub async fn delete_llm_obs_custom_eval_config_with_http_info(
         &self,
         eval_name: String,
@@ -3985,7 +3985,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Delete one or more records from an LLM Observability dataset.
+    /// Delete one or more records from an Agent Observability dataset.
     pub async fn delete_llm_obs_dataset_records(
         &self,
         project_id: String,
@@ -4001,7 +4001,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Delete one or more records from an LLM Observability dataset.
+    /// Delete one or more records from an Agent Observability dataset.
     pub async fn delete_llm_obs_dataset_records_with_http_info(
         &self,
         project_id: String,
@@ -4136,7 +4136,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Delete one or more LLM Observability datasets within the specified project.
+    /// Delete one or more Agent Observability datasets within the specified project.
     pub async fn delete_llm_obs_datasets(
         &self,
         project_id: String,
@@ -4151,7 +4151,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Delete one or more LLM Observability datasets within the specified project.
+    /// Delete one or more Agent Observability datasets within the specified project.
     pub async fn delete_llm_obs_datasets_with_http_info(
         &self,
         project_id: String,
@@ -4284,7 +4284,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Delete one or more LLM Observability experiments.
+    /// Delete one or more Agent Observability experiments.
     pub async fn delete_llm_obs_experiments(
         &self,
         body: crate::datadogV2::model::LLMObsDeleteExperimentsRequest,
@@ -4295,7 +4295,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Delete one or more LLM Observability experiments.
+    /// Delete one or more Agent Observability experiments.
     pub async fn delete_llm_obs_experiments_with_http_info(
         &self,
         body: crate::datadogV2::model::LLMObsDeleteExperimentsRequest,
@@ -4525,7 +4525,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Delete one or more LLM Observability projects.
+    /// Delete one or more Agent Observability projects.
     pub async fn delete_llm_obs_projects(
         &self,
         body: crate::datadogV2::model::LLMObsDeleteProjectsRequest,
@@ -4536,7 +4536,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Delete one or more LLM Observability projects.
+    /// Delete one or more Agent Observability projects.
     pub async fn delete_llm_obs_projects_with_http_info(
         &self,
         body: crate::datadogV2::model::LLMObsDeleteProjectsRequest,
@@ -4667,7 +4667,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Soft-delete an LLM Observability prompt. The prompt's version rows are retained, but they are no longer accessible through the public prompt registry endpoints.
+    /// Soft-delete an Agent Observability prompt. The prompt's version rows are retained, but they are no longer accessible through the public prompt registry endpoints.
     pub async fn delete_llm_obs_prompt(
         &self,
         prompt_id: String,
@@ -4689,7 +4689,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Soft-delete an LLM Observability prompt. The prompt's version rows are retained, but they are no longer accessible through the public prompt registry endpoints.
+    /// Soft-delete an Agent Observability prompt. The prompt's version rows are retained, but they are no longer accessible through the public prompt registry endpoints.
     pub async fn delete_llm_obs_prompt_with_http_info(
         &self,
         prompt_id: String,
@@ -5306,7 +5306,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Retrieve a custom LLM Observability evaluator configuration by its name.
+    /// Retrieve a custom Agent Observability evaluator configuration by its name.
     pub async fn get_llm_obs_custom_eval_config(
         &self,
         eval_name: String,
@@ -5331,7 +5331,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Retrieve a custom LLM Observability evaluator configuration by its name.
+    /// Retrieve a custom Agent Observability evaluator configuration by its name.
     pub async fn get_llm_obs_custom_eval_config_with_http_info(
         &self,
         eval_name: String,
@@ -5786,7 +5786,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Get the latest version of an LLM Observability prompt by prompt ID.
+    /// Get the latest version of an Agent Observability prompt by prompt ID.
     pub async fn get_llm_obs_prompt(
         &self,
         prompt_id: String,
@@ -5812,7 +5812,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Get the latest version of an LLM Observability prompt by prompt ID.
+    /// Get the latest version of an Agent Observability prompt by prompt ID.
     pub async fn get_llm_obs_prompt_with_http_info(
         &self,
         prompt_id: String,
@@ -5916,7 +5916,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Get the full template of a single, specific version of an LLM Observability prompt.
+    /// Get the full template of a single, specific version of an Agent Observability prompt.
     pub async fn get_llm_obs_prompt_version(
         &self,
         prompt_id: String,
@@ -5942,7 +5942,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Get the full template of a single, specific version of an LLM Observability prompt.
+    /// Get the full template of a single, specific version of an Agent Observability prompt.
     pub async fn get_llm_obs_prompt_version_with_http_info(
         &self,
         prompt_id: String,
@@ -6174,7 +6174,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all custom LLM Observability evaluator configurations for the organization.
+    /// List all custom Agent Observability evaluator configurations for the organization.
     pub async fn list_llm_obs_custom_eval_configs(
         &self,
     ) -> Result<
@@ -6195,7 +6195,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all custom LLM Observability evaluator configurations for the organization.
+    /// List all custom Agent Observability evaluator configurations for the organization.
     pub async fn list_llm_obs_custom_eval_configs_with_http_info(
         &self,
     ) -> Result<
@@ -6288,7 +6288,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all records in an LLM Observability dataset, sorted by creation date, newest first.
+    /// List all records in an Agent Observability dataset, sorted by creation date, newest first.
     pub async fn list_llm_obs_dataset_records(
         &self,
         project_id: String,
@@ -6315,7 +6315,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all records in an LLM Observability dataset, sorted by creation date, newest first.
+    /// List all records in an Agent Observability dataset, sorted by creation date, newest first.
     pub async fn list_llm_obs_dataset_records_with_http_info(
         &self,
         project_id: String,
@@ -6554,7 +6554,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all LLM Observability datasets for a project, sorted by creation date, newest first.
+    /// List all Agent Observability datasets for a project, sorted by creation date, newest first.
     pub async fn list_llm_obs_datasets(
         &self,
         project_id: String,
@@ -6580,7 +6580,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all LLM Observability datasets for a project, sorted by creation date, newest first.
+    /// List all Agent Observability datasets for a project, sorted by creation date, newest first.
     pub async fn list_llm_obs_datasets_with_http_info(
         &self,
         project_id: String,
@@ -7074,7 +7074,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all LLM Observability experiments sorted by creation date, newest first.
+    /// List all Agent Observability experiments sorted by creation date, newest first.
     pub async fn list_llm_obs_experiments(
         &self,
         params: ListLLMObsExperimentsOptionalParams,
@@ -7096,7 +7096,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all LLM Observability experiments sorted by creation date, newest first.
+    /// List all Agent Observability experiments sorted by creation date, newest first.
     pub async fn list_llm_obs_experiments_with_http_info(
         &self,
         params: ListLLMObsExperimentsOptionalParams,
@@ -8146,7 +8146,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all LLM Observability projects sorted by creation date, newest first.
+    /// List all Agent Observability projects sorted by creation date, newest first.
     pub async fn list_llm_obs_projects(
         &self,
         params: ListLLMObsProjectsOptionalParams,
@@ -8168,7 +8168,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all LLM Observability projects sorted by creation date, newest first.
+    /// List all Agent Observability projects sorted by creation date, newest first.
     pub async fn list_llm_obs_projects_with_http_info(
         &self,
         params: ListLLMObsProjectsOptionalParams,
@@ -8285,7 +8285,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all versions of an LLM Observability prompt, ordered newest to oldest. If the prompt does not exist, is not registered, or is archived, the response contains an empty list.
+    /// List all versions of an Agent Observability prompt, ordered newest to oldest. If the prompt does not exist, is not registered, or is archived, the response contains an empty list.
     pub async fn list_llm_obs_prompt_versions(
         &self,
         prompt_id: String,
@@ -8310,7 +8310,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all versions of an LLM Observability prompt, ordered newest to oldest. If the prompt does not exist, is not registered, or is archived, the response contains an empty list.
+    /// List all versions of an Agent Observability prompt, ordered newest to oldest. If the prompt does not exist, is not registered, or is archived, the response contains an empty list.
     pub async fn list_llm_obs_prompt_versions_with_http_info(
         &self,
         prompt_id: String,
@@ -8405,7 +8405,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all LLM Observability prompts in the prompt registry for the organization.
+    /// List all Agent Observability prompts in the prompt registry for the organization.
     pub async fn list_llm_obs_prompts(
         &self,
         params: ListLLMObsPromptsOptionalParams,
@@ -8427,7 +8427,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List all LLM Observability prompts in the prompt registry for the organization.
+    /// List all Agent Observability prompts in the prompt registry for the organization.
     pub async fn list_llm_obs_prompts_with_http_info(
         &self,
         params: ListLLMObsPromptsOptionalParams,
@@ -8529,7 +8529,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List LLM Observability spans matching the specified filters.
+    /// List Agent Observability spans matching the specified filters.
     pub async fn list_llm_obs_spans(
         &self,
         params: ListLLMObsSpansOptionalParams,
@@ -8549,7 +8549,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// List LLM Observability spans matching the specified filters.
+    /// List Agent Observability spans matching the specified filters.
     pub async fn list_llm_obs_spans_with_http_info(
         &self,
         params: ListLLMObsSpansOptionalParams,
@@ -8981,7 +8981,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Search across LLM Observability experimentation entities — projects, datasets, dataset records, experiments, and experiment runs — using cursor-based pagination.
+    /// Search across Agent Observability experimentation entities — projects, datasets, dataset records, experiments, and experiment runs — using cursor-based pagination.
     ///
     /// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
     ///
@@ -9010,7 +9010,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Search across LLM Observability experimentation entities — projects, datasets, dataset records, experiments, and experiment runs — using cursor-based pagination.
+    /// Search across Agent Observability experimentation entities — projects, datasets, dataset records, experiments, and experiment runs — using cursor-based pagination.
     ///
     /// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
     ///
@@ -9155,7 +9155,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Search LLM Observability spans using structured filters in the request body.
+    /// Search Agent Observability spans using structured filters in the request body.
     pub async fn search_llm_obs_spans(
         &self,
         body: crate::datadogV2::model::LLMObsSearchSpansRequest,
@@ -9175,7 +9175,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Search LLM Observability spans using structured filters in the request body.
+    /// Search Agent Observability spans using structured filters in the request body.
     pub async fn search_llm_obs_spans_with_http_info(
         &self,
         body: crate::datadogV2::model::LLMObsSearchSpansRequest,
@@ -9316,7 +9316,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Search across LLM Observability experimentation entities using offset-based (page-number) pagination.
+    /// Search across Agent Observability experimentation entities using offset-based (page-number) pagination.
     /// Use this endpoint when you need total page count or want to navigate to a specific page number.
     ///
     /// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
@@ -9344,7 +9344,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Search across LLM Observability experimentation entities using offset-based (page-number) pagination.
+    /// Search across Agent Observability experimentation entities using offset-based (page-number) pagination.
     /// Use this endpoint when you need total page count or want to navigate to a specific page number.
     ///
     /// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
@@ -10104,7 +10104,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create or update a custom LLM Observability evaluator configuration by its name.
+    /// Create or update a custom Agent Observability evaluator configuration by its name.
     pub async fn update_llm_obs_custom_eval_config(
         &self,
         eval_name: String,
@@ -10119,7 +10119,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Create or update a custom LLM Observability evaluator configuration by its name.
+    /// Create or update a custom Agent Observability evaluator configuration by its name.
     pub async fn update_llm_obs_custom_eval_config_with_http_info(
         &self,
         eval_name: String,
@@ -10253,7 +10253,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Partially update an existing LLM Observability dataset within the specified project.
+    /// Partially update an existing Agent Observability dataset within the specified project.
     pub async fn update_llm_obs_dataset(
         &self,
         project_id: String,
@@ -10280,7 +10280,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Partially update an existing LLM Observability dataset within the specified project.
+    /// Partially update an existing Agent Observability dataset within the specified project.
     pub async fn update_llm_obs_dataset_with_http_info(
         &self,
         project_id: String,
@@ -10425,7 +10425,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Update one or more existing records in an LLM Observability dataset.
+    /// Update one or more existing records in an Agent Observability dataset.
     pub async fn update_llm_obs_dataset_records(
         &self,
         project_id: String,
@@ -10452,7 +10452,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Update one or more existing records in an LLM Observability dataset.
+    /// Update one or more existing records in an Agent Observability dataset.
     pub async fn update_llm_obs_dataset_records_with_http_info(
         &self,
         project_id: String,
@@ -10598,7 +10598,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Partially update an existing LLM Observability experiment.
+    /// Partially update an existing Agent Observability experiment.
     pub async fn update_llm_obs_experiment(
         &self,
         experiment_id: String,
@@ -10624,7 +10624,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Partially update an existing LLM Observability experiment.
+    /// Partially update an existing Agent Observability experiment.
     pub async fn update_llm_obs_experiment_with_http_info(
         &self,
         experiment_id: String,
@@ -10767,7 +10767,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Partially update an existing LLM Observability project.
+    /// Partially update an existing Agent Observability project.
     pub async fn update_llm_obs_project(
         &self,
         project_id: String,
@@ -10793,7 +10793,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Partially update an existing LLM Observability project.
+    /// Partially update an existing Agent Observability project.
     pub async fn update_llm_obs_project_with_http_info(
         &self,
         project_id: String,
@@ -10936,7 +10936,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Update the title, the description, or both, for an LLM Observability prompt.
+    /// Update the title, the description, or both, for an Agent Observability prompt.
     pub async fn update_llm_obs_prompt(
         &self,
         prompt_id: String,
@@ -10962,7 +10962,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Update the title, the description, or both, for an LLM Observability prompt.
+    /// Update the title, the description, or both, for an Agent Observability prompt.
     pub async fn update_llm_obs_prompt_with_http_info(
         &self,
         prompt_id: String,
@@ -11105,7 +11105,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Update the description, the feature-flag environments, or both, for a specific version of an LLM Observability prompt.
+    /// Update the description, the feature-flag environments, or both, for a specific version of an Agent Observability prompt.
     pub async fn update_llm_obs_prompt_version(
         &self,
         prompt_id: String,
@@ -11132,7 +11132,7 @@ impl LLMObservabilityAPI {
         }
     }
 
-    /// Update the description, the feature-flag environments, or both, for a specific version of an LLM Observability prompt.
+    /// Update the description, the feature-flag environments, or both, for a specific version of an Agent Observability prompt.
     pub async fn update_llm_obs_prompt_version_with_http_info(
         &self,
         prompt_id: String,

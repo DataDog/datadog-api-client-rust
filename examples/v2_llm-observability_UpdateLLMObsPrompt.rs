@@ -1,4 +1,4 @@
-// Update an LLM Observability prompt returns "OK" response
+// Update an Agent Observability prompt returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_llm_observability::LLMObservabilityAPI;
 use datadog_api_client::datadogV2::model::LLMObsPromptType;

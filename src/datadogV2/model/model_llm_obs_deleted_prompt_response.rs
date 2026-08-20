@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response confirming that an LLM Observability prompt was deleted.
+/// Response confirming that an Agent Observability prompt was deleted.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsDeletedPromptResponse {
-    /// Data object confirming that an LLM Observability prompt was deleted.
+    /// Data object confirming that an Agent Observability prompt was deleted.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsDeletedPromptData,
     #[serde(flatten)]

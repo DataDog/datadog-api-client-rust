@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of an LLM Observability span.
+/// Attributes of an Agent Observability span.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -19,7 +19,7 @@ pub struct LLMObsSpanAttributes {
     pub evaluation: Option<
         std::collections::BTreeMap<String, crate::datadogV2::model::LLMObsSpanEvaluationMetric>,
     >,
-    /// Input or output content of an LLM Observability span.
+    /// Input or output content of an Agent Observability span.
     #[serde(rename = "input")]
     pub input: Option<crate::datadogV2::model::LLMObsSpanIO>,
     /// Detected intent of the span.
@@ -43,7 +43,7 @@ pub struct LLMObsSpanAttributes {
     /// Name of the span.
     #[serde(rename = "name")]
     pub name: String,
-    /// Input or output content of an LLM Observability span.
+    /// Input or output content of an Agent Observability span.
     #[serde(rename = "output")]
     pub output: Option<crate::datadogV2::model::LLMObsSpanIO>,
     /// Identifier of the parent span, if any.
