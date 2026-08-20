@@ -20,7 +20,7 @@ pub struct Spec {
     /// Unique identifier used to trigger workflows automatically in Datadog.
     #[serde(rename = "handle")]
     pub handle: Option<String>,
-    /// A list of input parameters for the workflow. These can be used as dynamic runtime values in your workflow.
+    /// A list of input parameters for the workflow. Input parameters are available under the `Trigger` object and can be referenced in workflow steps using `{{ Trigger.<parameter_name> }}`.
     #[serde(rename = "inputSchema")]
     pub input_schema: Option<crate::datadogV2::model::InputSchema>,
     /// A list of output parameters for the workflow.
