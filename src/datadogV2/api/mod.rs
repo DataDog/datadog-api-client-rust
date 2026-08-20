@@ -4,6 +4,7 @@
 
 pub mod api_action_connection;
 pub mod api_actions_datastores;
+pub mod api_agent_observability;
 pub mod api_agentless_scanning;
 pub mod api_annotations;
 pub mod api_api_management;
@@ -70,7 +71,6 @@ pub mod api_integrations;
 pub mod api_ip_allowlist;
 pub mod api_jira_integration;
 pub mod api_key_management;
-pub mod api_llm_observability;
 pub mod api_logs;
 pub mod api_logs_archives;
 pub mod api_logs_custom_destinations;

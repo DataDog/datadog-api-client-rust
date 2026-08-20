@@ -5,6 +5,7 @@
 pub mod api;
 pub use self::api::api_action_connection;
 pub use self::api::api_actions_datastores;
+pub use self::api::api_agent_observability;
 pub use self::api::api_agentless_scanning;
 pub use self::api::api_annotations;
 pub use self::api::api_api_management;
@@ -71,7 +72,6 @@ pub use self::api::api_integrations;
 pub use self::api::api_ip_allowlist;
 pub use self::api::api_jira_integration;
 pub use self::api::api_key_management;
-pub use self::api::api_llm_observability;
 pub use self::api::api_logs;
 pub use self::api::api_logs_archives;
 pub use self::api::api_logs_custom_destinations;
