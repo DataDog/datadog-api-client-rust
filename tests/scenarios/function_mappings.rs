@@ -200,6 +200,8 @@ pub struct ApiInstances {
         Option<datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI>,
     pub v2_api_rum_config: Option<datadogV2::api_rum_config::RUMConfigAPI>,
     pub v2_api_rum_metrics: Option<datadogV2::api_rum_metrics::RumMetricsAPI>,
+    pub v2_api_rum_retention_quota:
+        Option<datadogV2::api_rum_retention_quota::RUMRetentionQuotaAPI>,
     pub v2_api_rum_operations: Option<datadogV2::api_rum_operations::RUMOperationsAPI>,
     pub v2_api_rum_insights: Option<datadogV2::api_rum_insights::RUMInsightsAPI>,
     pub v2_api_rum_replay_playlists:
@@ -1312,6 +1314,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "RumMetrics" => {
             world.api_instances.v2_api_rum_metrics = Some(
                 datadogV2::api_rum_metrics::RumMetricsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "RUMRetentionQuota" => {
+            world.api_instances.v2_api_rum_retention_quota = Some(
+                datadogV2::api_rum_retention_quota::RUMRetentionQuotaAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -7175,6 +7185,17 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateRumMetric".into(), test_v2_update_rum_metric);
+    world.function_mappings.insert(
+        "v2.DeleteRumQuotaConfig".into(),
+        test_v2_delete_rum_quota_config,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetRumQuotaConfig".into(), test_v2_get_rum_quota_config);
+    world.function_mappings.insert(
+        "v2.UpsertRumQuotaConfig".into(),
+        test_v2_upsert_rum_quota_config,
+    );
     world
         .function_mappings
         .insert("v2.CreateRUMOperation".into(), test_v2_create_rum_operation);
@@ -56563,6 +56584,90 @@ fn test_v2_update_rum_metric(world: &mut DatadogWorld, _parameters: &HashMap<Str
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_rum_quota_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_retention_quota
+        .as_ref()
+        .expect("api instance not found");
+    let scope_type =
+        serde_json::from_value(_parameters.get("scope_type").unwrap().clone()).unwrap();
+    let scope_id = serde_json::from_value(_parameters.get("scope_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_rum_quota_config_with_http_info(scope_type, scope_id))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_rum_quota_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_retention_quota
+        .as_ref()
+        .expect("api instance not found");
+    let scope_type =
+        serde_json::from_value(_parameters.get("scope_type").unwrap().clone()).unwrap();
+    let scope_id = serde_json::from_value(_parameters.get("scope_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_rum_quota_config_with_http_info(scope_type, scope_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_upsert_rum_quota_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_rum_retention_quota
+        .as_ref()
+        .expect("api instance not found");
+    let scope_type =
+        serde_json::from_value(_parameters.get("scope_type").unwrap().clone()).unwrap();
+    let scope_id = serde_json::from_value(_parameters.get("scope_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.upsert_rum_quota_config_with_http_info(scope_type, scope_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
