@@ -11,6 +11,7 @@ use std::collections::BTreeMap;
 async fn main() {
     let body = CreateDataDeletionRequestBody::new(CreateDataDeletionRequestBodyData::new(
         CreateDataDeletionRequestBodyAttributes::new(
+            100,
             1672527600000,
             BTreeMap::from([
                 ("host".to_string(), "abc".to_string()),
@@ -21,8 +22,7 @@ async fn main() {
         .indexes(vec!["test-index".to_string(), "test-index-2".to_string()]),
         CreateDataDeletionRequestBodyDataType::CREATE_DELETION_REQ,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateDataDeletionRequest", true);
+    let configuration = datadog::Configuration::new();
     let api = DataDeletionAPI::with_config(configuration);
     let resp = api
         .create_data_deletion_request("logs".to_string(), body)
