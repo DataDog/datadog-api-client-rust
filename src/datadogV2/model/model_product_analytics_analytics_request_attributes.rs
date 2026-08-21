@@ -20,7 +20,7 @@ pub struct ProductAnalyticsAnalyticsRequestAttributes {
     /// The analytics query definition containing a base query, compute rule, and optional grouping.
     #[serde(rename = "query")]
     pub query: crate::datadogV2::model::ProductAnalyticsAnalyticsQuery,
-    /// Optional request ID for multi-step query continuation.
+    /// Unique identifier of the query.
     #[serde(rename = "request_id")]
     pub request_id: Option<String>,
     /// End time in epoch milliseconds.
