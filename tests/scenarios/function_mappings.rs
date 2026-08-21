@@ -48283,6 +48283,9 @@ fn test_v2_estimate_metrics_output_series(
     let filter_groups = _parameters
         .get("filter[groups]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_exclude_tags_mode = _parameters
+        .get("filter[exclude_tags_mode]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_hours_ago = _parameters
         .get("filter[hours_ago]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -48297,6 +48300,7 @@ fn test_v2_estimate_metrics_output_series(
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_metrics::EstimateMetricsOutputSeriesOptionalParams::default();
     params.filter_groups = filter_groups;
+    params.filter_exclude_tags_mode = filter_exclude_tags_mode;
     params.filter_hours_ago = filter_hours_ago;
     params.filter_num_aggregations = filter_num_aggregations;
     params.filter_pct = filter_pct;
