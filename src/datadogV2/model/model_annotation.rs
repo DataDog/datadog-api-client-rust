@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A list of annotations used in the workflow. These are like sticky notes for your workflow!
+/// A text annotation displayed on the workflow canvas.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Annotation {
-    /// The definition of `AnnotationDisplay` object.
+    /// The annotation's position and size on the workflow canvas.
     #[serde(rename = "display")]
     pub display: crate::datadogV2::model::AnnotationDisplay,
-    /// The `Annotation` `id`.
+    /// The unique identifier of this annotation within the workflow.
     #[serde(rename = "id")]
     pub id: String,
-    /// The definition of `AnnotationMarkdownTextAnnotation` object.
+    /// Markdown content displayed in an annotation.
     #[serde(rename = "markdownTextAnnotation")]
     pub markdown_text_annotation: crate::datadogV2::model::AnnotationMarkdownTextAnnotation,
     #[serde(flatten)]
