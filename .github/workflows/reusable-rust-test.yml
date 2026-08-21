@@ -53,13 +53,16 @@ jobs:
           key: ${{ runner.os }}-cargo-target-${{ steps.rust.outputs.version }}-${{ hashFiles('**/Cargo.toml') }}
           restore-keys: ${{ runner.os }}-cargo-target-${{ steps.rust.outputs.version }}-
       - name: Compile test binary
-        run: cargo test --test main --no-run
+        id: compile
+        run: |
+          BINARY=$(cargo test --test main --no-run --message-format=json 2>/dev/null \
+            | jq -r 'select(.executable != null) | .executable' | head -1)
+          echo "binary=$BINARY" >> $GITHUB_OUTPUT
         shell: bash
       - name: Stage test binary
         shell: bash
         run: |
-          BINARY=$(find target/debug/deps -name 'main-*' -executable -type f | head -1)
-          cp "$BINARY" test-binary
+          cp "${{ steps.compile.outputs.binary }}" test-binary
       - name: Upload test binary
         uses: actions/upload-artifact@v4
         with:
