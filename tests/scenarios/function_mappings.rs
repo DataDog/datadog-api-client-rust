@@ -203,6 +203,8 @@ pub struct ApiInstances {
     pub v2_api_rum_metrics: Option<datadogV2::api_rum_metrics::RumMetricsAPI>,
     pub v2_api_rum_retention_quota:
         Option<datadogV2::api_rum_retention_quota::RUMRetentionQuotaAPI>,
+    pub v2_api_rum_teams_ownership:
+        Option<datadogV2::api_rum_teams_ownership::RumTeamsOwnershipAPI>,
     pub v2_api_rum_operations: Option<datadogV2::api_rum_operations::RUMOperationsAPI>,
     pub v2_api_rum_insights: Option<datadogV2::api_rum_insights::RUMInsightsAPI>,
     pub v2_api_rum_replay_playlists:
@@ -1323,6 +1325,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "RUMRetentionQuota" => {
             world.api_instances.v2_api_rum_retention_quota = Some(
                 datadogV2::api_rum_retention_quota::RUMRetentionQuotaAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "RumTeamsOwnership" => {
+            world.api_instances.v2_api_rum_teams_ownership = Some(
+                datadogV2::api_rum_teams_ownership::RumTeamsOwnershipAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -7196,6 +7206,30 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpsertRumQuotaConfig".into(),
         test_v2_upsert_rum_quota_config,
+    );
+    world.function_mappings.insert(
+        "v2.ListTeamsOwnershipMappings".into(),
+        test_v2_list_teams_ownership_mappings,
+    );
+    world.function_mappings.insert(
+        "v2.CreateTeamsOwnershipMapping".into(),
+        test_v2_create_teams_ownership_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.CreateTeamsOwnershipMappingsBatch".into(),
+        test_v2_create_teams_ownership_mappings_batch,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteTeamsOwnershipMapping".into(),
+        test_v2_delete_teams_ownership_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.GetTeamsOwnershipMapping".into(),
+        test_v2_get_teams_ownership_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.ListTeamsOwnershipRules".into(),
+        test_v2_list_teams_ownership_rules,
     );
     world
         .function_mappings
@@ -56670,6 +56704,208 @@ fn test_v2_upsert_rum_quota_config(world: &mut DatadogWorld, _parameters: &HashM
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_teams_ownership_mappings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_teams_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let filter_view_name = _parameters
+        .get("filter[view_name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_team_handle = _parameters
+        .get("filter[team_handle]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_application_id = _parameters
+        .get("filter[application_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_service = _parameters
+        .get("filter[service]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_rum_teams_ownership::ListTeamsOwnershipMappingsOptionalParams::default();
+    params.filter_view_name = filter_view_name;
+    params.filter_team_handle = filter_team_handle;
+    params.filter_application_id = filter_application_id;
+    params.filter_service = filter_service;
+    let response = match block_on(api.list_teams_ownership_mappings_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_teams_ownership_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_teams_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_teams_ownership_mapping_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_teams_ownership_mappings_batch(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_teams_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_teams_ownership_mappings_batch_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_teams_ownership_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_teams_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_teams_ownership_mapping_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_teams_ownership_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_teams_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_teams_ownership_mapping_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_teams_ownership_rules(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_teams_ownership
+        .as_ref()
+        .expect("api instance not found");
+    let filter_view_name = _parameters
+        .get("filter[view_name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_team_handle = _parameters
+        .get("filter[team_handle]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_application_id = _parameters
+        .get("filter[application_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_service = _parameters
+        .get("filter[service]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_rum_teams_ownership::ListTeamsOwnershipRulesOptionalParams::default();
+    params.filter_view_name = filter_view_name;
+    params.filter_team_handle = filter_team_handle;
+    params.filter_application_id = filter_application_id;
+    params.filter_service = filter_service;
+    let response = match block_on(api.list_teams_ownership_rules_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
