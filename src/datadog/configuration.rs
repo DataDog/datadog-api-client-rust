@@ -559,6 +559,10 @@ impl Default for Configuration {
             ("v2.update_form".to_owned(), false),
             ("v2.upsert_and_publish_form_version".to_owned(), false),
             ("v2.upsert_form_version".to_owned(), false),
+            (
+                "v2.update_login_org_configs_mcp_cross_app_access_issuer_url".to_owned(),
+                false,
+            ),
             ("v2.update_org_saml_configurations".to_owned(), false),
             ("v2.get_governance_config".to_owned(), false),
             ("v2.get_governance_control".to_owned(), false),
