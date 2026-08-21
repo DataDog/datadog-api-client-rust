@@ -11,7 +11,8 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsTimeseriesResponseData {
-    /// Attributes of a timeseries analytics response, containing series data, timestamps, and interval definitions.
+    /// Attributes of a timeseries analytics response, containing series data, timestamps, and
+    /// interval definitions.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::ProductAnalyticsTimeseriesResponseAttributes>,
     /// Unique identifier for this response data object.

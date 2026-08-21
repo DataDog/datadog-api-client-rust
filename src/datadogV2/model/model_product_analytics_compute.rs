@@ -14,7 +14,8 @@ pub struct ProductAnalyticsCompute {
     /// The aggregation function (count, cardinality, avg, sum, min, max, etc.).
     #[serde(rename = "aggregation")]
     pub aggregation: String,
-    /// Time bucket size in milliseconds. Required for timeseries queries.
+    /// Time bucket size in milliseconds. Required for timeseries queries; ignored by the
+    /// scalar endpoint, which returns a single value.
     #[serde(rename = "interval")]
     pub interval: Option<i64>,
     /// The metric to aggregate on. Required for non-count aggregations.
