@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `AnnotationMarkdownTextAnnotation` object.
+/// Markdown content displayed in an annotation.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AnnotationMarkdownTextAnnotation {
-    /// The `markdownTextAnnotation` `text`.
+    /// The annotation's Markdown content.
     #[serde(rename = "text")]
     pub text: Option<String>,
     #[serde(flatten)]

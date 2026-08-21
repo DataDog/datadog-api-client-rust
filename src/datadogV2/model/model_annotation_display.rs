@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `AnnotationDisplay` object.
+/// The annotation's position and size on the workflow canvas.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AnnotationDisplay {
-    /// The definition of `AnnotationDisplayBounds` object.
+    /// Canvas coordinates and dimensions for an annotation on the workflow canvas.
     #[serde(rename = "bounds")]
     pub bounds: Option<crate::datadogV2::model::AnnotationDisplayBounds>,
     #[serde(flatten)]

@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of `AnnotationDisplayBounds` object.
+/// Canvas coordinates and dimensions for an annotation on the workflow canvas.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AnnotationDisplayBounds {
-    /// The `bounds` `height`.
+    /// The annotation's height on the canvas.
     #[serde(rename = "height")]
     pub height: Option<f64>,
-    /// The `bounds` `width`.
+    /// The annotation's width on the canvas.
     #[serde(rename = "width")]
     pub width: Option<f64>,
-    /// The `bounds` `x`.
+    /// The annotation's horizontal canvas coordinate.
     #[serde(rename = "x")]
     pub x: Option<f64>,
-    /// The `bounds` `y`.
+    /// The annotation's vertical canvas coordinate.
     #[serde(rename = "y")]
     pub y: Option<f64>,
     #[serde(flatten)]
