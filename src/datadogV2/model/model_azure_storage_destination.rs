@@ -19,6 +19,11 @@ pub struct AzureStorageDestination {
     /// Configuration for buffer settings on destination components.
     #[serde(rename = "buffer")]
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
+    /// Compression configuration for archived logs. When omitted, logs are compressed with gzip
+    /// for backward compatibility.
+    #[serde(rename = "compression")]
+    pub compression:
+        Option<crate::datadogV2::model::ObservabilityPipelineAzureStorageDestinationCompression>,
     /// Name of the environment variable or secret that holds the Azure Storage connection string.
     #[serde(rename = "connection_string_key")]
     pub connection_string_key: Option<String>,
@@ -51,6 +56,7 @@ impl AzureStorageDestination {
         AzureStorageDestination {
             blob_prefix: None,
             buffer: None,
+            compression: None,
             connection_string_key: None,
             container_name,
             id,
@@ -71,6 +77,14 @@ impl AzureStorageDestination {
         value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
     ) -> Self {
         self.buffer = Some(value);
+        self
+    }
+
+    pub fn compression(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineAzureStorageDestinationCompression,
+    ) -> Self {
+        self.compression = Some(value);
         self
     }
 
@@ -109,6 +123,7 @@ impl<'de> Deserialize<'de> for AzureStorageDestination {
                 let mut buffer: Option<
                     crate::datadogV2::model::ObservabilityPipelineBufferOptions,
                 > = None;
+                let mut compression: Option<crate::datadogV2::model::ObservabilityPipelineAzureStorageDestinationCompression> = None;
                 let mut connection_string_key: Option<String> = None;
                 let mut container_name: Option<String> = None;
                 let mut id: Option<String> = None;
@@ -137,6 +152,21 @@ impl<'de> Deserialize<'de> for AzureStorageDestination {
                             if let Some(ref _buffer) = buffer {
                                 match _buffer {
                                     crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "compression" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            compression =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _compression) = compression {
+                                match _compression {
+                                    crate::datadogV2::model::ObservabilityPipelineAzureStorageDestinationCompression::UnparsedObject(_compression) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -187,6 +217,7 @@ impl<'de> Deserialize<'de> for AzureStorageDestination {
                 let content = AzureStorageDestination {
                     blob_prefix,
                     buffer,
+                    compression,
                     connection_string_key,
                     container_name,
                     id,
