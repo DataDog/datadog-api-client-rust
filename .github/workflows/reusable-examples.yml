@@ -21,11 +21,30 @@ on:
 jobs:
   examples:
     runs-on: ubuntu-latest
+    env:
+      CARGO_PROFILE_DEV_DEBUG: line-tables-only
+      CARGO_INCREMENTAL: "0"
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: DataDog/datadog-api-client-rust
           ref: ${{ inputs.target-branch || github.ref }}
+      - name: Free disk space
+        shell: bash
+        run: |
+          echo "Disk before cleanup:"
+          df -h /
+          sudo rm -rf \
+            /usr/share/dotnet \
+            /usr/local/lib/android \
+            /opt/ghc \
+            /usr/local/.ghcup \
+            /opt/hostedtoolcache/CodeQL \
+            /usr/share/swift \
+            /usr/local/share/powershell || true
+          sudo docker image prune --all --force || true
+          echo "Disk after cleanup:"
+          df -h /
       - name: Install Rust
         run: rustup toolchain install ${{ inputs.rust-version }} --profile minimal --no-self-update && rustup default ${{ inputs.rust-version }}
         shell: bash
