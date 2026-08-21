@@ -17,6 +17,15 @@ pub struct DataDeletionResponseItemAttributes {
     /// User who created the deletion request.
     #[serde(rename = "created_by")]
     pub created_by: String,
+    /// A message for the customer regarding the deletion request, if any.
+    #[serde(rename = "customer_message")]
+    pub customer_message: Option<String>,
+    /// Total number of elements to be deleted as displayed to the user.
+    #[serde(rename = "displayed_total")]
+    pub displayed_total: i64,
+    /// Category of the error, if any, for the deletion request.
+    #[serde(rename = "error_category")]
+    pub error_category: Option<String>,
     /// Start of requested time window, milliseconds since Unix epoch.
     #[serde(rename = "from_time")]
     pub from_time: i64,
@@ -61,6 +70,7 @@ impl DataDeletionResponseItemAttributes {
     pub fn new(
         created_at: String,
         created_by: String,
+        displayed_total: i64,
         from_time: i64,
         is_created: bool,
         org_id: i64,
@@ -75,6 +85,9 @@ impl DataDeletionResponseItemAttributes {
         DataDeletionResponseItemAttributes {
             created_at,
             created_by,
+            customer_message: None,
+            displayed_total,
+            error_category: None,
             from_time,
             indexes: None,
             is_created,
@@ -89,6 +102,16 @@ impl DataDeletionResponseItemAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn customer_message(mut self, value: String) -> Self {
+        self.customer_message = Some(value);
+        self
+    }
+
+    pub fn error_category(mut self, value: String) -> Self {
+        self.error_category = Some(value);
+        self
     }
 
     pub fn indexes(mut self, value: Vec<String>) -> Self {
@@ -124,6 +147,9 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
             {
                 let mut created_at: Option<String> = None;
                 let mut created_by: Option<String> = None;
+                let mut customer_message: Option<String> = None;
+                let mut displayed_total: Option<i64> = None;
+                let mut error_category: Option<String> = None;
                 let mut from_time: Option<i64> = None;
                 let mut indexes: Option<Vec<String>> = None;
                 let mut is_created: Option<bool> = None;
@@ -148,6 +174,24 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                         }
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customer_message" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            customer_message =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "displayed_total" => {
+                            displayed_total =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "error_category" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            error_category =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "from_time" => {
                             from_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -196,6 +240,8 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
+                let displayed_total =
+                    displayed_total.ok_or_else(|| M::Error::missing_field("displayed_total"))?;
                 let from_time = from_time.ok_or_else(|| M::Error::missing_field("from_time"))?;
                 let is_created = is_created.ok_or_else(|| M::Error::missing_field("is_created"))?;
                 let org_id = org_id.ok_or_else(|| M::Error::missing_field("org_id"))?;
@@ -212,6 +258,9 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                 let content = DataDeletionResponseItemAttributes {
                     created_at,
                     created_by,
+                    customer_message,
+                    displayed_total,
+                    error_category,
                     from_time,
                     indexes,
                     is_created,
