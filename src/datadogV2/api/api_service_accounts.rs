@@ -14,7 +14,7 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListServiceAccountAccessTokensOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -27,7 +27,7 @@ pub struct ListServiceAccountAccessTokensOptionalParams {
 }
 
 impl ListServiceAccountAccessTokensOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -55,7 +55,7 @@ impl ListServiceAccountAccessTokensOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListServiceAccountApplicationKeysOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -72,7 +72,7 @@ pub struct ListServiceAccountApplicationKeysOptionalParams {
 }
 
 impl ListServiceAccountApplicationKeysOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self

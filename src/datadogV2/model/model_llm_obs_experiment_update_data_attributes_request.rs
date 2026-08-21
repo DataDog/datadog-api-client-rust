@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for updating an LLM Observability experiment.
+/// Attributes for updating an Agent Observability experiment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -26,7 +26,7 @@ pub struct LLMObsExperimentUpdateDataAttributesRequest {
     /// Updated name of the experiment.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// Execution status of an LLM Observability experiment.
+    /// Execution status of an Agent Observability experiment.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::LLMObsExperimentStatus>,
     #[serde(flatten)]

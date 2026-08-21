@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for a flattened LLM Observability prompt version returned for SDK consumption.
+/// Data object for a flattened Agent Observability prompt version returned for SDK consumption.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,7 +17,7 @@ pub struct LLMObsPromptSDKData {
     /// Unique identifier of the prompt.
     #[serde(rename = "id")]
     pub id: String,
-    /// Resource type of an LLM Observability prompt.
+    /// Resource type of an Agent Observability prompt.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsPromptType,
     #[serde(flatten)]

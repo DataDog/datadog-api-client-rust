@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for restoring an LLM Observability dataset to a previous version.
+/// Data object for restoring an Agent Observability dataset to a previous version.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsDatasetRestoreVersionDataRequest {
-    /// Attributes for restoring an LLM Observability dataset to a previous version.
+    /// Attributes for restoring an Agent Observability dataset to a previous version.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsDatasetRestoreVersionDataAttributesRequest,
     /// Unique identifier of the dataset to restore.
     #[serde(rename = "id")]
     pub id: String,
-    /// Resource type of an LLM Observability dataset.
+    /// Resource type of an Agent Observability dataset.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsDatasetType,
     #[serde(flatten)]

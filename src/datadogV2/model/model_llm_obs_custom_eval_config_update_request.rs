@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request to create or update a custom LLM Observability evaluator configuration.
+/// Request to create or update a custom Agent Observability evaluator configuration.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsCustomEvalConfigUpdateRequest {
-    /// Data object for creating or updating a custom LLM Observability evaluator configuration.
+    /// Data object for creating or updating a custom Agent Observability evaluator configuration.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsCustomEvalConfigUpdateData,
     #[serde(flatten)]

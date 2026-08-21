@@ -579,22 +579,22 @@ pub struct UsageSummaryDateOrg {
     /// Shows the 99th percentile of all IoT devices over all hours in the current date for the given org.
     #[serde(rename = "iot_device_top99p_sum")]
     pub iot_device_top99p_sum: Option<i64>,
-    /// Shows the sum of all LLM Observability 15-day retention spans over all hours in the current date for the given org.
+    /// Shows the sum of all Agent Observability 15-day retention spans over all hours in the current date for the given org.
     #[serde(rename = "llm_observability_15day_retention_spans_sum")]
     pub llm_observability_15day_retention_spans_sum: Option<i64>,
-    /// Shows the sum of all LLM Observability 30-day retention spans over all hours in the current date for the given org.
+    /// Shows the sum of all Agent Observability 30-day retention spans over all hours in the current date for the given org.
     #[serde(rename = "llm_observability_30day_retention_spans_sum")]
     pub llm_observability_30day_retention_spans_sum: Option<i64>,
-    /// Shows the sum of all LLM Observability 60-day retention spans over all hours in the current date for the given org.
+    /// Shows the sum of all Agent Observability 60-day retention spans over all hours in the current date for the given org.
     #[serde(rename = "llm_observability_60day_retention_spans_sum")]
     pub llm_observability_60day_retention_spans_sum: Option<i64>,
-    /// Shows the sum of all LLM Observability 90-day retention spans over all hours in the current date for the given org.
+    /// Shows the sum of all Agent Observability 90-day retention spans over all hours in the current date for the given org.
     #[serde(rename = "llm_observability_90day_retention_spans_sum")]
     pub llm_observability_90day_retention_spans_sum: Option<i64>,
-    /// Shows the sum of all LLM Observability minimum spend over all hours in the current date for the given org.
+    /// Shows the sum of all Agent Observability minimum spend over all hours in the current date for the given org.
     #[serde(rename = "llm_observability_min_spend_sum")]
     pub llm_observability_min_spend_sum: Option<i64>,
-    /// Shows the sum of all LLM observability sessions over all hours in the current date for the given org.
+    /// Shows the sum of all Agent observability sessions over all hours in the current date for the given org.
     #[serde(rename = "llm_observability_sum")]
     pub llm_observability_sum: Option<i64>,
     /// Shows the sum of all Logs Archive Search scanned data over all hours in the current date for the given org.

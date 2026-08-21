@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing a single LLM Observability experiment.
+/// Response containing a single Agent Observability experiment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsExperimentResponse {
-    /// Data object for an LLM Observability experiment.
+    /// Data object for an Agent Observability experiment.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsExperimentDataResponse,
     #[serde(flatten)]

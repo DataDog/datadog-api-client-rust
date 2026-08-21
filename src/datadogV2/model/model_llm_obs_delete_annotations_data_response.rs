@@ -17,7 +17,7 @@ pub struct LLMObsDeleteAnnotationsDataResponse {
     /// The annotation queue ID.
     #[serde(rename = "id")]
     pub id: String,
-    /// Resource type for LLM Observability annotations.
+    /// Resource type for Agent Observability annotations.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsAnnotationsType,
     #[serde(flatten)]

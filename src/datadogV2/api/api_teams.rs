@@ -17,7 +17,7 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetTeamMembershipsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -28,7 +28,7 @@ pub struct GetTeamMembershipsOptionalParams {
 }
 
 impl GetTeamMembershipsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -54,7 +54,7 @@ impl GetTeamMembershipsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListMemberTeamsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -63,7 +63,7 @@ pub struct ListMemberTeamsOptionalParams {
 }
 
 impl ListMemberTeamsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -84,7 +84,7 @@ impl ListMemberTeamsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListTeamConnectionsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -99,7 +99,7 @@ pub struct ListTeamConnectionsOptionalParams {
 }
 
 impl ListTeamConnectionsOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -137,7 +137,7 @@ impl ListTeamConnectionsOptionalParams {
 pub struct ListTeamHierarchyLinksOptionalParams {
     /// Specific page number to return.
     pub page_number: Option<i64>,
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Filter by parent team ID
     pub filter_parent_team: Option<String>,
@@ -151,7 +151,7 @@ impl ListTeamHierarchyLinksOptionalParams {
         self.page_number = Some(value);
         self
     }
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -174,7 +174,7 @@ impl ListTeamHierarchyLinksOptionalParams {
 pub struct ListTeamsOptionalParams {
     /// Specific page number to return.
     pub page_number: Option<i64>,
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specifies the order of the returned teams
     pub sort: Option<crate::datadogV2::model::ListTeamsSort>,
@@ -194,7 +194,7 @@ impl ListTeamsOptionalParams {
         self.page_number = Some(value);
         self
     }
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self

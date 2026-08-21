@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for an LLM Observability project.
+/// Data object for an Agent Observability project.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsProjectDataResponse {
-    /// Attributes of an LLM Observability project.
+    /// Attributes of an Agent Observability project.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsProjectDataAttributesResponse,
     /// Unique identifier of the project.
     #[serde(rename = "id")]
     pub id: String,
-    /// Resource type of an LLM Observability project.
+    /// Resource type of an Agent Observability project.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsProjectType,
     #[serde(flatten)]

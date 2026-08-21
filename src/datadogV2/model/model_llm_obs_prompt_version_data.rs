@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for a specific version of an LLM Observability prompt.
+/// Data object for a specific version of an Agent Observability prompt.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPromptVersionData {
-    /// Attributes of a specific version of an LLM Observability prompt.
+    /// Attributes of a specific version of an Agent Observability prompt.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsPromptVersionDataAttributes,
     /// Unique identifier of the prompt version.
     #[serde(rename = "id")]
     pub id: String,
-    /// Resource type of an LLM Observability prompt version.
+    /// Resource type of an Agent Observability prompt version.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsPromptVersionType,
     #[serde(flatten)]

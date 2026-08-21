@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object of an LLM Observability patterns clustered points response.
+/// Data object of an Agent Observability patterns clustered points response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPatternsClusteredPointsResponseData {
-    /// Attributes of an LLM Observability patterns clustered points response.
+    /// Attributes of an Agent Observability patterns clustered points response.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsPatternsClusteredPointsResponseAttributes,
     /// Identifier of the topic the points belong to.
     #[serde(rename = "id")]
     pub id: String,
-    /// Resource type of an LLM Observability patterns clustered points response.
+    /// Resource type of an Agent Observability patterns clustered points response.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsPatternsClusteredPointsType,
     #[serde(flatten)]

@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for updating an LLM Observability prompt.
+/// Data object for updating an Agent Observability prompt.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsUpdatePromptData {
-    /// Attributes for updating an LLM Observability prompt. At least one of `title` or `description` must be provided; both attributes are optional individually.
+    /// Attributes for updating an Agent Observability prompt. At least one of `title` or `description` must be provided; both attributes are optional individually.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsUpdatePromptDataAttributes,
-    /// Resource type of an LLM Observability prompt.
+    /// Resource type of an Agent Observability prompt.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsPromptType,
     #[serde(flatten)]

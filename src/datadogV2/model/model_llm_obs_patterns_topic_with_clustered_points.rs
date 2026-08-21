@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A topic discovered by an LLM Observability patterns run, including the
+/// A topic discovered by an Agent Observability patterns run, including the
 /// clustered points attached to leaf topics.
 #[non_exhaustive]
 #[skip_serializing_none]

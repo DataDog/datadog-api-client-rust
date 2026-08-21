@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for creating an LLM Observability experiment.
+/// Data object for creating an Agent Observability experiment.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsExperimentDataRequest {
-    /// Attributes for creating an LLM Observability experiment.
+    /// Attributes for creating an Agent Observability experiment.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsExperimentDataAttributesRequest,
-    /// Resource type of an LLM Observability experiment.
+    /// Resource type of an Agent Observability experiment.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsExperimentType,
     #[serde(flatten)]

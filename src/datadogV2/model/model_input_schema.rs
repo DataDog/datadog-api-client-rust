@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A list of input parameters for the workflow. These can be used as dynamic runtime values in your workflow.
+/// A list of input parameters for the workflow. Input parameters are available under the `Trigger` object and can be referenced in workflow steps using `{{ Trigger.<parameter_name> }}`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

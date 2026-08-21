@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for deleting records from an LLM Observability dataset.
+/// Data object for deleting records from an Agent Observability dataset.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsDeleteDatasetRecordsDataRequest {
-    /// Attributes for deleting records from an LLM Observability dataset.
+    /// Attributes for deleting records from an Agent Observability dataset.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsDeleteDatasetRecordsDataAttributesRequest,
-    /// Resource type of LLM Observability dataset records.
+    /// Resource type of Agent Observability dataset records.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsRecordType,
     #[serde(flatten)]

@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for creating an LLM Observability annotation queue.
+/// Data object for creating an Agent Observability annotation queue.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsAnnotationQueueDataRequest {
-    /// Attributes for creating an LLM Observability annotation queue.
+    /// Attributes for creating an Agent Observability annotation queue.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsAnnotationQueueDataAttributesRequest,
-    /// Resource type of an LLM Observability annotation queue.
+    /// Resource type of an Agent Observability annotation queue.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsAnnotationQueueType,
     #[serde(flatten)]

@@ -269,10 +269,10 @@ pub struct MonthlyUsageAttributionValues {
     /// The Serverless APM usage by tag(s).
     #[serde(rename = "lambda_traced_invocations_usage")]
     pub lambda_traced_invocations_usage: Option<f64>,
-    /// The percentage of LLM Observability usage by tag(s).
+    /// The percentage of Agent Observability usage by tag(s).
     #[serde(rename = "llm_observability_percentage")]
     pub llm_observability_percentage: Option<f64>,
-    /// The LLM Observability usage by tag(s).
+    /// The Agent Observability usage by tag(s).
     #[serde(rename = "llm_observability_usage")]
     pub llm_observability_usage: Option<f64>,
     /// The percentage of LLM Spans usage by tag(s).

@@ -14,7 +14,7 @@ pub struct LLMObsExperimentEventsDataRequest {
     /// Attributes for pushing experiment events including spans and metrics.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsExperimentEventsDataAttributesRequest,
-    /// Resource type for LLM Observability experiment events.
+    /// Resource type for Agent Observability experiment events.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsEventType,
     #[serde(flatten)]

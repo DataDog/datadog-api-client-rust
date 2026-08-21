@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Filter criteria for an LLM Observability span search.
+/// Filter criteria for an Agent Observability span search.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,7 +17,7 @@ pub struct LLMObsSpanFilter {
     /// Filter by ML application name.
     #[serde(rename = "ml_app")]
     pub ml_app: Option<String>,
-    /// Search query using LLM Observability query syntax. Supports attribute filters using the field:value syntax (e.g. session_id, trace_id, ml_app, meta.span.kind). When provided, structured field filters (`span_id`, `trace_id`, etc.) are ignored.
+    /// Search query using Agent Observability query syntax. Supports attribute filters using the field:value syntax (e.g. session_id, trace_id, ml_app, meta.span.kind). When provided, structured field filters (`span_id`, `trace_id`, etc.) are ignored.
     #[serde(rename = "query")]
     pub query: Option<String>,
     /// Filter by exact span ID.

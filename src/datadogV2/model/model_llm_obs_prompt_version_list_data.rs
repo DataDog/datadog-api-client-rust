@@ -17,7 +17,7 @@ pub struct LLMObsPromptVersionListData {
     /// Unique identifier of the prompt version.
     #[serde(rename = "id")]
     pub id: String,
-    /// Resource type of an LLM Observability prompt version.
+    /// Resource type of an Agent Observability prompt version.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsPromptVersionType,
     #[serde(flatten)]

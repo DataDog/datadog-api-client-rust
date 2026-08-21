@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A metric associated with an LLM Observability experiment span.
+/// A metric associated with an Agent Observability experiment span.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsExperimentMetric {
-    /// Assessment result for an LLM Observability experiment metric.
+    /// Assessment result for an Agent Observability experiment metric.
     #[serde(rename = "assessment")]
     pub assessment: Option<crate::datadogV2::model::LLMObsMetricAssessment>,
     /// Boolean value. Used when `metric_type` is `boolean`.
@@ -32,7 +32,7 @@ pub struct LLMObsExperimentMetric {
     /// Arbitrary metadata associated with the metric.
     #[serde(rename = "metadata")]
     pub metadata: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// Type of metric recorded for an LLM Observability experiment.
+    /// Type of metric recorded for an Agent Observability experiment.
     #[serde(rename = "metric_type")]
     pub metric_type: crate::datadogV2::model::LLMObsMetricScoreType,
     /// Human-readable reasoning for the metric value.

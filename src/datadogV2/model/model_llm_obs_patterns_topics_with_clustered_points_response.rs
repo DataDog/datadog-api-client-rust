@@ -7,12 +7,12 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// Response containing the topics, and the clustered points of their leaf topics,
-/// discovered by an LLM Observability patterns run.
+/// discovered by an Agent Observability patterns run.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPatternsTopicsWithClusteredPointsResponse {
-    /// Data object of an LLM Observability patterns topics-with-clustered-points response.
+    /// Data object of an Agent Observability patterns topics-with-clustered-points response.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsPatternsTopicsWithClusteredPointsResponseData,
     #[serde(flatten)]

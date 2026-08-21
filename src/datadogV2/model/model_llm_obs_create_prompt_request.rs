@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request to create an LLM Observability prompt.
+/// Request to create an Agent Observability prompt.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsCreatePromptRequest {
-    /// Data object for creating an LLM Observability prompt.
+    /// Data object for creating an Agent Observability prompt.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::LLMObsCreatePromptData,
     #[serde(flatten)]

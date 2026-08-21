@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing a list of LLM Observability prompts.
+/// Response containing a list of Agent Observability prompts.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPromptsResponse {
-    /// List of LLM Observability prompts.
+    /// List of Agent Observability prompts.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::LLMObsPromptData>,
     #[serde(flatten)]

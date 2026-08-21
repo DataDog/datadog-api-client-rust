@@ -587,22 +587,22 @@ pub struct UsageSummaryResponse {
     /// Shows the sum of all live logs bytes ingested over all hours in the current month for all organizations (data available as of December 1, 2020).
     #[serde(rename = "live_ingested_bytes_agg_sum")]
     pub live_ingested_bytes_agg_sum: Option<i64>,
-    /// Shows the sum of all LLM Observability 15-day retention spans over all hours in the current month for all organizations.
+    /// Shows the sum of all Agent Observability 15-day retention spans over all hours in the current month for all organizations.
     #[serde(rename = "llm_observability_15day_retention_spans_agg_sum")]
     pub llm_observability_15day_retention_spans_agg_sum: Option<i64>,
-    /// Shows the sum of all LLM Observability 30-day retention spans over all hours in the current month for all organizations.
+    /// Shows the sum of all Agent Observability 30-day retention spans over all hours in the current month for all organizations.
     #[serde(rename = "llm_observability_30day_retention_spans_agg_sum")]
     pub llm_observability_30day_retention_spans_agg_sum: Option<i64>,
-    /// Shows the sum of all LLM Observability 60-day retention spans over all hours in the current month for all organizations.
+    /// Shows the sum of all Agent Observability 60-day retention spans over all hours in the current month for all organizations.
     #[serde(rename = "llm_observability_60day_retention_spans_agg_sum")]
     pub llm_observability_60day_retention_spans_agg_sum: Option<i64>,
-    /// Shows the sum of all LLM Observability 90-day retention spans over all hours in the current month for all organizations.
+    /// Shows the sum of all Agent Observability 90-day retention spans over all hours in the current month for all organizations.
     #[serde(rename = "llm_observability_90day_retention_spans_agg_sum")]
     pub llm_observability_90day_retention_spans_agg_sum: Option<i64>,
-    /// Sum of all LLM observability sessions for all hours in the current month for all organizations.
+    /// Sum of all Agent observability sessions for all hours in the current month for all organizations.
     #[serde(rename = "llm_observability_agg_sum")]
     pub llm_observability_agg_sum: Option<i64>,
-    /// Minimum spend for LLM observability sessions for all hours in the current month for all organizations.
+    /// Minimum spend for Agent observability sessions for all hours in the current month for all organizations.
     #[serde(rename = "llm_observability_min_spend_agg_sum")]
     pub llm_observability_min_spend_agg_sum: Option<i64>,
     /// Shows the sum of all Logs Archive Search scanned data over all hours in the current month for all organizations.

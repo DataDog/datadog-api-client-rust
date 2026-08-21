@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for an LLM Observability spans search request.
+/// Data object for an Agent Observability spans search request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsSearchSpansRequestData {
-    /// Attributes of an LLM Observability spans search request.
+    /// Attributes of an Agent Observability spans search request.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsSearchSpansRequestAttributes,
-    /// Resource type for an LLM Observability spans search request.
+    /// Resource type for an Agent Observability spans search request.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::LLMObsSearchSpansRequestType,
     #[serde(flatten)]
