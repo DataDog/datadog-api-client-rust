@@ -201,8 +201,8 @@ pub struct ApiInstances {
         Option<datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI>,
     pub v2_api_rum_config: Option<datadogV2::api_rum_config::RUMConfigAPI>,
     pub v2_api_rum_metrics: Option<datadogV2::api_rum_metrics::RumMetricsAPI>,
-    pub v2_api_rum_retention_quota:
-        Option<datadogV2::api_rum_retention_quota::RUMRetentionQuotaAPI>,
+    pub v2_api_rum_retention_quotas:
+        Option<datadogV2::api_rum_retention_quotas::RUMRetentionQuotasAPI>,
     pub v2_api_rum_operations: Option<datadogV2::api_rum_operations::RUMOperationsAPI>,
     pub v2_api_rum_insights: Option<datadogV2::api_rum_insights::RUMInsightsAPI>,
     pub v2_api_rum_replay_playlists:
@@ -1320,9 +1320,9 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "RUMRetentionQuota" => {
-            world.api_instances.v2_api_rum_retention_quota = Some(
-                datadogV2::api_rum_retention_quota::RUMRetentionQuotaAPI::with_client_and_config(
+        "RUMRetentionQuotas" => {
+            world.api_instances.v2_api_rum_retention_quotas = Some(
+                datadogV2::api_rum_retention_quotas::RUMRetentionQuotasAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -56916,7 +56916,7 @@ fn test_v2_update_rum_metric(world: &mut DatadogWorld, _parameters: &HashMap<Str
 fn test_v2_delete_rum_quota_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_rum_retention_quota
+        .v2_api_rum_retention_quotas
         .as_ref()
         .expect("api instance not found");
     let scope_type =
@@ -56944,7 +56944,7 @@ fn test_v2_delete_rum_quota_config(world: &mut DatadogWorld, _parameters: &HashM
 fn test_v2_get_rum_quota_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_rum_retention_quota
+        .v2_api_rum_retention_quotas
         .as_ref()
         .expect("api instance not found");
     let scope_type =
@@ -56971,7 +56971,7 @@ fn test_v2_get_rum_quota_config(world: &mut DatadogWorld, _parameters: &HashMap<
 fn test_v2_upsert_rum_quota_config(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_rum_retention_quota
+        .v2_api_rum_retention_quotas
         .as_ref()
         .expect("api instance not found");
     let scope_type =

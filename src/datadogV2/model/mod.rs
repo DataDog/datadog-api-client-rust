@@ -10740,8 +10740,6 @@ pub mod model_rum_retention_quota_config_data;
 pub use self::model_rum_retention_quota_config_data::RumRetentionQuotaConfigData;
 pub mod model_rum_retention_quota_config_attributes;
 pub use self::model_rum_retention_quota_config_attributes::RumRetentionQuotaConfigAttributes;
-pub mod model_rum_retention_quota_adaptive_config;
-pub use self::model_rum_retention_quota_adaptive_config::RumRetentionQuotaAdaptiveConfig;
 pub mod model_rum_retention_quota_custom_config;
 pub use self::model_rum_retention_quota_custom_config::RumRetentionQuotaCustomConfig;
 pub mod model_rum_retention_quota_reached_action;
