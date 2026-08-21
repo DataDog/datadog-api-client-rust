@@ -19,11 +19,13 @@ use std::io::Write;
 pub struct EstimateMetricsOutputSeriesOptionalParams {
     /// Comma-separated list of tag keys that the metric is configured to query with. For example: `filter[groups]=app,host`.
     pub filter_groups: Option<String>,
+    /// When `true`, `filter[groups]` is treated as an exclude list instead of an include list. Defaults to `false`.
+    pub filter_exclude_tags_mode: Option<bool>,
     /// The number of hours of look back (from now) to estimate cardinality with. If unspecified, it defaults to 0 hours.
     pub filter_hours_ago: Option<i32>,
     /// Deprecated. Number of aggregations has no impact on volume.
     pub filter_num_aggregations: Option<i32>,
-    /// A boolean, for distribution metrics only, to estimate cardinality if the metric includes additional percentile aggregators.
+    /// Deprecated. This query parameter has no effect on the estimate.
     pub filter_pct: Option<bool>,
     /// A window, in hours, from the look back to estimate cardinality with. The minimum and default is 1 hour.
     pub filter_timespan_h: Option<i32>,
@@ -33,6 +35,11 @@ impl EstimateMetricsOutputSeriesOptionalParams {
     /// Comma-separated list of tag keys that the metric is configured to query with. For example: `filter[groups]=app,host`.
     pub fn filter_groups(mut self, value: String) -> Self {
         self.filter_groups = Some(value);
+        self
+    }
+    /// When `true`, `filter[groups]` is treated as an exclude list instead of an include list. Defaults to `false`.
+    pub fn filter_exclude_tags_mode(mut self, value: bool) -> Self {
+        self.filter_exclude_tags_mode = Some(value);
         self
     }
     /// The number of hours of look back (from now) to estimate cardinality with. If unspecified, it defaults to 0 hours.
@@ -45,7 +52,7 @@ impl EstimateMetricsOutputSeriesOptionalParams {
         self.filter_num_aggregations = Some(value);
         self
     }
-    /// A boolean, for distribution metrics only, to estimate cardinality if the metric includes additional percentile aggregators.
+    /// Deprecated. This query parameter has no effect on the estimate.
     pub fn filter_pct(mut self, value: bool) -> Self {
         self.filter_pct = Some(value);
         self
@@ -2106,6 +2113,7 @@ impl MetricsAPI {
 
         // unbox and build optional parameters
         let filter_groups = params.filter_groups;
+        let filter_exclude_tags_mode = params.filter_exclude_tags_mode;
         let filter_hours_ago = params.filter_hours_ago;
         let filter_num_aggregations = params.filter_num_aggregations;
         let filter_pct = params.filter_pct;
@@ -2124,6 +2132,10 @@ impl MetricsAPI {
         if let Some(ref local_query_param) = filter_groups {
             local_req_builder =
                 local_req_builder.query(&[("filter[groups]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_exclude_tags_mode {
+            local_req_builder = local_req_builder
+                .query(&[("filter[exclude_tags_mode]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_hours_ago {
             local_req_builder =
