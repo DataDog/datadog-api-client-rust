@@ -8,7 +8,6 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RumRetentionQuotaMode {
     CUSTOM,
-    ADAPTIVE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -16,7 +15,6 @@ impl ToString for RumRetentionQuotaMode {
     fn to_string(&self) -> String {
         match self {
             Self::CUSTOM => String::from("custom"),
-            Self::ADAPTIVE => String::from("adaptive"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -42,7 +40,6 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaMode {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "custom" => Self::CUSTOM,
-            "adaptive" => Self::ADAPTIVE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
