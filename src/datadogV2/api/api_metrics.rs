@@ -3973,7 +3973,9 @@ impl MetricsAPI {
     }
 
     /// Query timeseries data across various data sources and
-    /// process the data by applying formulas and functions.
+    /// process the data by applying formulas and functions. Datadog recommends
+    /// using this endpoint over the v1 `/api/v1/query` endpoint for querying
+    /// timeseries data.
     pub async fn query_timeseries_data(
         &self,
         body: crate::datadogV2::model::TimeseriesFormulaQueryRequest,
@@ -3996,7 +3998,9 @@ impl MetricsAPI {
     }
 
     /// Query timeseries data across various data sources and
-    /// process the data by applying formulas and functions.
+    /// process the data by applying formulas and functions. Datadog recommends
+    /// using this endpoint over the v1 `/api/v1/query` endpoint for querying
+    /// timeseries data.
     pub async fn query_timeseries_data_with_http_info(
         &self,
         body: crate::datadogV2::model::TimeseriesFormulaQueryRequest,

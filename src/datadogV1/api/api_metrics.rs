@@ -557,7 +557,9 @@ impl MetricsAPI {
         }
     }
 
-    /// Query timeseries points.
+    /// Query timeseries points. Datadog recommends using the v2
+    /// `/api/v2/query/timeseries` endpoint over this endpoint for
+    /// querying timeseries data.
     pub async fn query_metrics(
         &self,
         from: i64,
@@ -579,7 +581,9 @@ impl MetricsAPI {
         }
     }
 
-    /// Query timeseries points.
+    /// Query timeseries points. Datadog recommends using the v2
+    /// `/api/v2/query/timeseries` endpoint over this endpoint for
+    /// querying timeseries data.
     pub async fn query_metrics_with_http_info(
         &self,
         from: i64,
