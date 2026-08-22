@@ -84,7 +84,7 @@ impl ListScorecardCampaignsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListScorecardOutcomesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific offset to use as the beginning of the returned page.
     pub page_offset: Option<i64>,
@@ -107,7 +107,7 @@ pub struct ListScorecardOutcomesOptionalParams {
 }
 
 impl ListScorecardOutcomesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -163,7 +163,7 @@ impl ListScorecardOutcomesOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListScorecardRulesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific offset to use as the beginning of the returned page.
     pub page_offset: Option<i64>,
@@ -186,7 +186,7 @@ pub struct ListScorecardRulesOptionalParams {
 }
 
 impl ListScorecardRulesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self

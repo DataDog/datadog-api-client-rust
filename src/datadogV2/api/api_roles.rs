@@ -15,7 +15,7 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListRoleUsersOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -28,7 +28,7 @@ pub struct ListRoleUsersOptionalParams {
 }
 
 impl ListRoleUsersOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
@@ -56,7 +56,7 @@ impl ListRoleUsersOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListRolesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub page_size: Option<i64>,
     /// Specific page number to return.
     pub page_number: Option<i64>,
@@ -71,7 +71,7 @@ pub struct ListRolesOptionalParams {
 }
 
 impl ListRolesOptionalParams {
-    /// Size for a given page. The maximum allowed value is 100.
+    /// Number of items to return per page. The maximum allowed value is 100.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
         self
