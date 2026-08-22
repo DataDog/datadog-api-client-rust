@@ -26,12 +26,34 @@ jobs:
         rust-version: ${{ fromJSON(inputs.rust-versions) }}
         platform: ${{ fromJSON(inputs.platforms) }}
     runs-on: ${{ matrix.platform }}
+    env:
+      # Keep file:line in panics while cutting multi-GB debuginfo on this generated crate.
+      CARGO_PROFILE_TEST_DEBUG: line-tables-only
+      CARGO_INCREMENTAL: "0"
     steps:
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: DataDog/datadog-api-client-rust
           ref: ${{ inputs.target-branch || github.ref }}
+      - name: Free disk space
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          echo "Disk before cleanup:"
+          df -h /
+          # ubuntu-latest only guarantees ~14GB free; this crate's debug target can exceed that.
+          sudo rm -rf \
+            /usr/share/dotnet \
+            /usr/local/lib/android \
+            /opt/ghc \
+            /usr/local/.ghcup \
+            /opt/hostedtoolcache/CodeQL \
+            /usr/share/swift \
+            /usr/local/share/powershell || true
+          sudo docker image prune --all --force || true
+          echo "Disk after cleanup:"
+          df -h /
       - name: Install Rust
         id: rust
         run: |
@@ -51,7 +73,6 @@ jobs:
         with:
           path: target
           key: ${{ runner.os }}-cargo-target-${{ steps.rust.outputs.version }}-${{ hashFiles('**/Cargo.toml') }}
-          restore-keys: ${{ runner.os }}-cargo-target-${{ steps.rust.outputs.version }}-
       - name: Compile test binary
         run: cargo test --test main --no-run
         shell: bash
@@ -59,7 +80,13 @@ jobs:
         shell: bash
         run: |
           BINARY=$(find target/debug/deps -name 'main-*' -executable -type f | head -1)
-          cp "$BINARY" test-binary
+          if [ -z "$BINARY" ]; then
+            echo "No compiled test binary found in target/debug/deps"
+            ls -la target/debug/deps || true
+            exit 1
+          fi
+          echo "Staging $BINARY ($(du -h "$BINARY" | cut -f1))"
+          mv "$BINARY" test-binary
       - name: Upload test binary
         uses: actions/upload-artifact@v4
         with:
