@@ -11542,6 +11542,8 @@ pub mod model_scanned_asset_metadata_asset;
 pub use self::model_scanned_asset_metadata_asset::ScannedAssetMetadataAsset;
 pub mod model_scanned_asset_metadata_last_success;
 pub use self::model_scanned_asset_metadata_last_success::ScannedAssetMetadataLastSuccess;
+pub mod model_scanned_asset_metadata_type;
+pub use self::model_scanned_asset_metadata_type::ScannedAssetMetadataType;
 pub mod model_io_c_triage_state;
 pub use self::model_io_c_triage_state::IoCTriageState;
 pub mod model_io_c_explorer_list_response;
