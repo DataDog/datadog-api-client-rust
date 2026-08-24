@@ -10,7 +10,7 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// DeleteRumQuotaConfigError is a struct for typed errors of method [`RUMRetentionQuotaAPI::delete_rum_quota_config`]
+/// DeleteRumQuotaConfigError is a struct for typed errors of method [`RUMRetentionQuotasAPI::delete_rum_quota_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteRumQuotaConfigError {
@@ -19,7 +19,7 @@ pub enum DeleteRumQuotaConfigError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetRumQuotaConfigError is a struct for typed errors of method [`RUMRetentionQuotaAPI::get_rum_quota_config`]
+/// GetRumQuotaConfigError is a struct for typed errors of method [`RUMRetentionQuotasAPI::get_rum_quota_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetRumQuotaConfigError {
@@ -28,7 +28,7 @@ pub enum GetRumQuotaConfigError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpsertRumQuotaConfigError is a struct for typed errors of method [`RUMRetentionQuotaAPI::upsert_rum_quota_config`]
+/// UpsertRumQuotaConfigError is a struct for typed errors of method [`RUMRetentionQuotasAPI::upsert_rum_quota_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpsertRumQuotaConfigError {
@@ -39,18 +39,18 @@ pub enum UpsertRumQuotaConfigError {
 
 /// Manage RUM retention quota configurations for your organization's RUM applications.
 #[derive(Debug, Clone)]
-pub struct RUMRetentionQuotaAPI {
+pub struct RUMRetentionQuotasAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for RUMRetentionQuotaAPI {
+impl Default for RUMRetentionQuotasAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl RUMRetentionQuotaAPI {
+impl RUMRetentionQuotasAPI {
     pub fn new() -> Self {
         Self::default()
     }
