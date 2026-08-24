@@ -11,14 +11,11 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumRetentionQuotaConfigAttributes {
-    /// The configuration used when `mode` is `adaptive`.
-    #[serde(rename = "adaptive")]
-    pub adaptive: Option<crate::datadogV2::model::RumRetentionQuotaAdaptiveConfig>,
     /// The configuration used when `mode` is `custom`.
     #[serde(rename = "custom")]
     pub custom: Option<crate::datadogV2::model::RumRetentionQuotaCustomConfig>,
-    /// The retention quota mode. `custom` enforces a fixed session limit, while
-    /// `adaptive` dynamically adjusts retention.
+    /// The retention quota mode. `custom` enforces a fixed session limit.
+    /// `custom` is the only supported mode.
     #[serde(rename = "mode")]
     pub mode: crate::datadogV2::model::RumRetentionQuotaMode,
     /// The ID of the organization the retention quota configuration belongs to.
@@ -43,7 +40,6 @@ impl RumRetentionQuotaConfigAttributes {
         org_id: i64,
     ) -> RumRetentionQuotaConfigAttributes {
         RumRetentionQuotaConfigAttributes {
-            adaptive: None,
             custom: None,
             mode,
             org_id,
@@ -52,14 +48,6 @@ impl RumRetentionQuotaConfigAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn adaptive(
-        mut self,
-        value: crate::datadogV2::model::RumRetentionQuotaAdaptiveConfig,
-    ) -> Self {
-        self.adaptive = Some(value);
-        self
     }
 
     pub fn custom(mut self, value: crate::datadogV2::model::RumRetentionQuotaCustomConfig) -> Self {
@@ -103,8 +91,6 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut adaptive: Option<crate::datadogV2::model::RumRetentionQuotaAdaptiveConfig> =
-                    None;
                 let mut custom: Option<crate::datadogV2::model::RumRetentionQuotaCustomConfig> =
                     None;
                 let mut mode: Option<crate::datadogV2::model::RumRetentionQuotaMode> = None;
@@ -119,12 +105,6 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "adaptive" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            adaptive = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "custom" => {
                             if v.is_null() {
                                 continue;
@@ -168,7 +148,6 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigAttributes {
                 let org_id = org_id.ok_or_else(|| M::Error::missing_field("org_id"))?;
 
                 let content = RumRetentionQuotaConfigAttributes {
-                    adaptive,
                     custom,
                     mode,
                     org_id,
