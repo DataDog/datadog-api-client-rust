@@ -14,15 +14,15 @@ pub struct ScaRequestDataAttributesDependenciesItemsLocationsItems {
     /// A range within a file defined by a start and end position, along with the file name.
     #[serde(rename = "block")]
     pub block: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition>,
-    /// A range within a file defined by a start and end position, along with the file name.
-    #[serde(rename = "name")]
-    pub name: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition>,
-    /// A range within a file defined by a start and end position, along with the file name.
-    #[serde(rename = "namespace")]
-    pub namespace: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition>,
-    /// A range within a file defined by a start and end position, along with the file name.
-    #[serde(rename = "version")]
-    pub version: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition>,
+    /// A nullable range within a file defined by a start and end position, along with the file name.
+    #[serde(rename = "name", default, with = "::serde_with::rust::double_option")]
+    pub name: Option<Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition>>,
+    /// A nullable range within a file defined by a start and end position, along with the file name.
+    #[serde(rename = "namespace", default, with = "::serde_with::rust::double_option")]
+    pub namespace: Option<Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition>>,
+    /// A nullable range within a file defined by a start and end position, along with the file name.
+    #[serde(rename = "version", default, with = "::serde_with::rust::double_option")]
+    pub version: Option<Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -52,7 +52,7 @@ impl ScaRequestDataAttributesDependenciesItemsLocationsItems {
 
     pub fn name(
         mut self,
-        value: crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition,
+        value: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition>,
     ) -> Self {
         self.name = Some(value);
         self
@@ -60,7 +60,7 @@ impl ScaRequestDataAttributesDependenciesItemsLocationsItems {
 
     pub fn namespace(
         mut self,
-        value: crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition,
+        value: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition>,
     ) -> Self {
         self.namespace = Some(value);
         self
@@ -68,7 +68,7 @@ impl ScaRequestDataAttributesDependenciesItemsLocationsItems {
 
     pub fn version(
         mut self,
-        value: crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition,
+        value: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition>,
     ) -> Self {
         self.version = Some(value);
         self
@@ -107,9 +107,9 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributesDependenciesItemsLocation
                 M: MapAccess<'a>,
             {
                 let mut block: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition> = None;
-                let mut name: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition> = None;
-                let mut namespace: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition> = None;
-                let mut version: Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition> = None;
+                let mut name: Option<Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition>> = None;
+                let mut namespace: Option<Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition>> = None;
+                let mut version: Option<Option<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -125,21 +125,12 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributesDependenciesItemsLocation
                             block = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "namespace" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             namespace = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "version" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
