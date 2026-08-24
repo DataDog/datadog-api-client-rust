@@ -97,7 +97,7 @@ impl ServiceLevelObjectiveCorrectionsAPI {
     }
     pub fn with_config(config: datadog::Configuration) -> Self {
         let reqwest_client_builder = {
-            let builder = reqwest::Client::builder();
+            let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
                 builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))

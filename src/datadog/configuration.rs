@@ -3,6 +3,7 @@
 // Copyright 2019-Present Datadog, Inc.
 use lazy_static::lazy_static;
 use log::warn;
+use reqwest::header::{HeaderMap, HeaderValue};
 use std::collections::HashMap;
 use std::env;
 
@@ -53,6 +54,7 @@ pub struct Configuration {
     pub proxy_url: Option<String>,
     pub enable_retry: bool,
     pub max_retries: u32,
+    pub(crate) is_iac: bool,
 }
 
 impl Configuration {
@@ -116,6 +118,19 @@ impl Configuration {
     pub fn set_retry(&mut self, enable_retry: bool, max_retries: u32) {
         self.enable_retry = enable_retry;
         self.max_retries = max_retries;
+    }
+
+    pub fn set_is_iac(&mut self, is_iac: bool) {
+        self.is_iac = is_iac;
+    }
+
+    pub(crate) fn apply_headers(&self, builder: reqwest::ClientBuilder) -> reqwest::ClientBuilder {
+        if !self.is_iac {
+            return builder;
+        }
+        let mut default_headers = HeaderMap::new();
+        default_headers.insert(MANAGED_BY_HEADER_NAME, HeaderValue::from_static("iac"));
+        builder.default_headers(default_headers)
     }
 }
 
@@ -947,9 +962,12 @@ impl Default for Configuration {
             proxy_url: None,
             enable_retry: false,
             max_retries: 3,
+            is_iac: false,
         }
     }
 }
+
+pub(crate) const MANAGED_BY_HEADER_NAME: &str = "X-Datadog-Managed-By";
 
 lazy_static! {
     pub static ref DEFAULT_USER_AGENT: String = format!(

@@ -98,7 +98,7 @@ impl {{ structName }} {
     }
     pub fn with_config(config: datadog::Configuration) -> Self {
         let reqwest_client_builder = {
-            let builder = reqwest::Client::builder();
+            let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
                 builder
@@ -397,7 +397,7 @@ impl {{ structName }} {
                 )
             }
         };
-        
+
         // build auth
         {%- set authMethods = operation.security if "security" in operation else openapi.security %}
         {%- if authMethods %}
