@@ -15,23 +15,26 @@ pub struct ScaRequestDataAttributesDependenciesItems {
     #[serde(rename = "exclusions")]
     pub exclusions: Option<Vec<String>>,
     /// The group or organization namespace of the dependency (e.g., Maven group ID).
-    #[serde(rename = "group")]
-    pub group: Option<String>,
+    #[serde(rename = "group", default, with = "::serde_with::rust::double_option")]
+    pub group: Option<Option<String>>,
     /// Indicates whether this is a development-only dependency not used in production.
     #[serde(rename = "is_dev")]
     pub is_dev: Option<bool>,
     /// Indicates whether this is a direct dependency (as opposed to a transitive one).
-    #[serde(rename = "is_direct")]
-    pub is_direct: Option<bool>,
+    #[serde(rename = "is_direct", default, with = "::serde_with::rust::double_option")]
+    pub is_direct: Option<Option<bool>>,
     /// The programming language ecosystem of this dependency (e.g., java, python, javascript).
     #[serde(rename = "language")]
     pub language: Option<String>,
     /// The list of source file locations where this dependency is declared.
-    #[serde(rename = "locations")]
-    pub locations: Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItems>>,
+    #[serde(rename = "locations", default, with = "::serde_with::rust::double_option")]
+    pub locations: Option<Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItems>>>,
     /// The name of the dependency package.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// Indicates whether dependency details are intentionally opaque.
+    #[serde(rename = "opaque")]
+    pub opaque: Option<bool>,
     /// The package manager responsible for this dependency (e.g., maven, pip, npm).
     #[serde(rename = "package_manager")]
     pub package_manager: Option<String>,
@@ -41,9 +44,21 @@ pub struct ScaRequestDataAttributesDependenciesItems {
     /// Properties describing symbols from this dependency that are reachable in the application code.
     #[serde(rename = "reachable_symbol_properties")]
     pub reachable_symbol_properties: Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsReachableSymbolPropertiesItems>>,
+    /// Indicates whether this dependency requires transitive dependency enrichment.
+    #[serde(rename = "requires_transitive_enrichment")]
+    pub requires_transitive_enrichment: Option<bool>,
+    /// The target framework identifiers associated with this dependency.
+    #[serde(rename = "target_frameworks")]
+    pub target_frameworks: Option<Vec<String>>,
     /// The version of the dependency.
-    #[serde(rename = "version")]
-    pub version: Option<String>,
+    #[serde(rename = "version", default, with = "::serde_with::rust::double_option")]
+    pub version: Option<Option<String>>,
+    /// Indicates whether the version value represents a version constraint.
+    #[serde(rename = "version_constraint")]
+    pub version_constraint: Option<bool>,
+    /// The version range associated with this dependency when a manifest declares a range.
+    #[serde(rename = "version_range")]
+    pub version_range: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -61,10 +76,15 @@ impl ScaRequestDataAttributesDependenciesItems {
             language: None,
             locations: None,
             name: None,
+            opaque: None,
             package_manager: None,
             purl: None,
             reachable_symbol_properties: None,
+            requires_transitive_enrichment: None,
+            target_frameworks: None,
             version: None,
+            version_constraint: None,
+            version_range: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -75,7 +95,7 @@ impl ScaRequestDataAttributesDependenciesItems {
         self
     }
 
-    pub fn group(mut self, value: String) -> Self {
+    pub fn group(mut self, value: Option<String>) -> Self {
         self.group = Some(value);
         self
     }
@@ -85,7 +105,7 @@ impl ScaRequestDataAttributesDependenciesItems {
         self
     }
 
-    pub fn is_direct(mut self, value: bool) -> Self {
+    pub fn is_direct(mut self, value: Option<bool>) -> Self {
         self.is_direct = Some(value);
         self
     }
@@ -97,8 +117,8 @@ impl ScaRequestDataAttributesDependenciesItems {
 
     pub fn locations(
         mut self,
-        value: Vec<
-            crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItems,
+        value: Option<
+            Vec<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItems>,
         >,
     ) -> Self {
         self.locations = Some(value);
@@ -107,6 +127,11 @@ impl ScaRequestDataAttributesDependenciesItems {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn opaque(mut self, value: bool) -> Self {
+        self.opaque = Some(value);
         self
     }
 
@@ -128,8 +153,28 @@ impl ScaRequestDataAttributesDependenciesItems {
         self
     }
 
-    pub fn version(mut self, value: String) -> Self {
+    pub fn requires_transitive_enrichment(mut self, value: bool) -> Self {
+        self.requires_transitive_enrichment = Some(value);
+        self
+    }
+
+    pub fn target_frameworks(mut self, value: Vec<String>) -> Self {
+        self.target_frameworks = Some(value);
+        self
+    }
+
+    pub fn version(mut self, value: Option<String>) -> Self {
         self.version = Some(value);
+        self
+    }
+
+    pub fn version_constraint(mut self, value: bool) -> Self {
+        self.version_constraint = Some(value);
+        self
+    }
+
+    pub fn version_range(mut self, value: String) -> Self {
+        self.version_range = Some(value);
         self
     }
 
@@ -166,16 +211,21 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributesDependenciesItems {
                 M: MapAccess<'a>,
             {
                 let mut exclusions: Option<Vec<String>> = None;
-                let mut group: Option<String> = None;
+                let mut group: Option<Option<String>> = None;
                 let mut is_dev: Option<bool> = None;
-                let mut is_direct: Option<bool> = None;
+                let mut is_direct: Option<Option<bool>> = None;
                 let mut language: Option<String> = None;
-                let mut locations: Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItems>> = None;
+                let mut locations: Option<Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItems>>> = None;
                 let mut name: Option<String> = None;
+                let mut opaque: Option<bool> = None;
                 let mut package_manager: Option<String> = None;
                 let mut purl: Option<String> = None;
                 let mut reachable_symbol_properties: Option<Vec<crate::datadogV2::model::ScaRequestDataAttributesDependenciesItemsReachableSymbolPropertiesItems>> = None;
-                let mut version: Option<String> = None;
+                let mut requires_transitive_enrichment: Option<bool> = None;
+                let mut target_frameworks: Option<Vec<String>> = None;
+                let mut version: Option<Option<String>> = None;
+                let mut version_constraint: Option<bool> = None;
+                let mut version_range: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -191,9 +241,6 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributesDependenciesItems {
                             exclusions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "group" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             group = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "is_dev" => {
@@ -203,9 +250,6 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributesDependenciesItems {
                             is_dev = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "is_direct" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             is_direct = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "language" => {
@@ -215,9 +259,6 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributesDependenciesItems {
                             language = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "locations" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             locations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
@@ -225,6 +266,12 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributesDependenciesItems {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "opaque" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            opaque = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "package_manager" => {
                             if v.is_null() {
@@ -246,11 +293,36 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributesDependenciesItems {
                             reachable_symbol_properties =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "version" => {
+                        "requires_transitive_enrichment" => {
                             if v.is_null() {
                                 continue;
                             }
+                            requires_transitive_enrichment =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "target_frameworks" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            target_frameworks =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "version" => {
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "version_constraint" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            version_constraint =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "version_range" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            version_range =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -268,10 +340,15 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributesDependenciesItems {
                     language,
                     locations,
                     name,
+                    opaque,
                     package_manager,
                     purl,
                     reachable_symbol_properties,
+                    requires_transitive_enrichment,
+                    target_frameworks,
                     version,
+                    version_constraint,
+                    version_range,
                     additional_properties,
                     _unparsed,
                 };
