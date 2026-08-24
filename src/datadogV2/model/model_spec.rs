@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Spec {
-    /// A list of annotations used in the workflow. These are like sticky notes for your workflow!
+    /// Up to 100 text annotations displayed on the workflow canvas.
     #[serde(rename = "annotations")]
     pub annotations: Option<Vec<crate::datadogV2::model::Annotation>>,
     /// A list of connections or connection groups used in the workflow.
