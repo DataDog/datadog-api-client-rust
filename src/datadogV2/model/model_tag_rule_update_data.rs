@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A tag policy resource.
+/// Data object for updating a tag rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagPolicyData {
-    /// The attributes of a tag policy resource.
+pub struct TagRuleUpdateData {
+    /// Mutable attributes of a tag rule. Each field is optional; omitting a field leaves its
+    /// current value unchanged. The `source` of a rule cannot be changed.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::TagPolicyAttributes,
-    /// The unique identifier of the tag policy.
+    pub attributes: Option<crate::datadogV2::model::TagRuleUpdateAttributes>,
+    /// The unique identifier of the tag rule being updated.
     #[serde(rename = "id")]
     pub id: String,
-    /// Related resources for a tag policy. Only present when the corresponding `include` query parameter is supplied.
-    #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::TagPolicyRelationships>,
-    /// JSON:API resource type for a tag policy.
+    /// JSON:API resource type for a tag rule.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::TagPolicyResourceType,
+    pub type_: crate::datadogV2::model::TagRuleResourceType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,24 +28,22 @@ pub struct TagPolicyData {
     pub(crate) _unparsed: bool,
 }
 
-impl TagPolicyData {
+impl TagRuleUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::TagPolicyAttributes,
         id: String,
-        type_: crate::datadogV2::model::TagPolicyResourceType,
-    ) -> TagPolicyData {
-        TagPolicyData {
-            attributes,
+        type_: crate::datadogV2::model::TagRuleResourceType,
+    ) -> TagRuleUpdateData {
+        TagRuleUpdateData {
+            attributes: None,
             id,
-            relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn relationships(mut self, value: crate::datadogV2::model::TagPolicyRelationships) -> Self {
-        self.relationships = Some(value);
+    pub fn attributes(mut self, value: crate::datadogV2::model::TagRuleUpdateAttributes) -> Self {
+        self.attributes = Some(value);
         self
     }
 
@@ -60,14 +56,14 @@ impl TagPolicyData {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPolicyData {
+impl<'de> Deserialize<'de> for TagRuleUpdateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagPolicyDataVisitor;
-        impl<'a> Visitor<'a> for TagPolicyDataVisitor {
-            type Value = TagPolicyData;
+        struct TagRuleUpdateDataVisitor;
+        impl<'a> Visitor<'a> for TagRuleUpdateDataVisitor {
+            type Value = TagRuleUpdateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -77,11 +73,9 @@ impl<'de> Deserialize<'de> for TagPolicyData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::TagPolicyAttributes> = None;
+                let mut attributes: Option<crate::datadogV2::model::TagRuleUpdateAttributes> = None;
                 let mut id: Option<String> = None;
-                let mut relationships: Option<crate::datadogV2::model::TagPolicyRelationships> =
-                    None;
-                let mut type_: Option<crate::datadogV2::model::TagPolicyResourceType> = None;
+                let mut type_: Option<crate::datadogV2::model::TagRuleResourceType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,23 +85,19 @@ impl<'de> Deserialize<'de> for TagPolicyData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "relationships" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            relationships =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::TagPolicyResourceType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::TagRuleResourceType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -121,14 +111,12 @@ impl<'de> Deserialize<'de> for TagPolicyData {
                         }
                     }
                 }
-                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = TagPolicyData {
+                let content = TagRuleUpdateData {
                     attributes,
                     id,
-                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -138,6 +126,6 @@ impl<'de> Deserialize<'de> for TagPolicyData {
             }
         }
 
-        deserializer.deserialize_any(TagPolicyDataVisitor)
+        deserializer.deserialize_any(TagRuleUpdateDataVisitor)
     }
 }

@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TagPolicyInclude {
-    SCORE,
+pub enum TagRuleResourceType {
+    TAG_RULE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TagPolicyInclude {
+impl ToString for TagRuleResourceType {
     fn to_string(&self) -> String {
         match self {
-            Self::SCORE => String::from("score"),
+            Self::TAG_RULE => String::from("tag_rule"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TagPolicyInclude {
+impl Serialize for TagRuleResourceType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,14 +32,14 @@ impl Serialize for TagPolicyInclude {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPolicyInclude {
+impl<'de> Deserialize<'de> for TagRuleResourceType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "score" => Self::SCORE,
+            "tag_rule" => Self::TAG_RULE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

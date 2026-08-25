@@ -11,37 +11,37 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// DeleteTagPolicyOptionalParams is a struct for passing parameters to the method [`TagPoliciesAPI::delete_tag_policy`]
+/// DeleteTagRuleOptionalParams is a struct for passing parameters to the method [`TagRulesAPI::delete_tag_rule`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct DeleteTagPolicyOptionalParams {
-    /// Whether to permanently delete the policy instead of performing a soft delete. Defaults to `false`.
+pub struct DeleteTagRuleOptionalParams {
+    /// Whether to permanently delete the rule instead of performing a soft delete. Defaults to `false`.
     pub hard_delete: Option<bool>,
 }
 
-impl DeleteTagPolicyOptionalParams {
-    /// Whether to permanently delete the policy instead of performing a soft delete. Defaults to `false`.
+impl DeleteTagRuleOptionalParams {
+    /// Whether to permanently delete the rule instead of performing a soft delete. Defaults to `false`.
     pub fn hard_delete(mut self, value: bool) -> Self {
         self.hard_delete = Some(value);
         self
     }
 }
 
-/// GetTagPolicyOptionalParams is a struct for passing parameters to the method [`TagPoliciesAPI::get_tag_policy`]
+/// GetTagRuleOptionalParams is a struct for passing parameters to the method [`TagRulesAPI::get_tag_rule`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct GetTagPolicyOptionalParams {
-    /// Comma-separated list of related resources to include alongside the policy. Currently the only supported value is `score`.
-    pub include: Option<crate::datadogV2::model::TagPolicyInclude>,
+pub struct GetTagRuleOptionalParams {
+    /// Comma-separated list of related resources to include alongside the rule. Currently the only supported value is `score`.
+    pub include: Option<crate::datadogV2::model::TagRuleInclude>,
     /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds.
     pub ts_start: Option<i64>,
     /// End of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Must be in the past and greater than `ts_start`.
     pub ts_end: Option<i64>,
 }
 
-impl GetTagPolicyOptionalParams {
-    /// Comma-separated list of related resources to include alongside the policy. Currently the only supported value is `score`.
-    pub fn include(mut self, value: crate::datadogV2::model::TagPolicyInclude) -> Self {
+impl GetTagRuleOptionalParams {
+    /// Comma-separated list of related resources to include alongside the rule. Currently the only supported value is `score`.
+    pub fn include(mut self, value: crate::datadogV2::model::TagRuleInclude) -> Self {
         self.include = Some(value);
         self
     }
@@ -57,17 +57,17 @@ impl GetTagPolicyOptionalParams {
     }
 }
 
-/// GetTagPolicyScoreOptionalParams is a struct for passing parameters to the method [`TagPoliciesAPI::get_tag_policy_score`]
+/// GetTagRuleScoreOptionalParams is a struct for passing parameters to the method [`TagRulesAPI::get_tag_rule_score`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct GetTagPolicyScoreOptionalParams {
+pub struct GetTagRuleScoreOptionalParams {
     /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds.
     pub ts_start: Option<i64>,
     /// End of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Must be in the past and greater than `ts_start`.
     pub ts_end: Option<i64>,
 }
 
-impl GetTagPolicyScoreOptionalParams {
+impl GetTagRuleScoreOptionalParams {
     /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds.
     pub fn ts_start(mut self, value: i64) -> Self {
         self.ts_start = Some(value);
@@ -80,42 +80,42 @@ impl GetTagPolicyScoreOptionalParams {
     }
 }
 
-/// ListTagPoliciesOptionalParams is a struct for passing parameters to the method [`TagPoliciesAPI::list_tag_policies`]
+/// ListTagRulesOptionalParams is a struct for passing parameters to the method [`TagRulesAPI::list_tag_rules`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct ListTagPoliciesOptionalParams {
-    /// Whether to include policies that are currently disabled. Defaults to `false`.
+pub struct ListTagRulesOptionalParams {
+    /// Whether to include rules that are currently disabled. Defaults to `false`.
     pub include_disabled: Option<bool>,
-    /// Whether to include policies that have been soft-deleted. Defaults to `false`.
+    /// Whether to include rules that have been soft-deleted. Defaults to `false`.
     pub include_deleted: Option<bool>,
-    /// Comma-separated list of related resources to include alongside each policy in the response. Currently the only supported value is `score`.
-    pub include: Option<crate::datadogV2::model::TagPolicyInclude>,
-    /// Restrict the result set to policies whose source matches the given value.
-    pub filter_source: Option<crate::datadogV2::model::TagPolicySource>,
+    /// Comma-separated list of related resources to include alongside each rule in the response. Currently the only supported value is `score`.
+    pub include: Option<crate::datadogV2::model::TagRuleInclude>,
+    /// Restrict the result set to rules whose source matches the given value.
+    pub filter_source: Option<crate::datadogV2::model::TagRuleSource>,
     /// Start of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Defaults to a recent window appropriate for the source.
     pub ts_start: Option<i64>,
     /// End of the time window used for compliance score computation, as a Unix timestamp in milliseconds. Must be in the past and greater than `ts_start`.
     pub ts_end: Option<i64>,
 }
 
-impl ListTagPoliciesOptionalParams {
-    /// Whether to include policies that are currently disabled. Defaults to `false`.
+impl ListTagRulesOptionalParams {
+    /// Whether to include rules that are currently disabled. Defaults to `false`.
     pub fn include_disabled(mut self, value: bool) -> Self {
         self.include_disabled = Some(value);
         self
     }
-    /// Whether to include policies that have been soft-deleted. Defaults to `false`.
+    /// Whether to include rules that have been soft-deleted. Defaults to `false`.
     pub fn include_deleted(mut self, value: bool) -> Self {
         self.include_deleted = Some(value);
         self
     }
-    /// Comma-separated list of related resources to include alongside each policy in the response. Currently the only supported value is `score`.
-    pub fn include(mut self, value: crate::datadogV2::model::TagPolicyInclude) -> Self {
+    /// Comma-separated list of related resources to include alongside each rule in the response. Currently the only supported value is `score`.
+    pub fn include(mut self, value: crate::datadogV2::model::TagRuleInclude) -> Self {
         self.include = Some(value);
         self
     }
-    /// Restrict the result set to policies whose source matches the given value.
-    pub fn filter_source(mut self, value: crate::datadogV2::model::TagPolicySource) -> Self {
+    /// Restrict the result set to rules whose source matches the given value.
+    pub fn filter_source(mut self, value: crate::datadogV2::model::TagRuleSource) -> Self {
         self.filter_source = Some(value);
         self
     }
@@ -131,78 +131,78 @@ impl ListTagPoliciesOptionalParams {
     }
 }
 
-/// CreateTagPolicyError is a struct for typed errors of method [`TagPoliciesAPI::create_tag_policy`]
+/// CreateTagRuleError is a struct for typed errors of method [`TagRulesAPI::create_tag_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateTagPolicyError {
+pub enum CreateTagRuleError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteTagPolicyError is a struct for typed errors of method [`TagPoliciesAPI::delete_tag_policy`]
+/// DeleteTagRuleError is a struct for typed errors of method [`TagRulesAPI::delete_tag_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum DeleteTagPolicyError {
+pub enum DeleteTagRuleError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// GetTagPolicyError is a struct for typed errors of method [`TagPoliciesAPI::get_tag_policy`]
+/// GetTagRuleError is a struct for typed errors of method [`TagRulesAPI::get_tag_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetTagPolicyError {
+pub enum GetTagRuleError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// GetTagPolicyScoreError is a struct for typed errors of method [`TagPoliciesAPI::get_tag_policy_score`]
+/// GetTagRuleScoreError is a struct for typed errors of method [`TagRulesAPI::get_tag_rule_score`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetTagPolicyScoreError {
+pub enum GetTagRuleScoreError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// ListTagPoliciesError is a struct for typed errors of method [`TagPoliciesAPI::list_tag_policies`]
+/// ListTagRulesError is a struct for typed errors of method [`TagRulesAPI::list_tag_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListTagPoliciesError {
+pub enum ListTagRulesError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateTagPolicyError is a struct for typed errors of method [`TagPoliciesAPI::update_tag_policy`]
+/// UpdateTagRuleError is a struct for typed errors of method [`TagRulesAPI::update_tag_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum UpdateTagPolicyError {
+pub enum UpdateTagRuleError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// Tag Policies define rules that govern which tag values are accepted for a given tag key,
-/// scoped to a particular telemetry source (such as logs, spans, or metrics). Policies can be
-/// `blocking` (data not matching the policy is rejected) or `surfacing` (matching data is
-/// highlighted but not blocked). Each policy reports a compliance `score` derived from how
-/// much recent telemetry adheres to the policy.
+/// Tag Rules define rules that govern which tag values are accepted for a given tag key,
+/// scoped to a particular telemetry source (such as logs, spans, or metrics). Rules can be
+/// `blocking` (data not matching the rule is rejected) or `surfacing` (matching data is
+/// highlighted but not blocked). Each rule reports a compliance `score` derived from how
+/// much recent telemetry adheres to the rule.
 #[derive(Debug, Clone)]
-pub struct TagPoliciesAPI {
+pub struct TagRulesAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for TagPoliciesAPI {
+impl Default for TagRulesAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl TagPoliciesAPI {
+impl TagRulesAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -263,15 +263,14 @@ impl TagPoliciesAPI {
         Self { config, client }
     }
 
-    /// Create a new tag policy for the organization. The caller's organization is derived from
+    /// Create a new tag rule for the organization. The caller's organization is derived from
     /// the authenticated user; cross-organization creation is not supported. Fields such as
-    /// `policy_id`, `version`, and the timestamp/audit fields are assigned by the server.
-    pub async fn create_tag_policy(
+    /// `rule_id`, `version`, and the timestamp/audit fields are assigned by the server.
+    pub async fn create_tag_rule(
         &self,
-        body: crate::datadogV2::model::TagPolicyCreateRequest,
-    ) -> Result<crate::datadogV2::model::TagPolicyResponse, datadog::Error<CreateTagPolicyError>>
-    {
-        match self.create_tag_policy_with_http_info(body).await {
+        body: crate::datadogV2::model::TagRuleCreateRequest,
+    ) -> Result<crate::datadogV2::model::TagRuleResponse, datadog::Error<CreateTagRuleError>> {
+        match self.create_tag_rule_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -285,23 +284,23 @@ impl TagPoliciesAPI {
         }
     }
 
-    /// Create a new tag policy for the organization. The caller's organization is derived from
+    /// Create a new tag rule for the organization. The caller's organization is derived from
     /// the authenticated user; cross-organization creation is not supported. Fields such as
-    /// `policy_id`, `version`, and the timestamp/audit fields are assigned by the server.
-    pub async fn create_tag_policy_with_http_info(
+    /// `rule_id`, `version`, and the timestamp/audit fields are assigned by the server.
+    pub async fn create_tag_rule_with_http_info(
         &self,
-        body: crate::datadogV2::model::TagPolicyCreateRequest,
+        body: crate::datadogV2::model::TagRuleCreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagPolicyResponse>,
-        datadog::Error<CreateTagPolicyError>,
+        datadog::ResponseContent<crate::datadogV2::model::TagRuleResponse>,
+        datadog::Error<CreateTagRuleError>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.create_tag_policy";
+        let local_operation_id = "v2.create_tag_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_tag_policy' is not enabled".to_string(),
+                msg: "Operation 'v2.create_tag_rule' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -309,7 +308,7 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag_policies",
+            "{}/api/v2/governance/tag_rules",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -404,8 +403,7 @@ impl TagPoliciesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagPolicyResponse>(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::TagRuleResponse>(&local_content) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -416,7 +414,7 @@ impl TagPoliciesAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTagPolicyError> =
+            let local_entity: Option<CreateTagRuleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -427,38 +425,35 @@ impl TagPoliciesAPI {
         }
     }
 
-    /// Delete a tag policy. By default the policy is soft-deleted so it can be recovered later
+    /// Delete a tag rule. By default the rule is soft-deleted so it can be recovered later
     /// and so that historical score data remains queryable. Pass `hard_delete=true` to remove
-    /// the policy permanently.
-    pub async fn delete_tag_policy(
+    /// the rule permanently.
+    pub async fn delete_tag_rule(
         &self,
-        policy_id: String,
-        params: DeleteTagPolicyOptionalParams,
-    ) -> Result<(), datadog::Error<DeleteTagPolicyError>> {
-        match self
-            .delete_tag_policy_with_http_info(policy_id, params)
-            .await
-        {
+        rule_id: String,
+        params: DeleteTagRuleOptionalParams,
+    ) -> Result<(), datadog::Error<DeleteTagRuleError>> {
+        match self.delete_tag_rule_with_http_info(rule_id, params).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
-    /// Delete a tag policy. By default the policy is soft-deleted so it can be recovered later
+    /// Delete a tag rule. By default the rule is soft-deleted so it can be recovered later
     /// and so that historical score data remains queryable. Pass `hard_delete=true` to remove
-    /// the policy permanently.
-    pub async fn delete_tag_policy_with_http_info(
+    /// the rule permanently.
+    pub async fn delete_tag_rule_with_http_info(
         &self,
-        policy_id: String,
-        params: DeleteTagPolicyOptionalParams,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagPolicyError>> {
+        rule_id: String,
+        params: DeleteTagRuleOptionalParams,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTagRuleError>> {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.delete_tag_policy";
+        let local_operation_id = "v2.delete_tag_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_tag_policy' is not enabled".to_string(),
+                msg: "Operation 'v2.delete_tag_rule' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -469,9 +464,9 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag_policies/{policy_id}",
+            "{}/api/v2/governance/tag_rules/{rule_id}",
             local_configuration.get_operation_host(local_operation_id),
-            policy_id = datadog::urlencode(policy_id)
+            rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -529,7 +524,7 @@ impl TagPoliciesAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTagPolicyError> =
+            let local_entity: Option<DeleteTagRuleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -540,15 +535,15 @@ impl TagPoliciesAPI {
         }
     }
 
-    /// Retrieve a single tag policy by ID. Optionally include the policy's current compliance
-    /// score via the `include=score` query parameter. Policies belonging to other organizations
+    /// Retrieve a single tag rule by ID. Optionally include the rule's current compliance
+    /// score via the `include=score` query parameter. Rules belonging to other organizations
     /// cannot be retrieved.
-    pub async fn get_tag_policy(
+    pub async fn get_tag_rule(
         &self,
-        policy_id: String,
-        params: GetTagPolicyOptionalParams,
-    ) -> Result<crate::datadogV2::model::TagPolicyResponse, datadog::Error<GetTagPolicyError>> {
-        match self.get_tag_policy_with_http_info(policy_id, params).await {
+        rule_id: String,
+        params: GetTagRuleOptionalParams,
+    ) -> Result<crate::datadogV2::model::TagRuleResponse, datadog::Error<GetTagRuleError>> {
+        match self.get_tag_rule_with_http_info(rule_id, params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -562,24 +557,24 @@ impl TagPoliciesAPI {
         }
     }
 
-    /// Retrieve a single tag policy by ID. Optionally include the policy's current compliance
-    /// score via the `include=score` query parameter. Policies belonging to other organizations
+    /// Retrieve a single tag rule by ID. Optionally include the rule's current compliance
+    /// score via the `include=score` query parameter. Rules belonging to other organizations
     /// cannot be retrieved.
-    pub async fn get_tag_policy_with_http_info(
+    pub async fn get_tag_rule_with_http_info(
         &self,
-        policy_id: String,
-        params: GetTagPolicyOptionalParams,
+        rule_id: String,
+        params: GetTagRuleOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagPolicyResponse>,
-        datadog::Error<GetTagPolicyError>,
+        datadog::ResponseContent<crate::datadogV2::model::TagRuleResponse>,
+        datadog::Error<GetTagRuleError>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.get_tag_policy";
+        let local_operation_id = "v2.get_tag_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_tag_policy' is not enabled".to_string(),
+                msg: "Operation 'v2.get_tag_rule' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -592,9 +587,9 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag_policies/{policy_id}",
+            "{}/api/v2/governance/tag_rules/{rule_id}",
             local_configuration.get_operation_host(local_operation_id),
-            policy_id = datadog::urlencode(policy_id)
+            rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -654,8 +649,7 @@ impl TagPoliciesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagPolicyResponse>(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::TagRuleResponse>(&local_content) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -666,7 +660,7 @@ impl TagPoliciesAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTagPolicyError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetTagRuleError> = serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -676,20 +670,18 @@ impl TagPoliciesAPI {
         }
     }
 
-    /// Retrieve the compliance score for a single tag policy. The score is computed over the
+    /// Retrieve the compliance score for a single tag rule. The score is computed over the
     /// requested time window (or a source-appropriate default) and represents the percentage of
-    /// telemetry within that window that conforms to the policy. A `null` score indicates that
+    /// telemetry within that window that conforms to the rule. A `null` score indicates that
     /// no relevant telemetry was found.
-    pub async fn get_tag_policy_score(
+    pub async fn get_tag_rule_score(
         &self,
-        policy_id: String,
-        params: GetTagPolicyScoreOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TagPolicyScoreResponse,
-        datadog::Error<GetTagPolicyScoreError>,
-    > {
+        rule_id: String,
+        params: GetTagRuleScoreOptionalParams,
+    ) -> Result<crate::datadogV2::model::TagRuleScoreResponse, datadog::Error<GetTagRuleScoreError>>
+    {
         match self
-            .get_tag_policy_score_with_http_info(policy_id, params)
+            .get_tag_rule_score_with_http_info(rule_id, params)
             .await
         {
             Ok(response_content) => {
@@ -705,25 +697,25 @@ impl TagPoliciesAPI {
         }
     }
 
-    /// Retrieve the compliance score for a single tag policy. The score is computed over the
+    /// Retrieve the compliance score for a single tag rule. The score is computed over the
     /// requested time window (or a source-appropriate default) and represents the percentage of
-    /// telemetry within that window that conforms to the policy. A `null` score indicates that
+    /// telemetry within that window that conforms to the rule. A `null` score indicates that
     /// no relevant telemetry was found.
-    pub async fn get_tag_policy_score_with_http_info(
+    pub async fn get_tag_rule_score_with_http_info(
         &self,
-        policy_id: String,
-        params: GetTagPolicyScoreOptionalParams,
+        rule_id: String,
+        params: GetTagRuleScoreOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagPolicyScoreResponse>,
-        datadog::Error<GetTagPolicyScoreError>,
+        datadog::ResponseContent<crate::datadogV2::model::TagRuleScoreResponse>,
+        datadog::Error<GetTagRuleScoreError>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.get_tag_policy_score";
+        let local_operation_id = "v2.get_tag_rule_score";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_tag_policy_score' is not enabled".to_string(),
+                msg: "Operation 'v2.get_tag_rule_score' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -735,9 +727,9 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag_policies/{policy_id}/score",
+            "{}/api/v2/governance/tag_rules/{rule_id}/score",
             local_configuration.get_operation_host(local_operation_id),
-            policy_id = datadog::urlencode(policy_id)
+            rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
@@ -793,7 +785,7 @@ impl TagPoliciesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagPolicyScoreResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::TagRuleScoreResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -806,7 +798,7 @@ impl TagPoliciesAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTagPolicyScoreError> =
+            let local_entity: Option<GetTagRuleScoreError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -817,17 +809,15 @@ impl TagPoliciesAPI {
         }
     }
 
-    /// Retrieve all tag policies for the organization. Optionally include disabled or deleted
-    /// policies, filter by telemetry source, and include each policy's current compliance score
+    /// Retrieve all tag rules for the organization. Optionally include disabled or deleted
+    /// rules, filter by telemetry source, and include each rule's current compliance score
     /// via the `include=score` query parameter.
-    pub async fn list_tag_policies(
+    pub async fn list_tag_rules(
         &self,
-        params: ListTagPoliciesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TagPoliciesListResponse,
-        datadog::Error<ListTagPoliciesError>,
-    > {
-        match self.list_tag_policies_with_http_info(params).await {
+        params: ListTagRulesOptionalParams,
+    ) -> Result<crate::datadogV2::model::TagRulesListResponse, datadog::Error<ListTagRulesError>>
+    {
+        match self.list_tag_rules_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -841,23 +831,23 @@ impl TagPoliciesAPI {
         }
     }
 
-    /// Retrieve all tag policies for the organization. Optionally include disabled or deleted
-    /// policies, filter by telemetry source, and include each policy's current compliance score
+    /// Retrieve all tag rules for the organization. Optionally include disabled or deleted
+    /// rules, filter by telemetry source, and include each rule's current compliance score
     /// via the `include=score` query parameter.
-    pub async fn list_tag_policies_with_http_info(
+    pub async fn list_tag_rules_with_http_info(
         &self,
-        params: ListTagPoliciesOptionalParams,
+        params: ListTagRulesOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagPoliciesListResponse>,
-        datadog::Error<ListTagPoliciesError>,
+        datadog::ResponseContent<crate::datadogV2::model::TagRulesListResponse>,
+        datadog::Error<ListTagRulesError>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.list_tag_policies";
+        let local_operation_id = "v2.list_tag_rules";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_tag_policies' is not enabled".to_string(),
+                msg: "Operation 'v2.list_tag_rules' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -873,7 +863,7 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag_policies",
+            "{}/api/v2/governance/tag_rules",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -946,7 +936,7 @@ impl TagPoliciesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagPoliciesListResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::TagRulesListResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -959,8 +949,7 @@ impl TagPoliciesAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTagPoliciesError> =
-                serde_json::from_str(&local_content).ok();
+            let local_entity: Option<ListTagRulesError> = serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -970,16 +959,15 @@ impl TagPoliciesAPI {
         }
     }
 
-    /// Update one or more attributes of an existing tag policy. Only the fields supplied in the
-    /// request body are modified; omitted fields retain their current values. The policy's
+    /// Update one or more attributes of an existing tag rule. Only the fields supplied in the
+    /// request body are modified; omitted fields retain their current values. The rule's
     /// `source` cannot be changed after creation.
-    pub async fn update_tag_policy(
+    pub async fn update_tag_rule(
         &self,
-        policy_id: String,
-        body: crate::datadogV2::model::TagPolicyUpdateRequest,
-    ) -> Result<crate::datadogV2::model::TagPolicyResponse, datadog::Error<UpdateTagPolicyError>>
-    {
-        match self.update_tag_policy_with_http_info(policy_id, body).await {
+        rule_id: String,
+        body: crate::datadogV2::model::TagRuleUpdateRequest,
+    ) -> Result<crate::datadogV2::model::TagRuleResponse, datadog::Error<UpdateTagRuleError>> {
+        match self.update_tag_rule_with_http_info(rule_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -993,24 +981,24 @@ impl TagPoliciesAPI {
         }
     }
 
-    /// Update one or more attributes of an existing tag policy. Only the fields supplied in the
-    /// request body are modified; omitted fields retain their current values. The policy's
+    /// Update one or more attributes of an existing tag rule. Only the fields supplied in the
+    /// request body are modified; omitted fields retain their current values. The rule's
     /// `source` cannot be changed after creation.
-    pub async fn update_tag_policy_with_http_info(
+    pub async fn update_tag_rule_with_http_info(
         &self,
-        policy_id: String,
-        body: crate::datadogV2::model::TagPolicyUpdateRequest,
+        rule_id: String,
+        body: crate::datadogV2::model::TagRuleUpdateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TagPolicyResponse>,
-        datadog::Error<UpdateTagPolicyError>,
+        datadog::ResponseContent<crate::datadogV2::model::TagRuleResponse>,
+        datadog::Error<UpdateTagRuleError>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.update_tag_policy";
+        let local_operation_id = "v2.update_tag_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_tag_policy' is not enabled".to_string(),
+                msg: "Operation 'v2.update_tag_rule' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -1018,9 +1006,9 @@ impl TagPoliciesAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/tag_policies/{policy_id}",
+            "{}/api/v2/governance/tag_rules/{rule_id}",
             local_configuration.get_operation_host(local_operation_id),
-            policy_id = datadog::urlencode(policy_id)
+            rule_id = datadog::urlencode(rule_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
@@ -1114,8 +1102,7 @@ impl TagPoliciesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TagPolicyResponse>(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::TagRuleResponse>(&local_content) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -1126,7 +1113,7 @@ impl TagPoliciesAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTagPolicyError> =
+            let local_entity: Option<UpdateTagRuleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

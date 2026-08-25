@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Payload for creating a new tag policy.
+/// Payload for updating an existing tag rule. Only the supplied fields are modified.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagPolicyCreateRequest {
-    /// Data object for creating a tag policy.
+pub struct TagRuleUpdateRequest {
+    /// Data object for updating a tag rule.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::TagPolicyCreateData,
+    pub data: crate::datadogV2::model::TagRuleUpdateData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,9 +21,9 @@ pub struct TagPolicyCreateRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl TagPolicyCreateRequest {
-    pub fn new(data: crate::datadogV2::model::TagPolicyCreateData) -> TagPolicyCreateRequest {
-        TagPolicyCreateRequest {
+impl TagRuleUpdateRequest {
+    pub fn new(data: crate::datadogV2::model::TagRuleUpdateData) -> TagRuleUpdateRequest {
+        TagRuleUpdateRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +39,14 @@ impl TagPolicyCreateRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPolicyCreateRequest {
+impl<'de> Deserialize<'de> for TagRuleUpdateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagPolicyCreateRequestVisitor;
-        impl<'a> Visitor<'a> for TagPolicyCreateRequestVisitor {
-            type Value = TagPolicyCreateRequest;
+        struct TagRuleUpdateRequestVisitor;
+        impl<'a> Visitor<'a> for TagRuleUpdateRequestVisitor {
+            type Value = TagRuleUpdateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for TagPolicyCreateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TagPolicyCreateData> = None;
+                let mut data: Option<crate::datadogV2::model::TagRuleUpdateData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for TagPolicyCreateRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = TagPolicyCreateRequest {
+                let content = TagRuleUpdateRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -87,6 +87,6 @@ impl<'de> Deserialize<'de> for TagPolicyCreateRequest {
             }
         }
 
-        deserializer.deserialize_any(TagPolicyCreateRequestVisitor)
+        deserializer.deserialize_any(TagRuleUpdateRequestVisitor)
     }
 }

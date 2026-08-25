@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TagPolicyType {
-    BLOCKING,
+pub enum TagRuleCreateType {
     SURFACING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TagPolicyType {
+impl ToString for TagRuleCreateType {
     fn to_string(&self) -> String {
         match self {
-            Self::BLOCKING => String::from("blocking"),
             Self::SURFACING => String::from("surfacing"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TagPolicyType {
+impl Serialize for TagRuleCreateType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,14 +32,13 @@ impl Serialize for TagPolicyType {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPolicyType {
+impl<'de> Deserialize<'de> for TagRuleCreateType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "blocking" => Self::BLOCKING,
             "surfacing" => Self::SURFACING,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),

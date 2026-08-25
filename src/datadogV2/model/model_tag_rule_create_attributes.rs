@@ -6,37 +6,41 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Mutable attributes of a tag policy. Each field is optional; omitting a field leaves its
-/// current value unchanged. The `source` of a policy cannot be changed.
+/// Attributes that can be supplied when creating a tag rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagPolicyUpdateAttributes {
-    /// Whether the policy is currently enforced.
+pub struct TagRuleCreateAttributes {
+    /// Whether the rule is currently enforced. Defaults to `true` for newly created rules.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
-    /// When `true`, the policy matches tag values that do NOT match any of the supplied patterns.
+    /// Human-readable name for the tag rule.
+    #[serde(rename = "name")]
+    pub name: String,
+    /// When `true`, the rule matches tag values that do NOT match any of the supplied patterns. Defaults to `false`.
     #[serde(rename = "negated")]
     pub negated: Option<bool>,
-    /// Human-readable name for the tag policy.
-    #[serde(rename = "policy_name")]
-    pub policy_name: Option<String>,
-    /// How the policy is enforced. `blocking` rejects telemetry that violates the policy.
-    /// `surfacing` only highlights non-compliant telemetry without blocking it.
-    #[serde(rename = "policy_type")]
-    pub policy_type: Option<crate::datadogV2::model::TagPolicyType>,
-    /// When `true`, telemetry without this tag is treated as a violation.
+    /// When `true`, telemetry without this tag is treated as a violation. Defaults to `false`.
     #[serde(rename = "required")]
     pub required: Option<bool>,
-    /// The scope the policy applies within.
+    /// The rule type allowed when creating a tag rule. Only `surfacing` is accepted at
+    /// creation time.
+    #[serde(rename = "rule_type")]
+    pub rule_type: crate::datadogV2::model::TagRuleCreateType,
+    /// The scope the rule applies within. Typically an environment, team, or
+    /// organization-level identifier used to limit where the rule is enforced.
     #[serde(rename = "scope")]
-    pub scope: Option<String>,
-    /// The tag key that the policy governs.
+    pub scope: String,
+    /// The telemetry source that a tag rule applies to.
+    #[serde(rename = "source")]
+    pub source: crate::datadogV2::model::TagRuleSource,
+    /// The tag key that the rule governs (for example, `service`).
     #[serde(rename = "tag_key")]
-    pub tag_key: Option<String>,
-    /// One or more patterns that valid values for the tag key must match.
+    pub tag_key: String,
+    /// One or more patterns that valid values for the tag key must match. At least one
+    /// pattern is required.
     #[serde(rename = "tag_value_patterns")]
-    pub tag_value_patterns: Option<Vec<String>>,
+    pub tag_value_patterns: Vec<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -44,17 +48,25 @@ pub struct TagPolicyUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl TagPolicyUpdateAttributes {
-    pub fn new() -> TagPolicyUpdateAttributes {
-        TagPolicyUpdateAttributes {
+impl TagRuleCreateAttributes {
+    pub fn new(
+        name: String,
+        rule_type: crate::datadogV2::model::TagRuleCreateType,
+        scope: String,
+        source: crate::datadogV2::model::TagRuleSource,
+        tag_key: String,
+        tag_value_patterns: Vec<String>,
+    ) -> TagRuleCreateAttributes {
+        TagRuleCreateAttributes {
             enabled: None,
+            name,
             negated: None,
-            policy_name: None,
-            policy_type: None,
             required: None,
-            scope: None,
-            tag_key: None,
-            tag_value_patterns: None,
+            rule_type,
+            scope,
+            source,
+            tag_key,
+            tag_value_patterns,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -70,33 +82,8 @@ impl TagPolicyUpdateAttributes {
         self
     }
 
-    pub fn policy_name(mut self, value: String) -> Self {
-        self.policy_name = Some(value);
-        self
-    }
-
-    pub fn policy_type(mut self, value: crate::datadogV2::model::TagPolicyType) -> Self {
-        self.policy_type = Some(value);
-        self
-    }
-
     pub fn required(mut self, value: bool) -> Self {
         self.required = Some(value);
-        self
-    }
-
-    pub fn scope(mut self, value: String) -> Self {
-        self.scope = Some(value);
-        self
-    }
-
-    pub fn tag_key(mut self, value: String) -> Self {
-        self.tag_key = Some(value);
-        self
-    }
-
-    pub fn tag_value_patterns(mut self, value: Vec<String>) -> Self {
-        self.tag_value_patterns = Some(value);
         self
     }
 
@@ -109,20 +96,14 @@ impl TagPolicyUpdateAttributes {
     }
 }
 
-impl Default for TagPolicyUpdateAttributes {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for TagPolicyUpdateAttributes {
+impl<'de> Deserialize<'de> for TagRuleCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagPolicyUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for TagPolicyUpdateAttributesVisitor {
-            type Value = TagPolicyUpdateAttributes;
+        struct TagRuleCreateAttributesVisitor;
+        impl<'a> Visitor<'a> for TagRuleCreateAttributesVisitor {
+            type Value = TagRuleCreateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -133,11 +114,12 @@ impl<'de> Deserialize<'de> for TagPolicyUpdateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut enabled: Option<bool> = None;
+                let mut name: Option<String> = None;
                 let mut negated: Option<bool> = None;
-                let mut policy_name: Option<String> = None;
-                let mut policy_type: Option<crate::datadogV2::model::TagPolicyType> = None;
                 let mut required: Option<bool> = None;
+                let mut rule_type: Option<crate::datadogV2::model::TagRuleCreateType> = None;
                 let mut scope: Option<String> = None;
+                let mut source: Option<crate::datadogV2::model::TagRuleSource> = None;
                 let mut tag_key: Option<String> = None;
                 let mut tag_value_patterns: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -154,35 +136,14 @@ impl<'de> Deserialize<'de> for TagPolicyUpdateAttributes {
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "negated" => {
                             if v.is_null() {
                                 continue;
                             }
                             negated = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "policy_name" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            policy_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "policy_type" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            policy_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _policy_type) = policy_type {
-                                match _policy_type {
-                                    crate::datadogV2::model::TagPolicyType::UnparsedObject(
-                                        _policy_type,
-                                    ) => {
-                                        _unparsed = true;
-                                    }
-                                    _ => {}
-                                }
-                            }
                         }
                         "required" => {
                             if v.is_null() {
@@ -190,22 +151,39 @@ impl<'de> Deserialize<'de> for TagPolicyUpdateAttributes {
                             }
                             required = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "scope" => {
-                            if v.is_null() {
-                                continue;
+                        "rule_type" => {
+                            rule_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _rule_type) = rule_type {
+                                match _rule_type {
+                                    crate::datadogV2::model::TagRuleCreateType::UnparsedObject(
+                                        _rule_type,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
                             }
+                        }
+                        "scope" => {
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "tag_key" => {
-                            if v.is_null() {
-                                continue;
+                        "source" => {
+                            source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _source) = source {
+                                match _source {
+                                    crate::datadogV2::model::TagRuleSource::UnparsedObject(
+                                        _source,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
                             }
+                        }
+                        "tag_key" => {
                             tag_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tag_value_patterns" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             tag_value_patterns =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -216,14 +194,22 @@ impl<'de> Deserialize<'de> for TagPolicyUpdateAttributes {
                         }
                     }
                 }
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let rule_type = rule_type.ok_or_else(|| M::Error::missing_field("rule_type"))?;
+                let scope = scope.ok_or_else(|| M::Error::missing_field("scope"))?;
+                let source = source.ok_or_else(|| M::Error::missing_field("source"))?;
+                let tag_key = tag_key.ok_or_else(|| M::Error::missing_field("tag_key"))?;
+                let tag_value_patterns = tag_value_patterns
+                    .ok_or_else(|| M::Error::missing_field("tag_value_patterns"))?;
 
-                let content = TagPolicyUpdateAttributes {
+                let content = TagRuleCreateAttributes {
                     enabled,
+                    name,
                     negated,
-                    policy_name,
-                    policy_type,
                     required,
+                    rule_type,
                     scope,
+                    source,
                     tag_key,
                     tag_value_patterns,
                     additional_properties,
@@ -234,6 +220,6 @@ impl<'de> Deserialize<'de> for TagPolicyUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(TagPolicyUpdateAttributesVisitor)
+        deserializer.deserialize_any(TagRuleCreateAttributesVisitor)
     }
 }
