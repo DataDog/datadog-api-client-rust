@@ -6,20 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A compliance score resource for a tag policy.
+/// Data object for creating a tag rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagPolicyScoreData {
-    /// Attributes of a tag policy compliance score.
+pub struct TagRuleCreateData {
+    /// Attributes that can be supplied when creating a tag rule.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::TagPolicyScoreAttributes,
-    /// The unique identifier of the compliance score resource.
-    #[serde(rename = "id")]
-    pub id: String,
-    /// JSON:API resource type for a tag policy compliance score.
+    pub attributes: crate::datadogV2::model::TagRuleCreateAttributes,
+    /// JSON:API resource type for a tag rule.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::TagPolicyScoreResourceType,
+    pub type_: crate::datadogV2::model::TagRuleResourceType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,15 +24,13 @@ pub struct TagPolicyScoreData {
     pub(crate) _unparsed: bool,
 }
 
-impl TagPolicyScoreData {
+impl TagRuleCreateData {
     pub fn new(
-        attributes: crate::datadogV2::model::TagPolicyScoreAttributes,
-        id: String,
-        type_: crate::datadogV2::model::TagPolicyScoreResourceType,
-    ) -> TagPolicyScoreData {
-        TagPolicyScoreData {
+        attributes: crate::datadogV2::model::TagRuleCreateAttributes,
+        type_: crate::datadogV2::model::TagRuleResourceType,
+    ) -> TagRuleCreateData {
+        TagRuleCreateData {
             attributes,
-            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -51,14 +46,14 @@ impl TagPolicyScoreData {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPolicyScoreData {
+impl<'de> Deserialize<'de> for TagRuleCreateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagPolicyScoreDataVisitor;
-        impl<'a> Visitor<'a> for TagPolicyScoreDataVisitor {
-            type Value = TagPolicyScoreData;
+        struct TagRuleCreateDataVisitor;
+        impl<'a> Visitor<'a> for TagRuleCreateDataVisitor {
+            type Value = TagRuleCreateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,10 +63,8 @@ impl<'de> Deserialize<'de> for TagPolicyScoreData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::TagPolicyScoreAttributes> =
-                    None;
-                let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::TagPolicyScoreResourceType> = None;
+                let mut attributes: Option<crate::datadogV2::model::TagRuleCreateAttributes> = None;
+                let mut type_: Option<crate::datadogV2::model::TagRuleResourceType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -83,14 +76,11 @@ impl<'de> Deserialize<'de> for TagPolicyScoreData {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "id" => {
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::TagPolicyScoreResourceType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::TagRuleResourceType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -105,12 +95,10 @@ impl<'de> Deserialize<'de> for TagPolicyScoreData {
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = TagPolicyScoreData {
+                let content = TagRuleCreateData {
                     attributes,
-                    id,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -120,6 +108,6 @@ impl<'de> Deserialize<'de> for TagPolicyScoreData {
             }
         }
 
-        deserializer.deserialize_any(TagPolicyScoreDataVisitor)
+        deserializer.deserialize_any(TagRuleCreateDataVisitor)
     }
 }

@@ -6,29 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TagPolicySource {
-    LOGS,
-    SPANS,
-    METRICS,
-    RUM,
-    FEED,
+pub enum TagRuleType {
+    BLOCKING,
+    SURFACING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TagPolicySource {
+impl ToString for TagRuleType {
     fn to_string(&self) -> String {
         match self {
-            Self::LOGS => String::from("logs"),
-            Self::SPANS => String::from("spans"),
-            Self::METRICS => String::from("metrics"),
-            Self::RUM => String::from("rum"),
-            Self::FEED => String::from("feed"),
+            Self::BLOCKING => String::from("blocking"),
+            Self::SURFACING => String::from("surfacing"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TagPolicySource {
+impl Serialize for TagRuleType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -40,18 +34,15 @@ impl Serialize for TagPolicySource {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPolicySource {
+impl<'de> Deserialize<'de> for TagRuleType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "logs" => Self::LOGS,
-            "spans" => Self::SPANS,
-            "metrics" => Self::METRICS,
-            "rum" => Self::RUM,
-            "feed" => Self::FEED,
+            "blocking" => Self::BLOCKING,
+            "surfacing" => Self::SURFACING,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

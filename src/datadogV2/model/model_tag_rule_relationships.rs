@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A relationship to the compliance score resource for this policy.
+/// Related resources for a tag rule. Only present when the corresponding `include` query parameter is supplied.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagPolicyScoreRelationship {
-    /// Identifier of the related compliance score resource.
-    #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::TagPolicyScoreRelationshipData,
+pub struct TagRuleRelationships {
+    /// A relationship to the compliance score resource for this rule.
+    #[serde(rename = "score")]
+    pub score: Option<crate::datadogV2::model::TagRuleScoreRelationship>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,15 +21,18 @@ pub struct TagPolicyScoreRelationship {
     pub(crate) _unparsed: bool,
 }
 
-impl TagPolicyScoreRelationship {
-    pub fn new(
-        data: crate::datadogV2::model::TagPolicyScoreRelationshipData,
-    ) -> TagPolicyScoreRelationship {
-        TagPolicyScoreRelationship {
-            data,
+impl TagRuleRelationships {
+    pub fn new() -> TagRuleRelationships {
+        TagRuleRelationships {
+            score: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn score(mut self, value: crate::datadogV2::model::TagRuleScoreRelationship) -> Self {
+        self.score = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -41,14 +44,20 @@ impl TagPolicyScoreRelationship {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPolicyScoreRelationship {
+impl Default for TagRuleRelationships {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for TagRuleRelationships {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagPolicyScoreRelationshipVisitor;
-        impl<'a> Visitor<'a> for TagPolicyScoreRelationshipVisitor {
-            type Value = TagPolicyScoreRelationship;
+        struct TagRuleRelationshipsVisitor;
+        impl<'a> Visitor<'a> for TagRuleRelationshipsVisitor {
+            type Value = TagRuleRelationships;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,8 +67,7 @@ impl<'de> Deserialize<'de> for TagPolicyScoreRelationship {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TagPolicyScoreRelationshipData> =
-                    None;
+                let mut score: Option<crate::datadogV2::model::TagRuleScoreRelationship> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -68,8 +76,11 @@ impl<'de> Deserialize<'de> for TagPolicyScoreRelationship {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "score" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            score = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -78,10 +89,9 @@ impl<'de> Deserialize<'de> for TagPolicyScoreRelationship {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = TagPolicyScoreRelationship {
-                    data,
+                let content = TagRuleRelationships {
+                    score,
                     additional_properties,
                     _unparsed,
                 };
@@ -90,6 +100,6 @@ impl<'de> Deserialize<'de> for TagPolicyScoreRelationship {
             }
         }
 
-        deserializer.deserialize_any(TagPolicyScoreRelationshipVisitor)
+        deserializer.deserialize_any(TagRuleRelationshipsVisitor)
     }
 }

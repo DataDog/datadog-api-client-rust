@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Identifier of the related compliance score resource.
+/// A tag rule compliance score.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagPolicyScoreRelationshipData {
-    /// The unique identifier of the related compliance score resource.
-    #[serde(rename = "id")]
-    pub id: String,
-    /// JSON:API resource type for a tag policy compliance score.
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::TagPolicyScoreResourceType,
+pub struct TagRuleScoreResponse {
+    /// A compliance score resource for a tag rule.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::TagRuleScoreData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,14 +21,10 @@ pub struct TagPolicyScoreRelationshipData {
     pub(crate) _unparsed: bool,
 }
 
-impl TagPolicyScoreRelationshipData {
-    pub fn new(
-        id: String,
-        type_: crate::datadogV2::model::TagPolicyScoreResourceType,
-    ) -> TagPolicyScoreRelationshipData {
-        TagPolicyScoreRelationshipData {
-            id,
-            type_,
+impl TagRuleScoreResponse {
+    pub fn new(data: crate::datadogV2::model::TagRuleScoreData) -> TagRuleScoreResponse {
+        TagRuleScoreResponse {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -46,14 +39,14 @@ impl TagPolicyScoreRelationshipData {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPolicyScoreRelationshipData {
+impl<'de> Deserialize<'de> for TagRuleScoreResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagPolicyScoreRelationshipDataVisitor;
-        impl<'a> Visitor<'a> for TagPolicyScoreRelationshipDataVisitor {
-            type Value = TagPolicyScoreRelationshipData;
+        struct TagRuleScoreResponseVisitor;
+        impl<'a> Visitor<'a> for TagRuleScoreResponseVisitor {
+            type Value = TagRuleScoreResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,8 +56,7 @@ impl<'de> Deserialize<'de> for TagPolicyScoreRelationshipData {
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::TagPolicyScoreResourceType> = None;
+                let mut data: Option<crate::datadogV2::model::TagRuleScoreData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -73,19 +65,8 @@ impl<'de> Deserialize<'de> for TagPolicyScoreRelationshipData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "id" => {
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::TagPolicyScoreResourceType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -94,12 +75,10 @@ impl<'de> Deserialize<'de> for TagPolicyScoreRelationshipData {
                         }
                     }
                 }
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = TagPolicyScoreRelationshipData {
-                    id,
-                    type_,
+                let content = TagRuleScoreResponse {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -108,6 +87,6 @@ impl<'de> Deserialize<'de> for TagPolicyScoreRelationshipData {
             }
         }
 
-        deserializer.deserialize_any(TagPolicyScoreRelationshipDataVisitor)
+        deserializer.deserialize_any(TagRuleScoreResponseVisitor)
     }
 }

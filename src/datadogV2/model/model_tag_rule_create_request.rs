@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A single tag policy.
+/// Payload for creating a new tag rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagPolicyResponse {
-    /// A tag policy resource.
+pub struct TagRuleCreateRequest {
+    /// Data object for creating a tag rule.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::TagPolicyData,
-    /// Related resources fetched alongside the primary tag policies. Populated when an `include` query parameter is supplied.
-    #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::TagPolicyScoreData>>,
+    pub data: crate::datadogV2::model::TagRuleCreateData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,19 +21,13 @@ pub struct TagPolicyResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl TagPolicyResponse {
-    pub fn new(data: crate::datadogV2::model::TagPolicyData) -> TagPolicyResponse {
-        TagPolicyResponse {
+impl TagRuleCreateRequest {
+    pub fn new(data: crate::datadogV2::model::TagRuleCreateData) -> TagRuleCreateRequest {
+        TagRuleCreateRequest {
             data,
-            included: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn included(mut self, value: Vec<crate::datadogV2::model::TagPolicyScoreData>) -> Self {
-        self.included = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -48,14 +39,14 @@ impl TagPolicyResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPolicyResponse {
+impl<'de> Deserialize<'de> for TagRuleCreateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagPolicyResponseVisitor;
-        impl<'a> Visitor<'a> for TagPolicyResponseVisitor {
-            type Value = TagPolicyResponse;
+        struct TagRuleCreateRequestVisitor;
+        impl<'a> Visitor<'a> for TagRuleCreateRequestVisitor {
+            type Value = TagRuleCreateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -65,8 +56,7 @@ impl<'de> Deserialize<'de> for TagPolicyResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TagPolicyData> = None;
-                let mut included: Option<Vec<crate::datadogV2::model::TagPolicyScoreData>> = None;
+                let mut data: Option<crate::datadogV2::model::TagRuleCreateData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -78,12 +68,6 @@ impl<'de> Deserialize<'de> for TagPolicyResponse {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "included" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -93,9 +77,8 @@ impl<'de> Deserialize<'de> for TagPolicyResponse {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = TagPolicyResponse {
+                let content = TagRuleCreateRequest {
                     data,
-                    included,
                     additional_properties,
                     _unparsed,
                 };
@@ -104,6 +87,6 @@ impl<'de> Deserialize<'de> for TagPolicyResponse {
             }
         }
 
-        deserializer.deserialize_any(TagPolicyResponseVisitor)
+        deserializer.deserialize_any(TagRuleCreateRequestVisitor)
     }
 }

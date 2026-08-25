@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Payload for updating an existing tag policy. Only the supplied fields are modified.
+/// A relationship to the compliance score resource for this rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagPolicyUpdateRequest {
-    /// Data object for updating a tag policy.
+pub struct TagRuleScoreRelationship {
+    /// Identifier of the related compliance score resource.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::TagPolicyUpdateData,
+    pub data: crate::datadogV2::model::TagRuleScoreRelationshipData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,9 +21,11 @@ pub struct TagPolicyUpdateRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl TagPolicyUpdateRequest {
-    pub fn new(data: crate::datadogV2::model::TagPolicyUpdateData) -> TagPolicyUpdateRequest {
-        TagPolicyUpdateRequest {
+impl TagRuleScoreRelationship {
+    pub fn new(
+        data: crate::datadogV2::model::TagRuleScoreRelationshipData,
+    ) -> TagRuleScoreRelationship {
+        TagRuleScoreRelationship {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +41,14 @@ impl TagPolicyUpdateRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPolicyUpdateRequest {
+impl<'de> Deserialize<'de> for TagRuleScoreRelationship {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagPolicyUpdateRequestVisitor;
-        impl<'a> Visitor<'a> for TagPolicyUpdateRequestVisitor {
-            type Value = TagPolicyUpdateRequest;
+        struct TagRuleScoreRelationshipVisitor;
+        impl<'a> Visitor<'a> for TagRuleScoreRelationshipVisitor {
+            type Value = TagRuleScoreRelationship;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +58,7 @@ impl<'de> Deserialize<'de> for TagPolicyUpdateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TagPolicyUpdateData> = None;
+                let mut data: Option<crate::datadogV2::model::TagRuleScoreRelationshipData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,7 +79,7 @@ impl<'de> Deserialize<'de> for TagPolicyUpdateRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = TagPolicyUpdateRequest {
+                let content = TagRuleScoreRelationship {
                     data,
                     additional_properties,
                     _unparsed,
@@ -87,6 +89,6 @@ impl<'de> Deserialize<'de> for TagPolicyUpdateRequest {
             }
         }
 
-        deserializer.deserialize_any(TagPolicyUpdateRequestVisitor)
+        deserializer.deserialize_any(TagRuleScoreRelationshipVisitor)
     }
 }

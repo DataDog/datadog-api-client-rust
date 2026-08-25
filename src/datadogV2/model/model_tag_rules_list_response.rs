@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A page of tag policies.
+/// A page of tag rules.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagPoliciesListResponse {
-    /// An array of tag policy data objects.
+pub struct TagRulesListResponse {
+    /// An array of tag rule data objects.
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::TagPolicyData>,
-    /// Related resources fetched alongside the primary tag policies. Populated when an `include` query parameter is supplied.
+    pub data: Vec<crate::datadogV2::model::TagRuleData>,
+    /// Related resources fetched alongside the primary tag rules. Populated when an `include` query parameter is supplied.
     #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::TagPolicyScoreData>>,
+    pub included: Option<Vec<crate::datadogV2::model::TagRuleScoreData>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,9 +24,9 @@ pub struct TagPoliciesListResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl TagPoliciesListResponse {
-    pub fn new(data: Vec<crate::datadogV2::model::TagPolicyData>) -> TagPoliciesListResponse {
-        TagPoliciesListResponse {
+impl TagRulesListResponse {
+    pub fn new(data: Vec<crate::datadogV2::model::TagRuleData>) -> TagRulesListResponse {
+        TagRulesListResponse {
             data,
             included: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -34,7 +34,7 @@ impl TagPoliciesListResponse {
         }
     }
 
-    pub fn included(mut self, value: Vec<crate::datadogV2::model::TagPolicyScoreData>) -> Self {
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::TagRuleScoreData>) -> Self {
         self.included = Some(value);
         self
     }
@@ -48,14 +48,14 @@ impl TagPoliciesListResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPoliciesListResponse {
+impl<'de> Deserialize<'de> for TagRulesListResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagPoliciesListResponseVisitor;
-        impl<'a> Visitor<'a> for TagPoliciesListResponseVisitor {
-            type Value = TagPoliciesListResponse;
+        struct TagRulesListResponseVisitor;
+        impl<'a> Visitor<'a> for TagRulesListResponseVisitor {
+            type Value = TagRulesListResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -65,8 +65,8 @@ impl<'de> Deserialize<'de> for TagPoliciesListResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::TagPolicyData>> = None;
-                let mut included: Option<Vec<crate::datadogV2::model::TagPolicyScoreData>> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::TagRuleData>> = None;
+                let mut included: Option<Vec<crate::datadogV2::model::TagRuleScoreData>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -93,7 +93,7 @@ impl<'de> Deserialize<'de> for TagPoliciesListResponse {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = TagPoliciesListResponse {
+                let content = TagRulesListResponse {
                     data,
                     included,
                     additional_properties,
@@ -104,6 +104,6 @@ impl<'de> Deserialize<'de> for TagPoliciesListResponse {
             }
         }
 
-        deserializer.deserialize_any(TagPoliciesListResponseVisitor)
+        deserializer.deserialize_any(TagRulesListResponseVisitor)
     }
 }

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a tag policy compliance score.
+/// Attributes of a tag rule compliance score.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TagPolicyScoreAttributes {
-    /// The compliance score for the policy over the requested time window, as a percentage
+pub struct TagRuleScoreAttributes {
+    /// The compliance score for the rule over the requested time window, as a percentage
     /// between 0 and 100. `null` indicates that no relevant telemetry was found.
     #[serialize_always]
     #[serde(rename = "score")]
@@ -22,7 +22,7 @@ pub struct TagPolicyScoreAttributes {
     /// Start of the time window the score was computed over, as a Unix timestamp in milliseconds.
     #[serde(rename = "ts_start")]
     pub ts_start: i64,
-    /// The version of the tag policy that the score was computed against.
+    /// The version of the tag rule that the score was computed against.
     #[serde(rename = "version")]
     pub version: i64,
     #[serde(flatten)]
@@ -32,14 +32,14 @@ pub struct TagPolicyScoreAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl TagPolicyScoreAttributes {
+impl TagRuleScoreAttributes {
     pub fn new(
         score: Option<f64>,
         ts_end: i64,
         ts_start: i64,
         version: i64,
-    ) -> TagPolicyScoreAttributes {
-        TagPolicyScoreAttributes {
+    ) -> TagRuleScoreAttributes {
+        TagRuleScoreAttributes {
             score,
             ts_end,
             ts_start,
@@ -58,14 +58,14 @@ impl TagPolicyScoreAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for TagPolicyScoreAttributes {
+impl<'de> Deserialize<'de> for TagRuleScoreAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TagPolicyScoreAttributesVisitor;
-        impl<'a> Visitor<'a> for TagPolicyScoreAttributesVisitor {
-            type Value = TagPolicyScoreAttributes;
+        struct TagRuleScoreAttributesVisitor;
+        impl<'a> Visitor<'a> for TagRuleScoreAttributesVisitor {
+            type Value = TagRuleScoreAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -114,7 +114,7 @@ impl<'de> Deserialize<'de> for TagPolicyScoreAttributes {
                 let ts_start = ts_start.ok_or_else(|| M::Error::missing_field("ts_start"))?;
                 let version = version.ok_or_else(|| M::Error::missing_field("version"))?;
 
-                let content = TagPolicyScoreAttributes {
+                let content = TagRuleScoreAttributes {
                     score,
                     ts_end,
                     ts_start,
@@ -127,6 +127,6 @@ impl<'de> Deserialize<'de> for TagPolicyScoreAttributes {
             }
         }
 
-        deserializer.deserialize_any(TagPolicyScoreAttributesVisitor)
+        deserializer.deserialize_any(TagRuleScoreAttributesVisitor)
     }
 }
