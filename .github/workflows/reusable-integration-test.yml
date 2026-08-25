@@ -115,6 +115,7 @@ jobs:
         run: ./run-tests.sh
         env:
           CI: "true"
+          DD_USE_GENERATED_TESTS: "true"
           DD_AGENT_HOST: localhost
           DD_ENV: prod
           DD_SERVICE: datadog-api-client-rust
