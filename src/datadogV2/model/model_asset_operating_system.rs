@@ -17,6 +17,9 @@ pub struct AssetOperatingSystem {
     /// Operating system name.
     #[serde(rename = "name")]
     pub name: String,
+    /// Operating system version.
+    #[serde(rename = "version")]
+    pub version: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,6 +32,7 @@ impl AssetOperatingSystem {
         AssetOperatingSystem {
             description: None,
             name,
+            version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -36,6 +40,11 @@ impl AssetOperatingSystem {
 
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    pub fn version(mut self, value: String) -> Self {
+        self.version = Some(value);
         self
     }
 
@@ -67,6 +76,7 @@ impl<'de> Deserialize<'de> for AssetOperatingSystem {
             {
                 let mut description: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut version: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -85,6 +95,12 @@ impl<'de> Deserialize<'de> for AssetOperatingSystem {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "version" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -97,6 +113,7 @@ impl<'de> Deserialize<'de> for AssetOperatingSystem {
                 let content = AssetOperatingSystem {
                     description,
                     name,
+                    version,
                     additional_properties,
                     _unparsed,
                 };

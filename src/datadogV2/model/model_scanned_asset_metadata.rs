@@ -17,6 +17,9 @@ pub struct ScannedAssetMetadata {
     /// The ID of the scanned asset metadata.
     #[serde(rename = "id")]
     pub id: String,
+    /// The JSON:API type.
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV2::model::ScannedAssetMetadataType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -28,10 +31,12 @@ impl ScannedAssetMetadata {
     pub fn new(
         attributes: crate::datadogV2::model::ScannedAssetMetadataAttributes,
         id: String,
+        type_: crate::datadogV2::model::ScannedAssetMetadataType,
     ) -> ScannedAssetMetadata {
         ScannedAssetMetadata {
             attributes,
             id,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -67,6 +72,7 @@ impl<'de> Deserialize<'de> for ScannedAssetMetadata {
                     crate::datadogV2::model::ScannedAssetMetadataAttributes,
                 > = None;
                 let mut id: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::ScannedAssetMetadataType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,6 +87,17 @@ impl<'de> Deserialize<'de> for ScannedAssetMetadata {
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::ScannedAssetMetadataType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -90,10 +107,12 @@ impl<'de> Deserialize<'de> for ScannedAssetMetadata {
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ScannedAssetMetadata {
                     attributes,
                     id,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
