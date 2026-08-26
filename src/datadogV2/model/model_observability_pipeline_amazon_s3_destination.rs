@@ -23,6 +23,11 @@ pub struct ObservabilityPipelineAmazonS3Destination {
     /// Configuration for buffer settings on destination components.
     #[serde(rename = "buffer")]
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
+    /// Compression configuration for archived logs. When omitted, logs are compressed with gzip
+    /// for backward compatibility.
+    #[serde(rename = "compression")]
+    pub compression:
+        Option<crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationCompression>,
     /// Unique identifier for the destination component.
     #[serde(rename = "id")]
     pub id: String,
@@ -74,6 +79,7 @@ impl ObservabilityPipelineAmazonS3Destination {
             auth: None,
             bucket,
             buffer: None,
+            compression: None,
             id,
             inputs,
             key_prefix: None,
@@ -98,6 +104,14 @@ impl ObservabilityPipelineAmazonS3Destination {
         value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
     ) -> Self {
         self.buffer = Some(value);
+        self
+    }
+
+    pub fn compression(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationCompression,
+    ) -> Self {
+        self.compression = Some(value);
         self
     }
 
@@ -155,6 +169,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3Destination {
                 let mut buffer: Option<
                     crate::datadogV2::model::ObservabilityPipelineBufferOptions,
                 > = None;
+                let mut compression: Option<
+                    crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationCompression,
+                > = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut key_prefix: Option<String> = None;
@@ -193,6 +210,21 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3Destination {
                             if let Some(ref _buffer) = buffer {
                                 match _buffer {
                                     crate::datadogV2::model::ObservabilityPipelineBufferOptions::UnparsedObject(_buffer) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "compression" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            compression =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _compression) = compression {
+                                match _compression {
+                                    crate::datadogV2::model::ObservabilityPipelineAmazonS3DestinationCompression::UnparsedObject(_compression) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -284,6 +316,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonS3Destination {
                     auth,
                     bucket,
                     buffer,
+                    compression,
                     id,
                     inputs,
                     key_prefix,
