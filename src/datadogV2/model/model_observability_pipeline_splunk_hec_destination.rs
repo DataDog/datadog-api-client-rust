@@ -15,6 +15,7 @@ use std::fmt::{self, Formatter};
 pub struct ObservabilityPipelineSplunkHecDestination {
     /// If `true`, Splunk tries to extract timestamps from incoming log events.
     /// If `false`, Splunk assigns the time the event was received.
+    /// Only applies when `endpoint_target` is `event`; cannot be `true` when `endpoint_target` is `raw`.
     #[serde(rename = "auto_extract_timestamp")]
     pub auto_extract_timestamp: Option<bool>,
     /// Configuration for buffer settings on destination components.
@@ -24,6 +25,10 @@ pub struct ObservabilityPipelineSplunkHecDestination {
     #[serde(rename = "encoding")]
     pub encoding:
         Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding>,
+    /// The Splunk HEC endpoint to send events to. Use `event` to send structured events to the `/event` endpoint, or `raw` to send the raw message to the `/raw` endpoint.
+    #[serde(rename = "endpoint_target")]
+    pub endpoint_target:
+        Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEndpointTarget>,
     /// Name of the environment variable or secret that holds the Splunk HEC endpoint URL.
     #[serde(rename = "endpoint_url_key")]
     pub endpoint_url_key: Option<String>,
@@ -69,6 +74,7 @@ impl ObservabilityPipelineSplunkHecDestination {
             auto_extract_timestamp: None,
             buffer: None,
             encoding: None,
+            endpoint_target: None,
             endpoint_url_key: None,
             id,
             index: None,
@@ -101,6 +107,14 @@ impl ObservabilityPipelineSplunkHecDestination {
         value: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding,
     ) -> Self {
         self.encoding = Some(value);
+        self
+    }
+
+    pub fn endpoint_target(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEndpointTarget,
+    ) -> Self {
+        self.endpoint_target = Some(value);
         self
     }
 
@@ -170,6 +184,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                 let mut encoding: Option<
                     crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding,
                 > = None;
+                let mut endpoint_target: Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEndpointTarget> = None;
                 let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut index: Option<String> = None;
@@ -220,6 +235,21 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                             if let Some(ref _encoding) = encoding {
                                 match _encoding {
                                     crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding::UnparsedObject(_encoding) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "endpoint_target" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            endpoint_target =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _endpoint_target) = endpoint_target {
+                                match _endpoint_target {
+                                    crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEndpointTarget::UnparsedObject(_endpoint_target) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -305,6 +335,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                     auto_extract_timestamp,
                     buffer,
                     encoding,
+                    endpoint_target,
                     endpoint_url_key,
                     id,
                     index,
