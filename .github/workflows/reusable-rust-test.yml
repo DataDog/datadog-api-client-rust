@@ -89,6 +89,8 @@ jobs:
           name: test-binary-${{ matrix.rust-version }}-${{ matrix.platform }}
       - name: Run tests
         shell: bash
+        env:
+          DD_USE_GENERATED_TESTS: "true"
         run: |
           chmod +x test-binary
           ./test-binary
