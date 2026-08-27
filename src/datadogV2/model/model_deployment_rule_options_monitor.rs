@@ -14,9 +14,18 @@ pub struct DeploymentRuleOptionsMonitor {
     /// Seconds the monitor needs to stay in OK status for the rule to pass.
     #[serde(rename = "duration")]
     pub duration: Option<i64>,
+    /// Whether the rule should fail if a matching monitor group is in a NO DATA state.
+    #[serde(rename = "fail_on_no_data")]
+    pub fail_on_no_data: Option<bool>,
+    /// Whether the rule should fail if no monitor groups are found for the query.
+    #[serde(rename = "fail_on_no_groups_found")]
+    pub fail_on_no_groups_found: Option<bool>,
     /// Monitors that match this query are evaluated.
     #[serde(rename = "query")]
     pub query: String,
+    /// Seconds to wait after a deployment starts before evaluating the monitor's status.
+    #[serde(rename = "warmup")]
+    pub warmup: Option<i64>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -26,13 +35,31 @@ impl DeploymentRuleOptionsMonitor {
     pub fn new(query: String) -> DeploymentRuleOptionsMonitor {
         DeploymentRuleOptionsMonitor {
             duration: None,
+            fail_on_no_data: None,
+            fail_on_no_groups_found: None,
             query,
+            warmup: None,
             _unparsed: false,
         }
     }
 
     pub fn duration(mut self, value: i64) -> Self {
         self.duration = Some(value);
+        self
+    }
+
+    pub fn fail_on_no_data(mut self, value: bool) -> Self {
+        self.fail_on_no_data = Some(value);
+        self
+    }
+
+    pub fn fail_on_no_groups_found(mut self, value: bool) -> Self {
+        self.fail_on_no_groups_found = Some(value);
+        self
+    }
+
+    pub fn warmup(mut self, value: i64) -> Self {
+        self.warmup = Some(value);
         self
     }
 }
@@ -55,7 +82,10 @@ impl<'de> Deserialize<'de> for DeploymentRuleOptionsMonitor {
                 M: MapAccess<'a>,
             {
                 let mut duration: Option<i64> = None;
+                let mut fail_on_no_data: Option<bool> = None;
+                let mut fail_on_no_groups_found: Option<bool> = None;
                 let mut query: Option<String> = None;
+                let mut warmup: Option<i64> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -66,8 +96,28 @@ impl<'de> Deserialize<'de> for DeploymentRuleOptionsMonitor {
                             }
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "fail_on_no_data" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fail_on_no_data =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "fail_on_no_groups_found" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            fail_on_no_groups_found =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "warmup" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            warmup = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             return Err(serde::de::Error::custom(
@@ -80,7 +130,10 @@ impl<'de> Deserialize<'de> for DeploymentRuleOptionsMonitor {
 
                 let content = DeploymentRuleOptionsMonitor {
                     duration,
+                    fail_on_no_data,
+                    fail_on_no_groups_found,
                     query,
+                    warmup,
                     _unparsed,
                 };
 
