@@ -6,11 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A range within a file defined by a start and end position, along with the file name.
+/// A nullable range within a file defined by a start and end position, along with the file name.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition {
+pub struct ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition {
     /// A specific position (line and column) within a source file.
     #[serde(rename = "end")]
     pub end: Option<
@@ -34,9 +34,9 @@ pub struct ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition {
     pub(crate) _unparsed: bool,
 }
 
-impl ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition {
-    pub fn new() -> ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition {
-        ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition {
+impl ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition {
+    pub fn new() -> ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition {
+        ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition {
             end: None,
             file_name: None,
             role: None,
@@ -81,22 +81,25 @@ impl ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition {
     }
 }
 
-impl Default for ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition {
+impl Default for ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition {
+impl<'de> Deserialize<'de>
+    for ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition
+{
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePositionVisitor;
+        struct ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePositionVisitor;
         impl<'a> Visitor<'a>
-            for ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePositionVisitor
+            for ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePositionVisitor
         {
-            type Value = ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition;
+            type Value =
+                ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -150,21 +153,22 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributesDependenciesItemsLocation
                     }
                 }
 
-                let content = ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition {
-                    end,
-                    file_name,
-                    role,
-                    start,
-                    additional_properties,
-                    _unparsed,
-                };
+                let content =
+                    ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition {
+                        end,
+                        file_name,
+                        role,
+                        start,
+                        additional_properties,
+                        _unparsed,
+                    };
 
                 Ok(content)
             }
         }
 
         deserializer.deserialize_any(
-            ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePositionVisitor,
+            ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePositionVisitor,
         )
     }
 }
