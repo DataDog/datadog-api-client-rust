@@ -139,6 +139,7 @@ pub mod api_synthetics;
 pub mod api_tag_rules;
 pub mod api_teams;
 pub mod api_test_optimization;
+pub mod api_threat_intelligence;
 pub mod api_twilio_integration_accounts;
 pub mod api_usage_metering;
 pub mod api_user_authorized_clients;
