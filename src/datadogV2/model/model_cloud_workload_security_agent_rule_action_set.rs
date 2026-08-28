@@ -32,6 +32,9 @@ pub struct CloudWorkloadSecurityAgentRuleActionSet {
     /// The scope of the set action.
     #[serde(rename = "scope")]
     pub scope: Option<String>,
+    /// The scope field of the set action.
+    #[serde(rename = "scope_field")]
+    pub scope_field: Option<String>,
     /// The size of the set action.
     #[serde(rename = "size")]
     pub size: Option<i64>,
@@ -58,6 +61,7 @@ impl CloudWorkloadSecurityAgentRuleActionSet {
             inherited: None,
             name: None,
             scope: None,
+            scope_field: None,
             size: None,
             ttl: None,
             value: None,
@@ -98,6 +102,11 @@ impl CloudWorkloadSecurityAgentRuleActionSet {
 
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
+        self
+    }
+
+    pub fn scope_field(mut self, value: String) -> Self {
+        self.scope_field = Some(value);
         self
     }
 
@@ -158,6 +167,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                 let mut inherited: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut scope: Option<String> = None;
+                let mut scope_field: Option<String> = None;
                 let mut size: Option<i64> = None;
                 let mut ttl: Option<i64> = None;
                 let mut value: Option<
@@ -214,6 +224,13 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "scope_field" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            scope_field =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "size" => {
                             if v.is_null() {
                                 continue;
@@ -256,6 +273,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                     inherited,
                     name,
                     scope,
+                    scope_field,
                     size,
                     ttl,
                     value,

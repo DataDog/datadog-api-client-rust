@@ -14,6 +14,13 @@ pub struct CloudWorkloadSecurityAgentPolicyAttributes {
     /// The number of rules with the blocking feature in this policy
     #[serde(rename = "blockingRulesCount")]
     pub blocking_rules_count: Option<i32>,
+    /// Whether a content pack update is available for the policy.
+    #[serde(
+        rename = "contentPackUpdateAvailable",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub content_pack_update_available: Option<Option<bool>>,
     /// Whether the policy is managed by Datadog
     #[serde(rename = "datadogManaged")]
     pub datadog_managed: Option<bool>,
@@ -53,6 +60,9 @@ pub struct CloudWorkloadSecurityAgentPolicyAttributes {
     /// The number of rules in this policy
     #[serde(rename = "ruleCount")]
     pub rule_count: Option<i32>,
+    /// The ID of the Datadog-managed default policy this policy is sourced from.
+    #[serde(rename = "sourceDefaultPolicyId")]
+    pub source_default_policy_id: Option<String>,
     /// Timestamp in milliseconds when the policy was last updated
     #[serde(rename = "updateDate")]
     pub update_date: Option<i64>,
@@ -76,6 +86,7 @@ impl CloudWorkloadSecurityAgentPolicyAttributes {
     pub fn new() -> CloudWorkloadSecurityAgentPolicyAttributes {
         CloudWorkloadSecurityAgentPolicyAttributes {
             blocking_rules_count: None,
+            content_pack_update_available: None,
             datadog_managed: None,
             description: None,
             disabled_rules_count: None,
@@ -89,6 +100,7 @@ impl CloudWorkloadSecurityAgentPolicyAttributes {
             policy_version: None,
             priority: None,
             rule_count: None,
+            source_default_policy_id: None,
             update_date: None,
             updated_at: None,
             updater: None,
@@ -100,6 +112,11 @@ impl CloudWorkloadSecurityAgentPolicyAttributes {
 
     pub fn blocking_rules_count(mut self, value: i32) -> Self {
         self.blocking_rules_count = Some(value);
+        self
+    }
+
+    pub fn content_pack_update_available(mut self, value: Option<bool>) -> Self {
+        self.content_pack_update_available = Some(value);
         self
     }
 
@@ -168,6 +185,11 @@ impl CloudWorkloadSecurityAgentPolicyAttributes {
         self
     }
 
+    pub fn source_default_policy_id(mut self, value: String) -> Self {
+        self.source_default_policy_id = Some(value);
+        self
+    }
+
     pub fn update_date(mut self, value: i64) -> Self {
         self.update_date = Some(value);
         self
@@ -227,6 +249,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                 M: MapAccess<'a>,
             {
                 let mut blocking_rules_count: Option<i32> = None;
+                let mut content_pack_update_available: Option<Option<bool>> = None;
                 let mut datadog_managed: Option<bool> = None;
                 let mut description: Option<String> = None;
                 let mut disabled_rules_count: Option<i32> = None;
@@ -240,6 +263,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                 let mut policy_version: Option<String> = None;
                 let mut priority: Option<i64> = None;
                 let mut rule_count: Option<i32> = None;
+                let mut source_default_policy_id: Option<String> = None;
                 let mut update_date: Option<i64> = None;
                 let mut updated_at: Option<i64> = None;
                 let mut updater: Option<
@@ -261,6 +285,10 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                                 continue;
                             }
                             blocking_rules_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "contentPackUpdateAvailable" => {
+                            content_pack_update_available =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "datadogManaged" => {
@@ -348,6 +376,13 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                             }
                             rule_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "sourceDefaultPolicyId" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            source_default_policy_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "updateDate" => {
                             if v.is_null() {
                                 continue;
@@ -383,6 +418,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
 
                 let content = CloudWorkloadSecurityAgentPolicyAttributes {
                     blocking_rules_count,
+                    content_pack_update_available,
                     datadog_managed,
                     description,
                     disabled_rules_count,
@@ -396,6 +432,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                     policy_version,
                     priority,
                     rule_count,
+                    source_default_policy_id,
                     update_date,
                     updated_at,
                     updater,

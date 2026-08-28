@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudWorkloadSecurityAgentRuleAction {
+    /// Whether the action is disabled.
+    #[serde(rename = "disabled")]
+    pub disabled: Option<bool>,
     /// SECL expression used to target the container to apply the action on
     #[serde(rename = "filter")]
     pub filter: Option<String>,
@@ -36,6 +39,7 @@ pub struct CloudWorkloadSecurityAgentRuleAction {
 impl CloudWorkloadSecurityAgentRuleAction {
     pub fn new() -> CloudWorkloadSecurityAgentRuleAction {
         CloudWorkloadSecurityAgentRuleAction {
+            disabled: None,
             filter: None,
             hash: None,
             kill: None,
@@ -44,6 +48,11 @@ impl CloudWorkloadSecurityAgentRuleAction {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn disabled(mut self, value: bool) -> Self {
+        self.disabled = Some(value);
+        self
     }
 
     pub fn filter(mut self, value: String) -> Self {
@@ -115,6 +124,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
             where
                 M: MapAccess<'a>,
             {
+                let mut disabled: Option<bool> = None;
                 let mut filter: Option<String> = None;
                 let mut hash: Option<
                     crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionHash,
@@ -135,6 +145,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "disabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "filter" => {
                             if v.is_null() {
                                 continue;
@@ -174,6 +190,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
                 }
 
                 let content = CloudWorkloadSecurityAgentRuleAction {
+                    disabled,
                     filter,
                     hash,
                     kill,
