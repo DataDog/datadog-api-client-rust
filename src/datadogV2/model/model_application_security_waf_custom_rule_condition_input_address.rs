@@ -28,6 +28,7 @@ pub enum ApplicationSecurityWafCustomRuleConditionInputAddress {
     SERVER_RESPONSE_HEADERS_NO_COOKIES,
     SERVER_RESPONSE_TRAILERS,
     SERVER_RESPONSE_BODY,
+    SERVER_RESPONSE_BODY_RAW,
     GRPC_SERVER_REQUEST_METADATA,
     GRPC_SERVER_REQUEST_MESSAGE,
     GRPC_SERVER_METHOD,
@@ -73,6 +74,7 @@ impl ToString for ApplicationSecurityWafCustomRuleConditionInputAddress {
             }
             Self::SERVER_RESPONSE_TRAILERS => String::from("server.response.trailers"),
             Self::SERVER_RESPONSE_BODY => String::from("server.response.body"),
+            Self::SERVER_RESPONSE_BODY_RAW => String::from("server.response.body.raw"),
             Self::GRPC_SERVER_REQUEST_METADATA => String::from("grpc.server.request.metadata"),
             Self::GRPC_SERVER_REQUEST_MESSAGE => String::from("grpc.server.request.message"),
             Self::GRPC_SERVER_METHOD => String::from("grpc.server.method"),
@@ -130,6 +132,7 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafCustomRuleConditionInputAdd
             "server.response.headers.no_cookies" => Self::SERVER_RESPONSE_HEADERS_NO_COOKIES,
             "server.response.trailers" => Self::SERVER_RESPONSE_TRAILERS,
             "server.response.body" => Self::SERVER_RESPONSE_BODY,
+            "server.response.body.raw" => Self::SERVER_RESPONSE_BODY_RAW,
             "grpc.server.request.metadata" => Self::GRPC_SERVER_REQUEST_METADATA,
             "grpc.server.request.message" => Self::GRPC_SERVER_REQUEST_MESSAGE,
             "grpc.server.method" => Self::GRPC_SERVER_METHOD,
