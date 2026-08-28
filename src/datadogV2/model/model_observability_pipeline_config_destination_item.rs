@@ -82,6 +82,9 @@ pub enum ObservabilityPipelineConfigDestinationItem {
     ObservabilityPipelineDatadogMetricsDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogMetricsDestination>,
     ),
+    ObservabilityPipelineOpentelemetryMetricsDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetryMetricsDestination>,
+    ),
     ObservabilityPipelineSplunkHecMetricsDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestination>,
     ),
@@ -302,6 +305,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineDatadogMetricsDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetryMetricsDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineOpentelemetryMetricsDestination(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
