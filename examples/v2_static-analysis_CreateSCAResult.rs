@@ -8,14 +8,20 @@ use datadog_api_client::datadogV2::model::ScaRequestDataAttributesCommit;
 use datadog_api_client::datadogV2::model::ScaRequestDataAttributesDependenciesItems;
 use datadog_api_client::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItems;
 use datadog_api_client::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition;
+use datadog_api_client::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition;
 use datadog_api_client::datadogV2::model::ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition;
 use datadog_api_client::datadogV2::model::ScaRequestDataAttributesDependenciesItemsReachableSymbolPropertiesItems;
 use datadog_api_client::datadogV2::model::ScaRequestDataAttributesFilesItems;
 use datadog_api_client::datadogV2::model::ScaRequestDataAttributesRelationsItems;
 use datadog_api_client::datadogV2::model::ScaRequestDataAttributesRepository;
+use datadog_api_client::datadogV2::model::ScaRequestDataAttributesScanStartTimestamp;
+use datadog_api_client::datadogV2::model::ScaRequestDataAttributesTags;
+use datadog_api_client::datadogV2::model::ScaRequestDataAttributesTagsTool;
+use datadog_api_client::datadogV2::model::ScaRequestDataAttributesTagsToolGenerator;
 use datadog_api_client::datadogV2::model::ScaRequestDataAttributesVulnerabilitiesItems;
 use datadog_api_client::datadogV2::model::ScaRequestDataAttributesVulnerabilitiesItemsAffectsItems;
 use datadog_api_client::datadogV2::model::ScaRequestDataType;
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -31,69 +37,90 @@ async fn main() {
                         vec![
                             ScaRequestDataAttributesDependenciesItems::new()
                                 .exclusions(vec![])
+                                .group(None)
+                                .is_direct(None)
                                 .locations(
-                                    vec![
-                                        ScaRequestDataAttributesDependenciesItemsLocationsItems::new()
-                                            .block(
-                                                ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition
-                                                ::new()
-                                                    .end(
-                                                        ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
-                                                        ::new(),
-                                                    )
-                                                    .start(
-                                                        ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
-                                                        ::new(),
+                                    Some(
+                                        vec![
+                                            ScaRequestDataAttributesDependenciesItemsLocationsItems::new()
+                                                .block(
+                                                    ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition
+                                                    ::new()
+                                                        .end(
+                                                            ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
+                                                            ::new(),
+                                                        )
+                                                        .start(
+                                                            ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
+                                                            ::new(),
+                                                        ),
+                                                )
+                                                .name(
+                                                    Some(
+                                                        ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition
+                                                        ::new()
+                                                            .end(
+                                                                ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
+                                                                ::new(),
+                                                            )
+                                                            .start(
+                                                                ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
+                                                                ::new(),
+                                                            ),
                                                     ),
-                                            )
-                                            .name(
-                                                ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition
-                                                ::new()
-                                                    .end(
-                                                        ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
-                                                        ::new(),
-                                                    )
-                                                    .start(
-                                                        ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
-                                                        ::new(),
+                                                )
+                                                .namespace(
+                                                    Some(
+                                                        ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition
+                                                        ::new()
+                                                            .end(
+                                                                ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
+                                                                ::new(),
+                                                            )
+                                                            .start(
+                                                                ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
+                                                                ::new(),
+                                                            ),
                                                     ),
-                                            )
-                                            .namespace(
-                                                ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition
-                                                ::new()
-                                                    .end(
-                                                        ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
-                                                        ::new(),
-                                                    )
-                                                    .start(
-                                                        ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
-                                                        ::new(),
+                                                )
+                                                .version(
+                                                    Some(
+                                                        ScaRequestDataAttributesDependenciesItemsLocationsItemsNullableFilePosition
+                                                        ::new()
+                                                            .end(
+                                                                ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
+                                                                ::new(),
+                                                            )
+                                                            .start(
+                                                                ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
+                                                                ::new(),
+                                                            ),
                                                     ),
-                                            )
-                                            .version(
-                                                ScaRequestDataAttributesDependenciesItemsLocationsItemsFilePosition
-                                                ::new()
-                                                    .end(
-                                                        ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
-                                                        ::new(),
-                                                    )
-                                                    .start(
-                                                        ScaRequestDataAttributesDependenciesItemsLocationsItemsPosition
-                                                        ::new(),
-                                                    ),
-                                            )
-                                    ],
+                                                )
+                                        ],
+                                    ),
                                 )
                                 .reachable_symbol_properties(
                                     vec![
                                         ScaRequestDataAttributesDependenciesItemsReachableSymbolPropertiesItems::new()
                                     ],
                                 )
+                                .target_frameworks(vec![])
+                                .version(None)
                         ],
                     )
                     .files(vec![ScaRequestDataAttributesFilesItems::new()])
                     .relations(vec![ScaRequestDataAttributesRelationsItems::new().depends_on(vec![])])
                     .repository(ScaRequestDataAttributesRepository::new())
+                    .scan_start_timestamp(Some(ScaRequestDataAttributesScanStartTimestamp::new()))
+                    .tags(
+                        ScaRequestDataAttributesTags::new()
+                            .tool(
+                                ScaRequestDataAttributesTagsTool
+                                ::new().generator(ScaRequestDataAttributesTagsToolGenerator::new()),
+                            )
+                            .additional_properties(BTreeMap::from([])),
+                    )
                     .vulnerabilities(
                         vec![
                             ScaRequestDataAttributesVulnerabilitiesItems

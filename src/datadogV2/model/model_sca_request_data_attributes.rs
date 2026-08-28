@@ -30,12 +30,20 @@ pub struct ScaRequestDataAttributes {
     /// Information about the source code repository being analyzed.
     #[serde(rename = "repository")]
     pub repository: Option<crate::datadogV2::model::ScaRequestDataAttributesRepository>,
+    /// The time when the SCA scan started.
+    #[serde(
+        rename = "scan_start_timestamp",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub scan_start_timestamp:
+        Option<Option<crate::datadogV2::model::ScaRequestDataAttributesScanStartTimestamp>>,
     /// The name of the service or application being analyzed.
     #[serde(rename = "service")]
     pub service: Option<String>,
-    /// A map of key-value tags providing additional metadata for the SCA scan.
+    /// A map of tags providing additional metadata for the SCA scan.
     #[serde(rename = "tags")]
-    pub tags: Option<std::collections::BTreeMap<String, String>>,
+    pub tags: Option<crate::datadogV2::model::ScaRequestDataAttributesTags>,
     /// The list of vulnerabilities identified in the dependency graph.
     #[serde(rename = "vulnerabilities")]
     pub vulnerabilities:
@@ -56,6 +64,7 @@ impl ScaRequestDataAttributes {
             files: None,
             relations: None,
             repository: None,
+            scan_start_timestamp: None,
             service: None,
             tags: None,
             vulnerabilities: None,
@@ -109,12 +118,20 @@ impl ScaRequestDataAttributes {
         self
     }
 
+    pub fn scan_start_timestamp(
+        mut self,
+        value: Option<crate::datadogV2::model::ScaRequestDataAttributesScanStartTimestamp>,
+    ) -> Self {
+        self.scan_start_timestamp = Some(value);
+        self
+    }
+
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
 
-    pub fn tags(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
+    pub fn tags(mut self, value: crate::datadogV2::model::ScaRequestDataAttributesTags) -> Self {
         self.tags = Some(value);
         self
     }
@@ -174,8 +191,11 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributes {
                 let mut repository: Option<
                     crate::datadogV2::model::ScaRequestDataAttributesRepository,
                 > = None;
+                let mut scan_start_timestamp: Option<
+                    Option<crate::datadogV2::model::ScaRequestDataAttributesScanStartTimestamp>,
+                > = None;
                 let mut service: Option<String> = None;
-                let mut tags: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut tags: Option<crate::datadogV2::model::ScaRequestDataAttributesTags> = None;
                 let mut vulnerabilities: Option<
                     Vec<crate::datadogV2::model::ScaRequestDataAttributesVulnerabilitiesItems>,
                 > = None;
@@ -224,6 +244,10 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributes {
                             }
                             repository = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "scan_start_timestamp" => {
+                            scan_start_timestamp =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "service" => {
                             if v.is_null() {
                                 continue;
@@ -258,6 +282,7 @@ impl<'de> Deserialize<'de> for ScaRequestDataAttributes {
                     files,
                     relations,
                     repository,
+                    scan_start_timestamp,
                     service,
                     tags,
                     vulnerabilities,
