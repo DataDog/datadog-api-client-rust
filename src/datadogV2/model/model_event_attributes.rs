@@ -55,7 +55,8 @@ pub struct EventAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub monitor_id: Option<Option<i64>>,
-    /// The priority of the event's monitor. For example, `normal` or `low`.
+    /// The priority of the event alert. Legacy events use `normal` or `low`.
+    /// Alert events use `1` (highest priority) through `5` (lowest priority).
     #[serde(
         rename = "priority",
         default,
@@ -76,9 +77,9 @@ pub struct EventAttributes {
     /// Identifier for the source of the event, such as a monitor alert, an externally-submitted event, or an integration.
     #[serde(rename = "sourcecategory")]
     pub sourcecategory: Option<String>,
-    /// If an alert event is enabled, its status is one of the following:
-    /// `failure`, `error`, `warning`, `info`, `success`, `user_update`,
-    /// `recommendation`, or `snapshot`.
+    /// The event status. Legacy events can use `failure`, `error`, `warning`,
+    /// `info`, `success`, `user_update`, `recommendation`, or `snapshot`.
+    /// Alert events can use `error`, `warn`, or `ok`.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::EventStatusType>,
     /// A list of tags to apply to the event.

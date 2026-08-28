@@ -14,6 +14,9 @@ pub struct Event {
     /// Event ID.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// The integration ID of the event.
+    #[serde(rename = "integration_id")]
+    pub integration_id: Option<String>,
     /// The event name.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -23,6 +26,9 @@ pub struct Event {
     /// Event type.
     #[serde(rename = "type")]
     pub type_: Option<String>,
+    /// A unique identifier for the event. You can use this identifier to query or reference the event.
+    #[serde(rename = "uid")]
+    pub uid: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,9 +40,11 @@ impl Event {
     pub fn new() -> Event {
         Event {
             id: None,
+            integration_id: None,
             name: None,
             source_id: None,
             type_: None,
+            uid: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -44,6 +52,11 @@ impl Event {
 
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn integration_id(mut self, value: String) -> Self {
+        self.integration_id = Some(value);
         self
     }
 
@@ -59,6 +72,11 @@ impl Event {
 
     pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
+        self
+    }
+
+    pub fn uid(mut self, value: String) -> Self {
+        self.uid = Some(value);
         self
     }
 
@@ -95,9 +113,11 @@ impl<'de> Deserialize<'de> for Event {
                 M: MapAccess<'a>,
             {
                 let mut id: Option<String> = None;
+                let mut integration_id: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut source_id: Option<i64> = None;
                 let mut type_: Option<String> = None;
+                let mut uid: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -111,6 +131,13 @@ impl<'de> Deserialize<'de> for Event {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "integration_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            integration_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             if v.is_null() {
@@ -130,6 +157,12 @@ impl<'de> Deserialize<'de> for Event {
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "uid" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            uid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -140,9 +173,11 @@ impl<'de> Deserialize<'de> for Event {
 
                 let content = Event {
                     id,
+                    integration_id,
                     name,
                     source_id,
                     type_,
+                    uid,
                     additional_properties,
                     _unparsed,
                 };
