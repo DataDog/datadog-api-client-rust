@@ -61,14 +61,21 @@ impl GetLLMObsAnnotatedInteractionsByTraceIDsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetLLMObsPromptOptionalParams {
-    /// **Deprecated.** Optional label of the prompt version to return. Do not use this parameter for new integrations. If omitted, the latest version is returned. If the prompt has no labels, the latest version is returned even when a label is requested. If the prompt has labels but none match the requested label, a 404 response is returned.
+    /// **Deprecated.** Optional label of the prompt version to return. Do not use this parameter for new integrations. If omitted, the latest version is returned. If the prompt has no labels, the latest version is returned even when a label is requested. If the prompt has labels but none match the requested label, a 404 response is returned. This parameter cannot be used with `environment`.
     pub label: Option<String>,
+    /// Optional `DD_ENV` value used to resolve the prompt version deployed to the matching Feature Flags environment. This value is not a Feature Flags environment UUID. Using this parameter additionally requires the `feature_flag_config_read` and `feature_flag_environment_config_read` permissions. This parameter cannot be used with `label`.
+    pub environment: Option<String>,
 }
 
 impl GetLLMObsPromptOptionalParams {
-    /// **Deprecated.** Optional label of the prompt version to return. Do not use this parameter for new integrations. If omitted, the latest version is returned. If the prompt has no labels, the latest version is returned even when a label is requested. If the prompt has labels but none match the requested label, a 404 response is returned.
+    /// **Deprecated.** Optional label of the prompt version to return. Do not use this parameter for new integrations. If omitted, the latest version is returned. If the prompt has no labels, the latest version is returned even when a label is requested. If the prompt has labels but none match the requested label, a 404 response is returned. This parameter cannot be used with `environment`.
     pub fn label(mut self, value: String) -> Self {
         self.label = Some(value);
+        self
+    }
+    /// Optional `DD_ENV` value used to resolve the prompt version deployed to the matching Feature Flags environment. This value is not a Feature Flags environment UUID. Using this parameter additionally requires the `feature_flag_config_read` and `feature_flag_environment_config_read` permissions. This parameter cannot be used with `label`.
+    pub fn environment(mut self, value: String) -> Self {
+        self.environment = Some(value);
         self
     }
 }
@@ -5786,7 +5793,7 @@ impl AgentObservabilityAPI {
         }
     }
 
-    /// Get the latest version of an Agent Observability prompt by prompt ID.
+    /// Get an Agent Observability prompt by prompt ID. When `environment` is omitted, this returns the latest version or uses the deprecated `label` behavior and requires `llm_observability_read`. When `environment` is supplied, it must be a nonempty `DD_ENV` value, cannot be combined with `label`, and additionally requires `feature_flag_config_read` and `feature_flag_environment_config_read`. An empty environment or combining it with `label` returns 400, and missing either additional permission returns 403. A missing prompt or deployment returns 404 without falling back to the latest version. An environment resolution failure returns 500.
     pub async fn get_llm_obs_prompt(
         &self,
         prompt_id: String,
@@ -5812,7 +5819,7 @@ impl AgentObservabilityAPI {
         }
     }
 
-    /// Get the latest version of an Agent Observability prompt by prompt ID.
+    /// Get an Agent Observability prompt by prompt ID. When `environment` is omitted, this returns the latest version or uses the deprecated `label` behavior and requires `llm_observability_read`. When `environment` is supplied, it must be a nonempty `DD_ENV` value, cannot be combined with `label`, and additionally requires `feature_flag_config_read` and `feature_flag_environment_config_read`. An empty environment or combining it with `label` returns 400, and missing either additional permission returns 403. A missing prompt or deployment returns 404 without falling back to the latest version. An environment resolution failure returns 500.
     pub async fn get_llm_obs_prompt_with_http_info(
         &self,
         prompt_id: String,
@@ -5834,6 +5841,7 @@ impl AgentObservabilityAPI {
 
         // unbox and build optional parameters
         let label = params.label;
+        let environment = params.environment;
 
         let local_client = &self.client;
 
@@ -5848,6 +5856,10 @@ impl AgentObservabilityAPI {
         if let Some(ref local_query_param) = label {
             local_req_builder =
                 local_req_builder.query(&[("label", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = environment {
+            local_req_builder =
+                local_req_builder.query(&[("environment", &local_query_param.to_string())]);
         };
 
         // build headers

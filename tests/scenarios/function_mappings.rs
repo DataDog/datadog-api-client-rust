@@ -17186,8 +17186,12 @@ fn test_v2_get_llm_obs_prompt(world: &mut DatadogWorld, _parameters: &HashMap<St
     let label = _parameters
         .get("label")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let environment = _parameters
+        .get("environment")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_agent_observability::GetLLMObsPromptOptionalParams::default();
     params.label = label;
+    params.environment = environment;
     let response = match block_on(api.get_llm_obs_prompt_with_http_info(prompt_id, params)) {
         Ok(response) => response,
         Err(error) => {
