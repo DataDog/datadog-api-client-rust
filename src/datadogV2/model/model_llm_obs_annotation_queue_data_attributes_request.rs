@@ -23,6 +23,15 @@ pub struct LLMObsAnnotationQueueDataAttributesRequest {
     /// Identifier of the project this queue belongs to.
     #[serde(rename = "project_id")]
     pub project_id: String,
+    /// Whether annotation access is restricted to assigned users.
+    #[serde(rename = "restrict_to_assignees")]
+    pub restrict_to_assignees: Option<bool>,
+    /// Whether annotation access is restricted to queue reviewers.
+    #[serde(rename = "restrict_to_reviewers")]
+    pub restrict_to_reviewers: Option<bool>,
+    /// Email addresses of reviewers who can access the annotation queue.
+    #[serde(rename = "reviewer_emails")]
+    pub reviewer_emails: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -37,6 +46,9 @@ impl LLMObsAnnotationQueueDataAttributesRequest {
             description: None,
             name,
             project_id,
+            restrict_to_assignees: None,
+            restrict_to_reviewers: None,
+            reviewer_emails: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -52,6 +64,21 @@ impl LLMObsAnnotationQueueDataAttributesRequest {
 
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    pub fn restrict_to_assignees(mut self, value: bool) -> Self {
+        self.restrict_to_assignees = Some(value);
+        self
+    }
+
+    pub fn restrict_to_reviewers(mut self, value: bool) -> Self {
+        self.restrict_to_reviewers = Some(value);
+        self
+    }
+
+    pub fn reviewer_emails(mut self, value: Vec<String>) -> Self {
+        self.reviewer_emails = Some(value);
         self
     }
 
@@ -86,6 +113,9 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesRequest {
                 let mut description: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut project_id: Option<String> = None;
+                let mut restrict_to_assignees: Option<bool> = None;
+                let mut restrict_to_reviewers: Option<bool> = None;
+                let mut reviewer_emails: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -114,6 +144,27 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesRequest {
                         "project_id" => {
                             project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "restrict_to_assignees" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            restrict_to_assignees =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "restrict_to_reviewers" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            restrict_to_reviewers =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "reviewer_emails" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            reviewer_emails =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -129,6 +180,9 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesRequest {
                     description,
                     name,
                     project_id,
+                    restrict_to_assignees,
+                    restrict_to_reviewers,
+                    reviewer_emails,
                     additional_properties,
                     _unparsed,
                 };

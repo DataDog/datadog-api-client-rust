@@ -14,6 +14,9 @@ pub struct LLMObsDisplayBlockAnnotatedInteractionItem {
     /// List of annotations for this interaction.
     #[serde(rename = "annotations")]
     pub annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItem>,
+    /// Whether the current caller can annotate this interaction.
+    #[serde(rename = "can_annotate")]
+    pub can_annotate: bool,
     /// Server-generated deterministic identifier derived from the block list.
     #[serde(rename = "content_id")]
     pub content_id: String,
@@ -37,6 +40,7 @@ pub struct LLMObsDisplayBlockAnnotatedInteractionItem {
 impl LLMObsDisplayBlockAnnotatedInteractionItem {
     pub fn new(
         annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItem>,
+        can_annotate: bool,
         content_id: String,
         display_block: Vec<crate::datadogV2::model::LLMObsContentBlock>,
         id: String,
@@ -44,6 +48,7 @@ impl LLMObsDisplayBlockAnnotatedInteractionItem {
     ) -> LLMObsDisplayBlockAnnotatedInteractionItem {
         LLMObsDisplayBlockAnnotatedInteractionItem {
             annotations,
+            can_annotate,
             content_id,
             display_block,
             id,
@@ -81,6 +86,7 @@ impl<'de> Deserialize<'de> for LLMObsDisplayBlockAnnotatedInteractionItem {
             {
                 let mut annotations: Option<Vec<crate::datadogV2::model::LLMObsAnnotationItem>> =
                     None;
+                let mut can_annotate: Option<bool> = None;
                 let mut content_id: Option<String> = None;
                 let mut display_block: Option<Vec<crate::datadogV2::model::LLMObsContentBlock>> =
                     None;
@@ -97,6 +103,10 @@ impl<'de> Deserialize<'de> for LLMObsDisplayBlockAnnotatedInteractionItem {
                     match k.as_str() {
                         "annotations" => {
                             annotations =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "can_annotate" => {
+                            can_annotate =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "content_id" => {
@@ -129,6 +139,8 @@ impl<'de> Deserialize<'de> for LLMObsDisplayBlockAnnotatedInteractionItem {
                 }
                 let annotations =
                     annotations.ok_or_else(|| M::Error::missing_field("annotations"))?;
+                let can_annotate =
+                    can_annotate.ok_or_else(|| M::Error::missing_field("can_annotate"))?;
                 let content_id = content_id.ok_or_else(|| M::Error::missing_field("content_id"))?;
                 let display_block =
                     display_block.ok_or_else(|| M::Error::missing_field("display_block"))?;
@@ -137,6 +149,7 @@ impl<'de> Deserialize<'de> for LLMObsDisplayBlockAnnotatedInteractionItem {
 
                 let content = LLMObsDisplayBlockAnnotatedInteractionItem {
                     annotations,
+                    can_annotate,
                     content_id,
                     display_block,
                     id,

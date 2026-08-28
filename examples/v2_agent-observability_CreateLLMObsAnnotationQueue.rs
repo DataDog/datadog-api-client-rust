@@ -34,7 +34,10 @@ async fn main() {
             "bad".to_string(),
             "neutral".to_string(),
         ])]))
-        .description("Queue for annotating customer support traces".to_string()),
+        .description("Queue for annotating customer support traces".to_string())
+        .restrict_to_assignees(false)
+        .restrict_to_reviewers(true)
+        .reviewer_emails(vec!["reviewer@example.com".to_string()]),
         LLMObsAnnotationQueueType::QUEUES,
     ));
     let mut configuration = datadog::Configuration::new();

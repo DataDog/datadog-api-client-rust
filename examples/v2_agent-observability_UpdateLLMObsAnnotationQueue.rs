@@ -33,7 +33,10 @@ async fn main() {
                     "neutral".to_string(),
                 ])]))
                 .description("Updated description".to_string())
-                .name("Updated queue name".to_string()),
+                .name("Updated queue name".to_string())
+                .restrict_to_assignees(false)
+                .restrict_to_reviewers(true)
+                .reviewer_emails(vec!["reviewer@example.com".to_string()]),
             LLMObsAnnotationQueueType::QUEUES,
         ));
     let mut configuration = datadog::Configuration::new();
