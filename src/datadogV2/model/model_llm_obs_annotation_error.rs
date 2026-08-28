@@ -14,6 +14,9 @@ pub struct LLMObsAnnotationError {
     /// ID of the annotation that failed, if applicable.
     #[serde(rename = "annotation_id")]
     pub annotation_id: Option<String>,
+    /// Stable error code. `permission_denied` indicates the item was rejected by queue access rules.
+    #[serde(rename = "code")]
+    pub code: Option<crate::datadogV2::model::LLMObsAnnotationErrorCode>,
     /// Error message.
     #[serde(rename = "error")]
     pub error: String,
@@ -31,6 +34,7 @@ impl LLMObsAnnotationError {
     pub fn new(error: String, interaction_id: String) -> LLMObsAnnotationError {
         LLMObsAnnotationError {
             annotation_id: None,
+            code: None,
             error,
             interaction_id,
             additional_properties: std::collections::BTreeMap::new(),
@@ -40,6 +44,11 @@ impl LLMObsAnnotationError {
 
     pub fn annotation_id(mut self, value: String) -> Self {
         self.annotation_id = Some(value);
+        self
+    }
+
+    pub fn code(mut self, value: crate::datadogV2::model::LLMObsAnnotationErrorCode) -> Self {
+        self.code = Some(value);
         self
     }
 
@@ -70,6 +79,7 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationError {
                 M: MapAccess<'a>,
             {
                 let mut annotation_id: Option<String> = None;
+                let mut code: Option<crate::datadogV2::model::LLMObsAnnotationErrorCode> = None;
                 let mut error: Option<String> = None;
                 let mut interaction_id: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -86,6 +96,20 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationError {
                             }
                             annotation_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "code" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _code) = code {
+                                match _code {
+                                    crate::datadogV2::model::LLMObsAnnotationErrorCode::UnparsedObject(_code) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "error" => {
                             error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -107,6 +131,7 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationError {
 
                 let content = LLMObsAnnotationError {
                     annotation_id,
+                    code,
                     error,
                     interaction_id,
                     additional_properties,

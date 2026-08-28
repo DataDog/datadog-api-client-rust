@@ -14,6 +14,9 @@ pub struct LLMObsAnnotationQueueDataAttributesResponse {
     /// Schema defining the labels for an annotation queue.
     #[serde(rename = "annotation_schema")]
     pub annotation_schema: Option<crate::datadogV2::model::LLMObsAnnotationSchema>,
+    /// Whether the current caller can manage access for the annotation queue.
+    #[serde(rename = "can_manage_access")]
+    pub can_manage_access: bool,
     /// Timestamp when the queue was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
@@ -38,6 +41,16 @@ pub struct LLMObsAnnotationQueueDataAttributesResponse {
     /// Identifier of the project this queue belongs to.
     #[serde(rename = "project_id")]
     pub project_id: String,
+    /// Whether annotation access is restricted to assigned users.
+    #[serde(rename = "restrict_to_assignees")]
+    pub restrict_to_assignees: bool,
+    /// Whether annotation access is restricted to queue reviewers.
+    #[serde(rename = "restrict_to_reviewers")]
+    pub restrict_to_reviewers: bool,
+    /// Email addresses of reviewers for the annotation queue. Returned only
+    /// when the caller can manage queue access.
+    #[serde(rename = "reviewer_emails")]
+    pub reviewer_emails: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -47,6 +60,7 @@ pub struct LLMObsAnnotationQueueDataAttributesResponse {
 
 impl LLMObsAnnotationQueueDataAttributesResponse {
     pub fn new(
+        can_manage_access: bool,
         created_at: chrono::DateTime<chrono::Utc>,
         created_by: String,
         description: String,
@@ -55,9 +69,12 @@ impl LLMObsAnnotationQueueDataAttributesResponse {
         name: String,
         owned_by: String,
         project_id: String,
+        restrict_to_assignees: bool,
+        restrict_to_reviewers: bool,
     ) -> LLMObsAnnotationQueueDataAttributesResponse {
         LLMObsAnnotationQueueDataAttributesResponse {
             annotation_schema: None,
+            can_manage_access,
             created_at,
             created_by,
             description,
@@ -66,6 +83,9 @@ impl LLMObsAnnotationQueueDataAttributesResponse {
             name,
             owned_by,
             project_id,
+            restrict_to_assignees,
+            restrict_to_reviewers,
+            reviewer_emails: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -76,6 +96,11 @@ impl LLMObsAnnotationQueueDataAttributesResponse {
         value: crate::datadogV2::model::LLMObsAnnotationSchema,
     ) -> Self {
         self.annotation_schema = Some(value);
+        self
+    }
+
+    pub fn reviewer_emails(mut self, value: Vec<String>) -> Self {
+        self.reviewer_emails = Some(value);
         self
     }
 
@@ -107,6 +132,7 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesResponse {
             {
                 let mut annotation_schema: Option<crate::datadogV2::model::LLMObsAnnotationSchema> =
                     None;
+                let mut can_manage_access: Option<bool> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut description: Option<String> = None;
@@ -115,6 +141,9 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesResponse {
                 let mut name: Option<String> = None;
                 let mut owned_by: Option<String> = None;
                 let mut project_id: Option<String> = None;
+                let mut restrict_to_assignees: Option<bool> = None;
+                let mut restrict_to_reviewers: Option<bool> = None;
+                let mut reviewer_emails: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -128,6 +157,10 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesResponse {
                                 continue;
                             }
                             annotation_schema =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "can_manage_access" => {
+                            can_manage_access =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_at" => {
@@ -157,6 +190,21 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesResponse {
                         "project_id" => {
                             project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "restrict_to_assignees" => {
+                            restrict_to_assignees =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "restrict_to_reviewers" => {
+                            restrict_to_reviewers =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "reviewer_emails" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            reviewer_emails =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -164,6 +212,8 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesResponse {
                         }
                     }
                 }
+                let can_manage_access = can_manage_access
+                    .ok_or_else(|| M::Error::missing_field("can_manage_access"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
                 let description =
@@ -175,9 +225,14 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesResponse {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let owned_by = owned_by.ok_or_else(|| M::Error::missing_field("owned_by"))?;
                 let project_id = project_id.ok_or_else(|| M::Error::missing_field("project_id"))?;
+                let restrict_to_assignees = restrict_to_assignees
+                    .ok_or_else(|| M::Error::missing_field("restrict_to_assignees"))?;
+                let restrict_to_reviewers = restrict_to_reviewers
+                    .ok_or_else(|| M::Error::missing_field("restrict_to_reviewers"))?;
 
                 let content = LLMObsAnnotationQueueDataAttributesResponse {
                     annotation_schema,
+                    can_manage_access,
                     created_at,
                     created_by,
                     description,
@@ -186,6 +241,9 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueDataAttributesResponse {
                     name,
                     owned_by,
                     project_id,
+                    restrict_to_assignees,
+                    restrict_to_reviewers,
+                    reviewer_emails,
                     additional_properties,
                     _unparsed,
                 };
