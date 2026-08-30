@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Schema for an Incident-based trigger.
+/// Schema for an incident-based trigger.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentTriggerWrapper {
-    /// Trigger a workflow from an Incident. For automatic triggering a handle must be configured and the workflow must be published.
+    /// Trigger a workflow from an incident. For automatic triggering a handle must be configured and the workflow must be published.
     #[serde(rename = "incidentTrigger")]
     pub incident_trigger: crate::datadogV2::model::IncidentTrigger,
     /// Names of existing workflow steps that run first after a trigger fires.

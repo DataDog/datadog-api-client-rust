@@ -6,14 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Schema for a Slack-based trigger.
+/// Schema for an incident postmortem updated trigger.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct SlackTriggerWrapper {
-    /// Trigger a workflow from Slack. The workflow must be published.
-    #[serde(rename = "slackTrigger")]
-    pub slack_trigger: crate::datadogV2::model::SlackTrigger,
+pub struct IncidentPostmortemUpdatedTriggerWrapper {
+    /// Trigger a workflow when a postmortem is updated for an incident.
+    #[serde(rename = "incidentPostmortemUpdatedTrigger")]
+    pub incident_postmortem_updated_trigger:
+        crate::datadogV2::model::IncidentPostmortemUpdatedTrigger,
     /// Names of existing workflow steps that run first after a trigger fires.
     #[serde(rename = "startStepNames")]
     pub start_step_names: Option<Vec<String>>,
@@ -24,10 +25,12 @@ pub struct SlackTriggerWrapper {
     pub(crate) _unparsed: bool,
 }
 
-impl SlackTriggerWrapper {
-    pub fn new(slack_trigger: crate::datadogV2::model::SlackTrigger) -> SlackTriggerWrapper {
-        SlackTriggerWrapper {
-            slack_trigger,
+impl IncidentPostmortemUpdatedTriggerWrapper {
+    pub fn new(
+        incident_postmortem_updated_trigger: crate::datadogV2::model::IncidentPostmortemUpdatedTrigger,
+    ) -> IncidentPostmortemUpdatedTriggerWrapper {
+        IncidentPostmortemUpdatedTriggerWrapper {
+            incident_postmortem_updated_trigger,
             start_step_names: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -48,14 +51,14 @@ impl SlackTriggerWrapper {
     }
 }
 
-impl<'de> Deserialize<'de> for SlackTriggerWrapper {
+impl<'de> Deserialize<'de> for IncidentPostmortemUpdatedTriggerWrapper {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct SlackTriggerWrapperVisitor;
-        impl<'a> Visitor<'a> for SlackTriggerWrapperVisitor {
-            type Value = SlackTriggerWrapper;
+        struct IncidentPostmortemUpdatedTriggerWrapperVisitor;
+        impl<'a> Visitor<'a> for IncidentPostmortemUpdatedTriggerWrapperVisitor {
+            type Value = IncidentPostmortemUpdatedTriggerWrapper;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -65,7 +68,9 @@ impl<'de> Deserialize<'de> for SlackTriggerWrapper {
             where
                 M: MapAccess<'a>,
             {
-                let mut slack_trigger: Option<crate::datadogV2::model::SlackTrigger> = None;
+                let mut incident_postmortem_updated_trigger: Option<
+                    crate::datadogV2::model::IncidentPostmortemUpdatedTrigger,
+                > = None;
                 let mut start_step_names: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -75,8 +80,8 @@ impl<'de> Deserialize<'de> for SlackTriggerWrapper {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "slackTrigger" => {
-                            slack_trigger =
+                        "incidentPostmortemUpdatedTrigger" => {
+                            incident_postmortem_updated_trigger =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "startStepNames" => {
@@ -93,11 +98,13 @@ impl<'de> Deserialize<'de> for SlackTriggerWrapper {
                         }
                     }
                 }
-                let slack_trigger =
-                    slack_trigger.ok_or_else(|| M::Error::missing_field("slack_trigger"))?;
+                let incident_postmortem_updated_trigger = incident_postmortem_updated_trigger
+                    .ok_or_else(|| {
+                        M::Error::missing_field("incident_postmortem_updated_trigger")
+                    })?;
 
-                let content = SlackTriggerWrapper {
-                    slack_trigger,
+                let content = IncidentPostmortemUpdatedTriggerWrapper {
+                    incident_postmortem_updated_trigger,
                     start_step_names,
                     additional_properties,
                     _unparsed,
@@ -107,6 +114,6 @@ impl<'de> Deserialize<'de> for SlackTriggerWrapper {
             }
         }
 
-        deserializer.deserialize_any(SlackTriggerWrapperVisitor)
+        deserializer.deserialize_any(IncidentPostmortemUpdatedTriggerWrapperVisitor)
     }
 }

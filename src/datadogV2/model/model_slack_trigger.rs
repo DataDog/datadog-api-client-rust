@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Trigger a workflow from an incident. For automatic triggering a handle must be configured and the workflow must be published.
+/// Trigger a workflow from Slack. The workflow must be published.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentTrigger {
-    /// Defines a rate limit for a trigger.
-    #[serde(rename = "rateLimit")]
-    pub rate_limit: Option<crate::datadogV2::model::TriggerRateLimit>,
-    /// Version of the incident manual trigger.
-    #[serde(rename = "version")]
-    pub version: Option<String>,
+pub struct SlackTrigger {
+    /// Slack emoji reactions that trigger the workflow.
+    #[serde(rename = "reactionTriggers")]
+    pub reaction_triggers: Option<Vec<crate::datadogV2::model::SlackReactionConfig>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,20 @@ pub struct IncidentTrigger {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentTrigger {
-    pub fn new() -> IncidentTrigger {
-        IncidentTrigger {
-            rate_limit: None,
-            version: None,
+impl SlackTrigger {
+    pub fn new() -> SlackTrigger {
+        SlackTrigger {
+            reaction_triggers: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn rate_limit(mut self, value: crate::datadogV2::model::TriggerRateLimit) -> Self {
-        self.rate_limit = Some(value);
-        self
-    }
-
-    pub fn version(mut self, value: String) -> Self {
-        self.version = Some(value);
+    pub fn reaction_triggers(
+        mut self,
+        value: Vec<crate::datadogV2::model::SlackReactionConfig>,
+    ) -> Self {
+        self.reaction_triggers = Some(value);
         self
     }
 
@@ -53,20 +47,20 @@ impl IncidentTrigger {
     }
 }
 
-impl Default for IncidentTrigger {
+impl Default for SlackTrigger {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentTrigger {
+impl<'de> Deserialize<'de> for SlackTrigger {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentTriggerVisitor;
-        impl<'a> Visitor<'a> for IncidentTriggerVisitor {
-            type Value = IncidentTrigger;
+        struct SlackTriggerVisitor;
+        impl<'a> Visitor<'a> for SlackTriggerVisitor {
+            type Value = SlackTrigger;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +70,9 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
             where
                 M: MapAccess<'a>,
             {
-                let mut rate_limit: Option<crate::datadogV2::model::TriggerRateLimit> = None;
-                let mut version: Option<String> = None;
+                let mut reaction_triggers: Option<
+                    Vec<crate::datadogV2::model::SlackReactionConfig>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +81,12 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "rateLimit" => {
+                        "reactionTriggers" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rate_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "version" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            reaction_triggers =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,9 +96,8 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
                     }
                 }
 
-                let content = IncidentTrigger {
-                    rate_limit,
-                    version,
+                let content = SlackTrigger {
+                    reaction_triggers,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +106,6 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
             }
         }
 
-        deserializer.deserialize_any(IncidentTriggerVisitor)
+        deserializer.deserialize_any(SlackTriggerVisitor)
     }
 }
