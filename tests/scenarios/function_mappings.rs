@@ -4605,6 +4605,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.GetProjectedCost".into(), test_v2_get_projected_cost);
+    world
+        .function_mappings
+        .insert("v2.ListQuotas".into(), test_v2_list_quotas);
+    world.function_mappings.insert(
+        "v2.ListQuotasWithPagination".into(),
+        test_v2_list_quotas_with_pagination,
+    );
+    world
+        .function_mappings
+        .insert("v2.CreateQuotas".into(), test_v2_create_quotas);
+    world
+        .function_mappings
+        .insert("v2.DeleteQuota".into(), test_v2_delete_quota);
+    world
+        .function_mappings
+        .insert("v2.UpdateQuota".into(), test_v2_update_quota);
     world.function_mappings.insert(
         "v2.GetUsageSummaryAvailableFields".into(),
         test_v2_get_usage_summary_available_fields,
@@ -34894,6 +34910,183 @@ fn test_v2_get_projected_cost(world: &mut DatadogWorld, _parameters: &HashMap<St
     params.view = view;
     params.include_connected_accounts = include_connected_accounts;
     let response = match block_on(api.get_projected_cost_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_quotas(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let quota_namespace =
+        serde_json::from_value(_parameters.get("quota_namespace").unwrap().clone()).unwrap();
+    let include_descendants = _parameters
+        .get("include_descendants")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_usage_metering::ListQuotasOptionalParams::default();
+    params.include_descendants = include_descendants;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
+    let response = match block_on(api.list_quotas_with_http_info(quota_namespace, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_quotas_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let quota_namespace =
+        serde_json::from_value(_parameters.get("quota_namespace").unwrap().clone()).unwrap();
+    let include_descendants = _parameters
+        .get("include_descendants")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_usage_metering::ListQuotasOptionalParams::default();
+    params.include_descendants = include_descendants;
+    params.page_cursor = page_cursor;
+    params.page_limit = page_limit;
+    let response = api.list_quotas_with_pagination(quota_namespace, params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_create_quotas(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let quota_namespace =
+        serde_json::from_value(_parameters.get("quota_namespace").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include_descendants = _parameters
+        .get("include_descendants")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_usage_metering::CreateQuotasOptionalParams::default();
+    params.include_descendants = include_descendants;
+    let response = match block_on(api.create_quotas_with_http_info(quota_namespace, body, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_quota(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let quota_namespace =
+        serde_json::from_value(_parameters.get("quota_namespace").unwrap().clone()).unwrap();
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_quota_with_http_info(quota_namespace, id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_quota(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_usage_metering
+        .as_ref()
+        .expect("api instance not found");
+    let quota_namespace =
+        serde_json::from_value(_parameters.get("quota_namespace").unwrap().clone()).unwrap();
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_quota_with_http_info(quota_namespace, id, body)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
