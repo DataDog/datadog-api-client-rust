@@ -911,6 +911,7 @@ impl Default for Configuration {
             ("v2.create_scorecard_outcomes_batch".to_owned(), false),
             ("v2.get_entity_risk_score".to_owned(), false),
             ("v2.list_entity_risk_scores".to_owned(), false),
+            ("v2.add_stix_threat_intel".to_owned(), false),
             ("v2.create_slo_report_job".to_owned(), false),
             ("v2.get_slo_report".to_owned(), false),
             ("v2.get_slo_report_job_status".to_owned(), false),
