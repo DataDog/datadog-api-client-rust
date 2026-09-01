@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[serde(untagged)]
 pub enum IssuesSearchResultIncluded {
     Issue(Box<crate::datadogV2::model::Issue>),
-    Case(Box<crate::datadogV2::model::Case>),
+    IssueCase(Box<crate::datadogV2::model::IssueCase>),
     IssueUser(Box<crate::datadogV2::model::IssueUser>),
     IssueTeam(Box<crate::datadogV2::model::IssueTeam>),
     UnparsedObject(crate::datadog::UnparsedObject),
@@ -27,10 +27,11 @@ impl<'de> Deserialize<'de> for IssuesSearchResultIncluded {
                 return Ok(IssuesSearchResultIncluded::Issue(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::Case>>(value.clone())
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::IssueCase>>(value.clone())
         {
             if !_v._unparsed {
-                return Ok(IssuesSearchResultIncluded::Case(_v));
+                return Ok(IssuesSearchResultIncluded::IssueCase(_v));
             }
         }
         if let Ok(_v) =
