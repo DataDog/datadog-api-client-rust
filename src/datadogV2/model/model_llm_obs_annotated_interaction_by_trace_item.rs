@@ -13,11 +13,11 @@ use std::fmt::{self, Formatter};
 pub struct LLMObsAnnotatedInteractionByTraceItem {
     /// List of annotations for this interaction.
     #[serde(rename = "annotations")]
-    pub annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItem>,
+    pub annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItemResponse>,
     /// Whether the current caller can annotate this interaction.
     #[serde(rename = "can_annotate")]
     pub can_annotate: bool,
-    /// Upstream entity identifier (trace ID, session ID, or deterministic display_block ID).
+    /// Upstream entity identifier (trace ID, session ID, or deterministic display_block or frontend ID).
     #[serde(rename = "content_id")]
     pub content_id: String,
     /// Timestamp when the interaction was added to the queue.
@@ -27,6 +27,9 @@ pub struct LLMObsAnnotatedInteractionByTraceItem {
     /// Must contain at least one block.
     #[serde(rename = "display_block")]
     pub display_block: Option<Vec<crate::datadogV2::model::LLMObsContentBlock>>,
+    /// Web content that makes up a `frontend` interaction.
+    #[serde(rename = "frontend")]
+    pub frontend: Option<crate::datadogV2::model::LLMObsFrontendContent>,
     /// Unique identifier of the interaction.
     #[serde(rename = "id")]
     pub id: String,
@@ -51,7 +54,7 @@ pub struct LLMObsAnnotatedInteractionByTraceItem {
 
 impl LLMObsAnnotatedInteractionByTraceItem {
     pub fn new(
-        annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItem>,
+        annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItemResponse>,
         can_annotate: bool,
         content_id: String,
         created_at: chrono::DateTime<chrono::Utc>,
@@ -67,6 +70,7 @@ impl LLMObsAnnotatedInteractionByTraceItem {
             content_id,
             created_at,
             display_block: None,
+            frontend: None,
             id,
             modified_at,
             queue_id,
@@ -82,6 +86,11 @@ impl LLMObsAnnotatedInteractionByTraceItem {
         value: Vec<crate::datadogV2::model::LLMObsContentBlock>,
     ) -> Self {
         self.display_block = Some(value);
+        self
+    }
+
+    pub fn frontend(mut self, value: crate::datadogV2::model::LLMObsFrontendContent) -> Self {
+        self.frontend = Some(value);
         self
     }
 
@@ -111,13 +120,15 @@ impl<'de> Deserialize<'de> for LLMObsAnnotatedInteractionByTraceItem {
             where
                 M: MapAccess<'a>,
             {
-                let mut annotations: Option<Vec<crate::datadogV2::model::LLMObsAnnotationItem>> =
-                    None;
+                let mut annotations: Option<
+                    Vec<crate::datadogV2::model::LLMObsAnnotationItemResponse>,
+                > = None;
                 let mut can_annotate: Option<bool> = None;
                 let mut content_id: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut display_block: Option<Vec<crate::datadogV2::model::LLMObsContentBlock>> =
                     None;
+                let mut frontend: Option<crate::datadogV2::model::LLMObsFrontendContent> = None;
                 let mut id: Option<String> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut queue_id: Option<String> = None;
@@ -151,6 +162,12 @@ impl<'de> Deserialize<'de> for LLMObsAnnotatedInteractionByTraceItem {
                             }
                             display_block =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "frontend" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            frontend = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -202,6 +219,7 @@ impl<'de> Deserialize<'de> for LLMObsAnnotatedInteractionByTraceItem {
                     content_id,
                     created_at,
                     display_block,
+                    frontend,
                     id,
                     modified_at,
                     queue_id,

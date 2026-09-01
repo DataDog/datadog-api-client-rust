@@ -2478,6 +2478,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_llm_obs_annotated_interactions,
     );
     world.function_mappings.insert(
+        "v2.GetLLMObsAnnotatedInteraction".into(),
+        test_v2_get_llm_obs_annotated_interaction,
+    );
+    world.function_mappings.insert(
         "v2.UpsertLLMObsAnnotations".into(),
         test_v2_upsert_llm_obs_annotations,
     );
@@ -16403,6 +16407,38 @@ fn test_v2_get_llm_obs_annotated_interactions(
         .expect("api instance not found");
     let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_llm_obs_annotated_interactions_with_http_info(queue_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_llm_obs_annotated_interaction(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_agent_observability
+        .as_ref()
+        .expect("api instance not found");
+    let queue_id = serde_json::from_value(_parameters.get("queue_id").unwrap().clone()).unwrap();
+    let interaction_id =
+        serde_json::from_value(_parameters.get("interaction_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_llm_obs_annotated_interaction_with_http_info(queue_id, interaction_id),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {

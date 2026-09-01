@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct LLMObsDisplayBlockAnnotatedInteractionItem {
     /// List of annotations for this interaction.
     #[serde(rename = "annotations")]
-    pub annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItem>,
+    pub annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItemResponse>,
     /// Whether the current caller can annotate this interaction.
     #[serde(rename = "can_annotate")]
     pub can_annotate: bool,
@@ -39,7 +39,7 @@ pub struct LLMObsDisplayBlockAnnotatedInteractionItem {
 
 impl LLMObsDisplayBlockAnnotatedInteractionItem {
     pub fn new(
-        annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItem>,
+        annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItemResponse>,
         can_annotate: bool,
         content_id: String,
         display_block: Vec<crate::datadogV2::model::LLMObsContentBlock>,
@@ -84,8 +84,9 @@ impl<'de> Deserialize<'de> for LLMObsDisplayBlockAnnotatedInteractionItem {
             where
                 M: MapAccess<'a>,
             {
-                let mut annotations: Option<Vec<crate::datadogV2::model::LLMObsAnnotationItem>> =
-                    None;
+                let mut annotations: Option<
+                    Vec<crate::datadogV2::model::LLMObsAnnotationItemResponse>,
+                > = None;
                 let mut can_annotate: Option<bool> = None;
                 let mut content_id: Option<String> = None;
                 let mut display_block: Option<Vec<crate::datadogV2::model::LLMObsContentBlock>> =

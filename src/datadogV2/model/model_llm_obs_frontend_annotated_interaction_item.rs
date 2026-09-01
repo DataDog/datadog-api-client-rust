@@ -6,32 +6,29 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A trace, experiment trace, or session interaction with its associated annotations.
+/// A frontend interaction with its associated annotations.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct LLMObsTraceAnnotatedInteractionItem {
+pub struct LLMObsFrontendAnnotatedInteractionItem {
     /// List of annotations for this interaction.
     #[serde(rename = "annotations")]
     pub annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItemResponse>,
     /// Whether the current caller can annotate this interaction.
     #[serde(rename = "can_annotate")]
     pub can_annotate: bool,
-    /// Upstream entity identifier supplied by the caller.
+    /// Server-generated deterministic identifier derived from the content.
     #[serde(rename = "content_id")]
     pub content_id: String,
-    /// Timestamp when the interaction was added to the queue.
-    #[serde(rename = "created_at")]
-    pub created_at: chrono::DateTime<chrono::Utc>,
+    /// Web content that makes up a `frontend` interaction.
+    #[serde(rename = "frontend")]
+    pub frontend: crate::datadogV2::model::LLMObsFrontendContent,
     /// Unique identifier of the interaction.
     #[serde(rename = "id")]
     pub id: String,
-    /// Timestamp when the interaction was last updated.
-    #[serde(rename = "modified_at")]
-    pub modified_at: chrono::DateTime<chrono::Utc>,
-    /// Type of an upstream-entity interaction.
+    /// Type discriminator for a `frontend` interaction.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::LLMObsTraceInteractionType,
+    pub type_: crate::datadogV2::model::LLMObsFrontendInteractionType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -39,23 +36,21 @@ pub struct LLMObsTraceAnnotatedInteractionItem {
     pub(crate) _unparsed: bool,
 }
 
-impl LLMObsTraceAnnotatedInteractionItem {
+impl LLMObsFrontendAnnotatedInteractionItem {
     pub fn new(
         annotations: Vec<crate::datadogV2::model::LLMObsAnnotationItemResponse>,
         can_annotate: bool,
         content_id: String,
-        created_at: chrono::DateTime<chrono::Utc>,
+        frontend: crate::datadogV2::model::LLMObsFrontendContent,
         id: String,
-        modified_at: chrono::DateTime<chrono::Utc>,
-        type_: crate::datadogV2::model::LLMObsTraceInteractionType,
-    ) -> LLMObsTraceAnnotatedInteractionItem {
-        LLMObsTraceAnnotatedInteractionItem {
+        type_: crate::datadogV2::model::LLMObsFrontendInteractionType,
+    ) -> LLMObsFrontendAnnotatedInteractionItem {
+        LLMObsFrontendAnnotatedInteractionItem {
             annotations,
             can_annotate,
             content_id,
-            created_at,
+            frontend,
             id,
-            modified_at,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -71,14 +66,14 @@ impl LLMObsTraceAnnotatedInteractionItem {
     }
 }
 
-impl<'de> Deserialize<'de> for LLMObsTraceAnnotatedInteractionItem {
+impl<'de> Deserialize<'de> for LLMObsFrontendAnnotatedInteractionItem {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct LLMObsTraceAnnotatedInteractionItemVisitor;
-        impl<'a> Visitor<'a> for LLMObsTraceAnnotatedInteractionItemVisitor {
-            type Value = LLMObsTraceAnnotatedInteractionItem;
+        struct LLMObsFrontendAnnotatedInteractionItemVisitor;
+        impl<'a> Visitor<'a> for LLMObsFrontendAnnotatedInteractionItemVisitor {
+            type Value = LLMObsFrontendAnnotatedInteractionItem;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -93,10 +88,10 @@ impl<'de> Deserialize<'de> for LLMObsTraceAnnotatedInteractionItem {
                 > = None;
                 let mut can_annotate: Option<bool> = None;
                 let mut content_id: Option<String> = None;
-                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut frontend: Option<crate::datadogV2::model::LLMObsFrontendContent> = None;
                 let mut id: Option<String> = None;
-                let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut type_: Option<crate::datadogV2::model::LLMObsTraceInteractionType> = None;
+                let mut type_: Option<crate::datadogV2::model::LLMObsFrontendInteractionType> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -116,21 +111,17 @@ impl<'de> Deserialize<'de> for LLMObsTraceAnnotatedInteractionItem {
                         "content_id" => {
                             content_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "created_at" => {
-                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "frontend" => {
+                            frontend = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "modified_at" => {
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::LLMObsTraceInteractionType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::LLMObsFrontendInteractionType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -149,19 +140,16 @@ impl<'de> Deserialize<'de> for LLMObsTraceAnnotatedInteractionItem {
                 let can_annotate =
                     can_annotate.ok_or_else(|| M::Error::missing_field("can_annotate"))?;
                 let content_id = content_id.ok_or_else(|| M::Error::missing_field("content_id"))?;
-                let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
+                let frontend = frontend.ok_or_else(|| M::Error::missing_field("frontend"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let modified_at =
-                    modified_at.ok_or_else(|| M::Error::missing_field("modified_at"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = LLMObsTraceAnnotatedInteractionItem {
+                let content = LLMObsFrontendAnnotatedInteractionItem {
                     annotations,
                     can_annotate,
                     content_id,
-                    created_at,
+                    frontend,
                     id,
-                    modified_at,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -171,6 +159,6 @@ impl<'de> Deserialize<'de> for LLMObsTraceAnnotatedInteractionItem {
             }
         }
 
-        deserializer.deserialize_any(LLMObsTraceAnnotatedInteractionItemVisitor)
+        deserializer.deserialize_any(LLMObsFrontendAnnotatedInteractionItemVisitor)
     }
 }
