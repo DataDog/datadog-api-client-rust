@@ -12,6 +12,7 @@ pub enum LLMObsAnnotationQueueInteractionItem {
     LLMObsDisplayBlockInteractionItem(
         Box<crate::datadogV2::model::LLMObsDisplayBlockInteractionItem>,
     ),
+    LLMObsFrontendInteractionItem(Box<crate::datadogV2::model::LLMObsFrontendInteractionItem>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -37,6 +38,14 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueInteractionItem {
                 return Ok(
                     LLMObsAnnotationQueueInteractionItem::LLMObsDisplayBlockInteractionItem(_v),
                 );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::LLMObsFrontendInteractionItem>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(LLMObsAnnotationQueueInteractionItem::LLMObsFrontendInteractionItem(_v));
             }
         }
 
