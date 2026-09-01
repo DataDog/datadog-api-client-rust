@@ -6239,6 +6239,8 @@ impl CloudCostManagementAPI {
         }
     }
 
+    /// **Note**: This endpoint is deprecated. View OCI accounts in Cloud Cost Settings in the Datadog web application instead.
+    ///
     /// List the OCI configs.
     pub async fn list_cost_oci_configs(
         &self,
@@ -6258,6 +6260,8 @@ impl CloudCostManagementAPI {
         }
     }
 
+    /// **Note**: This endpoint is deprecated. View OCI accounts in Cloud Cost Settings in the Datadog web application instead.
+    ///
     /// List the OCI configs.
     pub async fn list_cost_oci_configs_with_http_info(
         &self,
