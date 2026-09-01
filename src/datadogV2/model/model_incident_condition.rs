@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Trigger a workflow from an incident. For automatic triggering a handle must be configured and the workflow must be published.
+/// Conditions that determine which incidents trigger the workflow.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentTrigger {
-    /// Defines a rate limit for a trigger.
-    #[serde(rename = "rateLimit")]
-    pub rate_limit: Option<crate::datadogV2::model::TriggerRateLimit>,
-    /// Version of the incident manual trigger.
-    #[serde(rename = "version")]
-    pub version: Option<String>,
+pub struct IncidentCondition {
+    /// Incident tags and values used to filter matching incidents.
+    #[serde(rename = "tagValues")]
+    pub tag_values: Option<Vec<crate::datadogV2::model::IncidentTagValue>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +21,17 @@ pub struct IncidentTrigger {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentTrigger {
-    pub fn new() -> IncidentTrigger {
-        IncidentTrigger {
-            rate_limit: None,
-            version: None,
+impl IncidentCondition {
+    pub fn new() -> IncidentCondition {
+        IncidentCondition {
+            tag_values: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn rate_limit(mut self, value: crate::datadogV2::model::TriggerRateLimit) -> Self {
-        self.rate_limit = Some(value);
-        self
-    }
-
-    pub fn version(mut self, value: String) -> Self {
-        self.version = Some(value);
+    pub fn tag_values(mut self, value: Vec<crate::datadogV2::model::IncidentTagValue>) -> Self {
+        self.tag_values = Some(value);
         self
     }
 
@@ -53,20 +44,20 @@ impl IncidentTrigger {
     }
 }
 
-impl Default for IncidentTrigger {
+impl Default for IncidentCondition {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for IncidentTrigger {
+impl<'de> Deserialize<'de> for IncidentCondition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentTriggerVisitor;
-        impl<'a> Visitor<'a> for IncidentTriggerVisitor {
-            type Value = IncidentTrigger;
+        struct IncidentConditionVisitor;
+        impl<'a> Visitor<'a> for IncidentConditionVisitor {
+            type Value = IncidentCondition;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +67,7 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
             where
                 M: MapAccess<'a>,
             {
-                let mut rate_limit: Option<crate::datadogV2::model::TriggerRateLimit> = None;
-                let mut version: Option<String> = None;
+                let mut tag_values: Option<Vec<crate::datadogV2::model::IncidentTagValue>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +76,11 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "rateLimit" => {
+                        "tagValues" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rate_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "version" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            tag_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -106,9 +90,8 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
                     }
                 }
 
-                let content = IncidentTrigger {
-                    rate_limit,
-                    version,
+                let content = IncidentCondition {
+                    tag_values,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +100,6 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
             }
         }
 
-        deserializer.deserialize_any(IncidentTriggerVisitor)
+        deserializer.deserialize_any(IncidentConditionVisitor)
     }
 }

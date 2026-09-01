@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Trigger a workflow from an incident. For automatic triggering a handle must be configured and the workflow must be published.
+/// Whether to execute the workflow serially for an incident.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IncidentTrigger {
-    /// Defines a rate limit for a trigger.
-    #[serde(rename = "rateLimit")]
-    pub rate_limit: Option<crate::datadogV2::model::TriggerRateLimit>,
-    /// Version of the incident manual trigger.
-    #[serde(rename = "version")]
-    pub version: Option<String>,
+pub struct SerialExecution {
+    /// Whether serial execution is enabled.
+    #[serde(rename = "enabled")]
+    pub enabled: bool,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,24 +21,13 @@ pub struct IncidentTrigger {
     pub(crate) _unparsed: bool,
 }
 
-impl IncidentTrigger {
-    pub fn new() -> IncidentTrigger {
-        IncidentTrigger {
-            rate_limit: None,
-            version: None,
+impl SerialExecution {
+    pub fn new(enabled: bool) -> SerialExecution {
+        SerialExecution {
+            enabled,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn rate_limit(mut self, value: crate::datadogV2::model::TriggerRateLimit) -> Self {
-        self.rate_limit = Some(value);
-        self
-    }
-
-    pub fn version(mut self, value: String) -> Self {
-        self.version = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -53,20 +39,14 @@ impl IncidentTrigger {
     }
 }
 
-impl Default for IncidentTrigger {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for IncidentTrigger {
+impl<'de> Deserialize<'de> for SerialExecution {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IncidentTriggerVisitor;
-        impl<'a> Visitor<'a> for IncidentTriggerVisitor {
-            type Value = IncidentTrigger;
+        struct SerialExecutionVisitor;
+        impl<'a> Visitor<'a> for SerialExecutionVisitor {
+            type Value = SerialExecution;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +56,7 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
             where
                 M: MapAccess<'a>,
             {
-                let mut rate_limit: Option<crate::datadogV2::model::TriggerRateLimit> = None;
-                let mut version: Option<String> = None;
+                let mut enabled: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +65,8 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "rateLimit" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            rate_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "version" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "enabled" => {
+                            enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -105,10 +75,10 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
                         }
                     }
                 }
+                let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
 
-                let content = IncidentTrigger {
-                    rate_limit,
-                    version,
+                let content = SerialExecution {
+                    enabled,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +87,6 @@ impl<'de> Deserialize<'de> for IncidentTrigger {
             }
         }
 
-        deserializer.deserialize_any(IncidentTriggerVisitor)
+        deserializer.deserialize_any(SerialExecutionVisitor)
     }
 }

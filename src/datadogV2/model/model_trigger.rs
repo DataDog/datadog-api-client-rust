@@ -20,6 +20,21 @@ pub enum Trigger {
     DashboardTriggerWrapper(Box<crate::datadogV2::model::DashboardTriggerWrapper>),
     FormTriggerWrapper(Box<crate::datadogV2::model::FormTriggerWrapper>),
     GithubWebhookTriggerWrapper(Box<crate::datadogV2::model::GithubWebhookTriggerWrapper>),
+    IncidentCreatedTriggerWrapper(Box<crate::datadogV2::model::IncidentCreatedTriggerWrapper>),
+    IncidentImpactCreatedTriggerWrapper(
+        Box<crate::datadogV2::model::IncidentImpactCreatedTriggerWrapper>,
+    ),
+    IncidentImpactUpdatedTriggerWrapper(
+        Box<crate::datadogV2::model::IncidentImpactUpdatedTriggerWrapper>,
+    ),
+    IncidentPostmortemUpdatedTriggerWrapper(
+        Box<crate::datadogV2::model::IncidentPostmortemUpdatedTriggerWrapper>,
+    ),
+    IncidentResponderCreatedTriggerWrapper(
+        Box<crate::datadogV2::model::IncidentResponderCreatedTriggerWrapper>,
+    ),
+    IncidentSavedTriggerWrapper(Box<crate::datadogV2::model::IncidentSavedTriggerWrapper>),
+    IncidentScheduleTriggerWrapper(Box<crate::datadogV2::model::IncidentScheduleTriggerWrapper>),
     IncidentTriggerWrapper(Box<crate::datadogV2::model::IncidentTriggerWrapper>),
     MonitorTriggerWrapper(Box<crate::datadogV2::model::MonitorTriggerWrapper>),
     NotebookTriggerWrapper(Box<crate::datadogV2::model::NotebookTriggerWrapper>),
@@ -112,6 +127,62 @@ impl<'de> Deserialize<'de> for Trigger {
         {
             if !_v._unparsed {
                 return Ok(Trigger::GithubWebhookTriggerWrapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::IncidentCreatedTriggerWrapper>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(Trigger::IncidentCreatedTriggerWrapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::IncidentImpactCreatedTriggerWrapper>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(Trigger::IncidentImpactCreatedTriggerWrapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::IncidentImpactUpdatedTriggerWrapper>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(Trigger::IncidentImpactUpdatedTriggerWrapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::IncidentPostmortemUpdatedTriggerWrapper>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(Trigger::IncidentPostmortemUpdatedTriggerWrapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::IncidentResponderCreatedTriggerWrapper>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(Trigger::IncidentResponderCreatedTriggerWrapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::IncidentSavedTriggerWrapper>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(Trigger::IncidentSavedTriggerWrapper(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::IncidentScheduleTriggerWrapper>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(Trigger::IncidentScheduleTriggerWrapper(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::IncidentTriggerWrapper>>(
