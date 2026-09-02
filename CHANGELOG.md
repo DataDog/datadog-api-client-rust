@@ -1,5 +1,52 @@
 # CHANGELOG
 
+## 0.36.0/2026-09-02
+
+### Added
+* Add opentelemetry metrics destination to observability pipelines public api spec [#2002](https://github.com/DataDog/datadog-api-client-rust/pull/2002)
+* Add incident and Slack reaction triggers to Workflow Automation [#2001](https://github.com/DataDog/datadog-api-client-rust/pull/2001)
+* Publish unstable STIX ingestion API [#2000](https://github.com/DataDog/datadog-api-client-rust/pull/2000)
+* [AGV-1598] Add is_iac support to send X-Datadog-Managed-By header [#1991](https://github.com/DataDog/datadog-api-client-rust/pull/1991)
+* Add warmup, fail_on_no_groups_found, and fail_on_no_data to Deployment Gates monitor rule options [#1990](https://github.com/DataDog/datadog-api-client-rust/pull/1990)
+* Add server.response.body.raw WAF address [#1977](https://github.com/DataDog/datadog-api-client-rust/pull/1977)
+* Fix estimate endpoint query params to match live schema [#1971](https://github.com/DataDog/datadog-api-client-rust/pull/1971)
+* Add OpenAPI docs for usage quotas admin [#1970](https://github.com/DataDog/datadog-api-client-rust/pull/1970)
+* Add zstd/compression to archive destinations [#1968](https://github.com/DataDog/datadog-api-client-rust/pull/1968)
+* Sync LLM Obs annotation access docs [#1962](https://github.com/DataDog/datadog-api-client-rust/pull/1962)
+* RUM - Make exclusion filter operations public [#1960](https://github.com/DataDog/datadog-api-client-rust/pull/1960)
+* API spec for severity modifiers automation pipelines [#1951](https://github.com/DataDog/datadog-api-client-rust/pull/1951)
+* Add bundle_config to Monitor Notification Rule [#1950](https://github.com/DataDog/datadog-api-client-rust/pull/1950)
+* Document RUM retention quota config API [#1949](https://github.com/DataDog/datadog-api-client-rust/pull/1949)
+* Add Integration Accounts v2 API for Twilio and Elastic Cloud [#1945](https://github.com/DataDog/datadog-api-client-rust/pull/1945)
+* Add endpoint_target field to Splunk HEC destination [#1944](https://github.com/DataDog/datadog-api-client-rust/pull/1944)
+* Add public Execution Policies endpoints [#1940](https://github.com/DataDog/datadog-api-client-rust/pull/1940)
+* Add OpenAPI spec for RUM Teams Ownership public API [#1935](https://github.com/DataDog/datadog-api-client-rust/pull/1935)
+* Add tags to Action Connection API spec [#1934](https://github.com/DataDog/datadog-api-client-rust/pull/1934)
+* Add Work Management note to Case Management API tag description [#1932](https://github.com/DataDog/datadog-api-client-rust/pull/1932)
+* Add OAuth support for v2 Logs queries [#1931](https://github.com/DataDog/datadog-api-client-rust/pull/1931)
+* Declare OAuth support for Events Search [#1929](https://github.com/DataDog/datadog-api-client-rust/pull/1929)
+* Add is_deleted query parameter to ListSLOs [#1899](https://github.com/DataDog/datadog-api-client-rust/pull/1899)
+
+### Changed
+* Promote usage quotas admin endpoints to public unstable [#1996](https://github.com/DataDog/datadog-api-client-rust/pull/1996)
+* AI Gateway - Fully type private beta control plane API [#1986](https://github.com/DataDog/datadog-api-client-rust/pull/1986)
+* Fix SCA OpenAPI drift [#1982](https://github.com/DataDog/datadog-api-client-rust/pull/1982)
+* Mark Data Deletion API as GA and update documentation [#1966](https://github.com/DataDog/datadog-api-client-rust/pull/1966)
+* Update CODEOWNERS to IDP pack [#1948](https://github.com/DataDog/datadog-api-client-rust/pull/1948)
+* Remove status_pages_settings_write as an accepted permission from Status Pages publishing APIs [#1942](https://github.com/DataDog/datadog-api-client-rust/pull/1942)
+* Rename Tag Policies to Tag Rules and move to /api/v2/governance/tag_rules [#1914](https://github.com/DataDog/datadog-api-client-rust/pull/1914)
+
+### Fixed
+* Fix CreateTeamConnections example missing required type fields [#1985](https://github.com/DataDog/datadog-api-client-rust/pull/1985)
+* Fix ARM API security spec drift [#1975](https://github.com/DataDog/datadog-api-client-rust/pull/1975)
+
+### Removed
+* Rename spec to RUM Retention Quotas and remove unsupported mode [#1969](https://github.com/DataDog/datadog-api-client-rust/pull/1969)
+* Make LLM Observability data deletion endpoint private [#1939](https://github.com/DataDog/datadog-api-client-rust/pull/1939)
+
+### Deprecated
+* Mark unused AWS logs v1 endpoints as deprecated [#1770](https://github.com/DataDog/datadog-api-client-rust/pull/1770)
+
 ## 0.35.0/2026-08-12
 
 ### Changed
