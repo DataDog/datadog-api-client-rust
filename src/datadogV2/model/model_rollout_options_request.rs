@@ -11,13 +11,26 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RolloutOptionsRequest {
-    /// Whether the schedule should begin automatically.
+    /// Whether the schedule should begin automatically. Deprecated in favor of
+    /// `scheduled_start`, which takes precedence when both are set.
+    #[deprecated]
     #[serde(
         rename = "autostart",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub autostart: Option<Option<bool>>,
+    /// Controls when the schedule starts. Supersedes `autostart`. One of:
+    ///
+    /// - `none`: create the schedule without starting it.
+    /// - `now`: start the schedule immediately.
+    /// - `relative:<duration>`: start after a duration (for example `relative:2h`).
+    /// - `absolute:<RFC3339 timestamp>`: start at a specific time (for example `absolute:2025-06-13T12:00:00Z`).
+    ///
+    /// An `absolute` timestamp in the past or present is treated as `now`. A future start time
+    /// is not supported for allocations linked to a standard experiment.
+    #[serde(rename = "scheduled_start")]
+    pub scheduled_start: Option<String>,
     /// Interval in milliseconds for uniform interval strategies.
     #[serde(rename = "selection_interval_ms")]
     pub selection_interval_ms: Option<i64>,
@@ -33,8 +46,10 @@ pub struct RolloutOptionsRequest {
 
 impl RolloutOptionsRequest {
     pub fn new(strategy: crate::datadogV2::model::RolloutStrategy) -> RolloutOptionsRequest {
+        #[allow(deprecated)]
         RolloutOptionsRequest {
             autostart: None,
+            scheduled_start: None,
             selection_interval_ms: None,
             strategy,
             additional_properties: std::collections::BTreeMap::new(),
@@ -42,11 +57,19 @@ impl RolloutOptionsRequest {
         }
     }
 
+    #[allow(deprecated)]
     pub fn autostart(mut self, value: Option<bool>) -> Self {
         self.autostart = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn scheduled_start(mut self, value: String) -> Self {
+        self.scheduled_start = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn selection_interval_ms(mut self, value: i64) -> Self {
         self.selection_interval_ms = Some(value);
         self
@@ -79,6 +102,7 @@ impl<'de> Deserialize<'de> for RolloutOptionsRequest {
                 M: MapAccess<'a>,
             {
                 let mut autostart: Option<Option<bool>> = None;
+                let mut scheduled_start: Option<String> = None;
                 let mut selection_interval_ms: Option<i64> = None;
                 let mut strategy: Option<crate::datadogV2::model::RolloutStrategy> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -91,6 +115,13 @@ impl<'de> Deserialize<'de> for RolloutOptionsRequest {
                     match k.as_str() {
                         "autostart" => {
                             autostart = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "scheduled_start" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            scheduled_start =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "selection_interval_ms" => {
                             if v.is_null() {
@@ -121,8 +152,10 @@ impl<'de> Deserialize<'de> for RolloutOptionsRequest {
                 }
                 let strategy = strategy.ok_or_else(|| M::Error::missing_field("strategy"))?;
 
+                #[allow(deprecated)]
                 let content = RolloutOptionsRequest {
                     autostart,
+                    scheduled_start,
                     selection_interval_ms,
                     strategy,
                     additional_properties,

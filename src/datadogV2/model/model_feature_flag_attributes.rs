@@ -33,6 +33,9 @@ pub struct FeatureFlagAttributes {
     /// Environment-specific settings for the feature flag.
     #[serde(rename = "feature_flag_environments")]
     pub feature_flag_environments: Option<Vec<crate::datadogV2::model::FeatureFlagEnvironment>>,
+    /// Indicates whether the feature flag is marked as a favorite by the current user.
+    #[serde(rename = "is_favorite")]
+    pub is_favorite: Option<bool>,
     /// JSON schema for validation when value_type is JSON.
     #[serde(
         rename = "json_schema",
@@ -52,6 +55,14 @@ pub struct FeatureFlagAttributes {
     /// Indicates whether this feature flag requires approval for changes.
     #[serde(rename = "require_approval")]
     pub require_approval: Option<bool>,
+    /// Details about the feature flag's staleness status.
+    #[serde(
+        rename = "staleness_details",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub staleness_details:
+        Option<Option<crate::datadogV2::model::FeatureFlagAttributesStalenessDetails>>,
     /// Indicates the whether a feature flag is stale or not.
     #[serde(rename = "staleness_status")]
     pub staleness_status: Option<String>,
@@ -89,11 +100,13 @@ impl FeatureFlagAttributes {
             description,
             distribution_channel: None,
             feature_flag_environments: None,
+            is_favorite: None,
             json_schema: None,
             key,
             last_updated_by: None,
             name,
             require_approval: None,
+            staleness_details: None,
             staleness_status: None,
             tags: None,
             updated_at: None,
@@ -132,6 +145,11 @@ impl FeatureFlagAttributes {
         self
     }
 
+    pub fn is_favorite(mut self, value: bool) -> Self {
+        self.is_favorite = Some(value);
+        self
+    }
+
     pub fn json_schema(mut self, value: Option<String>) -> Self {
         self.json_schema = Some(value);
         self
@@ -144,6 +162,14 @@ impl FeatureFlagAttributes {
 
     pub fn require_approval(mut self, value: bool) -> Self {
         self.require_approval = Some(value);
+        self
+    }
+
+    pub fn staleness_details(
+        mut self,
+        value: Option<crate::datadogV2::model::FeatureFlagAttributesStalenessDetails>,
+    ) -> Self {
+        self.staleness_details = Some(value);
         self
     }
 
@@ -196,11 +222,15 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                 let mut feature_flag_environments: Option<
                     Vec<crate::datadogV2::model::FeatureFlagEnvironment>,
                 > = None;
+                let mut is_favorite: Option<bool> = None;
                 let mut json_schema: Option<Option<String>> = None;
                 let mut key: Option<String> = None;
                 let mut last_updated_by: Option<uuid::Uuid> = None;
                 let mut name: Option<String> = None;
                 let mut require_approval: Option<bool> = None;
+                let mut staleness_details: Option<
+                    Option<crate::datadogV2::model::FeatureFlagAttributesStalenessDetails>,
+                > = None;
                 let mut staleness_status: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -248,6 +278,13 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                             feature_flag_environments =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "is_favorite" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_favorite =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "json_schema" => {
                             json_schema =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -270,6 +307,10 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                                 continue;
                             }
                             require_approval =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "staleness_details" => {
+                            staleness_details =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "staleness_status" => {
@@ -328,11 +369,13 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                     description,
                     distribution_channel,
                     feature_flag_environments,
+                    is_favorite,
                     json_schema,
                     key,
                     last_updated_by,
                     name,
                     require_approval,
+                    staleness_details,
                     staleness_status,
                     tags,
                     updated_at,

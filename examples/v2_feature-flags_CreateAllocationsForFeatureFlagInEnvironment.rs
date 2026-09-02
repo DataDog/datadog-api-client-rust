@@ -32,6 +32,7 @@ async fn main() {
             ExposureScheduleRequest::new(
                 RolloutOptionsRequest::new(RolloutStrategy::UNIFORM_INTERVALS)
                     .autostart(Some(false))
+                    .scheduled_start("absolute:2025-06-13T12:00:00Z".to_string())
                     .selection_interval_ms(3600000),
                 vec![ExposureRolloutStepRequest::new(0.5, 1, false)
                     .id(Uuid::parse_str("550e8400-e29b-41d4-a716-446655440040")
