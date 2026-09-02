@@ -24,6 +24,9 @@ use datadog_api_client::datadogV2::model::TriggerRateLimit;
 use datadog_api_client::datadogV2::model::WorkflowData;
 use datadog_api_client::datadogV2::model::WorkflowDataAttributes;
 use datadog_api_client::datadogV2::model::WorkflowDataType;
+use datadog_api_client::datadogV2::model::WorkflowRunAs;
+use datadog_api_client::datadogV2::model::WorkflowRunAsOwner;
+use datadog_api_client::datadogV2::model::WorkflowRunAsOwnerType;
 use serde_json::Value;
 
 #[tokio::main]
@@ -84,6 +87,9 @@ async fn main() {
         )
         .description("A sample workflow.".to_string())
         .published(true)
+        .run_as(WorkflowRunAs::WorkflowRunAsOwner(Box::new(
+            WorkflowRunAsOwner::new(WorkflowRunAsOwnerType::OWNER),
+        )))
         .tags(vec![
             "team:infra".to_string(),
             "service:monitoring".to_string(),

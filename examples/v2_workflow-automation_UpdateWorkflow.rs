@@ -24,6 +24,9 @@ use datadog_api_client::datadogV2::model::UpdateWorkflowRequest;
 use datadog_api_client::datadogV2::model::WorkflowDataType;
 use datadog_api_client::datadogV2::model::WorkflowDataUpdate;
 use datadog_api_client::datadogV2::model::WorkflowDataUpdateAttributes;
+use datadog_api_client::datadogV2::model::WorkflowRunAs;
+use datadog_api_client::datadogV2::model::WorkflowRunAsOwner;
+use datadog_api_client::datadogV2::model::WorkflowRunAsOwnerType;
 use serde_json::Value;
 
 #[tokio::main]
@@ -36,6 +39,9 @@ async fn main() {
                 .description("A sample workflow.".to_string())
                 .name("Example Workflow".to_string())
                 .published(true)
+                .run_as(WorkflowRunAs::WorkflowRunAsOwner(Box::new(
+                    WorkflowRunAsOwner::new(WorkflowRunAsOwnerType::OWNER),
+                )))
                 .spec(
                     Spec::new()
                         .connection_envs(vec![ConnectionEnv::new(ConnectionEnvEnv::DEFAULT)
