@@ -360,6 +360,7 @@ impl RestrictionPoliciesAPI {
     /// - Monitor Notification Rules: `monitor-notification-rule`
     /// - Status Pages: `status-page`
     /// - Feature Flags: `feature-flag`
+    /// - Network Path Configs: `network-path-config`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -391,6 +392,7 @@ impl RestrictionPoliciesAPI {
     /// Monitor Notification Rules  | `viewer`, `editor`
     /// Status Pages                | `viewer`, `responder`, `manager`
     /// Feature Flags               | `viewer`, `contributor`, `editor`
+    /// Network Path Configs        | `viewer`, `editor`
     pub async fn update_restriction_policy(
         &self,
         resource_id: String,
@@ -448,6 +450,7 @@ impl RestrictionPoliciesAPI {
     /// - Monitor Notification Rules: `monitor-notification-rule`
     /// - Status Pages: `status-page`
     /// - Feature Flags: `feature-flag`
+    /// - Network Path Configs: `network-path-config`
     ///
     /// #### Supported relations for resources
     /// Resource Type               | Supported Relations
@@ -479,6 +482,7 @@ impl RestrictionPoliciesAPI {
     /// Monitor Notification Rules  | `viewer`, `editor`
     /// Status Pages                | `viewer`, `responder`, `manager`
     /// Feature Flags               | `viewer`, `contributor`, `editor`
+    /// Network Path Configs        | `viewer`, `editor`
     pub async fn update_restriction_policy_with_http_info(
         &self,
         resource_id: String,
