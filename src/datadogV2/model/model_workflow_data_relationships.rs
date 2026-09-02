@@ -17,6 +17,9 @@ pub struct WorkflowDataRelationships {
     /// The definition of `WorkflowUserRelationship` object.
     #[serde(rename = "owner")]
     pub owner: Option<crate::datadogV2::model::WorkflowUserRelationship>,
+    /// The definition of `WorkflowUserRelationship` object.
+    #[serde(rename = "runAs")]
+    pub run_as: Option<crate::datadogV2::model::WorkflowUserRelationship>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,6 +32,7 @@ impl WorkflowDataRelationships {
         WorkflowDataRelationships {
             creator: None,
             owner: None,
+            run_as: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -41,6 +45,11 @@ impl WorkflowDataRelationships {
 
     pub fn owner(mut self, value: crate::datadogV2::model::WorkflowUserRelationship) -> Self {
         self.owner = Some(value);
+        self
+    }
+
+    pub fn run_as(mut self, value: crate::datadogV2::model::WorkflowUserRelationship) -> Self {
+        self.run_as = Some(value);
         self
     }
 
@@ -78,6 +87,7 @@ impl<'de> Deserialize<'de> for WorkflowDataRelationships {
             {
                 let mut creator: Option<crate::datadogV2::model::WorkflowUserRelationship> = None;
                 let mut owner: Option<crate::datadogV2::model::WorkflowUserRelationship> = None;
+                let mut run_as: Option<crate::datadogV2::model::WorkflowUserRelationship> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -98,6 +108,12 @@ impl<'de> Deserialize<'de> for WorkflowDataRelationships {
                             }
                             owner = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "runAs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            run_as = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -109,6 +125,7 @@ impl<'de> Deserialize<'de> for WorkflowDataRelationships {
                 let content = WorkflowDataRelationships {
                     creator,
                     owner,
+                    run_as,
                     additional_properties,
                     _unparsed,
                 };

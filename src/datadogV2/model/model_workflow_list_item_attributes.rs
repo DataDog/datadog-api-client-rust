@@ -23,6 +23,9 @@ pub struct WorkflowListItemAttributes {
     /// Whether the workflow is published. Unpublished workflows can only be run manually. Automatic triggers such as Schedule do not fire until the workflow is published.
     #[serde(rename = "published")]
     pub published: Option<bool>,
+    /// The effective type of identity used to run the workflow.
+    #[serde(rename = "runAsUserMode")]
+    pub run_as_user_mode: Option<crate::datadogV2::model::WorkflowRunAsUserMode>,
     /// A complete Workflow Automation definition, including its triggers, steps, and connections.
     #[serde(rename = "spec")]
     pub spec: Option<crate::datadogV2::model::Spec>,
@@ -46,6 +49,7 @@ impl WorkflowListItemAttributes {
             description: None,
             name,
             published: None,
+            run_as_user_mode: None,
             spec: None,
             tags: None,
             updated_at: None,
@@ -66,6 +70,14 @@ impl WorkflowListItemAttributes {
 
     pub fn published(mut self, value: bool) -> Self {
         self.published = Some(value);
+        self
+    }
+
+    pub fn run_as_user_mode(
+        mut self,
+        value: crate::datadogV2::model::WorkflowRunAsUserMode,
+    ) -> Self {
+        self.run_as_user_mode = Some(value);
         self
     }
 
@@ -114,6 +126,8 @@ impl<'de> Deserialize<'de> for WorkflowListItemAttributes {
                 let mut description: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut published: Option<bool> = None;
+                let mut run_as_user_mode: Option<crate::datadogV2::model::WorkflowRunAsUserMode> =
+                    None;
                 let mut spec: Option<crate::datadogV2::model::Spec> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -147,6 +161,21 @@ impl<'de> Deserialize<'de> for WorkflowListItemAttributes {
                             }
                             published = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "runAsUserMode" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            run_as_user_mode =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _run_as_user_mode) = run_as_user_mode {
+                                match _run_as_user_mode {
+                                    crate::datadogV2::model::WorkflowRunAsUserMode::UnparsedObject(_run_as_user_mode) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "spec" => {
                             if v.is_null() {
                                 continue;
@@ -179,6 +208,7 @@ impl<'de> Deserialize<'de> for WorkflowListItemAttributes {
                     description,
                     name,
                     published,
+                    run_as_user_mode,
                     spec,
                     tags,
                     updated_at,

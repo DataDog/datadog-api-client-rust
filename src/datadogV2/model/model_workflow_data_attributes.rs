@@ -23,6 +23,12 @@ pub struct WorkflowDataAttributes {
     /// Set the workflow to published or unpublished. Workflows in an unpublished state will only be executable via manual runs. Automatic triggers such as Schedule will not execute the workflow until it is published.
     #[serde(rename = "published")]
     pub published: Option<bool>,
+    /// Identity used to run the workflow.
+    #[serde(rename = "runAs")]
+    pub run_as: Option<crate::datadogV2::model::WorkflowRunAs>,
+    /// The effective type of identity used to run the workflow.
+    #[serde(rename = "runAsUserMode")]
+    pub run_as_user_mode: Option<crate::datadogV2::model::WorkflowRunAsUserMode>,
     /// A complete Workflow Automation definition, including its triggers, steps, and connections.
     #[serde(rename = "spec")]
     pub spec: crate::datadogV2::model::Spec,
@@ -49,6 +55,8 @@ impl WorkflowDataAttributes {
             description: None,
             name,
             published: None,
+            run_as: None,
+            run_as_user_mode: None,
             spec,
             tags: None,
             updated_at: None,
@@ -70,6 +78,19 @@ impl WorkflowDataAttributes {
 
     pub fn published(mut self, value: bool) -> Self {
         self.published = Some(value);
+        self
+    }
+
+    pub fn run_as(mut self, value: crate::datadogV2::model::WorkflowRunAs) -> Self {
+        self.run_as = Some(value);
+        self
+    }
+
+    pub fn run_as_user_mode(
+        mut self,
+        value: crate::datadogV2::model::WorkflowRunAsUserMode,
+    ) -> Self {
+        self.run_as_user_mode = Some(value);
         self
     }
 
@@ -118,6 +139,9 @@ impl<'de> Deserialize<'de> for WorkflowDataAttributes {
                 let mut description: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut published: Option<bool> = None;
+                let mut run_as: Option<crate::datadogV2::model::WorkflowRunAs> = None;
+                let mut run_as_user_mode: Option<crate::datadogV2::model::WorkflowRunAsUserMode> =
+                    None;
                 let mut spec: Option<crate::datadogV2::model::Spec> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -151,6 +175,37 @@ impl<'de> Deserialize<'de> for WorkflowDataAttributes {
                                 continue;
                             }
                             published = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "runAs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            run_as = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _run_as) = run_as {
+                                match _run_as {
+                                    crate::datadogV2::model::WorkflowRunAs::UnparsedObject(
+                                        _run_as,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "runAsUserMode" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            run_as_user_mode =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _run_as_user_mode) = run_as_user_mode {
+                                match _run_as_user_mode {
+                                    crate::datadogV2::model::WorkflowRunAsUserMode::UnparsedObject(_run_as_user_mode) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "spec" => {
                             spec = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -189,6 +244,8 @@ impl<'de> Deserialize<'de> for WorkflowDataAttributes {
                     description,
                     name,
                     published,
+                    run_as,
+                    run_as_user_mode,
                     spec,
                     tags,
                     updated_at,
