@@ -9,7 +9,9 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum EventStatusType {
     FAILURE,
     ERROR,
+    WARN,
     WARNING,
+    OK,
     INFO,
     SUCCESS,
     USER_UPDATE,
@@ -23,7 +25,9 @@ impl ToString for EventStatusType {
         match self {
             Self::FAILURE => String::from("failure"),
             Self::ERROR => String::from("error"),
+            Self::WARN => String::from("warn"),
             Self::WARNING => String::from("warning"),
+            Self::OK => String::from("ok"),
             Self::INFO => String::from("info"),
             Self::SUCCESS => String::from("success"),
             Self::USER_UPDATE => String::from("user_update"),
@@ -55,7 +59,9 @@ impl<'de> Deserialize<'de> for EventStatusType {
         Ok(match s.as_str() {
             "failure" => Self::FAILURE,
             "error" => Self::ERROR,
+            "warn" => Self::WARN,
             "warning" => Self::WARNING,
+            "ok" => Self::OK,
             "info" => Self::INFO,
             "success" => Self::SUCCESS,
             "user_update" => Self::USER_UPDATE,

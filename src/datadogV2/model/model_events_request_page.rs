@@ -14,7 +14,7 @@ pub struct EventsRequestPage {
     /// The returned paging point to use to get the next results.
     #[serde(rename = "cursor")]
     pub cursor: Option<String>,
-    /// The maximum number of logs in the response.
+    /// The maximum number of events in the response.
     #[serde(rename = "limit")]
     pub limit: Option<i32>,
     #[serde(flatten)]

@@ -9,6 +9,11 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum EventPriority {
     NORMAL,
     LOW,
+    PRIORITY_ONE,
+    PRIORITY_TWO,
+    PRIORITY_THREE,
+    PRIORITY_FOUR,
+    PRIORITY_FIVE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +22,11 @@ impl ToString for EventPriority {
         match self {
             Self::NORMAL => String::from("normal"),
             Self::LOW => String::from("low"),
+            Self::PRIORITY_ONE => String::from("1"),
+            Self::PRIORITY_TWO => String::from("2"),
+            Self::PRIORITY_THREE => String::from("3"),
+            Self::PRIORITY_FOUR => String::from("4"),
+            Self::PRIORITY_FIVE => String::from("5"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +53,11 @@ impl<'de> Deserialize<'de> for EventPriority {
         Ok(match s.as_str() {
             "normal" => Self::NORMAL,
             "low" => Self::LOW,
+            "1" => Self::PRIORITY_ONE,
+            "2" => Self::PRIORITY_TWO,
+            "3" => Self::PRIORITY_THREE,
+            "4" => Self::PRIORITY_FOUR,
+            "5" => Self::PRIORITY_FIVE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
