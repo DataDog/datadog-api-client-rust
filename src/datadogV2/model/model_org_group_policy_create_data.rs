@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct OrgGroupPolicyCreateData {
-    /// Attributes for creating an org group policy. If `policy_type` or `enforcement_tier` are not provided, they default to `org_config` and `DEFAULT` respectively.
+    /// Attributes for creating an org group policy. If `policy_type` is not provided, it defaults to `org_config`. `enforcement_tier` is optional; if not provided, the resulting value depends on `policy_type` and is otherwise unspecified.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::OrgGroupPolicyCreateAttributes,
     /// Relationships for creating a policy.

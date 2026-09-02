@@ -61,6 +61,8 @@ impl ListOrgGroupMembershipsOptionalParams {
 pub struct ListOrgGroupPoliciesOptionalParams {
     /// Filter policies by policy name.
     pub filter_policy_name: Option<String>,
+    /// Filter policies by policy type. Supported values are `org_config` and `role`.
+    pub filter_policy_type: Option<crate::datadogV2::model::OrgGroupPolicyFilterPolicyTypeValue>,
     /// The page number to return.
     pub page_number: Option<i64>,
     /// The number of items per page. Maximum is 1000.
@@ -73,6 +75,14 @@ impl ListOrgGroupPoliciesOptionalParams {
     /// Filter policies by policy name.
     pub fn filter_policy_name(mut self, value: String) -> Self {
         self.filter_policy_name = Some(value);
+        self
+    }
+    /// Filter policies by policy type. Supported values are `org_config` and `role`.
+    pub fn filter_policy_type(
+        mut self,
+        value: crate::datadogV2::model::OrgGroupPolicyFilterPolicyTypeValue,
+    ) -> Self {
+        self.filter_policy_type = Some(value);
         self
     }
     /// The page number to return.
@@ -2041,6 +2051,7 @@ impl OrgGroupsAPI {
 
         // unbox and build optional parameters
         let filter_policy_name = params.filter_policy_name;
+        let filter_policy_type = params.filter_policy_type;
         let page_number = params.page_number;
         let page_size = params.page_size;
         let sort = params.sort;
@@ -2059,6 +2070,10 @@ impl OrgGroupsAPI {
         if let Some(ref local_query_param) = filter_policy_name {
             local_req_builder =
                 local_req_builder.query(&[("filter[policy_name]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_policy_type {
+            local_req_builder =
+                local_req_builder.query(&[("filter[policy_type]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = page_number {
             local_req_builder =

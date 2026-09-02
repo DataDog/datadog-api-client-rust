@@ -52848,6 +52848,9 @@ fn test_v2_list_org_group_policies(world: &mut DatadogWorld, _parameters: &HashM
     let filter_policy_name = _parameters
         .get("filter[policy_name]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_policy_type = _parameters
+        .get("filter[policy_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let page_number = _parameters
         .get("page[number]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -52859,6 +52862,7 @@ fn test_v2_list_org_group_policies(world: &mut DatadogWorld, _parameters: &HashM
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_org_groups::ListOrgGroupPoliciesOptionalParams::default();
     params.filter_policy_name = filter_policy_name;
+    params.filter_policy_type = filter_policy_type;
     params.page_number = page_number;
     params.page_size = page_size;
     params.sort = sort;

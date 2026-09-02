@@ -11,19 +11,19 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct OrgGroupPolicyAttributes {
-    /// The policy content as key-value pairs.
+    /// The policy content as key-value pairs. For `org_config` policies, an arbitrary key-value map (for example, `{"value": "UTC"}`). For `role` policies, a `permissions` key containing an array of permission UUIDs (for example, `{"permissions": ["<uuid>", ...]}`).
     #[serde(rename = "content")]
     pub content: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// The enforcement tier of the policy. `OVERRIDE_ALLOWED` means the policy is set but member orgs may mutate it. `GROUP_MANAGED` means the policy is strictly controlled and mutations are blocked for affected orgs. `DELEGATE` means each member org controls its own value.
+    /// The enforcement tier of the policy. `OVERRIDE_ALLOWED` means the policy is set but member orgs may mutate it. `GROUP_MANAGED` means the policy is strictly controlled and mutations are blocked for affected orgs. `DELEGATE` means each member org controls its own value. `role` policies only support `GROUP_MANAGED` and `DELEGATE` — `OVERRIDE_ALLOWED` is rejected for this policy type. Transitioning a `role` policy to `DELEGATE` (disabling it) is one-way — the policy cannot be transitioned back to `GROUP_MANAGED` afterward.
     #[serde(rename = "enforcement_tier")]
     pub enforcement_tier: crate::datadogV2::model::OrgGroupPolicyEnforcementTier,
     /// Timestamp when the policy was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: chrono::DateTime<chrono::Utc>,
-    /// The name of the policy.
+    /// The name of the policy. This becomes the name of the resource created across orgs in the group (for example, for `role` policies, the name of the created role).
     #[serde(rename = "policy_name")]
     pub policy_name: String,
-    /// The type of the policy. Only `org_config` is supported, indicating a policy backed by an organization configuration setting.
+    /// The type of the policy. `org_config` indicates a policy backed by an organization configuration setting. `role` indicates a policy backed by a Datadog custom role.
     #[serde(rename = "policy_type")]
     pub policy_type: crate::datadogV2::model::OrgGroupPolicyPolicyType,
     #[serde(flatten)]

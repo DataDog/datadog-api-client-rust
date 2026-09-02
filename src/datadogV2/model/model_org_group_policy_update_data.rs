@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct OrgGroupPolicyUpdateData {
-    /// Attributes for updating an org group policy.
+    /// Attributes for updating an org group policy. `policy_name`, `content`, and `enforcement_tier` may be omitted individually to leave them unchanged.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::OrgGroupPolicyUpdateAttributes,
     /// The ID of the policy.
