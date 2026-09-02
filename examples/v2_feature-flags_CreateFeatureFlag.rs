@@ -5,14 +5,15 @@ use datadog_api_client::datadogV2::model::CreateFeatureFlagAttributes;
 use datadog_api_client::datadogV2::model::CreateFeatureFlagData;
 use datadog_api_client::datadogV2::model::CreateFeatureFlagDataType;
 use datadog_api_client::datadogV2::model::CreateFeatureFlagRequest;
+use datadog_api_client::datadogV2::model::CreateFeatureFlagStalenessStatus;
 use datadog_api_client::datadogV2::model::CreateVariant;
+use datadog_api_client::datadogV2::model::FeatureFlagDistributionChannel;
 use datadog_api_client::datadogV2::model::ValueType;
 
 #[tokio::main]
 async fn main() {
     let body = CreateFeatureFlagRequest::new(CreateFeatureFlagData::new(
         CreateFeatureFlagAttributes::new(
-            "Test feature flag for BDD scenarios".to_string(),
             "test-feature-flag-Example-Feature-Flag".to_string(),
             "Test Feature Flag Example-Feature-Flag".to_string(),
             ValueType::BOOLEAN,
@@ -29,7 +30,11 @@ async fn main() {
                 ),
             ],
         )
-        .default_variant_key(Some("variant-Example-Feature-Flag-1".to_string())),
+        .default_variant_key(Some("variant-Example-Feature-Flag-1".to_string()))
+        .distribution_channel(FeatureFlagDistributionChannel::SERVER)
+        .require_approval(false)
+        .staleness_status(CreateFeatureFlagStalenessStatus::PERMANENT)
+        .tags(vec!["env:api-client-test".to_string()]),
         CreateFeatureFlagDataType::FEATURE_FLAGS,
     ));
     let configuration = datadog::Configuration::new();
