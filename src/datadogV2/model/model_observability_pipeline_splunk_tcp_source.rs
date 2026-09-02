@@ -20,6 +20,9 @@ pub struct ObservabilityPipelineSplunkTcpSource {
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
+    /// Maximum duration, in seconds, that a connection can remain open before it is closed. When unset, connections can remain open indefinitely.
+    #[serde(rename = "max_connection_duration_secs")]
+    pub max_connection_duration_secs: Option<i64>,
     /// Configuration for enabling TLS encryption between the pipeline component and external connecting clients.
     #[serde(rename = "tls")]
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTls>,
@@ -41,6 +44,7 @@ impl ObservabilityPipelineSplunkTcpSource {
         ObservabilityPipelineSplunkTcpSource {
             address_key: None,
             id,
+            max_connection_duration_secs: None,
             tls: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -50,6 +54,11 @@ impl ObservabilityPipelineSplunkTcpSource {
 
     pub fn address_key(mut self, value: String) -> Self {
         self.address_key = Some(value);
+        self
+    }
+
+    pub fn max_connection_duration_secs(mut self, value: i64) -> Self {
+        self.max_connection_duration_secs = Some(value);
         self
     }
 
@@ -89,6 +98,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkTcpSource {
             {
                 let mut address_key: Option<String> = None;
                 let mut id: Option<String> = None;
+                let mut max_connection_duration_secs: Option<i64> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTls> =
                     None;
                 let mut type_: Option<
@@ -111,6 +121,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkTcpSource {
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "max_connection_duration_secs" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            max_connection_duration_secs =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tls" => {
                             if v.is_null() {
@@ -142,6 +159,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkTcpSource {
                 let content = ObservabilityPipelineSplunkTcpSource {
                     address_key,
                     id,
+                    max_connection_duration_secs,
                     tls,
                     type_,
                     additional_properties,
