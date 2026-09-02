@@ -20,7 +20,10 @@ pub struct CreateFeatureFlagAttributes {
     pub default_variant_key: Option<Option<String>>,
     /// The description of the feature flag.
     #[serde(rename = "description")]
-    pub description: String,
+    pub description: Option<String>,
+    /// The distribution channel for the feature flag.
+    #[serde(rename = "distribution_channel")]
+    pub distribution_channel: Option<crate::datadogV2::model::FeatureFlagDistributionChannel>,
     /// JSON schema for validation when value_type is JSON.
     #[serde(
         rename = "json_schema",
@@ -34,6 +37,15 @@ pub struct CreateFeatureFlagAttributes {
     /// The name of the feature flag.
     #[serde(rename = "name")]
     pub name: String,
+    /// Indicates whether this feature flag requires approval for changes.
+    #[serde(rename = "require_approval")]
+    pub require_approval: Option<bool>,
+    /// The staleness status for the feature flag at creation.
+    #[serde(rename = "staleness_status")]
+    pub staleness_status: Option<crate::datadogV2::model::CreateFeatureFlagStalenessStatus>,
+    /// Tags associated with the feature flag.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     /// The type of values for the feature flag variants.
     #[serde(rename = "value_type")]
     pub value_type: crate::datadogV2::model::ValueType,
@@ -49,7 +61,6 @@ pub struct CreateFeatureFlagAttributes {
 
 impl CreateFeatureFlagAttributes {
     pub fn new(
-        description: String,
         key: String,
         name: String,
         value_type: crate::datadogV2::model::ValueType,
@@ -57,10 +68,14 @@ impl CreateFeatureFlagAttributes {
     ) -> CreateFeatureFlagAttributes {
         CreateFeatureFlagAttributes {
             default_variant_key: None,
-            description,
+            description: None,
+            distribution_channel: None,
             json_schema: None,
             key,
             name,
+            require_approval: None,
+            staleness_status: None,
+            tags: None,
             value_type,
             variants,
             additional_properties: std::collections::BTreeMap::new(),
@@ -73,8 +88,39 @@ impl CreateFeatureFlagAttributes {
         self
     }
 
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn distribution_channel(
+        mut self,
+        value: crate::datadogV2::model::FeatureFlagDistributionChannel,
+    ) -> Self {
+        self.distribution_channel = Some(value);
+        self
+    }
+
     pub fn json_schema(mut self, value: Option<String>) -> Self {
         self.json_schema = Some(value);
+        self
+    }
+
+    pub fn require_approval(mut self, value: bool) -> Self {
+        self.require_approval = Some(value);
+        self
+    }
+
+    pub fn staleness_status(
+        mut self,
+        value: crate::datadogV2::model::CreateFeatureFlagStalenessStatus,
+    ) -> Self {
+        self.staleness_status = Some(value);
+        self
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
         self
     }
 
@@ -106,9 +152,17 @@ impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
             {
                 let mut default_variant_key: Option<Option<String>> = None;
                 let mut description: Option<String> = None;
+                let mut distribution_channel: Option<
+                    crate::datadogV2::model::FeatureFlagDistributionChannel,
+                > = None;
                 let mut json_schema: Option<Option<String>> = None;
                 let mut key: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut require_approval: Option<bool> = None;
+                let mut staleness_status: Option<
+                    crate::datadogV2::model::CreateFeatureFlagStalenessStatus,
+                > = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut value_type: Option<crate::datadogV2::model::ValueType> = None;
                 let mut variants: Option<Vec<crate::datadogV2::model::CreateVariant>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -124,8 +178,26 @@ impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "distribution_channel" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            distribution_channel =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _distribution_channel) = distribution_channel {
+                                match _distribution_channel {
+                                    crate::datadogV2::model::FeatureFlagDistributionChannel::UnparsedObject(_distribution_channel) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "json_schema" => {
                             json_schema =
@@ -136,6 +208,34 @@ impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "require_approval" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            require_approval =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "staleness_status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            staleness_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _staleness_status) = staleness_status {
+                                match _staleness_status {
+                                    crate::datadogV2::model::CreateFeatureFlagStalenessStatus::UnparsedObject(_staleness_status) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "value_type" => {
                             value_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -160,8 +260,6 @@ impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
                         }
                     }
                 }
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let key = key.ok_or_else(|| M::Error::missing_field("key"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let value_type = value_type.ok_or_else(|| M::Error::missing_field("value_type"))?;
@@ -170,9 +268,13 @@ impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
                 let content = CreateFeatureFlagAttributes {
                     default_variant_key,
                     description,
+                    distribution_channel,
                     json_schema,
                     key,
                     name,
+                    require_approval,
+                    staleness_status,
+                    tags,
                     value_type,
                     variants,
                     additional_properties,
