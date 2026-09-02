@@ -4112,6 +4112,8 @@ pub mod model_feature_flag_attributes;
 pub use self::model_feature_flag_attributes::FeatureFlagAttributes;
 pub mod model_feature_flag_environment;
 pub use self::model_feature_flag_environment::FeatureFlagEnvironment;
+pub mod model_feature_flag_attributes_staleness_details;
+pub use self::model_feature_flag_attributes_staleness_details::FeatureFlagAttributesStalenessDetails;
 pub mod model_list_environments_response;
 pub use self::model_list_environments_response::ListEnvironmentsResponse;
 pub mod model_environment;

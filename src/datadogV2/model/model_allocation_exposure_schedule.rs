@@ -50,6 +50,14 @@ pub struct AllocationExposureSchedule {
     /// Ordered progression steps for exposure.
     #[serde(rename = "rollout_steps")]
     pub rollout_steps: Vec<crate::datadogV2::model::AllocationExposureRolloutStep>,
+    /// The resolved UTC start time computed from `scheduled_start`. This field is
+    /// read-only and cannot be set directly.
+    #[serde(
+        rename = "scheduled_start_time",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub scheduled_start_time: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// The timestamp when the schedule was last updated.
     #[serde(rename = "updated_at")]
     pub updated_at: chrono::DateTime<chrono::Utc>,
@@ -79,6 +87,7 @@ impl AllocationExposureSchedule {
             id: None,
             rollout_options,
             rollout_steps,
+            scheduled_start_time: None,
             updated_at,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -102,6 +111,11 @@ impl AllocationExposureSchedule {
 
     pub fn id(mut self, value: uuid::Uuid) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn scheduled_start_time(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
+        self.scheduled_start_time = Some(value);
         self
     }
 
@@ -144,6 +158,7 @@ impl<'de> Deserialize<'de> for AllocationExposureSchedule {
                 let mut rollout_steps: Option<
                     Vec<crate::datadogV2::model::AllocationExposureRolloutStep>,
                 > = None;
+                let mut scheduled_start_time: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -190,6 +205,10 @@ impl<'de> Deserialize<'de> for AllocationExposureSchedule {
                             rollout_steps =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "scheduled_start_time" => {
+                            scheduled_start_time =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -221,6 +240,7 @@ impl<'de> Deserialize<'de> for AllocationExposureSchedule {
                     id,
                     rollout_options,
                     rollout_steps,
+                    scheduled_start_time,
                     updated_at,
                     additional_properties,
                     _unparsed,

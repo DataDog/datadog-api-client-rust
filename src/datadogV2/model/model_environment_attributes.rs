@@ -30,6 +30,9 @@ pub struct EnvironmentAttributes {
     /// The name of the environment.
     #[serde(rename = "name")]
     pub name: String,
+    /// Indicates whether full evaluation data is observed for this environment.
+    #[serde(rename = "observe_full_evaluation_data")]
+    pub observe_full_evaluation_data: Option<bool>,
     /// List of queries to define the environment scope.
     #[serde(rename = "queries")]
     pub queries: Option<Vec<String>>,
@@ -54,6 +57,7 @@ impl EnvironmentAttributes {
             is_production: None,
             key: None,
             name,
+            observe_full_evaluation_data: None,
             queries: None,
             require_feature_flag_approval: None,
             updated_at: None,
@@ -79,6 +83,11 @@ impl EnvironmentAttributes {
 
     pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
+        self
+    }
+
+    pub fn observe_full_evaluation_data(mut self, value: bool) -> Self {
+        self.observe_full_evaluation_data = Some(value);
         self
     }
 
@@ -128,6 +137,7 @@ impl<'de> Deserialize<'de> for EnvironmentAttributes {
                 let mut is_production: Option<bool> = None;
                 let mut key: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut observe_full_evaluation_data: Option<bool> = None;
                 let mut queries: Option<Vec<String>> = None;
                 let mut require_feature_flag_approval: Option<bool> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -165,6 +175,13 @@ impl<'de> Deserialize<'de> for EnvironmentAttributes {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "observe_full_evaluation_data" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            observe_full_evaluation_data =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "queries" => {
                             if v.is_null() {
                                 continue;
@@ -199,6 +216,7 @@ impl<'de> Deserialize<'de> for EnvironmentAttributes {
                     is_production,
                     key,
                     name,
+                    observe_full_evaluation_data,
                     queries,
                     require_feature_flag_approval,
                     updated_at,
