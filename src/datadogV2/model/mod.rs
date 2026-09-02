@@ -9338,6 +9338,8 @@ pub mod model_org_group_membership_update_data;
 pub use self::model_org_group_membership_update_data::OrgGroupMembershipUpdateData;
 pub mod model_org_group_membership_update_relationships;
 pub use self::model_org_group_membership_update_relationships::OrgGroupMembershipUpdateRelationships;
+pub mod model_org_group_policy_filter_policy_type_value;
+pub use self::model_org_group_policy_filter_policy_type_value::OrgGroupPolicyFilterPolicyTypeValue;
 pub mod model_org_group_policy_sort_option;
 pub use self::model_org_group_policy_sort_option::OrgGroupPolicySortOption;
 pub mod model_org_group_policy_list_response;

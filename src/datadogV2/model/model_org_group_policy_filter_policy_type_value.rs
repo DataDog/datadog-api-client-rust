@@ -6,13 +6,13 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum OrgGroupPolicyPolicyType {
+pub enum OrgGroupPolicyFilterPolicyTypeValue {
     ORG_CONFIG,
     ROLE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for OrgGroupPolicyPolicyType {
+impl ToString for OrgGroupPolicyFilterPolicyTypeValue {
     fn to_string(&self) -> String {
         match self {
             Self::ORG_CONFIG => String::from("org_config"),
@@ -22,7 +22,7 @@ impl ToString for OrgGroupPolicyPolicyType {
     }
 }
 
-impl Serialize for OrgGroupPolicyPolicyType {
+impl Serialize for OrgGroupPolicyFilterPolicyTypeValue {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,7 +34,7 @@ impl Serialize for OrgGroupPolicyPolicyType {
     }
 }
 
-impl<'de> Deserialize<'de> for OrgGroupPolicyPolicyType {
+impl<'de> Deserialize<'de> for OrgGroupPolicyFilterPolicyTypeValue {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

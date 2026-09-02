@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for updating an org group policy.
+/// Attributes for updating an org group policy. `policy_name`, `content`, and `enforcement_tier` may be omitted individually to leave them unchanged.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct OrgGroupPolicyUpdateAttributes {
-    /// The policy content as key-value pairs.
+    /// The policy content as key-value pairs. For `org_config` policies, an arbitrary key-value map (for example, `{"value": "UTC"}`). For `role` policies, a `permissions` key containing an array of permission UUIDs (for example, `{"permissions": ["<uuid>", ...]}`).
     #[serde(rename = "content")]
     pub content: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// The enforcement tier of the policy. `OVERRIDE_ALLOWED` means the policy is set but member orgs may mutate it. `GROUP_MANAGED` means the policy is strictly controlled and mutations are blocked for affected orgs. `DELEGATE` means each member org controls its own value.
+    /// The enforcement tier of the policy. `OVERRIDE_ALLOWED` means the policy is set but member orgs may mutate it. `GROUP_MANAGED` means the policy is strictly controlled and mutations are blocked for affected orgs. `DELEGATE` means each member org controls its own value. `role` policies only support `GROUP_MANAGED` and `DELEGATE` — `OVERRIDE_ALLOWED` is rejected for this policy type. Transitioning a `role` policy to `DELEGATE` (disabling it) is one-way — the policy cannot be transitioned back to `GROUP_MANAGED` afterward.
     #[serde(rename = "enforcement_tier")]
     pub enforcement_tier: Option<crate::datadogV2::model::OrgGroupPolicyEnforcementTier>,
+    /// The name of the policy. This becomes the name of the resource created across orgs in the group (for example, for `role` policies, the name of the created role). Omit to leave unchanged.
+    #[serde(rename = "policy_name")]
+    pub policy_name: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,6 +32,7 @@ impl OrgGroupPolicyUpdateAttributes {
         OrgGroupPolicyUpdateAttributes {
             content: None,
             enforcement_tier: None,
+            policy_name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -44,6 +48,11 @@ impl OrgGroupPolicyUpdateAttributes {
         value: crate::datadogV2::model::OrgGroupPolicyEnforcementTier,
     ) -> Self {
         self.enforcement_tier = Some(value);
+        self
+    }
+
+    pub fn policy_name(mut self, value: String) -> Self {
+        self.policy_name = Some(value);
         self
     }
 
@@ -84,6 +93,7 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyUpdateAttributes {
                 let mut enforcement_tier: Option<
                     crate::datadogV2::model::OrgGroupPolicyEnforcementTier,
                 > = None;
+                let mut policy_name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -113,6 +123,13 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyUpdateAttributes {
                                 }
                             }
                         }
+                        "policy_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            policy_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -124,6 +141,7 @@ impl<'de> Deserialize<'de> for OrgGroupPolicyUpdateAttributes {
                 let content = OrgGroupPolicyUpdateAttributes {
                     content,
                     enforcement_tier,
+                    policy_name,
                     additional_properties,
                     _unparsed,
                 };
