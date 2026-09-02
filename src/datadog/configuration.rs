@@ -874,6 +874,7 @@ impl Default for Configuration {
             ("v2.query_event_filtered_users".to_owned(), false),
             ("v2.query_users".to_owned(), false),
             ("v2.update_connection".to_owned(), false),
+            ("v2.list_product_catalog_sk_us".to_owned(), false),
             ("v2.get_pruned_trace_by_id".to_owned(), false),
             ("v2.get_trace_by_id".to_owned(), false),
             ("v2.get_asm_service_by_name".to_owned(), false),

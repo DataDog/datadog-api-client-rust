@@ -97,6 +97,7 @@ pub mod api_organizations;
 pub mod api_powerpack;
 pub mod api_processes;
 pub mod api_product_analytics;
+pub mod api_product_catalog;
 pub mod api_reference_tables;
 pub mod api_report_schedules;
 pub mod api_reporting_and_sharing;
