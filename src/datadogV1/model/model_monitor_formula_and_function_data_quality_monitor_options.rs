@@ -23,6 +23,10 @@ pub struct MonitorFormulaAndFunctionDataQualityMonitorOptions {
     /// Columns to group results by.
     #[serde(rename = "group_by_columns")]
     pub group_by_columns: Option<Vec<String>>,
+    /// Tuning options for the anomaly detection model used by the monitor.
+    #[serde(rename = "model_configuration")]
+    pub model_configuration:
+        Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelConfiguration>,
     /// Override for the model type used in anomaly detection.
     #[serde(rename = "model_type_override")]
     pub model_type_override:
@@ -32,6 +36,11 @@ pub struct MonitorFormulaAndFunctionDataQualityMonitorOptions {
     /// lower values tighten them and produce more alerts. Defaults to `3.0`.
     #[serde(rename = "sensitivity")]
     pub sensitivity: Option<f64>,
+    /// Configuration for a source to target monitor, which compares the same measure
+    /// across two data entities and alerts on the difference between them.
+    #[serde(rename = "source_to_target_config")]
+    pub source_to_target_config:
+        Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualitySourceToTargetConfig>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -46,8 +55,10 @@ impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
             custom_sql: None,
             custom_where: None,
             group_by_columns: None,
+            model_configuration: None,
             model_type_override: None,
             sensitivity: None,
+            source_to_target_config: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -73,6 +84,14 @@ impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
         self
     }
 
+    pub fn model_configuration(
+        mut self,
+        value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelConfiguration,
+    ) -> Self {
+        self.model_configuration = Some(value);
+        self
+    }
+
     pub fn model_type_override(
         mut self,
         value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride,
@@ -83,6 +102,14 @@ impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
 
     pub fn sensitivity(mut self, value: f64) -> Self {
         self.sensitivity = Some(value);
+        self
+    }
+
+    pub fn source_to_target_config(
+        mut self,
+        value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualitySourceToTargetConfig,
+    ) -> Self {
+        self.source_to_target_config = Some(value);
         self
     }
 
@@ -122,10 +149,14 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                 let mut custom_sql: Option<String> = None;
                 let mut custom_where: Option<String> = None;
                 let mut group_by_columns: Option<Vec<String>> = None;
+                let mut model_configuration: Option<
+                    crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelConfiguration,
+                > = None;
                 let mut model_type_override: Option<
                     crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride,
                 > = None;
                 let mut sensitivity: Option<f64> = None;
+                let mut source_to_target_config: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualitySourceToTargetConfig> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -161,6 +192,13 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                             group_by_columns =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "model_configuration" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            model_configuration =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "model_type_override" => {
                             if v.is_null() {
                                 continue;
@@ -183,6 +221,13 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                             sensitivity =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "source_to_target_config" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            source_to_target_config =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -196,8 +241,10 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                     custom_sql,
                     custom_where,
                     group_by_columns,
+                    model_configuration,
                     model_type_override,
                     sensitivity,
+                    source_to_target_config,
                     additional_properties,
                     _unparsed,
                 };
