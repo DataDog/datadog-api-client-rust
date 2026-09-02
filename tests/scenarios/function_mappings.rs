@@ -191,6 +191,7 @@ pub struct ApiInstances {
     pub v2_api_product_analytics: Option<datadogV2::api_product_analytics::ProductAnalyticsAPI>,
     pub v2_api_rum_audience_management:
         Option<datadogV2::api_rum_audience_management::RumAudienceManagementAPI>,
+    pub v2_api_product_catalog: Option<datadogV2::api_product_catalog::ProductCatalogAPI>,
     pub v2_api_apm_trace: Option<datadogV2::api_apm_trace::APMTraceAPI>,
     pub v2_api_reference_tables: Option<datadogV2::api_reference_tables::ReferenceTablesAPI>,
     pub v2_api_application_security:
@@ -1255,6 +1256,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
+        }
+        "ProductCatalog" => {
+            world.api_instances.v2_api_product_catalog = Some(
+                datadogV2::api_product_catalog::ProductCatalogAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "APMTrace" => {
             world.api_instances.v2_api_apm_trace = Some(
@@ -6982,6 +6991,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.ListConnections".into(), test_v2_list_connections);
+    world.function_mappings.insert(
+        "v2.ListProductCatalogSKUs".into(),
+        test_v2_list_product_catalog_sk_us,
+    );
     world.function_mappings.insert(
         "v2.GetPrunedTraceByID".into(),
         test_v2_get_pruned_trace_by_id,
@@ -54649,6 +54662,40 @@ fn test_v2_list_connections(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .expect("api instance not found");
     let entity = serde_json::from_value(_parameters.get("entity").unwrap().clone()).unwrap();
     let response = match block_on(api.list_connections_with_http_info(entity)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_product_catalog_sk_us(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_product_catalog
+        .as_ref()
+        .expect("api instance not found");
+    let version = serde_json::from_value(_parameters.get("version").unwrap().clone()).unwrap();
+    let as_of_date = _parameters
+        .get("as_of_date")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_product_catalog::ListProductCatalogSKUsOptionalParams::default();
+    params.as_of_date = as_of_date;
+    let response = match block_on(api.list_product_catalog_sk_us_with_http_info(version, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
