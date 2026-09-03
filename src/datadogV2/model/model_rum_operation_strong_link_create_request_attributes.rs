@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for creating a RUM operation strong link.
+/// Attributes for creating a RUM operation link.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,14 +14,14 @@ pub struct RUMOperationStrongLinkCreateRequestAttributes {
     /// The RUM application ID used when creating a stub operation from `operation_name`.
     #[serde(rename = "application_id")]
     pub application_id: Option<uuid::Uuid>,
-    /// A description of the strong link.
+    /// A description of the link.
     #[serde(
         rename = "description",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub description: Option<Option<String>>,
-    /// The unique identifier of the feature to link.
+    /// The unique identifier of the journey to link.
     #[serde(rename = "feature_id")]
     pub feature_id: String,
     /// The unique identifier of the RUM operation to link. Either `operation_id` or
@@ -32,10 +32,10 @@ pub struct RUMOperationStrongLinkCreateRequestAttributes {
     /// required. If no operation with this name exists, a stub operation is created.
     #[serde(rename = "operation_name")]
     pub operation_name: Option<String>,
-    /// The status of a RUM operation strong link.
+    /// The status of a RUM operation link.
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::RUMOperationStrongLinkStatus>,
-    /// A list of tags associated with the strong link.
+    /// A list of tags associated with the link.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     #[serde(flatten)]

@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Metadata for a list of RUM operation strong links.
+/// Metadata for a list of RUM operation links.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,7 +17,7 @@ pub struct RUMOperationStrongLinksListResponseMeta {
     /// The current offset.
     #[serde(rename = "offset")]
     pub offset: Option<i64>,
-    /// The total number of strong links matching the request.
+    /// The total number of links matching the request.
     #[serde(rename = "total")]
     pub total: Option<i64>,
     #[serde(flatten)]

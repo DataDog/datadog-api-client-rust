@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The request body for updating a RUM operation strong link.
+/// The request body for updating a RUM operation link.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMOperationStrongLinkUpdateRequest {
-    /// The data object for updating a RUM operation strong link.
+    /// The data object for updating a RUM operation link.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::RUMOperationStrongLinkUpdateRequestData,
     #[serde(flatten)]
