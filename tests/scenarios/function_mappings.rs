@@ -7,6 +7,7 @@ use std::collections::HashMap;
 
 use datadog_api_client::datadog::*;
 use datadog_api_client::datadogV1;
+use datadog_api_client::datadogV1_20270101;
 use datadog_api_client::datadogV2;
 
 #[derive(Debug, Default)]
@@ -49,6 +50,7 @@ pub struct ApiInstances {
     pub v1_api_tags: Option<datadogV1::api_tags::TagsAPI>,
     pub v1_api_users: Option<datadogV1::api_users::UsersAPI>,
     pub v1_api_authentication: Option<datadogV1::api_authentication::AuthenticationAPI>,
+    pub v1_20270101_api_dashboards: Option<datadogV1_20270101::api_dashboards::DashboardsAPI>,
     pub v2_api_fleet_automation: Option<datadogV2::api_fleet_automation::FleetAutomationAPI>,
     pub v2_api_agent_observability:
         Option<datadogV2::api_agent_observability::AgentObservabilityAPI>,
@@ -297,6 +299,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "Dashboards" => {
             world.api_instances.v1_api_dashboards = Some(
                 datadogV1::api_dashboards::DashboardsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+            world.api_instances.v1_20270101_api_dashboards = Some(
+                datadogV1_20270101::api_dashboards::DashboardsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -2384,6 +2392,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v1.Validate".into(), test_v1_validate);
+    world.function_mappings.insert(
+        "v1_20270101.ListDashboards".into(),
+        test_v1_20270101_list_dashboards,
+    );
+    world.function_mappings.insert(
+        "v1_20270101.ListDashboardsWithPagination".into(),
+        test_v1_20270101_list_dashboards_with_pagination,
+    );
     world.function_mappings.insert(
         "v2.ListFleetAgentTracers".into(),
         test_v2_list_fleet_agent_tracers,
@@ -15616,6 +15632,103 @@ fn test_v1_validate(world: &mut DatadogWorld, _parameters: &HashMap<String, Valu
     };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
+}
+
+fn test_v1_20270101_list_dashboards(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v1_20270101_api_dashboards
+        .as_ref()
+        .expect("api instance not found");
+    let filter_shared = _parameters
+        .get("filter[shared]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_deleted = _parameters
+        .get("filter[deleted]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let count = _parameters
+        .get("count")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let start = _parameters
+        .get("start")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV1_20270101::api_dashboards::ListDashboardsOptionalParams::default();
+    params.filter_shared = filter_shared;
+    params.filter_deleted = filter_deleted;
+    params.count = count;
+    params.start = start;
+    let response = match block_on(api.list_dashboards_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v1_20270101_list_dashboards_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v1_20270101_api_dashboards
+        .as_ref()
+        .expect("api instance not found");
+    let filter_shared = _parameters
+        .get("filter[shared]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_deleted = _parameters
+        .get("filter[deleted]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let count = _parameters
+        .get("count")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let start = _parameters
+        .get("start")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV1_20270101::api_dashboards::ListDashboardsOptionalParams::default();
+    params.filter_shared = filter_shared;
+    params.filter_deleted = filter_deleted;
+    params.count = count;
+    params.start = start;
+    let response = api.list_dashboards_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
 }
 
 fn test_v2_list_fleet_agent_tracers(

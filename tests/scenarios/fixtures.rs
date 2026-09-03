@@ -46,6 +46,7 @@ struct UndoOperation {
 #[derive(Debug, Default, World)]
 pub struct DatadogWorld {
     pub api_version: i32,
+    pub operation_version: Option<String>,
     pub config: Configuration,
     pub http_client: Option<reqwest_middleware::ClientWithMiddleware>,
     pub fixtures: Value,
@@ -61,6 +62,13 @@ pub struct DatadogWorld {
     test_scenario: String,
     test_server_session: Option<String>,
     test_runner_plan: Option<Value>,
+}
+
+fn operation_namespace(world: &DatadogWorld) -> String {
+    world
+        .operation_version
+        .clone()
+        .unwrap_or_else(|| format!("v{}", world.api_version))
 }
 
 lazy_static! {
@@ -280,6 +288,9 @@ fn apply_test_runner_plan(world: &mut DatadogWorld, pagination: bool) {
     }
     let plan = world.test_runner_plan.clone().unwrap();
     assert_eq!(plan["request"]["pagination"].as_bool().unwrap(), pagination);
+    world.operation_version = plan["operation_version"]
+        .as_str()
+        .map(|version| format!("v{}_{}", world.api_version, version.replace('-', "")));
     let api_name = plan["api"].as_str().unwrap().replace('-', "");
     initialize_api_instance(world, api_name.clone());
     world.api_name = Some(api_name);
@@ -332,6 +343,9 @@ async fn send_test_runner_request(world: &mut DatadogWorld) {
     let mut path = request_plan["path"].as_str().unwrap().to_string();
     let mut query = Vec::new();
     let mut headers = reqwest::header::HeaderMap::new();
+    if let Some(version) = plan["operation_version"].as_str() {
+        headers.insert("dd-api-version", version.parse().unwrap());
+    }
 
     for parameter in request_plan["parameters"].as_array().unwrap() {
         let name = parameter["name"].as_str().unwrap();
@@ -920,11 +934,23 @@ fn new_request(world: &mut DatadogWorld, operation_id: String) {
     world.operation_id = operation_id
 }
 
+#[given(expr = "new {string} with version {string} request")]
+fn new_versioned_request(world: &mut DatadogWorld, operation_id: String, version: String) {
+    world.operation_version = Some(format!(
+        "v{}_{}",
+        world.api_version,
+        version.replace('-', "")
+    ));
+    if !test_runner_enabled() {
+        world.operation_id = operation_id;
+    }
+}
+
 #[given(expr = "operation {string} enabled")]
 fn enable_unstable(world: &mut DatadogWorld, operation_id: String) {
     let operation_id = format!(
-        "v{}.{}",
-        world.api_version,
+        "{}.{}",
+        operation_namespace(world),
         operation_id.to_case(Case::Snake)
     );
     world
@@ -1034,7 +1060,11 @@ async fn request_sent(world: &mut DatadogWorld) {
     }
     world
         .function_mappings
-        .get(&format!("v{}.{}", world.api_version, &world.operation_id))
+        .get(&format!(
+            "{}.{}",
+            operation_namespace(world),
+            &world.operation_id
+        ))
         .expect(&format!(
             "{:?} request operation id not found",
             world.operation_id
@@ -1063,8 +1093,9 @@ async fn request_with_pagination_sent(world: &mut DatadogWorld) {
     world
         .function_mappings
         .get(&format!(
-            "v{}.{}WithPagination",
-            world.api_version, &world.operation_id
+            "{}.{}WithPagination",
+            operation_namespace(world),
+            &world.operation_id
         ))
         .expect(&format!(
             "{:?} request operation id not found",
