@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct OnCallTrigger {
+    /// The handle used to reference this trigger from On-Call. Required for automatic triggering.
+    #[serde(rename = "handle")]
+    pub handle: Option<String>,
     /// Defines a rate limit for a trigger.
     #[serde(rename = "rateLimit")]
     pub rate_limit: Option<crate::datadogV2::model::TriggerRateLimit>,
@@ -24,10 +27,16 @@ pub struct OnCallTrigger {
 impl OnCallTrigger {
     pub fn new() -> OnCallTrigger {
         OnCallTrigger {
+            handle: None,
             rate_limit: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn handle(mut self, value: String) -> Self {
+        self.handle = Some(value);
+        self
     }
 
     pub fn rate_limit(mut self, value: crate::datadogV2::model::TriggerRateLimit) -> Self {
@@ -67,6 +76,7 @@ impl<'de> Deserialize<'de> for OnCallTrigger {
             where
                 M: MapAccess<'a>,
             {
+                let mut handle: Option<String> = None;
                 let mut rate_limit: Option<crate::datadogV2::model::TriggerRateLimit> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -76,6 +86,12 @@ impl<'de> Deserialize<'de> for OnCallTrigger {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "handle" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "rateLimit" => {
                             if v.is_null() {
                                 continue;
@@ -91,6 +107,7 @@ impl<'de> Deserialize<'de> for OnCallTrigger {
                 }
 
                 let content = OnCallTrigger {
+                    handle,
                     rate_limit,
                     additional_properties,
                     _unparsed,
