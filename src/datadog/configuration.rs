@@ -173,6 +173,7 @@ impl Default for Configuration {
             ("v2.delete_llm_obs_projects".to_owned(), false),
             ("v2.delete_llm_obs_prompt".to_owned(), false),
             ("v2.export_llm_obs_dataset".to_owned(), false),
+            ("v2.get_llm_obs_annotated_interaction".to_owned(), false),
             ("v2.get_llm_obs_annotated_interactions".to_owned(), false),
             (
                 "v2.get_llm_obs_annotated_interactions_by_trace_i_ds".to_owned(),
