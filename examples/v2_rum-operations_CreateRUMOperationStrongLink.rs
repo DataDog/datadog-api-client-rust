@@ -1,4 +1,4 @@
-// Create a RUM operation strong link returns "Created" response
+// Create a RUM operation link returns "Created" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_operations::RUMOperationsAPI;
 use datadog_api_client::datadogV2::model::RUMOperationStrongLinkCreateRequest;
@@ -11,7 +11,7 @@ use datadog_api_client::datadogV2::model::RUMOperationStrongLinkType;
 async fn main() {
     let body =
         RUMOperationStrongLinkCreateRequest::new(RUMOperationStrongLinkCreateRequestData::new(
-            RUMOperationStrongLinkCreateRequestAttributes::new("feature-123".to_string())
+            RUMOperationStrongLinkCreateRequestAttributes::new("journey-123".to_string())
                 .description(None)
                 .operation_id("abc12345-1234-5678-abcd-ef1234567890".to_string())
                 .status(RUMOperationStrongLinkStatus::CONFIRMED)
