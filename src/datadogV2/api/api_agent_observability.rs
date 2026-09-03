@@ -2,10 +2,12 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
+use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use futures_core::stream::Stream;
 use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
@@ -30,6 +32,29 @@ impl ExportLLMObsDatasetOptionalParams {
     /// Version of the dataset to export. If omitted, the current version is used. Must be between 0 and the current version of the dataset, inclusive.
     pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
+        self
+    }
+}
+
+/// GetLLMObsAnnotatedInteractionOptionalParams is a struct for passing parameters to the method [`AgentObservabilityAPI::get_llm_obs_annotated_interaction`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetLLMObsAnnotatedInteractionOptionalParams {
+    /// Maximum number of events to return. Defaults to 10.
+    pub limit: Option<i32>,
+    /// Cursor from the previous response to retrieve the next page of events.
+    pub cursor: Option<String>,
+}
+
+impl GetLLMObsAnnotatedInteractionOptionalParams {
+    /// Maximum number of events to return. Defaults to 10.
+    pub fn limit(mut self, value: i32) -> Self {
+        self.limit = Some(value);
+        self
+    }
+    /// Cursor from the previous response to retrieve the next page of events.
+    pub fn cursor(mut self, value: String) -> Self {
+        self.cursor = Some(value);
         self
     }
 }
@@ -750,6 +775,15 @@ pub enum DeleteLLMObsPromptError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ExportLLMObsDatasetError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetLLMObsAnnotatedInteractionError is a struct for typed errors of method [`AgentObservabilityAPI::get_llm_obs_annotated_interaction`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetLLMObsAnnotatedInteractionError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -4906,6 +4940,181 @@ impl AgentObservabilityAPI {
             };
         } else {
             let local_entity: Option<ExportLLMObsDatasetError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieve an interaction, its annotations, and a page of related events from an annotation queue.
+    pub async fn get_llm_obs_annotated_interaction(
+        &self,
+        queue_id: String,
+        interaction_id: String,
+        params: GetLLMObsAnnotatedInteractionOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::LLMObsAnnotatedInteractionResponse,
+        datadog::Error<GetLLMObsAnnotatedInteractionError>,
+    > {
+        match self
+            .get_llm_obs_annotated_interaction_with_http_info(queue_id, interaction_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn get_llm_obs_annotated_interaction_with_pagination(
+        &self,
+        queue_id: String,
+        interaction_id: String,
+        mut params: GetLLMObsAnnotatedInteractionOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::LLMObsAnnotatedInteractionEvent,
+            datadog::Error<GetLLMObsAnnotatedInteractionError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10;
+            if params.limit.is_none() {
+                params.limit = Some(page_size);
+            } else {
+                page_size = params.limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.get_llm_obs_annotated_interaction( queue_id.clone(), interaction_id.clone(),params.clone()).await?;
+
+                let r = resp.data.attributes.events;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count == 0 {
+                    break;
+                }
+                let Some(next_cursor) = resp.data.attributes.next_cursor else { break };
+
+                params.cursor = Some(next_cursor);
+            }
+        }
+    }
+
+    /// Retrieve an interaction, its annotations, and a page of related events from an annotation queue.
+    pub async fn get_llm_obs_annotated_interaction_with_http_info(
+        &self,
+        queue_id: String,
+        interaction_id: String,
+        params: GetLLMObsAnnotatedInteractionOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotatedInteractionResponse>,
+        datadog::Error<GetLLMObsAnnotatedInteractionError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_llm_obs_annotated_interaction";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_llm_obs_annotated_interaction' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let limit = params.limit;
+        let cursor = params.cursor;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/annotated-interactions/{interaction_id}",
+            local_configuration.get_operation_host(local_operation_id), queue_id=
+            datadog::urlencode(queue_id)
+            , interaction_id=
+            datadog::urlencode(interaction_id)
+            );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = cursor {
+            local_req_builder =
+                local_req_builder.query(&[("cursor", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotatedInteractionResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetLLMObsAnnotatedInteractionError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
