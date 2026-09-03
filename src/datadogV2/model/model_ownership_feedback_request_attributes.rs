@@ -14,12 +14,6 @@ pub struct OwnershipFeedbackRequestAttributes {
     /// The feedback action to apply to an inference.
     #[serde(rename = "action")]
     pub action: crate::datadogV2::model::OwnershipFeedbackAction,
-    /// The handle of the actor submitting the feedback.
-    #[serde(rename = "actor_handle")]
-    pub actor_handle: String,
-    /// The type of actor submitting the feedback, for example `user` or `service`.
-    #[serde(rename = "actor_type")]
-    pub actor_type: String,
     /// The corrected owner handle. Required when `action` is `correct`.
     #[serde(
         rename = "corrected_owner_handle",
@@ -50,14 +44,10 @@ pub struct OwnershipFeedbackRequestAttributes {
 impl OwnershipFeedbackRequestAttributes {
     pub fn new(
         action: crate::datadogV2::model::OwnershipFeedbackAction,
-        actor_handle: String,
-        actor_type: String,
         inference_checksum: String,
     ) -> OwnershipFeedbackRequestAttributes {
         OwnershipFeedbackRequestAttributes {
             action,
-            actor_handle,
-            actor_type,
             corrected_owner_handle: None,
             corrected_owner_type: None,
             inference_checksum,
@@ -109,8 +99,6 @@ impl<'de> Deserialize<'de> for OwnershipFeedbackRequestAttributes {
                 M: MapAccess<'a>,
             {
                 let mut action: Option<crate::datadogV2::model::OwnershipFeedbackAction> = None;
-                let mut actor_handle: Option<String> = None;
-                let mut actor_type: Option<String> = None;
                 let mut corrected_owner_handle: Option<Option<String>> = None;
                 let mut corrected_owner_type: Option<Option<String>> = None;
                 let mut inference_checksum: Option<String> = None;
@@ -133,13 +121,6 @@ impl<'de> Deserialize<'de> for OwnershipFeedbackRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
-                        "actor_handle" => {
-                            actor_handle =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "actor_type" => {
-                            actor_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "corrected_owner_handle" => {
                             corrected_owner_handle =
@@ -164,16 +145,11 @@ impl<'de> Deserialize<'de> for OwnershipFeedbackRequestAttributes {
                     }
                 }
                 let action = action.ok_or_else(|| M::Error::missing_field("action"))?;
-                let actor_handle =
-                    actor_handle.ok_or_else(|| M::Error::missing_field("actor_handle"))?;
-                let actor_type = actor_type.ok_or_else(|| M::Error::missing_field("actor_type"))?;
                 let inference_checksum = inference_checksum
                     .ok_or_else(|| M::Error::missing_field("inference_checksum"))?;
 
                 let content = OwnershipFeedbackRequestAttributes {
                     action,
-                    actor_handle,
-                    actor_type,
                     corrected_owner_handle,
                     corrected_owner_type,
                     inference_checksum,

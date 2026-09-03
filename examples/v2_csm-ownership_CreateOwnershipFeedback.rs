@@ -13,8 +13,6 @@ async fn main() {
     let body = OwnershipFeedbackRequest::new(OwnershipFeedbackRequestData::new(
         OwnershipFeedbackRequestAttributes::new(
             OwnershipFeedbackAction::CONFIRM,
-            "user@example.com".to_string(),
-            "user".to_string(),
             "abc123".to_string(),
         )
         .corrected_owner_handle(Some("team-b".to_string()))
