@@ -11,7 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScatterPlotWidgetDefinitionRequests {
-    /// Scatterplot request containing formulas and functions.
+    /// Scatterplot table request. Supports two modes:
+    /// - **Formulas and functions** (default): `request_type` is absent or `"table"`. Uses `queries` and `formulas`.
+    /// - **Data projection**: `request_type` is `"data_projection"`. Uses `query`, `projection`, and optionally `limit`.
     #[serde(rename = "table")]
     pub table: Option<crate::datadogV1::model::ScatterplotTableRequest>,
     /// Updated scatter plot.

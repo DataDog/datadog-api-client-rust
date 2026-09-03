@@ -3,6 +3,7 @@ use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_dashboards::DashboardsAPI;
 use datadog_api_client::datadogV1::model::Dashboard;
 use datadog_api_client::datadogV1::model::DashboardLayoutType;
+use datadog_api_client::datadogV1::model::FormulaAndFunctionEventsDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricAggregation;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricDataSource;
 use datadog_api_client::datadogV1::model::FormulaAndFunctionMetricQueryDefinition;
@@ -11,8 +12,13 @@ use datadog_api_client::datadogV1::model::FormulaAndFunctionResponseFormat;
 use datadog_api_client::datadogV1::model::ScatterPlotWidgetDefinition;
 use datadog_api_client::datadogV1::model::ScatterPlotWidgetDefinitionRequests;
 use datadog_api_client::datadogV1::model::ScatterPlotWidgetDefinitionType;
+use datadog_api_client::datadogV1::model::ScatterplotDataProjectionDimension;
+use datadog_api_client::datadogV1::model::ScatterplotDataProjectionProjection;
+use datadog_api_client::datadogV1::model::ScatterplotDataProjectionProjectionType;
+use datadog_api_client::datadogV1::model::ScatterplotDataProjectionQuery;
 use datadog_api_client::datadogV1::model::ScatterplotDimension;
 use datadog_api_client::datadogV1::model::ScatterplotTableRequest;
+use datadog_api_client::datadogV1::model::ScatterplotTableRequestType;
 use datadog_api_client::datadogV1::model::ScatterplotWidgetFormula;
 use datadog_api_client::datadogV1::model::Widget;
 use datadog_api_client::datadogV1::model::WidgetAxis;
@@ -97,7 +103,60 @@ async fn main() {
                                 ),
                         ),
                     ),
-                ).layout(WidgetLayout::new(15, 47, 0, 0))
+                ).layout(WidgetLayout::new(15, 47, 0, 0)),
+                Widget::new(
+                    WidgetDefinition::ScatterPlotWidgetDefinition(
+                        Box::new(
+                            ScatterPlotWidgetDefinition::new(
+                                ScatterPlotWidgetDefinitionRequests
+                                ::new().table(
+                                    ScatterplotTableRequest::new()
+                                        .limit(200)
+                                        .projection(
+                                            ScatterplotDataProjectionProjection::new(
+                                                vec![
+                                                    ScatterplotDataProjectionDimension::new(
+                                                        "duration".to_string(),
+                                                        ScatterplotDimension::X,
+                                                    ),
+                                                    ScatterplotDataProjectionDimension::new(
+                                                        "@resource_name".to_string(),
+                                                        ScatterplotDimension::Y,
+                                                    )
+                                                ],
+                                                ScatterplotDataProjectionProjectionType::SCATTERPLOT,
+                                            ),
+                                        )
+                                        .query(
+                                            ScatterplotDataProjectionQuery::new(
+                                                FormulaAndFunctionEventsDataSource::SPANS,
+                                                "@service:web-store".to_string(),
+                                            ),
+                                        )
+                                        .request_type(ScatterplotTableRequestType::DATA_PROJECTION),
+                                ),
+                                ScatterPlotWidgetDefinitionType::SCATTERPLOT,
+                            )
+                                .title("Data Projection Scatterplot".to_string())
+                                .title_align(WidgetTextAlign::LEFT)
+                                .title_size("16".to_string())
+                                .xaxis(
+                                    WidgetAxis::new()
+                                        .include_zero(true)
+                                        .max("auto".to_string())
+                                        .min("auto".to_string())
+                                        .scale("linear".to_string()),
+                                )
+                                .yaxis(
+                                    WidgetAxis::new()
+                                        .include_zero(true)
+                                        .max("auto".to_string())
+                                        .min("auto".to_string())
+                                        .scale("linear".to_string()),
+                                ),
+                        ),
+                    ),
+                ).layout(WidgetLayout::new(15, 47, 48, 0))
             ],
         )
             .description(Some("".to_string()))
