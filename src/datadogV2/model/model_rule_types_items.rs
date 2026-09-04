@@ -25,6 +25,8 @@ pub enum RuleTypesItems {
     SAST_VULNERABILITY,
     SECRET_VULNERABILITY,
     WORKLOAD_ACTIVITY,
+    SENSITIVE_DATA,
+    SERVERLESS_FUNCTION_CODE_VULNERABILITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -51,6 +53,10 @@ impl ToString for RuleTypesItems {
             Self::SAST_VULNERABILITY => String::from("sast_vulnerability"),
             Self::SECRET_VULNERABILITY => String::from("secret_vulnerability"),
             Self::WORKLOAD_ACTIVITY => String::from("workload_activity"),
+            Self::SENSITIVE_DATA => String::from("sensitive_data"),
+            Self::SERVERLESS_FUNCTION_CODE_VULNERABILITY => {
+                String::from("serverless_function_code_vulnerability")
+            }
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -93,6 +99,10 @@ impl<'de> Deserialize<'de> for RuleTypesItems {
             "sast_vulnerability" => Self::SAST_VULNERABILITY,
             "secret_vulnerability" => Self::SECRET_VULNERABILITY,
             "workload_activity" => Self::WORKLOAD_ACTIVITY,
+            "sensitive_data" => Self::SENSITIVE_DATA,
+            "serverless_function_code_vulnerability" => {
+                Self::SERVERLESS_FUNCTION_CODE_VULNERABILITY
+            }
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
