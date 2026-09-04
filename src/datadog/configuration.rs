@@ -530,6 +530,9 @@ impl Default for Configuration {
             ("v2.list_csm_agentless_hosts".to_owned(), false),
             ("v2.list_csm_unified_host_facets".to_owned(), false),
             ("v2.list_csm_unified_hosts".to_owned(), false),
+            ("v2.get_dashboard_usage".to_owned(), false),
+            ("v2.list_dashboards_usage".to_owned(), false),
+            ("v2.validate_dashboard_widgets".to_owned(), false),
             (
                 "v2.list_shared_dashboards_by_dashboard_id".to_owned(),
                 false,
@@ -538,8 +541,6 @@ impl Default for Configuration {
             ("v2.delete_dashboard_secure_embed".to_owned(), false),
             ("v2.get_dashboard_secure_embed".to_owned(), false),
             ("v2.update_dashboard_secure_embed".to_owned(), false),
-            ("v2.get_dashboard_usage".to_owned(), false),
-            ("v2.list_dashboards_usage".to_owned(), false),
             (
                 "v2.get_data_observability_monitor_run_status".to_owned(),
                 false,

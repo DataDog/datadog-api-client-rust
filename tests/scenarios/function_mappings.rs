@@ -100,10 +100,10 @@ pub struct ApiInstances {
     pub v2_api_csm_ownership: Option<datadogV2::api_csm_ownership::CSMOwnershipAPI>,
     pub v2_api_csm_settings: Option<datadogV2::api_csm_settings::CSMSettingsAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
+    pub v2_api_dashboards: Option<datadogV2::api_dashboards::DashboardsAPI>,
     pub v2_api_dashboard_sharing: Option<datadogV2::api_dashboard_sharing::DashboardSharingAPI>,
     pub v2_api_dashboard_secure_embed:
         Option<datadogV2::api_dashboard_secure_embed::DashboardSecureEmbedAPI>,
-    pub v2_api_dashboards: Option<datadogV2::api_dashboards::DashboardsAPI>,
     pub v2_api_data_observability: Option<datadogV2::api_data_observability::DataObservabilityAPI>,
     pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
     pub v2_api_ddsql: Option<datadogV2::api_ddsql::DDSQLAPI>,
@@ -4742,6 +4742,21 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_dashboard_list_items,
     );
     world.function_mappings.insert(
+        "v2.ValidateDashboardWidgets".into(),
+        test_v2_validate_dashboard_widgets,
+    );
+    world.function_mappings.insert(
+        "v2.ListDashboardsUsage".into(),
+        test_v2_list_dashboards_usage,
+    );
+    world.function_mappings.insert(
+        "v2.ListDashboardsUsageWithPagination".into(),
+        test_v2_list_dashboards_usage_with_pagination,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetDashboardUsage".into(), test_v2_get_dashboard_usage);
+    world.function_mappings.insert(
         "v2.ListSharedDashboardsByDashboardId".into(),
         test_v2_list_shared_dashboards_by_dashboard_id,
     );
@@ -4761,17 +4776,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.UpdateDashboardSecureEmbed".into(),
         test_v2_update_dashboard_secure_embed,
     );
-    world.function_mappings.insert(
-        "v2.ListDashboardsUsage".into(),
-        test_v2_list_dashboards_usage,
-    );
-    world.function_mappings.insert(
-        "v2.ListDashboardsUsageWithPagination".into(),
-        test_v2_list_dashboards_usage_with_pagination,
-    );
-    world
-        .function_mappings
-        .insert("v2.GetDashboardUsage".into(), test_v2_get_dashboard_usage);
     world.function_mappings.insert(
         "v2.GetDataObservabilityMonitorRunStatus".into(),
         test_v2_get_data_observability_monitor_run_status,
@@ -36062,6 +36066,154 @@ fn test_v2_update_dashboard_list_items(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_validate_dashboard_widgets(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_dashboards
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.validate_dashboard_widgets_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_dashboards_usage(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_dashboards
+        .as_ref()
+        .expect("api instance not found");
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_edited_before = _parameters
+        .get("filter[edited_before]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_viewed_before = _parameters
+        .get("filter[viewed_before]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_dashboards::ListDashboardsUsageOptionalParams::default();
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    params.filter_edited_before = filter_edited_before;
+    params.filter_viewed_before = filter_viewed_before;
+    let response = match block_on(api.list_dashboards_usage_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_dashboards_usage_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_dashboards
+        .as_ref()
+        .expect("api instance not found");
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_edited_before = _parameters
+        .get("filter[edited_before]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_viewed_before = _parameters
+        .get("filter[viewed_before]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_dashboards::ListDashboardsUsageOptionalParams::default();
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    params.filter_edited_before = filter_edited_before;
+    params.filter_viewed_before = filter_viewed_before;
+    let response = api.list_dashboards_usage_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_get_dashboard_usage(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_dashboards
+        .as_ref()
+        .expect("api instance not found");
+    let dashboard_id =
+        serde_json::from_value(_parameters.get("dashboard_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_dashboard_usage_with_http_info(dashboard_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_list_shared_dashboards_by_dashboard_id(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -36214,126 +36366,6 @@ fn test_v2_update_dashboard_secure_embed(
                 };
             }
         };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_dashboards_usage(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_dashboards
-        .as_ref()
-        .expect("api instance not found");
-    let page_limit = _parameters
-        .get("page[limit]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_offset = _parameters
-        .get("page[offset]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_edited_before = _parameters
-        .get("filter[edited_before]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_viewed_before = _parameters
-        .get("filter[viewed_before]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_dashboards::ListDashboardsUsageOptionalParams::default();
-    params.page_limit = page_limit;
-    params.page_offset = page_offset;
-    params.filter_edited_before = filter_edited_before;
-    params.filter_viewed_before = filter_viewed_before;
-    let response = match block_on(api.list_dashboards_usage_with_http_info(params)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-fn test_v2_list_dashboards_usage_with_pagination(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_dashboards
-        .as_ref()
-        .expect("api instance not found");
-    let page_limit = _parameters
-        .get("page[limit]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let page_offset = _parameters
-        .get("page[offset]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_edited_before = _parameters
-        .get("filter[edited_before]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let filter_viewed_before = _parameters
-        .get("filter[viewed_before]")
-        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_dashboards::ListDashboardsUsageOptionalParams::default();
-    params.page_limit = page_limit;
-    params.page_offset = page_offset;
-    params.filter_edited_before = filter_edited_before;
-    params.filter_viewed_before = filter_viewed_before;
-    let response = api.list_dashboards_usage_with_pagination(params);
-    let mut result = Vec::new();
-
-    block_on(async {
-        pin_mut!(response);
-
-        while let Some(resp) = response.next().await {
-            match resp {
-                Ok(response) => {
-                    result.push(response);
-                }
-                Err(error) => {
-                    return match error {
-                        Error::ResponseError(e) => {
-                            if let Some(entity) = e.entity {
-                                world.response.object = serde_json::to_value(entity).unwrap();
-                            }
-                        }
-                        _ => panic!("error parsing response: {}", error),
-                    };
-                }
-            }
-        }
-    });
-    world.response.object = serde_json::to_value(result).unwrap();
-    world.response.code = 200;
-}
-
-fn test_v2_get_dashboard_usage(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
-    let api = world
-        .api_instances
-        .v2_api_dashboards
-        .as_ref()
-        .expect("api instance not found");
-    let dashboard_id =
-        serde_json::from_value(_parameters.get("dashboard_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_dashboard_usage_with_http_info(dashboard_id)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
