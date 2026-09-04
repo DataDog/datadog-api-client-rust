@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSpec {
-    /// Contains the the pipeline configuration.
+    /// Contains the pipeline configuration.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::ObservabilityPipelineSpecData,
     #[serde(flatten)]
