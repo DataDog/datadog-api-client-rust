@@ -53482,7 +53482,12 @@ fn test_v2_list_permissions(world: &mut DatadogWorld, _parameters: &HashMap<Stri
         .v2_api_roles
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.list_permissions_with_http_info()) {
+    let include_scopes = _parameters
+        .get("include_scopes")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_roles::ListPermissionsOptionalParams::default();
+    params.include_scopes = include_scopes;
+    let response = match block_on(api.list_permissions_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

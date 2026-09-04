@@ -11,6 +11,30 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// ListPermissionsOptionalParams is a struct for passing parameters to the method [`RolesAPI::list_permissions`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListPermissionsOptionalParams {
+    /// Set to `true` to return all permissions, including both permissions
+    /// that can be assigned to user roles and permissions that can only be
+    /// used as scopes for OAuth clients and scoped credentials. When `false`
+    /// (default), only permissions that can be assigned to user roles are
+    /// returned.
+    pub include_scopes: Option<bool>,
+}
+
+impl ListPermissionsOptionalParams {
+    /// Set to `true` to return all permissions, including both permissions
+    /// that can be assigned to user roles and permissions that can only be
+    /// used as scopes for OAuth clients and scoped credentials. When `false`
+    /// (default), only permissions that can be assigned to user roles are
+    /// returned.
+    pub fn include_scopes(mut self, value: bool) -> Self {
+        self.include_scopes = Some(value);
+        self
+    }
+}
+
 /// ListRoleUsersOptionalParams is a struct for passing parameters to the method [`RolesAPI::list_role_users`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -1132,9 +1156,10 @@ impl RolesAPI {
     /// Returns a list of all permissions, including name, description, and ID.
     pub async fn list_permissions(
         &self,
+        params: ListPermissionsOptionalParams,
     ) -> Result<crate::datadogV2::model::PermissionsResponse, datadog::Error<ListPermissionsError>>
     {
-        match self.list_permissions_with_http_info().await {
+        match self.list_permissions_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -1151,12 +1176,16 @@ impl RolesAPI {
     /// Returns a list of all permissions, including name, description, and ID.
     pub async fn list_permissions_with_http_info(
         &self,
+        params: ListPermissionsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::PermissionsResponse>,
         datadog::Error<ListPermissionsError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_permissions";
+
+        // unbox and build optional parameters
+        let include_scopes = params.include_scopes;
 
         let local_client = &self.client;
 
@@ -1166,6 +1195,11 @@ impl RolesAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include_scopes {
+            local_req_builder =
+                local_req_builder.query(&[("include_scopes", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
