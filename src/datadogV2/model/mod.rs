@@ -7878,6 +7878,8 @@ pub mod model_list_tags_response_data;
 pub use self::model_list_tags_response_data::ListTagsResponseData;
 pub mod model_list_tags_response_data_attributes;
 pub use self::model_list_tags_response_data_attributes::ListTagsResponseDataAttributes;
+pub mod model_device_tags_by_source;
+pub use self::model_device_tags_by_source::DeviceTagsBySource;
 pub mod model_list_interface_tags_response;
 pub use self::model_list_interface_tags_response::ListInterfaceTagsResponse;
 pub mod model_list_interface_tags_response_data;
