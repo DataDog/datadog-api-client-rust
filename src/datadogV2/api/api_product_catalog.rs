@@ -12,14 +12,16 @@ use serde::{Deserialize, Serialize};
 pub struct ListProductCatalogSKUsOptionalParams {
     /// The date the returned prices, allotments, and pricing tiers are effective as of, in
     /// `YYYY-MM-DD` format. Defaults to the date of the request, and must not be later
-    /// than it.
+    /// than it. Set it to a date in a past billing period to reconcile that period against
+    /// the prices that were in effect then, rather than today.
     pub as_of_date: Option<String>,
 }
 
 impl ListProductCatalogSKUsOptionalParams {
     /// The date the returned prices, allotments, and pricing tiers are effective as of, in
     /// `YYYY-MM-DD` format. Defaults to the date of the request, and must not be later
-    /// than it.
+    /// than it. Set it to a date in a past billing period to reconcile that period against
+    /// the prices that were in effect then, rather than today.
     pub fn as_of_date(mut self, value: String) -> Self {
         self.as_of_date = Some(value);
         self
