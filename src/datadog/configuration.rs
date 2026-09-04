@@ -485,8 +485,6 @@ impl Default for Configuration {
                 "v2.validate_security_monitoring_integration_credentials".to_owned(),
                 false,
             ),
-            ("v2.get_code_coverage_branch_summary".to_owned(), false),
-            ("v2.get_code_coverage_commit_summary".to_owned(), false),
             ("v2.get_rule_based_view".to_owned(), false),
             ("v2.get_commitments_commitment_list".to_owned(), false),
             ("v2.get_commitments_coverage_scalar".to_owned(), false),
