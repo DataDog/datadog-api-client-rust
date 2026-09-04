@@ -711,6 +711,11 @@ impl Default for Configuration {
             ("v2.update_incident_user_defined_field".to_owned(), false),
             ("v2.update_incident_user_defined_role".to_owned(), false),
             ("v2.update_timestamp_override".to_owned(), false),
+            ("v2.create_databricks_integration_account".to_owned(), false),
+            ("v2.delete_databricks_integration_account".to_owned(), false),
+            ("v2.get_databricks_integration_account".to_owned(), false),
+            ("v2.list_databricks_integration_accounts".to_owned(), false),
+            ("v2.update_databricks_integration_account".to_owned(), false),
             (
                 "v2.create_elastic_cloud_integration_account".to_owned(),
                 false,
