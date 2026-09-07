@@ -448,7 +448,7 @@ impl MetricsAPI {
 
     /// **Note**: This endpoint is deprecated. Use `/api/v2/metrics` instead.
     ///
-    /// Search for metrics from the last 24 hours in Datadog.
+    /// Search for metrics from the last 24 hours in Datadog. This integration test verifies review gating for public operations.
     pub async fn list_metrics(
         &self,
         q: String,
@@ -470,7 +470,7 @@ impl MetricsAPI {
 
     /// **Note**: This endpoint is deprecated. Use `/api/v2/metrics` instead.
     ///
-    /// Search for metrics from the last 24 hours in Datadog.
+    /// Search for metrics from the last 24 hours in Datadog. This integration test verifies review gating for public operations.
     pub async fn list_metrics_with_http_info(
         &self,
         q: String,
