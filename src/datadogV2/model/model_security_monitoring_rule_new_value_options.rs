@@ -17,6 +17,9 @@ pub struct SecurityMonitoringRuleNewValueOptions {
     /// When set to true, Datadog uses previous values that fall within the defined learning window to construct the baseline, enabling the system to establish an accurate baseline more rapidly rather than relying solely on gradual learning over time.
     #[serde(rename = "instantaneousBaseline")]
     pub instantaneous_baseline: Option<bool>,
+    /// Timeout in minutes for constructing the instantaneous baseline.
+    #[serde(rename = "instantaneousBaselineTimeoutMinutes")]
+    pub instantaneous_baseline_timeout_minutes: Option<i32>,
     /// The duration in days during which values are learned, and after which signals will be generated for values that
     /// weren't learned. If set to 0, a signal will be generated for all new values after the first value is learned.
     #[serde(rename = "learningDuration")]
@@ -41,6 +44,7 @@ impl SecurityMonitoringRuleNewValueOptions {
         SecurityMonitoringRuleNewValueOptions {
             forget_after: None,
             instantaneous_baseline: None,
+            instantaneous_baseline_timeout_minutes: None,
             learning_duration: None,
             learning_method: None,
             learning_threshold: None,
@@ -56,6 +60,11 @@ impl SecurityMonitoringRuleNewValueOptions {
 
     pub fn instantaneous_baseline(mut self, value: bool) -> Self {
         self.instantaneous_baseline = Some(value);
+        self
+    }
+
+    pub fn instantaneous_baseline_timeout_minutes(mut self, value: i32) -> Self {
+        self.instantaneous_baseline_timeout_minutes = Some(value);
         self
     }
 
@@ -114,6 +123,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
             {
                 let mut forget_after: Option<i32> = None;
                 let mut instantaneous_baseline: Option<bool> = None;
+                let mut instantaneous_baseline_timeout_minutes: Option<i32> = None;
                 let mut learning_duration: Option<i32> = None;
                 let mut learning_method: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningMethod,
@@ -141,6 +151,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                                 continue;
                             }
                             instantaneous_baseline =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "instantaneousBaselineTimeoutMinutes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            instantaneous_baseline_timeout_minutes =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "learningDuration" => {
@@ -191,6 +208,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                 let content = SecurityMonitoringRuleNewValueOptions {
                     forget_after,
                     instantaneous_baseline,
+                    instantaneous_baseline_timeout_minutes,
                     learning_duration,
                     learning_method,
                     learning_threshold,

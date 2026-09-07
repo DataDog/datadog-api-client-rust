@@ -22,6 +22,9 @@ pub struct SecurityMonitoringRuleImpossibleTravelOptions {
         with = "::serde_with::rust::double_option"
     )]
     pub baseline_user_locations_duration: Option<Option<i32>>,
+    /// Whether to detect transitions between IP addresses.
+    #[serde(rename = "detectIpTransition")]
+    pub detect_ip_transition: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,6 +37,7 @@ impl SecurityMonitoringRuleImpossibleTravelOptions {
         SecurityMonitoringRuleImpossibleTravelOptions {
             baseline_user_locations: None,
             baseline_user_locations_duration: None,
+            detect_ip_transition: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -46,6 +50,11 @@ impl SecurityMonitoringRuleImpossibleTravelOptions {
 
     pub fn baseline_user_locations_duration(mut self, value: Option<i32>) -> Self {
         self.baseline_user_locations_duration = Some(value);
+        self
+    }
+
+    pub fn detect_ip_transition(mut self, value: bool) -> Self {
+        self.detect_ip_transition = Some(value);
         self
     }
 
@@ -83,6 +92,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleImpossibleTravelOptions {
             {
                 let mut baseline_user_locations: Option<bool> = None;
                 let mut baseline_user_locations_duration: Option<Option<i32>> = None;
+                let mut detect_ip_transition: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -102,6 +112,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleImpossibleTravelOptions {
                             baseline_user_locations_duration =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "detectIpTransition" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            detect_ip_transition =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -113,6 +130,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleImpossibleTravelOptions {
                 let content = SecurityMonitoringRuleImpossibleTravelOptions {
                     baseline_user_locations,
                     baseline_user_locations_duration,
+                    detect_ip_transition,
                     additional_properties,
                     _unparsed,
                 };

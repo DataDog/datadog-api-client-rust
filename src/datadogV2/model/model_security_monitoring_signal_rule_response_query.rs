@@ -29,6 +29,9 @@ pub struct SecurityMonitoringSignalRuleResponseQuery {
     /// Fields to group by.
     #[serde(rename = "groupByFields")]
     pub group_by_fields: Option<Vec<String>>,
+    /// Whether events with missing group-by fields are processed with a replacement value.
+    #[serde(rename = "hasOptionalGroupByFields")]
+    pub has_optional_group_by_fields: Option<bool>,
     /// Group of target fields to aggregate over.
     #[serde(rename = "metrics")]
     pub metrics: Option<Vec<String>>,
@@ -54,6 +57,7 @@ impl SecurityMonitoringSignalRuleResponseQuery {
             default_rule_id: None,
             distinct_fields: None,
             group_by_fields: None,
+            has_optional_group_by_fields: None,
             metrics: None,
             name: None,
             rule_id: None,
@@ -92,6 +96,11 @@ impl SecurityMonitoringSignalRuleResponseQuery {
 
     pub fn group_by_fields(mut self, value: Vec<String>) -> Self {
         self.group_by_fields = Some(value);
+        self
+    }
+
+    pub fn has_optional_group_by_fields(mut self, value: bool) -> Self {
+        self.has_optional_group_by_fields = Some(value);
         self
     }
 
@@ -150,6 +159,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponseQuery {
                 let mut default_rule_id: Option<String> = None;
                 let mut distinct_fields: Option<Vec<String>> = None;
                 let mut group_by_fields: Option<Vec<String>> = None;
+                let mut has_optional_group_by_fields: Option<bool> = None;
                 let mut metrics: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut rule_id: Option<String> = None;
@@ -211,6 +221,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponseQuery {
                             group_by_fields =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "hasOptionalGroupByFields" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            has_optional_group_by_fields =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "metrics" => {
                             if v.is_null() {
                                 continue;
@@ -244,6 +261,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponseQuery {
                     default_rule_id,
                     distinct_fields,
                     group_by_fields,
+                    has_optional_group_by_fields,
                     metrics,
                     name,
                     rule_id,

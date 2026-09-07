@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A rule version with a list of updates.
+/// The user who created or last updated the rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RuleVersions {
-    /// A list of changes.
-    #[serde(rename = "changes")]
-    pub changes: Option<Vec<crate::datadogV2::model::VersionHistoryUpdate>>,
-    /// A security monitoring rule.
-    #[serde(rename = "rule")]
-    pub rule: Option<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
+pub struct SecurityMonitoringRuleUser {
+    /// The user handle. Empty for a default rule with no user.
+    #[serde(rename = "handle")]
+    pub handle: Option<String>,
+    /// The user name. Empty for a default rule with no user.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +24,23 @@ pub struct RuleVersions {
     pub(crate) _unparsed: bool,
 }
 
-impl RuleVersions {
-    pub fn new() -> RuleVersions {
-        RuleVersions {
-            changes: None,
-            rule: None,
+impl SecurityMonitoringRuleUser {
+    pub fn new() -> SecurityMonitoringRuleUser {
+        SecurityMonitoringRuleUser {
+            handle: None,
+            name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn changes(mut self, value: Vec<crate::datadogV2::model::VersionHistoryUpdate>) -> Self {
-        self.changes = Some(value);
+    pub fn handle(mut self, value: String) -> Self {
+        self.handle = Some(value);
         self
     }
 
-    pub fn rule(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleResponse) -> Self {
-        self.rule = Some(value);
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
@@ -53,20 +53,20 @@ impl RuleVersions {
     }
 }
 
-impl Default for RuleVersions {
+impl Default for SecurityMonitoringRuleUser {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RuleVersions {
+impl<'de> Deserialize<'de> for SecurityMonitoringRuleUser {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RuleVersionsVisitor;
-        impl<'a> Visitor<'a> for RuleVersionsVisitor {
-            type Value = RuleVersions;
+        struct SecurityMonitoringRuleUserVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringRuleUserVisitor {
+            type Value = SecurityMonitoringRuleUser;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,9 +76,8 @@ impl<'de> Deserialize<'de> for RuleVersions {
             where
                 M: MapAccess<'a>,
             {
-                let mut changes: Option<Vec<crate::datadogV2::model::VersionHistoryUpdate>> = None;
-                let mut rule: Option<crate::datadogV2::model::SecurityMonitoringRuleResponse> =
-                    None;
+                let mut handle: Option<String> = None;
+                let mut name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -87,25 +86,17 @@ impl<'de> Deserialize<'de> for RuleVersions {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "changes" => {
+                        "handle" => {
                             if v.is_null() {
                                 continue;
                             }
-                            changes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "rule" => {
+                        "name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _rule) = rule {
-                                match _rule {
-                                    crate::datadogV2::model::SecurityMonitoringRuleResponse::UnparsedObject(_rule) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -115,9 +106,9 @@ impl<'de> Deserialize<'de> for RuleVersions {
                     }
                 }
 
-                let content = RuleVersions {
-                    changes,
-                    rule,
+                let content = SecurityMonitoringRuleUser {
+                    handle,
+                    name,
                     additional_properties,
                     _unparsed,
                 };
@@ -126,6 +117,6 @@ impl<'de> Deserialize<'de> for RuleVersions {
             }
         }
 
-        deserializer.deserialize_any(RuleVersionsVisitor)
+        deserializer.deserialize_any(SecurityMonitoringRuleUserVisitor)
     }
 }
