@@ -49,6 +49,7 @@ pub use self::api::api_data_deletion;
 pub use self::api::api_data_observability;
 pub use self::api::api_datasets;
 pub use self::api::api_ddsql;
+pub use self::api::api_dem;
 pub use self::api::api_deployment_gates;
 pub use self::api::api_domain_allowlist;
 pub use self::api::api_dora_metrics;
