@@ -1,4 +1,4 @@
-// Get SPA Recommendations with a shard parameter returns "OK" response
+// Get SPA recommendations using a shard parameter returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_spa::GetSPARecommendationsWithShardOptionalParams;
 use datadog_api_client::datadogV2::api_spa::SpaAPI;
