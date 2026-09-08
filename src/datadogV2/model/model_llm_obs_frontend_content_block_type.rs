@@ -6,35 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum LLMObsContentBlockType {
-    MARKDOWN,
-    HEADER,
-    TEXT,
-    JSON,
-    IMAGE,
-    WIDGET,
-    LLMOBS_TRACE,
+pub enum LLMObsFrontendContentBlockType {
     FRONTEND,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for LLMObsContentBlockType {
+impl ToString for LLMObsFrontendContentBlockType {
     fn to_string(&self) -> String {
         match self {
-            Self::MARKDOWN => String::from("markdown"),
-            Self::HEADER => String::from("header"),
-            Self::TEXT => String::from("text"),
-            Self::JSON => String::from("json"),
-            Self::IMAGE => String::from("image"),
-            Self::WIDGET => String::from("widget"),
-            Self::LLMOBS_TRACE => String::from("llmobs_trace"),
             Self::FRONTEND => String::from("frontend"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for LLMObsContentBlockType {
+impl Serialize for LLMObsFrontendContentBlockType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -46,20 +32,13 @@ impl Serialize for LLMObsContentBlockType {
     }
 }
 
-impl<'de> Deserialize<'de> for LLMObsContentBlockType {
+impl<'de> Deserialize<'de> for LLMObsFrontendContentBlockType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "markdown" => Self::MARKDOWN,
-            "header" => Self::HEADER,
-            "text" => Self::TEXT,
-            "json" => Self::JSON,
-            "image" => Self::IMAGE,
-            "widget" => Self::WIDGET,
-            "llmobs_trace" => Self::LLMOBS_TRACE,
             "frontend" => Self::FRONTEND,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),

@@ -15,6 +15,7 @@ use std::fmt::{self, Formatter};
 /// - `image`: `url` is required.
 /// - `widget`: `tileDef` is required (any well-formed JSON; the frontend owns the renderable schema).
 /// - `llmobs_trace`: `traceId` is required; `interactionType`, when set, must be `trace` or `experiment_trace`.
+/// - `frontend`: `code` is required and must be a non-empty string; `label` is optional.
 ///
 /// `height`, when set, must be positive.
 #[non_exhaustive]
@@ -24,9 +25,12 @@ pub struct LLMObsContentBlock {
     /// Alternative text for an `image` block.
     #[serde(rename = "alt")]
     pub alt: Option<String>,
+    /// HTML code rendered by a `frontend` block. Required for `frontend` blocks.
+    #[serde(rename = "code")]
+    pub code: Option<String>,
     /// Block payload. A string for `markdown`, `header`, and `text`; an
     /// arbitrary JSON value (object, array, or scalar) for `json`. Omitted
-    /// for `image`, `widget`, and `llmobs_trace`.
+    /// for `image`, `widget`, `llmobs_trace`, and `frontend`.
     #[serde(rename = "content")]
     pub content: Option<serde_json::Value>,
     /// Optional rendered height. Must be positive when set.
@@ -37,7 +41,7 @@ pub struct LLMObsContentBlock {
     #[serde(rename = "interactionType")]
     pub interaction_type:
         Option<crate::datadogV2::model::LLMObsContentBlockLLMObsTraceInteractionType>,
-    /// Optional label rendered alongside the block.
+    /// Optional label rendered alongside a `frontend` block.
     #[serde(rename = "label")]
     pub label: Option<String>,
     /// Visual size for a `header` block.
@@ -71,6 +75,7 @@ impl LLMObsContentBlock {
     pub fn new(type_: crate::datadogV2::model::LLMObsContentBlockType) -> LLMObsContentBlock {
         LLMObsContentBlock {
             alt: None,
+            code: None,
             content: None,
             height: None,
             interaction_type: None,
@@ -88,6 +93,11 @@ impl LLMObsContentBlock {
 
     pub fn alt(mut self, value: String) -> Self {
         self.alt = Some(value);
+        self
+    }
+
+    pub fn code(mut self, value: String) -> Self {
+        self.code = Some(value);
         self
     }
 
@@ -169,6 +179,7 @@ impl<'de> Deserialize<'de> for LLMObsContentBlock {
                 M: MapAccess<'a>,
             {
                 let mut alt: Option<String> = None;
+                let mut code: Option<String> = None;
                 let mut content: Option<serde_json::Value> = None;
                 let mut height: Option<i64> = None;
                 let mut interaction_type: Option<
@@ -196,6 +207,12 @@ impl<'de> Deserialize<'de> for LLMObsContentBlock {
                                 continue;
                             }
                             alt = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "code" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "content" => {
                             if v.is_null() {
@@ -290,6 +307,7 @@ impl<'de> Deserialize<'de> for LLMObsContentBlock {
 
                 let content = LLMObsContentBlock {
                     alt,
+                    code,
                     content,
                     height,
                     interaction_type,
