@@ -52,10 +52,16 @@ pub struct SecurityMonitoringRuleOptions {
     /// Options on new value detection method.
     #[serde(rename = "newValueOptions")]
     pub new_value_options: Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptions>,
+    /// Fields used to identify related signals.
+    #[serde(rename = "relatedSignalsFields")]
+    pub related_signals_fields: Option<Vec<String>>,
     /// Options on sequence detection method.
     #[serde(rename = "sequenceDetectionOptions")]
     pub sequence_detection_options:
         Option<crate::datadogV2::model::SecurityMonitoringRuleSequenceDetectionOptions>,
+    /// A template for the signal title.
+    #[serde(rename = "signalTitleTemplate")]
+    pub signal_title_template: Option<String>,
     /// Options on third party detection method.
     #[serde(rename = "thirdPartyRuleOptions")]
     pub third_party_rule_options:
@@ -80,7 +86,9 @@ impl SecurityMonitoringRuleOptions {
             keep_alive: None,
             max_signal_duration: None,
             new_value_options: None,
+            related_signals_fields: None,
             sequence_detection_options: None,
+            signal_title_template: None,
             third_party_rule_options: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -164,11 +172,21 @@ impl SecurityMonitoringRuleOptions {
         self
     }
 
+    pub fn related_signals_fields(mut self, value: Vec<String>) -> Self {
+        self.related_signals_fields = Some(value);
+        self
+    }
+
     pub fn sequence_detection_options(
         mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleSequenceDetectionOptions,
     ) -> Self {
         self.sequence_detection_options = Some(value);
+        self
+    }
+
+    pub fn signal_title_template(mut self, value: String) -> Self {
+        self.signal_title_template = Some(value);
         self
     }
 
@@ -240,9 +258,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleOptions {
                 let mut new_value_options: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleNewValueOptions,
                 > = None;
+                let mut related_signals_fields: Option<Vec<String>> = None;
                 let mut sequence_detection_options: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleSequenceDetectionOptions,
                 > = None;
+                let mut signal_title_template: Option<String> = None;
                 let mut third_party_rule_options: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleThirdPartyOptions,
                 > = None;
@@ -363,11 +383,25 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleOptions {
                             new_value_options =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "relatedSignalsFields" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            related_signals_fields =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "sequenceDetectionOptions" => {
                             if v.is_null() {
                                 continue;
                             }
                             sequence_detection_options =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "signalTitleTemplate" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            signal_title_template =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "thirdPartyRuleOptions" => {
@@ -396,7 +430,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleOptions {
                     keep_alive,
                     max_signal_duration,
                     new_value_options,
+                    related_signals_fields,
                     sequence_detection_options,
+                    signal_title_template,
                     third_party_rule_options,
                     additional_properties,
                     _unparsed,

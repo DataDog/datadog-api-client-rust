@@ -6,17 +6,25 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A rule version with a list of updates.
+/// Metadata associated with the rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RuleVersions {
-    /// A list of changes.
-    #[serde(rename = "changes")]
-    pub changes: Option<Vec<crate::datadogV2::model::VersionHistoryUpdate>>,
-    /// A security monitoring rule.
-    #[serde(rename = "rule")]
-    pub rule: Option<crate::datadogV2::model::SecurityMonitoringRuleResponse>,
+pub struct SecurityMonitoringRuleMetadata {
+    /// Entities associated with the rule, or null when metadata is not requested.
+    #[serde(
+        rename = "entities",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub entities: Option<Option<Vec<serde_json::Value>>>,
+    /// Sources associated with the rule, or null when metadata is not requested.
+    #[serde(
+        rename = "sources",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub sources: Option<Option<Vec<String>>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +32,23 @@ pub struct RuleVersions {
     pub(crate) _unparsed: bool,
 }
 
-impl RuleVersions {
-    pub fn new() -> RuleVersions {
-        RuleVersions {
-            changes: None,
-            rule: None,
+impl SecurityMonitoringRuleMetadata {
+    pub fn new() -> SecurityMonitoringRuleMetadata {
+        SecurityMonitoringRuleMetadata {
+            entities: None,
+            sources: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn changes(mut self, value: Vec<crate::datadogV2::model::VersionHistoryUpdate>) -> Self {
-        self.changes = Some(value);
+    pub fn entities(mut self, value: Option<Vec<serde_json::Value>>) -> Self {
+        self.entities = Some(value);
         self
     }
 
-    pub fn rule(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleResponse) -> Self {
-        self.rule = Some(value);
+    pub fn sources(mut self, value: Option<Vec<String>>) -> Self {
+        self.sources = Some(value);
         self
     }
 
@@ -53,20 +61,20 @@ impl RuleVersions {
     }
 }
 
-impl Default for RuleVersions {
+impl Default for SecurityMonitoringRuleMetadata {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RuleVersions {
+impl<'de> Deserialize<'de> for SecurityMonitoringRuleMetadata {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RuleVersionsVisitor;
-        impl<'a> Visitor<'a> for RuleVersionsVisitor {
-            type Value = RuleVersions;
+        struct SecurityMonitoringRuleMetadataVisitor;
+        impl<'a> Visitor<'a> for SecurityMonitoringRuleMetadataVisitor {
+            type Value = SecurityMonitoringRuleMetadata;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,9 +84,8 @@ impl<'de> Deserialize<'de> for RuleVersions {
             where
                 M: MapAccess<'a>,
             {
-                let mut changes: Option<Vec<crate::datadogV2::model::VersionHistoryUpdate>> = None;
-                let mut rule: Option<crate::datadogV2::model::SecurityMonitoringRuleResponse> =
-                    None;
+                let mut entities: Option<Option<Vec<serde_json::Value>>> = None;
+                let mut sources: Option<Option<Vec<String>>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -87,25 +94,11 @@ impl<'de> Deserialize<'de> for RuleVersions {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "changes" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            changes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "entities" => {
+                            entities = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "rule" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _rule) = rule {
-                                match _rule {
-                                    crate::datadogV2::model::SecurityMonitoringRuleResponse::UnparsedObject(_rule) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                        "sources" => {
+                            sources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -115,9 +108,9 @@ impl<'de> Deserialize<'de> for RuleVersions {
                     }
                 }
 
-                let content = RuleVersions {
-                    changes,
-                    rule,
+                let content = SecurityMonitoringRuleMetadata {
+                    entities,
+                    sources,
                     additional_properties,
                     _unparsed,
                 };
@@ -126,6 +119,6 @@ impl<'de> Deserialize<'de> for RuleVersions {
             }
         }
 
-        deserializer.deserialize_any(RuleVersionsVisitor)
+        deserializer.deserialize_any(SecurityMonitoringRuleMetadataVisitor)
     }
 }

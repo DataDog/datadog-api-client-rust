@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringSignalRuleResponse {
+    /// Whether the rule blocks attackers.
+    #[serde(rename = "blocking")]
+    pub blocking: Option<bool>,
     /// Cases for generating signals.
     #[serde(rename = "cases")]
     pub cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>>,
@@ -20,12 +23,21 @@ pub struct SecurityMonitoringSignalRuleResponse {
     /// User ID of the user who created the rule.
     #[serde(rename = "creationAuthorId")]
     pub creation_author_id: Option<i64>,
+    /// The user who created or last updated the rule.
+    #[serde(rename = "creator")]
+    pub creator: Option<crate::datadogV2::model::SecurityMonitoringRuleUser>,
     /// Custom/Overridden message for generated signals (used in case of Default rule update).
     #[serde(rename = "customMessage")]
     pub custom_message: Option<String>,
     /// Custom/Overridden name of the rule (used in case of Default rule update).
     #[serde(rename = "customName")]
     pub custom_name: Option<String>,
+    /// The ID of the corresponding default rule.
+    #[serde(rename = "defaultRuleId")]
+    pub default_rule_id: Option<String>,
+    /// Default tags for default rules, included in tags.
+    #[serde(rename = "defaultTags")]
+    pub default_tags: Option<Vec<String>>,
     /// When the rule will be deprecated, timestamp in milliseconds.
     #[serde(rename = "deprecationDate")]
     pub deprecation_date: Option<i64>,
@@ -38,18 +50,30 @@ pub struct SecurityMonitoringSignalRuleResponse {
     /// The ID of the rule.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// Whether the rule is in beta.
+    #[serde(rename = "isBeta")]
+    pub is_beta: Option<bool>,
     /// Whether the rule is included by default.
     #[serde(rename = "isDefault")]
     pub is_default: Option<bool>,
     /// Whether the rule has been deleted.
     #[serde(rename = "isDeleted")]
     pub is_deleted: Option<bool>,
+    /// Whether the rule is deprecated.
+    #[serde(rename = "isDeprecated")]
+    pub is_deprecated: Option<bool>,
     /// Whether the rule is enabled.
     #[serde(rename = "isEnabled")]
     pub is_enabled: Option<bool>,
+    /// Whether the rule is provided by a partner.
+    #[serde(rename = "isPartner")]
+    pub is_partner: Option<bool>,
     /// Message for generated signals.
     #[serde(rename = "message")]
     pub message: Option<String>,
+    /// Metadata associated with the rule.
+    #[serde(rename = "metadata")]
+    pub metadata: Option<crate::datadogV2::model::SecurityMonitoringRuleMetadata>,
     /// The name of the rule.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -68,6 +92,12 @@ pub struct SecurityMonitoringSignalRuleResponse {
     /// User ID of the user who updated the rule.
     #[serde(rename = "updateAuthorId")]
     pub update_author_id: Option<i64>,
+    /// The date the rule was last updated, in milliseconds.
+    #[serde(rename = "updatedAt")]
+    pub updated_at: Option<i64>,
+    /// The user who created or last updated the rule.
+    #[serde(rename = "updater")]
+    pub updater: Option<crate::datadogV2::model::SecurityMonitoringRuleUser>,
     /// The version of the rule.
     #[serde(rename = "version")]
     pub version: Option<i64>,
@@ -81,29 +111,44 @@ pub struct SecurityMonitoringSignalRuleResponse {
 impl SecurityMonitoringSignalRuleResponse {
     pub fn new() -> SecurityMonitoringSignalRuleResponse {
         SecurityMonitoringSignalRuleResponse {
+            blocking: None,
             cases: None,
             created_at: None,
             creation_author_id: None,
+            creator: None,
             custom_message: None,
             custom_name: None,
+            default_rule_id: None,
+            default_tags: None,
             deprecation_date: None,
             filters: None,
             has_extended_title: None,
             id: None,
+            is_beta: None,
             is_default: None,
             is_deleted: None,
+            is_deprecated: None,
             is_enabled: None,
+            is_partner: None,
             message: None,
+            metadata: None,
             name: None,
             options: None,
             queries: None,
             tags: None,
             type_: None,
             update_author_id: None,
+            updated_at: None,
+            updater: None,
             version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn blocking(mut self, value: bool) -> Self {
+        self.blocking = Some(value);
+        self
     }
 
     pub fn cases(
@@ -124,6 +169,11 @@ impl SecurityMonitoringSignalRuleResponse {
         self
     }
 
+    pub fn creator(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleUser) -> Self {
+        self.creator = Some(value);
+        self
+    }
+
     pub fn custom_message(mut self, value: String) -> Self {
         self.custom_message = Some(value);
         self
@@ -131,6 +181,16 @@ impl SecurityMonitoringSignalRuleResponse {
 
     pub fn custom_name(mut self, value: String) -> Self {
         self.custom_name = Some(value);
+        self
+    }
+
+    pub fn default_rule_id(mut self, value: String) -> Self {
+        self.default_rule_id = Some(value);
+        self
+    }
+
+    pub fn default_tags(mut self, value: Vec<String>) -> Self {
+        self.default_tags = Some(value);
         self
     }
 
@@ -157,6 +217,11 @@ impl SecurityMonitoringSignalRuleResponse {
         self
     }
 
+    pub fn is_beta(mut self, value: bool) -> Self {
+        self.is_beta = Some(value);
+        self
+    }
+
     pub fn is_default(mut self, value: bool) -> Self {
         self.is_default = Some(value);
         self
@@ -167,13 +232,31 @@ impl SecurityMonitoringSignalRuleResponse {
         self
     }
 
+    pub fn is_deprecated(mut self, value: bool) -> Self {
+        self.is_deprecated = Some(value);
+        self
+    }
+
     pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
 
+    pub fn is_partner(mut self, value: bool) -> Self {
+        self.is_partner = Some(value);
+        self
+    }
+
     pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
+        self
+    }
+
+    pub fn metadata(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleMetadata,
+    ) -> Self {
+        self.metadata = Some(value);
         self
     }
 
@@ -216,6 +299,16 @@ impl SecurityMonitoringSignalRuleResponse {
         self
     }
 
+    pub fn updated_at(mut self, value: i64) -> Self {
+        self.updated_at = Some(value);
+        self
+    }
+
+    pub fn updater(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleUser) -> Self {
+        self.updater = Some(value);
+        self
+    }
+
     pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
@@ -253,21 +346,30 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
             where
                 M: MapAccess<'a>,
             {
+                let mut blocking: Option<bool> = None;
                 let mut cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>> =
                     None;
                 let mut created_at: Option<i64> = None;
                 let mut creation_author_id: Option<i64> = None;
+                let mut creator: Option<crate::datadogV2::model::SecurityMonitoringRuleUser> = None;
                 let mut custom_message: Option<String> = None;
                 let mut custom_name: Option<String> = None;
+                let mut default_rule_id: Option<String> = None;
+                let mut default_tags: Option<Vec<String>> = None;
                 let mut deprecation_date: Option<i64> = None;
                 let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
                     None;
                 let mut has_extended_title: Option<bool> = None;
                 let mut id: Option<String> = None;
+                let mut is_beta: Option<bool> = None;
                 let mut is_default: Option<bool> = None;
                 let mut is_deleted: Option<bool> = None;
+                let mut is_deprecated: Option<bool> = None;
                 let mut is_enabled: Option<bool> = None;
+                let mut is_partner: Option<bool> = None;
                 let mut message: Option<String> = None;
+                let mut metadata: Option<crate::datadogV2::model::SecurityMonitoringRuleMetadata> =
+                    None;
                 let mut name: Option<String> = None;
                 let mut options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions> =
                     None;
@@ -278,6 +380,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                 let mut type_: Option<crate::datadogV2::model::SecurityMonitoringSignalRuleType> =
                     None;
                 let mut update_author_id: Option<i64> = None;
+                let mut updated_at: Option<i64> = None;
+                let mut updater: Option<crate::datadogV2::model::SecurityMonitoringRuleUser> = None;
                 let mut version: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -287,6 +391,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "blocking" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            blocking = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "cases" => {
                             if v.is_null() {
                                 continue;
@@ -306,6 +416,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                             creation_author_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "creator" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            creator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "customMessage" => {
                             if v.is_null() {
                                 continue;
@@ -318,6 +434,20 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                                 continue;
                             }
                             custom_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "defaultRuleId" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            default_rule_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "defaultTags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            default_tags =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "deprecationDate" => {
@@ -346,6 +476,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "isBeta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_beta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "isDefault" => {
                             if v.is_null() {
                                 continue;
@@ -358,17 +494,36 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                             }
                             is_deleted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "isDeprecated" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_deprecated =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "isEnabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "isPartner" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_partner = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "message" => {
                             if v.is_null() {
                                 continue;
                             }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "metadata" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             if v.is_null() {
@@ -415,6 +570,18 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                             update_author_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "updatedAt" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "updater" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            updater = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "version" => {
                             if v.is_null() {
                                 continue;
@@ -430,25 +597,35 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                 }
 
                 let content = SecurityMonitoringSignalRuleResponse {
+                    blocking,
                     cases,
                     created_at,
                     creation_author_id,
+                    creator,
                     custom_message,
                     custom_name,
+                    default_rule_id,
+                    default_tags,
                     deprecation_date,
                     filters,
                     has_extended_title,
                     id,
+                    is_beta,
                     is_default,
                     is_deleted,
+                    is_deprecated,
                     is_enabled,
+                    is_partner,
                     message,
+                    metadata,
                     name,
                     options,
                     queries,
                     tags,
                     type_,
                     update_author_id,
+                    updated_at,
+                    updater,
                     version,
                     additional_properties,
                     _unparsed,
