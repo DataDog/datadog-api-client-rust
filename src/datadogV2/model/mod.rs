@@ -3002,6 +3002,8 @@ pub mod model_oci_config_type;
 pub use self::model_oci_config_type::OCIConfigType;
 pub mod model_recommendations_filter_request;
 pub use self::model_recommendations_filter_request::RecommendationsFilterRequest;
+pub mod model_recommendations_filter_request_scope;
+pub use self::model_recommendations_filter_request_scope::RecommendationsFilterRequestScope;
 pub mod model_recommendations_filter_request_sort_items;
 pub use self::model_recommendations_filter_request_sort_items::RecommendationsFilterRequestSortItems;
 pub mod model_cost_recommendation_array;
