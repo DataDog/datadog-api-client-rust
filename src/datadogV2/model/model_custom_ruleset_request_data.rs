@@ -6,20 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for a custom ruleset create or update request.
+/// Data object for a custom ruleset create or update request. The resource `id` is
+/// required and must equal both `attributes.name` and, on update, the `ruleset_name`
+/// path parameter; a request that omits it or supplies a different value is rejected
+/// with a 412 response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomRulesetRequestData {
-    /// Attributes for creating or updating a custom ruleset.
+    /// Attributes for creating or updating a custom ruleset. `name` is required and must
+    /// equal the resource `id`; the server rejects a mismatch with a 412 response.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::CustomRulesetRequestDataAttributes>,
-    /// Ruleset identifier
+    pub attributes: crate::datadogV2::model::CustomRulesetRequestDataAttributes,
+    /// Ruleset identifier, which is the same as the ruleset name.
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: String,
     /// Resource type
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::CustomRulesetDataType>,
+    pub type_: crate::datadogV2::model::CustomRulesetDataType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -28,32 +32,18 @@ pub struct CustomRulesetRequestData {
 }
 
 impl CustomRulesetRequestData {
-    pub fn new() -> CustomRulesetRequestData {
+    pub fn new(
+        attributes: crate::datadogV2::model::CustomRulesetRequestDataAttributes,
+        id: String,
+        type_: crate::datadogV2::model::CustomRulesetDataType,
+    ) -> CustomRulesetRequestData {
         CustomRulesetRequestData {
-            attributes: None,
-            id: None,
-            type_: None,
+            attributes,
+            id,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::CustomRulesetRequestDataAttributes,
-    ) -> Self {
-        self.attributes = Some(value);
-        self
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
-    pub fn type_(mut self, value: crate::datadogV2::model::CustomRulesetDataType) -> Self {
-        self.type_ = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -62,12 +52,6 @@ impl CustomRulesetRequestData {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for CustomRulesetRequestData {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -102,21 +86,12 @@ impl<'de> Deserialize<'de> for CustomRulesetRequestData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -134,6 +109,9 @@ impl<'de> Deserialize<'de> for CustomRulesetRequestData {
                         }
                     }
                 }
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = CustomRulesetRequestData {
                     attributes,

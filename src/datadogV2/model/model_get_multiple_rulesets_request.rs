@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsRequest {
+    /// CSRF token for security, sent by browser-based clients. Ignored by the API when absent.
+    #[serde(rename = "_authentication_token")]
+    pub _authentication_token: Option<String>,
     /// The primary data object in the get-multiple-rulesets request, containing request attributes and resource type.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::GetMultipleRulesetsRequestData>,
@@ -24,10 +27,16 @@ pub struct GetMultipleRulesetsRequest {
 impl GetMultipleRulesetsRequest {
     pub fn new() -> GetMultipleRulesetsRequest {
         GetMultipleRulesetsRequest {
+            _authentication_token: None,
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn _authentication_token(mut self, value: String) -> Self {
+        self._authentication_token = Some(value);
+        self
     }
 
     pub fn data(mut self, value: crate::datadogV2::model::GetMultipleRulesetsRequestData) -> Self {
@@ -67,6 +76,7 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsRequest {
             where
                 M: MapAccess<'a>,
             {
+                let mut _authentication_token: Option<String> = None;
                 let mut data: Option<crate::datadogV2::model::GetMultipleRulesetsRequestData> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -77,6 +87,13 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "_authentication_token" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            _authentication_token =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "data" => {
                             if v.is_null() {
                                 continue;
@@ -92,6 +109,7 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsRequest {
                 }
 
                 let content = GetMultipleRulesetsRequest {
+                    _authentication_token,
                     data,
                     additional_properties,
                     _unparsed,

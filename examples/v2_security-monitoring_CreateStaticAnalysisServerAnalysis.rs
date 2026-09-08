@@ -6,6 +6,8 @@ use datadog_api_client::datadogV2::model::AnalysisRequestData;
 use datadog_api_client::datadogV2::model::AnalysisRequestDataAttributes;
 use datadog_api_client::datadogV2::model::AnalysisRequestDataType;
 use datadog_api_client::datadogV2::model::AnalysisRequestRule;
+use datadog_api_client::datadogV2::model::AnalysisRequestRuleArgument;
+use datadog_api_client::datadogV2::model::AnalysisRequestRuleTest;
 
 #[tokio::main]
 async fn main() {
@@ -25,8 +27,11 @@ async fn main() {
                 "KGNhbGwgbmFtZTogKGF0dHJpYnV0ZSkpQHZhbA==".to_string(),
                 "TREE_SITTER_QUERY".to_string(),
             )
+            .arguments(vec![AnalysisRequestRuleArgument::new()])
             .entity_checked(None)
-            .regex(None)],
+            .name("no-exit".to_string())
+            .regex(None)
+            .tests(vec![AnalysisRequestRuleTest::new()])],
         ),
         AnalysisRequestDataType::ANALYSIS_REQUEST,
     ));

@@ -6,42 +6,49 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a custom rule revision, including code, metadata, and test cases.
+/// A revision of a custom static analysis rule as embedded in a rule supplied by a create
+/// or update request. Nested revisions are sent flat, without a `data`/`type`/`attributes`
+/// envelope. `id`, `version_id`, `checksum`, `created_at` and `created_by` are server-assigned
+/// and read-only; they are declared so that a ruleset previously read back can be supplied
+/// unchanged.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct CustomRuleRevisionAttributes {
+pub struct CustomRuleRevisionInput {
     /// Rule arguments
-    #[serialize_always]
-    #[serde(rename = "arguments")]
-    pub arguments: Option<Vec<crate::datadogV2::model::Argument>>,
+    #[serde(
+        rename = "arguments",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub arguments: Option<Option<Vec<crate::datadogV2::model::Argument>>>,
     /// Rule category
     #[serde(rename = "category")]
-    pub category: crate::datadogV2::model::CustomRuleRevisionAttributesCategory,
+    pub category: Option<crate::datadogV2::model::CustomRuleRevisionAttributesCategory>,
     /// Code checksum
     #[serde(rename = "checksum")]
-    pub checksum: String,
+    pub checksum: Option<String>,
     /// Rule code
     #[serde(rename = "code")]
-    pub code: String,
+    pub code: Option<String>,
     /// Creation timestamp
     #[serde(rename = "created_at")]
-    pub created_at: chrono::DateTime<chrono::Utc>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Creator identifier
     #[serde(rename = "created_by")]
-    pub created_by: String,
+    pub created_by: Option<String>,
     /// Revision creation message
     #[serde(rename = "creation_message")]
-    pub creation_message: String,
+    pub creation_message: Option<String>,
     /// Associated CVE
     #[serde(rename = "cve", default, with = "::serde_with::rust::double_option")]
     pub cve: Option<Option<String>>,
     /// Associated CWE
     #[serde(rename = "cwe", default, with = "::serde_with::rust::double_option")]
     pub cwe: Option<Option<String>>,
-    /// Full description
+    /// Base64-encoded full description
     #[serde(rename = "description")]
-    pub description: String,
+    pub description: Option<String>,
     /// Documentation URL
     #[serde(
         rename = "documentation_url",
@@ -49,91 +56,109 @@ pub struct CustomRuleRevisionAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub documentation_url: Option<Option<String>>,
-    /// Whether the revision is published
+    /// Revision identifier
+    #[serde(rename = "id")]
+    pub id: Option<String>,
+    /// Whether the revision should be published
     #[serde(rename = "is_published")]
-    pub is_published: bool,
+    pub is_published: Option<bool>,
     /// Whether this is a testing revision
     #[serde(rename = "is_testing")]
-    pub is_testing: bool,
+    pub is_testing: Option<bool>,
     /// Programming language
     #[serde(rename = "language")]
-    pub language: crate::datadogV2::model::Language,
+    pub language: Option<crate::datadogV2::model::Language>,
     /// Rule severity
     #[serde(rename = "severity")]
-    pub severity: crate::datadogV2::model::CustomRuleRevisionAttributesSeverity,
-    /// Short description
+    pub severity: Option<crate::datadogV2::model::CustomRuleRevisionAttributesSeverity>,
+    /// Base64-encoded short description
     #[serde(rename = "short_description")]
-    pub short_description: String,
+    pub short_description: Option<String>,
     /// Whether to use AI for fixes
     #[serde(rename = "should_use_ai_fix")]
-    pub should_use_ai_fix: bool,
+    pub should_use_ai_fix: Option<bool>,
     /// Rule tags
-    #[serialize_always]
-    #[serde(rename = "tags")]
-    pub tags: Option<Vec<String>>,
+    #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
+    pub tags: Option<Option<Vec<String>>>,
     /// Rule tests
-    #[serialize_always]
-    #[serde(rename = "tests")]
-    pub tests: Option<Vec<crate::datadogV2::model::CustomRuleRevisionTest>>,
+    #[serde(rename = "tests", default, with = "::serde_with::rust::double_option")]
+    pub tests: Option<Option<Vec<crate::datadogV2::model::CustomRuleRevisionTest>>>,
     /// Tree-sitter query
     #[serde(rename = "tree_sitter_query")]
-    pub tree_sitter_query: String,
+    pub tree_sitter_query: Option<String>,
     /// Monotonically increasing version number of the revision.
     #[serde(rename = "version_id")]
-    pub version_id: i64,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    pub version_id: Option<i64>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
-impl CustomRuleRevisionAttributes {
-    pub fn new(
-        arguments: Option<Vec<crate::datadogV2::model::Argument>>,
-        category: crate::datadogV2::model::CustomRuleRevisionAttributesCategory,
-        checksum: String,
-        code: String,
-        created_at: chrono::DateTime<chrono::Utc>,
-        created_by: String,
-        creation_message: String,
-        description: String,
-        is_published: bool,
-        is_testing: bool,
-        language: crate::datadogV2::model::Language,
-        severity: crate::datadogV2::model::CustomRuleRevisionAttributesSeverity,
-        short_description: String,
-        should_use_ai_fix: bool,
-        tags: Option<Vec<String>>,
-        tests: Option<Vec<crate::datadogV2::model::CustomRuleRevisionTest>>,
-        tree_sitter_query: String,
-        version_id: i64,
-    ) -> CustomRuleRevisionAttributes {
-        CustomRuleRevisionAttributes {
-            arguments,
-            category,
-            checksum,
-            code,
-            created_at,
-            created_by,
-            creation_message,
+impl CustomRuleRevisionInput {
+    pub fn new() -> CustomRuleRevisionInput {
+        CustomRuleRevisionInput {
+            arguments: None,
+            category: None,
+            checksum: None,
+            code: None,
+            created_at: None,
+            created_by: None,
+            creation_message: None,
             cve: None,
             cwe: None,
-            description,
+            description: None,
             documentation_url: None,
-            is_published,
-            is_testing,
-            language,
-            severity,
-            short_description,
-            should_use_ai_fix,
-            tags,
-            tests,
-            tree_sitter_query,
-            version_id,
-            additional_properties: std::collections::BTreeMap::new(),
+            id: None,
+            is_published: None,
+            is_testing: None,
+            language: None,
+            severity: None,
+            short_description: None,
+            should_use_ai_fix: None,
+            tags: None,
+            tests: None,
+            tree_sitter_query: None,
+            version_id: None,
             _unparsed: false,
         }
+    }
+
+    pub fn arguments(mut self, value: Option<Vec<crate::datadogV2::model::Argument>>) -> Self {
+        self.arguments = Some(value);
+        self
+    }
+
+    pub fn category(
+        mut self,
+        value: crate::datadogV2::model::CustomRuleRevisionAttributesCategory,
+    ) -> Self {
+        self.category = Some(value);
+        self
+    }
+
+    pub fn checksum(mut self, value: String) -> Self {
+        self.checksum = Some(value);
+        self
+    }
+
+    pub fn code(mut self, value: String) -> Self {
+        self.code = Some(value);
+        self
+    }
+
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn created_by(mut self, value: String) -> Self {
+        self.created_by = Some(value);
+        self
+    }
+
+    pub fn creation_message(mut self, value: String) -> Self {
+        self.creation_message = Some(value);
+        self
     }
 
     pub fn cve(mut self, value: Option<String>) -> Self {
@@ -146,28 +171,92 @@ impl CustomRuleRevisionAttributes {
         self
     }
 
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
+    }
+
     pub fn documentation_url(mut self, value: Option<String>) -> Self {
         self.documentation_url = Some(value);
         self
     }
 
-    pub fn additional_properties(
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn is_published(mut self, value: bool) -> Self {
+        self.is_published = Some(value);
+        self
+    }
+
+    pub fn is_testing(mut self, value: bool) -> Self {
+        self.is_testing = Some(value);
+        self
+    }
+
+    pub fn language(mut self, value: crate::datadogV2::model::Language) -> Self {
+        self.language = Some(value);
+        self
+    }
+
+    pub fn severity(
         mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
+        value: crate::datadogV2::model::CustomRuleRevisionAttributesSeverity,
     ) -> Self {
-        self.additional_properties = value;
+        self.severity = Some(value);
+        self
+    }
+
+    pub fn short_description(mut self, value: String) -> Self {
+        self.short_description = Some(value);
+        self
+    }
+
+    pub fn should_use_ai_fix(mut self, value: bool) -> Self {
+        self.should_use_ai_fix = Some(value);
+        self
+    }
+
+    pub fn tags(mut self, value: Option<Vec<String>>) -> Self {
+        self.tags = Some(value);
+        self
+    }
+
+    pub fn tests(
+        mut self,
+        value: Option<Vec<crate::datadogV2::model::CustomRuleRevisionTest>>,
+    ) -> Self {
+        self.tests = Some(value);
+        self
+    }
+
+    pub fn tree_sitter_query(mut self, value: String) -> Self {
+        self.tree_sitter_query = Some(value);
+        self
+    }
+
+    pub fn version_id(mut self, value: i64) -> Self {
+        self.version_id = Some(value);
         self
     }
 }
 
-impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
+impl Default for CustomRuleRevisionInput {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for CustomRuleRevisionInput {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct CustomRuleRevisionAttributesVisitor;
-        impl<'a> Visitor<'a> for CustomRuleRevisionAttributesVisitor {
-            type Value = CustomRuleRevisionAttributes;
+        struct CustomRuleRevisionInputVisitor;
+        impl<'a> Visitor<'a> for CustomRuleRevisionInputVisitor {
+            type Value = CustomRuleRevisionInput;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -190,6 +279,7 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                 let mut cwe: Option<Option<String>> = None;
                 let mut description: Option<String> = None;
                 let mut documentation_url: Option<Option<String>> = None;
+                let mut id: Option<String> = None;
                 let mut is_published: Option<bool> = None;
                 let mut is_testing: Option<bool> = None;
                 let mut language: Option<crate::datadogV2::model::Language> = None;
@@ -204,10 +294,6 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                 > = None;
                 let mut tree_sitter_query: Option<String> = None;
                 let mut version_id: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -216,6 +302,9 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                             arguments = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "category" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _category) = category {
                                 match _category {
@@ -227,18 +316,33 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                             }
                         }
                         "checksum" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             checksum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "code" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "creation_message" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             creation_message =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -249,6 +353,9 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                             cwe = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -256,14 +363,29 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                             documentation_url =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "is_published" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             is_published =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "is_testing" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             is_testing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "language" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             language = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _language) = language {
                                 match _language {
@@ -277,6 +399,9 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                             }
                         }
                         "severity" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             severity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _severity) = severity {
                                 match _severity {
@@ -288,10 +413,16 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                             }
                         }
                         "short_description" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             short_description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "should_use_ai_fix" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             should_use_ai_fix =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -302,45 +433,27 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                             tests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tree_sitter_query" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             tree_sitter_query =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "version_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             version_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
-                let arguments = arguments.ok_or_else(|| M::Error::missing_field("arguments"))?;
-                let category = category.ok_or_else(|| M::Error::missing_field("category"))?;
-                let checksum = checksum.ok_or_else(|| M::Error::missing_field("checksum"))?;
-                let code = code.ok_or_else(|| M::Error::missing_field("code"))?;
-                let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
-                let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
-                let creation_message =
-                    creation_message.ok_or_else(|| M::Error::missing_field("creation_message"))?;
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
-                let is_published =
-                    is_published.ok_or_else(|| M::Error::missing_field("is_published"))?;
-                let is_testing = is_testing.ok_or_else(|| M::Error::missing_field("is_testing"))?;
-                let language = language.ok_or_else(|| M::Error::missing_field("language"))?;
-                let severity = severity.ok_or_else(|| M::Error::missing_field("severity"))?;
-                let short_description = short_description
-                    .ok_or_else(|| M::Error::missing_field("short_description"))?;
-                let should_use_ai_fix = should_use_ai_fix
-                    .ok_or_else(|| M::Error::missing_field("should_use_ai_fix"))?;
-                let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;
-                let tests = tests.ok_or_else(|| M::Error::missing_field("tests"))?;
-                let tree_sitter_query = tree_sitter_query
-                    .ok_or_else(|| M::Error::missing_field("tree_sitter_query"))?;
-                let version_id = version_id.ok_or_else(|| M::Error::missing_field("version_id"))?;
 
-                let content = CustomRuleRevisionAttributes {
+                let content = CustomRuleRevisionInput {
                     arguments,
                     category,
                     checksum,
@@ -352,6 +465,7 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                     cwe,
                     description,
                     documentation_url,
+                    id,
                     is_published,
                     is_testing,
                     language,
@@ -362,7 +476,6 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                     tests,
                     tree_sitter_query,
                     version_id,
-                    additional_properties,
                     _unparsed,
                 };
 
@@ -370,6 +483,6 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
             }
         }
 
-        deserializer.deserialize_any(CustomRuleRevisionAttributesVisitor)
+        deserializer.deserialize_any(CustomRuleRevisionInputVisitor)
     }
 }

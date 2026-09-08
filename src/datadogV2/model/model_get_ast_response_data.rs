@@ -14,9 +14,9 @@ pub struct GetAstResponseData {
     /// The attributes of the get-AST response, containing the parsed abstract syntax tree.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::GetAstResponseDataAttributes,
-    /// The identifier of the get-AST response resource.
+    /// The identifier of the get-AST response resource, echoed from the request.
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: String,
     /// Get AST response resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::GetAstResponseDataType,
@@ -30,20 +30,16 @@ pub struct GetAstResponseData {
 impl GetAstResponseData {
     pub fn new(
         attributes: crate::datadogV2::model::GetAstResponseDataAttributes,
+        id: String,
         type_: crate::datadogV2::model::GetAstResponseDataType,
     ) -> GetAstResponseData {
         GetAstResponseData {
             attributes,
-            id: None,
+            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -88,9 +84,6 @@ impl<'de> Deserialize<'de> for GetAstResponseData {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -112,6 +105,7 @@ impl<'de> Deserialize<'de> for GetAstResponseData {
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = GetAstResponseData {

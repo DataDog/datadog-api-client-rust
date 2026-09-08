@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct GetMultipleRulesetsResponse {
     /// The primary data object in the get-multiple-rulesets response, containing the response attributes and resource type.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::GetMultipleRulesetsResponseData>,
+    pub data: crate::datadogV2::model::GetMultipleRulesetsResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,17 +22,14 @@ pub struct GetMultipleRulesetsResponse {
 }
 
 impl GetMultipleRulesetsResponse {
-    pub fn new() -> GetMultipleRulesetsResponse {
+    pub fn new(
+        data: crate::datadogV2::model::GetMultipleRulesetsResponseData,
+    ) -> GetMultipleRulesetsResponse {
         GetMultipleRulesetsResponse {
-            data: None,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(mut self, value: crate::datadogV2::model::GetMultipleRulesetsResponseData) -> Self {
-        self.data = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -41,12 +38,6 @@ impl GetMultipleRulesetsResponse {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for GetMultipleRulesetsResponse {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -78,9 +69,6 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponse {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -90,6 +78,7 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponse {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = GetMultipleRulesetsResponse {
                     data,

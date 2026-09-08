@@ -6,7 +6,8 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for creating or updating a custom ruleset.
+/// Attributes for creating or updating a custom ruleset. `name` is required and must
+/// equal the resource `id`; the server rejects a mismatch with a 412 response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,9 +15,9 @@ pub struct CustomRulesetRequestDataAttributes {
     /// Base64-encoded full description
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// Ruleset name
+    /// Ruleset name, which must be the same as the resource identifier.
     #[serde(rename = "name")]
-    pub name: Option<String>,
+    pub name: String,
     /// Rules in the ruleset
     #[serde(rename = "rules", default, with = "::serde_with::rust::double_option")]
     pub rules: Option<Option<Vec<crate::datadogV2::model::CustomRule>>>,
@@ -31,10 +32,10 @@ pub struct CustomRulesetRequestDataAttributes {
 }
 
 impl CustomRulesetRequestDataAttributes {
-    pub fn new() -> CustomRulesetRequestDataAttributes {
+    pub fn new(name: String) -> CustomRulesetRequestDataAttributes {
         CustomRulesetRequestDataAttributes {
             description: None,
-            name: None,
+            name,
             rules: None,
             short_description: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -44,11 +45,6 @@ impl CustomRulesetRequestDataAttributes {
 
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
-        self
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
         self
     }
 
@@ -68,12 +64,6 @@ impl CustomRulesetRequestDataAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for CustomRulesetRequestDataAttributes {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -114,9 +104,6 @@ impl<'de> Deserialize<'de> for CustomRulesetRequestDataAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rules" => {
@@ -136,6 +123,7 @@ impl<'de> Deserialize<'de> for CustomRulesetRequestDataAttributes {
                         }
                     }
                 }
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = CustomRulesetRequestDataAttributes {
                     description,

@@ -6,52 +6,82 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A custom static analysis rule within a ruleset.
+/// A custom static analysis rule within a ruleset, as supplied in a create or update
+/// request. Nested rules are sent flat, without a `data`/`type`/`attributes` envelope.
+/// `id` and `name` are client-supplied and must match each other. The remaining members
+/// are server-assigned and read-only; they are declared so that a ruleset previously
+/// read back can be supplied unchanged.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomRule {
     /// Creation timestamp
     #[serde(rename = "created_at")]
-    pub created_at: chrono::DateTime<chrono::Utc>,
+    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Creator identifier
     #[serde(rename = "created_by")]
-    pub created_by: String,
-    /// A specific revision of a custom static analysis rule.
+    pub created_by: Option<String>,
+    /// Rule identifier, which is the same as the rule name.
+    #[serde(rename = "id")]
+    pub id: String,
+    /// A revision of a custom static analysis rule as embedded in a rule supplied by a create
+    /// or update request. Nested revisions are sent flat, without a `data`/`type`/`attributes`
+    /// envelope. `id`, `version_id`, `checksum`, `created_at` and `created_by` are server-assigned
+    /// and read-only; they are declared so that a ruleset previously read back can be supplied
+    /// unchanged.
     #[serde(rename = "last_revision")]
-    pub last_revision: crate::datadogV2::model::CustomRuleRevision,
+    pub last_revision: Option<crate::datadogV2::model::CustomRuleRevisionInput>,
     /// Rule name
     #[serde(rename = "name")]
     pub name: String,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    /// Revision history of the rule.
+    #[serde(
+        rename = "revisions",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub revisions: Option<Option<Vec<crate::datadogV2::model::CustomRuleRevisionInput>>>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
 impl CustomRule {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        created_by: String,
-        last_revision: crate::datadogV2::model::CustomRuleRevision,
-        name: String,
-    ) -> CustomRule {
+    pub fn new(id: String, name: String) -> CustomRule {
         CustomRule {
-            created_at,
-            created_by,
-            last_revision,
+            created_at: None,
+            created_by: None,
+            id,
+            last_revision: None,
             name,
-            additional_properties: std::collections::BTreeMap::new(),
+            revisions: None,
             _unparsed: false,
         }
     }
 
-    pub fn additional_properties(
+    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.created_at = Some(value);
+        self
+    }
+
+    pub fn created_by(mut self, value: String) -> Self {
+        self.created_by = Some(value);
+        self
+    }
+
+    pub fn last_revision(
         mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
+        value: crate::datadogV2::model::CustomRuleRevisionInput,
     ) -> Self {
-        self.additional_properties = value;
+        self.last_revision = Some(value);
+        self
+    }
+
+    pub fn revisions(
+        mut self,
+        value: Option<Vec<crate::datadogV2::model::CustomRuleRevisionInput>>,
+    ) -> Self {
+        self.revisions = Some(value);
         self
     }
 }
@@ -75,48 +105,62 @@ impl<'de> Deserialize<'de> for CustomRule {
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
-                let mut last_revision: Option<crate::datadogV2::model::CustomRuleRevision> = None;
+                let mut id: Option<String> = None;
+                let mut last_revision: Option<crate::datadogV2::model::CustomRuleRevisionInput> =
+                    None;
                 let mut name: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut revisions: Option<
+                    Option<Vec<crate::datadogV2::model::CustomRuleRevisionInput>>,
+                > = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "created_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "last_revision" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             last_revision =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "revisions" => {
+                            revisions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
-                let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
-                let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
-                let last_revision =
-                    last_revision.ok_or_else(|| M::Error::missing_field("last_revision"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = CustomRule {
                     created_at,
                     created_by,
+                    id,
                     last_revision,
                     name,
-                    additional_properties,
+                    revisions,
                     _unparsed,
                 };
 

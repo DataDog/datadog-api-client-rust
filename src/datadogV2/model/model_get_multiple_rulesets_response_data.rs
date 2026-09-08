@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct GetMultipleRulesetsResponseData {
     /// The attributes of the get-multiple-rulesets response, containing the list of requested rulesets.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributes>,
-    /// The unique identifier of the get-multiple-rulesets response resource.
+    pub attributes: crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributes,
+    /// The unique identifier of the get-multiple-rulesets response resource, echoed from the request.
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: String,
     /// Get multiple rulesets response resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::GetMultipleRulesetsResponseDataType,
@@ -29,28 +29,17 @@ pub struct GetMultipleRulesetsResponseData {
 
 impl GetMultipleRulesetsResponseData {
     pub fn new(
+        attributes: crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributes,
+        id: String,
         type_: crate::datadogV2::model::GetMultipleRulesetsResponseDataType,
     ) -> GetMultipleRulesetsResponseData {
         GetMultipleRulesetsResponseData {
-            attributes: None,
-            id: None,
+            attributes,
+            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributes,
-    ) -> Self {
-        self.attributes = Some(value);
-        self
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -95,15 +84,9 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseData {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -124,6 +107,8 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseData {
                         }
                     }
                 }
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = GetMultipleRulesetsResponseData {

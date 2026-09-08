@@ -15,32 +15,34 @@ use datadog_api_client::datadogV2::model::Language;
 async fn main() {
     let body = CustomRuleRevisionRequest::new().data(
         CustomRuleRevisionRequestData::new()
-            .attributes(CustomRuleRevisionInputAttributes::new(
-                vec![Argument::new(
-                    "YXJndW1lbnQgZGVzY3JpcHRpb24=".to_string(),
-                    "YXJndW1lbnRfbmFtZQ==".to_string(),
-                )],
-                CustomRuleRevisionAttributesCategory::SECURITY,
-                "Y29uZHVjdG9yOgogICAgLSBkZXBsb3lfb25seTogdHJ1ZQ==".to_string(),
-                "Initial revision".to_string(),
-                Some("CVE-2024-1234".to_string()),
-                Some("CWE-79".to_string()),
-                "bG9uZyBkZXNjcmlwdGlvbg==".to_string(),
-                Some("https://docs.example.com/rules/my-rule".to_string()),
-                false,
-                false,
-                Language::PYTHON,
-                CustomRuleRevisionAttributesSeverity::ERROR,
-                "c2hvcnQgZGVzY3JpcHRpb24=".to_string(),
-                false,
-                vec!["security".to_string(), "custom".to_string()],
-                vec![CustomRuleRevisionTest::new(
-                    1,
+            .attributes(
+                CustomRuleRevisionInputAttributes::new(
+                    Some(vec![Argument::new(
+                        "YXJndW1lbnQgZGVzY3JpcHRpb24=".to_string(),
+                        "YXJndW1lbnRfbmFtZQ==".to_string(),
+                    )]),
+                    CustomRuleRevisionAttributesCategory::SECURITY,
                     "Y29uZHVjdG9yOgogICAgLSBkZXBsb3lfb25seTogdHJ1ZQ==".to_string(),
-                    "test.yaml".to_string(),
-                )],
-                "Y29uZHVjdG9yOgogICAgLSBkZXBsb3lfb25seTogdHJ1ZQ==".to_string(),
-            ))
+                    "Initial revision".to_string(),
+                    "bG9uZyBkZXNjcmlwdGlvbg==".to_string(),
+                    false,
+                    false,
+                    Language::PYTHON,
+                    CustomRuleRevisionAttributesSeverity::ERROR,
+                    "c2hvcnQgZGVzY3JpcHRpb24=".to_string(),
+                    false,
+                    Some(vec!["security".to_string(), "custom".to_string()]),
+                    Some(vec![CustomRuleRevisionTest::new(
+                        1,
+                        "Y29uZHVjdG9yOgogICAgLSBkZXBsb3lfb25seTogdHJ1ZQ==".to_string(),
+                        "test.yaml".to_string(),
+                    )]),
+                    "Y29uZHVjdG9yOgogICAgLSBkZXBsb3lfb25seTogdHJ1ZQ==".to_string(),
+                )
+                .cve(Some("CVE-2024-1234".to_string()))
+                .cwe(Some("CWE-79".to_string()))
+                .documentation_url(Some("https://docs.example.com/rules/my-rule".to_string())),
+            )
             .type_(CustomRuleRevisionDataType::CUSTOM_RULE_REVISION),
     );
     let mut configuration = datadog::Configuration::new();
