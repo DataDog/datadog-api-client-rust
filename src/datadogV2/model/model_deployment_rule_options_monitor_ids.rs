@@ -6,24 +6,24 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Monitor query options for deployment rules.
+/// Specific monitor options for deployment rules.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DeploymentRuleOptionsMonitor {
-    /// Seconds the monitor needs to stay in OK status for the rule to pass.
+pub struct DeploymentRuleOptionsMonitorIds {
+    /// Seconds the monitors need to stay in OK status for the rule to pass.
     #[serde(rename = "duration")]
     pub duration: Option<i64>,
-    /// Whether the rule should fail if a matching monitor group is in a NO DATA state.
+    /// Whether the rule should fail if a selected monitor group is in a NO DATA state.
     #[serde(rename = "fail_on_no_data")]
     pub fail_on_no_data: Option<bool>,
-    /// Whether the rule should fail if no monitor groups are found for the query.
+    /// Whether the rule should fail if no monitor groups are found for the selected monitors.
     #[serde(rename = "fail_on_no_groups_found")]
     pub fail_on_no_groups_found: Option<bool>,
-    /// A query that selects the monitors to evaluate.
-    #[serde(rename = "query")]
-    pub query: String,
-    /// Seconds to wait after a deployment starts before evaluating the monitor's status.
+    /// A non-empty list of specific monitors to evaluate.
+    #[serde(rename = "monitor_ids")]
+    pub monitor_ids: Vec<crate::datadogV2::model::DeploymentRuleOptionsMonitorId>,
+    /// Seconds to wait after a deployment starts before evaluating the monitors' statuses.
     #[serde(rename = "warmup")]
     pub warmup: Option<i64>,
     #[serde(skip)]
@@ -31,13 +31,15 @@ pub struct DeploymentRuleOptionsMonitor {
     pub(crate) _unparsed: bool,
 }
 
-impl DeploymentRuleOptionsMonitor {
-    pub fn new(query: String) -> DeploymentRuleOptionsMonitor {
-        DeploymentRuleOptionsMonitor {
+impl DeploymentRuleOptionsMonitorIds {
+    pub fn new(
+        monitor_ids: Vec<crate::datadogV2::model::DeploymentRuleOptionsMonitorId>,
+    ) -> DeploymentRuleOptionsMonitorIds {
+        DeploymentRuleOptionsMonitorIds {
             duration: None,
             fail_on_no_data: None,
             fail_on_no_groups_found: None,
-            query,
+            monitor_ids,
             warmup: None,
             _unparsed: false,
         }
@@ -64,14 +66,14 @@ impl DeploymentRuleOptionsMonitor {
     }
 }
 
-impl<'de> Deserialize<'de> for DeploymentRuleOptionsMonitor {
+impl<'de> Deserialize<'de> for DeploymentRuleOptionsMonitorIds {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DeploymentRuleOptionsMonitorVisitor;
-        impl<'a> Visitor<'a> for DeploymentRuleOptionsMonitorVisitor {
-            type Value = DeploymentRuleOptionsMonitor;
+        struct DeploymentRuleOptionsMonitorIdsVisitor;
+        impl<'a> Visitor<'a> for DeploymentRuleOptionsMonitorIdsVisitor {
+            type Value = DeploymentRuleOptionsMonitorIds;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -84,7 +86,9 @@ impl<'de> Deserialize<'de> for DeploymentRuleOptionsMonitor {
                 let mut duration: Option<i64> = None;
                 let mut fail_on_no_data: Option<bool> = None;
                 let mut fail_on_no_groups_found: Option<bool> = None;
-                let mut query: Option<String> = None;
+                let mut monitor_ids: Option<
+                    Vec<crate::datadogV2::model::DeploymentRuleOptionsMonitorId>,
+                > = None;
                 let mut warmup: Option<i64> = None;
                 let mut _unparsed = false;
 
@@ -110,8 +114,9 @@ impl<'de> Deserialize<'de> for DeploymentRuleOptionsMonitor {
                             fail_on_no_groups_found =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "query" => {
-                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "monitor_ids" => {
+                            monitor_ids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "warmup" => {
                             if v.is_null() {
@@ -126,13 +131,14 @@ impl<'de> Deserialize<'de> for DeploymentRuleOptionsMonitor {
                         }
                     }
                 }
-                let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
+                let monitor_ids =
+                    monitor_ids.ok_or_else(|| M::Error::missing_field("monitor_ids"))?;
 
-                let content = DeploymentRuleOptionsMonitor {
+                let content = DeploymentRuleOptionsMonitorIds {
                     duration,
                     fail_on_no_data,
                     fail_on_no_groups_found,
-                    query,
+                    monitor_ids,
                     warmup,
                     _unparsed,
                 };
@@ -141,6 +147,6 @@ impl<'de> Deserialize<'de> for DeploymentRuleOptionsMonitor {
             }
         }
 
-        deserializer.deserialize_any(DeploymentRuleOptionsMonitorVisitor)
+        deserializer.deserialize_any(DeploymentRuleOptionsMonitorIdsVisitor)
     }
 }
