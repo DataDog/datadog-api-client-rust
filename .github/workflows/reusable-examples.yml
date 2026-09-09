@@ -12,7 +12,7 @@ on:
         description: 'Examples command to execute'
         required: false
         type: string
-        default: 'cargo check --examples'
+        default: 'cargo check --locked --examples'
       rust-version:
         description: 'Rust version to use for examples'
         required: false

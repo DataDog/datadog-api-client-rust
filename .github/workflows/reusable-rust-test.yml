@@ -44,18 +44,18 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-registry-
       - name: Cache Cargo build
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
         with:
           path: target
-          key: ${{ runner.os }}-cargo-target-${{ steps.rust.outputs.version }}-${{ hashFiles('**/Cargo.toml') }}
+          key: ${{ runner.os }}-cargo-target-${{ steps.rust.outputs.version }}-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-target-${{ steps.rust.outputs.version }}-
       - name: Compile test binary
         id: compile
         run: |
-          BINARY=$(cargo test --test main --no-run --message-format=json 2>/dev/null \
+          BINARY=$(cargo test --locked --test main --no-run --message-format=json 2>/dev/null \
             | jq -r 'select(.executable != null) | .executable' | head -1)
           echo "binary=$BINARY" >> $GITHUB_OUTPUT
         shell: bash

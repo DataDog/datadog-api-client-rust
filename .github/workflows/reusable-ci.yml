@@ -22,7 +22,7 @@ on:
         description: 'Examples command to execute'
         required: false
         type: string
-        default: 'cargo check --examples'
+        default: 'cargo check --locked --examples'
     secrets:
       # Integration test secrets
       DD_API_KEY:

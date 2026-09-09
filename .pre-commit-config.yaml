@@ -34,7 +34,7 @@ repos:
     pass_filenames: false
   - id: lint
     name: Lint
-    entry: cargo check
+    entry: cargo check --locked
     language: system
     pass_filenames: false
     stages: [manual]

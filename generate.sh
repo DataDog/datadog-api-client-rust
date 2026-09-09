@@ -23,7 +23,7 @@ pre_commit_wrapper () {
   echo "command 'pre-commit run --all-files --hook-stage=manual ${1}' success"
 }
 
-cargo install dd-rust-license-tool --quiet
+scripts/install-license-tool.sh
 
 rm -rf src/*
 rm -rf examples/*

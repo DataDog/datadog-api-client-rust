@@ -43,4 +43,4 @@ jobs:
             cd $(echo $tag_name | rev | cut -d'/' -f2- | rev)
           fi
 
-          cargo publish --registry crates-io
+          cargo publish --locked --registry crates-io
