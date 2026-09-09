@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of ListTagsResponseDataAttributes object.
+/// Tags associated with a device from a specific source.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ListTagsResponseDataAttributes {
-    /// The list of device tags grouped by source.
-    #[serde(rename = "by_source")]
-    pub by_source: Option<Vec<crate::datadogV2::model::DeviceTagsBySource>>,
-    /// The list of tags
+pub struct DeviceTagsBySource {
+    /// The source of the tags.
+    #[serde(rename = "source")]
+    pub source: Option<String>,
+    /// The list of tags for the source.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     #[serde(flatten)]
@@ -24,18 +24,18 @@ pub struct ListTagsResponseDataAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl ListTagsResponseDataAttributes {
-    pub fn new() -> ListTagsResponseDataAttributes {
-        ListTagsResponseDataAttributes {
-            by_source: None,
+impl DeviceTagsBySource {
+    pub fn new() -> DeviceTagsBySource {
+        DeviceTagsBySource {
+            source: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn by_source(mut self, value: Vec<crate::datadogV2::model::DeviceTagsBySource>) -> Self {
-        self.by_source = Some(value);
+    pub fn source(mut self, value: String) -> Self {
+        self.source = Some(value);
         self
     }
 
@@ -53,20 +53,20 @@ impl ListTagsResponseDataAttributes {
     }
 }
 
-impl Default for ListTagsResponseDataAttributes {
+impl Default for DeviceTagsBySource {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for ListTagsResponseDataAttributes {
+impl<'de> Deserialize<'de> for DeviceTagsBySource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ListTagsResponseDataAttributesVisitor;
-        impl<'a> Visitor<'a> for ListTagsResponseDataAttributesVisitor {
-            type Value = ListTagsResponseDataAttributes;
+        struct DeviceTagsBySourceVisitor;
+        impl<'a> Visitor<'a> for DeviceTagsBySourceVisitor {
+            type Value = DeviceTagsBySource;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,7 +76,7 @@ impl<'de> Deserialize<'de> for ListTagsResponseDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut by_source: Option<Vec<crate::datadogV2::model::DeviceTagsBySource>> = None;
+                let mut source: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -86,11 +86,11 @@ impl<'de> Deserialize<'de> for ListTagsResponseDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "by_source" => {
+                        "source" => {
                             if v.is_null() {
                                 continue;
                             }
-                            by_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tags" => {
                             if v.is_null() {
@@ -106,8 +106,8 @@ impl<'de> Deserialize<'de> for ListTagsResponseDataAttributes {
                     }
                 }
 
-                let content = ListTagsResponseDataAttributes {
-                    by_source,
+                let content = DeviceTagsBySource {
+                    source,
                     tags,
                     additional_properties,
                     _unparsed,
@@ -117,6 +117,6 @@ impl<'de> Deserialize<'de> for ListTagsResponseDataAttributes {
             }
         }
 
-        deserializer.deserialize_any(ListTagsResponseDataAttributesVisitor)
+        deserializer.deserialize_any(DeviceTagsBySourceVisitor)
     }
 }
