@@ -11304,6 +11304,8 @@ pub mod model_aggregated_long_tasks_response_data;
 pub use self::model_aggregated_long_tasks_response_data::AggregatedLongTasksResponseData;
 pub mod model_aggregated_long_tasks_response_attributes;
 pub use self::model_aggregated_long_tasks_response_attributes::AggregatedLongTasksResponseAttributes;
+pub mod model_aggregated_long_tasks_response_attributes_criteria;
+pub use self::model_aggregated_long_tasks_response_attributes_criteria::AggregatedLongTasksResponseAttributesCriteria;
 pub mod model_aggregated_long_tasks_by_invoker_type;
 pub use self::model_aggregated_long_tasks_by_invoker_type::AggregatedLongTasksByInvokerType;
 pub mod model_long_task_stats_per_view;
