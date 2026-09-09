@@ -6,11 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a custom rule revision, including code, metadata, and test cases.
+/// A revision of a custom static analysis rule as embedded in a rule or ruleset response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct CustomRuleRevisionAttributes {
+pub struct CustomRuleRevisionEmbedded {
     /// Rule arguments
     #[serialize_always]
     #[serde(rename = "arguments")]
@@ -33,22 +33,21 @@ pub struct CustomRuleRevisionAttributes {
     /// Revision creation message
     #[serde(rename = "creation_message")]
     pub creation_message: String,
-    /// Associated CVE
-    #[serde(rename = "cve", default, with = "::serde_with::rust::double_option")]
-    pub cve: Option<Option<String>>,
-    /// Associated CWE
-    #[serde(rename = "cwe", default, with = "::serde_with::rust::double_option")]
-    pub cwe: Option<Option<String>>,
+    /// Associated CVE. Omitted when the revision has no associated CVE.
+    #[serde(rename = "cve")]
+    pub cve: Option<String>,
+    /// Associated CWE. Omitted when the revision has no associated CWE.
+    #[serde(rename = "cwe")]
+    pub cwe: Option<String>,
     /// Full description
     #[serde(rename = "description")]
     pub description: String,
-    /// Documentation URL
-    #[serde(
-        rename = "documentation_url",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub documentation_url: Option<Option<String>>,
+    /// Documentation URL. Omitted when the revision has no documentation URL.
+    #[serde(rename = "documentation_url")]
+    pub documentation_url: Option<String>,
+    /// Revision identifier
+    #[serde(rename = "id")]
+    pub id: String,
     /// Whether the revision is published
     #[serde(rename = "is_published")]
     pub is_published: bool,
@@ -88,7 +87,7 @@ pub struct CustomRuleRevisionAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl CustomRuleRevisionAttributes {
+impl CustomRuleRevisionEmbedded {
     pub fn new(
         arguments: Option<Vec<crate::datadogV2::model::Argument>>,
         category: crate::datadogV2::model::CustomRuleRevisionAttributesCategory,
@@ -98,6 +97,7 @@ impl CustomRuleRevisionAttributes {
         created_by: String,
         creation_message: String,
         description: String,
+        id: String,
         is_published: bool,
         is_testing: bool,
         language: crate::datadogV2::model::Language,
@@ -108,8 +108,8 @@ impl CustomRuleRevisionAttributes {
         tests: Option<Vec<crate::datadogV2::model::CustomRuleRevisionTest>>,
         tree_sitter_query: String,
         version_id: i64,
-    ) -> CustomRuleRevisionAttributes {
-        CustomRuleRevisionAttributes {
+    ) -> CustomRuleRevisionEmbedded {
+        CustomRuleRevisionEmbedded {
             arguments,
             category,
             checksum,
@@ -121,6 +121,7 @@ impl CustomRuleRevisionAttributes {
             cwe: None,
             description,
             documentation_url: None,
+            id,
             is_published,
             is_testing,
             language,
@@ -136,17 +137,17 @@ impl CustomRuleRevisionAttributes {
         }
     }
 
-    pub fn cve(mut self, value: Option<String>) -> Self {
+    pub fn cve(mut self, value: String) -> Self {
         self.cve = Some(value);
         self
     }
 
-    pub fn cwe(mut self, value: Option<String>) -> Self {
+    pub fn cwe(mut self, value: String) -> Self {
         self.cwe = Some(value);
         self
     }
 
-    pub fn documentation_url(mut self, value: Option<String>) -> Self {
+    pub fn documentation_url(mut self, value: String) -> Self {
         self.documentation_url = Some(value);
         self
     }
@@ -160,14 +161,14 @@ impl CustomRuleRevisionAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
+impl<'de> Deserialize<'de> for CustomRuleRevisionEmbedded {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct CustomRuleRevisionAttributesVisitor;
-        impl<'a> Visitor<'a> for CustomRuleRevisionAttributesVisitor {
-            type Value = CustomRuleRevisionAttributes;
+        struct CustomRuleRevisionEmbeddedVisitor;
+        impl<'a> Visitor<'a> for CustomRuleRevisionEmbeddedVisitor {
+            type Value = CustomRuleRevisionEmbedded;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -186,10 +187,11 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut creation_message: Option<String> = None;
-                let mut cve: Option<Option<String>> = None;
-                let mut cwe: Option<Option<String>> = None;
+                let mut cve: Option<String> = None;
+                let mut cwe: Option<String> = None;
                 let mut description: Option<String> = None;
-                let mut documentation_url: Option<Option<String>> = None;
+                let mut documentation_url: Option<String> = None;
+                let mut id: Option<String> = None;
                 let mut is_published: Option<bool> = None;
                 let mut is_testing: Option<bool> = None;
                 let mut language: Option<crate::datadogV2::model::Language> = None;
@@ -243,9 +245,15 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "cve" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             cve = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "cwe" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             cwe = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "description" => {
@@ -253,8 +261,14 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "documentation_url" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             documentation_url =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "is_published" => {
                             is_published =
@@ -325,6 +339,7 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                     creation_message.ok_or_else(|| M::Error::missing_field("creation_message"))?;
                 let description =
                     description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let is_published =
                     is_published.ok_or_else(|| M::Error::missing_field("is_published"))?;
                 let is_testing = is_testing.ok_or_else(|| M::Error::missing_field("is_testing"))?;
@@ -340,7 +355,7 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                     .ok_or_else(|| M::Error::missing_field("tree_sitter_query"))?;
                 let version_id = version_id.ok_or_else(|| M::Error::missing_field("version_id"))?;
 
-                let content = CustomRuleRevisionAttributes {
+                let content = CustomRuleRevisionEmbedded {
                     arguments,
                     category,
                     checksum,
@@ -352,6 +367,7 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
                     cwe,
                     description,
                     documentation_url,
+                    id,
                     is_published,
                     is_testing,
                     language,
@@ -370,6 +386,6 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributes {
             }
         }
 
-        deserializer.deserialize_any(CustomRuleRevisionAttributesVisitor)
+        deserializer.deserialize_any(CustomRuleRevisionEmbeddedVisitor)
     }
 }

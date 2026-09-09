@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AnalysisRequest {
+    /// CSRF token for security, sent by browser-based clients. Ignored by the API when absent.
+    #[serde(rename = "_authentication_token")]
+    pub _authentication_token: Option<String>,
     /// The primary data object in the analysis request.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::AnalysisRequestData,
@@ -24,10 +27,16 @@ pub struct AnalysisRequest {
 impl AnalysisRequest {
     pub fn new(data: crate::datadogV2::model::AnalysisRequestData) -> AnalysisRequest {
         AnalysisRequest {
+            _authentication_token: None,
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn _authentication_token(mut self, value: String) -> Self {
+        self._authentication_token = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -56,6 +65,7 @@ impl<'de> Deserialize<'de> for AnalysisRequest {
             where
                 M: MapAccess<'a>,
             {
+                let mut _authentication_token: Option<String> = None;
                 let mut data: Option<crate::datadogV2::model::AnalysisRequestData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -65,6 +75,13 @@ impl<'de> Deserialize<'de> for AnalysisRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "_authentication_token" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            _authentication_token =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -78,6 +95,7 @@ impl<'de> Deserialize<'de> for AnalysisRequest {
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = AnalysisRequest {
+                    _authentication_token,
                     data,
                     additional_properties,
                     _unparsed,

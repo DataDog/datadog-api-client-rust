@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomRuleResponseData {
-    /// A custom static analysis rule within a ruleset.
+    /// Attributes of a custom static analysis rule, including its most recent revision and revision history.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::CustomRule,
+    pub attributes: crate::datadogV2::model::CustomRuleAttributes,
     /// Rule identifier
     #[serde(rename = "id")]
     pub id: String,
@@ -29,7 +29,7 @@ pub struct CustomRuleResponseData {
 
 impl CustomRuleResponseData {
     pub fn new(
-        attributes: crate::datadogV2::model::CustomRule,
+        attributes: crate::datadogV2::model::CustomRuleAttributes,
         id: String,
         type_: crate::datadogV2::model::CustomRuleDataType,
     ) -> CustomRuleResponseData {
@@ -68,7 +68,7 @@ impl<'de> Deserialize<'de> for CustomRuleResponseData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::CustomRule> = None;
+                let mut attributes: Option<crate::datadogV2::model::CustomRuleAttributes> = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::CustomRuleDataType> = None;
                 let mut additional_properties: std::collections::BTreeMap<

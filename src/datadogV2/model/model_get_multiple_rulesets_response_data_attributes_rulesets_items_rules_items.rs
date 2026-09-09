@@ -13,79 +13,79 @@ use std::fmt::{self, Formatter};
 pub struct GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems {
     /// The list of configurable arguments accepted by this rule.
     #[serde(rename = "arguments")]
-    pub arguments: Option<Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsArgumentsItems>>,
+    pub arguments: Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsArgumentsItems>,
     /// The category classifying the type of issue this rule detects (e.g., security, style, performance).
     #[serde(rename = "category")]
-    pub category: Option<String>,
+    pub category: String,
     /// A checksum of the rule definition used to detect changes.
     #[serde(rename = "checksum")]
-    pub checksum: Option<String>,
+    pub checksum: String,
     /// The rule implementation code used by the static analysis engine.
     #[serde(rename = "code")]
-    pub code: Option<String>,
+    pub code: String,
     /// The date and time when the rule was created.
     #[serde(rename = "created_at")]
-    pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    pub created_at: chrono::DateTime<chrono::Utc>,
     /// The identifier of the user or system that created the rule.
     #[serde(rename = "created_by")]
-    pub created_by: Option<String>,
+    pub created_by: String,
     /// The CVE identifier associated with the vulnerability this rule detects, if applicable.
     #[serde(rename = "cve")]
     pub cve: Option<String>,
     /// The CWE identifier associated with the weakness category this rule detects, if applicable.
     #[serde(rename = "cwe")]
     pub cwe: Option<String>,
-    /// The resource identifier and type for a static analysis rule.
-    #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsData,
     /// A detailed explanation of what the rule detects and why it matters.
     #[serde(rename = "description")]
-    pub description: Option<String>,
+    pub description: String,
     /// A URL pointing to additional documentation for this rule.
     #[serde(rename = "documentation_url")]
     pub documentation_url: Option<String>,
     /// The code entity type (e.g., function, class, variable) that this rule inspects.
     #[serde(rename = "entity_checked")]
     pub entity_checked: Option<String>,
+    /// The unique identifier of the rule, which is the same as its name.
+    #[serde(rename = "id")]
+    pub id: String,
     /// Indicates whether the rule is publicly published and available to all users.
     #[serde(rename = "is_published")]
-    pub is_published: Option<bool>,
+    pub is_published: bool,
     /// Indicates whether the rule is in testing mode and not yet promoted to production.
     #[serde(rename = "is_testing")]
-    pub is_testing: Option<bool>,
+    pub is_testing: bool,
     /// The programming language this rule applies to.
     #[serde(rename = "language")]
-    pub language: Option<String>,
+    pub language: String,
     /// The date and time when the rule was last modified.
     #[serde(rename = "last_updated_at")]
-    pub last_updated_at: Option<chrono::DateTime<chrono::Utc>>,
+    pub last_updated_at: chrono::DateTime<chrono::Utc>,
     /// The identifier of the user or system that last updated the rule.
     #[serde(rename = "last_updated_by")]
-    pub last_updated_by: Option<String>,
+    pub last_updated_by: String,
     /// The unique name identifying this rule within its ruleset.
     #[serde(rename = "name")]
-    pub name: Option<String>,
+    pub name: String,
     /// A regular expression pattern used by the rule for pattern-based detection.
     #[serde(rename = "regex")]
     pub regex: Option<String>,
     /// The severity level of findings produced by this rule (e.g., ERROR, WARNING, NOTICE).
     #[serde(rename = "severity")]
-    pub severity: Option<String>,
+    pub severity: String,
     /// A brief summary of what the rule detects, suitable for display in listings.
     #[serde(rename = "short_description")]
-    pub short_description: Option<String>,
+    pub short_description: String,
     /// Indicates whether an AI-generated fix suggestion should be offered for findings from this rule.
     #[serde(rename = "should_use_ai_fix")]
-    pub should_use_ai_fix: Option<bool>,
+    pub should_use_ai_fix: bool,
     /// The list of test cases used to validate the rule's behavior.
     #[serde(rename = "tests")]
-    pub tests: Option<Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsTestsItems>>,
+    pub tests: Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsTestsItems>,
     /// The Tree-sitter query expression used by the rule to match code patterns in the AST.
     #[serde(rename = "tree_sitter_query")]
     pub tree_sitter_query: Option<String>,
     /// The rule type indicating the detection mechanism used (e.g., tree_sitter, regex).
     #[serde(rename = "type")]
-    pub type_: Option<String>,
+    pub type_: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -95,70 +95,55 @@ pub struct GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems {
 
 impl GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems {
     pub fn new(
-        data: crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsData,
+        arguments: Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsArgumentsItems>,
+        category: String,
+        checksum: String,
+        code: String,
+        created_at: chrono::DateTime<chrono::Utc>,
+        created_by: String,
+        description: String,
+        id: String,
+        is_published: bool,
+        is_testing: bool,
+        language: String,
+        last_updated_at: chrono::DateTime<chrono::Utc>,
+        last_updated_by: String,
+        name: String,
+        severity: String,
+        short_description: String,
+        should_use_ai_fix: bool,
+        tests: Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsTestsItems>,
+        type_: String,
     ) -> GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems {
         GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems {
-            arguments: None,
-            category: None,
-            checksum: None,
-            code: None,
-            created_at: None,
-            created_by: None,
+            arguments,
+            category,
+            checksum,
+            code,
+            created_at,
+            created_by,
             cve: None,
             cwe: None,
-            data,
-            description: None,
+            description,
             documentation_url: None,
             entity_checked: None,
-            is_published: None,
-            is_testing: None,
-            language: None,
-            last_updated_at: None,
-            last_updated_by: None,
-            name: None,
+            id,
+            is_published,
+            is_testing,
+            language,
+            last_updated_at,
+            last_updated_by,
+            name,
             regex: None,
-            severity: None,
-            short_description: None,
-            should_use_ai_fix: None,
-            tests: None,
+            severity,
+            short_description,
+            should_use_ai_fix,
+            tests,
             tree_sitter_query: None,
-            type_: None,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn arguments(
-        mut self,
-        value: Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsArgumentsItems>,
-    ) -> Self {
-        self.arguments = Some(value);
-        self
-    }
-
-    pub fn category(mut self, value: String) -> Self {
-        self.category = Some(value);
-        self
-    }
-
-    pub fn checksum(mut self, value: String) -> Self {
-        self.checksum = Some(value);
-        self
-    }
-
-    pub fn code(mut self, value: String) -> Self {
-        self.code = Some(value);
-        self
-    }
-
-    pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
-        self.created_at = Some(value);
-        self
-    }
-
-    pub fn created_by(mut self, value: String) -> Self {
-        self.created_by = Some(value);
-        self
     }
 
     pub fn cve(mut self, value: String) -> Self {
@@ -168,11 +153,6 @@ impl GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems {
 
     pub fn cwe(mut self, value: String) -> Self {
         self.cwe = Some(value);
-        self
-    }
-
-    pub fn description(mut self, value: String) -> Self {
-        self.description = Some(value);
         self
     }
 
@@ -186,71 +166,13 @@ impl GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems {
         self
     }
 
-    pub fn is_published(mut self, value: bool) -> Self {
-        self.is_published = Some(value);
-        self
-    }
-
-    pub fn is_testing(mut self, value: bool) -> Self {
-        self.is_testing = Some(value);
-        self
-    }
-
-    pub fn language(mut self, value: String) -> Self {
-        self.language = Some(value);
-        self
-    }
-
-    pub fn last_updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
-        self.last_updated_at = Some(value);
-        self
-    }
-
-    pub fn last_updated_by(mut self, value: String) -> Self {
-        self.last_updated_by = Some(value);
-        self
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
-        self
-    }
-
     pub fn regex(mut self, value: String) -> Self {
         self.regex = Some(value);
         self
     }
 
-    pub fn severity(mut self, value: String) -> Self {
-        self.severity = Some(value);
-        self
-    }
-
-    pub fn short_description(mut self, value: String) -> Self {
-        self.short_description = Some(value);
-        self
-    }
-
-    pub fn should_use_ai_fix(mut self, value: bool) -> Self {
-        self.should_use_ai_fix = Some(value);
-        self
-    }
-
-    pub fn tests(
-        mut self,
-        value: Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsTestsItems>,
-    ) -> Self {
-        self.tests = Some(value);
-        self
-    }
-
     pub fn tree_sitter_query(mut self, value: String) -> Self {
         self.tree_sitter_query = Some(value);
-        self
-    }
-
-    pub fn type_(mut self, value: String) -> Self {
-        self.type_ = Some(value);
         self
     }
 
@@ -288,10 +210,10 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributesRulesets
                 let mut created_by: Option<String> = None;
                 let mut cve: Option<String> = None;
                 let mut cwe: Option<String> = None;
-                let mut data: Option<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItemsData> = None;
                 let mut description: Option<String> = None;
                 let mut documentation_url: Option<String> = None;
                 let mut entity_checked: Option<String> = None;
+                let mut id: Option<String> = None;
                 let mut is_published: Option<bool> = None;
                 let mut is_testing: Option<bool> = None;
                 let mut language: Option<String> = None;
@@ -314,39 +236,21 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributesRulesets
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "arguments" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             arguments = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "category" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "checksum" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             checksum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "code" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_at" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_by" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "cve" => {
@@ -361,13 +265,7 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributesRulesets
                             }
                             cwe = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "description" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -385,43 +283,28 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributesRulesets
                             entity_checked =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "is_published" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             is_published =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "is_testing" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             is_testing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "language" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             language = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "last_updated_at" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             last_updated_at =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "last_updated_by" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             last_updated_by =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "regex" => {
@@ -431,29 +314,17 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributesRulesets
                             regex = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "severity" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             severity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "short_description" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             short_description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "should_use_ai_fix" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             should_use_ai_fix =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tests" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             tests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tree_sitter_query" => {
@@ -464,9 +335,6 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributesRulesets
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -476,7 +344,31 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributesRulesets
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
+                let arguments = arguments.ok_or_else(|| M::Error::missing_field("arguments"))?;
+                let category = category.ok_or_else(|| M::Error::missing_field("category"))?;
+                let checksum = checksum.ok_or_else(|| M::Error::missing_field("checksum"))?;
+                let code = code.ok_or_else(|| M::Error::missing_field("code"))?;
+                let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
+                let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
+                let description =
+                    description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let is_published =
+                    is_published.ok_or_else(|| M::Error::missing_field("is_published"))?;
+                let is_testing = is_testing.ok_or_else(|| M::Error::missing_field("is_testing"))?;
+                let language = language.ok_or_else(|| M::Error::missing_field("language"))?;
+                let last_updated_at =
+                    last_updated_at.ok_or_else(|| M::Error::missing_field("last_updated_at"))?;
+                let last_updated_by =
+                    last_updated_by.ok_or_else(|| M::Error::missing_field("last_updated_by"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let severity = severity.ok_or_else(|| M::Error::missing_field("severity"))?;
+                let short_description = short_description
+                    .ok_or_else(|| M::Error::missing_field("short_description"))?;
+                let should_use_ai_fix = should_use_ai_fix
+                    .ok_or_else(|| M::Error::missing_field("should_use_ai_fix"))?;
+                let tests = tests.ok_or_else(|| M::Error::missing_field("tests"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems {
                     arguments,
@@ -487,10 +379,10 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributesRulesets
                     created_by,
                     cve,
                     cwe,
-                    data,
                     description,
                     documentation_url,
                     entity_checked,
+                    id,
                     is_published,
                     is_testing,
                     language,

@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomRuleRevisionRequest {
+    /// CSRF token for security, sent by browser-based clients. Ignored by the API when absent.
+    #[serde(rename = "_authentication_token")]
+    pub _authentication_token: Option<String>,
     /// Data object for a custom rule revision create request.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::CustomRuleRevisionRequestData>,
@@ -24,10 +27,16 @@ pub struct CustomRuleRevisionRequest {
 impl CustomRuleRevisionRequest {
     pub fn new() -> CustomRuleRevisionRequest {
         CustomRuleRevisionRequest {
+            _authentication_token: None,
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn _authentication_token(mut self, value: String) -> Self {
+        self._authentication_token = Some(value);
+        self
     }
 
     pub fn data(mut self, value: crate::datadogV2::model::CustomRuleRevisionRequestData) -> Self {
@@ -67,6 +76,7 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionRequest {
             where
                 M: MapAccess<'a>,
             {
+                let mut _authentication_token: Option<String> = None;
                 let mut data: Option<crate::datadogV2::model::CustomRuleRevisionRequestData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -76,6 +86,13 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "_authentication_token" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            _authentication_token =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "data" => {
                             if v.is_null() {
                                 continue;
@@ -91,6 +108,7 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionRequest {
                 }
 
                 let content = CustomRuleRevisionRequest {
+                    _authentication_token,
                     data,
                     additional_properties,
                     _unparsed,

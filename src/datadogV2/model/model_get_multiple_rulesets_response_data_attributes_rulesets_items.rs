@@ -11,64 +11,47 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GetMultipleRulesetsResponseDataAttributesRulesetsItems {
-    /// The resource identifier and type for a ruleset.
-    #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsData,
     /// A detailed description of the ruleset's purpose and the types of issues it targets.
     #[serde(rename = "description")]
-    pub description: Option<String>,
+    pub description: String,
+    /// The unique identifier of the ruleset, which is the same as its name.
+    #[serde(rename = "id")]
+    pub id: String,
     /// The unique name of the ruleset.
     #[serde(rename = "name")]
-    pub name: Option<String>,
+    pub name: String,
     /// The list of static analysis rules included in this ruleset.
     #[serde(rename = "rules")]
-    pub rules: Option<Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems>>,
+    pub rules: Vec<
+        crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems,
+    >,
     /// A brief summary of the ruleset, suitable for display in listings.
     #[serde(rename = "short_description")]
-    pub short_description: Option<String>,
+    pub short_description: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
 impl GetMultipleRulesetsResponseDataAttributesRulesetsItems {
     pub fn new(
-        data: crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsData,
+        description: String,
+        id: String,
+        name: String,
+        rules: Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems>,
+        short_description: String,
     ) -> GetMultipleRulesetsResponseDataAttributesRulesetsItems {
         GetMultipleRulesetsResponseDataAttributesRulesetsItems {
-            data,
-            description: None,
-            name: None,
-            rules: None,
-            short_description: None,
+            description,
+            id,
+            name,
+            rules,
+            short_description,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn description(mut self, value: String) -> Self {
-        self.description = Some(value);
-        self
-    }
-
-    pub fn name(mut self, value: String) -> Self {
-        self.name = Some(value);
-        self
-    }
-
-    pub fn rules(
-        mut self,
-        value: Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems>,
-    ) -> Self {
-        self.rules = Some(value);
-        self
-    }
-
-    pub fn short_description(mut self, value: String) -> Self {
-        self.short_description = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -97,8 +80,8 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributesRulesets
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsData> = None;
                 let mut description: Option<String> = None;
+                let mut id: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut rules: Option<Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItemsRulesItems>> = None;
                 let mut short_description: Option<String> = None;
@@ -110,32 +93,20 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributesRulesets
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "description" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rules" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "short_description" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             short_description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -146,11 +117,17 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributesRulesets
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
+                let description =
+                    description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+                let rules = rules.ok_or_else(|| M::Error::missing_field("rules"))?;
+                let short_description = short_description
+                    .ok_or_else(|| M::Error::missing_field("short_description"))?;
 
                 let content = GetMultipleRulesetsResponseDataAttributesRulesetsItems {
-                    data,
                     description,
+                    id,
                     name,
                     rules,
                     short_description,

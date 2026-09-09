@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The request payload for parsing source code into an abstract syntax tree.
+/// A configurable argument of a forwarded static analysis rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct GetAstRequest {
-    /// CSRF token for security, sent by browser-based clients. Ignored by the API when absent.
-    #[serde(rename = "_authentication_token")]
-    pub _authentication_token: Option<String>,
-    /// The primary data object in the get-AST request.
-    #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::GetAstRequestData,
+pub struct AnalysisRequestRuleArgument {
+    /// An explanation of the argument's purpose and accepted values.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
+    /// The name of the rule argument.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,18 +24,23 @@ pub struct GetAstRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl GetAstRequest {
-    pub fn new(data: crate::datadogV2::model::GetAstRequestData) -> GetAstRequest {
-        GetAstRequest {
-            _authentication_token: None,
-            data,
+impl AnalysisRequestRuleArgument {
+    pub fn new() -> AnalysisRequestRuleArgument {
+        AnalysisRequestRuleArgument {
+            description: None,
+            name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn _authentication_token(mut self, value: String) -> Self {
-        self._authentication_token = Some(value);
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
@@ -48,14 +53,20 @@ impl GetAstRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for GetAstRequest {
+impl Default for AnalysisRequestRuleArgument {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for AnalysisRequestRuleArgument {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct GetAstRequestVisitor;
-        impl<'a> Visitor<'a> for GetAstRequestVisitor {
-            type Value = GetAstRequest;
+        struct AnalysisRequestRuleArgumentVisitor;
+        impl<'a> Visitor<'a> for AnalysisRequestRuleArgumentVisitor {
+            type Value = AnalysisRequestRuleArgument;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -65,8 +76,8 @@ impl<'de> Deserialize<'de> for GetAstRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut _authentication_token: Option<String> = None;
-                let mut data: Option<crate::datadogV2::model::GetAstRequestData> = None;
+                let mut description: Option<String> = None;
+                let mut name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -75,15 +86,18 @@ impl<'de> Deserialize<'de> for GetAstRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "_authentication_token" => {
+                        "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            _authentication_token =
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -92,11 +106,10 @@ impl<'de> Deserialize<'de> for GetAstRequest {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = GetAstRequest {
-                    _authentication_token,
-                    data,
+                let content = AnalysisRequestRuleArgument {
+                    description,
+                    name,
                     additional_properties,
                     _unparsed,
                 };
@@ -105,6 +118,6 @@ impl<'de> Deserialize<'de> for GetAstRequest {
             }
         }
 
-        deserializer.deserialize_any(GetAstRequestVisitor)
+        deserializer.deserialize_any(AnalysisRequestRuleArgumentVisitor)
     }
 }

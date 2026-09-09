@@ -13,9 +13,8 @@ use std::fmt::{self, Formatter};
 pub struct GetMultipleRulesetsResponseDataAttributes {
     /// The list of rulesets returned in response to the batch request.
     #[serde(rename = "rulesets")]
-    pub rulesets: Option<
+    pub rulesets:
         Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItems>,
-    >,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,20 +23,16 @@ pub struct GetMultipleRulesetsResponseDataAttributes {
 }
 
 impl GetMultipleRulesetsResponseDataAttributes {
-    pub fn new() -> GetMultipleRulesetsResponseDataAttributes {
+    pub fn new(
+        rulesets: Vec<
+            crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItems,
+        >,
+    ) -> GetMultipleRulesetsResponseDataAttributes {
         GetMultipleRulesetsResponseDataAttributes {
-            rulesets: None,
+            rulesets,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn rulesets(
-        mut self,
-        value: Vec<crate::datadogV2::model::GetMultipleRulesetsResponseDataAttributesRulesetsItems>,
-    ) -> Self {
-        self.rulesets = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -46,12 +41,6 @@ impl GetMultipleRulesetsResponseDataAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for GetMultipleRulesetsResponseDataAttributes {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -82,9 +71,6 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "rulesets" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             rulesets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -94,6 +80,7 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsResponseDataAttributes {
                         }
                     }
                 }
+                let rulesets = rulesets.ok_or_else(|| M::Error::missing_field("rulesets"))?;
 
                 let content = GetMultipleRulesetsResponseDataAttributes {
                     rulesets,

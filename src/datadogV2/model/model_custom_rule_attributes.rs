@@ -6,30 +6,27 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a custom ruleset, including its name, description, and rules.
+/// Attributes of a custom static analysis rule, including its most recent revision and revision history.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct CustomRulesetAttributes {
+pub struct CustomRuleAttributes {
     /// Creation timestamp
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
     /// Creator identifier
     #[serde(rename = "created_by")]
     pub created_by: String,
-    /// Base64-encoded full description
-    #[serde(rename = "description")]
-    pub description: String,
-    /// Ruleset name
+    /// A revision of a custom static analysis rule as embedded in a rule or ruleset response.
+    #[serde(rename = "last_revision")]
+    pub last_revision: crate::datadogV2::model::CustomRuleRevisionEmbedded,
+    /// Rule name
     #[serde(rename = "name")]
     pub name: String,
-    /// Rules in the ruleset
+    /// Revision history of the rule.
     #[serialize_always]
-    #[serde(rename = "rules")]
-    pub rules: Option<Vec<crate::datadogV2::model::CustomRulesetRuleEmbedded>>,
-    /// Base64-encoded short description
-    #[serde(rename = "short_description")]
-    pub short_description: String,
+    #[serde(rename = "revisions")]
+    pub revisions: Option<Vec<crate::datadogV2::model::CustomRuleRevisionEmbedded>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -37,22 +34,20 @@ pub struct CustomRulesetAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl CustomRulesetAttributes {
+impl CustomRuleAttributes {
     pub fn new(
         created_at: chrono::DateTime<chrono::Utc>,
         created_by: String,
-        description: String,
+        last_revision: crate::datadogV2::model::CustomRuleRevisionEmbedded,
         name: String,
-        rules: Option<Vec<crate::datadogV2::model::CustomRulesetRuleEmbedded>>,
-        short_description: String,
-    ) -> CustomRulesetAttributes {
-        CustomRulesetAttributes {
+        revisions: Option<Vec<crate::datadogV2::model::CustomRuleRevisionEmbedded>>,
+    ) -> CustomRuleAttributes {
+        CustomRuleAttributes {
             created_at,
             created_by,
-            description,
+            last_revision,
             name,
-            rules,
-            short_description,
+            revisions,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -67,14 +62,14 @@ impl CustomRulesetAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for CustomRulesetAttributes {
+impl<'de> Deserialize<'de> for CustomRuleAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct CustomRulesetAttributesVisitor;
-        impl<'a> Visitor<'a> for CustomRulesetAttributesVisitor {
-            type Value = CustomRulesetAttributes;
+        struct CustomRuleAttributesVisitor;
+        impl<'a> Visitor<'a> for CustomRuleAttributesVisitor {
+            type Value = CustomRuleAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -86,12 +81,12 @@ impl<'de> Deserialize<'de> for CustomRulesetAttributes {
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
-                let mut description: Option<String> = None;
+                let mut last_revision: Option<crate::datadogV2::model::CustomRuleRevisionEmbedded> =
+                    None;
                 let mut name: Option<String> = None;
-                let mut rules: Option<
-                    Option<Vec<crate::datadogV2::model::CustomRulesetRuleEmbedded>>,
+                let mut revisions: Option<
+                    Option<Vec<crate::datadogV2::model::CustomRuleRevisionEmbedded>>,
                 > = None;
-                let mut short_description: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -106,19 +101,15 @@ impl<'de> Deserialize<'de> for CustomRulesetAttributes {
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "description" => {
-                            description =
+                        "last_revision" => {
+                            last_revision =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "rules" => {
-                            rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "short_description" => {
-                            short_description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "revisions" => {
+                            revisions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -129,20 +120,17 @@ impl<'de> Deserialize<'de> for CustomRulesetAttributes {
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let last_revision =
+                    last_revision.ok_or_else(|| M::Error::missing_field("last_revision"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let rules = rules.ok_or_else(|| M::Error::missing_field("rules"))?;
-                let short_description = short_description
-                    .ok_or_else(|| M::Error::missing_field("short_description"))?;
+                let revisions = revisions.ok_or_else(|| M::Error::missing_field("revisions"))?;
 
-                let content = CustomRulesetAttributes {
+                let content = CustomRuleAttributes {
                     created_at,
                     created_by,
-                    description,
+                    last_revision,
                     name,
-                    rules,
-                    short_description,
+                    revisions,
                     additional_properties,
                     _unparsed,
                 };
@@ -151,6 +139,6 @@ impl<'de> Deserialize<'de> for CustomRulesetAttributes {
             }
         }
 
-        deserializer.deserialize_any(CustomRulesetAttributesVisitor)
+        deserializer.deserialize_any(CustomRuleAttributesVisitor)
     }
 }
