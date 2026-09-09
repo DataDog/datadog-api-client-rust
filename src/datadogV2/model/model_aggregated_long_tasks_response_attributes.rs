@@ -14,9 +14,10 @@ pub struct AggregatedLongTasksResponseAttributes {
     /// The RUM application ID that was analyzed.
     #[serde(rename = "application_id")]
     pub application_id: String,
-    /// Performance criteria to filter view instances by a metric threshold.
+    /// Performance criteria used to filter view instances by a metric threshold, or null if no criteria were applied.
+    #[serialize_always]
     #[serde(rename = "criteria")]
-    pub criteria: Option<crate::datadogV2::model::AggregatedWaterfallPerformanceCriteria>,
+    pub criteria: Option<crate::datadogV2::model::AggregatedLongTasksResponseAttributesCriteria>,
     /// Start of the analyzed time range as a Unix timestamp in seconds.
     #[serde(rename = "from")]
     pub from: i64,
@@ -45,6 +46,7 @@ pub struct AggregatedLongTasksResponseAttributes {
 impl AggregatedLongTasksResponseAttributes {
     pub fn new(
         application_id: String,
+        criteria: Option<crate::datadogV2::model::AggregatedLongTasksResponseAttributesCriteria>,
         from: i64,
         long_tasks_by_invoker_type: Vec<crate::datadogV2::model::AggregatedLongTasksByInvokerType>,
         sampled_view_ids: Vec<String>,
@@ -54,7 +56,7 @@ impl AggregatedLongTasksResponseAttributes {
     ) -> AggregatedLongTasksResponseAttributes {
         AggregatedLongTasksResponseAttributes {
             application_id,
-            criteria: None,
+            criteria,
             from,
             long_tasks_by_invoker_type,
             sampled_view_ids,
@@ -64,14 +66,6 @@ impl AggregatedLongTasksResponseAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn criteria(
-        mut self,
-        value: crate::datadogV2::model::AggregatedWaterfallPerformanceCriteria,
-    ) -> Self {
-        self.criteria = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -102,7 +96,7 @@ impl<'de> Deserialize<'de> for AggregatedLongTasksResponseAttributes {
             {
                 let mut application_id: Option<String> = None;
                 let mut criteria: Option<
-                    crate::datadogV2::model::AggregatedWaterfallPerformanceCriteria,
+                    Option<crate::datadogV2::model::AggregatedLongTasksResponseAttributesCriteria>,
                 > = None;
                 let mut from: Option<i64> = None;
                 let mut long_tasks_by_invoker_type: Option<
@@ -125,9 +119,6 @@ impl<'de> Deserialize<'de> for AggregatedLongTasksResponseAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "criteria" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             criteria = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "from" => {
@@ -159,6 +150,7 @@ impl<'de> Deserialize<'de> for AggregatedLongTasksResponseAttributes {
                 }
                 let application_id =
                     application_id.ok_or_else(|| M::Error::missing_field("application_id"))?;
+                let criteria = criteria.ok_or_else(|| M::Error::missing_field("criteria"))?;
                 let from = from.ok_or_else(|| M::Error::missing_field("from"))?;
                 let long_tasks_by_invoker_type = long_tasks_by_invoker_type
                     .ok_or_else(|| M::Error::missing_field("long_tasks_by_invoker_type"))?;
