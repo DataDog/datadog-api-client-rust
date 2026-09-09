@@ -22259,7 +22259,7 @@ impl SecurityMonitoringAPI {
         &self,
         body: crate::datadogV2::model::DueDateRuleReorderRequest,
     ) -> Result<
-        crate::datadogV2::model::DueDateRuleReorderRequest,
+        crate::datadogV2::model::DueDateRuleReorderResponse,
         datadog::Error<ReorderSecurityFindingsAutomationDueDateRulesError>,
     > {
         match self
@@ -22284,7 +22284,7 @@ impl SecurityMonitoringAPI {
         &self,
         body: crate::datadogV2::model::DueDateRuleReorderRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::DueDateRuleReorderRequest>,
+        datadog::ResponseContent<crate::datadogV2::model::DueDateRuleReorderResponse>,
         datadog::Error<ReorderSecurityFindingsAutomationDueDateRulesError>,
     > {
         let local_configuration = &self.config;
@@ -22396,7 +22396,7 @@ impl SecurityMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::DueDateRuleReorderRequest>(
+            match serde_json::from_str::<crate::datadogV2::model::DueDateRuleReorderResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -22425,7 +22425,7 @@ impl SecurityMonitoringAPI {
         &self,
         body: crate::datadogV2::model::MuteRuleReorderRequest,
     ) -> Result<
-        crate::datadogV2::model::MuteRuleReorderRequest,
+        crate::datadogV2::model::MuteRuleReorderResponse,
         datadog::Error<ReorderSecurityFindingsAutomationMuteRulesError>,
     > {
         match self
@@ -22450,7 +22450,7 @@ impl SecurityMonitoringAPI {
         &self,
         body: crate::datadogV2::model::MuteRuleReorderRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::MuteRuleReorderRequest>,
+        datadog::ResponseContent<crate::datadogV2::model::MuteRuleReorderResponse>,
         datadog::Error<ReorderSecurityFindingsAutomationMuteRulesError>,
     > {
         let local_configuration = &self.config;
@@ -22564,7 +22564,7 @@ impl SecurityMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::MuteRuleReorderRequest>(
+            match serde_json::from_str::<crate::datadogV2::model::MuteRuleReorderResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -22759,7 +22759,7 @@ impl SecurityMonitoringAPI {
         &self,
         body: crate::datadogV2::model::TicketCreationRuleReorderRequest,
     ) -> Result<
-        crate::datadogV2::model::TicketCreationRuleReorderRequest,
+        crate::datadogV2::model::TicketCreationRuleReorderResponse,
         datadog::Error<ReorderSecurityFindingsAutomationTicketCreationRulesError>,
     > {
         match self
@@ -22784,7 +22784,7 @@ impl SecurityMonitoringAPI {
         &self,
         body: crate::datadogV2::model::TicketCreationRuleReorderRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TicketCreationRuleReorderRequest>,
+        datadog::ResponseContent<crate::datadogV2::model::TicketCreationRuleReorderResponse>,
         datadog::Error<ReorderSecurityFindingsAutomationTicketCreationRulesError>,
     > {
         let local_configuration = &self.config;
@@ -22896,7 +22896,7 @@ impl SecurityMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TicketCreationRuleReorderRequest>(
+            match serde_json::from_str::<crate::datadogV2::model::TicketCreationRuleReorderResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
