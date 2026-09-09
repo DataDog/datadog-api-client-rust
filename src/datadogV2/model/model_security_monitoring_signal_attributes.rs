@@ -12,7 +12,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityMonitoringSignalAttributes {
-    /// A JSON object of attributes in the security signal.
+    /// A JSON object of attributes in the security signal, returned when listing or searching signals.
+    #[serde(rename = "attributes")]
+    pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
+    /// A JSON object of attributes in the security signal, returned when retrieving a single signal.
     #[serde(rename = "custom")]
     pub custom: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// The message in the security signal defined by the rule that generated the signal.
@@ -34,6 +37,7 @@ pub struct SecurityMonitoringSignalAttributes {
 impl SecurityMonitoringSignalAttributes {
     pub fn new() -> SecurityMonitoringSignalAttributes {
         SecurityMonitoringSignalAttributes {
+            attributes: None,
             custom: None,
             message: None,
             tags: None,
@@ -41,6 +45,14 @@ impl SecurityMonitoringSignalAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn attributes(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.attributes = Some(value);
+        self
     }
 
     pub fn custom(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
@@ -95,6 +107,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut attributes: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
                 let mut custom: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
                 let mut message: Option<String> = None;
@@ -108,6 +122,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "custom" => {
                             if v.is_null() {
                                 continue;
@@ -141,6 +161,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalAttributes {
                 }
 
                 let content = SecurityMonitoringSignalAttributes {
+                    attributes,
                     custom,
                     message,
                     tags,
