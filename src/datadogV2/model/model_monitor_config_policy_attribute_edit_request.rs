@@ -15,6 +15,8 @@ pub struct MonitorConfigPolicyAttributeEditRequest {
     #[serde(rename = "policy")]
     pub policy: crate::datadogV2::model::MonitorConfigPolicyPolicy,
     /// The monitor configuration policy type.
+    /// `tag` enforces required tags on monitors.
+    /// `downtime` sets a maximum downtime duration for the organization.
     #[serde(rename = "policy_type")]
     pub policy_type: crate::datadogV2::model::MonitorConfigPolicyType,
     #[serde(flatten)]
