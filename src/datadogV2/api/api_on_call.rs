@@ -2,10 +2,12 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
+use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -169,6 +171,43 @@ pub struct GetUserNotificationRuleOptionalParams {
 
 impl GetUserNotificationRuleOptionalParams {
     /// Comma-separated list of included relationships to be returned. Allowed values: `channel`.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
+/// ListOnCallSchedulesOptionalParams is a struct for passing parameters to the method [`OnCallAPI::list_on_call_schedules`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListOnCallSchedulesOptionalParams {
+    /// Number of items to return per page. The maximum allowed value is 100.
+    pub page_size: Option<i64>,
+    /// Specific page number to return.
+    pub page_number: Option<i64>,
+    /// Search query to filter schedules. Supports free-text search on schedule name (case-insensitive, `*` wildcards), and structured filters such as `team.id:<uuid>` and `user.id:<uuid>` (multiple values can be combined with `OR`, e.g. `user.id:(<uuid> OR <uuid>)`).
+    pub filter_query: Option<String>,
+    /// Comma-separated list of included relationships to be returned. Allowed value: `teams`.
+    pub include: Option<String>,
+}
+
+impl ListOnCallSchedulesOptionalParams {
+    /// Number of items to return per page. The maximum allowed value is 100.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Search query to filter schedules. Supports free-text search on schedule name (case-insensitive, `*` wildcards), and structured filters such as `team.id:<uuid>` and `user.id:<uuid>` (multiple values can be combined with `OR`, e.g. `user.id:(<uuid> OR <uuid>)`).
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Comma-separated list of included relationships to be returned. Allowed value: `teams`.
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
@@ -379,6 +418,14 @@ pub enum GetUserNotificationChannelError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUserNotificationRuleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListOnCallSchedulesError is a struct for typed errors of method [`OnCallAPI::list_on_call_schedules`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListOnCallSchedulesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2495,6 +2542,168 @@ impl OnCallAPI {
             };
         } else {
             let local_entity: Option<GetUserNotificationRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieve a list of On-Call schedules.
+    pub async fn list_on_call_schedules(
+        &self,
+        params: ListOnCallSchedulesOptionalParams,
+    ) -> Result<crate::datadogV2::model::Schedules, datadog::Error<ListOnCallSchedulesError>> {
+        match self.list_on_call_schedules_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_on_call_schedules_with_pagination(
+        &self,
+        mut params: ListOnCallSchedulesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::ScheduleListItem,
+            datadog::Error<ListOnCallSchedulesError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_on_call_schedules(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
+    /// Retrieve a list of On-Call schedules.
+    pub async fn list_on_call_schedules_with_http_info(
+        &self,
+        params: ListOnCallSchedulesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::Schedules>,
+        datadog::Error<ListOnCallSchedulesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_on_call_schedules";
+
+        // unbox and build optional parameters
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+        let filter_query = params.filter_query;
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/on-call/schedules",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::Schedules>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListOnCallSchedulesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
