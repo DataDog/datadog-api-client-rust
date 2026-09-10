@@ -11360,6 +11360,8 @@ pub mod model_aggregated_waterfall_response_data;
 pub use self::model_aggregated_waterfall_response_data::AggregatedWaterfallResponseData;
 pub mod model_aggregated_waterfall_response_attributes;
 pub use self::model_aggregated_waterfall_response_attributes::AggregatedWaterfallResponseAttributes;
+pub mod model_aggregated_waterfall_response_attributes_criteria;
+pub use self::model_aggregated_waterfall_response_attributes_criteria::AggregatedWaterfallResponseAttributesCriteria;
 pub mod model_aggregated_resource;
 pub use self::model_aggregated_resource::AggregatedResource;
 pub mod model_aggregated_resource_timing_breakdown;
