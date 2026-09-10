@@ -6,5 +6,5 @@ cd "${REPO_ROOT}"
 
 scripts/install-license-tool.sh
 export CARGO_RESOLVER_LOCKFILE_PATH="${REPO_ROOT}/.ci/license/Cargo.lock"
-cargo metadata --locked --format-version 1 >/dev/null
-dd-rust-license-tool check
+cargo update
+dd-rust-license-tool write

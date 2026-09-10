@@ -30,3 +30,23 @@ Test for a single scenario can be executed via
 By default integration tests use recorded API responses stored in cassettes. To record new API responses run the tests with `RECORD=true`.  
 To run integration tests against API without recording cassettes, run the tests with `RECORD=none`.
 
+## Dependency licenses
+
+Normal builds use the loose dependency constraints in `Cargo.toml`; the root
+`Cargo.lock` remains untracked. License checks instead use the reproducible
+dependency snapshot in `.ci/license/Cargo.lock` and require Cargo 1.97 or newer.
+
+Check the current snapshot and license inventory with:
+
+```shell
+./scripts/license-check.sh
+```
+
+After intentionally changing or updating dependencies, refresh both the
+license snapshot and the generated license inventory with:
+
+```shell
+./scripts/update-license.sh
+```
+
+Commit changes to `.ci/license/Cargo.lock` and `LICENSE-3rdparty.csv` together.

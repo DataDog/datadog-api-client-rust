@@ -61,9 +61,8 @@ jobs:
       - name: Cache license tool
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
         with:
-          path: ~/.cargo/bin
-          key: ${{ runner.os }}-cargo-bin-${{ steps.rust.outputs.version }}
-          restore-keys: ${{ runner.os }}-cargo-bin-
+          path: ~/.cargo/bin/dd-rust-license-tool
+          key: ${{ runner.os }}-cargo-bin-${{ steps.rust.outputs.version }}-${{ hashFiles('scripts/install-license-tool.sh') }}
       - name: License check
         run: ./scripts/license-check.sh
         shell: bash
