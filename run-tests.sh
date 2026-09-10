@@ -2,4 +2,4 @@
 if [ $? -ne 0 ]; then
     exit 1
 fi
-cargo test --locked --test main --
+cargo test --test main --

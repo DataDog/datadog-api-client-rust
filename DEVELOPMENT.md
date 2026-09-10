@@ -22,10 +22,10 @@ This project contains both Integration and Unit tests.
 __Never__ run the test suite against an organization with production data.
 
 Navigate to the root directory and run   
-`cargo test --locked --test main`
+`cargo test --test main`
 
 Test for a single scenario can be executed via  
-`cargo test --locked --test main -- --name "<scenario-name>"`
+`cargo test --test main -- --name "<scenario-name>"`
 
 By default integration tests use recorded API responses stored in cassettes. To record new API responses run the tests with `RECORD=true`.  
 To run integration tests against API without recording cassettes, run the tests with `RECORD=none`.

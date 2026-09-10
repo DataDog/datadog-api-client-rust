@@ -1,5 +1,7 @@
 /target/
 **/*.rs.bk
+Cargo.lock
+!.ci/license/Cargo.lock
 __pycache__
 .vscode/
 .pytest_cache/
