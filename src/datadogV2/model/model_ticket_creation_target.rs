@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum TicketCreationTarget {
     JIRA,
     CASE_MANAGEMENT,
+    LINEAR,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for TicketCreationTarget {
         match self {
             Self::JIRA => String::from("jira"),
             Self::CASE_MANAGEMENT => String::from("case_management"),
+            Self::LINEAR => String::from("linear"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for TicketCreationTarget {
         Ok(match s.as_str() {
             "jira" => Self::JIRA,
             "case_management" => Self::CASE_MANAGEMENT,
+            "linear" => Self::LINEAR,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
