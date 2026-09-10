@@ -8,6 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MonitorConfigPolicyType {
     TAG,
+    DOWNTIME,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -15,6 +16,7 @@ impl ToString for MonitorConfigPolicyType {
     fn to_string(&self) -> String {
         match self {
             Self::TAG => String::from("tag"),
+            Self::DOWNTIME => String::from("downtime"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,6 +42,7 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "tag" => Self::TAG,
+            "downtime" => Self::DOWNTIME,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
