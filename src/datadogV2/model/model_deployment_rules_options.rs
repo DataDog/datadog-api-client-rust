@@ -12,6 +12,7 @@ pub enum DeploymentRulesOptions {
         Box<crate::datadogV2::model::DeploymentRuleOptionsFaultyDeploymentDetection>,
     ),
     DeploymentRuleOptionsMonitor(Box<crate::datadogV2::model::DeploymentRuleOptionsMonitor>),
+    DeploymentRuleOptionsMonitorIds(Box<crate::datadogV2::model::DeploymentRuleOptionsMonitorIds>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -37,6 +38,14 @@ impl<'de> Deserialize<'de> for DeploymentRulesOptions {
         {
             if !_v._unparsed {
                 return Ok(DeploymentRulesOptions::DeploymentRuleOptionsMonitor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::DeploymentRuleOptionsMonitorIds>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(DeploymentRulesOptions::DeploymentRuleOptionsMonitorIds(_v));
             }
         }
 
