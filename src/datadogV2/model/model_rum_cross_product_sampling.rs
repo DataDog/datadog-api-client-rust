@@ -14,7 +14,7 @@ pub struct RumCrossProductSampling {
     /// Whether the cross-product retention filter for APM traces is enabled.
     #[serde(rename = "trace_enabled")]
     pub trace_enabled: Option<bool>,
-    /// The sample rate for the APM cross-product retention filter, between 0 and 100.
+    /// The sample rate for the APM cross-product retention filter, between 0 and 100. Values returned by the API are rounded to two decimal places.
     #[serde(rename = "trace_sample_rate")]
     pub trace_sample_rate: Option<f64>,
     #[serde(flatten)]
