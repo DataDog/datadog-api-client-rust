@@ -41,6 +41,8 @@ pub struct ObservabilityPipelineQuotaProcessor {
     /// - `drop`: Drop the event.
     /// - `no_action`: Let the event pass through.
     /// - `overflow_routing`: Route to an overflow destination.
+    ///
+    /// When `overflow_routing` is used, there must be a destination whose `inputs` reference this processor with the `<processor-id>.overflow_events` suffix to route the overflowing events. Only the following destination types support overflow inputs: `amazon_s3_generic`, `amazon_s3`, `google_cloud_storage`, and `azure_storage`.
     #[serde(rename = "overflow_action")]
     pub overflow_action:
         Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction>,
@@ -55,6 +57,8 @@ pub struct ObservabilityPipelineQuotaProcessor {
     /// - `drop`: Drop the event.
     /// - `no_action`: Let the event pass through.
     /// - `overflow_routing`: Route to an overflow destination.
+    ///
+    /// When `overflow_routing` is used, there must be a destination whose `inputs` reference this processor with the `<processor-id>.overflow_events` suffix to route the overflowing events. Only the following destination types support overflow inputs: `amazon_s3_generic`, `amazon_s3`, `google_cloud_storage`, and `azure_storage`.
     #[serde(rename = "too_many_buckets_action")]
     pub too_many_buckets_action:
         Option<crate::datadogV2::model::ObservabilityPipelineQuotaProcessorOverflowAction>,
