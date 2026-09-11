@@ -12,6 +12,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TimeseriesAnomalyInvestigationFormula {
     /// Formula expression referencing one or more named queries.
+    /// When the expression does not contain an explicit `anomalies()` call,
+    /// the endpoint applies the default Watchdog Explains anomaly detection configuration.
     #[serde(rename = "formula")]
     pub formula: String,
     /// Optional formula limit accepted for compatibility with Timeseries API requests. Formula limits have no effect on timeseries queries.

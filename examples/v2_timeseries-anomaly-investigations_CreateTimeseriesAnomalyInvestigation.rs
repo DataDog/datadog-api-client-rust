@@ -17,7 +17,7 @@ async fn main() {
             TimeseriesAnomalyInvestigationRequestAttributes::new(vec![
                 TimeseriesAnomalyInvestigationTimeseriesRequest::new(
                     vec![TimeseriesAnomalyInvestigationFormula::new(
-                        "anomalies(query1, 'agile', 3)".to_string(),
+                        "query1".to_string(),
                     )],
                     1754406000000,
                     vec![TimeseriesAnomalyInvestigationMetricQuery::new(
