@@ -8064,6 +8064,8 @@ pub mod model_dns_metric_key;
 pub use self::model_dns_metric_key::DnsMetricKey;
 pub mod model_single_aggregated_dns_response_data_type;
 pub use self::model_single_aggregated_dns_response_data_type::SingleAggregatedDnsResponseDataType;
+pub mod model_oidc_discovery_document;
+pub use self::model_oidc_discovery_document::OIDCDiscoveryDocument;
 pub mod model_o_auth2_well_known_sites_response;
 pub use self::model_o_auth2_well_known_sites_response::OAuth2WellKnownSitesResponse;
 pub mod model_o_auth2_well_known_sites_data;
