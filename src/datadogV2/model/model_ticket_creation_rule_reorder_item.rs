@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TicketCreationRuleReorderItem {
-    /// The ID of the automation rule.
+    /// The ID of the ticket creation rule.
     #[serde(rename = "id")]
     pub id: uuid::Uuid,
     /// The JSON:API type for ticket creation rules.

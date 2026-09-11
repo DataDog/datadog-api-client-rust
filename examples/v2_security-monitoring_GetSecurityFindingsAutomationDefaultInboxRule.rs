@@ -1,18 +1,16 @@
-// Delete a mute rule returns "Successfully deleted the mute rule" response
+// Get a default inbox rule returns "Successfully retrieved the default inbox
+// rule" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAPI;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
     configuration
-        .set_unstable_operation_enabled("v2.DeleteSecurityFindingsAutomationMuteRule", true);
+        .set_unstable_operation_enabled("v2.GetSecurityFindingsAutomationDefaultInboxRule", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
-        .delete_security_findings_automation_mute_rule(
-            Uuid::parse_str("00000000-0000-0000-0000-000000000000").expect("invalid UUID"),
-        )
+        .get_security_findings_automation_default_inbox_rule("secret_default_rule".to_string())
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

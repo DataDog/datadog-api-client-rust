@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The body of the mute rule reorder request.
+/// The action to take when the inbox rule matches a finding.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MuteRuleReorderRequest {
-    /// The ordered list of all mute rules. Every rule must be included.
-    #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::MuteRuleReorderItem>,
+pub struct InboxRuleAction {
+    /// An optional description providing more context for the rule.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,13 +21,18 @@ pub struct MuteRuleReorderRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl MuteRuleReorderRequest {
-    pub fn new(data: Vec<crate::datadogV2::model::MuteRuleReorderItem>) -> MuteRuleReorderRequest {
-        MuteRuleReorderRequest {
-            data,
+impl InboxRuleAction {
+    pub fn new() -> InboxRuleAction {
+        InboxRuleAction {
+            description: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -39,14 +44,20 @@ impl MuteRuleReorderRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
+impl Default for InboxRuleAction {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for InboxRuleAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MuteRuleReorderRequestVisitor;
-        impl<'a> Visitor<'a> for MuteRuleReorderRequestVisitor {
-            type Value = MuteRuleReorderRequest;
+        struct InboxRuleActionVisitor;
+        impl<'a> Visitor<'a> for InboxRuleActionVisitor {
+            type Value = InboxRuleAction;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +67,7 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::MuteRuleReorderItem>> = None;
+                let mut description: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -65,8 +76,12 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -75,10 +90,9 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = MuteRuleReorderRequest {
-                    data,
+                let content = InboxRuleAction {
+                    description,
                     additional_properties,
                     _unparsed,
                 };
@@ -87,6 +101,6 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
             }
         }
 
-        deserializer.deserialize_any(MuteRuleReorderRequestVisitor)
+        deserializer.deserialize_any(InboxRuleActionVisitor)
     }
 }

@@ -6,14 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The body of the mute rule reorder request.
+/// A list of inbox rules with pagination metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MuteRuleReorderRequest {
-    /// The ordered list of all mute rules. Every rule must be included.
+pub struct InboxRulesResponse {
+    /// A list of inbox rule data objects.
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::MuteRuleReorderItem>,
+    pub data: Vec<crate::datadogV2::model::InboxRuleDataResponse>,
+    /// Pagination links for the list of automation rules.
+    #[serde(rename = "links")]
+    pub links: crate::datadogV2::model::SecurityAutomationRulesLinks,
+    /// Metadata for the list of automation rules.
+    #[serde(rename = "meta")]
+    pub meta: crate::datadogV2::model::SecurityAutomationRulesMeta,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,10 +27,16 @@ pub struct MuteRuleReorderRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl MuteRuleReorderRequest {
-    pub fn new(data: Vec<crate::datadogV2::model::MuteRuleReorderItem>) -> MuteRuleReorderRequest {
-        MuteRuleReorderRequest {
+impl InboxRulesResponse {
+    pub fn new(
+        data: Vec<crate::datadogV2::model::InboxRuleDataResponse>,
+        links: crate::datadogV2::model::SecurityAutomationRulesLinks,
+        meta: crate::datadogV2::model::SecurityAutomationRulesMeta,
+    ) -> InboxRulesResponse {
+        InboxRulesResponse {
             data,
+            links,
+            meta,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -39,14 +51,14 @@ impl MuteRuleReorderRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
+impl<'de> Deserialize<'de> for InboxRulesResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MuteRuleReorderRequestVisitor;
-        impl<'a> Visitor<'a> for MuteRuleReorderRequestVisitor {
-            type Value = MuteRuleReorderRequest;
+        struct InboxRulesResponseVisitor;
+        impl<'a> Visitor<'a> for InboxRulesResponseVisitor {
+            type Value = InboxRulesResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +68,9 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::MuteRuleReorderItem>> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::InboxRuleDataResponse>> = None;
+                let mut links: Option<crate::datadogV2::model::SecurityAutomationRulesLinks> = None;
+                let mut meta: Option<crate::datadogV2::model::SecurityAutomationRulesMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -68,6 +82,12 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "links" => {
+                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "meta" => {
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -76,9 +96,13 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
                     }
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
+                let links = links.ok_or_else(|| M::Error::missing_field("links"))?;
+                let meta = meta.ok_or_else(|| M::Error::missing_field("meta"))?;
 
-                let content = MuteRuleReorderRequest {
+                let content = InboxRulesResponse {
                     data,
+                    links,
+                    meta,
                     additional_properties,
                     _unparsed,
                 };
@@ -87,6 +111,6 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
             }
         }
 
-        deserializer.deserialize_any(MuteRuleReorderRequestVisitor)
+        deserializer.deserialize_any(InboxRulesResponseVisitor)
     }
 }

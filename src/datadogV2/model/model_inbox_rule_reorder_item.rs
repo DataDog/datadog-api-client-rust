@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The body of the mute rule reorder request.
+/// A reference to an inbox rule used for reordering.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MuteRuleReorderRequest {
-    /// The ordered list of all mute rules. Every rule must be included.
-    #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::MuteRuleReorderItem>,
+pub struct InboxRuleReorderItem {
+    /// The ID of the inbox rule.
+    #[serde(rename = "id")]
+    pub id: uuid::Uuid,
+    /// The JSON:API type for inbox rules.
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV2::model::InboxRuleType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,10 +24,14 @@ pub struct MuteRuleReorderRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl MuteRuleReorderRequest {
-    pub fn new(data: Vec<crate::datadogV2::model::MuteRuleReorderItem>) -> MuteRuleReorderRequest {
-        MuteRuleReorderRequest {
-            data,
+impl InboxRuleReorderItem {
+    pub fn new(
+        id: uuid::Uuid,
+        type_: crate::datadogV2::model::InboxRuleType,
+    ) -> InboxRuleReorderItem {
+        InboxRuleReorderItem {
+            id,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -39,14 +46,14 @@ impl MuteRuleReorderRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
+impl<'de> Deserialize<'de> for InboxRuleReorderItem {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MuteRuleReorderRequestVisitor;
-        impl<'a> Visitor<'a> for MuteRuleReorderRequestVisitor {
-            type Value = MuteRuleReorderRequest;
+        struct InboxRuleReorderItemVisitor;
+        impl<'a> Visitor<'a> for InboxRuleReorderItemVisitor {
+            type Value = InboxRuleReorderItem;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +63,8 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::MuteRuleReorderItem>> = None;
+                let mut id: Option<uuid::Uuid> = None;
+                let mut type_: Option<crate::datadogV2::model::InboxRuleType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -65,8 +73,21 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::InboxRuleType::UnparsedObject(
+                                        _type_,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -75,10 +96,12 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = MuteRuleReorderRequest {
-                    data,
+                let content = InboxRuleReorderItem {
+                    id,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -87,6 +110,6 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
             }
         }
 
-        deserializer.deserialize_any(MuteRuleReorderRequestVisitor)
+        deserializer.deserialize_any(InboxRuleReorderItemVisitor)
     }
 }

@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SeverityModifierRuleReorderItem {
-    /// The ID of the automation rule.
+    /// The ID of the severity modifier rule.
     #[serde(rename = "id")]
     pub id: uuid::Uuid,
     /// The JSON:API type for severity modifier rules.
