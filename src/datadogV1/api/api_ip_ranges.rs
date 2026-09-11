@@ -87,7 +87,7 @@ impl IPRangesAPI {
         Self { config, client }
     }
 
-    /// Get information about Datadog IP ranges.
+    /// Get information about Datadog IP ranges, including service-specific prefixes.
     pub async fn get_ip_ranges(
         &self,
     ) -> Result<crate::datadogV1::model::IPRanges, datadog::Error<GetIPRangesError>> {
@@ -105,7 +105,7 @@ impl IPRangesAPI {
         }
     }
 
-    /// Get information about Datadog IP ranges.
+    /// Get information about Datadog IP ranges, including service-specific prefixes.
     pub async fn get_ip_ranges_with_http_info(
         &self,
     ) -> Result<
