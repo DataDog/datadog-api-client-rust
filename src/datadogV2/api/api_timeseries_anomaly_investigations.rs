@@ -94,8 +94,9 @@ impl TimeseriesAnomalyInvestigationsAPI {
         Self { config, client }
     }
 
-    /// Investigates a metrics timeseries request for its most significant anomaly and returns deterministic findings.
-    /// Metrics queries with or without grouping are supported. This API version accepts exactly one request and returns at most one anomaly.
+    /// Investigates a metrics timeseries request for its most significant anomalies and returns
+    /// deterministic findings. Metrics queries with or without grouping are supported. This
+    /// API version accepts exactly one request and returns at most three anomalies.
     pub async fn create_timeseries_anomaly_investigation(
         &self,
         body: crate::datadogV2::model::TimeseriesAnomalyInvestigationRequest,
@@ -120,8 +121,9 @@ impl TimeseriesAnomalyInvestigationsAPI {
         }
     }
 
-    /// Investigates a metrics timeseries request for its most significant anomaly and returns deterministic findings.
-    /// Metrics queries with or without grouping are supported. This API version accepts exactly one request and returns at most one anomaly.
+    /// Investigates a metrics timeseries request for its most significant anomalies and returns
+    /// deterministic findings. Metrics queries with or without grouping are supported. This
+    /// API version accepts exactly one request and returns at most three anomalies.
     pub async fn create_timeseries_anomaly_investigation_with_http_info(
         &self,
         body: crate::datadogV2::model::TimeseriesAnomalyInvestigationRequest,
