@@ -58,6 +58,8 @@ concurrency:
 jobs:
   integration_tests:
     runs-on: ubuntu-latest
+    env:
+      CARGO_INCREMENTAL: "0"
     if: >
       (github.event_name == 'pull_request' &&
       github.event.pull_request.draft == false &&
@@ -99,17 +101,30 @@ jobs:
           status: pending
           context: ${{ inputs.status-context || 'integration' }}
       - name: Install Rust
-        run: rustup toolchain install stable --profile minimal --no-self-update && rustup default stable
+        id: rust
+        run: |
+          rustup toolchain install stable --profile minimal --no-self-update && rustup default stable
+          echo "version=$(rustc --version | awk '{print $2}')" >> $GITHUB_OUTPUT
         shell: bash
-      - name: Cache Cargo
+      - name: Cache Cargo registry
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
         with:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }}
-          restore-keys: ${{ runner.os }}-cargo-
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
+          restore-keys: ${{ runner.os }}-cargo-registry-
+      - name: Resolve Cargo dependencies
+        run: cargo generate-lockfile
+        shell: bash
+      - name: Cache Cargo build
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-target-v2-${{ steps.rust.outputs.version }}-integration-${{ hashFiles('Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-target-v2-${{ steps.rust.outputs.version }}-integration-
+            ${{ runner.os }}-cargo-target-v2-${{ steps.rust.outputs.version }}-
       - name: Run integration tests
         shell: bash
         run: ./run-tests.sh
@@ -123,6 +138,9 @@ jobs:
           DD_TEST_CLIENT_API_KEY: ${{ secrets.DD_CLIENT_API_KEY }}
           DD_TEST_CLIENT_APP_KEY: ${{ secrets.DD_CLIENT_APP_KEY }}
           RECORD: "none"
+      - name: Remove workspace artifacts from cache
+        run: cargo clean --package datadog-api-client
+        shell: bash
       - name: Post failure status check
         if: failure() && github.event_name == 'pull_request' && contains(github.event.pull_request.head.ref, 'datadog-api-spec/generated/') && (inputs.enable-status-reporting || github.event_name != 'workflow_call')
         uses: DataDog/github-actions/post-status-check@65b4875f33ad773d7ba4b005a2cb5f35020295f3 # v2.3.0
