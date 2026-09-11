@@ -432,6 +432,7 @@ impl BitsAIAPI {
     }
 
     /// Trigger a new Bits AI investigation based on a monitor alert.
+    /// The `monitors_read` permission is also required when the trigger type is `monitor_alert_trigger`.
     pub async fn trigger_investigation(
         &self,
         body: crate::datadogV2::model::TriggerInvestigationRequest,
@@ -454,6 +455,7 @@ impl BitsAIAPI {
     }
 
     /// Trigger a new Bits AI investigation based on a monitor alert.
+    /// The `monitors_read` permission is also required when the trigger type is `monitor_alert_trigger`.
     pub async fn trigger_investigation_with_http_info(
         &self,
         body: crate::datadogV2::model::TriggerInvestigationRequest,
