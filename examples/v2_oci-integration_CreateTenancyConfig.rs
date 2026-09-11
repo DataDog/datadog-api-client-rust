@@ -76,8 +76,7 @@ mcwMY5r/WZ2qjFlPjeAqbL62aPDLidGjoaVo2iIoBPK/gjxQ/5f0MS4N/YQ0zWoYBueSQ0DGs
             .resource_collection_enabled(true),
         ),
     );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateTenancyConfig", true);
+    let configuration = datadog::Configuration::new();
     let api = OCIIntegrationAPI::with_config(configuration);
     let resp = api.create_tenancy_config(body).await;
     if let Ok(value) = resp {
