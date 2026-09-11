@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The body of the mute rule reorder request.
+/// A list of default inbox rules.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MuteRuleReorderRequest {
-    /// The ordered list of all mute rules. Every rule must be included.
+pub struct DefaultInboxRulesResponse {
+    /// A list of default inbox rule data objects.
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::MuteRuleReorderItem>,
+    pub data: Vec<crate::datadogV2::model::DefaultInboxRuleDataResponse>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,9 +21,11 @@ pub struct MuteRuleReorderRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl MuteRuleReorderRequest {
-    pub fn new(data: Vec<crate::datadogV2::model::MuteRuleReorderItem>) -> MuteRuleReorderRequest {
-        MuteRuleReorderRequest {
+impl DefaultInboxRulesResponse {
+    pub fn new(
+        data: Vec<crate::datadogV2::model::DefaultInboxRuleDataResponse>,
+    ) -> DefaultInboxRulesResponse {
+        DefaultInboxRulesResponse {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +41,14 @@ impl MuteRuleReorderRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
+impl<'de> Deserialize<'de> for DefaultInboxRulesResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MuteRuleReorderRequestVisitor;
-        impl<'a> Visitor<'a> for MuteRuleReorderRequestVisitor {
-            type Value = MuteRuleReorderRequest;
+        struct DefaultInboxRulesResponseVisitor;
+        impl<'a> Visitor<'a> for DefaultInboxRulesResponseVisitor {
+            type Value = DefaultInboxRulesResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +58,8 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::MuteRuleReorderItem>> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::DefaultInboxRuleDataResponse>> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,7 +80,7 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = MuteRuleReorderRequest {
+                let content = DefaultInboxRulesResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -87,6 +90,6 @@ impl<'de> Deserialize<'de> for MuteRuleReorderRequest {
             }
         }
 
-        deserializer.deserialize_any(MuteRuleReorderRequestVisitor)
+        deserializer.deserialize_any(DefaultInboxRulesResponseVisitor)
     }
 }

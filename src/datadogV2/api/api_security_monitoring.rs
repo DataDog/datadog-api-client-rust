@@ -835,6 +835,29 @@ impl ListSecurityFindingsAutomationDueDateRulesOptionalParams {
     }
 }
 
+/// ListSecurityFindingsAutomationInboxRulesOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_findings_automation_inbox_rules`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSecurityFindingsAutomationInboxRulesOptionalParams {
+    /// The number of rules per page. Maximum is 1000.
+    pub page_size: Option<i64>,
+    /// The page number to return.
+    pub page_number: Option<i64>,
+}
+
+impl ListSecurityFindingsAutomationInboxRulesOptionalParams {
+    /// The number of rules per page. Maximum is 1000.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// The page number to return.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+}
+
 /// ListSecurityFindingsAutomationMuteRulesOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_findings_automation_mute_rules`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -1853,6 +1876,15 @@ pub enum CreateSecurityFindingsAutomationDueDateRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateSecurityFindingsAutomationInboxRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_findings_automation_inbox_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateSecurityFindingsAutomationInboxRuleError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateSecurityFindingsAutomationMuteRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_findings_automation_mute_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -2020,6 +2052,14 @@ pub enum DeleteSecurityFindingsAutomationDueDateRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteSecurityFindingsAutomationInboxRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_security_findings_automation_inbox_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteSecurityFindingsAutomationInboxRuleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteSecurityFindingsAutomationMuteRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_security_findings_automation_mute_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -2110,6 +2150,14 @@ pub enum DetachCaseError {
     UnknownValue(serde_json::Value),
 }
 
+/// DisableSecurityFindingsAutomationDefaultInboxRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::disable_security_findings_automation_default_inbox_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DisableSecurityFindingsAutomationDefaultInboxRuleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// EditSecurityMonitoringSignalError is a struct for typed errors of method [`SecurityMonitoringAPI::edit_security_monitoring_signal`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -2139,6 +2187,14 @@ pub enum EditSecurityMonitoringSignalIncidentsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EditSecurityMonitoringSignalStateError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// EnableSecurityFindingsAutomationDefaultInboxRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::enable_security_findings_automation_default_inbox_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum EnableSecurityFindingsAutomationDefaultInboxRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2265,10 +2321,26 @@ pub enum GetSecurityFilterError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetSecurityFindingsAutomationDefaultInboxRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_findings_automation_default_inbox_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSecurityFindingsAutomationDefaultInboxRuleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// GetSecurityFindingsAutomationDueDateRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_findings_automation_due_date_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSecurityFindingsAutomationDueDateRuleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetSecurityFindingsAutomationInboxRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::get_security_findings_automation_inbox_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSecurityFindingsAutomationInboxRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2587,10 +2659,26 @@ pub enum ListSecurityFindingsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListSecurityFindingsAutomationDefaultInboxRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_findings_automation_default_inbox_rules`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSecurityFindingsAutomationDefaultInboxRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListSecurityFindingsAutomationDueDateRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_findings_automation_due_date_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListSecurityFindingsAutomationDueDateRulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListSecurityFindingsAutomationInboxRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_findings_automation_inbox_rules`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSecurityFindingsAutomationInboxRulesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2739,6 +2827,15 @@ pub enum ReorderSecurityFindingsAutomationDueDateRulesError {
     UnknownValue(serde_json::Value),
 }
 
+/// ReorderSecurityFindingsAutomationInboxRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::reorder_security_findings_automation_inbox_rules`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ReorderSecurityFindingsAutomationInboxRulesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ReorderSecurityFindingsAutomationMuteRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::reorder_security_findings_automation_mute_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -2867,6 +2964,15 @@ pub enum UpdateSecurityFilterError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateSecurityFindingsAutomationDueDateRuleError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateSecurityFindingsAutomationInboxRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::update_security_findings_automation_inbox_rule`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateSecurityFindingsAutomationInboxRuleError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -7270,7 +7376,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new due date rule for the current organization.
+    /// Create a due date rule for the current organization.
     pub async fn create_security_findings_automation_due_date_rule(
         &self,
         body: crate::datadogV2::model::DueDateRuleCreateRequest,
@@ -7295,7 +7401,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new due date rule for the current organization.
+    /// Create a due date rule for the current organization.
     pub async fn create_security_findings_automation_due_date_rule_with_http_info(
         &self,
         body: crate::datadogV2::model::DueDateRuleCreateRequest,
@@ -7436,7 +7542,173 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new mute rule for the current organization.
+    /// Create an inbox rule for the current organization.
+    pub async fn create_security_findings_automation_inbox_rule(
+        &self,
+        body: crate::datadogV2::model::InboxRuleCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::InboxRuleResponse,
+        datadog::Error<CreateSecurityFindingsAutomationInboxRuleError>,
+    > {
+        match self
+            .create_security_findings_automation_inbox_rule_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create an inbox rule for the current organization.
+    pub async fn create_security_findings_automation_inbox_rule_with_http_info(
+        &self,
+        body: crate::datadogV2::model::InboxRuleCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::InboxRuleResponse>,
+        datadog::Error<CreateSecurityFindingsAutomationInboxRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.create_security_findings_automation_inbox_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_security_findings_automation_inbox_rule' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/inbox_rules",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::InboxRuleResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateSecurityFindingsAutomationInboxRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Create a mute rule for the current organization.
     pub async fn create_security_findings_automation_mute_rule(
         &self,
         body: crate::datadogV2::model::MuteRuleCreateRequest,
@@ -7461,7 +7733,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new mute rule for the current organization.
+    /// Create a mute rule for the current organization.
     pub async fn create_security_findings_automation_mute_rule_with_http_info(
         &self,
         body: crate::datadogV2::model::MuteRuleCreateRequest,
@@ -7602,7 +7874,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new severity modifier rule for the current organization.
+    /// Create a severity modifier rule for the current organization.
     pub async fn create_security_findings_automation_severity_modifier_rule(
         &self,
         body: crate::datadogV2::model::SeverityModifierRuleCreateRequest,
@@ -7627,7 +7899,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new severity modifier rule for the current organization.
+    /// Create a severity modifier rule for the current organization.
     pub async fn create_security_findings_automation_severity_modifier_rule_with_http_info(
         &self,
         body: crate::datadogV2::model::SeverityModifierRuleCreateRequest,
@@ -7768,7 +8040,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new ticket creation rule for the current organization.
+    /// Create a ticket creation rule for the current organization.
     pub async fn create_security_findings_automation_ticket_creation_rule(
         &self,
         body: crate::datadogV2::model::TicketCreationRuleCreateRequest,
@@ -7793,7 +8065,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new ticket creation rule for the current organization.
+    /// Create a ticket creation rule for the current organization.
     pub async fn create_security_findings_automation_ticket_creation_rule_with_http_info(
         &self,
         body: crate::datadogV2::model::TicketCreationRuleCreateRequest,
@@ -10209,7 +10481,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete an existing due date rule by ID.
+    /// Delete a due date rule by ID.
     pub async fn delete_security_findings_automation_due_date_rule(
         &self,
         rule_id: uuid::Uuid,
@@ -10223,7 +10495,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete an existing due date rule by ID.
+    /// Delete a due date rule by ID.
     pub async fn delete_security_findings_automation_due_date_rule_with_http_info(
         &self,
         rule_id: uuid::Uuid,
@@ -10311,7 +10583,110 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete an existing mute rule by ID.
+    /// Delete an inbox rule by ID.
+    pub async fn delete_security_findings_automation_inbox_rule(
+        &self,
+        rule_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<DeleteSecurityFindingsAutomationInboxRuleError>> {
+        match self
+            .delete_security_findings_automation_inbox_rule_with_http_info(rule_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete an inbox rule by ID.
+    pub async fn delete_security_findings_automation_inbox_rule_with_http_info(
+        &self,
+        rule_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<DeleteSecurityFindingsAutomationInboxRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_security_findings_automation_inbox_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_security_findings_automation_inbox_rule' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/inbox_rules/{rule_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            rule_id = datadog::urlencode(rule_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteSecurityFindingsAutomationInboxRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete a mute rule by ID.
     pub async fn delete_security_findings_automation_mute_rule(
         &self,
         rule_id: uuid::Uuid,
@@ -10325,7 +10700,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete an existing mute rule by ID.
+    /// Delete a mute rule by ID.
     pub async fn delete_security_findings_automation_mute_rule_with_http_info(
         &self,
         rule_id: uuid::Uuid,
@@ -10414,7 +10789,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete an existing severity modifier rule by ID.
+    /// Delete a severity modifier rule by ID.
     pub async fn delete_security_findings_automation_severity_modifier_rule(
         &self,
         rule_id: uuid::Uuid,
@@ -10428,7 +10803,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete an existing severity modifier rule by ID.
+    /// Delete a severity modifier rule by ID.
     pub async fn delete_security_findings_automation_severity_modifier_rule_with_http_info(
         &self,
         rule_id: uuid::Uuid,
@@ -10516,7 +10891,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete an existing ticket creation rule by ID.
+    /// Delete a ticket creation rule by ID.
     pub async fn delete_security_findings_automation_ticket_creation_rule(
         &self,
         rule_id: uuid::Uuid,
@@ -10530,7 +10905,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete an existing ticket creation rule by ID.
+    /// Delete a ticket creation rule by ID.
     pub async fn delete_security_findings_automation_ticket_creation_rule_with_http_info(
         &self,
         rule_id: uuid::Uuid,
@@ -11426,6 +11801,126 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Disable a default inbox rule for the current organization.
+    pub async fn disable_security_findings_automation_default_inbox_rule(
+        &self,
+        rule_id: String,
+    ) -> Result<
+        crate::datadogV2::model::DefaultInboxRuleResponse,
+        datadog::Error<DisableSecurityFindingsAutomationDefaultInboxRuleError>,
+    > {
+        match self
+            .disable_security_findings_automation_default_inbox_rule_with_http_info(rule_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Disable a default inbox rule for the current organization.
+    pub async fn disable_security_findings_automation_default_inbox_rule_with_http_info(
+        &self,
+        rule_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DefaultInboxRuleResponse>,
+        datadog::Error<DisableSecurityFindingsAutomationDefaultInboxRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.disable_security_findings_automation_default_inbox_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.disable_security_findings_automation_default_inbox_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/default_inbox_rules/{rule_id}/disable",
+            local_configuration.get_operation_host(local_operation_id),
+            rule_id = datadog::urlencode(rule_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DefaultInboxRuleResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<DisableSecurityFindingsAutomationDefaultInboxRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Update the triage state or assignee of a security signal.
     pub async fn edit_security_monitoring_signal(
         &self,
@@ -12072,6 +12567,126 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<EditSecurityMonitoringSignalStateError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Enable a default inbox rule for the current organization.
+    pub async fn enable_security_findings_automation_default_inbox_rule(
+        &self,
+        rule_id: String,
+    ) -> Result<
+        crate::datadogV2::model::DefaultInboxRuleResponse,
+        datadog::Error<EnableSecurityFindingsAutomationDefaultInboxRuleError>,
+    > {
+        match self
+            .enable_security_findings_automation_default_inbox_rule_with_http_info(rule_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Enable a default inbox rule for the current organization.
+    pub async fn enable_security_findings_automation_default_inbox_rule_with_http_info(
+        &self,
+        rule_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DefaultInboxRuleResponse>,
+        datadog::Error<EnableSecurityFindingsAutomationDefaultInboxRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.enable_security_findings_automation_default_inbox_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.enable_security_findings_automation_default_inbox_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/default_inbox_rules/{rule_id}/enable",
+            local_configuration.get_operation_host(local_operation_id),
+            rule_id = datadog::urlencode(rule_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DefaultInboxRuleResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<EnableSecurityFindingsAutomationDefaultInboxRuleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -13955,6 +14570,130 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get the details of a default inbox rule by ID.
+    /// Datadog manages default inbox rules. Their name, rule, and action are
+    /// read-only, and each organization can change only whether they are enabled.
+    pub async fn get_security_findings_automation_default_inbox_rule(
+        &self,
+        rule_id: String,
+    ) -> Result<
+        crate::datadogV2::model::DefaultInboxRuleResponse,
+        datadog::Error<GetSecurityFindingsAutomationDefaultInboxRuleError>,
+    > {
+        match self
+            .get_security_findings_automation_default_inbox_rule_with_http_info(rule_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the details of a default inbox rule by ID.
+    /// Datadog manages default inbox rules. Their name, rule, and action are
+    /// read-only, and each organization can change only whether they are enabled.
+    pub async fn get_security_findings_automation_default_inbox_rule_with_http_info(
+        &self,
+        rule_id: String,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DefaultInboxRuleResponse>,
+        datadog::Error<GetSecurityFindingsAutomationDefaultInboxRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_security_findings_automation_default_inbox_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_security_findings_automation_default_inbox_rule' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/default_inbox_rules/{rule_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            rule_id = datadog::urlencode(rule_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DefaultInboxRuleResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSecurityFindingsAutomationDefaultInboxRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get the details of a due date rule by ID.
     pub async fn get_security_findings_automation_due_date_rule(
         &self,
@@ -14066,6 +14805,126 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<GetSecurityFindingsAutomationDueDateRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the details of an inbox rule by ID.
+    pub async fn get_security_findings_automation_inbox_rule(
+        &self,
+        rule_id: uuid::Uuid,
+    ) -> Result<
+        crate::datadogV2::model::InboxRuleResponse,
+        datadog::Error<GetSecurityFindingsAutomationInboxRuleError>,
+    > {
+        match self
+            .get_security_findings_automation_inbox_rule_with_http_info(rule_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the details of an inbox rule by ID.
+    pub async fn get_security_findings_automation_inbox_rule_with_http_info(
+        &self,
+        rule_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::InboxRuleResponse>,
+        datadog::Error<GetSecurityFindingsAutomationInboxRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_security_findings_automation_inbox_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_security_findings_automation_inbox_rule' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/inbox_rules/{rule_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            rule_id = datadog::urlencode(rule_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::InboxRuleResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSecurityFindingsAutomationInboxRuleError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -19318,6 +20177,127 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Get all default inbox rules for the current organization.
+    /// Datadog manages default inbox rules. Their name, rule, and action are
+    /// read-only, and each organization can change only whether they are enabled.
+    pub async fn list_security_findings_automation_default_inbox_rules(
+        &self,
+    ) -> Result<
+        crate::datadogV2::model::DefaultInboxRulesResponse,
+        datadog::Error<ListSecurityFindingsAutomationDefaultInboxRulesError>,
+    > {
+        match self
+            .list_security_findings_automation_default_inbox_rules_with_http_info()
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get all default inbox rules for the current organization.
+    /// Datadog manages default inbox rules. Their name, rule, and action are
+    /// read-only, and each organization can change only whether they are enabled.
+    pub async fn list_security_findings_automation_default_inbox_rules_with_http_info(
+        &self,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DefaultInboxRulesResponse>,
+        datadog::Error<ListSecurityFindingsAutomationDefaultInboxRulesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_security_findings_automation_default_inbox_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_security_findings_automation_default_inbox_rules' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/default_inbox_rules",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DefaultInboxRulesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSecurityFindingsAutomationDefaultInboxRulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get all due date rules for the current organization.
     pub async fn list_security_findings_automation_due_date_rules(
         &self,
@@ -19442,6 +20422,139 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<ListSecurityFindingsAutomationDueDateRulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get all inbox rules for the current organization.
+    pub async fn list_security_findings_automation_inbox_rules(
+        &self,
+        params: ListSecurityFindingsAutomationInboxRulesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::InboxRulesResponse,
+        datadog::Error<ListSecurityFindingsAutomationInboxRulesError>,
+    > {
+        match self
+            .list_security_findings_automation_inbox_rules_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get all inbox rules for the current organization.
+    pub async fn list_security_findings_automation_inbox_rules_with_http_info(
+        &self,
+        params: ListSecurityFindingsAutomationInboxRulesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::InboxRulesResponse>,
+        datadog::Error<ListSecurityFindingsAutomationInboxRulesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_security_findings_automation_inbox_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_security_findings_automation_inbox_rules' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/inbox_rules",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::InboxRulesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSecurityFindingsAutomationInboxRulesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -22420,6 +23533,174 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Reorder the list of inbox rules for the current organization.
+    pub async fn reorder_security_findings_automation_inbox_rules(
+        &self,
+        body: crate::datadogV2::model::InboxRuleReorderRequest,
+    ) -> Result<
+        crate::datadogV2::model::InboxRuleReorderResponse,
+        datadog::Error<ReorderSecurityFindingsAutomationInboxRulesError>,
+    > {
+        match self
+            .reorder_security_findings_automation_inbox_rules_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Reorder the list of inbox rules for the current organization.
+    pub async fn reorder_security_findings_automation_inbox_rules_with_http_info(
+        &self,
+        body: crate::datadogV2::model::InboxRuleReorderRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::InboxRuleReorderResponse>,
+        datadog::Error<ReorderSecurityFindingsAutomationInboxRulesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.reorder_security_findings_automation_inbox_rules";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg:
+                    "Operation 'v2.reorder_security_findings_automation_inbox_rules' is not enabled"
+                        .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/inbox_rules/reorder",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::InboxRuleReorderResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ReorderSecurityFindingsAutomationInboxRulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Reorder the list of mute rules for the current organization.
     pub async fn reorder_security_findings_automation_mute_rules(
         &self,
@@ -24926,7 +26207,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Update an existing due date rule by ID.
+    /// Update a due date rule by ID.
     pub async fn update_security_findings_automation_due_date_rule(
         &self,
         rule_id: uuid::Uuid,
@@ -24952,7 +26233,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Update an existing due date rule by ID.
+    /// Update a due date rule by ID.
     pub async fn update_security_findings_automation_due_date_rule_with_http_info(
         &self,
         rule_id: uuid::Uuid,
@@ -25095,7 +26376,176 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Update an existing mute rule by ID.
+    /// Update an inbox rule by ID.
+    pub async fn update_security_findings_automation_inbox_rule(
+        &self,
+        rule_id: uuid::Uuid,
+        body: crate::datadogV2::model::InboxRuleUpdateRequest,
+    ) -> Result<
+        crate::datadogV2::model::InboxRuleResponse,
+        datadog::Error<UpdateSecurityFindingsAutomationInboxRuleError>,
+    > {
+        match self
+            .update_security_findings_automation_inbox_rule_with_http_info(rule_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update an inbox rule by ID.
+    pub async fn update_security_findings_automation_inbox_rule_with_http_info(
+        &self,
+        rule_id: uuid::Uuid,
+        body: crate::datadogV2::model::InboxRuleUpdateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::InboxRuleResponse>,
+        datadog::Error<UpdateSecurityFindingsAutomationInboxRuleError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.update_security_findings_automation_inbox_rule";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_security_findings_automation_inbox_rule' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/findings/automation/inbox_rules/{rule_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            rule_id = datadog::urlencode(rule_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::InboxRuleResponse>(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateSecurityFindingsAutomationInboxRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update a mute rule by ID.
     pub async fn update_security_findings_automation_mute_rule(
         &self,
         rule_id: uuid::Uuid,
@@ -25121,7 +26571,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Update an existing mute rule by ID.
+    /// Update a mute rule by ID.
     pub async fn update_security_findings_automation_mute_rule_with_http_info(
         &self,
         rule_id: uuid::Uuid,
@@ -25264,7 +26714,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Update an existing severity modifier rule by ID.
+    /// Update a severity modifier rule by ID.
     pub async fn update_security_findings_automation_severity_modifier_rule(
         &self,
         rule_id: uuid::Uuid,
@@ -25292,7 +26742,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Update an existing severity modifier rule by ID.
+    /// Update a severity modifier rule by ID.
     pub async fn update_security_findings_automation_severity_modifier_rule_with_http_info(
         &self,
         rule_id: uuid::Uuid,
@@ -25435,7 +26885,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Update an existing ticket creation rule by ID.
+    /// Update a ticket creation rule by ID.
     pub async fn update_security_findings_automation_ticket_creation_rule(
         &self,
         rule_id: uuid::Uuid,
@@ -25461,7 +26911,7 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Update an existing ticket creation rule by ID.
+    /// Update a ticket creation rule by ID.
     pub async fn update_security_findings_automation_ticket_creation_rule_with_http_info(
         &self,
         rule_id: uuid::Uuid,

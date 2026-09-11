@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DueDateRuleReorderRequest {
-    /// The ordered list of all due date rules; every rule must be included.
+    /// The ordered list of all due date rules. Every rule must be included.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::DueDateRuleReorderItem>,
     #[serde(flatten)]

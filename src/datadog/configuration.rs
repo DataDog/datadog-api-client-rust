@@ -297,6 +297,10 @@ impl Default for Configuration {
                 false,
             ),
             (
+                "v2.create_security_findings_automation_inbox_rule".to_owned(),
+                false,
+            ),
+            (
                 "v2.create_security_findings_automation_mute_rule".to_owned(),
                 false,
             ),
@@ -330,6 +334,10 @@ impl Default for Configuration {
                 false,
             ),
             (
+                "v2.delete_security_findings_automation_inbox_rule".to_owned(),
+                false,
+            ),
+            (
                 "v2.delete_security_findings_automation_mute_rule".to_owned(),
                 false,
             ),
@@ -347,6 +355,14 @@ impl Default for Configuration {
                 false,
             ),
             (
+                "v2.disable_security_findings_automation_default_inbox_rule".to_owned(),
+                false,
+            ),
+            (
+                "v2.enable_security_findings_automation_default_inbox_rule".to_owned(),
+                false,
+            ),
+            (
                 "v2.export_security_monitoring_terraform_resource".to_owned(),
                 false,
             ),
@@ -359,7 +375,15 @@ impl Default for Configuration {
             ("v2.get_rule_version_history".to_owned(), false),
             ("v2.get_secrets_rules".to_owned(), false),
             (
+                "v2.get_security_findings_automation_default_inbox_rule".to_owned(),
+                false,
+            ),
+            (
                 "v2.get_security_findings_automation_due_date_rule".to_owned(),
+                false,
+            ),
+            (
+                "v2.get_security_findings_automation_inbox_rule".to_owned(),
                 false,
             ),
             (
@@ -409,7 +433,15 @@ impl Default for Configuration {
             ),
             ("v2.list_scanned_assets_metadata".to_owned(), false),
             (
+                "v2.list_security_findings_automation_default_inbox_rules".to_owned(),
+                false,
+            ),
+            (
                 "v2.list_security_findings_automation_due_date_rules".to_owned(),
+                false,
+            ),
+            (
+                "v2.list_security_findings_automation_inbox_rules".to_owned(),
                 false,
             ),
             (
@@ -438,6 +470,10 @@ impl Default for Configuration {
                 false,
             ),
             (
+                "v2.reorder_security_findings_automation_inbox_rules".to_owned(),
+                false,
+            ),
+            (
                 "v2.reorder_security_findings_automation_mute_rules".to_owned(),
                 false,
             ),
@@ -458,6 +494,10 @@ impl Default for Configuration {
             ("v2.update_findings_assignee".to_owned(), false),
             (
                 "v2.update_security_findings_automation_due_date_rule".to_owned(),
+                false,
+            ),
+            (
+                "v2.update_security_findings_automation_inbox_rule".to_owned(),
                 false,
             ),
             (
