@@ -129,6 +129,8 @@ pub struct ApiInstances {
     pub v2_api_elastic_cloud_integration_accounts: Option<
         datadogV2::api_elastic_cloud_integration_accounts::ElasticCloudIntegrationAccountsAPI,
     >,
+    pub v2_api_snowflake_integration:
+        Option<datadogV2::api_snowflake_integration::SnowflakeIntegrationAPI>,
     pub v2_api_twilio_integration_accounts:
         Option<datadogV2::api_twilio_integration_accounts::TwilioIntegrationAccountsAPI>,
     pub v2_api_aws_integration: Option<datadogV2::api_aws_integration::AWSIntegrationAPI>,
@@ -1008,6 +1010,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         }
         "ElasticCloudIntegrationAccounts" => {
             world.api_instances.v2_api_elastic_cloud_integration_accounts = Some(datadogV2::api_elastic_cloud_integration_accounts::ElasticCloudIntegrationAccountsAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
+        }
+        "SnowflakeIntegration" => {
+            world.api_instances.v2_api_snowflake_integration = Some(datadogV2::api_snowflake_integration::SnowflakeIntegrationAPI::with_client_and_config(
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
@@ -5736,6 +5744,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateElasticCloudIntegrationAccount".into(),
         test_v2_update_elastic_cloud_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.ListSnowflakeIntegrationAccounts".into(),
+        test_v2_list_snowflake_integration_accounts,
+    );
+    world.function_mappings.insert(
+        "v2.CreateSnowflakeIntegrationAccount".into(),
+        test_v2_create_snowflake_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteSnowflakeIntegrationAccount".into(),
+        test_v2_delete_snowflake_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.GetSnowflakeIntegrationAccount".into(),
+        test_v2_get_snowflake_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateSnowflakeIntegrationAccount".into(),
+        test_v2_update_snowflake_integration_account,
     );
     world.function_mappings.insert(
         "v2.ListTwilioIntegrationAccounts".into(),
@@ -44409,6 +44437,152 @@ fn test_v2_update_elastic_cloud_integration_account(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_snowflake_integration_accounts(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_snowflake_integration
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_snowflake_integration_accounts_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_snowflake_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_snowflake_integration
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_snowflake_integration_account_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_snowflake_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_snowflake_integration
+        .as_ref()
+        .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_snowflake_integration_account_with_http_info(account_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_snowflake_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_snowflake_integration
+        .as_ref()
+        .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_snowflake_integration_account_with_http_info(account_id))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_snowflake_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_snowflake_integration
+        .as_ref()
+        .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_snowflake_integration_account_with_http_info(account_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

@@ -1,0 +1,18 @@
+// Delete a Snowflake integration account returns "OK" response
+use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_snowflake_integration::SnowflakeIntegrationAPI;
+
+#[tokio::main]
+async fn main() {
+    let mut configuration = datadog::Configuration::new();
+    configuration.set_unstable_operation_enabled("v2.DeleteSnowflakeIntegrationAccount", true);
+    let api = SnowflakeIntegrationAPI::with_config(configuration);
+    let resp = api
+        .delete_snowflake_integration_account("account_id".to_string())
+        .await;
+    if let Ok(value) = resp {
+        println!("{:#?}", value);
+    } else {
+        println!("{:#?}", resp.unwrap_err());
+    }
+}
