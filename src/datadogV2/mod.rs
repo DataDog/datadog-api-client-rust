@@ -47,6 +47,7 @@ pub use self::api::api_dashboard_sharing;
 pub use self::api::api_dashboards;
 pub use self::api::api_data_deletion;
 pub use self::api::api_data_observability;
+pub use self::api::api_databricks_integration;
 pub use self::api::api_datasets;
 pub use self::api::api_ddsql;
 pub use self::api::api_dem;
