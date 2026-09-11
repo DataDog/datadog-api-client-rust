@@ -10,6 +10,8 @@ use std::fmt::{self, Formatter};
 /// Metrics can be counters, gauges, or distributions and optionally grouped by log fields.
 ///
 /// **Supported pipeline types:** logs
+///
+/// **Deprecated:** This processor is deprecated. Use the `generate_metrics` processor instead.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
