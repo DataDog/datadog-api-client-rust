@@ -20,6 +20,7 @@ async fn main() {
             .reset_utc_offset("+02:00".to_string()),
     )
     .daily_limit_warning_threshold_percentage(70.0 as f64)
+    .description("Contains logs matching the criteria defined by the filter.".to_string())
     .exclusion_filters(vec![LogsExclusion::new("payment".to_string()).filter(
         LogsExclusionFilter::new(1.0)
             .query("*".to_string())
