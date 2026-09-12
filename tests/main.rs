@@ -1,4 +1,5 @@
 mod scenarios;
+mod sharding;
 
 use cucumber::{cli, parser, runner, writer, StatsWriter, World};
 use lazy_static::lazy_static;
@@ -7,6 +8,7 @@ use scenarios::fixtures::{
     after_scenario, before_scenario, given_resource_in_system, DatadogWorld,
 };
 use serde_json::Value;
+use sharding::TestShard;
 use std::{
     collections::HashMap,
     env,
@@ -156,6 +158,14 @@ async fn main() {
     };
     let parsed_cli: cli::Opts<parser::basic::Cli, runner::basic::Cli, writer::basic::Cli> =
         cli::Opts::parsed();
+    let test_shard = TestShard::from_env();
+    if let Some(shard) = test_shard {
+        println!(
+            "=== Running test shard {}/{} ===",
+            shard.number(),
+            shard.total()
+        );
+    }
     let mut cucumber = DatadogWorld::cucumber()
         .with_default_cli()
         .max_concurrent_scenarios(Some(concurrent_scenarios))
@@ -186,7 +196,7 @@ async fn main() {
     }
 
     let failed = cucumber
-        .filter_run("tests/scenarios/features/", move |_, _, sc| {
+        .filter_run("tests/scenarios/features/", move |feature, rule, sc| {
             let name_re = parsed_cli.re_filter.clone();
             let name_match = name_re
                 .and_then(|filter| Some(filter.is_match(sc.name.as_str())))
@@ -200,7 +210,14 @@ async fn main() {
             } else if is_replay && sc.tags.contains(&"integration-only".into()) {
                 false
             } else {
-                true
+                test_shard.is_none_or(|shard| {
+                    shard.includes(
+                        feature.path.as_ref().unwrap().to_string_lossy().as_ref(),
+                        rule.map(|rule| rule.name.as_str()),
+                        sc.name.as_str(),
+                        sc.position.line,
+                    )
+                })
             }
         })
         .await
