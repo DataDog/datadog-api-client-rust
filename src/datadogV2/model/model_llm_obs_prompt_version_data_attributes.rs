@@ -14,6 +14,9 @@ pub struct LLMObsPromptVersionDataAttributes {
     /// UUID of the user who authored this version.
     #[serde(rename = "author")]
     pub author: Option<String>,
+    /// Customer-owned configuration delivered with a prompt version. Datadog stores and returns the object without interpolating it, validating provider-specific keys, or applying it to model calls. Do not include secrets.
+    #[serde(rename = "config")]
+    pub config: std::collections::BTreeMap<String, serde_json::Value>,
     /// Timestamp stored on this prompt version.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -66,6 +69,7 @@ pub struct LLMObsPromptVersionDataAttributes {
 
 impl LLMObsPromptVersionDataAttributes {
     pub fn new(
+        config: std::collections::BTreeMap<String, serde_json::Value>,
         prompt_id: String,
         prompt_uuid: String,
         template: crate::datadogV2::model::LLMObsPromptTemplate,
@@ -74,6 +78,7 @@ impl LLMObsPromptVersionDataAttributes {
         #[allow(deprecated)]
         LLMObsPromptVersionDataAttributes {
             author: None,
+            config,
             created_at: None,
             datasets: None,
             description: None,
@@ -186,6 +191,8 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut author: Option<String> = None;
+                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut datasets: Option<Vec<crate::datadogV2::model::LLMObsPromptDataset>> = None;
                 let mut description: Option<String> = None;
@@ -213,6 +220,9 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                                 continue;
                             }
                             author = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "config" => {
+                            config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_at" => {
                             if v.is_null() {
@@ -306,6 +316,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                         }
                     }
                 }
+                let config = config.ok_or_else(|| M::Error::missing_field("config"))?;
                 let prompt_id = prompt_id.ok_or_else(|| M::Error::missing_field("prompt_id"))?;
                 let prompt_uuid =
                     prompt_uuid.ok_or_else(|| M::Error::missing_field("prompt_uuid"))?;
@@ -315,6 +326,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                 #[allow(deprecated)]
                 let content = LLMObsPromptVersionDataAttributes {
                     author,
+                    config,
                     created_at,
                     datasets,
                     description,

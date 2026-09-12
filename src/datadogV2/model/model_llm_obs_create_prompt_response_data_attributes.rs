@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of an Agent Observability prompt registry entry. Prompt list and metadata-update responses omit complete template and configuration data.
+/// Attributes returned after creating an Agent Observability prompt and its first version.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct LLMObsPromptDataAttributes {
+pub struct LLMObsCreatePromptResponseDataAttributes {
     /// UUID of the user who authored the prompt.
     #[serde(rename = "author")]
     pub author: Option<String>,
+    /// Customer-owned configuration delivered with a prompt version. Datadog stores and returns the object without interpolating it, validating provider-specific keys, or applying it to model calls. Do not include secrets.
+    #[serde(rename = "config")]
+    pub config: std::collections::BTreeMap<String, serde_json::Value>,
     /// Timestamp when the prompt was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -66,16 +69,18 @@ pub struct LLMObsPromptDataAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl LLMObsPromptDataAttributes {
+impl LLMObsCreatePromptResponseDataAttributes {
     pub fn new(
+        config: std::collections::BTreeMap<String, serde_json::Value>,
         created_from: String,
         in_registry: bool,
         num_versions: i64,
         prompt_id: String,
         source: crate::datadogV2::model::LLMObsPromptResponseSource,
-    ) -> LLMObsPromptDataAttributes {
-        LLMObsPromptDataAttributes {
+    ) -> LLMObsCreatePromptResponseDataAttributes {
+        LLMObsCreatePromptResponseDataAttributes {
             author: None,
+            config,
             created_at: None,
             created_from,
             datasets: None,
@@ -160,14 +165,14 @@ impl LLMObsPromptDataAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for LLMObsPromptDataAttributes {
+impl<'de> Deserialize<'de> for LLMObsCreatePromptResponseDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct LLMObsPromptDataAttributesVisitor;
-        impl<'a> Visitor<'a> for LLMObsPromptDataAttributesVisitor {
-            type Value = LLMObsPromptDataAttributes;
+        struct LLMObsCreatePromptResponseDataAttributesVisitor;
+        impl<'a> Visitor<'a> for LLMObsCreatePromptResponseDataAttributesVisitor {
+            type Value = LLMObsCreatePromptResponseDataAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -178,6 +183,8 @@ impl<'de> Deserialize<'de> for LLMObsPromptDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut author: Option<String> = None;
+                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_from: Option<String> = None;
                 let mut datasets: Option<Vec<crate::datadogV2::model::LLMObsPromptDataset>> = None;
@@ -206,6 +213,9 @@ impl<'de> Deserialize<'de> for LLMObsPromptDataAttributes {
                                 continue;
                             }
                             author = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "config" => {
+                            config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_at" => {
                             if v.is_null() {
@@ -304,6 +314,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptDataAttributes {
                         }
                     }
                 }
+                let config = config.ok_or_else(|| M::Error::missing_field("config"))?;
                 let created_from =
                     created_from.ok_or_else(|| M::Error::missing_field("created_from"))?;
                 let in_registry =
@@ -313,8 +324,9 @@ impl<'de> Deserialize<'de> for LLMObsPromptDataAttributes {
                 let prompt_id = prompt_id.ok_or_else(|| M::Error::missing_field("prompt_id"))?;
                 let source = source.ok_or_else(|| M::Error::missing_field("source"))?;
 
-                let content = LLMObsPromptDataAttributes {
+                let content = LLMObsCreatePromptResponseDataAttributes {
                     author,
+                    config,
                     created_at,
                     created_from,
                     datasets,
@@ -338,6 +350,6 @@ impl<'de> Deserialize<'de> for LLMObsPromptDataAttributes {
             }
         }
 
-        deserializer.deserialize_any(LLMObsPromptDataAttributesVisitor)
+        deserializer.deserialize_any(LLMObsCreatePromptResponseDataAttributesVisitor)
     }
 }

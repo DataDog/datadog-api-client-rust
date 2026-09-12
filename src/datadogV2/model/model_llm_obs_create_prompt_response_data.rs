@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for an Agent Observability prompt.
+/// Data object returned after creating an Agent Observability prompt.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct LLMObsPromptData {
-    /// Attributes of an Agent Observability prompt registry entry. Prompt list and metadata-update responses omit complete template and configuration data.
+pub struct LLMObsCreatePromptResponseData {
+    /// Attributes returned after creating an Agent Observability prompt and its first version.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::LLMObsPromptDataAttributes,
+    pub attributes: crate::datadogV2::model::LLMObsCreatePromptResponseDataAttributes,
     /// Unique identifier of the prompt.
     #[serde(rename = "id")]
     pub id: String,
@@ -27,13 +27,13 @@ pub struct LLMObsPromptData {
     pub(crate) _unparsed: bool,
 }
 
-impl LLMObsPromptData {
+impl LLMObsCreatePromptResponseData {
     pub fn new(
-        attributes: crate::datadogV2::model::LLMObsPromptDataAttributes,
+        attributes: crate::datadogV2::model::LLMObsCreatePromptResponseDataAttributes,
         id: String,
         type_: crate::datadogV2::model::LLMObsPromptType,
-    ) -> LLMObsPromptData {
-        LLMObsPromptData {
+    ) -> LLMObsCreatePromptResponseData {
+        LLMObsCreatePromptResponseData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl LLMObsPromptData {
     }
 }
 
-impl<'de> Deserialize<'de> for LLMObsPromptData {
+impl<'de> Deserialize<'de> for LLMObsCreatePromptResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct LLMObsPromptDataVisitor;
-        impl<'a> Visitor<'a> for LLMObsPromptDataVisitor {
-            type Value = LLMObsPromptData;
+        struct LLMObsCreatePromptResponseDataVisitor;
+        impl<'a> Visitor<'a> for LLMObsCreatePromptResponseDataVisitor {
+            type Value = LLMObsCreatePromptResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,8 +68,9 @@ impl<'de> Deserialize<'de> for LLMObsPromptData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::LLMObsPromptDataAttributes> =
-                    None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::LLMObsCreatePromptResponseDataAttributes,
+                > = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::LLMObsPromptType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -110,7 +111,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = LLMObsPromptData {
+                let content = LLMObsCreatePromptResponseData {
                     attributes,
                     id,
                     type_,
@@ -122,6 +123,6 @@ impl<'de> Deserialize<'de> for LLMObsPromptData {
             }
         }
 
-        deserializer.deserialize_any(LLMObsPromptDataVisitor)
+        deserializer.deserialize_any(LLMObsCreatePromptResponseDataVisitor)
     }
 }
