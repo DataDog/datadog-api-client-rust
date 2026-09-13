@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[serde(untagged)]
 pub enum LLMObsPromptTemplate {
     LLMObsPromptTextTemplate(String),
-    LLMObsPromptChatTemplate(Vec<crate::datadogV2::model::LLMObsPromptChatMessage>),
+    LLMObsPromptChatTemplate(Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -23,7 +23,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptTemplate {
             return Ok(LLMObsPromptTemplate::LLMObsPromptTextTemplate(_v));
         }
         if let Ok(_v) = serde_json::from_value::<
-            Vec<crate::datadogV2::model::LLMObsPromptChatMessage>,
+            Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>,
         >(value.clone())
         {
             return Ok(LLMObsPromptTemplate::LLMObsPromptChatTemplate(_v));
