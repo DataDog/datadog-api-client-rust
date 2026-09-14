@@ -43,6 +43,7 @@ async fn main() {
                     .name("my budget".to_string())
                     .org_id(123)
                     .start_month(202501)
+                    .tags(vec!["service".to_string()])
                     .total_amount(1000.0 as f64)
                     .updated_at(1738258683590)
                     .updated_by("00000000-0a0a-0a0a-aaa0-00000000000a".to_string()),
