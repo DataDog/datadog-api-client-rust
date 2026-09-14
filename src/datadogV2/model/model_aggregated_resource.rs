@@ -42,6 +42,9 @@ pub struct AggregatedResource {
     /// Percentage of sampled view instances that loaded this resource.
     #[serde(rename = "load_frequency_pct")]
     pub load_frequency_pct: f64,
+    /// Number of requests served from the local browser cache without a network round trip.
+    #[serde(rename = "local_cache_count")]
+    pub local_cache_count: i32,
     /// Maximum duration in milliseconds.
     #[serde(rename = "max_duration_ms")]
     pub max_duration_ms: f64,
@@ -51,12 +54,21 @@ pub struct AggregatedResource {
     /// Minimum duration in milliseconds.
     #[serde(rename = "min_duration_ms")]
     pub min_duration_ms: f64,
+    /// Number of requests reported by the browser as non-render-blocking.
+    #[serde(rename = "non_blocking_count")]
+    pub non_blocking_count: i32,
     /// 75th percentile duration in milliseconds.
     #[serde(rename = "p75_duration_ms")]
     pub p75_duration_ms: f64,
     /// 95th percentile duration in milliseconds.
     #[serde(rename = "p95_duration_ms")]
     pub p95_duration_ms: f64,
+    /// Number of requests reported by the browser as render-blocking.
+    #[serde(rename = "render_blocking_count")]
+    pub render_blocking_count: i32,
+    /// Percentage of render-blocking requests among those reporting a render-blocking status.
+    #[serde(rename = "render_blocking_pct")]
+    pub render_blocking_pct: f64,
     /// Resource type (JS, CSS, image, fetch, XHR, document, and so on).
     #[serialize_always]
     #[serde(rename = "resource_type")]
@@ -64,6 +76,9 @@ pub struct AggregatedResource {
     /// URL path group used to aggregate similar resources.
     #[serde(rename = "resource_url_path_group")]
     pub resource_url_path_group: String,
+    /// Number of cached requests revalidated by the server with a 304 response.
+    #[serde(rename = "server_validated_cache_count")]
+    pub server_validated_cache_count: i32,
     /// Average timing breakdown per network phase for a resource.
     #[serde(rename = "timing_breakdown")]
     pub timing_breakdown: crate::datadogV2::model::AggregatedResourceTimingBreakdown,
@@ -89,13 +104,18 @@ impl AggregatedResource {
         downloaded_count: i32,
         http_method: Option<String>,
         load_frequency_pct: f64,
+        local_cache_count: i32,
         max_duration_ms: f64,
         median_duration_ms: f64,
         min_duration_ms: f64,
+        non_blocking_count: i32,
         p75_duration_ms: f64,
         p95_duration_ms: f64,
+        render_blocking_count: i32,
+        render_blocking_pct: f64,
         resource_type: Option<String>,
         resource_url_path_group: String,
+        server_validated_cache_count: i32,
         timing_breakdown: crate::datadogV2::model::AggregatedResourceTimingBreakdown,
         total_requests: i32,
         views_with_resource: i32,
@@ -111,13 +131,18 @@ impl AggregatedResource {
             global_view_name_pct: None,
             http_method,
             load_frequency_pct,
+            local_cache_count,
             max_duration_ms,
             median_duration_ms,
             min_duration_ms,
+            non_blocking_count,
             p75_duration_ms,
             p95_duration_ms,
+            render_blocking_count,
+            render_blocking_pct,
             resource_type,
             resource_url_path_group,
+            server_validated_cache_count,
             timing_breakdown,
             total_requests,
             views_with_resource,
@@ -177,13 +202,18 @@ impl<'de> Deserialize<'de> for AggregatedResource {
                 let mut global_view_name_pct: Option<f64> = None;
                 let mut http_method: Option<Option<String>> = None;
                 let mut load_frequency_pct: Option<f64> = None;
+                let mut local_cache_count: Option<i32> = None;
                 let mut max_duration_ms: Option<f64> = None;
                 let mut median_duration_ms: Option<f64> = None;
                 let mut min_duration_ms: Option<f64> = None;
+                let mut non_blocking_count: Option<i32> = None;
                 let mut p75_duration_ms: Option<f64> = None;
                 let mut p95_duration_ms: Option<f64> = None;
+                let mut render_blocking_count: Option<i32> = None;
+                let mut render_blocking_pct: Option<f64> = None;
                 let mut resource_type: Option<Option<String>> = None;
                 let mut resource_url_path_group: Option<String> = None;
+                let mut server_validated_cache_count: Option<i32> = None;
                 let mut timing_breakdown: Option<
                     crate::datadogV2::model::AggregatedResourceTimingBreakdown,
                 > = None;
@@ -246,6 +276,10 @@ impl<'de> Deserialize<'de> for AggregatedResource {
                             load_frequency_pct =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "local_cache_count" => {
+                            local_cache_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "max_duration_ms" => {
                             max_duration_ms =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -258,6 +292,10 @@ impl<'de> Deserialize<'de> for AggregatedResource {
                             min_duration_ms =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "non_blocking_count" => {
+                            non_blocking_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "p75_duration_ms" => {
                             p75_duration_ms =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -266,12 +304,24 @@ impl<'de> Deserialize<'de> for AggregatedResource {
                             p95_duration_ms =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "render_blocking_count" => {
+                            render_blocking_count =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "render_blocking_pct" => {
+                            render_blocking_pct =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "resource_type" => {
                             resource_type =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "resource_url_path_group" => {
                             resource_url_path_group =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "server_validated_cache_count" => {
+                            server_validated_cache_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "timing_breakdown" => {
@@ -307,20 +357,30 @@ impl<'de> Deserialize<'de> for AggregatedResource {
                     http_method.ok_or_else(|| M::Error::missing_field("http_method"))?;
                 let load_frequency_pct = load_frequency_pct
                     .ok_or_else(|| M::Error::missing_field("load_frequency_pct"))?;
+                let local_cache_count = local_cache_count
+                    .ok_or_else(|| M::Error::missing_field("local_cache_count"))?;
                 let max_duration_ms =
                     max_duration_ms.ok_or_else(|| M::Error::missing_field("max_duration_ms"))?;
                 let median_duration_ms = median_duration_ms
                     .ok_or_else(|| M::Error::missing_field("median_duration_ms"))?;
                 let min_duration_ms =
                     min_duration_ms.ok_or_else(|| M::Error::missing_field("min_duration_ms"))?;
+                let non_blocking_count = non_blocking_count
+                    .ok_or_else(|| M::Error::missing_field("non_blocking_count"))?;
                 let p75_duration_ms =
                     p75_duration_ms.ok_or_else(|| M::Error::missing_field("p75_duration_ms"))?;
                 let p95_duration_ms =
                     p95_duration_ms.ok_or_else(|| M::Error::missing_field("p95_duration_ms"))?;
+                let render_blocking_count = render_blocking_count
+                    .ok_or_else(|| M::Error::missing_field("render_blocking_count"))?;
+                let render_blocking_pct = render_blocking_pct
+                    .ok_or_else(|| M::Error::missing_field("render_blocking_pct"))?;
                 let resource_type =
                     resource_type.ok_or_else(|| M::Error::missing_field("resource_type"))?;
                 let resource_url_path_group = resource_url_path_group
                     .ok_or_else(|| M::Error::missing_field("resource_url_path_group"))?;
+                let server_validated_cache_count = server_validated_cache_count
+                    .ok_or_else(|| M::Error::missing_field("server_validated_cache_count"))?;
                 let timing_breakdown =
                     timing_breakdown.ok_or_else(|| M::Error::missing_field("timing_breakdown"))?;
                 let total_requests =
@@ -339,13 +399,18 @@ impl<'de> Deserialize<'de> for AggregatedResource {
                     global_view_name_pct,
                     http_method,
                     load_frequency_pct,
+                    local_cache_count,
                     max_duration_ms,
                     median_duration_ms,
                     min_duration_ms,
+                    non_blocking_count,
                     p75_duration_ms,
                     p95_duration_ms,
+                    render_blocking_count,
+                    render_blocking_pct,
                     resource_type,
                     resource_url_path_group,
+                    server_validated_cache_count,
                     timing_breakdown,
                     total_requests,
                     views_with_resource,
