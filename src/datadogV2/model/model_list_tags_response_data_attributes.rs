@@ -11,9 +11,6 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ListTagsResponseDataAttributes {
-    /// The list of device tags grouped by source.
-    #[serde(rename = "by_source")]
-    pub by_source: Option<Vec<crate::datadogV2::model::DeviceTagsBySource>>,
     /// The list of tags
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -27,16 +24,10 @@ pub struct ListTagsResponseDataAttributes {
 impl ListTagsResponseDataAttributes {
     pub fn new() -> ListTagsResponseDataAttributes {
         ListTagsResponseDataAttributes {
-            by_source: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn by_source(mut self, value: Vec<crate::datadogV2::model::DeviceTagsBySource>) -> Self {
-        self.by_source = Some(value);
-        self
     }
 
     pub fn tags(mut self, value: Vec<String>) -> Self {
@@ -76,7 +67,6 @@ impl<'de> Deserialize<'de> for ListTagsResponseDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut by_source: Option<Vec<crate::datadogV2::model::DeviceTagsBySource>> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -86,12 +76,6 @@ impl<'de> Deserialize<'de> for ListTagsResponseDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "by_source" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            by_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -107,7 +91,6 @@ impl<'de> Deserialize<'de> for ListTagsResponseDataAttributes {
                 }
 
                 let content = ListTagsResponseDataAttributes {
-                    by_source,
                     tags,
                     additional_properties,
                     _unparsed,
