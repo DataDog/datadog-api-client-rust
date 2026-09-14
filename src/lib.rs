@@ -5,8 +5,6 @@
 #![allow(non_snake_case)]
 #![doc = include_str!("../README.md")]
 
-/// Shared client configuration and authentication types.
 pub mod datadog;
-/// Types and API clients for Datadog API v1.
 pub mod datadogV1;
 pub mod datadogV2;
