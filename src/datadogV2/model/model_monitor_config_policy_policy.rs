@@ -9,9 +9,6 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[serde(untagged)]
 pub enum MonitorConfigPolicyPolicy {
     MonitorConfigPolicyTagPolicy(Box<crate::datadogV2::model::MonitorConfigPolicyTagPolicy>),
-    MonitorConfigPolicyDowntimePolicy(
-        Box<crate::datadogV2::model::MonitorConfigPolicyDowntimePolicy>,
-    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -27,14 +24,6 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyPolicy {
         {
             if !_v._unparsed {
                 return Ok(MonitorConfigPolicyPolicy::MonitorConfigPolicyTagPolicy(_v));
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::MonitorConfigPolicyDowntimePolicy>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(MonitorConfigPolicyPolicy::MonitorConfigPolicyDowntimePolicy(_v));
             }
         }
 
