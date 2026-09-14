@@ -62,6 +62,9 @@ pub enum ObservabilityPipelineConfigSourceItem {
     ObservabilityPipelineOpentelemetrySource(
         Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>,
     ),
+    ObservabilityPipelinePrometheusRemoteWriteSource(
+        Box<crate::datadogV2::model::ObservabilityPipelinePrometheusRemoteWriteSource>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -257,6 +260,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
                         _v,
                     ),
                 );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelinePrometheusRemoteWriteSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelinePrometheusRemoteWriteSource(_v));
             }
         }
 
