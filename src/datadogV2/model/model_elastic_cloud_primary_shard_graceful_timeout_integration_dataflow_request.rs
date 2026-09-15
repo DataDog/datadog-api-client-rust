@@ -6,16 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The Elastic Cloud primary shard graceful timeout dataflow.
+/// Tolerance for slow primary shard requests. Primary shard metrics can grow large enough for the request to time out; enabling this keeps the rest of the collection running when that happens instead of failing the run. Only has an effect alongside `elastic-cloud-primary-shard-stats`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ElasticCloudPrimaryShardGracefulTimeoutIntegrationDataflowRequest {
-    /// Whether the Elastic Cloud dataflow is enabled.
+    /// Whether this tolerance is applied. Defaults to `false`; set to `true` to apply it.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -25,21 +23,12 @@ impl ElasticCloudPrimaryShardGracefulTimeoutIntegrationDataflowRequest {
     pub fn new() -> ElasticCloudPrimaryShardGracefulTimeoutIntegrationDataflowRequest {
         ElasticCloudPrimaryShardGracefulTimeoutIntegrationDataflowRequest {
             enabled: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -68,10 +57,6 @@ impl<'de> Deserialize<'de> for ElasticCloudPrimaryShardGracefulTimeoutIntegratio
                 M: MapAccess<'a>,
             {
                 let mut enabled: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,16 +68,15 @@ impl<'de> Deserialize<'de> for ElasticCloudPrimaryShardGracefulTimeoutIntegratio
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
 
                 let content = ElasticCloudPrimaryShardGracefulTimeoutIntegrationDataflowRequest {
                     enabled,
-                    additional_properties,
                     _unparsed,
                 };
 

@@ -1,6 +1,6 @@
 // Create a Twilio integration account returns "Created" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_twilio_integration_accounts::TwilioIntegrationAccountsAPI;
+use datadog_api_client::datadogV2::api_twilio_integration::TwilioIntegrationAPI;
 use datadog_api_client::datadogV2::model::IntegrationAccountBasicAuthRequest;
 use datadog_api_client::datadogV2::model::IntegrationAccountBasicAuthType;
 use datadog_api_client::datadogV2::model::IntegrationAccountType;
@@ -51,7 +51,7 @@ async fn main() {
     ));
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateTwilioIntegrationAccount", true);
-    let api = TwilioIntegrationAccountsAPI::with_config(configuration);
+    let api = TwilioIntegrationAPI::with_config(configuration);
     let resp = api.create_twilio_integration_account(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

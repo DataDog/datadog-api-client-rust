@@ -15,7 +15,7 @@ pub struct ElasticCloudIntegrationAccountResponseAttributes {
     #[serde(rename = "authentication")]
     pub authentication:
         Option<crate::datadogV2::model::ElasticCloudIntegrationAccountAuthenticationResponse>,
-    /// Dataflows configured on the Elastic Cloud integration account, keyed by dataflow id.
+    /// Data Datadog collects from Elastic Cloud, keyed by dataflow id.
     #[serde(rename = "dataflows")]
     pub dataflows: Option<crate::datadogV2::model::ElasticCloudIntegrationDataflowsResponse>,
     /// Human-readable name of the Elastic Cloud integration account.

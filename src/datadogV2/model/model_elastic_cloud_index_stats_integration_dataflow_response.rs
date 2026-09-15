@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The Elastic Cloud index stats dataflow.
+/// Metrics for individual indices. Only the indices granted to the role of the user in `authentication` are collected.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ElasticCloudIndexStatsIntegrationDataflowResponse {
-    /// Whether the Elastic Cloud dataflow is enabled.
+    /// Whether Datadog collects this data.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// Read-only collection status of a dataflow.

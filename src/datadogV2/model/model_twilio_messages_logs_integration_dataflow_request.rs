@@ -6,16 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The Twilio messages logs dataflow.
+/// Twilio Message resource logs for inbound and outbound messages, used to track delivery and troubleshoot message errors. A log is produced when you send a message through the REST API, when Twilio executes a TwiML instruction, and when someone messages one of your Twilio numbers or channel addresses. Message bodies are never collected.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TwilioMessagesLogsIntegrationDataflowRequest {
-    /// Whether the Twilio dataflow is enabled.
+    /// Whether Datadog collects this data. Defaults to `false`; set to `true` to start collection.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -25,21 +23,12 @@ impl TwilioMessagesLogsIntegrationDataflowRequest {
     pub fn new() -> TwilioMessagesLogsIntegrationDataflowRequest {
         TwilioMessagesLogsIntegrationDataflowRequest {
             enabled: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -68,10 +57,6 @@ impl<'de> Deserialize<'de> for TwilioMessagesLogsIntegrationDataflowRequest {
                 M: MapAccess<'a>,
             {
                 let mut enabled: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,18 +68,14 @@ impl<'de> Deserialize<'de> for TwilioMessagesLogsIntegrationDataflowRequest {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
 
-                let content = TwilioMessagesLogsIntegrationDataflowRequest {
-                    enabled,
-                    additional_properties,
-                    _unparsed,
-                };
+                let content = TwilioMessagesLogsIntegrationDataflowRequest { enabled, _unparsed };
 
                 Ok(content)
             }

@@ -11,67 +11,65 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// CreateElasticCloudIntegrationAccountError is a struct for typed errors of method [`ElasticCloudIntegrationAccountsAPI::create_elastic_cloud_integration_account`]
+/// CreateTwilioIntegrationAccountError is a struct for typed errors of method [`TwilioIntegrationAPI::create_twilio_integration_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateElasticCloudIntegrationAccountError {
+pub enum CreateTwilioIntegrationAccountError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteElasticCloudIntegrationAccountError is a struct for typed errors of method [`ElasticCloudIntegrationAccountsAPI::delete_elastic_cloud_integration_account`]
+/// DeleteTwilioIntegrationAccountError is a struct for typed errors of method [`TwilioIntegrationAPI::delete_twilio_integration_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum DeleteElasticCloudIntegrationAccountError {
+pub enum DeleteTwilioIntegrationAccountError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// GetElasticCloudIntegrationAccountError is a struct for typed errors of method [`ElasticCloudIntegrationAccountsAPI::get_elastic_cloud_integration_account`]
+/// GetTwilioIntegrationAccountError is a struct for typed errors of method [`TwilioIntegrationAPI::get_twilio_integration_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetElasticCloudIntegrationAccountError {
+pub enum GetTwilioIntegrationAccountError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// ListElasticCloudIntegrationAccountsError is a struct for typed errors of method [`ElasticCloudIntegrationAccountsAPI::list_elastic_cloud_integration_accounts`]
+/// ListTwilioIntegrationAccountsError is a struct for typed errors of method [`TwilioIntegrationAPI::list_twilio_integration_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListElasticCloudIntegrationAccountsError {
+pub enum ListTwilioIntegrationAccountsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateElasticCloudIntegrationAccountError is a struct for typed errors of method [`ElasticCloudIntegrationAccountsAPI::update_elastic_cloud_integration_account`]
+/// UpdateTwilioIntegrationAccountError is a struct for typed errors of method [`TwilioIntegrationAPI::update_twilio_integration_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum UpdateElasticCloudIntegrationAccountError {
+pub enum UpdateTwilioIntegrationAccountError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// Manage your Datadog Elastic Cloud integration accounts directly through the Datadog API.
-/// Create, update, and delete accounts, configure authentication and settings, and
-/// enable or disable dataflows such as cluster metrics, index stats, shard stats,
-/// pending tasks, and snapshot lifecycle management stats. See the
-/// [Elastic Cloud integration page](<https://docs.datadoghq.com/integrations/elastic-cloud/>) for
+/// Manage your Datadog Twilio integration accounts and account resources directly
+/// through the Datadog API. See the
+/// [Twilio integration page](<https://docs.datadoghq.com/integrations/twilio/>) for
 /// more information.
 #[derive(Debug, Clone)]
-pub struct ElasticCloudIntegrationAccountsAPI {
+pub struct TwilioIntegrationAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for ElasticCloudIntegrationAccountsAPI {
+impl Default for TwilioIntegrationAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl ElasticCloudIntegrationAccountsAPI {
+impl TwilioIntegrationAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -132,16 +130,16 @@ impl ElasticCloudIntegrationAccountsAPI {
         Self { config, client }
     }
 
-    /// Create an Elastic Cloud integration account.
-    pub async fn create_elastic_cloud_integration_account(
+    /// Create a Twilio integration account.
+    pub async fn create_twilio_integration_account(
         &self,
-        body: crate::datadogV2::model::ElasticCloudIntegrationAccountCreateRequest,
+        body: crate::datadogV2::model::TwilioIntegrationAccountCreateRequest,
     ) -> Result<
-        crate::datadogV2::model::ElasticCloudIntegrationAccountResponse,
-        datadog::Error<CreateElasticCloudIntegrationAccountError>,
+        crate::datadogV2::model::TwilioIntegrationAccountResponse,
+        datadog::Error<CreateTwilioIntegrationAccountError>,
     > {
         match self
-            .create_elastic_cloud_integration_account_with_http_info(body)
+            .create_twilio_integration_account_with_http_info(body)
             .await
         {
             Ok(response_content) => {
@@ -157,22 +155,21 @@ impl ElasticCloudIntegrationAccountsAPI {
         }
     }
 
-    /// Create an Elastic Cloud integration account.
-    pub async fn create_elastic_cloud_integration_account_with_http_info(
+    /// Create a Twilio integration account.
+    pub async fn create_twilio_integration_account_with_http_info(
         &self,
-        body: crate::datadogV2::model::ElasticCloudIntegrationAccountCreateRequest,
+        body: crate::datadogV2::model::TwilioIntegrationAccountCreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ElasticCloudIntegrationAccountResponse>,
-        datadog::Error<CreateElasticCloudIntegrationAccountError>,
+        datadog::ResponseContent<crate::datadogV2::model::TwilioIntegrationAccountResponse>,
+        datadog::Error<CreateTwilioIntegrationAccountError>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.create_elastic_cloud_integration_account";
+        let local_operation_id = "v2.create_twilio_integration_account";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_elastic_cloud_integration_account' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_twilio_integration_account' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -180,7 +177,7 @@ impl ElasticCloudIntegrationAccountsAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/integration-interfaces/elastic-cloud/accounts",
+            "{}/api/v2/integration-interfaces/twilio/accounts",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -275,10 +272,9 @@ impl ElasticCloudIntegrationAccountsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ElasticCloudIntegrationAccountResponse,
-            >(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::TwilioIntegrationAccountResponse>(
+                &local_content,
+            ) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -289,7 +285,7 @@ impl ElasticCloudIntegrationAccountsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateElasticCloudIntegrationAccountError> =
+            let local_entity: Option<CreateTwilioIntegrationAccountError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -300,13 +296,13 @@ impl ElasticCloudIntegrationAccountsAPI {
         }
     }
 
-    /// Delete an Elastic Cloud integration account.
-    pub async fn delete_elastic_cloud_integration_account(
+    /// Delete a Twilio integration account.
+    pub async fn delete_twilio_integration_account(
         &self,
         account_id: String,
-    ) -> Result<(), datadog::Error<DeleteElasticCloudIntegrationAccountError>> {
+    ) -> Result<(), datadog::Error<DeleteTwilioIntegrationAccountError>> {
         match self
-            .delete_elastic_cloud_integration_account_with_http_info(account_id)
+            .delete_twilio_integration_account_with_http_info(account_id)
             .await
         {
             Ok(_) => Ok(()),
@@ -314,22 +310,19 @@ impl ElasticCloudIntegrationAccountsAPI {
         }
     }
 
-    /// Delete an Elastic Cloud integration account.
-    pub async fn delete_elastic_cloud_integration_account_with_http_info(
+    /// Delete a Twilio integration account.
+    pub async fn delete_twilio_integration_account_with_http_info(
         &self,
         account_id: String,
-    ) -> Result<
-        datadog::ResponseContent<()>,
-        datadog::Error<DeleteElasticCloudIntegrationAccountError>,
-    > {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTwilioIntegrationAccountError>>
+    {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.delete_elastic_cloud_integration_account";
+        let local_operation_id = "v2.delete_twilio_integration_account";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_elastic_cloud_integration_account' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.delete_twilio_integration_account' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -337,7 +330,7 @@ impl ElasticCloudIntegrationAccountsAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/integration-interfaces/elastic-cloud/accounts/{account_id}",
+            "{}/api/v2/integration-interfaces/twilio/accounts/{account_id}",
             local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
@@ -392,7 +385,7 @@ impl ElasticCloudIntegrationAccountsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteElasticCloudIntegrationAccountError> =
+            let local_entity: Option<DeleteTwilioIntegrationAccountError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -403,16 +396,16 @@ impl ElasticCloudIntegrationAccountsAPI {
         }
     }
 
-    /// Get an Elastic Cloud integration account.
-    pub async fn get_elastic_cloud_integration_account(
+    /// Get a Twilio integration account.
+    pub async fn get_twilio_integration_account(
         &self,
         account_id: String,
     ) -> Result<
-        crate::datadogV2::model::ElasticCloudIntegrationAccountResponse,
-        datadog::Error<GetElasticCloudIntegrationAccountError>,
+        crate::datadogV2::model::TwilioIntegrationAccountResponse,
+        datadog::Error<GetTwilioIntegrationAccountError>,
     > {
         match self
-            .get_elastic_cloud_integration_account_with_http_info(account_id)
+            .get_twilio_integration_account_with_http_info(account_id)
             .await
         {
             Ok(response_content) => {
@@ -428,22 +421,21 @@ impl ElasticCloudIntegrationAccountsAPI {
         }
     }
 
-    /// Get an Elastic Cloud integration account.
-    pub async fn get_elastic_cloud_integration_account_with_http_info(
+    /// Get a Twilio integration account.
+    pub async fn get_twilio_integration_account_with_http_info(
         &self,
         account_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ElasticCloudIntegrationAccountResponse>,
-        datadog::Error<GetElasticCloudIntegrationAccountError>,
+        datadog::ResponseContent<crate::datadogV2::model::TwilioIntegrationAccountResponse>,
+        datadog::Error<GetTwilioIntegrationAccountError>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.get_elastic_cloud_integration_account";
+        let local_operation_id = "v2.get_twilio_integration_account";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_elastic_cloud_integration_account' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.get_twilio_integration_account' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -451,7 +443,7 @@ impl ElasticCloudIntegrationAccountsAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/integration-interfaces/elastic-cloud/accounts/{account_id}",
+            "{}/api/v2/integration-interfaces/twilio/accounts/{account_id}",
             local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
@@ -500,10 +492,9 @@ impl ElasticCloudIntegrationAccountsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ElasticCloudIntegrationAccountResponse,
-            >(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::TwilioIntegrationAccountResponse>(
+                &local_content,
+            ) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -514,7 +505,7 @@ impl ElasticCloudIntegrationAccountsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetElasticCloudIntegrationAccountError> =
+            let local_entity: Option<GetTwilioIntegrationAccountError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -525,17 +516,14 @@ impl ElasticCloudIntegrationAccountsAPI {
         }
     }
 
-    /// List Elastic Cloud integration accounts.
-    pub async fn list_elastic_cloud_integration_accounts(
+    /// List Twilio integration accounts.
+    pub async fn list_twilio_integration_accounts(
         &self,
     ) -> Result<
-        crate::datadogV2::model::ElasticCloudIntegrationAccountsResponse,
-        datadog::Error<ListElasticCloudIntegrationAccountsError>,
+        crate::datadogV2::model::TwilioIntegrationAccountsResponse,
+        datadog::Error<ListTwilioIntegrationAccountsError>,
     > {
-        match self
-            .list_elastic_cloud_integration_accounts_with_http_info()
-            .await
-        {
+        match self.list_twilio_integration_accounts_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -549,21 +537,20 @@ impl ElasticCloudIntegrationAccountsAPI {
         }
     }
 
-    /// List Elastic Cloud integration accounts.
-    pub async fn list_elastic_cloud_integration_accounts_with_http_info(
+    /// List Twilio integration accounts.
+    pub async fn list_twilio_integration_accounts_with_http_info(
         &self,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ElasticCloudIntegrationAccountsResponse>,
-        datadog::Error<ListElasticCloudIntegrationAccountsError>,
+        datadog::ResponseContent<crate::datadogV2::model::TwilioIntegrationAccountsResponse>,
+        datadog::Error<ListTwilioIntegrationAccountsError>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.list_elastic_cloud_integration_accounts";
+        let local_operation_id = "v2.list_twilio_integration_accounts";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_elastic_cloud_integration_accounts' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.list_twilio_integration_accounts' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -571,7 +558,7 @@ impl ElasticCloudIntegrationAccountsAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/integration-interfaces/elastic-cloud/accounts",
+            "{}/api/v2/integration-interfaces/twilio/accounts",
             local_configuration.get_operation_host(local_operation_id)
         );
         let mut local_req_builder =
@@ -619,10 +606,9 @@ impl ElasticCloudIntegrationAccountsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ElasticCloudIntegrationAccountsResponse,
-            >(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::TwilioIntegrationAccountsResponse>(
+                &local_content,
+            ) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -633,7 +619,7 @@ impl ElasticCloudIntegrationAccountsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListElasticCloudIntegrationAccountsError> =
+            let local_entity: Option<ListTwilioIntegrationAccountsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -644,17 +630,17 @@ impl ElasticCloudIntegrationAccountsAPI {
         }
     }
 
-    /// Update an Elastic Cloud integration account. Only the fields provided are changed.
-    pub async fn update_elastic_cloud_integration_account(
+    /// Update a Twilio integration account. Only the fields provided are changed.
+    pub async fn update_twilio_integration_account(
         &self,
         account_id: String,
-        body: crate::datadogV2::model::ElasticCloudIntegrationAccountUpdateRequest,
+        body: crate::datadogV2::model::TwilioIntegrationAccountUpdateRequest,
     ) -> Result<
-        crate::datadogV2::model::ElasticCloudIntegrationAccountResponse,
-        datadog::Error<UpdateElasticCloudIntegrationAccountError>,
+        crate::datadogV2::model::TwilioIntegrationAccountResponse,
+        datadog::Error<UpdateTwilioIntegrationAccountError>,
     > {
         match self
-            .update_elastic_cloud_integration_account_with_http_info(account_id, body)
+            .update_twilio_integration_account_with_http_info(account_id, body)
             .await
         {
             Ok(response_content) => {
@@ -670,23 +656,22 @@ impl ElasticCloudIntegrationAccountsAPI {
         }
     }
 
-    /// Update an Elastic Cloud integration account. Only the fields provided are changed.
-    pub async fn update_elastic_cloud_integration_account_with_http_info(
+    /// Update a Twilio integration account. Only the fields provided are changed.
+    pub async fn update_twilio_integration_account_with_http_info(
         &self,
         account_id: String,
-        body: crate::datadogV2::model::ElasticCloudIntegrationAccountUpdateRequest,
+        body: crate::datadogV2::model::TwilioIntegrationAccountUpdateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ElasticCloudIntegrationAccountResponse>,
-        datadog::Error<UpdateElasticCloudIntegrationAccountError>,
+        datadog::ResponseContent<crate::datadogV2::model::TwilioIntegrationAccountResponse>,
+        datadog::Error<UpdateTwilioIntegrationAccountError>,
     > {
         let local_configuration = &self.config;
-        let local_operation_id = "v2.update_elastic_cloud_integration_account";
+        let local_operation_id = "v2.update_twilio_integration_account";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_elastic_cloud_integration_account' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.update_twilio_integration_account' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
@@ -694,7 +679,7 @@ impl ElasticCloudIntegrationAccountsAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/integration-interfaces/elastic-cloud/accounts/{account_id}",
+            "{}/api/v2/integration-interfaces/twilio/accounts/{account_id}",
             local_configuration.get_operation_host(local_operation_id),
             account_id = datadog::urlencode(account_id)
         );
@@ -790,10 +775,9 @@ impl ElasticCloudIntegrationAccountsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ElasticCloudIntegrationAccountResponse,
-            >(&local_content)
-            {
+            match serde_json::from_str::<crate::datadogV2::model::TwilioIntegrationAccountResponse>(
+                &local_content,
+            ) {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
                         status: local_status,
@@ -804,7 +788,7 @@ impl ElasticCloudIntegrationAccountsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateElasticCloudIntegrationAccountError> =
+            let local_entity: Option<UpdateTwilioIntegrationAccountError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

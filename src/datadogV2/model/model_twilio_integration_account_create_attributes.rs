@@ -14,7 +14,7 @@ pub struct TwilioIntegrationAccountCreateAttributes {
     /// Authentication for creating the Twilio integration account. Exactly one method is set.
     #[serde(rename = "authentication")]
     pub authentication: crate::datadogV2::model::TwilioIntegrationAccountAuthenticationRequest,
-    /// Dataflows to configure on the Twilio integration account, keyed by dataflow id.
+    /// Data Datadog collects from Twilio, keyed by dataflow id. Each dataflow turns on a distinct kind of collection: set `enabled` to start or stop it. Defaults listed on each dataflow apply when the account is created; on update, omitted fields keep their current values. Where a dataflow depends on a Twilio feature being enabled, that prerequisite is noted on the dataflow; a dataflow enabled without it is stored but collects no data.
     #[serde(rename = "dataflows")]
     pub dataflows: Option<crate::datadogV2::model::TwilioIntegrationDataflowsRequest>,
     /// Human-readable name of the Twilio integration account.

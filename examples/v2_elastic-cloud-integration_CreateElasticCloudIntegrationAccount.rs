@@ -1,6 +1,6 @@
 // Create an Elastic Cloud integration account returns "Created" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_elastic_cloud_integration_accounts::ElasticCloudIntegrationAccountsAPI;
+use datadog_api_client::datadogV2::api_elastic_cloud_integration::ElasticCloudIntegrationAPI;
 use datadog_api_client::datadogV2::model::ElasticCloudDetailedIndexStatsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::ElasticCloudIndexStatsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountAuthenticationRequest;
@@ -64,7 +64,7 @@ async fn main() {
         );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateElasticCloudIntegrationAccount", true);
-    let api = ElasticCloudIntegrationAccountsAPI::with_config(configuration);
+    let api = ElasticCloudIntegrationAPI::with_config(configuration);
     let resp = api.create_elastic_cloud_integration_account(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

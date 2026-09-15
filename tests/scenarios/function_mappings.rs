@@ -126,11 +126,9 @@ pub struct ApiInstances {
     pub v2_api_entity_integration_configs:
         Option<datadogV2::api_entity_integration_configs::EntityIntegrationConfigsAPI>,
     pub v2_api_incidents: Option<datadogV2::api_incidents::IncidentsAPI>,
-    pub v2_api_elastic_cloud_integration_accounts: Option<
-        datadogV2::api_elastic_cloud_integration_accounts::ElasticCloudIntegrationAccountsAPI,
-    >,
-    pub v2_api_twilio_integration_accounts:
-        Option<datadogV2::api_twilio_integration_accounts::TwilioIntegrationAccountsAPI>,
+    pub v2_api_elastic_cloud_integration:
+        Option<datadogV2::api_elastic_cloud_integration::ElasticCloudIntegrationAPI>,
+    pub v2_api_twilio_integration: Option<datadogV2::api_twilio_integration::TwilioIntegrationAPI>,
     pub v2_api_aws_integration: Option<datadogV2::api_aws_integration::AWSIntegrationAPI>,
     pub v2_api_aws_logs_integration:
         Option<datadogV2::api_aws_logs_integration::AWSLogsIntegrationAPI>,
@@ -1006,17 +1004,19 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "ElasticCloudIntegrationAccounts" => {
-            world.api_instances.v2_api_elastic_cloud_integration_accounts = Some(datadogV2::api_elastic_cloud_integration_accounts::ElasticCloudIntegrationAccountsAPI::with_client_and_config(
+        "ElasticCloudIntegration" => {
+            world.api_instances.v2_api_elastic_cloud_integration = Some(datadogV2::api_elastic_cloud_integration::ElasticCloudIntegrationAPI::with_client_and_config(
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
         }
-        "TwilioIntegrationAccounts" => {
-            world.api_instances.v2_api_twilio_integration_accounts = Some(datadogV2::api_twilio_integration_accounts::TwilioIntegrationAccountsAPI::with_client_and_config(
-                world.config.clone(),
-                world.http_client.as_ref().unwrap().clone()
-            ));
+        "TwilioIntegration" => {
+            world.api_instances.v2_api_twilio_integration = Some(
+                datadogV2::api_twilio_integration::TwilioIntegrationAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "GoogleChatIntegration" => {
             world.api_instances.v2_api_google_chat_integration = Some(datadogV2::api_google_chat_integration::GoogleChatIntegrationAPI::with_client_and_config(
@@ -44271,7 +44271,7 @@ fn test_v2_list_elastic_cloud_integration_accounts(
 ) {
     let api = world
         .api_instances
-        .v2_api_elastic_cloud_integration_accounts
+        .v2_api_elastic_cloud_integration
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.list_elastic_cloud_integration_accounts_with_http_info()) {
@@ -44298,7 +44298,7 @@ fn test_v2_create_elastic_cloud_integration_account(
 ) {
     let api = world
         .api_instances
-        .v2_api_elastic_cloud_integration_accounts
+        .v2_api_elastic_cloud_integration
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -44327,7 +44327,7 @@ fn test_v2_delete_elastic_cloud_integration_account(
 ) {
     let api = world
         .api_instances
-        .v2_api_elastic_cloud_integration_accounts
+        .v2_api_elastic_cloud_integration
         .as_ref()
         .expect("api instance not found");
     let account_id =
@@ -44357,7 +44357,7 @@ fn test_v2_get_elastic_cloud_integration_account(
 ) {
     let api = world
         .api_instances
-        .v2_api_elastic_cloud_integration_accounts
+        .v2_api_elastic_cloud_integration
         .as_ref()
         .expect("api instance not found");
     let account_id =
@@ -44387,7 +44387,7 @@ fn test_v2_update_elastic_cloud_integration_account(
 ) {
     let api = world
         .api_instances
-        .v2_api_elastic_cloud_integration_accounts
+        .v2_api_elastic_cloud_integration
         .as_ref()
         .expect("api instance not found");
     let account_id =
@@ -44419,7 +44419,7 @@ fn test_v2_list_twilio_integration_accounts(
 ) {
     let api = world
         .api_instances
-        .v2_api_twilio_integration_accounts
+        .v2_api_twilio_integration
         .as_ref()
         .expect("api instance not found");
     let response = match block_on(api.list_twilio_integration_accounts_with_http_info()) {
@@ -44446,7 +44446,7 @@ fn test_v2_create_twilio_integration_account(
 ) {
     let api = world
         .api_instances
-        .v2_api_twilio_integration_accounts
+        .v2_api_twilio_integration
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -44474,7 +44474,7 @@ fn test_v2_delete_twilio_integration_account(
 ) {
     let api = world
         .api_instances
-        .v2_api_twilio_integration_accounts
+        .v2_api_twilio_integration
         .as_ref()
         .expect("api instance not found");
     let account_id =
@@ -44504,7 +44504,7 @@ fn test_v2_get_twilio_integration_account(
 ) {
     let api = world
         .api_instances
-        .v2_api_twilio_integration_accounts
+        .v2_api_twilio_integration
         .as_ref()
         .expect("api instance not found");
     let account_id =
@@ -44533,7 +44533,7 @@ fn test_v2_update_twilio_integration_account(
 ) {
     let api = world
         .api_instances
-        .v2_api_twilio_integration_accounts
+        .v2_api_twilio_integration
         .as_ref()
         .expect("api instance not found");
     let account_id =
