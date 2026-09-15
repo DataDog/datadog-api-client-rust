@@ -14,9 +14,10 @@ pub struct AggregatedWaterfallResponseAttributes {
     /// The RUM application ID that was analyzed.
     #[serde(rename = "application_id")]
     pub application_id: String,
-    /// Performance criteria to filter view instances by a metric threshold.
+    /// Performance criteria used to filter view instances by a metric threshold, or null if no criteria were applied.
+    #[serialize_always]
     #[serde(rename = "criteria")]
-    pub criteria: Option<crate::datadogV2::model::AggregatedWaterfallPerformanceCriteria>,
+    pub criteria: Option<crate::datadogV2::model::AggregatedWaterfallResponseAttributesCriteria>,
     /// Start of the analyzed time range as a Unix timestamp in seconds.
     #[serde(rename = "from")]
     pub from: i64,
@@ -48,6 +49,7 @@ pub struct AggregatedWaterfallResponseAttributes {
 impl AggregatedWaterfallResponseAttributes {
     pub fn new(
         application_id: String,
+        criteria: Option<crate::datadogV2::model::AggregatedWaterfallResponseAttributesCriteria>,
         from: i64,
         resources: Vec<crate::datadogV2::model::AggregatedResource>,
         sampled_view_ids: Vec<String>,
@@ -58,7 +60,7 @@ impl AggregatedWaterfallResponseAttributes {
     ) -> AggregatedWaterfallResponseAttributes {
         AggregatedWaterfallResponseAttributes {
             application_id,
-            criteria: None,
+            criteria,
             from,
             resources,
             sampled_view_ids,
@@ -69,14 +71,6 @@ impl AggregatedWaterfallResponseAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn criteria(
-        mut self,
-        value: crate::datadogV2::model::AggregatedWaterfallPerformanceCriteria,
-    ) -> Self {
-        self.criteria = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -107,7 +101,7 @@ impl<'de> Deserialize<'de> for AggregatedWaterfallResponseAttributes {
             {
                 let mut application_id: Option<String> = None;
                 let mut criteria: Option<
-                    crate::datadogV2::model::AggregatedWaterfallPerformanceCriteria,
+                    Option<crate::datadogV2::model::AggregatedWaterfallResponseAttributesCriteria>,
                 > = None;
                 let mut from: Option<i64> = None;
                 let mut resources: Option<Vec<crate::datadogV2::model::AggregatedResource>> = None;
@@ -129,9 +123,6 @@ impl<'de> Deserialize<'de> for AggregatedWaterfallResponseAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "criteria" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             criteria = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "from" => {
@@ -166,6 +157,7 @@ impl<'de> Deserialize<'de> for AggregatedWaterfallResponseAttributes {
                 }
                 let application_id =
                     application_id.ok_or_else(|| M::Error::missing_field("application_id"))?;
+                let criteria = criteria.ok_or_else(|| M::Error::missing_field("criteria"))?;
                 let from = from.ok_or_else(|| M::Error::missing_field("from"))?;
                 let resources = resources.ok_or_else(|| M::Error::missing_field("resources"))?;
                 let sampled_view_ids =

@@ -26,7 +26,7 @@ pub struct RumRetentionFilterUpdateAttributes {
     /// The query string for a RUM retention filter.
     #[serde(rename = "query")]
     pub query: Option<String>,
-    /// The sample rate for a RUM retention filter, between 0.1 and 100.
+    /// The sample rate for a RUM retention filter, between 0.1 and 100. Values are truncated to one decimal place.
     #[serde(rename = "sample_rate")]
     pub sample_rate: Option<f64>,
     #[serde(flatten)]
