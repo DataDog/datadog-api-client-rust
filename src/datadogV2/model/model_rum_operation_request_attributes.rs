@@ -31,7 +31,7 @@ pub struct RUMOperationRequestAttributes {
     /// A human-readable display name for the RUM operation.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
-    /// The list of feature IDs associated with the RUM operation.
+    /// The list of journey IDs associated with the RUM operation.
     #[serde(rename = "feature_ids")]
     pub feature_ids: Option<Vec<String>>,
     /// The definition of a RUM operation's journey, used to detect it from RUM events.

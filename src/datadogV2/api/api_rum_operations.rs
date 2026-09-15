@@ -15,9 +15,9 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListRUMOperationStrongLinksOptionalParams {
-    /// Filter strong links by RUM operation ID.
+    /// Filter links by RUM operation ID.
     pub operation_id: Option<String>,
-    /// Filter strong links by feature ID.
+    /// Filter links by journey (feature) ID.
     pub feature_id: Option<String>,
     /// Offset for pagination.
     pub page_offset: Option<i64>,
@@ -26,12 +26,12 @@ pub struct ListRUMOperationStrongLinksOptionalParams {
 }
 
 impl ListRUMOperationStrongLinksOptionalParams {
-    /// Filter strong links by RUM operation ID.
+    /// Filter links by RUM operation ID.
     pub fn operation_id(mut self, value: String) -> Self {
         self.operation_id = Some(value);
         self
     }
-    /// Filter strong links by feature ID.
+    /// Filter links by journey (feature) ID.
     pub fn feature_id(mut self, value: String) -> Self {
         self.feature_id = Some(value);
         self
@@ -62,7 +62,7 @@ pub struct ListRUMOperationsOptionalParams {
     pub creator: Option<String>,
     /// Filter operations by team. Accepts a comma-separated list of teams.
     pub team: Option<String>,
-    /// Filter operations by feature ID. Accepts a comma-separated list of feature IDs.
+    /// Filter operations by journey ID. Accepts a comma-separated list of journey IDs.
     pub feature_id: Option<String>,
     /// Filter operations by RUM application ID.
     pub application_id: Option<uuid::Uuid>,
@@ -94,7 +94,7 @@ impl ListRUMOperationsOptionalParams {
         self.team = Some(value);
         self
     }
-    /// Filter operations by feature ID. Accepts a comma-separated list of feature IDs.
+    /// Filter operations by journey ID. Accepts a comma-separated list of journey IDs.
     pub fn feature_id(mut self, value: String) -> Self {
         self.feature_id = Some(value);
         self
@@ -197,8 +197,8 @@ pub enum UpdateRUMOperationStrongLinkError {
 }
 
 /// Manage [RUM Operations](<https://docs.datadoghq.com/real_user_monitoring/>), business
-/// transactions detected from RUM events through a configurable journey, and their strong links
-/// to features. See the [RUM & Session Replay page](<https://docs.datadoghq.com/real_user_monitoring/>)
+/// transactions detected from RUM events through a configurable journey, and their links
+/// to journeys. See the [RUM & Session Replay page](<https://docs.datadoghq.com/real_user_monitoring/>)
 /// for more information.
 #[derive(Debug, Clone)]
 pub struct RUMOperationsAPI {
@@ -436,7 +436,7 @@ impl RUMOperationsAPI {
         }
     }
 
-    /// Create a strong link between a RUM operation and a feature, confirming that the feature
+    /// Create a link between a RUM operation and a journey, confirming that the journey
     /// belongs to the operation. The operation can be identified by `operation_id` or `operation_name`;
     /// if `operation_name` does not match an existing operation, a stub operation is created.
     pub async fn create_rum_operation_strong_link(
@@ -463,7 +463,7 @@ impl RUMOperationsAPI {
         }
     }
 
-    /// Create a strong link between a RUM operation and a feature, confirming that the feature
+    /// Create a link between a RUM operation and a journey, confirming that the journey
     /// belongs to the operation. The operation can be identified by `operation_id` or `operation_name`;
     /// if `operation_name` does not match an existing operation, a stub operation is created.
     pub async fn create_rum_operation_strong_link_with_http_info(
@@ -705,7 +705,7 @@ impl RUMOperationsAPI {
         }
     }
 
-    /// Delete the strong link between a RUM operation and a feature.
+    /// Delete the link between a RUM operation and a journey.
     pub async fn delete_rum_operation_strong_link(
         &self,
         rum_operation_id: String,
@@ -720,7 +720,7 @@ impl RUMOperationsAPI {
         }
     }
 
-    /// Delete the strong link between a RUM operation and a feature.
+    /// Delete the link between a RUM operation and a journey.
     pub async fn delete_rum_operation_strong_link_with_http_info(
         &self,
         rum_operation_id: String,
@@ -1043,8 +1043,8 @@ impl RUMOperationsAPI {
         }
     }
 
-    /// List strong links between RUM operations and features. A strong link confirms that a feature
-    /// belongs to an operation. Provide `operation_id`, `feature_id`, or both to filter results;
+    /// List links between RUM operations and journeys. A link confirms that a journey
+    /// belongs to an operation. Provide `operation_id`, `feature_id` (journey ID), or both to filter results;
     /// at least one is required.
     pub async fn list_rum_operation_strong_links(
         &self,
@@ -1070,8 +1070,8 @@ impl RUMOperationsAPI {
         }
     }
 
-    /// List strong links between RUM operations and features. A strong link confirms that a feature
-    /// belongs to an operation. Provide `operation_id`, `feature_id`, or both to filter results;
+    /// List links between RUM operations and journeys. A link confirms that a journey
+    /// belongs to an operation. Provide `operation_id`, `feature_id` (journey ID), or both to filter results;
     /// at least one is required.
     pub async fn list_rum_operation_strong_links_with_http_info(
         &self,
@@ -1181,7 +1181,8 @@ impl RUMOperationsAPI {
         }
     }
 
-    /// Search RUM operations for your organization. Supports filtering by query, creator, team, feature, and application.
+    /// Search RUM operations for your organization. Supports filtering by query, creator, team,
+    /// journey, and application.
     pub async fn list_rum_operations(
         &self,
         params: ListRUMOperationsOptionalParams,
@@ -1203,7 +1204,8 @@ impl RUMOperationsAPI {
         }
     }
 
-    /// Search RUM operations for your organization. Supports filtering by query, creator, team, feature, and application.
+    /// Search RUM operations for your organization. Supports filtering by query, creator, team,
+    /// journey, and application.
     pub async fn list_rum_operations_with_http_info(
         &self,
         params: ListRUMOperationsOptionalParams,
@@ -1506,7 +1508,7 @@ impl RUMOperationsAPI {
         }
     }
 
-    /// Update the status of a strong link between a RUM operation and a feature.
+    /// Update the status of a link between a RUM operation and a journey.
     pub async fn update_rum_operation_strong_link(
         &self,
         rum_operation_id: String,
@@ -1533,7 +1535,7 @@ impl RUMOperationsAPI {
         }
     }
 
-    /// Update the status of a strong link between a RUM operation and a feature.
+    /// Update the status of a link between a RUM operation and a journey.
     pub async fn update_rum_operation_strong_link_with_http_info(
         &self,
         rum_operation_id: String,

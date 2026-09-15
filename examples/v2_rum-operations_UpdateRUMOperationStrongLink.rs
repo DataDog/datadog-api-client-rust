@@ -1,4 +1,4 @@
-// Update a RUM operation strong link returns "OK" response
+// Update a RUM operation link returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_operations::RUMOperationsAPI;
 use datadog_api_client::datadogV2::model::RUMOperationStrongLinkType;
