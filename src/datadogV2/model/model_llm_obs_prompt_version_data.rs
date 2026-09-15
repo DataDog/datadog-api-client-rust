@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPromptVersionData {
-    /// Attributes of a specific version of an Agent Observability prompt.
+    /// Attributes of a specific version of an Agent Observability prompt. For a composed version, `authoring_template` contains its pinned include-bearing source; ordinary versions omit that attribute.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsPromptVersionDataAttributes,
     /// Unique identifier of the prompt version.

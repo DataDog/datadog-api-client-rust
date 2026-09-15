@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a specific version of an Agent Observability prompt.
+/// Attributes of a specific version of an Agent Observability prompt. For a composed version, `authoring_template` contains its pinned include-bearing source; ordinary versions omit that attribute.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,6 +14,9 @@ pub struct LLMObsPromptVersionDataAttributes {
     /// UUID of the user who authored this version.
     #[serde(rename = "author")]
     pub author: Option<String>,
+    /// A text template, a list of chat messages, or an authored chat object. Text can include an exact prompt version with `{{>prompt-id version=N}}`. Use an authored chat object when including prompts as chat messages.
+    #[serde(rename = "authoring_template")]
+    pub authoring_template: Option<crate::datadogV2::model::LLMObsPromptTemplate>,
     /// Timestamp stored on this prompt version.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -45,7 +48,7 @@ pub struct LLMObsPromptVersionDataAttributes {
     /// Tags observed on runs of this prompt version.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// A text template or a list of chat messages.
+    /// A text template, a list of chat messages, or an authored chat object. Text can include an exact prompt version with `{{>prompt-id version=N}}`. Use an authored chat object when including prompts as chat messages.
     #[serde(rename = "template")]
     pub template: crate::datadogV2::model::LLMObsPromptTemplate,
     /// User-supplied identifier for this version.
@@ -74,6 +77,7 @@ impl LLMObsPromptVersionDataAttributes {
         #[allow(deprecated)]
         LLMObsPromptVersionDataAttributes {
             author: None,
+            authoring_template: None,
             created_at: None,
             datasets: None,
             description: None,
@@ -96,6 +100,15 @@ impl LLMObsPromptVersionDataAttributes {
     #[allow(deprecated)]
     pub fn author(mut self, value: String) -> Self {
         self.author = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn authoring_template(
+        mut self,
+        value: crate::datadogV2::model::LLMObsPromptTemplate,
+    ) -> Self {
+        self.authoring_template = Some(value);
         self
     }
 
@@ -186,6 +199,8 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut author: Option<String> = None;
+                let mut authoring_template: Option<crate::datadogV2::model::LLMObsPromptTemplate> =
+                    None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut datasets: Option<Vec<crate::datadogV2::model::LLMObsPromptDataset>> = None;
                 let mut description: Option<String> = None;
@@ -213,6 +228,21 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                                 continue;
                             }
                             author = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "authoring_template" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            authoring_template =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _authoring_template) = authoring_template {
+                                match _authoring_template {
+                                    crate::datadogV2::model::LLMObsPromptTemplate::UnparsedObject(_authoring_template) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "created_at" => {
                             if v.is_null() {
@@ -315,6 +345,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                 #[allow(deprecated)]
                 let content = LLMObsPromptVersionDataAttributes {
                     author,
+                    authoring_template,
                     created_at,
                     datasets,
                     description,
