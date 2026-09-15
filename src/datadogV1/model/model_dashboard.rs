@@ -68,7 +68,7 @@ pub struct Dashboard {
     /// List of tabs for organizing dashboard widgets into groups.
     #[serde(rename = "tabs", default, with = "::serde_with::rust::double_option")]
     pub tabs: Option<Option<Vec<crate::datadogV1::model::DashboardTab>>>,
-    /// List of team names representing ownership of a dashboard.
+    /// Tags associated with the dashboard. Supports up to five team tags and two AI tags.
     #[serde(rename = "tags", default, with = "::serde_with::rust::double_option")]
     pub tags: Option<Option<Vec<String>>>,
     /// Array of template variables saved views.

@@ -20,7 +20,7 @@ pub struct DatasetListQuery {
     /// Product page that published the dataset queried by a `DatasetListQuery`. `ddsql_query` is the only provider currently supported for host map widgets.
     #[serde(rename = "dataset_provider")]
     pub dataset_provider: crate::datadogV1::model::PublishedDatasetProvider,
-    /// Filter applied to the dataset's rows, using events-style search syntax.
+    /// Filter applied to the rows of the dataset, using events-style search syntax.
     #[serde(rename = "filter")]
     pub filter: Option<String>,
     /// Maximum number of rows to return from the dataset query.
