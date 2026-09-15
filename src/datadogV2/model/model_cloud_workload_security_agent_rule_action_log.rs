@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Hash file specified by the field attribute
+/// The log action applied when the rule is triggered.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct CloudWorkloadSecurityAgentRuleActionHash {
-    /// The field of the hash action
-    #[serde(rename = "field")]
-    pub field: Option<String>,
-    /// The maximum size of the files to hash, in bytes.
-    #[serde(rename = "max_file_size")]
-    pub max_file_size: Option<i64>,
+pub struct CloudWorkloadSecurityAgentRuleActionLog {
+    /// The level of the log action.
+    #[serde(rename = "level")]
+    pub level: Option<String>,
+    /// The message of the log action.
+    #[serde(rename = "message")]
+    pub message: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +24,23 @@ pub struct CloudWorkloadSecurityAgentRuleActionHash {
     pub(crate) _unparsed: bool,
 }
 
-impl CloudWorkloadSecurityAgentRuleActionHash {
-    pub fn new() -> CloudWorkloadSecurityAgentRuleActionHash {
-        CloudWorkloadSecurityAgentRuleActionHash {
-            field: None,
-            max_file_size: None,
+impl CloudWorkloadSecurityAgentRuleActionLog {
+    pub fn new() -> CloudWorkloadSecurityAgentRuleActionLog {
+        CloudWorkloadSecurityAgentRuleActionLog {
+            level: None,
+            message: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn field(mut self, value: String) -> Self {
-        self.field = Some(value);
+    pub fn level(mut self, value: String) -> Self {
+        self.level = Some(value);
         self
     }
 
-    pub fn max_file_size(mut self, value: i64) -> Self {
-        self.max_file_size = Some(value);
+    pub fn message(mut self, value: String) -> Self {
+        self.message = Some(value);
         self
     }
 
@@ -53,20 +53,20 @@ impl CloudWorkloadSecurityAgentRuleActionHash {
     }
 }
 
-impl Default for CloudWorkloadSecurityAgentRuleActionHash {
+impl Default for CloudWorkloadSecurityAgentRuleActionLog {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionHash {
+impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionLog {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct CloudWorkloadSecurityAgentRuleActionHashVisitor;
-        impl<'a> Visitor<'a> for CloudWorkloadSecurityAgentRuleActionHashVisitor {
-            type Value = CloudWorkloadSecurityAgentRuleActionHash;
+        struct CloudWorkloadSecurityAgentRuleActionLogVisitor;
+        impl<'a> Visitor<'a> for CloudWorkloadSecurityAgentRuleActionLogVisitor {
+            type Value = CloudWorkloadSecurityAgentRuleActionLog;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +76,8 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionHash {
             where
                 M: MapAccess<'a>,
             {
-                let mut field: Option<String> = None;
-                let mut max_file_size: Option<i64> = None;
+                let mut level: Option<String> = None;
+                let mut message: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,18 +86,17 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionHash {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "field" => {
+                        "level" => {
                             if v.is_null() {
                                 continue;
                             }
-                            field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            level = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "max_file_size" => {
+                        "message" => {
                             if v.is_null() {
                                 continue;
                             }
-                            max_file_size =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -107,9 +106,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionHash {
                     }
                 }
 
-                let content = CloudWorkloadSecurityAgentRuleActionHash {
-                    field,
-                    max_file_size,
+                let content = CloudWorkloadSecurityAgentRuleActionLog {
+                    level,
+                    message,
                     additional_properties,
                     _unparsed,
                 };
@@ -118,6 +117,6 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionHash {
             }
         }
 
-        deserializer.deserialize_any(CloudWorkloadSecurityAgentRuleActionHashVisitor)
+        deserializer.deserialize_any(CloudWorkloadSecurityAgentRuleActionLogVisitor)
     }
 }

@@ -6,19 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Policy and policy type for a monitor configuration policy.
+/// The network filter action applied on the network traffic matching the rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MonitorConfigPolicyAttributeResponse {
-    /// Configuration for the policy.
+pub struct CloudWorkloadSecurityAgentRuleActionNetworkFilter {
+    /// The filter expression of the network filter action.
+    #[serde(rename = "filter")]
+    pub filter: Option<String>,
+    /// The policy of the network filter action.
     #[serde(rename = "policy")]
-    pub policy: Option<crate::datadogV2::model::MonitorConfigPolicyPolicy>,
-    /// The monitor configuration policy type.
-    /// `tag` enforces required tags on monitors.
-    /// `downtime` sets a maximum downtime duration for the organization.
-    #[serde(rename = "policy_type")]
-    pub policy_type: Option<crate::datadogV2::model::MonitorConfigPolicyType>,
+    pub policy: Option<String>,
+    /// The scope of the network filter action.
+    #[serde(rename = "scope")]
+    pub scope: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -26,23 +27,29 @@ pub struct MonitorConfigPolicyAttributeResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl MonitorConfigPolicyAttributeResponse {
-    pub fn new() -> MonitorConfigPolicyAttributeResponse {
-        MonitorConfigPolicyAttributeResponse {
+impl CloudWorkloadSecurityAgentRuleActionNetworkFilter {
+    pub fn new() -> CloudWorkloadSecurityAgentRuleActionNetworkFilter {
+        CloudWorkloadSecurityAgentRuleActionNetworkFilter {
+            filter: None,
             policy: None,
-            policy_type: None,
+            scope: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn policy(mut self, value: crate::datadogV2::model::MonitorConfigPolicyPolicy) -> Self {
+    pub fn filter(mut self, value: String) -> Self {
+        self.filter = Some(value);
+        self
+    }
+
+    pub fn policy(mut self, value: String) -> Self {
         self.policy = Some(value);
         self
     }
 
-    pub fn policy_type(mut self, value: crate::datadogV2::model::MonitorConfigPolicyType) -> Self {
-        self.policy_type = Some(value);
+    pub fn scope(mut self, value: String) -> Self {
+        self.scope = Some(value);
         self
     }
 
@@ -55,20 +62,20 @@ impl MonitorConfigPolicyAttributeResponse {
     }
 }
 
-impl Default for MonitorConfigPolicyAttributeResponse {
+impl Default for CloudWorkloadSecurityAgentRuleActionNetworkFilter {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for MonitorConfigPolicyAttributeResponse {
+impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionNetworkFilter {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MonitorConfigPolicyAttributeResponseVisitor;
-        impl<'a> Visitor<'a> for MonitorConfigPolicyAttributeResponseVisitor {
-            type Value = MonitorConfigPolicyAttributeResponse;
+        struct CloudWorkloadSecurityAgentRuleActionNetworkFilterVisitor;
+        impl<'a> Visitor<'a> for CloudWorkloadSecurityAgentRuleActionNetworkFilterVisitor {
+            type Value = CloudWorkloadSecurityAgentRuleActionNetworkFilter;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -78,9 +85,9 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyAttributeResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut policy: Option<crate::datadogV2::model::MonitorConfigPolicyPolicy> = None;
-                let mut policy_type: Option<crate::datadogV2::model::MonitorConfigPolicyType> =
-                    None;
+                let mut filter: Option<String> = None;
+                let mut policy: Option<String> = None;
+                let mut scope: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,34 +96,23 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyAttributeResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "filter" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "policy" => {
                             if v.is_null() {
                                 continue;
                             }
                             policy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _policy) = policy {
-                                match _policy {
-                                    crate::datadogV2::model::MonitorConfigPolicyPolicy::UnparsedObject(_policy) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
                         }
-                        "policy_type" => {
+                        "scope" => {
                             if v.is_null() {
                                 continue;
                             }
-                            policy_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _policy_type) = policy_type {
-                                match _policy_type {
-                                    crate::datadogV2::model::MonitorConfigPolicyType::UnparsedObject(_policy_type) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                            scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -126,9 +122,10 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyAttributeResponse {
                     }
                 }
 
-                let content = MonitorConfigPolicyAttributeResponse {
+                let content = CloudWorkloadSecurityAgentRuleActionNetworkFilter {
+                    filter,
                     policy,
-                    policy_type,
+                    scope,
                     additional_properties,
                     _unparsed,
                 };
@@ -137,6 +134,6 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyAttributeResponse {
             }
         }
 
-        deserializer.deserialize_any(MonitorConfigPolicyAttributeResponseVisitor)
+        deserializer.deserialize_any(CloudWorkloadSecurityAgentRuleActionNetworkFilterVisitor)
     }
 }

@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CloudWorkloadSecurityAgentRuleAction {
+    /// The core dump action applied on the process matching the rule.
+    #[serde(rename = "coredump")]
+    pub coredump: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionCoreDump>,
     /// Whether the action is disabled
     #[serde(rename = "disabled")]
     pub disabled: Option<bool>,
@@ -23,9 +26,16 @@ pub struct CloudWorkloadSecurityAgentRuleAction {
     /// Kill system call applied on the container matching the rule
     #[serde(rename = "kill")]
     pub kill: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleKill>,
+    /// The log action applied when the rule is triggered.
+    #[serde(rename = "log")]
+    pub log: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionLog>,
     /// The metadata action applied on the scope matching the rule
     #[serde(rename = "metadata")]
     pub metadata: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionMetadata>,
+    /// The network filter action applied on the network traffic matching the rule.
+    #[serde(rename = "network_filter")]
+    pub network_filter:
+        Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionNetworkFilter>,
     /// The set action applied on the scope matching the rule
     #[serde(rename = "set")]
     pub set: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSet>,
@@ -39,15 +49,26 @@ pub struct CloudWorkloadSecurityAgentRuleAction {
 impl CloudWorkloadSecurityAgentRuleAction {
     pub fn new() -> CloudWorkloadSecurityAgentRuleAction {
         CloudWorkloadSecurityAgentRuleAction {
+            coredump: None,
             disabled: None,
             filter: None,
             hash: None,
             kill: None,
+            log: None,
             metadata: None,
+            network_filter: None,
             set: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn coredump(
+        mut self,
+        value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionCoreDump,
+    ) -> Self {
+        self.coredump = Some(value);
+        self
     }
 
     pub fn disabled(mut self, value: bool) -> Self {
@@ -76,11 +97,27 @@ impl CloudWorkloadSecurityAgentRuleAction {
         self
     }
 
+    pub fn log(
+        mut self,
+        value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionLog,
+    ) -> Self {
+        self.log = Some(value);
+        self
+    }
+
     pub fn metadata(
         mut self,
         value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionMetadata,
     ) -> Self {
         self.metadata = Some(value);
+        self
+    }
+
+    pub fn network_filter(
+        mut self,
+        value: crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionNetworkFilter,
+    ) -> Self {
+        self.network_filter = Some(value);
         self
     }
 
@@ -124,6 +161,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
             where
                 M: MapAccess<'a>,
             {
+                let mut coredump: Option<
+                    crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionCoreDump,
+                > = None;
                 let mut disabled: Option<bool> = None;
                 let mut filter: Option<String> = None;
                 let mut hash: Option<
@@ -131,8 +171,14 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
                 > = None;
                 let mut kill: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentRuleKill> =
                     None;
+                let mut log: Option<
+                    crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionLog,
+                > = None;
                 let mut metadata: Option<
                     crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionMetadata,
+                > = None;
+                let mut network_filter: Option<
+                    crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionNetworkFilter,
                 > = None;
                 let mut set: Option<
                     crate::datadogV2::model::CloudWorkloadSecurityAgentRuleActionSet,
@@ -145,6 +191,12 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "coredump" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            coredump = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "disabled" => {
                             if v.is_null() {
                                 continue;
@@ -169,11 +221,24 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
                             }
                             kill = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "log" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            log = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "network_filter" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            network_filter =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "set" => {
                             if v.is_null() {
@@ -190,11 +255,14 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleAction {
                 }
 
                 let content = CloudWorkloadSecurityAgentRuleAction {
+                    coredump,
                     disabled,
                     filter,
                     hash,
                     kill,
+                    log,
                     metadata,
+                    network_filter,
                     set,
                     additional_properties,
                     _unparsed,

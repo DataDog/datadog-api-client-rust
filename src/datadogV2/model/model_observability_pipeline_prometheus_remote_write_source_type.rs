@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum MonitorConfigPolicyType {
-    TAG,
-    DOWNTIME,
+pub enum ObservabilityPipelinePrometheusRemoteWriteSourceType {
+    PROMETHEUS_REMOTE_WRITE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for MonitorConfigPolicyType {
+impl ToString for ObservabilityPipelinePrometheusRemoteWriteSourceType {
     fn to_string(&self) -> String {
         match self {
-            Self::TAG => String::from("tag"),
-            Self::DOWNTIME => String::from("downtime"),
+            Self::PROMETHEUS_REMOTE_WRITE => String::from("prometheus_remote_write"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for MonitorConfigPolicyType {
+impl Serialize for ObservabilityPipelinePrometheusRemoteWriteSourceType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,15 +32,14 @@ impl Serialize for MonitorConfigPolicyType {
     }
 }
 
-impl<'de> Deserialize<'de> for MonitorConfigPolicyType {
+impl<'de> Deserialize<'de> for ObservabilityPipelinePrometheusRemoteWriteSourceType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "tag" => Self::TAG,
-            "downtime" => Self::DOWNTIME,
+            "prometheus_remote_write" => Self::PROMETHEUS_REMOTE_WRITE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

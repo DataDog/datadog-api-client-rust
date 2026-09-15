@@ -11,6 +11,9 @@ pub enum MonitorConfigPolicyPolicyCreateRequest {
     MonitorConfigPolicyTagPolicyCreateRequest(
         Box<crate::datadogV2::model::MonitorConfigPolicyTagPolicyCreateRequest>,
     ),
+    MonitorConfigPolicyDowntimePolicyCreateRequest(
+        Box<crate::datadogV2::model::MonitorConfigPolicyDowntimePolicyCreateRequest>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -26,6 +29,14 @@ impl<'de> Deserialize<'de> for MonitorConfigPolicyPolicyCreateRequest {
         {
             if !_v._unparsed {
                 return Ok(MonitorConfigPolicyPolicyCreateRequest::MonitorConfigPolicyTagPolicyCreateRequest(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::MonitorConfigPolicyDowntimePolicyCreateRequest>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(MonitorConfigPolicyPolicyCreateRequest::MonitorConfigPolicyDowntimePolicyCreateRequest(_v));
             }
         }
 
