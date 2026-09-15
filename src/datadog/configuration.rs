@@ -849,6 +849,7 @@ impl Default for Configuration {
             ("v2.list_network_health_insights".to_owned(), false),
             ("v2.delete_scopes_restriction".to_owned(), false),
             ("v2.get_o_auth2_well_known_sites".to_owned(), false),
+            ("v2.get_oidc_discovery_document".to_owned(), false),
             ("v2.get_scopes_restriction".to_owned(), false),
             ("v2.register_o_auth_client".to_owned(), false),
             ("v2.upsert_scopes_restriction".to_owned(), false),
@@ -1466,6 +1467,92 @@ lazy_static! {
             ServerVariable {
                 description: "The subdomain where the API is deployed.".into(),
                 default_value: "http-intake.logs".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+                ],
+            ),
+            (
+                "v2.get_oidc_discovery_document".into(),
+                vec![
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "The regional site for Datadog customers.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                    "datadoghq.com".into(),
+                    "us3.datadoghq.com".into(),
+                    "us5.datadoghq.com".into(),
+                    "ap1.datadoghq.com".into(),
+                    "ap2.datadoghq.com".into(),
+                    "uk1.datadoghq.com".into(),
+                    "datadoghq.eu".into(),
+                    "ddog-gov.com".into(),
+                    "us2.ddog-gov.com".into(),
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The subdomain where the API is deployed.".into(),
+                default_value: "app".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+                ServerConfiguration {
+    url: "{protocol}://{name}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "name".into(),
+            ServerVariable {
+                description: "Full site DNS name.".into(),
+                default_value: "app.datadoghq.com".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+        (
+            "protocol".into(),
+            ServerVariable {
+                description: "The protocol for accessing the API.".into(),
+                default_value: "https".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+    ]),
+},
+                ServerConfiguration {
+    url: "https://{subdomain}.{site}".into(),
+    description: "No description provided".into(),
+    variables: HashMap::from([
+        (
+            "site".into(),
+            ServerVariable {
+                description: "Any Datadog deployment.".into(),
+                default_value: "datadoghq.com".into(),
+                enum_values: vec![
+                ],
+            },
+        ),
+        (
+            "subdomain".into(),
+            ServerVariable {
+                description: "The subdomain where the API is deployed.".into(),
+                default_value: "app".into(),
                 enum_values: vec![
                 ],
             },
