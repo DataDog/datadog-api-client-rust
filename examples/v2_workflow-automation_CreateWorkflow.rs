@@ -90,6 +90,7 @@ async fn main() {
         .run_as(WorkflowRunAs::WorkflowRunAsOwner(Box::new(
             WorkflowRunAsOwner::new(WorkflowRunAsOwnerType::OWNER),
         )))
+        .sensitive_privileges(true)
         .tags(vec![
             "team:infra".to_string(),
             "service:monitoring".to_string(),
