@@ -9,4 +9,5 @@
 pub mod datadog;
 /// Types and API clients for Datadog API v1.
 pub mod datadogV1;
+pub mod datadogV1_20270101;
 pub mod datadogV2;
