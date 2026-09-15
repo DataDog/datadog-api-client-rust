@@ -1,32 +1,6 @@
 repos:
 - repo: local
   hooks:
-  - id: generate
-    name: Generate
-    language: system
-    entry: bash -c "./generate.sh"
-    files: '^(\.generator/.*|\.pre-commit-config\.yaml|Makefile|\tests/scenarios/features/.*)'
-    stages: [manual]
-    pass_filenames: false
-    verbose: true
-  - id: generator
-    name: generator
-    language: python
-    entry: bash -c "cd .generator && poetry install && poetry run python -m generator ./schemas/v1/openapi.yaml ./schemas/v2/openapi.yaml -o ../src/"
-    files: "^.generator/.*"
-    stages: [manual]
-    pass_filenames: false
-    additional_dependencies:
-      - "poetry"
-  - id: examples
-    name: examples
-    language: python
-    entry: bash -c "cd .generator && poetry install && poetry run pytest && cd .."
-    files: "^.generator/"
-    stages: [manual]
-    pass_filenames: false
-    additional_dependencies:
-      - "poetry"
   - id: format
     name: Format
     language: system
