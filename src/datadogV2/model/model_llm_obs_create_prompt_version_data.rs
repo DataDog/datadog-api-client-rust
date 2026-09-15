@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsCreatePromptVersionData {
-    /// Attributes for creating a new version of an Agent Observability prompt. `template` is required; all other attributes are optional.
+    /// Attributes for creating a new version of an Agent Observability prompt. `template` is required; all other attributes are optional. If `config` is omitted, the latest version's configuration is carried forward. An explicit empty object clears it.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsCreatePromptVersionDataAttributes,
     /// Resource type of an Agent Observability prompt version.

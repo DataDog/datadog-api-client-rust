@@ -6,11 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for creating a new version of an Agent Observability prompt. `template` is required; all other attributes are optional.
+/// Attributes for creating a new version of an Agent Observability prompt. `template` is required; all other attributes are optional. If `config` is omitted, the latest version's configuration is carried forward. An explicit empty object clears it.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsCreatePromptVersionDataAttributes {
+    /// Customer-owned configuration delivered with a prompt version. Datadog stores and returns the object without interpolating it, validating provider-specific keys, or applying it to model calls. Do not include secrets.
+    #[serde(rename = "config")]
+    pub config: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Optional description of this version.
     #[serde(rename = "description")]
     pub description: Option<String>,
@@ -40,6 +43,7 @@ impl LLMObsCreatePromptVersionDataAttributes {
     ) -> LLMObsCreatePromptVersionDataAttributes {
         #[allow(deprecated)]
         LLMObsCreatePromptVersionDataAttributes {
+            config: None,
             description: None,
             env_ids: None,
             labels: None,
@@ -48,6 +52,12 @@ impl LLMObsCreatePromptVersionDataAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn config(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
+        self.config = Some(value);
+        self
     }
 
     #[allow(deprecated)]
@@ -100,6 +110,8 @@ impl<'de> Deserialize<'de> for LLMObsCreatePromptVersionDataAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
                 let mut description: Option<String> = None;
                 let mut env_ids: Option<Vec<String>> = None;
                 let mut labels: Option<Vec<crate::datadogV2::model::LLMObsPromptVersionLabel>> =
@@ -114,6 +126,12 @@ impl<'de> Deserialize<'de> for LLMObsCreatePromptVersionDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "config" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "description" => {
                             if v.is_null() {
                                 continue;
@@ -162,6 +180,7 @@ impl<'de> Deserialize<'de> for LLMObsCreatePromptVersionDataAttributes {
 
                 #[allow(deprecated)]
                 let content = LLMObsCreatePromptVersionDataAttributes {
+                    config,
                     description,
                     env_ids,
                     labels,

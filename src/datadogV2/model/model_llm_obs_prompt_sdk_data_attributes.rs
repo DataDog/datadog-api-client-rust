@@ -14,6 +14,9 @@ pub struct LLMObsPromptSDKDataAttributes {
     /// Chat template for this prompt version, as a list of role and content messages. Omitted for text templates.
     #[serde(rename = "chat_template")]
     pub chat_template: Option<Vec<crate::datadogV2::model::LLMObsPromptChatMessage>>,
+    /// Customer-owned configuration delivered with a prompt version. Datadog stores and returns the object without interpolating it, validating provider-specific keys, or applying it to model calls. Do not include secrets.
+    #[serde(rename = "config")]
+    pub config: std::collections::BTreeMap<String, serde_json::Value>,
     /// Labels attached to the selected version.
     #[deprecated]
     #[serde(rename = "labels")]
@@ -38,10 +41,13 @@ pub struct LLMObsPromptSDKDataAttributes {
 }
 
 impl LLMObsPromptSDKDataAttributes {
-    pub fn new() -> LLMObsPromptSDKDataAttributes {
+    pub fn new(
+        config: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> LLMObsPromptSDKDataAttributes {
         #[allow(deprecated)]
         LLMObsPromptSDKDataAttributes {
             chat_template: None,
+            config,
             labels: None,
             prompt_id: None,
             prompt_version_uuid: None,
@@ -100,12 +106,6 @@ impl LLMObsPromptSDKDataAttributes {
     }
 }
 
-impl Default for LLMObsPromptSDKDataAttributes {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 impl<'de> Deserialize<'de> for LLMObsPromptSDKDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
@@ -126,6 +126,8 @@ impl<'de> Deserialize<'de> for LLMObsPromptSDKDataAttributes {
                 let mut chat_template: Option<
                     Vec<crate::datadogV2::model::LLMObsPromptChatMessage>,
                 > = None;
+                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
                 let mut labels: Option<Vec<String>> = None;
                 let mut prompt_id: Option<String> = None;
                 let mut prompt_version_uuid: Option<String> = None;
@@ -145,6 +147,9 @@ impl<'de> Deserialize<'de> for LLMObsPromptSDKDataAttributes {
                             }
                             chat_template =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "config" => {
+                            config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "labels" => {
                             if v.is_null() {
@@ -184,10 +189,12 @@ impl<'de> Deserialize<'de> for LLMObsPromptSDKDataAttributes {
                         }
                     }
                 }
+                let config = config.ok_or_else(|| M::Error::missing_field("config"))?;
 
                 #[allow(deprecated)]
                 let content = LLMObsPromptSDKDataAttributes {
                     chat_template,
+                    config,
                     labels,
                     prompt_id,
                     prompt_version_uuid,
