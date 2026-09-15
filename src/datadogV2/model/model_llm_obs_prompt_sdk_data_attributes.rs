@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPromptSDKDataAttributes {
-    /// Chat template for this prompt version, as a list of role and content messages. Omitted for text templates.
+    /// Chat template for this prompt version, as a list of messages and named message placeholders. Omitted for text templates.
     #[serde(rename = "chat_template")]
-    pub chat_template: Option<Vec<crate::datadogV2::model::LLMObsPromptChatMessage>>,
+    pub chat_template: Option<Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>>,
     /// Labels attached to the selected version.
     #[deprecated]
     #[serde(rename = "labels")]
@@ -55,7 +55,7 @@ impl LLMObsPromptSDKDataAttributes {
     #[allow(deprecated)]
     pub fn chat_template(
         mut self,
-        value: Vec<crate::datadogV2::model::LLMObsPromptChatMessage>,
+        value: Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>,
     ) -> Self {
         self.chat_template = Some(value);
         self
@@ -124,7 +124,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptSDKDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut chat_template: Option<
-                    Vec<crate::datadogV2::model::LLMObsPromptChatMessage>,
+                    Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>,
                 > = None;
                 let mut labels: Option<Vec<String>> = None;
                 let mut prompt_id: Option<String> = None;
