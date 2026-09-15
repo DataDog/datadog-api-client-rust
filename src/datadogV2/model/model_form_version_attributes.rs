@@ -24,6 +24,9 @@ pub struct FormVersionAttributes {
     #[serialize_always]
     #[serde(rename = "etag")]
     pub etag: Option<String>,
+    /// Whether this version number has ever appeared in the form's publication history.
+    #[serde(rename = "has_ever_been_published")]
+    pub has_ever_been_published: Option<bool>,
     /// The ID of the form version.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -70,6 +73,7 @@ impl FormVersionAttributes {
             data_definition,
             definition_signature,
             etag,
+            has_ever_been_published: None,
             id: None,
             modified_at,
             state,
@@ -80,6 +84,11 @@ impl FormVersionAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn has_ever_been_published(mut self, value: bool) -> Self {
+        self.has_ever_been_published = Some(value);
+        self
     }
 
     pub fn id(mut self, value: String) -> Self {
@@ -117,6 +126,7 @@ impl<'de> Deserialize<'de> for FormVersionAttributes {
                 let mut data_definition: Option<crate::datadogV2::model::FormDataDefinition> = None;
                 let mut definition_signature: Option<String> = None;
                 let mut etag: Option<Option<String>> = None;
+                let mut has_ever_been_published: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut state: Option<crate::datadogV2::model::FormVersionState> = None;
@@ -145,6 +155,13 @@ impl<'de> Deserialize<'de> for FormVersionAttributes {
                         }
                         "etag" => {
                             etag = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "has_ever_been_published" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            has_ever_been_published =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             if v.is_null() {
@@ -209,6 +226,7 @@ impl<'de> Deserialize<'de> for FormVersionAttributes {
                     data_definition,
                     definition_signature,
                     etag,
+                    has_ever_been_published,
                     id,
                     modified_at,
                     state,
