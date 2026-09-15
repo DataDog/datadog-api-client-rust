@@ -2862,6 +2862,8 @@ pub mod model_budget_with_entries_data_attributes_entries_items_costs;
 pub use self::model_budget_with_entries_data_attributes_entries_items_costs::BudgetWithEntriesDataAttributesEntriesItemsCosts;
 pub mod model_budget_with_entries_data_attributes_entries_items_tag_filters_items;
 pub use self::model_budget_with_entries_data_attributes_entries_items_tag_filters_items::BudgetWithEntriesDataAttributesEntriesItemsTagFiltersItems;
+pub mod model_budget_with_entries_meta;
+pub use self::model_budget_with_entries_meta::BudgetWithEntriesMeta;
 pub mod model_validation_response;
 pub use self::model_validation_response::ValidationResponse;
 pub mod model_validation_error;

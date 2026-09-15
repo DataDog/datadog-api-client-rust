@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The definition of the `BudgetWithEntries` object.
+/// Additional information about errors encountered while retrieving budget cost data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct BudgetWithEntries {
-    /// A budget and all its entries.
-    #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::BudgetWithEntriesData>,
-    /// Additional information about errors encountered while retrieving budget cost data.
-    #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::BudgetWithEntriesMeta>,
+pub struct BudgetWithEntriesMeta {
+    /// A user-facing explanation of why budget cost data could not be retrieved.
+    #[serde(rename = "error")]
+    pub error: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,24 +21,13 @@ pub struct BudgetWithEntries {
     pub(crate) _unparsed: bool,
 }
 
-impl BudgetWithEntries {
-    pub fn new() -> BudgetWithEntries {
-        BudgetWithEntries {
-            data: None,
-            meta: None,
+impl BudgetWithEntriesMeta {
+    pub fn new(error: String) -> BudgetWithEntriesMeta {
+        BudgetWithEntriesMeta {
+            error,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(mut self, value: crate::datadogV2::model::BudgetWithEntriesData) -> Self {
-        self.data = Some(value);
-        self
-    }
-
-    pub fn meta(mut self, value: crate::datadogV2::model::BudgetWithEntriesMeta) -> Self {
-        self.meta = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -53,20 +39,14 @@ impl BudgetWithEntries {
     }
 }
 
-impl Default for BudgetWithEntries {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for BudgetWithEntries {
+impl<'de> Deserialize<'de> for BudgetWithEntriesMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BudgetWithEntriesVisitor;
-        impl<'a> Visitor<'a> for BudgetWithEntriesVisitor {
-            type Value = BudgetWithEntries;
+        struct BudgetWithEntriesMetaVisitor;
+        impl<'a> Visitor<'a> for BudgetWithEntriesMetaVisitor {
+            type Value = BudgetWithEntriesMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +56,7 @@ impl<'de> Deserialize<'de> for BudgetWithEntries {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::BudgetWithEntriesData> = None;
-                let mut meta: Option<crate::datadogV2::model::BudgetWithEntriesMeta> = None;
+                let mut error: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,17 +65,8 @@ impl<'de> Deserialize<'de> for BudgetWithEntries {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "meta" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "error" => {
+                            error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -105,10 +75,10 @@ impl<'de> Deserialize<'de> for BudgetWithEntries {
                         }
                     }
                 }
+                let error = error.ok_or_else(|| M::Error::missing_field("error"))?;
 
-                let content = BudgetWithEntries {
-                    data,
-                    meta,
+                let content = BudgetWithEntriesMeta {
+                    error,
                     additional_properties,
                     _unparsed,
                 };
@@ -117,6 +87,6 @@ impl<'de> Deserialize<'de> for BudgetWithEntries {
             }
         }
 
-        deserializer.deserialize_any(BudgetWithEntriesVisitor)
+        deserializer.deserialize_any(BudgetWithEntriesMetaVisitor)
     }
 }
