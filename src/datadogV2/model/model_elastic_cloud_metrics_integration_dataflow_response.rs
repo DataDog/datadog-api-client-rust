@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The Elastic Cloud metrics dataflow.
+/// Node-level statistics for the clusters in your deployment, such as the number of nodes and the number of documents on each node. This is the integration's baseline collection: it is always on and cannot be turned off, which is why it appears in responses only.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ElasticCloudMetricsIntegrationDataflowResponse {
-    /// Whether the Elastic Cloud dataflow is enabled.
+    /// Whether Datadog collects this data. Always `true`, because this collection cannot be turned off.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// Read-only collection status of a dataflow.

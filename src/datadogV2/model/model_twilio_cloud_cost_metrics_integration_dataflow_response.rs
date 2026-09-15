@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The Twilio cloud cost metrics dataflow.
+/// Your Twilio cost data, so that Twilio spend can be broken down and attributed in [Cloud Cost Management](<https://docs.datadoghq.com/cloud_cost_management/>).
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TwilioCloudCostMetricsIntegrationDataflowResponse {
-    /// Whether the Twilio dataflow is enabled.
+    /// Whether Datadog collects this data.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// Read-only collection status of a dataflow.

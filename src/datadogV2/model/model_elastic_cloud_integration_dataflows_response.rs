@@ -6,42 +6,42 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Dataflows configured on the Elastic Cloud integration account, keyed by dataflow id.
+/// Data Datadog collects from Elastic Cloud, keyed by dataflow id.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ElasticCloudIntegrationDataflowsResponse {
-    /// The Elastic Cloud detailed index stats dataflow.
+    /// Primary shard metrics broken down per index, rather than aggregated across the cluster.
     #[serde(rename = "elastic-cloud-detailed-index-stats")]
     pub elastic_cloud_detailed_index_stats:
         Option<crate::datadogV2::model::ElasticCloudDetailedIndexStatsIntegrationDataflowResponse>,
-    /// The Elastic Cloud index stats dataflow.
+    /// Metrics for individual indices. Only the indices granted to the role of the user in `authentication` are collected.
     #[serde(rename = "elastic-cloud-index-stats")]
     pub elastic_cloud_index_stats:
         Option<crate::datadogV2::model::ElasticCloudIndexStatsIntegrationDataflowResponse>,
-    /// The Elastic Cloud metrics dataflow.
+    /// Node-level statistics for the clusters in your deployment, such as the number of nodes and the number of documents on each node. This is the integration's baseline collection: it is always on and cannot be turned off, which is why it appears in responses only.
     #[serde(rename = "elastic-cloud-metrics")]
     pub elastic_cloud_metrics:
         Option<crate::datadogV2::model::ElasticCloudMetricsIntegrationDataflowResponse>,
-    /// The Elastic Cloud pending task stats dataflow.
+    /// Metrics for cluster-level changes that have been submitted but not yet executed.
     #[serde(rename = "elastic-cloud-pending-task-stats")]
     pub elastic_cloud_pending_task_stats:
         Option<crate::datadogV2::model::ElasticCloudPendingTaskStatsIntegrationDataflowResponse>,
-    /// The Elastic Cloud primary shard graceful timeout dataflow.
+    /// Tolerance for slow primary shard requests, keeping the rest of the collection running when a primary shard request times out instead of failing the run. Only has an effect alongside `elastic-cloud-primary-shard-stats`.
     #[serde(rename = "elastic-cloud-primary-shard-graceful-timeout")]
     pub elastic_cloud_primary_shard_graceful_timeout: Option<
         crate::datadogV2::model::ElasticCloudPrimaryShardGracefulTimeoutIntegrationDataflowResponse,
     >,
-    /// The Elastic Cloud primary shard stats dataflow.
+    /// Metrics covering only the cluster's primary shards.
     #[serde(rename = "elastic-cloud-primary-shard-stats")]
     pub elastic_cloud_primary_shard_stats:
         Option<crate::datadogV2::model::ElasticCloudPrimaryShardStatsIntegrationDataflowResponse>,
-    /// The Elastic Cloud shard allocation stats dataflow.
+    /// Metrics for how many shards are allocated to each data node, and the disk space they use.
     #[serde(rename = "elastic-cloud-shard-allocation-stats")]
     pub elastic_cloud_shard_allocation_stats: Option<
         crate::datadogV2::model::ElasticCloudShardAllocationStatsIntegrationDataflowResponse,
     >,
-    /// The Elastic Cloud snapshot lifecycle management stats dataflow.
+    /// Metrics about the actions taken by snapshot lifecycle management. Requires the `read_slm` Elasticsearch cluster privilege on the role of the user in `authentication`; without it this dataflow collects no data.
     #[serde(rename = "elastic-cloud-slm-stats")]
     pub elastic_cloud_slm_stats:
         Option<crate::datadogV2::model::ElasticCloudSlmStatsIntegrationDataflowResponse>,

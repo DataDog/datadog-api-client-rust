@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The Twilio call summaries logs dataflow.
+/// Twilio Call Summary resource logs, covering the metadata and performance of the calls made from your Twilio account. Requires Voice Insights Advanced Features to be enabled on the Twilio account; without it this dataflow collects no data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TwilioCallSummariesLogsIntegrationDataflowResponse {
-    /// Whether the Twilio dataflow is enabled.
+    /// Whether Datadog collects this data.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// Read-only collection status of a dataflow.
