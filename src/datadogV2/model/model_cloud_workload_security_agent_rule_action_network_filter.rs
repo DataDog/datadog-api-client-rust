@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Hash file specified by the field attribute
+/// The network filter action applied on the network traffic matching the rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct CloudWorkloadSecurityAgentRuleActionHash {
-    /// The field of the hash action
-    #[serde(rename = "field")]
-    pub field: Option<String>,
-    /// The maximum size of the files to hash, in bytes.
-    #[serde(rename = "max_file_size")]
-    pub max_file_size: Option<i64>,
+pub struct CloudWorkloadSecurityAgentRuleActionNetworkFilter {
+    /// The filter expression of the network filter action.
+    #[serde(rename = "filter")]
+    pub filter: Option<String>,
+    /// The policy of the network filter action.
+    #[serde(rename = "policy")]
+    pub policy: Option<String>,
+    /// The scope of the network filter action.
+    #[serde(rename = "scope")]
+    pub scope: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,23 +27,29 @@ pub struct CloudWorkloadSecurityAgentRuleActionHash {
     pub(crate) _unparsed: bool,
 }
 
-impl CloudWorkloadSecurityAgentRuleActionHash {
-    pub fn new() -> CloudWorkloadSecurityAgentRuleActionHash {
-        CloudWorkloadSecurityAgentRuleActionHash {
-            field: None,
-            max_file_size: None,
+impl CloudWorkloadSecurityAgentRuleActionNetworkFilter {
+    pub fn new() -> CloudWorkloadSecurityAgentRuleActionNetworkFilter {
+        CloudWorkloadSecurityAgentRuleActionNetworkFilter {
+            filter: None,
+            policy: None,
+            scope: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn field(mut self, value: String) -> Self {
-        self.field = Some(value);
+    pub fn filter(mut self, value: String) -> Self {
+        self.filter = Some(value);
         self
     }
 
-    pub fn max_file_size(mut self, value: i64) -> Self {
-        self.max_file_size = Some(value);
+    pub fn policy(mut self, value: String) -> Self {
+        self.policy = Some(value);
+        self
+    }
+
+    pub fn scope(mut self, value: String) -> Self {
+        self.scope = Some(value);
         self
     }
 
@@ -53,20 +62,20 @@ impl CloudWorkloadSecurityAgentRuleActionHash {
     }
 }
 
-impl Default for CloudWorkloadSecurityAgentRuleActionHash {
+impl Default for CloudWorkloadSecurityAgentRuleActionNetworkFilter {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionHash {
+impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionNetworkFilter {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct CloudWorkloadSecurityAgentRuleActionHashVisitor;
-        impl<'a> Visitor<'a> for CloudWorkloadSecurityAgentRuleActionHashVisitor {
-            type Value = CloudWorkloadSecurityAgentRuleActionHash;
+        struct CloudWorkloadSecurityAgentRuleActionNetworkFilterVisitor;
+        impl<'a> Visitor<'a> for CloudWorkloadSecurityAgentRuleActionNetworkFilterVisitor {
+            type Value = CloudWorkloadSecurityAgentRuleActionNetworkFilter;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,8 +85,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionHash {
             where
                 M: MapAccess<'a>,
             {
-                let mut field: Option<String> = None;
-                let mut max_file_size: Option<i64> = None;
+                let mut filter: Option<String> = None;
+                let mut policy: Option<String> = None;
+                let mut scope: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -86,18 +96,23 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionHash {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "field" => {
+                        "filter" => {
                             if v.is_null() {
                                 continue;
                             }
-                            field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "max_file_size" => {
+                        "policy" => {
                             if v.is_null() {
                                 continue;
                             }
-                            max_file_size =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            policy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "scope" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -107,9 +122,10 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionHash {
                     }
                 }
 
-                let content = CloudWorkloadSecurityAgentRuleActionHash {
-                    field,
-                    max_file_size,
+                let content = CloudWorkloadSecurityAgentRuleActionNetworkFilter {
+                    filter,
+                    policy,
+                    scope,
                     additional_properties,
                     _unparsed,
                 };
@@ -118,6 +134,6 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionHash {
             }
         }
 
-        deserializer.deserialize_any(CloudWorkloadSecurityAgentRuleActionHashVisitor)
+        deserializer.deserialize_any(CloudWorkloadSecurityAgentRuleActionNetworkFilterVisitor)
     }
 }

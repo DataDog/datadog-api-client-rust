@@ -29,9 +29,15 @@ pub struct CloudWorkloadSecurityAgentRuleActionSet {
     /// The name of the set action
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// Whether the value of the set action is private.
+    #[serde(rename = "private")]
+    pub private: Option<bool>,
     /// The scope of the set action.
     #[serde(rename = "scope")]
     pub scope: Option<String>,
+    /// The scope field of the set action.
+    #[serde(rename = "scope_field")]
+    pub scope_field: Option<String>,
     /// The size of the set action.
     #[serde(rename = "size")]
     pub size: Option<i64>,
@@ -57,7 +63,9 @@ impl CloudWorkloadSecurityAgentRuleActionSet {
             field: None,
             inherited: None,
             name: None,
+            private: None,
             scope: None,
+            scope_field: None,
             size: None,
             ttl: None,
             value: None,
@@ -96,8 +104,18 @@ impl CloudWorkloadSecurityAgentRuleActionSet {
         self
     }
 
+    pub fn private(mut self, value: bool) -> Self {
+        self.private = Some(value);
+        self
+    }
+
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
+        self
+    }
+
+    pub fn scope_field(mut self, value: String) -> Self {
+        self.scope_field = Some(value);
         self
     }
 
@@ -157,7 +175,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                 let mut field: Option<String> = None;
                 let mut inherited: Option<bool> = None;
                 let mut name: Option<String> = None;
+                let mut private: Option<bool> = None;
                 let mut scope: Option<String> = None;
+                let mut scope_field: Option<String> = None;
                 let mut size: Option<i64> = None;
                 let mut ttl: Option<i64> = None;
                 let mut value: Option<
@@ -208,11 +228,24 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "private" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            private = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "scope_field" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            scope_field =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "size" => {
                             if v.is_null() {
@@ -255,7 +288,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionSet {
                     field,
                     inherited,
                     name,
+                    private,
                     scope,
+                    scope_field,
                     size,
                     ttl,
                     value,
