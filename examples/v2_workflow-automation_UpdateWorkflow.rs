@@ -42,6 +42,7 @@ async fn main() {
                 .run_as(WorkflowRunAs::WorkflowRunAsOwner(Box::new(
                     WorkflowRunAsOwner::new(WorkflowRunAsOwnerType::OWNER),
                 )))
+                .sensitive_privileges(false)
                 .spec(
                     Spec::new()
                         .connection_envs(vec![ConnectionEnv::new(ConnectionEnvEnv::DEFAULT)
