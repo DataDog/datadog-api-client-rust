@@ -16,7 +16,7 @@ pub struct BudgetAttributesCostsUnit {
     pub family: Option<String>,
     /// The unique identifier for the unit.
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: Option<i64>,
     /// The full name of the unit.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -55,7 +55,7 @@ impl BudgetAttributesCostsUnit {
         self
     }
 
-    pub fn id(mut self, value: String) -> Self {
+    pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
@@ -113,7 +113,7 @@ impl<'de> Deserialize<'de> for BudgetAttributesCostsUnit {
                 M: MapAccess<'a>,
             {
                 let mut family: Option<String> = None;
-                let mut id: Option<String> = None;
+                let mut id: Option<i64> = None;
                 let mut name: Option<String> = None;
                 let mut plural: Option<String> = None;
                 let mut scale_factor: Option<f64> = None;
