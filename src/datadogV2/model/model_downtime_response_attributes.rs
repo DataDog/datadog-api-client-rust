@@ -52,6 +52,11 @@ pub struct DowntimeResponseAttributes {
     /// Actions that will trigger a monitor notification if the downtime is in the `notify_end_types` state.
     #[serde(rename = "notify_end_types")]
     pub notify_end_types: Option<Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>>,
+    /// The principals (users, roles, or teams) allowed to act on behalf of the downtime.
+    ///
+    /// **Note**: This feature is currently in Preview and may not be available for all organizations.
+    #[serde(rename = "run_as")]
+    pub run_as: Option<Vec<crate::datadogV2::model::DowntimeRunAsItem>>,
     /// The schedule that defines when the monitor starts, stops, and recurs. There are two types of schedules:
     /// one-time and recurring. Recurring schedules may have up to five RRULE-based recurrences. If no schedules are
     /// provided, the downtime will begin immediately and never end.
@@ -82,6 +87,7 @@ impl DowntimeResponseAttributes {
             mute_first_recovery_notification: None,
             notify_end_states: None,
             notify_end_types: None,
+            run_as: None,
             schedule: None,
             scope: None,
             status: None,
@@ -141,6 +147,11 @@ impl DowntimeResponseAttributes {
         value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
     ) -> Self {
         self.notify_end_types = Some(value);
+        self
+    }
+
+    pub fn run_as(mut self, value: Vec<crate::datadogV2::model::DowntimeRunAsItem>) -> Self {
+        self.run_as = Some(value);
         self
     }
 
@@ -206,6 +217,7 @@ impl<'de> Deserialize<'de> for DowntimeResponseAttributes {
                 let mut notify_end_types: Option<
                     Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
                 > = None;
+                let mut run_as: Option<Vec<crate::datadogV2::model::DowntimeRunAsItem>> = None;
                 let mut schedule: Option<crate::datadogV2::model::DowntimeScheduleResponse> = None;
                 let mut scope: Option<String> = None;
                 let mut status: Option<crate::datadogV2::model::DowntimeStatus> = None;
@@ -275,6 +287,12 @@ impl<'de> Deserialize<'de> for DowntimeResponseAttributes {
                             notify_end_types =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "run_as" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            run_as = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "schedule" => {
                             if v.is_null() {
                                 continue;
@@ -329,6 +347,7 @@ impl<'de> Deserialize<'de> for DowntimeResponseAttributes {
                     mute_first_recovery_notification,
                     notify_end_states,
                     notify_end_types,
+                    run_as,
                     schedule,
                     scope,
                     status,

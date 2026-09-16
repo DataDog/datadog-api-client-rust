@@ -38545,8 +38545,12 @@ fn test_v2_get_downtime(world: &mut DatadogWorld, _parameters: &HashMap<String, 
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let with_run_as = _parameters
+        .get("with_run_as")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_downtimes::GetDowntimeOptionalParams::default();
     params.include = include;
+    params.with_run_as = with_run_as;
     let response = match block_on(api.get_downtime_with_http_info(downtime_id, params)) {
         Ok(response) => response,
         Err(error) => {
