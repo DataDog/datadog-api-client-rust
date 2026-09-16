@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TimeseriesWidgetDefinition {
+    /// Anomaly detection configuration for a timeseries widget.
+    #[serde(rename = "anomaly_detection")]
+    pub anomaly_detection: Option<crate::datadogV1::model::TimeseriesWidgetAnomalyDetection>,
     /// List of custom links.
     #[serde(rename = "custom_links")]
     pub custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>>,
@@ -74,6 +77,7 @@ impl TimeseriesWidgetDefinition {
     ) -> TimeseriesWidgetDefinition {
         #[allow(deprecated)]
         TimeseriesWidgetDefinition {
+            anomaly_detection: None,
             custom_links: None,
             description: None,
             events: None,
@@ -93,6 +97,15 @@ impl TimeseriesWidgetDefinition {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn anomaly_detection(
+        mut self,
+        value: crate::datadogV1::model::TimeseriesWidgetAnomalyDetection,
+    ) -> Self {
+        self.anomaly_detection = Some(value);
+        self
     }
 
     #[allow(deprecated)]
@@ -211,6 +224,9 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
             where
                 M: MapAccess<'a>,
             {
+                let mut anomaly_detection: Option<
+                    crate::datadogV1::model::TimeseriesWidgetAnomalyDetection,
+                > = None;
                 let mut custom_links: Option<Vec<crate::datadogV1::model::WidgetCustomLink>> = None;
                 let mut description: Option<String> = None;
                 let mut events: Option<Vec<crate::datadogV1::model::WidgetEvent>> = None;
@@ -241,6 +257,13 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "anomaly_detection" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            anomaly_detection =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "custom_links" => {
                             if v.is_null() {
                                 continue;
@@ -385,6 +408,7 @@ impl<'de> Deserialize<'de> for TimeseriesWidgetDefinition {
 
                 #[allow(deprecated)]
                 let content = TimeseriesWidgetDefinition {
+                    anomaly_detection,
                     custom_links,
                     description,
                     events,
