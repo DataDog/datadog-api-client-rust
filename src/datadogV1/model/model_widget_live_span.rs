@@ -24,6 +24,9 @@ pub enum WidgetLiveSpan {
     MONTH_TO_DATE,
     PAST_ONE_YEAR,
     ALERT,
+    FULL_WEEK,
+    FULL_MONTH,
+    YEAR_TO_DATE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -47,6 +50,9 @@ impl ToString for WidgetLiveSpan {
             Self::MONTH_TO_DATE => String::from("month_to_date"),
             Self::PAST_ONE_YEAR => String::from("1y"),
             Self::ALERT => String::from("alert"),
+            Self::FULL_WEEK => String::from("full_week"),
+            Self::FULL_MONTH => String::from("full_month"),
+            Self::YEAR_TO_DATE => String::from("year_to_date"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -88,6 +94,9 @@ impl<'de> Deserialize<'de> for WidgetLiveSpan {
             "month_to_date" => Self::MONTH_TO_DATE,
             "1y" => Self::PAST_ONE_YEAR,
             "alert" => Self::ALERT,
+            "full_week" => Self::FULL_WEEK,
+            "full_month" => Self::FULL_MONTH,
+            "year_to_date" => Self::YEAR_TO_DATE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
