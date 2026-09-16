@@ -15,6 +15,7 @@ pub enum WidgetDefinition {
     CheckStatusWidgetDefinition(Box<crate::datadogV1::model::CheckStatusWidgetDefinition>),
     CohortWidgetDefinition(Box<crate::datadogV1::model::CohortWidgetDefinition>),
     DistributionWidgetDefinition(Box<crate::datadogV1::model::DistributionWidgetDefinition>),
+    EmbeddedAppWidgetDefinition(Box<crate::datadogV1::model::EmbeddedAppWidgetDefinition>),
     EventStreamWidgetDefinition(Box<crate::datadogV1::model::EventStreamWidgetDefinition>),
     EventTimelineWidgetDefinition(Box<crate::datadogV1::model::EventTimelineWidgetDefinition>),
     FreeTextWidgetDefinition(Box<crate::datadogV1::model::FreeTextWidgetDefinition>),
@@ -112,6 +113,14 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         {
             if !_v._unparsed {
                 return Ok(WidgetDefinition::DistributionWidgetDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::EmbeddedAppWidgetDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(WidgetDefinition::EmbeddedAppWidgetDefinition(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
