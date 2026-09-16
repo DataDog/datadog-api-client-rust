@@ -23,7 +23,7 @@ async fn main() {
                             .forecast(None)
                             .ootb_forecast(None),
                     )
-                    .costs_unit(BudgetAttributesCostsUnit::new())
+                    .costs_unit(BudgetAttributesCostsUnit::new().id(42))
                     .created_at(1738258683590)
                     .created_by("00000000-0a0a-0a0a-aaa0-00000000000a".to_string())
                     .end_month(202502)
