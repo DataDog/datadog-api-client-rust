@@ -47,6 +47,9 @@ pub struct BudgetAttributes {
     /// The month when the budget starts.
     #[serde(rename = "start_month")]
     pub start_month: Option<i64>,
+    /// The tag keys used to group costs for the budget.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     /// The sum of all budget entries' amounts.
     #[serde(rename = "total_amount")]
     pub total_amount: Option<f64>,
@@ -78,6 +81,7 @@ impl BudgetAttributes {
             name: None,
             org_id: None,
             start_month: None,
+            tags: None,
             total_amount: None,
             updated_at: None,
             updated_by: None,
@@ -149,6 +153,11 @@ impl BudgetAttributes {
         self
     }
 
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
+        self
+    }
+
     pub fn total_amount(mut self, value: f64) -> Self {
         self.total_amount = Some(value);
         self
@@ -211,6 +220,7 @@ impl<'de> Deserialize<'de> for BudgetAttributes {
                 let mut name: Option<String> = None;
                 let mut org_id: Option<i64> = None;
                 let mut start_month: Option<i64> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut total_amount: Option<f64> = None;
                 let mut updated_at: Option<i64> = None;
                 let mut updated_by: Option<String> = None;
@@ -298,6 +308,12 @@ impl<'de> Deserialize<'de> for BudgetAttributes {
                             start_month =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "total_amount" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
@@ -338,6 +354,7 @@ impl<'de> Deserialize<'de> for BudgetAttributes {
                     name,
                     org_id,
                     start_month,
+                    tags,
                     total_amount,
                     updated_at,
                     updated_by,
