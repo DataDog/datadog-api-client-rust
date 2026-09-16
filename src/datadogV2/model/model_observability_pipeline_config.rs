@@ -14,6 +14,10 @@ pub struct ObservabilityPipelineConfig {
     /// A list of destination components where processed logs are sent.
     #[serde(rename = "destinations")]
     pub destinations: Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
+    /// Enables end-to-end event delivery confirmation. Without a disk buffer, sources acknowledge events after delivery to all final destinations; when a disk buffer provides the acknowledgment boundary, they acknowledge after durable persistence.
+    /// Defaults to `false` when omitted. Requires Observability Pipelines Worker 2.14 or later. All configured sources must support this behavior.
+    #[serde(rename = "end_to_end_acknowledgements")]
+    pub end_to_end_acknowledgements: Option<bool>,
     /// The type of data being ingested. Defaults to `logs` if not specified.
     #[serde(rename = "pipeline_type")]
     pub pipeline_type: Option<crate::datadogV2::model::ObservabilityPipelineConfigPipelineType>,
@@ -52,6 +56,7 @@ impl ObservabilityPipelineConfig {
         #[allow(deprecated)]
         ObservabilityPipelineConfig {
             destinations,
+            end_to_end_acknowledgements: None,
             pipeline_type: None,
             processor_groups: None,
             processors: None,
@@ -60,6 +65,12 @@ impl ObservabilityPipelineConfig {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn end_to_end_acknowledgements(mut self, value: bool) -> Self {
+        self.end_to_end_acknowledgements = Some(value);
+        self
     }
 
     #[allow(deprecated)]
@@ -124,6 +135,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                 let mut destinations: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
                 > = None;
+                let mut end_to_end_acknowledgements: Option<bool> = None;
                 let mut pipeline_type: Option<
                     crate::datadogV2::model::ObservabilityPipelineConfigPipelineType,
                 > = None;
@@ -147,6 +159,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                     match k.as_str() {
                         "destinations" => {
                             destinations =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "end_to_end_acknowledgements" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            end_to_end_acknowledgements =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "pipeline_type" => {
@@ -201,6 +220,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                 #[allow(deprecated)]
                 let content = ObservabilityPipelineConfig {
                     destinations,
+                    end_to_end_acknowledgements,
                     pipeline_type,
                     processor_groups,
                     processors,
