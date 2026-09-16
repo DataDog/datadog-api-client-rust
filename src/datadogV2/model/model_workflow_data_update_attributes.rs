@@ -29,6 +29,9 @@ pub struct WorkflowDataUpdateAttributes {
     /// The effective type of identity used to run the workflow.
     #[serde(rename = "runAsUserMode")]
     pub run_as_user_mode: Option<crate::datadogV2::model::WorkflowRunAsUserMode>,
+    /// Whether the workflow requires sensitive privileges to run. Only the workflow owner can update this field. This allows it to run actions that use [Execution Policies](<https://docs.datadoghq.com/actions/private_actions/execution_policies/>).
+    #[serde(rename = "sensitivePrivileges")]
+    pub sensitive_privileges: Option<bool>,
     /// A complete Workflow Automation definition, including its triggers, steps, and connections.
     #[serde(rename = "spec")]
     pub spec: Option<crate::datadogV2::model::Spec>,
@@ -57,6 +60,7 @@ impl WorkflowDataUpdateAttributes {
             published: None,
             run_as: None,
             run_as_user_mode: None,
+            sensitive_privileges: None,
             spec: None,
             tags: None,
             updated_at: None,
@@ -96,6 +100,11 @@ impl WorkflowDataUpdateAttributes {
         value: crate::datadogV2::model::WorkflowRunAsUserMode,
     ) -> Self {
         self.run_as_user_mode = Some(value);
+        self
+    }
+
+    pub fn sensitive_privileges(mut self, value: bool) -> Self {
+        self.sensitive_privileges = Some(value);
         self
     }
 
@@ -158,6 +167,7 @@ impl<'de> Deserialize<'de> for WorkflowDataUpdateAttributes {
                 let mut run_as: Option<crate::datadogV2::model::WorkflowRunAs> = None;
                 let mut run_as_user_mode: Option<crate::datadogV2::model::WorkflowRunAsUserMode> =
                     None;
+                let mut sensitive_privileges: Option<bool> = None;
                 let mut spec: Option<crate::datadogV2::model::Spec> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -226,6 +236,13 @@ impl<'de> Deserialize<'de> for WorkflowDataUpdateAttributes {
                                 }
                             }
                         }
+                        "sensitivePrivileges" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sensitive_privileges =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "spec" => {
                             if v.is_null() {
                                 continue;
@@ -266,6 +283,7 @@ impl<'de> Deserialize<'de> for WorkflowDataUpdateAttributes {
                     published,
                     run_as,
                     run_as_user_mode,
+                    sensitive_privileges,
                     spec,
                     tags,
                     updated_at,
