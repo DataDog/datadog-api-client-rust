@@ -6,67 +6,48 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Username and password authentication. Only the fields provided are changed; omit `password` to keep the stored one.
+/// Username and password authentication.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IntegrationAccountBasicAuthUpdate {
+pub struct TwilioIntegrationAccountBasicAuthRequest {
     /// The authentication method type.
     #[serde(rename = "auth_type")]
-    pub auth_type: crate::datadogV2::model::IntegrationAccountBasicAuthType,
+    pub auth_type: crate::datadogV2::model::TwilioIntegrationAccountBasicAuthType,
     /// Secret password or private key.
     #[serde(rename = "password")]
-    pub password: Option<String>,
+    pub password: String,
     /// Non-secret username or public identifier for the credential pair.
     #[serde(rename = "username")]
-    pub username: Option<String>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    pub username: String,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
-impl IntegrationAccountBasicAuthUpdate {
+impl TwilioIntegrationAccountBasicAuthRequest {
     pub fn new(
-        auth_type: crate::datadogV2::model::IntegrationAccountBasicAuthType,
-    ) -> IntegrationAccountBasicAuthUpdate {
-        IntegrationAccountBasicAuthUpdate {
+        auth_type: crate::datadogV2::model::TwilioIntegrationAccountBasicAuthType,
+        password: String,
+        username: String,
+    ) -> TwilioIntegrationAccountBasicAuthRequest {
+        TwilioIntegrationAccountBasicAuthRequest {
             auth_type,
-            password: None,
-            username: None,
-            additional_properties: std::collections::BTreeMap::new(),
+            password,
+            username,
             _unparsed: false,
         }
     }
-
-    pub fn password(mut self, value: String) -> Self {
-        self.password = Some(value);
-        self
-    }
-
-    pub fn username(mut self, value: String) -> Self {
-        self.username = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
-    }
 }
 
-impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthUpdate {
+impl<'de> Deserialize<'de> for TwilioIntegrationAccountBasicAuthRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IntegrationAccountBasicAuthUpdateVisitor;
-        impl<'a> Visitor<'a> for IntegrationAccountBasicAuthUpdateVisitor {
-            type Value = IntegrationAccountBasicAuthUpdate;
+        struct TwilioIntegrationAccountBasicAuthRequestVisitor;
+        impl<'a> Visitor<'a> for TwilioIntegrationAccountBasicAuthRequestVisitor {
+            type Value = TwilioIntegrationAccountBasicAuthRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -77,14 +58,10 @@ impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthUpdate {
                 M: MapAccess<'a>,
             {
                 let mut auth_type: Option<
-                    crate::datadogV2::model::IntegrationAccountBasicAuthType,
+                    crate::datadogV2::model::TwilioIntegrationAccountBasicAuthType,
                 > = None;
                 let mut password: Option<String> = None;
                 let mut username: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -93,7 +70,7 @@ impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthUpdate {
                             auth_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _auth_type) = auth_type {
                                 match _auth_type {
-                                    crate::datadogV2::model::IntegrationAccountBasicAuthType::UnparsedObject(_auth_type) => {
+                                    crate::datadogV2::model::TwilioIntegrationAccountBasicAuthType::UnparsedObject(_auth_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -101,31 +78,26 @@ impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthUpdate {
                             }
                         }
                         "password" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             password = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "username" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             username = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
                 let auth_type = auth_type.ok_or_else(|| M::Error::missing_field("auth_type"))?;
+                let password = password.ok_or_else(|| M::Error::missing_field("password"))?;
+                let username = username.ok_or_else(|| M::Error::missing_field("username"))?;
 
-                let content = IntegrationAccountBasicAuthUpdate {
+                let content = TwilioIntegrationAccountBasicAuthRequest {
                     auth_type,
                     password,
                     username,
-                    additional_properties,
                     _unparsed,
                 };
 
@@ -133,6 +105,6 @@ impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthUpdate {
             }
         }
 
-        deserializer.deserialize_any(IntegrationAccountBasicAuthUpdateVisitor)
+        deserializer.deserialize_any(TwilioIntegrationAccountBasicAuthRequestVisitor)
     }
 }

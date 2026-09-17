@@ -10,55 +10,44 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct IntegrationAccountBasicAuthRequest {
+pub struct ElasticCloudIntegrationAccountBasicAuthRequest {
     /// The authentication method type.
     #[serde(rename = "auth_type")]
-    pub auth_type: crate::datadogV2::model::IntegrationAccountBasicAuthType,
+    pub auth_type: crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthType,
     /// Secret password or private key.
     #[serde(rename = "password")]
     pub password: String,
     /// Non-secret username or public identifier for the credential pair.
     #[serde(rename = "username")]
     pub username: String,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
 }
 
-impl IntegrationAccountBasicAuthRequest {
+impl ElasticCloudIntegrationAccountBasicAuthRequest {
     pub fn new(
-        auth_type: crate::datadogV2::model::IntegrationAccountBasicAuthType,
+        auth_type: crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthType,
         password: String,
         username: String,
-    ) -> IntegrationAccountBasicAuthRequest {
-        IntegrationAccountBasicAuthRequest {
+    ) -> ElasticCloudIntegrationAccountBasicAuthRequest {
+        ElasticCloudIntegrationAccountBasicAuthRequest {
             auth_type,
             password,
             username,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
-        self
-    }
 }
 
-impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthRequest {
+impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountBasicAuthRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct IntegrationAccountBasicAuthRequestVisitor;
-        impl<'a> Visitor<'a> for IntegrationAccountBasicAuthRequestVisitor {
-            type Value = IntegrationAccountBasicAuthRequest;
+        struct ElasticCloudIntegrationAccountBasicAuthRequestVisitor;
+        impl<'a> Visitor<'a> for ElasticCloudIntegrationAccountBasicAuthRequestVisitor {
+            type Value = ElasticCloudIntegrationAccountBasicAuthRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -69,14 +58,10 @@ impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthRequest {
                 M: MapAccess<'a>,
             {
                 let mut auth_type: Option<
-                    crate::datadogV2::model::IntegrationAccountBasicAuthType,
+                    crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthType,
                 > = None;
                 let mut password: Option<String> = None;
                 let mut username: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -85,7 +70,7 @@ impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthRequest {
                             auth_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _auth_type) = auth_type {
                                 match _auth_type {
-                                    crate::datadogV2::model::IntegrationAccountBasicAuthType::UnparsedObject(_auth_type) => {
+                                    crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthType::UnparsedObject(_auth_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -99,9 +84,9 @@ impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthRequest {
                             username = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -109,11 +94,10 @@ impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthRequest {
                 let password = password.ok_or_else(|| M::Error::missing_field("password"))?;
                 let username = username.ok_or_else(|| M::Error::missing_field("username"))?;
 
-                let content = IntegrationAccountBasicAuthRequest {
+                let content = ElasticCloudIntegrationAccountBasicAuthRequest {
                     auth_type,
                     password,
                     username,
-                    additional_properties,
                     _unparsed,
                 };
 
@@ -121,6 +105,6 @@ impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthRequest {
             }
         }
 
-        deserializer.deserialize_any(IntegrationAccountBasicAuthRequestVisitor)
+        deserializer.deserialize_any(ElasticCloudIntegrationAccountBasicAuthRequestVisitor)
     }
 }

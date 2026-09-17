@@ -6,16 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The Elastic Cloud pending task stats dataflow.
+/// Metrics for cluster-level changes that have been submitted but not yet executed.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ElasticCloudPendingTaskStatsIntegrationDataflowRequest {
-    /// Whether the Elastic Cloud dataflow is enabled.
+    /// Whether Datadog collects this data. Defaults to `false`; set to `true` to start collection.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -25,21 +23,12 @@ impl ElasticCloudPendingTaskStatsIntegrationDataflowRequest {
     pub fn new() -> ElasticCloudPendingTaskStatsIntegrationDataflowRequest {
         ElasticCloudPendingTaskStatsIntegrationDataflowRequest {
             enabled: None,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -68,10 +57,6 @@ impl<'de> Deserialize<'de> for ElasticCloudPendingTaskStatsIntegrationDataflowRe
                 M: MapAccess<'a>,
             {
                 let mut enabled: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -83,18 +68,15 @@ impl<'de> Deserialize<'de> for ElasticCloudPendingTaskStatsIntegrationDataflowRe
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
 
-                let content = ElasticCloudPendingTaskStatsIntegrationDataflowRequest {
-                    enabled,
-                    additional_properties,
-                    _unparsed,
-                };
+                let content =
+                    ElasticCloudPendingTaskStatsIntegrationDataflowRequest { enabled, _unparsed };
 
                 Ok(content)
             }

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum IntegrationAccountBasicAuthType {
+pub enum ElasticCloudIntegrationAccountBasicAuthType {
     BASIC,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for IntegrationAccountBasicAuthType {
+impl ToString for ElasticCloudIntegrationAccountBasicAuthType {
     fn to_string(&self) -> String {
         match self {
             Self::BASIC => String::from("basic"),
@@ -20,7 +20,7 @@ impl ToString for IntegrationAccountBasicAuthType {
     }
 }
 
-impl Serialize for IntegrationAccountBasicAuthType {
+impl Serialize for ElasticCloudIntegrationAccountBasicAuthType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for IntegrationAccountBasicAuthType {
     }
 }
 
-impl<'de> Deserialize<'de> for IntegrationAccountBasicAuthType {
+impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountBasicAuthType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

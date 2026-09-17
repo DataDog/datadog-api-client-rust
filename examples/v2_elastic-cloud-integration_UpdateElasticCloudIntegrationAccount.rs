@@ -1,9 +1,11 @@
 // Update an Elastic Cloud integration account returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_elastic_cloud_integration_accounts::ElasticCloudIntegrationAccountsAPI;
+use datadog_api_client::datadogV2::api_elastic_cloud_integration::ElasticCloudIntegrationAPI;
 use datadog_api_client::datadogV2::model::ElasticCloudDetailedIndexStatsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::ElasticCloudIndexStatsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountAuthenticationUpdate;
+use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthType;
+use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthUpdate;
 use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountSettingsUpdate;
 use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountUpdateAttributes;
 use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountUpdateData;
@@ -14,8 +16,6 @@ use datadog_api_client::datadogV2::model::ElasticCloudPrimaryShardGracefulTimeou
 use datadog_api_client::datadogV2::model::ElasticCloudPrimaryShardStatsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::ElasticCloudShardAllocationStatsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::ElasticCloudSlmStatsIntegrationDataflowRequest;
-use datadog_api_client::datadogV2::model::IntegrationAccountBasicAuthType;
-use datadog_api_client::datadogV2::model::IntegrationAccountBasicAuthUpdate;
 use datadog_api_client::datadogV2::model::IntegrationAccountType;
 
 #[tokio::main]
@@ -25,9 +25,12 @@ async fn main() {
             ElasticCloudIntegrationAccountUpdateData::new(
                 ElasticCloudIntegrationAccountUpdateAttributes::new()
                     .authentication(
-                        ElasticCloudIntegrationAccountAuthenticationUpdate::IntegrationAccountBasicAuthUpdate(
+                        ElasticCloudIntegrationAccountAuthenticationUpdate
+                        ::ElasticCloudIntegrationAccountBasicAuthUpdate(
                             Box::new(
-                                IntegrationAccountBasicAuthUpdate::new(IntegrationAccountBasicAuthType::BASIC)
+                                ElasticCloudIntegrationAccountBasicAuthUpdate::new(
+                                    ElasticCloudIntegrationAccountBasicAuthType::BASIC,
+                                )
                                     .password("your-password".to_string())
                                     .username("datadog".to_string()),
                             ),
@@ -69,7 +72,7 @@ async fn main() {
         );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.UpdateElasticCloudIntegrationAccount", true);
-    let api = ElasticCloudIntegrationAccountsAPI::with_config(configuration);
+    let api = ElasticCloudIntegrationAPI::with_config(configuration);
     let resp = api
         .update_elastic_cloud_integration_account("account_id".to_string(), body)
         .await;
