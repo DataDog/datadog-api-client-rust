@@ -10,6 +10,10 @@ use cucumber::{
     given, then, when, World,
 };
 use datadog_api_client::datadog::{APIKey, Configuration};
+use flate2::{
+    write::{GzEncoder, ZlibEncoder},
+    Compression,
+};
 use lazy_static::lazy_static;
 use minijinja::{Environment, State};
 use regex::Regex;
@@ -383,7 +387,28 @@ async fn send_test_runner_request(world: &mut DatadogWorld) {
         request = request.header("content-type", content_type);
     }
     if let Some(body) = world.parameters.get("body") {
-        request = request.body(serde_json::to_vec(body).unwrap());
+        let body = serde_json::to_vec(body).unwrap();
+        if let Some(compression) = request_plan["compression"].as_str() {
+            request = request.header("content-encoding", compression);
+            let compressed = match compression {
+                "gzip" => {
+                    let mut encoder = GzEncoder::new(Vec::new(), Compression::default());
+                    encoder.write_all(&body).unwrap();
+                    encoder.finish().unwrap()
+                }
+                "deflate" => {
+                    let mut encoder = ZlibEncoder::new(Vec::new(), Compression::default());
+                    encoder.write_all(&body).unwrap();
+                    encoder.finish().unwrap()
+                }
+                #[cfg(feature = "zstd")]
+                "zstd1" => zstd::stream::encode_all(body.as_slice(), 0).unwrap(),
+                value => panic!("unsupported generated request compression: {value}"),
+            };
+            request = request.body(compressed);
+        } else {
+            request = request.body(body);
+        }
     }
 
     let response = request.send().await.expect("generated test request failed");
