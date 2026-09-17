@@ -33,6 +33,9 @@ pub struct PartialAPIKeyAttributes {
     /// Name of the API key.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// Whether the API key can enroll a Private Action Runner.
+    #[serde(rename = "private_action_runner_enroll_enabled")]
+    pub private_action_runner_enroll_enabled: Option<bool>,
     /// The remote config read enabled status.
     #[serde(rename = "remote_config_read_enabled")]
     pub remote_config_read_enabled: Option<bool>,
@@ -52,6 +55,7 @@ impl PartialAPIKeyAttributes {
             last4: None,
             modified_at: None,
             name: None,
+            private_action_runner_enroll_enabled: None,
             remote_config_read_enabled: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -85,6 +89,11 @@ impl PartialAPIKeyAttributes {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn private_action_runner_enroll_enabled(mut self, value: bool) -> Self {
+        self.private_action_runner_enroll_enabled = Some(value);
         self
     }
 
@@ -131,6 +140,7 @@ impl<'de> Deserialize<'de> for PartialAPIKeyAttributes {
                 let mut last4: Option<String> = None;
                 let mut modified_at: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut private_action_runner_enroll_enabled: Option<bool> = None;
                 let mut remote_config_read_enabled: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -175,6 +185,13 @@ impl<'de> Deserialize<'de> for PartialAPIKeyAttributes {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "private_action_runner_enroll_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            private_action_runner_enroll_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "remote_config_read_enabled" => {
                             if v.is_null() {
                                 continue;
@@ -197,6 +214,7 @@ impl<'de> Deserialize<'de> for PartialAPIKeyAttributes {
                     last4,
                     modified_at,
                     name,
+                    private_action_runner_enroll_enabled,
                     remote_config_read_enabled,
                     additional_properties,
                     _unparsed,
