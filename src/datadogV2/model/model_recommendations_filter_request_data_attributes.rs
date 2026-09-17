@@ -1,0 +1,156 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use serde::de::{Error, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
+use serde_with::skip_serializing_none;
+use std::fmt::{self, Formatter};
+
+/// Attributes used to filter and sort cost recommendations.
+#[non_exhaustive]
+#[skip_serializing_none]
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub struct RecommendationsFilterRequestDataAttributes {
+    /// Recommendations scope. Defaults to `ccm`; use `experiment` for experimental recommendations or `*` for both.
+    #[serde(rename = "scope")]
+    pub scope: Option<crate::datadogV2::model::RecommendationsFilterRequestScope>,
+    /// Ordered list of sort clauses applied to the result set.
+    #[serde(rename = "sort")]
+    pub sort: Option<Vec<crate::datadogV2::model::RecommendationsFilterRequestSortItems>>,
+    /// Active view name (for example, `active`, `dismissed`, `open`, `in-progress`, or `completed`).
+    #[serde(rename = "view")]
+    pub view: Option<String>,
+    #[serde(flatten)]
+    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool,
+}
+
+impl RecommendationsFilterRequestDataAttributes {
+    pub fn new() -> RecommendationsFilterRequestDataAttributes {
+        RecommendationsFilterRequestDataAttributes {
+            scope: None,
+            sort: None,
+            view: None,
+            additional_properties: std::collections::BTreeMap::new(),
+            _unparsed: false,
+        }
+    }
+
+    pub fn scope(
+        mut self,
+        value: crate::datadogV2::model::RecommendationsFilterRequestScope,
+    ) -> Self {
+        self.scope = Some(value);
+        self
+    }
+
+    pub fn sort(
+        mut self,
+        value: Vec<crate::datadogV2::model::RecommendationsFilterRequestSortItems>,
+    ) -> Self {
+        self.sort = Some(value);
+        self
+    }
+
+    pub fn view(mut self, value: String) -> Self {
+        self.view = Some(value);
+        self
+    }
+
+    pub fn additional_properties(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.additional_properties = value;
+        self
+    }
+}
+
+impl Default for RecommendationsFilterRequestDataAttributes {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for RecommendationsFilterRequestDataAttributes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct RecommendationsFilterRequestDataAttributesVisitor;
+        impl<'a> Visitor<'a> for RecommendationsFilterRequestDataAttributesVisitor {
+            type Value = RecommendationsFilterRequestDataAttributes;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut scope: Option<crate::datadogV2::model::RecommendationsFilterRequestScope> =
+                    None;
+                let mut sort: Option<
+                    Vec<crate::datadogV2::model::RecommendationsFilterRequestSortItems>,
+                > = None;
+                let mut view: Option<String> = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "scope" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _scope) = scope {
+                                match _scope {
+                                    crate::datadogV2::model::RecommendationsFilterRequestScope::UnparsedObject(_scope) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "sort" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "view" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            view = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        &_ => {
+                            if let Ok(value) = serde_json::from_value(v.clone()) {
+                                additional_properties.insert(k, value);
+                            }
+                        }
+                    }
+                }
+
+                let content = RecommendationsFilterRequestDataAttributes {
+                    scope,
+                    sort,
+                    view,
+                    additional_properties,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(RecommendationsFilterRequestDataAttributesVisitor)
+    }
+}

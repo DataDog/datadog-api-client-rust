@@ -6,23 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request body for filtering cost recommendations.
+/// JSON:API request body for filtering cost recommendations.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RecommendationsFilterRequest {
-    /// Filter expression applied to the recommendations.
-    #[serde(rename = "filter")]
-    pub filter: Option<String>,
-    /// Recommendations scope. Defaults to `ccm`; use `experiment` for experimental recommendations or `*` for both.
-    #[serde(rename = "scope")]
-    pub scope: Option<crate::datadogV2::model::RecommendationsFilterRequestScope>,
-    /// Ordered list of sort clauses applied to the result set.
-    #[serde(rename = "sort")]
-    pub sort: Option<Vec<crate::datadogV2::model::RecommendationsFilterRequestSortItems>>,
-    /// Active view name (for example, `active`, `dismissed`, `open`, `in-progress`, or `completed`).
-    #[serde(rename = "view")]
-    pub view: Option<String>,
+    /// JSON:API resource containing the cost recommendations filter. This legacy search contract
+    /// uses the resource ID for the filter expression rather than as a persistent resource identifier.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::RecommendationsFilterRequestData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -31,41 +23,14 @@ pub struct RecommendationsFilterRequest {
 }
 
 impl RecommendationsFilterRequest {
-    pub fn new() -> RecommendationsFilterRequest {
+    pub fn new(
+        data: crate::datadogV2::model::RecommendationsFilterRequestData,
+    ) -> RecommendationsFilterRequest {
         RecommendationsFilterRequest {
-            filter: None,
-            scope: None,
-            sort: None,
-            view: None,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn filter(mut self, value: String) -> Self {
-        self.filter = Some(value);
-        self
-    }
-
-    pub fn scope(
-        mut self,
-        value: crate::datadogV2::model::RecommendationsFilterRequestScope,
-    ) -> Self {
-        self.scope = Some(value);
-        self
-    }
-
-    pub fn sort(
-        mut self,
-        value: Vec<crate::datadogV2::model::RecommendationsFilterRequestSortItems>,
-    ) -> Self {
-        self.sort = Some(value);
-        self
-    }
-
-    pub fn view(mut self, value: String) -> Self {
-        self.view = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -74,12 +39,6 @@ impl RecommendationsFilterRequest {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for RecommendationsFilterRequest {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -100,13 +59,8 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut filter: Option<String> = None;
-                let mut scope: Option<crate::datadogV2::model::RecommendationsFilterRequestScope> =
+                let mut data: Option<crate::datadogV2::model::RecommendationsFilterRequestData> =
                     None;
-                let mut sort: Option<
-                    Vec<crate::datadogV2::model::RecommendationsFilterRequestSortItems>,
-                > = None;
-                let mut view: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -115,37 +69,8 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequest {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "filter" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "scope" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _scope) = scope {
-                                match _scope {
-                                    crate::datadogV2::model::RecommendationsFilterRequestScope::UnparsedObject(_scope) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
-                        }
-                        "sort" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "view" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            view = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -154,12 +79,10 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequest {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = RecommendationsFilterRequest {
-                    filter,
-                    scope,
-                    sort,
-                    view,
+                    data,
                     additional_properties,
                     _unparsed,
                 };
