@@ -3861,6 +3861,7 @@ impl TeamsAPI {
 
     /// Get all teams.
     /// Can be used to search for teams using the `filter[keyword]` and `filter[me]` query parameters.
+    /// This temporary description change exercises SDK generation.
     pub async fn list_teams(
         &self,
         params: ListTeamsOptionalParams,
@@ -3913,6 +3914,7 @@ impl TeamsAPI {
 
     /// Get all teams.
     /// Can be used to search for teams using the `filter[keyword]` and `filter[me]` query parameters.
+    /// This temporary description change exercises SDK generation.
     pub async fn list_teams_with_http_info(
         &self,
         params: ListTeamsOptionalParams,
