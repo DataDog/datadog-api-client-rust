@@ -8,8 +8,8 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ElasticCloudIntegrationAccountAuthenticationUpdate {
-    IntegrationAccountBasicAuthUpdate(
-        Box<crate::datadogV2::model::IntegrationAccountBasicAuthUpdate>,
+    ElasticCloudIntegrationAccountBasicAuthUpdate(
+        Box<crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthUpdate>,
     ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -21,11 +21,11 @@ impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountAuthenticationUpdat
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
         if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::IntegrationAccountBasicAuthUpdate>,
+            Box<crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthUpdate>,
         >(value.clone())
         {
             if !_v._unparsed {
-                return Ok(ElasticCloudIntegrationAccountAuthenticationUpdate::IntegrationAccountBasicAuthUpdate(_v));
+                return Ok(ElasticCloudIntegrationAccountAuthenticationUpdate::ElasticCloudIntegrationAccountBasicAuthUpdate(_v));
             }
         }
 

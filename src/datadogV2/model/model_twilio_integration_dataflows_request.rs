@@ -6,28 +6,28 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Dataflows to configure on the Twilio integration account, keyed by dataflow id.
+/// Data Datadog collects from Twilio, keyed by dataflow id. Each dataflow turns on a distinct kind of collection: set `enabled` to start or stop it. Defaults listed on each dataflow apply when the account is created; on update, omitted fields keep their current values. Where a dataflow depends on a Twilio feature being enabled, that prerequisite is noted on the dataflow; a dataflow enabled without it is stored but collects no data.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TwilioIntegrationDataflowsRequest {
-    /// The Twilio alerts logs dataflow.
+    /// Twilio Alert resource logs, which detail the errors and warnings raised when Twilio makes a webhook request to your server or when your application calls the Twilio REST API. This is the one kind of data the integration collects by default.
     #[serde(rename = "twilio-alerts-logs")]
     pub twilio_alerts_logs:
         Option<crate::datadogV2::model::TwilioAlertsLogsIntegrationDataflowRequest>,
-    /// The Twilio call summaries logs dataflow.
+    /// Twilio Call Summary resource logs, covering the metadata and performance of the calls made from your Twilio account. Requires Voice Insights Advanced Features to be enabled on the Twilio account; without it this dataflow collects no data.
     #[serde(rename = "twilio-call-summaries-logs")]
     pub twilio_call_summaries_logs:
         Option<crate::datadogV2::model::TwilioCallSummariesLogsIntegrationDataflowRequest>,
-    /// The Twilio cloud cost metrics dataflow.
+    /// Your Twilio cost data, so that Twilio spend can be broken down and attributed in [Cloud Cost Management](<https://docs.datadoghq.com/cloud_cost_management/>). Cost data appears in Cloud Cost Management within 24 hours of enabling this dataflow.
     #[serde(rename = "twilio-cloud-cost-metrics")]
     pub twilio_cloud_cost_metrics:
         Option<crate::datadogV2::model::TwilioCloudCostMetricsIntegrationDataflowRequest>,
-    /// The Twilio events logs dataflow.
+    /// Twilio Event resource logs, which record virtually every action taken in your Twilio account, such as provisioning a phone number, changing account security settings, or deleting a recording. Actions are recorded whether they came from the REST API, a user in the Twilio Console, or Twilio itself. [Cloud SIEM](<https://docs.datadoghq.com/security/cloud_siem/>) analyzes and correlates these logs to detect threats in real time.
     #[serde(rename = "twilio-events-logs")]
     pub twilio_events_logs:
         Option<crate::datadogV2::model::TwilioEventsLogsIntegrationDataflowRequest>,
-    /// The Twilio messages logs dataflow.
+    /// Twilio Message resource logs for inbound and outbound messages, used to track delivery and troubleshoot message errors. A log is produced when you send a message through the REST API, when Twilio executes a TwiML instruction, and when someone messages one of your Twilio numbers or channel addresses. Message bodies are never collected.
     #[serde(rename = "twilio-messages-logs")]
     pub twilio_messages_logs:
         Option<crate::datadogV2::model::TwilioMessagesLogsIntegrationDataflowRequest>,

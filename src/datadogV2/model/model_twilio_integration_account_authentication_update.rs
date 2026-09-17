@@ -8,8 +8,8 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum TwilioIntegrationAccountAuthenticationUpdate {
-    IntegrationAccountBasicAuthUpdate(
-        Box<crate::datadogV2::model::IntegrationAccountBasicAuthUpdate>,
+    TwilioIntegrationAccountBasicAuthUpdate(
+        Box<crate::datadogV2::model::TwilioIntegrationAccountBasicAuthUpdate>,
     ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -21,15 +21,11 @@ impl<'de> Deserialize<'de> for TwilioIntegrationAccountAuthenticationUpdate {
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
         if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::IntegrationAccountBasicAuthUpdate>,
+            Box<crate::datadogV2::model::TwilioIntegrationAccountBasicAuthUpdate>,
         >(value.clone())
         {
             if !_v._unparsed {
-                return Ok(
-                    TwilioIntegrationAccountAuthenticationUpdate::IntegrationAccountBasicAuthUpdate(
-                        _v,
-                    ),
-                );
+                return Ok(TwilioIntegrationAccountAuthenticationUpdate::TwilioIntegrationAccountBasicAuthUpdate(_v));
             }
         }
 

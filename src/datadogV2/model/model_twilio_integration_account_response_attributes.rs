@@ -15,7 +15,7 @@ pub struct TwilioIntegrationAccountResponseAttributes {
     #[serde(rename = "authentication")]
     pub authentication:
         Option<crate::datadogV2::model::TwilioIntegrationAccountAuthenticationResponse>,
-    /// Dataflows configured on the Twilio integration account, keyed by dataflow id.
+    /// Data Datadog collects from Twilio, keyed by dataflow id.
     #[serde(rename = "dataflows")]
     pub dataflows: Option<crate::datadogV2::model::TwilioIntegrationDataflowsResponse>,
     /// Human-readable name of the Twilio integration account.

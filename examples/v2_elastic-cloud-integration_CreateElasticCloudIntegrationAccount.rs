@@ -1,9 +1,11 @@
 // Create an Elastic Cloud integration account returns "Created" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_elastic_cloud_integration_accounts::ElasticCloudIntegrationAccountsAPI;
+use datadog_api_client::datadogV2::api_elastic_cloud_integration::ElasticCloudIntegrationAPI;
 use datadog_api_client::datadogV2::model::ElasticCloudDetailedIndexStatsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::ElasticCloudIndexStatsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountAuthenticationRequest;
+use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthRequest;
+use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthType;
 use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountCreateAttributes;
 use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountCreateData;
 use datadog_api_client::datadogV2::model::ElasticCloudIntegrationAccountCreateRequest;
@@ -14,8 +16,6 @@ use datadog_api_client::datadogV2::model::ElasticCloudPrimaryShardGracefulTimeou
 use datadog_api_client::datadogV2::model::ElasticCloudPrimaryShardStatsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::ElasticCloudShardAllocationStatsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::ElasticCloudSlmStatsIntegrationDataflowRequest;
-use datadog_api_client::datadogV2::model::IntegrationAccountBasicAuthRequest;
-use datadog_api_client::datadogV2::model::IntegrationAccountBasicAuthType;
 use datadog_api_client::datadogV2::model::IntegrationAccountType;
 
 #[tokio::main]
@@ -24,10 +24,10 @@ async fn main() {
         ElasticCloudIntegrationAccountCreateRequest::new(
             ElasticCloudIntegrationAccountCreateData::new(
                 ElasticCloudIntegrationAccountCreateAttributes::new(
-                    ElasticCloudIntegrationAccountAuthenticationRequest::IntegrationAccountBasicAuthRequest(
+                    ElasticCloudIntegrationAccountAuthenticationRequest::ElasticCloudIntegrationAccountBasicAuthRequest(
                         Box::new(
-                            IntegrationAccountBasicAuthRequest::new(
-                                IntegrationAccountBasicAuthType::BASIC,
+                            ElasticCloudIntegrationAccountBasicAuthRequest::new(
+                                ElasticCloudIntegrationAccountBasicAuthType::BASIC,
                                 "your-password".to_string(),
                                 "datadog".to_string(),
                             ),
@@ -64,7 +64,7 @@ async fn main() {
         );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateElasticCloudIntegrationAccount", true);
-    let api = ElasticCloudIntegrationAccountsAPI::with_config(configuration);
+    let api = ElasticCloudIntegrationAPI::with_config(configuration);
     let resp = api.create_elastic_cloud_integration_account(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

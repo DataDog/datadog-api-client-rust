@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The Elastic Cloud detailed index stats dataflow.
+/// Primary shard metrics broken down per index, rather than aggregated across the cluster.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ElasticCloudDetailedIndexStatsIntegrationDataflowResponse {
-    /// Whether the Elastic Cloud dataflow is enabled.
+    /// Whether Datadog collects this data.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// Read-only collection status of a dataflow.

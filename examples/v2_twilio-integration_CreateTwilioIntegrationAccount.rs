@@ -1,14 +1,14 @@
 // Create a Twilio integration account returns "Created" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_twilio_integration_accounts::TwilioIntegrationAccountsAPI;
-use datadog_api_client::datadogV2::model::IntegrationAccountBasicAuthRequest;
-use datadog_api_client::datadogV2::model::IntegrationAccountBasicAuthType;
+use datadog_api_client::datadogV2::api_twilio_integration::TwilioIntegrationAPI;
 use datadog_api_client::datadogV2::model::IntegrationAccountType;
 use datadog_api_client::datadogV2::model::TwilioAlertsLogsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::TwilioCallSummariesLogsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::TwilioCloudCostMetricsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::TwilioEventsLogsIntegrationDataflowRequest;
 use datadog_api_client::datadogV2::model::TwilioIntegrationAccountAuthenticationRequest;
+use datadog_api_client::datadogV2::model::TwilioIntegrationAccountBasicAuthRequest;
+use datadog_api_client::datadogV2::model::TwilioIntegrationAccountBasicAuthType;
 use datadog_api_client::datadogV2::model::TwilioIntegrationAccountCreateAttributes;
 use datadog_api_client::datadogV2::model::TwilioIntegrationAccountCreateData;
 use datadog_api_client::datadogV2::model::TwilioIntegrationAccountCreateRequest;
@@ -20,9 +20,9 @@ use datadog_api_client::datadogV2::model::TwilioMessagesLogsIntegrationDataflowR
 async fn main() {
     let body = TwilioIntegrationAccountCreateRequest::new(TwilioIntegrationAccountCreateData::new(
         TwilioIntegrationAccountCreateAttributes::new(
-            TwilioIntegrationAccountAuthenticationRequest::IntegrationAccountBasicAuthRequest(
-                Box::new(IntegrationAccountBasicAuthRequest::new(
-                    IntegrationAccountBasicAuthType::BASIC,
+            TwilioIntegrationAccountAuthenticationRequest::TwilioIntegrationAccountBasicAuthRequest(
+                Box::new(TwilioIntegrationAccountBasicAuthRequest::new(
+                    TwilioIntegrationAccountBasicAuthType::BASIC,
                     "your-password".to_string(),
                     "datadog".to_string(),
                 )),
@@ -51,7 +51,7 @@ async fn main() {
     ));
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.CreateTwilioIntegrationAccount", true);
-    let api = TwilioIntegrationAccountsAPI::with_config(configuration);
+    let api = TwilioIntegrationAPI::with_config(configuration);
     let resp = api.create_twilio_integration_account(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
