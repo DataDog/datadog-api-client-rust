@@ -933,6 +933,11 @@ fn enable_unstable(world: &mut DatadogWorld, operation_id: String) {
     initialize_api_instance(world, world.api_name.clone().unwrap());
 }
 
+#[given(expr = "the request uses {string} compression")]
+fn request_uses_compression(_world: &mut DatadogWorld, _compression: String) {
+    // The generated replay server validates the Content-Encoding header and compressed body.
+}
+
 #[given(regex = r"^body with value (.*)$")]
 fn body_with_value(world: &mut DatadogWorld, body: String) {
     if test_runner_enabled() {
