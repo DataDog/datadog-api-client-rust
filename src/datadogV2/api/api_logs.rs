@@ -875,6 +875,11 @@ impl LogsAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.submit_log";
+        let params = if params.content_encoding.is_none() {
+            params.content_encoding(crate::datadogV2::model::ContentEncoding::GZIP)
+        } else {
+            params
+        };
 
         // unbox and build optional parameters
         let content_encoding = params.content_encoding;
