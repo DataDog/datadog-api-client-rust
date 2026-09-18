@@ -140,6 +140,7 @@ pub mod api_storage_management;
 pub mod api_synthetics;
 pub mod api_tag_rules;
 pub mod api_teams;
+pub mod api_terraform_state_files;
 pub mod api_test_optimization;
 pub mod api_threat_intelligence;
 pub mod api_timeseries_anomaly_investigations;
