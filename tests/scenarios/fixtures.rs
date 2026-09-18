@@ -963,6 +963,11 @@ fn request_uses_compression(_world: &mut DatadogWorld, _compression: String) {
     // The generated replay server validates the Content-Encoding header and compressed body.
 }
 
+#[given(expr = "the user selects {string} compression")]
+fn user_selects_compression(_world: &mut DatadogWorld, _compression: String) {
+    // The generated request plan applies the explicitly selected compression.
+}
+
 #[given(regex = r"^body with value (.*)$")]
 fn body_with_value(world: &mut DatadogWorld, body: String) {
     if test_runner_enabled() {
