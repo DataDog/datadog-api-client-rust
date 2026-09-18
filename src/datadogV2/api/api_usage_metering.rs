@@ -2750,7 +2750,9 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Lists usage quotas for the caller's organization in a quota namespace. You can optionally include descendant organizations in the same datacenter as the caller. Requires the `billing_edit` permission.
+    /// Lists usage quotas for the caller's organization in a quota namespace. You can optionally include
+    /// descendant organizations in the same datacenter as the caller. Requires the `billing_read` or
+    /// `billing_edit` permission.
     pub async fn list_quotas(
         &self,
         quota_namespace: String,
@@ -2809,7 +2811,9 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Lists usage quotas for the caller's organization in a quota namespace. You can optionally include descendant organizations in the same datacenter as the caller. Requires the `billing_edit` permission.
+    /// Lists usage quotas for the caller's organization in a quota namespace. You can optionally include
+    /// descendant organizations in the same datacenter as the caller. Requires the `billing_read` or
+    /// `billing_edit` permission.
     pub async fn list_quotas_with_http_info(
         &self,
         quota_namespace: String,
