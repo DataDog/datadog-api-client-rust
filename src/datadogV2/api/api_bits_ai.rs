@@ -431,7 +431,7 @@ impl BitsAIAPI {
         }
     }
 
-    /// Trigger a new Bits AI investigation based on a monitor alert.
+    /// Trigger a new Bits AI investigation from either a monitor alert or a general investigation request.
     pub async fn trigger_investigation(
         &self,
         body: crate::datadogV2::model::TriggerInvestigationRequest,
@@ -453,7 +453,7 @@ impl BitsAIAPI {
         }
     }
 
-    /// Trigger a new Bits AI investigation based on a monitor alert.
+    /// Trigger a new Bits AI investigation from either a monitor alert or a general investigation request.
     pub async fn trigger_investigation_with_http_info(
         &self,
         body: crate::datadogV2::model::TriggerInvestigationRequest,
