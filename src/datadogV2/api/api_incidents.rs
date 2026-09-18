@@ -5101,6 +5101,9 @@ impl IncidentsAPI {
     }
 
     /// Create a page from an incident using the Cases service.
+    ///
+    /// **Deprecated**: This endpoint is deprecated. Use
+    /// [Create an on-call page from an incident](#create-an-on-call-page-from-an-incident) instead.
     pub async fn create_page_from_incident(
         &self,
         incident_id: String,
@@ -5127,6 +5130,9 @@ impl IncidentsAPI {
     }
 
     /// Create a page from an incident using the Cases service.
+    ///
+    /// **Deprecated**: This endpoint is deprecated. Use
+    /// [Create an on-call page from an incident](#create-an-on-call-page-from-an-incident) instead.
     pub async fn create_page_from_incident_with_http_info(
         &self,
         incident_id: String,
