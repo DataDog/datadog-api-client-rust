@@ -372,6 +372,7 @@ impl Default for Configuration {
             ("v2.get_finding".to_owned(), false),
             ("v2.get_historical_job".to_owned(), false),
             ("v2.get_indicator_of_compromise".to_owned(), false),
+            ("v2.get_matching_signals".to_owned(), false),
             ("v2.get_rule_version_history".to_owned(), false),
             ("v2.get_secrets_rules".to_owned(), false),
             (
