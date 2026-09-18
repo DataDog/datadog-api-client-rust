@@ -4,7 +4,6 @@ use datadog_api_client::datadogV2::api_metrics::MetricsAPI;
 use datadog_api_client::datadogV2::model::TagIndexingRuleCreateAttributes;
 use datadog_api_client::datadogV2::model::TagIndexingRuleCreateData;
 use datadog_api_client::datadogV2::model::TagIndexingRuleCreateRequest;
-use datadog_api_client::datadogV2::model::TagIndexingRuleDynamicTags;
 use datadog_api_client::datadogV2::model::TagIndexingRuleMetricMatch;
 use datadog_api_client::datadogV2::model::TagIndexingRuleOptions;
 use datadog_api_client::datadogV2::model::TagIndexingRuleOptionsData;
@@ -23,11 +22,6 @@ async fn main() {
             TagIndexingRuleOptions::new()
                 .data(
                     TagIndexingRuleOptionsData::new()
-                        .dynamic_tags(
-                            TagIndexingRuleDynamicTags::new()
-                                .queried_tags_window_seconds(3600)
-                                .related_asset_tags(false),
-                        )
                         .manage_preexisting_metrics(true)
                         .metric_match(
                             TagIndexingRuleMetricMatch::new().queried_window_seconds(3600),
