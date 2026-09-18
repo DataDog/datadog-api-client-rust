@@ -595,7 +595,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Get all scheduled downtimes.
+    /// List scheduled downtimes, optionally filtering to those that are active when the request is made.
     pub async fn list_downtimes(
         &self,
         params: ListDowntimesOptionalParams,
@@ -652,7 +652,7 @@ impl DowntimesAPI {
         }
     }
 
-    /// Get all scheduled downtimes.
+    /// List scheduled downtimes, optionally filtering to those that are active when the request is made.
     pub async fn list_downtimes_with_http_info(
         &self,
         params: ListDowntimesOptionalParams,
