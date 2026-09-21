@@ -122,6 +122,8 @@ pub struct ApiInstances {
     pub v2_api_tag_rules: Option<datadogV2::api_tag_rules::TagRulesAPI>,
     pub v2_api_high_availability_multi_region:
         Option<datadogV2::api_high_availability_multi_region::HighAvailabilityMultiRegionAPI>,
+    pub v2_api_terraform_state_files:
+        Option<datadogV2::api_terraform_state_files::TerraformStateFilesAPI>,
     pub v2_api_identity_providers: Option<datadogV2::api_identity_providers::IdentityProvidersAPI>,
     pub v2_api_entity_integration_configs:
         Option<datadogV2::api_entity_integration_configs::EntityIntegrationConfigsAPI>,
@@ -980,6 +982,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         }
         "HighAvailabilityMultiRegion" => {
             world.api_instances.v2_api_high_availability_multi_region = Some(datadogV2::api_high_availability_multi_region::HighAvailabilityMultiRegionAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
+        }
+        "TerraformStateFiles" => {
+            world.api_instances.v2_api_terraform_state_files = Some(datadogV2::api_terraform_state_files::TerraformStateFilesAPI::with_client_and_config(
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
@@ -5343,6 +5351,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.CreateHamrOrgConnection".into(),
         test_v2_create_hamr_org_connection,
+    );
+    world.function_mappings.insert(
+        "v2.ListTerraformBackendSyncConfigs".into(),
+        test_v2_list_terraform_backend_sync_configs,
+    );
+    world.function_mappings.insert(
+        "v2.CreateTerraformBackendSyncConfig".into(),
+        test_v2_create_terraform_backend_sync_config,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteTerraformBackendSyncConfig".into(),
+        test_v2_delete_terraform_backend_sync_config,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateTerraformBackendSyncConfig".into(),
+        test_v2_update_terraform_backend_sync_config,
     );
     world.function_mappings.insert(
         "v2.ListIdentityProviders".into(),
@@ -41028,6 +41052,124 @@ fn test_v2_create_hamr_org_connection(
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.create_hamr_org_connection_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_terraform_backend_sync_configs(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_terraform_state_files
+        .as_ref()
+        .expect("api instance not found");
+    let account_id = _parameters
+        .get("account_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_terraform_state_files::ListTerraformBackendSyncConfigsOptionalParams::default();
+    params.account_id = account_id;
+    let response = match block_on(api.list_terraform_backend_sync_configs_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_terraform_backend_sync_config(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_terraform_state_files
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_terraform_backend_sync_config_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_terraform_backend_sync_config(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_terraform_state_files
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let response = match block_on(api.delete_terraform_backend_sync_config_with_http_info(id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_terraform_backend_sync_config(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_terraform_state_files
+        .as_ref()
+        .expect("api instance not found");
+    let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_terraform_backend_sync_config_with_http_info(id, body))
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {
