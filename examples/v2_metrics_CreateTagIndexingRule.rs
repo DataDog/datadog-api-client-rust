@@ -23,11 +23,7 @@ async fn main() {
             TagIndexingRuleOptions::new()
                 .data(
                     TagIndexingRuleOptionsData::new()
-                        .dynamic_tags(
-                            TagIndexingRuleDynamicTags::new()
-                                .queried_tags_window_seconds(3600)
-                                .related_asset_tags(false),
-                        )
+                        .dynamic_tags(TagIndexingRuleDynamicTags::new())
                         .manage_preexisting_metrics(true)
                         .metric_match(
                             TagIndexingRuleMetricMatch::new().queried_window_seconds(3600),
