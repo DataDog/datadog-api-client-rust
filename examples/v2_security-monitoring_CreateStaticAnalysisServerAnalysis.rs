@@ -31,6 +31,7 @@ async fn main() {
             .entity_checked(None)
             .name("no-exit".to_string())
             .regex(None)
+            .tags(vec![])
             .tests(vec![AnalysisRequestRuleTest::new()])],
         ),
         AnalysisRequestDataType::ANALYSIS_REQUEST,

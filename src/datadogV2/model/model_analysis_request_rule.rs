@@ -35,6 +35,9 @@ pub struct AnalysisRequestRule {
     /// The identifier of the user or system that created the rule. Server-assigned by the rulesets endpoints; ignored by this operation.
     #[serde(rename = "created_by")]
     pub created_by: Option<String>,
+    /// The message associated with the custom rule revision. Forwarded from the custom rulesets endpoints; ignored by this operation.
+    #[serde(rename = "creation_message")]
+    pub creation_message: Option<String>,
     /// The CVE identifier associated with the rule. Forwarded from the rulesets endpoints; ignored by this operation.
     #[serde(rename = "cve")]
     pub cve: Option<String>,
@@ -87,6 +90,9 @@ pub struct AnalysisRequestRule {
     /// Whether an AI-generated fix should be offered. Forwarded from the rulesets endpoints; ignored by this operation.
     #[serde(rename = "should_use_ai_fix")]
     pub should_use_ai_fix: Option<bool>,
+    /// Tags associated with the custom rule revision. Forwarded from the custom rulesets endpoints; ignored by this operation.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     /// The test cases associated with the rule. Forwarded from the rulesets endpoints; ignored by this operation.
     #[serde(rename = "tests")]
     pub tests: Option<Vec<crate::datadogV2::model::AnalysisRequestRuleTest>>,
@@ -96,6 +102,9 @@ pub struct AnalysisRequestRule {
     /// The rule type indicating the detection mechanism (for example, `TREE_SITTER_QUERY`).
     #[serde(rename = "type")]
     pub type_: String,
+    /// The custom rule revision version. Forwarded from the custom rulesets endpoints; ignored by this operation.
+    #[serde(rename = "version_id")]
+    pub version_id: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -121,6 +130,7 @@ impl AnalysisRequestRule {
             code,
             created_at: None,
             created_by: None,
+            creation_message: None,
             cve: None,
             cwe: None,
             description: None,
@@ -137,9 +147,11 @@ impl AnalysisRequestRule {
             severity,
             short_description: None,
             should_use_ai_fix: None,
+            tags: None,
             tests: None,
             tree_sitter_query,
             type_,
+            version_id: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -160,6 +172,11 @@ impl AnalysisRequestRule {
 
     pub fn created_by(mut self, value: String) -> Self {
         self.created_by = Some(value);
+        self
+    }
+
+    pub fn creation_message(mut self, value: String) -> Self {
+        self.creation_message = Some(value);
         self
     }
 
@@ -228,8 +245,18 @@ impl AnalysisRequestRule {
         self
     }
 
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
+        self
+    }
+
     pub fn tests(mut self, value: Vec<crate::datadogV2::model::AnalysisRequestRuleTest>) -> Self {
         self.tests = Some(value);
+        self
+    }
+
+    pub fn version_id(mut self, value: i64) -> Self {
+        self.version_id = Some(value);
         self
     }
 
@@ -267,6 +294,7 @@ impl<'de> Deserialize<'de> for AnalysisRequestRule {
                 let mut code: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
+                let mut creation_message: Option<String> = None;
                 let mut cve: Option<String> = None;
                 let mut cwe: Option<String> = None;
                 let mut description: Option<String> = None;
@@ -283,9 +311,11 @@ impl<'de> Deserialize<'de> for AnalysisRequestRule {
                 let mut severity: Option<String> = None;
                 let mut short_description: Option<String> = None;
                 let mut should_use_ai_fix: Option<bool> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut tests: Option<Vec<crate::datadogV2::model::AnalysisRequestRuleTest>> = None;
                 let mut tree_sitter_query: Option<String> = None;
                 let mut type_: Option<String> = None;
+                let mut version_id: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -320,6 +350,13 @@ impl<'de> Deserialize<'de> for AnalysisRequestRule {
                                 continue;
                             }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "creation_message" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            creation_message =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "cve" => {
                             if v.is_null() {
@@ -410,6 +447,12 @@ impl<'de> Deserialize<'de> for AnalysisRequestRule {
                             should_use_ai_fix =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tests" => {
                             if v.is_null() {
                                 continue;
@@ -422,6 +465,12 @@ impl<'de> Deserialize<'de> for AnalysisRequestRule {
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "version_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            version_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -447,6 +496,7 @@ impl<'de> Deserialize<'de> for AnalysisRequestRule {
                     code,
                     created_at,
                     created_by,
+                    creation_message,
                     cve,
                     cwe,
                     description,
@@ -463,9 +513,11 @@ impl<'de> Deserialize<'de> for AnalysisRequestRule {
                     severity,
                     short_description,
                     should_use_ai_fix,
+                    tags,
                     tests,
                     tree_sitter_query,
                     type_,
+                    version_id,
                     additional_properties,
                     _unparsed,
                 };
