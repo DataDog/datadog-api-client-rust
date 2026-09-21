@@ -3859,7 +3859,7 @@ impl TeamsAPI {
         }
     }
 
-    /// Get all teams.
+    /// Get all teams in your organization.
     /// Can be used to search for teams using the `filter[keyword]` and `filter[me]` query parameters.
     pub async fn list_teams(
         &self,
@@ -3911,7 +3911,7 @@ impl TeamsAPI {
         }
     }
 
-    /// Get all teams.
+    /// Get all teams in your organization.
     /// Can be used to search for teams using the `filter[keyword]` and `filter[me]` query parameters.
     pub async fn list_teams_with_http_info(
         &self,
