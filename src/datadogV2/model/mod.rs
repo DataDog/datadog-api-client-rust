@@ -10662,6 +10662,8 @@ pub mod model_batch_delete_rows_request_array;
 pub use self::model_batch_delete_rows_request_array::BatchDeleteRowsRequestArray;
 pub mod model_table_row_resource_array;
 pub use self::model_table_row_resource_array::TableRowResourceArray;
+pub mod model_table_row_resource_array_meta;
+pub use self::model_table_row_resource_array_meta::TableRowResourceArrayMeta;
 pub mod model_batch_upsert_rows_request_array;
 pub use self::model_batch_upsert_rows_request_array::BatchUpsertRowsRequestArray;
 pub mod model_batch_upsert_rows_request_data;
