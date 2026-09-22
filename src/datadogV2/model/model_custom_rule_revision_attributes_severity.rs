@@ -10,6 +10,7 @@ pub enum CustomRuleRevisionAttributesSeverity {
     ERROR,
     WARNING,
     NOTICE,
+    NONE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +20,7 @@ impl ToString for CustomRuleRevisionAttributesSeverity {
             Self::ERROR => String::from("ERROR"),
             Self::WARNING => String::from("WARNING"),
             Self::NOTICE => String::from("NOTICE"),
+            Self::NONE => String::from("NONE"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +48,7 @@ impl<'de> Deserialize<'de> for CustomRuleRevisionAttributesSeverity {
             "ERROR" => Self::ERROR,
             "WARNING" => Self::WARNING,
             "NOTICE" => Self::NOTICE,
+            "NONE" => Self::NONE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
