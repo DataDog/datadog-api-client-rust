@@ -25,12 +25,6 @@ pub struct TagIndexingRuleDynamicTags {
     /// Tags not used in any dashboards,  monitors, notebooks, or SLOs are excluded from indexing.
     #[serde(rename = "exclude_not_used_in_assets")]
     pub exclude_not_used_in_assets: Option<bool>,
-    /// Window in seconds for evaluating queried tags.
-    #[serde(rename = "queried_tags_window_seconds")]
-    pub queried_tags_window_seconds: Option<i64>,
-    /// When true, tags from related assets are included.
-    #[serde(rename = "related_asset_tags")]
-    pub related_asset_tags: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -43,8 +37,6 @@ impl TagIndexingRuleDynamicTags {
         TagIndexingRuleDynamicTags {
             exclude_not_queried_window_seconds: None,
             exclude_not_used_in_assets: None,
-            queried_tags_window_seconds: None,
-            related_asset_tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -57,16 +49,6 @@ impl TagIndexingRuleDynamicTags {
 
     pub fn exclude_not_used_in_assets(mut self, value: bool) -> Self {
         self.exclude_not_used_in_assets = Some(value);
-        self
-    }
-
-    pub fn queried_tags_window_seconds(mut self, value: i64) -> Self {
-        self.queried_tags_window_seconds = Some(value);
-        self
-    }
-
-    pub fn related_asset_tags(mut self, value: bool) -> Self {
-        self.related_asset_tags = Some(value);
         self
     }
 
@@ -104,8 +86,6 @@ impl<'de> Deserialize<'de> for TagIndexingRuleDynamicTags {
             {
                 let mut exclude_not_queried_window_seconds: Option<i64> = None;
                 let mut exclude_not_used_in_assets: Option<bool> = None;
-                let mut queried_tags_window_seconds: Option<i64> = None;
-                let mut related_asset_tags: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -128,20 +108,6 @@ impl<'de> Deserialize<'de> for TagIndexingRuleDynamicTags {
                             exclude_not_used_in_assets =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "queried_tags_window_seconds" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            queried_tags_window_seconds =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "related_asset_tags" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            related_asset_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -153,8 +119,6 @@ impl<'de> Deserialize<'de> for TagIndexingRuleDynamicTags {
                 let content = TagIndexingRuleDynamicTags {
                     exclude_not_queried_window_seconds,
                     exclude_not_used_in_assets,
-                    queried_tags_window_seconds,
-                    related_asset_tags,
                     additional_properties,
                     _unparsed,
                 };
