@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The request body for deleting multiple rows from a reference table.
+/// The bearer token authentication method configured on the account.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct BatchDeleteRowsRequestArray {
-    /// List of row resources to delete from the reference table. The request payload can be up to 1 MiB.
-    #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::TableRowResourceIdentifier>,
+pub struct DatabricksIntegrationAccountBearerTokenAuthResponse {
+    /// The authentication method type.
+    #[serde(rename = "auth_type")]
+    pub auth_type: crate::datadogV2::model::DatabricksIntegrationAccountBearerTokenAuthType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,12 +21,12 @@ pub struct BatchDeleteRowsRequestArray {
     pub(crate) _unparsed: bool,
 }
 
-impl BatchDeleteRowsRequestArray {
+impl DatabricksIntegrationAccountBearerTokenAuthResponse {
     pub fn new(
-        data: Vec<crate::datadogV2::model::TableRowResourceIdentifier>,
-    ) -> BatchDeleteRowsRequestArray {
-        BatchDeleteRowsRequestArray {
-            data,
+        auth_type: crate::datadogV2::model::DatabricksIntegrationAccountBearerTokenAuthType,
+    ) -> DatabricksIntegrationAccountBearerTokenAuthResponse {
+        DatabricksIntegrationAccountBearerTokenAuthResponse {
+            auth_type,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -41,14 +41,14 @@ impl BatchDeleteRowsRequestArray {
     }
 }
 
-impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
+impl<'de> Deserialize<'de> for DatabricksIntegrationAccountBearerTokenAuthResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BatchDeleteRowsRequestArrayVisitor;
-        impl<'a> Visitor<'a> for BatchDeleteRowsRequestArrayVisitor {
-            type Value = BatchDeleteRowsRequestArray;
+        struct DatabricksIntegrationAccountBearerTokenAuthResponseVisitor;
+        impl<'a> Visitor<'a> for DatabricksIntegrationAccountBearerTokenAuthResponseVisitor {
+            type Value = DatabricksIntegrationAccountBearerTokenAuthResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,8 +58,9 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::TableRowResourceIdentifier>> =
-                    None;
+                let mut auth_type: Option<
+                    crate::datadogV2::model::DatabricksIntegrationAccountBearerTokenAuthType,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -68,8 +69,16 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "auth_type" => {
+                            auth_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _auth_type) = auth_type {
+                                match _auth_type {
+                                    crate::datadogV2::model::DatabricksIntegrationAccountBearerTokenAuthType::UnparsedObject(_auth_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -78,10 +87,10 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
+                let auth_type = auth_type.ok_or_else(|| M::Error::missing_field("auth_type"))?;
 
-                let content = BatchDeleteRowsRequestArray {
-                    data,
+                let content = DatabricksIntegrationAccountBearerTokenAuthResponse {
+                    auth_type,
                     additional_properties,
                     _unparsed,
                 };
@@ -90,6 +99,6 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
             }
         }
 
-        deserializer.deserialize_any(BatchDeleteRowsRequestArrayVisitor)
+        deserializer.deserialize_any(DatabricksIntegrationAccountBearerTokenAuthResponseVisitor)
     }
 }

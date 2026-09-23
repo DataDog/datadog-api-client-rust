@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The request body for deleting multiple rows from a reference table.
+/// Response payload for a single Databricks integration account.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct BatchDeleteRowsRequestArray {
-    /// List of row resources to delete from the reference table. The request payload can be up to 1 MiB.
+pub struct DatabricksIntegrationAccountResponse {
+    /// Data envelope of a Databricks integration account, including server-assigned identity.
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::TableRowResourceIdentifier>,
+    pub data: crate::datadogV2::model::DatabricksIntegrationAccountResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct BatchDeleteRowsRequestArray {
     pub(crate) _unparsed: bool,
 }
 
-impl BatchDeleteRowsRequestArray {
+impl DatabricksIntegrationAccountResponse {
     pub fn new(
-        data: Vec<crate::datadogV2::model::TableRowResourceIdentifier>,
-    ) -> BatchDeleteRowsRequestArray {
-        BatchDeleteRowsRequestArray {
+        data: crate::datadogV2::model::DatabricksIntegrationAccountResponseData,
+    ) -> DatabricksIntegrationAccountResponse {
+        DatabricksIntegrationAccountResponse {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl BatchDeleteRowsRequestArray {
     }
 }
 
-impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
+impl<'de> Deserialize<'de> for DatabricksIntegrationAccountResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BatchDeleteRowsRequestArrayVisitor;
-        impl<'a> Visitor<'a> for BatchDeleteRowsRequestArrayVisitor {
-            type Value = BatchDeleteRowsRequestArray;
+        struct DatabricksIntegrationAccountResponseVisitor;
+        impl<'a> Visitor<'a> for DatabricksIntegrationAccountResponseVisitor {
+            type Value = DatabricksIntegrationAccountResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,8 +58,9 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::TableRowResourceIdentifier>> =
-                    None;
+                let mut data: Option<
+                    crate::datadogV2::model::DatabricksIntegrationAccountResponseData,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -80,7 +81,7 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = BatchDeleteRowsRequestArray {
+                let content = DatabricksIntegrationAccountResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -90,6 +91,6 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
             }
         }
 
-        deserializer.deserialize_any(BatchDeleteRowsRequestArrayVisitor)
+        deserializer.deserialize_any(DatabricksIntegrationAccountResponseVisitor)
     }
 }

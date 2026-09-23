@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The request body for deleting multiple rows from a reference table.
+/// Settings configured on the Databricks integration account.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct BatchDeleteRowsRequestArray {
-    /// List of row resources to delete from the reference table. The request payload can be up to 1 MiB.
-    #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::TableRowResourceIdentifier>,
+pub struct DatabricksIntegrationAccountSettingsResponse {
+    /// ID of the SQL warehouse used to query the Databricks system tables.
+    #[serde(rename = "system_tables_sql_warehouse_id")]
+    pub system_tables_sql_warehouse_id: Option<String>,
+    /// URL of the Databricks workspace.
+    #[serde(rename = "workspace_url")]
+    pub workspace_url: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,15 +24,19 @@ pub struct BatchDeleteRowsRequestArray {
     pub(crate) _unparsed: bool,
 }
 
-impl BatchDeleteRowsRequestArray {
-    pub fn new(
-        data: Vec<crate::datadogV2::model::TableRowResourceIdentifier>,
-    ) -> BatchDeleteRowsRequestArray {
-        BatchDeleteRowsRequestArray {
-            data,
+impl DatabricksIntegrationAccountSettingsResponse {
+    pub fn new(workspace_url: String) -> DatabricksIntegrationAccountSettingsResponse {
+        DatabricksIntegrationAccountSettingsResponse {
+            system_tables_sql_warehouse_id: None,
+            workspace_url,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn system_tables_sql_warehouse_id(mut self, value: String) -> Self {
+        self.system_tables_sql_warehouse_id = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -41,14 +48,14 @@ impl BatchDeleteRowsRequestArray {
     }
 }
 
-impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
+impl<'de> Deserialize<'de> for DatabricksIntegrationAccountSettingsResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct BatchDeleteRowsRequestArrayVisitor;
-        impl<'a> Visitor<'a> for BatchDeleteRowsRequestArrayVisitor {
-            type Value = BatchDeleteRowsRequestArray;
+        struct DatabricksIntegrationAccountSettingsResponseVisitor;
+        impl<'a> Visitor<'a> for DatabricksIntegrationAccountSettingsResponseVisitor {
+            type Value = DatabricksIntegrationAccountSettingsResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,8 +65,8 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::TableRowResourceIdentifier>> =
-                    None;
+                let mut system_tables_sql_warehouse_id: Option<String> = None;
+                let mut workspace_url: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -68,8 +75,16 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "system_tables_sql_warehouse_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            system_tables_sql_warehouse_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "workspace_url" => {
+                            workspace_url =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -78,10 +93,12 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
                         }
                     }
                 }
-                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
+                let workspace_url =
+                    workspace_url.ok_or_else(|| M::Error::missing_field("workspace_url"))?;
 
-                let content = BatchDeleteRowsRequestArray {
-                    data,
+                let content = DatabricksIntegrationAccountSettingsResponse {
+                    system_tables_sql_warehouse_id,
+                    workspace_url,
                     additional_properties,
                     _unparsed,
                 };
@@ -90,6 +107,6 @@ impl<'de> Deserialize<'de> for BatchDeleteRowsRequestArray {
             }
         }
 
-        deserializer.deserialize_any(BatchDeleteRowsRequestArrayVisitor)
+        deserializer.deserialize_any(DatabricksIntegrationAccountSettingsResponseVisitor)
     }
 }
