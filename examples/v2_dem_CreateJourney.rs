@@ -17,24 +17,36 @@ async fn main() {
         DemJourneyCreateAttributes::new(
             DemJourneyRum::new(vec![
                 DemRumStep::new(
-                    vec![DemRumNode::new("action.name:'checkout'".to_string())],
+                    vec![DemRumNode::new(
+                        "11111111-2222-3333-4444-555555555555".to_string(),
+                        r#"@action.name:"Checkout""#.to_string(),
+                    )],
                     DemRumStepType::START,
                 ),
                 DemRumStep::new(
-                    vec![DemRumNode::new("action.name:'confirmation'".to_string())],
+                    vec![DemRumNode::new(
+                        "11111111-2222-3333-4444-555555555555".to_string(),
+                        r#"@view.url_path:"/confirmation""#.to_string(),
+                    )],
                     DemRumStepType::STOP,
                 ),
             ])
-            .filter("env:prod".to_string())
+            .filter("@application.id:11111111-2222-3333-4444-555555555555 env:prod".to_string())
             .variants(vec![DemVariant::new(
                 "Mobile checkout".to_string(),
                 vec![
                     DemRumStep::new(
-                        vec![DemRumNode::new("action.name:'checkout'".to_string())],
+                        vec![DemRumNode::new(
+                            "11111111-2222-3333-4444-555555555555".to_string(),
+                            r#"@action.name:"Checkout""#.to_string(),
+                        )],
                         DemRumStepType::START,
                     ),
                     DemRumStep::new(
-                        vec![DemRumNode::new("action.name:'confirmation'".to_string())],
+                        vec![DemRumNode::new(
+                            "11111111-2222-3333-4444-555555555555".to_string(),
+                            r#"@view.url_path:"/confirmation""#.to_string(),
+                        )],
                         DemRumStepType::STOP,
                     ),
                 ],
@@ -47,11 +59,17 @@ async fn main() {
             "Mobile checkout".to_string(),
             vec![
                 DemRumStep::new(
-                    vec![DemRumNode::new("action.name:'checkout'".to_string())],
+                    vec![DemRumNode::new(
+                        "11111111-2222-3333-4444-555555555555".to_string(),
+                        r#"@action.name:"Checkout""#.to_string(),
+                    )],
                     DemRumStepType::START,
                 ),
                 DemRumStep::new(
-                    vec![DemRumNode::new("action.name:'confirmation'".to_string())],
+                    vec![DemRumNode::new(
+                        "11111111-2222-3333-4444-555555555555".to_string(),
+                        r#"@view.url_path:"/confirmation""#.to_string(),
+                    )],
                     DemRumStepType::STOP,
                 ),
             ],

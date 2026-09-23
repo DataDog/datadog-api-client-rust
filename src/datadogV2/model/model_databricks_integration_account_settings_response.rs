@@ -6,20 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The RUM definition for a DEM journey.
+/// Settings configured on the Databricks integration account.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DemJourneyRum {
-    /// An optional RUM query filter applied to the entire journey. For a single-application journey, include the application as `@application.id:<application_id>` in addition to setting `app_id` on every RUM node.
-    #[serde(rename = "filter")]
-    pub filter: Option<String>,
-    /// List of RUM journey steps.
-    #[serde(rename = "rum_steps")]
-    pub rum_steps: Vec<crate::datadogV2::model::DemRumStep>,
-    /// List of variants associated with a DEM journey.
-    #[serde(rename = "variants")]
-    pub variants: Option<Vec<crate::datadogV2::model::DemVariant>>,
+pub struct DatabricksIntegrationAccountSettingsResponse {
+    /// ID of the SQL warehouse used to query the Databricks system tables.
+    #[serde(rename = "system_tables_sql_warehouse_id")]
+    pub system_tables_sql_warehouse_id: Option<String>,
+    /// URL of the Databricks workspace.
+    #[serde(rename = "workspace_url")]
+    pub workspace_url: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,24 +24,18 @@ pub struct DemJourneyRum {
     pub(crate) _unparsed: bool,
 }
 
-impl DemJourneyRum {
-    pub fn new(rum_steps: Vec<crate::datadogV2::model::DemRumStep>) -> DemJourneyRum {
-        DemJourneyRum {
-            filter: None,
-            rum_steps,
-            variants: None,
+impl DatabricksIntegrationAccountSettingsResponse {
+    pub fn new(workspace_url: String) -> DatabricksIntegrationAccountSettingsResponse {
+        DatabricksIntegrationAccountSettingsResponse {
+            system_tables_sql_warehouse_id: None,
+            workspace_url,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn filter(mut self, value: String) -> Self {
-        self.filter = Some(value);
-        self
-    }
-
-    pub fn variants(mut self, value: Vec<crate::datadogV2::model::DemVariant>) -> Self {
-        self.variants = Some(value);
+    pub fn system_tables_sql_warehouse_id(mut self, value: String) -> Self {
+        self.system_tables_sql_warehouse_id = Some(value);
         self
     }
 
@@ -57,14 +48,14 @@ impl DemJourneyRum {
     }
 }
 
-impl<'de> Deserialize<'de> for DemJourneyRum {
+impl<'de> Deserialize<'de> for DatabricksIntegrationAccountSettingsResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DemJourneyRumVisitor;
-        impl<'a> Visitor<'a> for DemJourneyRumVisitor {
-            type Value = DemJourneyRum;
+        struct DatabricksIntegrationAccountSettingsResponseVisitor;
+        impl<'a> Visitor<'a> for DatabricksIntegrationAccountSettingsResponseVisitor {
+            type Value = DatabricksIntegrationAccountSettingsResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -74,9 +65,8 @@ impl<'de> Deserialize<'de> for DemJourneyRum {
             where
                 M: MapAccess<'a>,
             {
-                let mut filter: Option<String> = None;
-                let mut rum_steps: Option<Vec<crate::datadogV2::model::DemRumStep>> = None;
-                let mut variants: Option<Vec<crate::datadogV2::model::DemVariant>> = None;
+                let mut system_tables_sql_warehouse_id: Option<String> = None;
+                let mut workspace_url: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -85,20 +75,16 @@ impl<'de> Deserialize<'de> for DemJourneyRum {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "filter" => {
+                        "system_tables_sql_warehouse_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            system_tables_sql_warehouse_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "rum_steps" => {
-                            rum_steps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "variants" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            variants = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "workspace_url" => {
+                            workspace_url =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -107,12 +93,12 @@ impl<'de> Deserialize<'de> for DemJourneyRum {
                         }
                     }
                 }
-                let rum_steps = rum_steps.ok_or_else(|| M::Error::missing_field("rum_steps"))?;
+                let workspace_url =
+                    workspace_url.ok_or_else(|| M::Error::missing_field("workspace_url"))?;
 
-                let content = DemJourneyRum {
-                    filter,
-                    rum_steps,
-                    variants,
+                let content = DatabricksIntegrationAccountSettingsResponse {
+                    system_tables_sql_warehouse_id,
+                    workspace_url,
                     additional_properties,
                     _unparsed,
                 };
@@ -121,6 +107,6 @@ impl<'de> Deserialize<'de> for DemJourneyRum {
             }
         }
 
-        deserializer.deserialize_any(DemJourneyRumVisitor)
+        deserializer.deserialize_any(DatabricksIntegrationAccountSettingsResponseVisitor)
     }
 }

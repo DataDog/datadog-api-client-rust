@@ -6,20 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A RUM node within a journey step.
+/// Settings of the Cloud Cost Management dataflow.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct DemRumNode {
-    /// The RUM application ID whose events this node query matches. This value is required for every node when creating or updating a DEM feature or journey, including variants, and is used to discover the resource in application-scoped searches. Use `GET /api/v2/rum/applications` to find RUM application IDs.
-    #[serde(rename = "app_id")]
-    pub app_id: String,
-    /// The ID of the RUM node element.
-    #[serde(rename = "id")]
-    pub id: Option<String>,
-    /// The RUM query for matching this node.
-    #[serde(rename = "query")]
-    pub query: String,
+pub struct DatabricksCloudCostMetricsIntegrationDataflowSettingsResponse {
+    /// Whether cost data is collected for every workspace in the Databricks account rather than this workspace only. This takes effect across the Databricks account: if any one workspace enables it, Datadog collects cost data for all of them regardless of their individual settings, and every covered workspace incurs Cloud Cost Management charges.
+    #[serde(rename = "ccm_collect_all_workspaces")]
+    pub ccm_collect_all_workspaces: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,19 +21,17 @@ pub struct DemRumNode {
     pub(crate) _unparsed: bool,
 }
 
-impl DemRumNode {
-    pub fn new(app_id: String, query: String) -> DemRumNode {
-        DemRumNode {
-            app_id,
-            id: None,
-            query,
+impl DatabricksCloudCostMetricsIntegrationDataflowSettingsResponse {
+    pub fn new() -> DatabricksCloudCostMetricsIntegrationDataflowSettingsResponse {
+        DatabricksCloudCostMetricsIntegrationDataflowSettingsResponse {
+            ccm_collect_all_workspaces: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
+    pub fn ccm_collect_all_workspaces(mut self, value: bool) -> Self {
+        self.ccm_collect_all_workspaces = Some(value);
         self
     }
 
@@ -52,14 +44,20 @@ impl DemRumNode {
     }
 }
 
-impl<'de> Deserialize<'de> for DemRumNode {
+impl Default for DatabricksCloudCostMetricsIntegrationDataflowSettingsResponse {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for DatabricksCloudCostMetricsIntegrationDataflowSettingsResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct DemRumNodeVisitor;
-        impl<'a> Visitor<'a> for DemRumNodeVisitor {
-            type Value = DemRumNode;
+        struct DatabricksCloudCostMetricsIntegrationDataflowSettingsResponseVisitor;
+        impl<'a> Visitor<'a> for DatabricksCloudCostMetricsIntegrationDataflowSettingsResponseVisitor {
+            type Value = DatabricksCloudCostMetricsIntegrationDataflowSettingsResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -69,9 +67,7 @@ impl<'de> Deserialize<'de> for DemRumNode {
             where
                 M: MapAccess<'a>,
             {
-                let mut app_id: Option<String> = None;
-                let mut id: Option<String> = None;
-                let mut query: Option<String> = None;
+                let mut ccm_collect_all_workspaces: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -80,17 +76,12 @@ impl<'de> Deserialize<'de> for DemRumNode {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "app_id" => {
-                            app_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
+                        "ccm_collect_all_workspaces" => {
                             if v.is_null() {
                                 continue;
                             }
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "query" => {
-                            query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            ccm_collect_all_workspaces =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -99,13 +90,9 @@ impl<'de> Deserialize<'de> for DemRumNode {
                         }
                     }
                 }
-                let app_id = app_id.ok_or_else(|| M::Error::missing_field("app_id"))?;
-                let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 
-                let content = DemRumNode {
-                    app_id,
-                    id,
-                    query,
+                let content = DatabricksCloudCostMetricsIntegrationDataflowSettingsResponse {
+                    ccm_collect_all_workspaces,
                     additional_properties,
                     _unparsed,
                 };
@@ -114,6 +101,7 @@ impl<'de> Deserialize<'de> for DemRumNode {
             }
         }
 
-        deserializer.deserialize_any(DemRumNodeVisitor)
+        deserializer
+            .deserialize_any(DatabricksCloudCostMetricsIntegrationDataflowSettingsResponseVisitor)
     }
 }
