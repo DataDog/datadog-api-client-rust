@@ -63,6 +63,12 @@ jobs:
         with:
           path: ~/.cargo/bin/dd-rust-license-tool
           key: ${{ runner.os }}-cargo-bin-${{ steps.rust.outputs.version }}-${{ hashFiles('scripts/install-license-tool.sh') }}
+      - name: Update package version in license lockfile
+        if: github.event_name == 'schedule' || startsWith(github.event.pull_request.head.ref, 'release/')
+        run: |
+          export CARGO_RESOLVER_LOCKFILE_PATH="${PWD}/.ci/license/Cargo.lock"
+          cargo update --package datadog-api-client
+        shell: bash
       - name: License check
         run: ./scripts/license-check.sh
         shell: bash
