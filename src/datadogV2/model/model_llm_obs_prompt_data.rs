@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPromptData {
-    /// Attributes of an Agent Observability prompt registry entry.
+    /// Attributes of an Agent Observability prompt registry entry. Prompt list and metadata-update responses omit complete template and configuration data.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsPromptDataAttributes,
     /// Unique identifier of the prompt.

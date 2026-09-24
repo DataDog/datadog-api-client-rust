@@ -3173,7 +3173,7 @@ impl AgentObservabilityAPI {
         &self,
         body: crate::datadogV2::model::LLMObsCreatePromptRequest,
     ) -> Result<
-        crate::datadogV2::model::LLMObsPromptResponse,
+        crate::datadogV2::model::LLMObsCreatePromptResponse,
         datadog::Error<CreateLLMObsPromptError>,
     > {
         match self.create_llm_obs_prompt_with_http_info(body).await {
@@ -3195,7 +3195,7 @@ impl AgentObservabilityAPI {
         &self,
         body: crate::datadogV2::model::LLMObsCreatePromptRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::LLMObsCreatePromptResponse>,
         datadog::Error<CreateLLMObsPromptError>,
     > {
         let local_configuration = &self.config;
@@ -3307,7 +3307,7 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsCreatePromptResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -6127,7 +6127,7 @@ impl AgentObservabilityAPI {
         }
     }
 
-    /// Get the full template of a single, specific version of an Agent Observability prompt.
+    /// Get the full template and configuration of a single, specific version of an Agent Observability prompt.
     pub async fn get_llm_obs_prompt_version(
         &self,
         prompt_id: String,
@@ -6153,7 +6153,7 @@ impl AgentObservabilityAPI {
         }
     }
 
-    /// Get the full template of a single, specific version of an Agent Observability prompt.
+    /// Get the full template and configuration of a single, specific version of an Agent Observability prompt.
     pub async fn get_llm_obs_prompt_version_with_http_info(
         &self,
         prompt_id: String,
