@@ -1,5 +1,70 @@
 # CHANGELOG
 
+## 0.37.0/2026-09-24
+
+### Added
+* Add bearer auth to endpoints that support api app key auth [#2117](https://github.com/DataDog/datadog-api-client-rust/pull/2117)
+* Document Deployment Gate evaluation APIs [#2116](https://github.com/DataDog/datadog-api-client-rust/pull/2116)
+* Update GCP V2 API spec to support is_org_folder_resource_collection_enabled  [#2110](https://github.com/DataDog/datadog-api-client-rust/pull/2110)
+* allow billing read for ListQuotas GET endpoint [#2102](https://github.com/DataDog/datadog-api-client-rust/pull/2102)
+* Document run_as attribute and with_run_as param for downtime v2 API [#2096](https://github.com/DataDog/datadog-api-client-rust/pull/2096)
+* Add draft monitor permissions definition [#2090](https://github.com/DataDog/datadog-api-client-rust/pull/2090)
+* Add sensitivePrivileges field to Workflow Automation spec [#2089](https://github.com/DataDog/datadog-api-client-rust/pull/2089)
+* Document GetBudget response metadata [#2079](https://github.com/DataDog/datadog-api-client-rust/pull/2079)
+* LLMObs Document version-pinned prompt composition [#2074](https://github.com/DataDog/datadog-api-client-rust/pull/2074)
+* Add versioned prompt configuration [#2073](https://github.com/DataDog/datadog-api-client-rust/pull/2073)
+* Document OAuth v2 OIDC discovery endpoint [#2072](https://github.com/DataDog/datadog-api-client-rust/pull/2072)
+* Add prometheus remote write source and sink to obs-pipelines public api spec [#2066](https://github.com/DataDog/datadog-api-client-rust/pull/2066)
+* Allow up to three timeseries anomaly investigation results [#2065](https://github.com/DataDog/datadog-api-client-rust/pull/2065)
+* Security findings default and regular inbox rules API spec [#2063](https://github.com/DataDog/datadog-api-client-rust/pull/2063)
+* Add Integration Accounts v2 API for Snowflake [#2062](https://github.com/DataDog/datadog-api-client-rust/pull/2062)
+* Add downtime duration policy to Monitor Config Policy API spec [#2060](https://github.com/DataDog/datadog-api-client-rust/pull/2060)
+* Add overflow and metrics destinations, deprecate generate_datadog_metrics, add custom auth for http_client [#2059](https://github.com/DataDog/datadog-api-client-rust/pull/2059)
+* promote GET `/api/v2/on-call/schedules` to a public ListOnCallSchedules operation [#2058](https://github.com/DataDog/datadog-api-client-rust/pull/2058)
+* Add documentation for name filter query parameter in ListStatusPages [#2056](https://github.com/DataDog/datadog-api-client-rust/pull/2056)
+* Add embedded app widgets to the Dashboard API [#2051](https://github.com/DataDog/datadog-api-client-rust/pull/2051)
+* Support frontend annotation display blocks [#2050](https://github.com/DataDog/datadog-api-client-rust/pull/2050)
+* Accept the linear ticket creation target in security pipelines automation [#2049](https://github.com/DataDog/datadog-api-client-rust/pull/2049)
+* Add timeseries anomaly investigations API [#2040](https://github.com/DataDog/datadog-api-client-rust/pull/2040)
+* Add monitor IDs to deployment rules [#2038](https://github.com/DataDog/datadog-api-client-rust/pull/2038)
+* Change usage quotas public APIs to only required billing_edit [#2037](https://github.com/DataDog/datadog-api-client-rust/pull/2037)
+* Add `sensitive_data` and `serverless_function_code_vulnerability` to security finding notification API spec [#2036](https://github.com/DataDog/datadog-api-client-rust/pull/2036)
+* Add Integration Accounts v2 API for Databricks [#2032](https://github.com/DataDog/datadog-api-client-rust/pull/2032)
+* Add source to target and model configuration options to data quality monitors [#2029](https://github.com/DataDog/datadog-api-client-rust/pull/2029)
+* Publish product catalog SKUs and pricing API in preview [#2028](https://github.com/DataDog/datadog-api-client-rust/pull/2028)
+* Add unit cost ROI endpoints to Cloud Cost Management [#2027](https://github.com/DataDog/datadog-api-client-rust/pull/2027)
+* Update Observability Pipelines Splunk TCP source in OpenAPI spec [#2026](https://github.com/DataDog/datadog-api-client-rust/pull/2026)
+* Add annotated interaction details endpoint [#2020](https://github.com/DataDog/datadog-api-client-rust/pull/2020)
+* [DEM-68] - Publish DEM Journey APIs [#2018](https://github.com/DataDog/datadog-api-client-rust/pull/2018)
+* Add canceled_description to maintenance response attributes [#2016](https://github.com/DataDog/datadog-api-client-rust/pull/2016)
+* Add Feature Flag creation options [#2010](https://github.com/DataDog/datadog-api-client-rust/pull/2010)
+* Add workflow run as configuration [#1993](https://github.com/DataDog/datadog-api-client-rust/pull/1993)
+* Document NDM device tag sources [#1976](https://github.com/DataDog/datadog-api-client-rust/pull/1976)
+* Promote Code Coverage v2 endpoints to stable [#1946](https://github.com/DataDog/datadog-api-client-rust/pull/1946)
+* Document include_scopes query param on GET /api/v2/permissions [#1908](https://github.com/DataDog/datadog-api-client-rust/pull/1908)
+
+### Removed
+* Remove deprecated queried_tags_window_seconds and related_asset_tags fields [#2113](https://github.com/DataDog/datadog-api-client-rust/pull/2113)
+* Deprecate POST incidents /cases/page endpoint [#2103](https://github.com/DataDog/datadog-api-client-rust/pull/2103)
+* Remove actor_handle and actor_type from the CSM ownership feedback request [#2033](https://github.com/DataDog/datadog-api-client-rust/pull/2033)
+
+### Fixed
+* Fix static analysis OpenAPI drift [#2112](https://github.com/DataDog/datadog-api-client-rust/pull/2112)
+* Allow SDS configuration metadata extensions [#2109](https://github.com/DataDog/datadog-api-client-rust/pull/2109)
+* Fix cost recommendations JSON API request schema [#2097](https://github.com/DataDog/datadog-api-client-rust/pull/2097)
+* Add Private Action Runner flag to API key schemas [#2094](https://github.com/DataDog/datadog-api-client-rust/pull/2094)
+* Document monitor scope for investigations [#2068](https://github.com/DataDog/datadog-api-client-rust/pull/2068)
+* Fix static-analysis-api spec drift [#2053](https://github.com/DataDog/datadog-api-client-rust/pull/2053)
+
+### Changed
+* Normalize Twilio and Elastic Cloud integration account specs [#2087](https://github.com/DataDog/datadog-api-client-rust/pull/2087)
+* Use JSONAPI error schema for cost tag endpoints [#2083](https://github.com/DataDog/datadog-api-client-rust/pull/2083)
+* Fix GetBudget costs_unit.id type to integer [#2081](https://github.com/DataDog/datadog-api-client-rust/pull/2081)
+* Add role policy type to org group policies [#2030](https://github.com/DataDog/datadog-api-client-rust/pull/2030)
+
+### Deprecated
+* Deprecate OCI config listing endpoint [#2011](https://github.com/DataDog/datadog-api-client-rust/pull/2011)
+
 ## 0.36.0/2026-09-02
 
 ### Added
