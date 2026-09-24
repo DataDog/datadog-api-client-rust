@@ -6,14 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a flattened prompt version returned for SDK consumption. Exactly one of `template` and `chat_template` is returned.
+/// Attributes of a flattened prompt version returned for SDK consumption. Exactly one of `template` and `chat_template` is returned. Empty `config` is omitted when configuration authoring is disabled for the organization. Non-empty saved configuration is always returned.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPromptSDKDataAttributes {
-    /// Chat template for this prompt version, as a list of role and content messages. Omitted for text templates.
+    /// Chat template for this prompt version, as a list of messages and named message placeholders. Omitted for text templates.
+    /// **Preview:** Message placeholders are available in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager.
     #[serde(rename = "chat_template")]
-    pub chat_template: Option<Vec<crate::datadogV2::model::LLMObsPromptChatMessage>>,
+    pub chat_template: Option<Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>>,
+    /// Versioned prompt configuration is in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager. Customer-owned configuration delivered with a prompt version. Datadog stores and returns the object without interpolating it, validating provider-specific keys, or applying it to model calls. Do not include secrets.
+    #[serde(rename = "config")]
+    pub config: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Labels attached to the selected version.
     #[deprecated]
     #[serde(rename = "labels")]
@@ -42,6 +46,7 @@ impl LLMObsPromptSDKDataAttributes {
         #[allow(deprecated)]
         LLMObsPromptSDKDataAttributes {
             chat_template: None,
+            config: None,
             labels: None,
             prompt_id: None,
             prompt_version_uuid: None,
@@ -55,9 +60,15 @@ impl LLMObsPromptSDKDataAttributes {
     #[allow(deprecated)]
     pub fn chat_template(
         mut self,
-        value: Vec<crate::datadogV2::model::LLMObsPromptChatMessage>,
+        value: Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>,
     ) -> Self {
         self.chat_template = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn config(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
+        self.config = Some(value);
         self
     }
 
@@ -124,8 +135,10 @@ impl<'de> Deserialize<'de> for LLMObsPromptSDKDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut chat_template: Option<
-                    Vec<crate::datadogV2::model::LLMObsPromptChatMessage>,
+                    Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>,
                 > = None;
+                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
                 let mut labels: Option<Vec<String>> = None;
                 let mut prompt_id: Option<String> = None;
                 let mut prompt_version_uuid: Option<String> = None;
@@ -145,6 +158,12 @@ impl<'de> Deserialize<'de> for LLMObsPromptSDKDataAttributes {
                             }
                             chat_template =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "config" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "labels" => {
                             if v.is_null() {
@@ -188,6 +207,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptSDKDataAttributes {
                 #[allow(deprecated)]
                 let content = LLMObsPromptSDKDataAttributes {
                     chat_template,
+                    config,
                     labels,
                     prompt_id,
                     prompt_version_uuid,

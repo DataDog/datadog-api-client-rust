@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPromptSDKData {
-    /// Attributes of a flattened prompt version returned for SDK consumption. Exactly one of `template` and `chat_template` is returned.
+    /// Attributes of a flattened prompt version returned for SDK consumption. Exactly one of `template` and `chat_template` is returned. Empty `config` is omitted when configuration authoring is disabled for the organization. Non-empty saved configuration is always returned.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsPromptSDKDataAttributes,
     /// Unique identifier of the prompt.

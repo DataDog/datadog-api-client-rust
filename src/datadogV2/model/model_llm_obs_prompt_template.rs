@@ -3,13 +3,14 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// A text template or a list of chat messages.
+/// A text template or a list of chat messages and named message placeholders.
+/// **Preview:** Message placeholders are available in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum LLMObsPromptTemplate {
     LLMObsPromptTextTemplate(String),
-    LLMObsPromptChatTemplate(Vec<crate::datadogV2::model::LLMObsPromptChatMessage>),
+    LLMObsPromptChatTemplate(Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -23,7 +24,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptTemplate {
             return Ok(LLMObsPromptTemplate::LLMObsPromptTextTemplate(_v));
         }
         if let Ok(_v) = serde_json::from_value::<
-            Vec<crate::datadogV2::model::LLMObsPromptChatMessage>,
+            Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>,
         >(value.clone())
         {
             return Ok(LLMObsPromptTemplate::LLMObsPromptChatTemplate(_v));
