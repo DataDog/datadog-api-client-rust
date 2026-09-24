@@ -11,6 +11,11 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RecommendationsFilterRequestDataAttributes {
+    /// Filter expression applied to the recommendations. When supplied, this attribute overrides
+    /// `data.id`, including when empty. When omitted, `data.id` is used. If the resulting filter
+    /// is empty, it defaults to `*`. Scope, view, and pagination still apply.
+    #[serde(rename = "filter")]
+    pub filter: Option<String>,
     /// Recommendations scope. Defaults to `ccm`; use `experiment` for experimental recommendations or `*` for both.
     #[serde(rename = "scope")]
     pub scope: Option<crate::datadogV2::model::RecommendationsFilterRequestScope>,
@@ -30,12 +35,18 @@ pub struct RecommendationsFilterRequestDataAttributes {
 impl RecommendationsFilterRequestDataAttributes {
     pub fn new() -> RecommendationsFilterRequestDataAttributes {
         RecommendationsFilterRequestDataAttributes {
+            filter: None,
             scope: None,
             sort: None,
             view: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn filter(mut self, value: String) -> Self {
+        self.filter = Some(value);
+        self
     }
 
     pub fn scope(
@@ -91,6 +102,7 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequestDataAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut filter: Option<String> = None;
                 let mut scope: Option<crate::datadogV2::model::RecommendationsFilterRequestScope> =
                     None;
                 let mut sort: Option<
@@ -105,6 +117,12 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequestDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "filter" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "scope" => {
                             if v.is_null() {
                                 continue;
@@ -140,6 +158,7 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequestDataAttributes {
                 }
 
                 let content = RecommendationsFilterRequestDataAttributes {
+                    filter,
                     scope,
                     sort,
                     view,
