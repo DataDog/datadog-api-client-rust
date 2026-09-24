@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a specific version of an Agent Observability prompt.
+/// Attributes of a specific version of an Agent Observability prompt. Empty `config` is omitted when configuration authoring is disabled for the organization. Non-empty saved configuration is always returned.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,6 +14,9 @@ pub struct LLMObsPromptVersionDataAttributes {
     /// UUID of the user who authored this version.
     #[serde(rename = "author")]
     pub author: Option<String>,
+    /// Versioned prompt configuration is in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager. Customer-owned configuration delivered with a prompt version. Datadog stores and returns the object without interpolating it, validating provider-specific keys, or applying it to model calls. Do not include secrets.
+    #[serde(rename = "config")]
+    pub config: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Timestamp stored on this prompt version.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -74,6 +77,7 @@ impl LLMObsPromptVersionDataAttributes {
         #[allow(deprecated)]
         LLMObsPromptVersionDataAttributes {
             author: None,
+            config: None,
             created_at: None,
             datasets: None,
             description: None,
@@ -96,6 +100,12 @@ impl LLMObsPromptVersionDataAttributes {
     #[allow(deprecated)]
     pub fn author(mut self, value: String) -> Self {
         self.author = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn config(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
+        self.config = Some(value);
         self
     }
 
@@ -186,6 +196,8 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut author: Option<String> = None;
+                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut datasets: Option<Vec<crate::datadogV2::model::LLMObsPromptDataset>> = None;
                 let mut description: Option<String> = None;
@@ -213,6 +225,12 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                                 continue;
                             }
                             author = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "config" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "created_at" => {
                             if v.is_null() {
@@ -315,6 +333,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptVersionDataAttributes {
                 #[allow(deprecated)]
                 let content = LLMObsPromptVersionDataAttributes {
                     author,
+                    config,
                     created_at,
                     datasets,
                     description,

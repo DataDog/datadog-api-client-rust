@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for a flattened Agent Observability prompt version returned for SDK consumption.
+/// Data object returned after creating an Agent Observability prompt.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct LLMObsPromptSDKData {
-    /// Attributes of a flattened prompt version returned for SDK consumption. Exactly one of `template` and `chat_template` is returned. Empty `config` is omitted when configuration authoring is disabled for the organization. Non-empty saved configuration is always returned.
+pub struct LLMObsCreatePromptResponseData {
+    /// Attributes returned after creating an Agent Observability prompt and its first version. Empty `config` is omitted when configuration authoring is disabled for the organization. Non-empty saved configuration is always returned.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::LLMObsPromptSDKDataAttributes,
+    pub attributes: crate::datadogV2::model::LLMObsCreatePromptResponseDataAttributes,
     /// Unique identifier of the prompt.
     #[serde(rename = "id")]
     pub id: String,
@@ -27,13 +27,13 @@ pub struct LLMObsPromptSDKData {
     pub(crate) _unparsed: bool,
 }
 
-impl LLMObsPromptSDKData {
+impl LLMObsCreatePromptResponseData {
     pub fn new(
-        attributes: crate::datadogV2::model::LLMObsPromptSDKDataAttributes,
+        attributes: crate::datadogV2::model::LLMObsCreatePromptResponseDataAttributes,
         id: String,
         type_: crate::datadogV2::model::LLMObsPromptType,
-    ) -> LLMObsPromptSDKData {
-        LLMObsPromptSDKData {
+    ) -> LLMObsCreatePromptResponseData {
+        LLMObsCreatePromptResponseData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl LLMObsPromptSDKData {
     }
 }
 
-impl<'de> Deserialize<'de> for LLMObsPromptSDKData {
+impl<'de> Deserialize<'de> for LLMObsCreatePromptResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct LLMObsPromptSDKDataVisitor;
-        impl<'a> Visitor<'a> for LLMObsPromptSDKDataVisitor {
-            type Value = LLMObsPromptSDKData;
+        struct LLMObsCreatePromptResponseDataVisitor;
+        impl<'a> Visitor<'a> for LLMObsCreatePromptResponseDataVisitor {
+            type Value = LLMObsCreatePromptResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,8 +68,9 @@ impl<'de> Deserialize<'de> for LLMObsPromptSDKData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::LLMObsPromptSDKDataAttributes> =
-                    None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::LLMObsCreatePromptResponseDataAttributes,
+                > = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::LLMObsPromptType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -110,7 +111,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptSDKData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = LLMObsPromptSDKData {
+                let content = LLMObsCreatePromptResponseData {
                     attributes,
                     id,
                     type_,
@@ -122,6 +123,6 @@ impl<'de> Deserialize<'de> for LLMObsPromptSDKData {
             }
         }
 
-        deserializer.deserialize_any(LLMObsPromptSDKDataVisitor)
+        deserializer.deserialize_any(LLMObsCreatePromptResponseDataVisitor)
     }
 }
