@@ -14,6 +14,10 @@ pub struct TeamRoutingRulesRequestRule {
     /// Specifies the list of actions to perform when the routing rule is matched.
     #[serde(rename = "actions")]
     pub actions: Option<Vec<crate::datadogV2::model::RoutingRuleAction>>,
+    /// Specifies the unique identifier of an existing routing rule to update.
+    /// If omitted, a new routing rule is created.
+    #[serde(rename = "id")]
+    pub id: Option<String>,
     /// Identifies the policy to be applied when this routing rule matches.
     #[serde(rename = "policy_id")]
     pub policy_id: Option<String>,
@@ -37,6 +41,7 @@ impl TeamRoutingRulesRequestRule {
     pub fn new() -> TeamRoutingRulesRequestRule {
         TeamRoutingRulesRequestRule {
             actions: None,
+            id: None,
             policy_id: None,
             query: None,
             time_restriction: None,
@@ -48,6 +53,11 @@ impl TeamRoutingRulesRequestRule {
 
     pub fn actions(mut self, value: Vec<crate::datadogV2::model::RoutingRuleAction>) -> Self {
         self.actions = Some(value);
+        self
+    }
+
+    pub fn id(mut self, value: String) -> Self {
+        self.id = Some(value);
         self
     }
 
@@ -104,6 +114,7 @@ impl<'de> Deserialize<'de> for TeamRoutingRulesRequestRule {
                 M: MapAccess<'a>,
             {
                 let mut actions: Option<Vec<crate::datadogV2::model::RoutingRuleAction>> = None;
+                let mut id: Option<String> = None;
                 let mut policy_id: Option<String> = None;
                 let mut query: Option<String> = None;
                 let mut time_restriction: Option<crate::datadogV2::model::TimeRestrictions> = None;
@@ -121,6 +132,12 @@ impl<'de> Deserialize<'de> for TeamRoutingRulesRequestRule {
                                 continue;
                             }
                             actions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "policy_id" => {
                             if v.is_null() {
@@ -165,6 +182,7 @@ impl<'de> Deserialize<'de> for TeamRoutingRulesRequestRule {
 
                 let content = TeamRoutingRulesRequestRule {
                     actions,
+                    id,
                     policy_id,
                     query,
                     time_restriction,
