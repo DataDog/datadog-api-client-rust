@@ -3169,6 +3169,8 @@ impl AgentObservabilityAPI {
     }
 
     /// Create a new prompt (and its first version) in the Agent Observability prompt registry.
+    ///
+    /// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
     pub async fn create_llm_obs_prompt(
         &self,
         body: crate::datadogV2::model::LLMObsCreatePromptRequest,
@@ -3191,6 +3193,8 @@ impl AgentObservabilityAPI {
     }
 
     /// Create a new prompt (and its first version) in the Agent Observability prompt registry.
+    ///
+    /// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
     pub async fn create_llm_obs_prompt_with_http_info(
         &self,
         body: crate::datadogV2::model::LLMObsCreatePromptRequest,
@@ -3332,6 +3336,8 @@ impl AgentObservabilityAPI {
     }
 
     /// Create a new version of an existing Agent Observability prompt.
+    ///
+    /// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
     pub async fn create_llm_obs_prompt_version(
         &self,
         prompt_id: String,
@@ -3358,6 +3364,8 @@ impl AgentObservabilityAPI {
     }
 
     /// Create a new version of an existing Agent Observability prompt.
+    ///
+    /// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
     pub async fn create_llm_obs_prompt_version_with_http_info(
         &self,
         prompt_id: String,
