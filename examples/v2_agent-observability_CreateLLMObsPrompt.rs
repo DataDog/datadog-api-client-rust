@@ -7,6 +7,8 @@ use datadog_api_client::datadogV2::model::LLMObsCreatePromptRequest;
 use datadog_api_client::datadogV2::model::LLMObsPromptTemplate;
 use datadog_api_client::datadogV2::model::LLMObsPromptType;
 use datadog_api_client::datadogV2::model::LLMObsPromptVersionLabel;
+use serde_json::Value;
+use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
@@ -17,6 +19,10 @@ async fn main() {
                 "You are a helpful assistant for .".to_string(),
             ),
         )
+        .config(BTreeMap::from([
+            ("model".to_string(), Value::from("provider-model")),
+            ("temperature".to_string(), Value::from(0.2)),
+        ]))
         .env_ids(vec![])
         .labels(vec![LLMObsPromptVersionLabel::PRODUCTION]),
         LLMObsPromptType::PROMPT_TEMPLATES,
