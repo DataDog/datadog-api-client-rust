@@ -3,13 +3,18 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// A text template or a list of chat messages.
+/// A text template, a list of chat messages, or an authored chat object. Text can include an exact prompt version with `{{>prompt-id version=N}}`; other text, including `{{>...}}` sequences without a version, remains literal. Use an authored chat object when including prompts as chat messages.
+/// **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
+/// Without access, inline references remain literal text and structured includes are unsupported. Previously compiled prompt versions remain available for execution.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum LLMObsPromptTemplate {
     LLMObsPromptTextTemplate(String),
     LLMObsPromptChatTemplate(Vec<crate::datadogV2::model::LLMObsPromptChatMessage>),
+    LLMObsPromptAuthoringMessagesTemplate(
+        Box<crate::datadogV2::model::LLMObsPromptAuthoringMessagesTemplate>,
+    ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -27,6 +32,16 @@ impl<'de> Deserialize<'de> for LLMObsPromptTemplate {
         >(value.clone())
         {
             return Ok(LLMObsPromptTemplate::LLMObsPromptChatTemplate(_v));
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::LLMObsPromptAuthoringMessagesTemplate>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(LLMObsPromptTemplate::LLMObsPromptAuthoringMessagesTemplate(
+                    _v,
+                ));
+            }
         }
 
         return Ok(LLMObsPromptTemplate::UnparsedObject(
