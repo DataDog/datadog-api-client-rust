@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DemJourneyRum {
-    /// An optional RUM query filter applied to the entire journey.
+    /// An optional RUM query filter applied to the entire journey. For a single-application journey, include the application as `@application.id:<application_id>` in addition to setting `app_id` on every RUM node.
     #[serde(rename = "filter")]
     pub filter: Option<String>,
     /// List of RUM journey steps.

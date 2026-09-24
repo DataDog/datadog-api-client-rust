@@ -16,16 +16,22 @@ async fn main() {
             "Mobile checkout".to_string(),
             vec![
                 DemRumStep::new(
-                    vec![DemRumNode::new("action.name:'checkout'".to_string())],
+                    vec![DemRumNode::new(
+                        "11111111-2222-3333-4444-555555555555".to_string(),
+                        r#"@action.name:"Checkout""#.to_string(),
+                    )],
                     DemRumStepType::START,
                 ),
                 DemRumStep::new(
-                    vec![DemRumNode::new("action.name:'confirmation'".to_string())],
+                    vec![DemRumNode::new(
+                        "11111111-2222-3333-4444-555555555555".to_string(),
+                        r#"@view.url_path:"/confirmation""#.to_string(),
+                    )],
                     DemRumStepType::STOP,
                 ),
             ],
         )
-        .filter("device.type:mobile".to_string()),
+        .filter("@device.type:mobile".to_string()),
         DemVariantType::VARIANTS,
     ));
     let configuration = datadog::Configuration::new();

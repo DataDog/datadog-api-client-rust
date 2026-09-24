@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DemRumNode {
-    /// The application ID associated with this node.
+    /// The RUM application ID whose events this node query matches. This value is required for every node when creating or updating a DEM feature or journey, including variants, and is used to discover the resource in application-scoped searches. Use `GET /api/v2/rum/applications` to find RUM application IDs.
     #[serde(rename = "app_id")]
-    pub app_id: Option<String>,
+    pub app_id: String,
     /// The ID of the RUM node element.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -28,19 +28,14 @@ pub struct DemRumNode {
 }
 
 impl DemRumNode {
-    pub fn new(query: String) -> DemRumNode {
+    pub fn new(app_id: String, query: String) -> DemRumNode {
         DemRumNode {
-            app_id: None,
+            app_id,
             id: None,
             query,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn app_id(mut self, value: String) -> Self {
-        self.app_id = Some(value);
-        self
     }
 
     pub fn id(mut self, value: String) -> Self {
@@ -86,9 +81,6 @@ impl<'de> Deserialize<'de> for DemRumNode {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "app_id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             app_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
@@ -107,6 +99,7 @@ impl<'de> Deserialize<'de> for DemRumNode {
                         }
                     }
                 }
+                let app_id = app_id.ok_or_else(|| M::Error::missing_field("app_id"))?;
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 
                 let content = DemRumNode {
