@@ -23,6 +23,9 @@ pub struct DashboardUsageUser {
     /// Display name of the user.
     #[serde(rename = "name")]
     pub name: Option<String>,
+    /// just testing generation
+    #[serde(rename = "test")]
+    pub test: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -37,6 +40,7 @@ impl DashboardUsageUser {
             id: None,
             is_disabled: None,
             name: None,
+            test: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -59,6 +63,11 @@ impl DashboardUsageUser {
 
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
+        self
+    }
+
+    pub fn test(mut self, value: bool) -> Self {
+        self.test = Some(value);
         self
     }
 
@@ -98,6 +107,7 @@ impl<'de> Deserialize<'de> for DashboardUsageUser {
                 let mut id: Option<String> = None;
                 let mut is_disabled: Option<bool> = None;
                 let mut name: Option<String> = None;
+                let mut test: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -131,6 +141,12 @@ impl<'de> Deserialize<'de> for DashboardUsageUser {
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "test" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            test = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -144,6 +160,7 @@ impl<'de> Deserialize<'de> for DashboardUsageUser {
                     id,
                     is_disabled,
                     name,
+                    test,
                     additional_properties,
                     _unparsed,
                 };
