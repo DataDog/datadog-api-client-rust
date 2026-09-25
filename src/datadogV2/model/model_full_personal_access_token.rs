@@ -19,7 +19,7 @@ pub struct FullPersonalAccessToken {
     pub id: Option<String>,
     /// Resources related to the access token.
     #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::PersonalAccessTokenRelationships>,
+    pub relationships: Option<crate::datadogV2::model::FullPersonalAccessTokenRelationships>,
     /// Personal access tokens resource type.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::PersonalAccessTokensType>,
@@ -57,7 +57,7 @@ impl FullPersonalAccessToken {
 
     pub fn relationships(
         mut self,
-        value: crate::datadogV2::model::PersonalAccessTokenRelationships,
+        value: crate::datadogV2::model::FullPersonalAccessTokenRelationships,
     ) -> Self {
         self.relationships = Some(value);
         self
@@ -105,7 +105,7 @@ impl<'de> Deserialize<'de> for FullPersonalAccessToken {
                 > = None;
                 let mut id: Option<String> = None;
                 let mut relationships: Option<
-                    crate::datadogV2::model::PersonalAccessTokenRelationships,
+                    crate::datadogV2::model::FullPersonalAccessTokenRelationships,
                 > = None;
                 let mut type_: Option<crate::datadogV2::model::PersonalAccessTokensType> = None;
                 let mut additional_properties: std::collections::BTreeMap<

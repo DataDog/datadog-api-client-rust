@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response for retrieving an access token.
+/// Response for updating an access token.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct PersonalAccessTokenResponse {
-    /// Datadog access token.
+pub struct UpdatedPersonalAccessTokenResponse {
+    /// Datadog access token returned by the update endpoint.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::PersonalAccessToken>,
-    /// Array of objects related to the access tokens.
-    #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>>,
+    pub data: crate::datadogV2::model::UpdatedPersonalAccessToken,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,27 +21,15 @@ pub struct PersonalAccessTokenResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl PersonalAccessTokenResponse {
-    pub fn new() -> PersonalAccessTokenResponse {
-        PersonalAccessTokenResponse {
-            data: None,
-            included: None,
+impl UpdatedPersonalAccessTokenResponse {
+    pub fn new(
+        data: crate::datadogV2::model::UpdatedPersonalAccessToken,
+    ) -> UpdatedPersonalAccessTokenResponse {
+        UpdatedPersonalAccessTokenResponse {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(mut self, value: crate::datadogV2::model::PersonalAccessToken) -> Self {
-        self.data = Some(value);
-        self
-    }
-
-    pub fn included(
-        mut self,
-        value: Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>,
-    ) -> Self {
-        self.included = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -56,20 +41,14 @@ impl PersonalAccessTokenResponse {
     }
 }
 
-impl Default for PersonalAccessTokenResponse {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for PersonalAccessTokenResponse {
+impl<'de> Deserialize<'de> for UpdatedPersonalAccessTokenResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct PersonalAccessTokenResponseVisitor;
-        impl<'a> Visitor<'a> for PersonalAccessTokenResponseVisitor {
-            type Value = PersonalAccessTokenResponse;
+        struct UpdatedPersonalAccessTokenResponseVisitor;
+        impl<'a> Visitor<'a> for UpdatedPersonalAccessTokenResponseVisitor {
+            type Value = UpdatedPersonalAccessTokenResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +58,7 @@ impl<'de> Deserialize<'de> for PersonalAccessTokenResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::PersonalAccessToken> = None;
-                let mut included: Option<
-                    Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>,
-                > = None;
+                let mut data: Option<crate::datadogV2::model::UpdatedPersonalAccessToken> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -92,16 +68,7 @@ impl<'de> Deserialize<'de> for PersonalAccessTokenResponse {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "included" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -110,10 +77,10 @@ impl<'de> Deserialize<'de> for PersonalAccessTokenResponse {
                         }
                     }
                 }
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = PersonalAccessTokenResponse {
+                let content = UpdatedPersonalAccessTokenResponse {
                     data,
-                    included,
                     additional_properties,
                     _unparsed,
                 };
@@ -122,6 +89,6 @@ impl<'de> Deserialize<'de> for PersonalAccessTokenResponse {
             }
         }
 
-        deserializer.deserialize_any(PersonalAccessTokenResponseVisitor)
+        deserializer.deserialize_any(UpdatedPersonalAccessTokenResponseVisitor)
     }
 }

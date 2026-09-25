@@ -14,6 +14,9 @@ pub struct ServiceAccessTokenResponse {
     /// Datadog access token.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::ServiceAccessToken>,
+    /// Array of objects related to the access tokens.
+    #[serde(rename = "included")]
+    pub included: Option<Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,6 +28,7 @@ impl ServiceAccessTokenResponse {
     pub fn new() -> ServiceAccessTokenResponse {
         ServiceAccessTokenResponse {
             data: None,
+            included: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -32,6 +36,14 @@ impl ServiceAccessTokenResponse {
 
     pub fn data(mut self, value: crate::datadogV2::model::ServiceAccessToken) -> Self {
         self.data = Some(value);
+        self
+    }
+
+    pub fn included(
+        mut self,
+        value: Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>,
+    ) -> Self {
+        self.included = Some(value);
         self
     }
 
@@ -68,6 +80,9 @@ impl<'de> Deserialize<'de> for ServiceAccessTokenResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<crate::datadogV2::model::ServiceAccessToken> = None;
+                let mut included: Option<
+                    Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,6 +97,12 @@ impl<'de> Deserialize<'de> for ServiceAccessTokenResponse {
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "included" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -92,6 +113,7 @@ impl<'de> Deserialize<'de> for ServiceAccessTokenResponse {
 
                 let content = ServiceAccessTokenResponse {
                     data,
+                    included,
                     additional_properties,
                     _unparsed,
                 };

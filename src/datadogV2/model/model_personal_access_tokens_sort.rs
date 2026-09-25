@@ -15,6 +15,8 @@ pub enum PersonalAccessTokensSort {
     EXPIRES_AT_DESCENDING,
     LAST_USED_AT_ASCENDING,
     LAST_USED_AT_DESCENDING,
+    LEAKED_ASCENDING,
+    LEAKED_DESCENDING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -29,6 +31,8 @@ impl ToString for PersonalAccessTokensSort {
             Self::EXPIRES_AT_DESCENDING => String::from("-expires_at"),
             Self::LAST_USED_AT_ASCENDING => String::from("last_used_at"),
             Self::LAST_USED_AT_DESCENDING => String::from("-last_used_at"),
+            Self::LEAKED_ASCENDING => String::from("leaked"),
+            Self::LEAKED_DESCENDING => String::from("-leaked"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -61,6 +65,8 @@ impl<'de> Deserialize<'de> for PersonalAccessTokensSort {
             "-expires_at" => Self::EXPIRES_AT_DESCENDING,
             "last_used_at" => Self::LAST_USED_AT_ASCENDING,
             "-last_used_at" => Self::LAST_USED_AT_DESCENDING,
+            "leaked" => Self::LEAKED_ASCENDING,
+            "-leaked" => Self::LEAKED_DESCENDING,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
