@@ -958,13 +958,13 @@ fn enable_unstable(world: &mut DatadogWorld, operation_id: String) {
     initialize_api_instance(world, world.api_name.clone().unwrap());
 }
 
-#[given(expr = "the request uses {string} compression")]
-fn request_uses_compression(_world: &mut DatadogWorld, _compression: String) {
-    // The generated replay server validates the Content-Encoding header and compressed body.
+#[given(expr = "the request and response use {string} compression")]
+fn request_and_response_use_compression(_world: &mut DatadogWorld, _compression: String) {
+    // The generated replay server validates the request and compresses the recorded response.
 }
 
-#[given(expr = "the user selects {string} compression")]
-fn user_selects_compression(_world: &mut DatadogWorld, _compression: String) {
+#[given(expr = "the client selects {string} compression")]
+fn client_selects_compression(_world: &mut DatadogWorld, _compression: String) {
     // The generated request plan applies the explicitly selected compression.
 }
 
