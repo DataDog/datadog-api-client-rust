@@ -6,23 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TriggerType {
+pub enum MonitorAlertTriggerType {
     MONITOR_ALERT_TRIGGER,
-    GENERAL_INVESTIGATION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TriggerType {
+impl ToString for MonitorAlertTriggerType {
     fn to_string(&self) -> String {
         match self {
             Self::MONITOR_ALERT_TRIGGER => String::from("monitor_alert_trigger"),
-            Self::GENERAL_INVESTIGATION => String::from("general_investigation"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TriggerType {
+impl Serialize for MonitorAlertTriggerType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,7 +32,7 @@ impl Serialize for TriggerType {
     }
 }
 
-impl<'de> Deserialize<'de> for TriggerType {
+impl<'de> Deserialize<'de> for MonitorAlertTriggerType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
@@ -42,7 +40,6 @@ impl<'de> Deserialize<'de> for TriggerType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "monitor_alert_trigger" => Self::MONITOR_ALERT_TRIGGER,
-            "general_investigation" => Self::GENERAL_INVESTIGATION,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

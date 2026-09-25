@@ -12,14 +12,15 @@ use datadog_api_client::datadogV2::model::TriggerType;
 #[tokio::main]
 async fn main() {
     let body = TriggerInvestigationRequest::new(TriggerInvestigationRequestData::new(
-        TriggerInvestigationRequestDataAttributes::new(TriggerAttributes::new(
-            MonitorAlertTriggerAttributes::new(
-                "1234567890123456789".to_string(),
-                1700000000000,
-                12345678,
-            ),
-            TriggerType::MONITOR_ALERT_TRIGGER,
-        )),
+        TriggerInvestigationRequestDataAttributes::new(
+            TriggerAttributes::new()
+                .monitor_alert_trigger(MonitorAlertTriggerAttributes::new(
+                    "1234567890123456789".to_string(),
+                    1700000000000,
+                    12345678,
+                ))
+                .type_(TriggerType::MONITOR_ALERT_TRIGGER),
+        ),
         TriggerInvestigationRequestType::TRIGGER_INVESTIGATION_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();

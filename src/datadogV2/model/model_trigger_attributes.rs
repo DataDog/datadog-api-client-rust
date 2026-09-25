@@ -11,12 +11,15 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TriggerAttributes {
+    /// Attributes for a general investigation, not tied to a specific monitor alert.
+    #[serde(rename = "general_investigation")]
+    pub general_investigation: Option<crate::datadogV2::model::GeneralInvestigationAttributes>,
     /// Attributes for a monitor alert trigger.
     #[serde(rename = "monitor_alert_trigger")]
-    pub monitor_alert_trigger: crate::datadogV2::model::MonitorAlertTriggerAttributes,
+    pub monitor_alert_trigger: Option<crate::datadogV2::model::MonitorAlertTriggerAttributes>,
     /// The type of trigger for the investigation.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::TriggerType,
+    pub type_: Option<crate::datadogV2::model::TriggerType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,16 +28,35 @@ pub struct TriggerAttributes {
 }
 
 impl TriggerAttributes {
-    pub fn new(
-        monitor_alert_trigger: crate::datadogV2::model::MonitorAlertTriggerAttributes,
-        type_: crate::datadogV2::model::TriggerType,
-    ) -> TriggerAttributes {
+    pub fn new() -> TriggerAttributes {
         TriggerAttributes {
-            monitor_alert_trigger,
-            type_,
+            general_investigation: None,
+            monitor_alert_trigger: None,
+            type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn general_investigation(
+        mut self,
+        value: crate::datadogV2::model::GeneralInvestigationAttributes,
+    ) -> Self {
+        self.general_investigation = Some(value);
+        self
+    }
+
+    pub fn monitor_alert_trigger(
+        mut self,
+        value: crate::datadogV2::model::MonitorAlertTriggerAttributes,
+    ) -> Self {
+        self.monitor_alert_trigger = Some(value);
+        self
+    }
+
+    pub fn type_(mut self, value: crate::datadogV2::model::TriggerType) -> Self {
+        self.type_ = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -43,6 +65,12 @@ impl TriggerAttributes {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for TriggerAttributes {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -63,6 +91,9 @@ impl<'de> Deserialize<'de> for TriggerAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut general_investigation: Option<
+                    crate::datadogV2::model::GeneralInvestigationAttributes,
+                > = None;
                 let mut monitor_alert_trigger: Option<
                     crate::datadogV2::model::MonitorAlertTriggerAttributes,
                 > = None;
@@ -75,11 +106,32 @@ impl<'de> Deserialize<'de> for TriggerAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "general_investigation" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            general_investigation =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _general_investigation) = general_investigation {
+                                match _general_investigation {
+                                    crate::datadogV2::model::GeneralInvestigationAttributes::UnparsedObject(_general_investigation) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "monitor_alert_trigger" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             monitor_alert_trigger =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -99,11 +151,9 @@ impl<'de> Deserialize<'de> for TriggerAttributes {
                         }
                     }
                 }
-                let monitor_alert_trigger = monitor_alert_trigger
-                    .ok_or_else(|| M::Error::missing_field("monitor_alert_trigger"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = TriggerAttributes {
+                    general_investigation,
                     monitor_alert_trigger,
                     type_,
                     additional_properties,

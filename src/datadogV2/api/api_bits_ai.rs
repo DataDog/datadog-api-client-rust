@@ -431,7 +431,7 @@ impl BitsAIAPI {
         }
     }
 
-    /// Trigger a new Bits AI investigation based on a monitor alert.
+    /// Trigger a Bits AI investigation from a monitor alert or a general investigation.
     /// The `monitors_read` permission is required when the trigger type is `monitor_alert_trigger`.
     pub async fn trigger_investigation(
         &self,
@@ -454,7 +454,7 @@ impl BitsAIAPI {
         }
     }
 
-    /// Trigger a new Bits AI investigation based on a monitor alert.
+    /// Trigger a Bits AI investigation from a monitor alert or a general investigation.
     /// The `monitors_read` permission is required when the trigger type is `monitor_alert_trigger`.
     pub async fn trigger_investigation_with_http_info(
         &self,
