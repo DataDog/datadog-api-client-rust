@@ -14,6 +14,9 @@ pub struct ListServiceAccessTokensResponse {
     /// Array of access tokens.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::ServiceAccessToken>>,
+    /// Array of objects related to the access tokens.
+    #[serde(rename = "included")]
+    pub included: Option<Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>>,
     /// Additional information related to the access token response.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::ServiceAccessTokenResponseMeta>,
@@ -28,6 +31,7 @@ impl ListServiceAccessTokensResponse {
     pub fn new() -> ListServiceAccessTokensResponse {
         ListServiceAccessTokensResponse {
             data: None,
+            included: None,
             meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -36,6 +40,14 @@ impl ListServiceAccessTokensResponse {
 
     pub fn data(mut self, value: Vec<crate::datadogV2::model::ServiceAccessToken>) -> Self {
         self.data = Some(value);
+        self
+    }
+
+    pub fn included(
+        mut self,
+        value: Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>,
+    ) -> Self {
+        self.included = Some(value);
         self
     }
 
@@ -77,6 +89,9 @@ impl<'de> Deserialize<'de> for ListServiceAccessTokensResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<Vec<crate::datadogV2::model::ServiceAccessToken>> = None;
+                let mut included: Option<
+                    Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>,
+                > = None;
                 let mut meta: Option<crate::datadogV2::model::ServiceAccessTokenResponseMeta> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -92,6 +107,12 @@ impl<'de> Deserialize<'de> for ListServiceAccessTokensResponse {
                                 continue;
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "included" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "meta" => {
                             if v.is_null() {
@@ -109,6 +130,7 @@ impl<'de> Deserialize<'de> for ListServiceAccessTokensResponse {
 
                 let content = ListServiceAccessTokensResponse {
                     data,
+                    included,
                     meta,
                     additional_properties,
                     _unparsed,
