@@ -16,13 +16,13 @@ pub struct DatabricksIntegrationAccountPrivateActionRunnerAuthResponse {
     pub auth_type: crate::datadogV2::model::DatabricksIntegrationAccountPrivateActionRunnerAuthType,
     /// Unique identifier of the Private Action Runner connection holding the credentials.
     #[serde(rename = "connection_id")]
-    pub connection_id: String,
+    pub connection_id: uuid::Uuid,
     /// Path of the credential inside the secret backend configured on the runner.
     #[serde(rename = "secret_path")]
     pub secret_path: Option<String>,
     /// Unique identifier of the user the Private Action Runner connection belongs to.
     #[serde(rename = "user_uuid")]
-    pub user_uuid: String,
+    pub user_uuid: uuid::Uuid,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -33,8 +33,8 @@ pub struct DatabricksIntegrationAccountPrivateActionRunnerAuthResponse {
 impl DatabricksIntegrationAccountPrivateActionRunnerAuthResponse {
     pub fn new(
         auth_type: crate::datadogV2::model::DatabricksIntegrationAccountPrivateActionRunnerAuthType,
-        connection_id: String,
-        user_uuid: String,
+        connection_id: uuid::Uuid,
+        user_uuid: uuid::Uuid,
     ) -> DatabricksIntegrationAccountPrivateActionRunnerAuthResponse {
         DatabricksIntegrationAccountPrivateActionRunnerAuthResponse {
             auth_type,
@@ -78,9 +78,9 @@ impl<'de> Deserialize<'de> for DatabricksIntegrationAccountPrivateActionRunnerAu
                 M: MapAccess<'a>,
             {
                 let mut auth_type: Option<crate::datadogV2::model::DatabricksIntegrationAccountPrivateActionRunnerAuthType> = None;
-                let mut connection_id: Option<String> = None;
+                let mut connection_id: Option<uuid::Uuid> = None;
                 let mut secret_path: Option<String> = None;
-                let mut user_uuid: Option<String> = None;
+                let mut user_uuid: Option<uuid::Uuid> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
