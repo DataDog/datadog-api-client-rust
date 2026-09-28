@@ -246,7 +246,7 @@ impl ReferenceTablesAPI {
         Self { config, client }
     }
 
-    /// Batch query reference table rows by their primary key values.  Returns only found rows in the included array.
+    /// Batch query reference table rows by their primary key values. Returns only found rows in the included array.
     pub async fn batch_rows_query(
         &self,
         body: crate::datadogV2::model::BatchRowsQueryRequest,
@@ -266,7 +266,7 @@ impl ReferenceTablesAPI {
         }
     }
 
-    /// Batch query reference table rows by their primary key values.  Returns only found rows in the included array.
+    /// Batch query reference table rows by their primary key values. Returns only found rows in the included array.
     pub async fn batch_rows_query_with_http_info(
         &self,
         body: crate::datadogV2::model::BatchRowsQueryRequest,
