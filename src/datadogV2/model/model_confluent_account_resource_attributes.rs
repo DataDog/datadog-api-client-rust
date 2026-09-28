@@ -17,7 +17,7 @@ pub struct ConfluentAccountResourceAttributes {
     /// The ID associated with a Confluent resource.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// The resource type of the Resource. Can be `kafka`, `connector`, `ksql`, or `schema_registry`.
+    /// The resource type of the Resource. Can be `kafka`, `connector`, `ksql`, `schema_registry`, or `flink`.
     #[serde(rename = "resource_type")]
     pub resource_type: String,
     /// A list of strings representing tags. Can be a single key, or key-value pairs separated by a colon.
