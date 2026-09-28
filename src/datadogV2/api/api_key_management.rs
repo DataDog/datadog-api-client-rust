@@ -43,6 +43,26 @@ impl GetApplicationKeyOptionalParams {
     }
 }
 
+/// GetPersonalAccessTokenOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::get_personal_access_token`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetPersonalAccessTokenOptionalParams {
+    /// Comma-separated list of relationship objects that should be included in the response.
+    pub include:
+        Option<Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>>,
+}
+
+impl GetPersonalAccessTokenOptionalParams {
+    /// Comma-separated list of relationship objects that should be included in the response.
+    pub fn include(
+        mut self,
+        value: Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>,
+    ) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ListAPIKeysOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::list_api_keys`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -280,6 +300,11 @@ pub struct ListPersonalAccessTokensOptionalParams {
     pub filter: Option<String>,
     /// Filter access tokens by the owner's ID. Supports multiple values.
     pub filter_owned_by: Option<Vec<String>>,
+    /// When true, only return access tokens that have been detected as leaked. Has no effect when false.
+    pub filter_leaked: Option<bool>,
+    /// Comma-separated list of relationship objects that should be included in the response.
+    pub include:
+        Option<Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>>,
 }
 
 impl ListPersonalAccessTokensOptionalParams {
@@ -308,6 +333,19 @@ impl ListPersonalAccessTokensOptionalParams {
     /// Filter access tokens by the owner's ID. Supports multiple values.
     pub fn filter_owned_by(mut self, value: Vec<String>) -> Self {
         self.filter_owned_by = Some(value);
+        self
+    }
+    /// When true, only return access tokens that have been detected as leaked. Has no effect when false.
+    pub fn filter_leaked(mut self, value: bool) -> Self {
+        self.filter_leaked = Some(value);
+        self
+    }
+    /// Comma-separated list of relationship objects that should be included in the response.
+    pub fn include(
+        mut self,
+        value: Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>,
+    ) -> Self {
+        self.include = Some(value);
         self
     }
 }
@@ -1643,12 +1681,13 @@ impl KeyManagementAPI {
     pub async fn get_personal_access_token(
         &self,
         token_id: String,
+        params: GetPersonalAccessTokenOptionalParams,
     ) -> Result<
         crate::datadogV2::model::PersonalAccessTokenResponse,
         datadog::Error<GetPersonalAccessTokenError>,
     > {
         match self
-            .get_personal_access_token_with_http_info(token_id)
+            .get_personal_access_token_with_http_info(token_id, params)
             .await
         {
             Ok(response_content) => {
@@ -1668,12 +1707,16 @@ impl KeyManagementAPI {
     pub async fn get_personal_access_token_with_http_info(
         &self,
         token_id: String,
+        params: GetPersonalAccessTokenOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenResponse>,
         datadog::Error<GetPersonalAccessTokenError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_personal_access_token";
+
+        // unbox and build optional parameters
+        let include = params.include;
 
         let local_client = &self.client;
 
@@ -1684,6 +1727,18 @@ impl KeyManagementAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local) = include {
+            local_req_builder = local_req_builder.query(&[(
+                "include",
+                &local
+                    .iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -2255,6 +2310,8 @@ impl KeyManagementAPI {
         let sort = params.sort;
         let filter = params.filter;
         let filter_owned_by = params.filter_owned_by;
+        let filter_leaked = params.filter_leaked;
+        let include = params.include;
 
         let local_client = &self.client;
 
@@ -2286,6 +2343,21 @@ impl KeyManagementAPI {
                 local_req_builder =
                     local_req_builder.query(&[("filter[owned_by]", &param.to_string())]);
             }
+        };
+        if let Some(ref local_query_param) = filter_leaked {
+            local_req_builder =
+                local_req_builder.query(&[("filter[leaked]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = include {
+            local_req_builder = local_req_builder.query(&[(
+                "include",
+                &local
+                    .iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]);
         };
 
         // build headers
@@ -2927,7 +2999,7 @@ impl KeyManagementAPI {
         token_id: String,
         body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest,
     ) -> Result<
-        crate::datadogV2::model::PersonalAccessTokenResponse,
+        crate::datadogV2::model::UpdatedPersonalAccessTokenResponse,
         datadog::Error<UpdatePersonalAccessTokenError>,
     > {
         match self
@@ -2953,7 +3025,7 @@ impl KeyManagementAPI {
         token_id: String,
         body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::UpdatedPersonalAccessTokenResponse>,
         datadog::Error<UpdatePersonalAccessTokenError>,
     > {
         let local_configuration = &self.config;
@@ -3058,7 +3130,7 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PersonalAccessTokenResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::UpdatedPersonalAccessTokenResponse>(
                 &local_content,
             ) {
                 Ok(e) => {

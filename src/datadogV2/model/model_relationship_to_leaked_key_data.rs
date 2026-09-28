@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response for retrieving an access token.
+/// Relationship to the leak the access token was found in.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct PersonalAccessTokenResponse {
-    /// Datadog access token.
-    #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::PersonalAccessToken>,
-    /// Array of objects related to the access tokens.
-    #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>>,
+pub struct RelationshipToLeakedKeyData {
+    /// A unique identifier that represents the leak.
+    #[serde(rename = "id")]
+    pub id: String,
+    /// The definition of LeakedKeyType object.
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV2::model::LeakedKeyType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,27 +24,17 @@ pub struct PersonalAccessTokenResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl PersonalAccessTokenResponse {
-    pub fn new() -> PersonalAccessTokenResponse {
-        PersonalAccessTokenResponse {
-            data: None,
-            included: None,
+impl RelationshipToLeakedKeyData {
+    pub fn new(
+        id: String,
+        type_: crate::datadogV2::model::LeakedKeyType,
+    ) -> RelationshipToLeakedKeyData {
+        RelationshipToLeakedKeyData {
+            id,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn data(mut self, value: crate::datadogV2::model::PersonalAccessToken) -> Self {
-        self.data = Some(value);
-        self
-    }
-
-    pub fn included(
-        mut self,
-        value: Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>,
-    ) -> Self {
-        self.included = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -56,20 +46,14 @@ impl PersonalAccessTokenResponse {
     }
 }
 
-impl Default for PersonalAccessTokenResponse {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for PersonalAccessTokenResponse {
+impl<'de> Deserialize<'de> for RelationshipToLeakedKeyData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct PersonalAccessTokenResponseVisitor;
-        impl<'a> Visitor<'a> for PersonalAccessTokenResponseVisitor {
-            type Value = PersonalAccessTokenResponse;
+        struct RelationshipToLeakedKeyDataVisitor;
+        impl<'a> Visitor<'a> for RelationshipToLeakedKeyDataVisitor {
+            type Value = RelationshipToLeakedKeyData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,10 +63,8 @@ impl<'de> Deserialize<'de> for PersonalAccessTokenResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::PersonalAccessToken> = None;
-                let mut included: Option<
-                    Vec<crate::datadogV2::model::AccessTokenResponseIncludedItem>,
-                > = None;
+                let mut id: Option<String> = None;
+                let mut type_: Option<crate::datadogV2::model::LeakedKeyType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,17 +73,21 @@ impl<'de> Deserialize<'de> for PersonalAccessTokenResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "data" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "included" => {
-                            if v.is_null() {
-                                continue;
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::LeakedKeyType::UnparsedObject(
+                                        _type_,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
                             }
-                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -110,10 +96,12 @@ impl<'de> Deserialize<'de> for PersonalAccessTokenResponse {
                         }
                     }
                 }
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = PersonalAccessTokenResponse {
-                    data,
-                    included,
+                let content = RelationshipToLeakedKeyData {
+                    id,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -122,6 +110,6 @@ impl<'de> Deserialize<'de> for PersonalAccessTokenResponse {
             }
         }
 
-        deserializer.deserialize_any(PersonalAccessTokenResponseVisitor)
+        deserializer.deserialize_any(RelationshipToLeakedKeyDataVisitor)
     }
 }

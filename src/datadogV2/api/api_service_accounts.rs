@@ -10,6 +10,26 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// GetServiceAccountAccessTokenOptionalParams is a struct for passing parameters to the method [`ServiceAccountsAPI::get_service_account_access_token`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetServiceAccountAccessTokenOptionalParams {
+    /// Comma-separated list of relationship objects that should be included in the response.
+    pub include:
+        Option<Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>>,
+}
+
+impl GetServiceAccountAccessTokenOptionalParams {
+    /// Comma-separated list of relationship objects that should be included in the response.
+    pub fn include(
+        mut self,
+        value: Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>,
+    ) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ListServiceAccountAccessTokensOptionalParams is a struct for passing parameters to the method [`ServiceAccountsAPI::list_service_account_access_tokens`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -24,6 +44,11 @@ pub struct ListServiceAccountAccessTokensOptionalParams {
     pub sort: Option<crate::datadogV2::model::PersonalAccessTokensSort>,
     /// Filter access tokens by the specified string.
     pub filter: Option<String>,
+    /// When true, only return access tokens that have been detected as leaked. Has no effect when false.
+    pub filter_leaked: Option<bool>,
+    /// Comma-separated list of relationship objects that should be included in the response.
+    pub include:
+        Option<Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>>,
 }
 
 impl ListServiceAccountAccessTokensOptionalParams {
@@ -47,6 +72,19 @@ impl ListServiceAccountAccessTokensOptionalParams {
     /// Filter access tokens by the specified string.
     pub fn filter(mut self, value: String) -> Self {
         self.filter = Some(value);
+        self
+    }
+    /// When true, only return access tokens that have been detected as leaked. Has no effect when false.
+    pub fn filter_leaked(mut self, value: bool) -> Self {
+        self.filter_leaked = Some(value);
+        self
+    }
+    /// Comma-separated list of relationship objects that should be included in the response.
+    pub fn include(
+        mut self,
+        value: Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>,
+    ) -> Self {
+        self.include = Some(value);
         self
     }
 }
@@ -841,12 +879,13 @@ impl ServiceAccountsAPI {
         &self,
         service_account_id: String,
         token_id: String,
+        params: GetServiceAccountAccessTokenOptionalParams,
     ) -> Result<
         crate::datadogV2::model::ServiceAccessTokenResponse,
         datadog::Error<GetServiceAccountAccessTokenError>,
     > {
         match self
-            .get_service_account_access_token_with_http_info(service_account_id, token_id)
+            .get_service_account_access_token_with_http_info(service_account_id, token_id, params)
             .await
         {
             Ok(response_content) => {
@@ -867,12 +906,16 @@ impl ServiceAccountsAPI {
         &self,
         service_account_id: String,
         token_id: String,
+        params: GetServiceAccountAccessTokenOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::ServiceAccessTokenResponse>,
         datadog::Error<GetServiceAccountAccessTokenError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_service_account_access_token";
+
+        // unbox and build optional parameters
+        let include = params.include;
 
         let local_client = &self.client;
 
@@ -884,6 +927,18 @@ impl ServiceAccountsAPI {
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local) = include {
+            local_req_builder = local_req_builder.query(&[(
+                "include",
+                &local
+                    .iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
@@ -1109,6 +1164,8 @@ impl ServiceAccountsAPI {
         let page_number = params.page_number;
         let sort = params.sort;
         let filter = params.filter;
+        let filter_leaked = params.filter_leaked;
+        let include = params.include;
 
         let local_client = &self.client;
 
@@ -1135,6 +1192,21 @@ impl ServiceAccountsAPI {
         if let Some(ref local_query_param) = filter {
             local_req_builder =
                 local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_leaked {
+            local_req_builder =
+                local_req_builder.query(&[("filter[leaked]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = include {
+            local_req_builder = local_req_builder.query(&[(
+                "include",
+                &local
+                    .iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]);
         };
 
         // build headers
@@ -1452,7 +1524,7 @@ impl ServiceAccountsAPI {
         token_id: String,
         body: crate::datadogV2::model::ServiceAccountAccessTokenUpdateRequest,
     ) -> Result<
-        crate::datadogV2::model::ServiceAccessTokenResponse,
+        crate::datadogV2::model::UpdatedServiceAccessTokenResponse,
         datadog::Error<UpdateServiceAccountAccessTokenError>,
     > {
         match self
@@ -1479,7 +1551,7 @@ impl ServiceAccountsAPI {
         token_id: String,
         body: crate::datadogV2::model::ServiceAccountAccessTokenUpdateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ServiceAccessTokenResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::UpdatedServiceAccessTokenResponse>,
         datadog::Error<UpdateServiceAccountAccessTokenError>,
     > {
         let local_configuration = &self.config;
@@ -1585,7 +1657,7 @@ impl ServiceAccountsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ServiceAccessTokenResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::UpdatedServiceAccessTokenResponse>(
                 &local_content,
             ) {
                 Ok(e) => {

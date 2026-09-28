@@ -1,5 +1,6 @@
 // Get an access token for a service account returns "OK" response
 use datadog_api_client::datadog;
+use datadog_api_client::datadogV2::api_service_accounts::GetServiceAccountAccessTokenOptionalParams;
 use datadog_api_client::datadogV2::api_service_accounts::ServiceAccountsAPI;
 
 #[tokio::main]
@@ -16,6 +17,7 @@ async fn main() {
         .get_service_account_access_token(
             service_account_user_data_id.clone(),
             service_account_access_token_data_id.clone(),
+            GetServiceAccountAccessTokenOptionalParams::default(),
         )
         .await;
     if let Ok(value) = resp {
