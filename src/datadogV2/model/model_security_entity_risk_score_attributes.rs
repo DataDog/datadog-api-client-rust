@@ -56,7 +56,7 @@ pub struct SecurityEntityRiskScoreAttributes {
     /// Severity level based on risk score
     #[serde(rename = "severity")]
     pub severity: crate::datadogV2::model::SecurityEntityRiskScoreAttributesSeverity,
-    /// Number of security signals detected for this entity.
+    /// Number of risk-contributing security signals detected for this entity.
     #[serde(rename = "signalsDetected")]
     pub signals_detected: i64,
     #[serde(flatten)]
