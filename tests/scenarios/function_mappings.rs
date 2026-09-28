@@ -21068,6 +21068,12 @@ fn test_v2_list_personal_access_tokens(
     let filter_owned_by = _parameters
         .get("filter[owned_by]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_leaked = _parameters
+        .get("filter[leaked]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
         datadogV2::api_key_management::ListPersonalAccessTokensOptionalParams::default();
     params.page_size = page_size;
@@ -21075,6 +21081,8 @@ fn test_v2_list_personal_access_tokens(
     params.sort = sort;
     params.filter = filter;
     params.filter_owned_by = filter_owned_by;
+    params.filter_leaked = filter_leaked;
+    params.include = include;
     let response = match block_on(api.list_personal_access_tokens_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -21159,7 +21167,12 @@ fn test_v2_get_personal_access_token(
         .as_ref()
         .expect("api instance not found");
     let token_id = serde_json::from_value(_parameters.get("token_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_personal_access_token_with_http_info(token_id)) {
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_key_management::GetPersonalAccessTokenOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.get_personal_access_token_with_http_info(token_id, params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -61943,12 +61956,20 @@ fn test_v2_list_service_account_access_tokens(
     let filter = _parameters
         .get("filter")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_leaked = _parameters
+        .get("filter[leaked]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
         datadogV2::api_service_accounts::ListServiceAccountAccessTokensOptionalParams::default();
     params.page_size = page_size;
     params.page_number = page_number;
     params.sort = sort;
     params.filter = filter;
+    params.filter_leaked = filter_leaked;
+    params.include = include;
     let response = match block_on(
         api.list_service_account_access_tokens_with_http_info(service_account_id, params),
     ) {
@@ -62045,9 +62066,17 @@ fn test_v2_get_service_account_access_token(
     let service_account_id =
         serde_json::from_value(_parameters.get("service_account_id").unwrap().clone()).unwrap();
     let token_id = serde_json::from_value(_parameters.get("token_id").unwrap().clone()).unwrap();
-    let response = match block_on(
-        api.get_service_account_access_token_with_http_info(service_account_id, token_id),
-    ) {
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_service_accounts::GetServiceAccountAccessTokenOptionalParams::default();
+    params.include = include;
+    let response = match block_on(api.get_service_account_access_token_with_http_info(
+        service_account_id,
+        token_id,
+        params,
+    )) {
         Ok(response) => response,
         Err(error) => {
             return match error {

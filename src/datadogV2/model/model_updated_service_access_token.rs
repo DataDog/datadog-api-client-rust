@@ -6,23 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Datadog access token, including the token key.
+/// Datadog access token returned by the update endpoint.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct FullServiceAccessToken {
-    /// Attributes of a full access token, including the token key.
+pub struct UpdatedServiceAccessToken {
+    /// Attributes of an access token.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::FullServiceAccessTokenAttributes>,
+    pub attributes: Option<crate::datadogV2::model::ServiceAccessTokenAttributes>,
     /// ID of the access token.
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: String,
     /// Resources related to the access token.
     #[serde(rename = "relationships")]
-    pub relationships: Option<crate::datadogV2::model::FullServiceAccessTokenRelationships>,
+    pub relationships: Option<crate::datadogV2::model::UpdatedServiceAccessTokenRelationships>,
     /// Service access tokens resource type.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::ServiceAccessTokensType>,
+    pub type_: crate::datadogV2::model::ServiceAccessTokensType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,13 +30,16 @@ pub struct FullServiceAccessToken {
     pub(crate) _unparsed: bool,
 }
 
-impl FullServiceAccessToken {
-    pub fn new() -> FullServiceAccessToken {
-        FullServiceAccessToken {
+impl UpdatedServiceAccessToken {
+    pub fn new(
+        id: String,
+        type_: crate::datadogV2::model::ServiceAccessTokensType,
+    ) -> UpdatedServiceAccessToken {
+        UpdatedServiceAccessToken {
             attributes: None,
-            id: None,
+            id,
             relationships: None,
-            type_: None,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -44,27 +47,17 @@ impl FullServiceAccessToken {
 
     pub fn attributes(
         mut self,
-        value: crate::datadogV2::model::FullServiceAccessTokenAttributes,
+        value: crate::datadogV2::model::ServiceAccessTokenAttributes,
     ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
-        self
-    }
-
     pub fn relationships(
         mut self,
-        value: crate::datadogV2::model::FullServiceAccessTokenRelationships,
+        value: crate::datadogV2::model::UpdatedServiceAccessTokenRelationships,
     ) -> Self {
         self.relationships = Some(value);
-        self
-    }
-
-    pub fn type_(mut self, value: crate::datadogV2::model::ServiceAccessTokensType) -> Self {
-        self.type_ = Some(value);
         self
     }
 
@@ -77,20 +70,14 @@ impl FullServiceAccessToken {
     }
 }
 
-impl Default for FullServiceAccessToken {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<'de> Deserialize<'de> for FullServiceAccessToken {
+impl<'de> Deserialize<'de> for UpdatedServiceAccessToken {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct FullServiceAccessTokenVisitor;
-        impl<'a> Visitor<'a> for FullServiceAccessTokenVisitor {
-            type Value = FullServiceAccessToken;
+        struct UpdatedServiceAccessTokenVisitor;
+        impl<'a> Visitor<'a> for UpdatedServiceAccessTokenVisitor {
+            type Value = UpdatedServiceAccessToken;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -100,12 +87,11 @@ impl<'de> Deserialize<'de> for FullServiceAccessToken {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::FullServiceAccessTokenAttributes,
-                > = None;
+                let mut attributes: Option<crate::datadogV2::model::ServiceAccessTokenAttributes> =
+                    None;
                 let mut id: Option<String> = None;
                 let mut relationships: Option<
-                    crate::datadogV2::model::FullServiceAccessTokenRelationships,
+                    crate::datadogV2::model::UpdatedServiceAccessTokenRelationships,
                 > = None;
                 let mut type_: Option<crate::datadogV2::model::ServiceAccessTokensType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -123,9 +109,6 @@ impl<'de> Deserialize<'de> for FullServiceAccessToken {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "relationships" => {
@@ -136,9 +119,6 @@ impl<'de> Deserialize<'de> for FullServiceAccessToken {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -156,8 +136,10 @@ impl<'de> Deserialize<'de> for FullServiceAccessToken {
                         }
                     }
                 }
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = FullServiceAccessToken {
+                let content = UpdatedServiceAccessToken {
                     attributes,
                     id,
                     relationships,
@@ -170,6 +152,6 @@ impl<'de> Deserialize<'de> for FullServiceAccessToken {
             }
         }
 
-        deserializer.deserialize_any(FullServiceAccessTokenVisitor)
+        deserializer.deserialize_any(UpdatedServiceAccessTokenVisitor)
     }
 }

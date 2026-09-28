@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Resources related to the access token entry in the mixed list response.
+/// Resources related to the access token.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct AccessTokenListItemRelationships {
-    /// Relationship to the leak the access token was found in. `data` is null when the access token has not been detected as leaked.
-    #[serde(rename = "leak_information")]
-    pub leak_information: Option<crate::datadogV2::model::RelationshipToLeakedKey>,
-    /// Relationship to the access token's owner.
+pub struct UpdatedPersonalAccessTokenRelationships {
+    /// Relationship to user.
     #[serde(rename = "owned_by")]
-    pub owned_by: Option<crate::datadogV2::model::RelationshipToAccessTokenOwner>,
+    pub owned_by: Option<crate::datadogV2::model::RelationshipToUser>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,28 +21,16 @@ pub struct AccessTokenListItemRelationships {
     pub(crate) _unparsed: bool,
 }
 
-impl AccessTokenListItemRelationships {
-    pub fn new() -> AccessTokenListItemRelationships {
-        AccessTokenListItemRelationships {
-            leak_information: None,
+impl UpdatedPersonalAccessTokenRelationships {
+    pub fn new() -> UpdatedPersonalAccessTokenRelationships {
+        UpdatedPersonalAccessTokenRelationships {
             owned_by: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn leak_information(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToLeakedKey,
-    ) -> Self {
-        self.leak_information = Some(value);
-        self
-    }
-
-    pub fn owned_by(
-        mut self,
-        value: crate::datadogV2::model::RelationshipToAccessTokenOwner,
-    ) -> Self {
+    pub fn owned_by(mut self, value: crate::datadogV2::model::RelationshipToUser) -> Self {
         self.owned_by = Some(value);
         self
     }
@@ -59,20 +44,20 @@ impl AccessTokenListItemRelationships {
     }
 }
 
-impl Default for AccessTokenListItemRelationships {
+impl Default for UpdatedPersonalAccessTokenRelationships {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for AccessTokenListItemRelationships {
+impl<'de> Deserialize<'de> for UpdatedPersonalAccessTokenRelationships {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct AccessTokenListItemRelationshipsVisitor;
-        impl<'a> Visitor<'a> for AccessTokenListItemRelationshipsVisitor {
-            type Value = AccessTokenListItemRelationships;
+        struct UpdatedPersonalAccessTokenRelationshipsVisitor;
+        impl<'a> Visitor<'a> for UpdatedPersonalAccessTokenRelationshipsVisitor {
+            type Value = UpdatedPersonalAccessTokenRelationships;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -82,10 +67,7 @@ impl<'de> Deserialize<'de> for AccessTokenListItemRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut leak_information: Option<crate::datadogV2::model::RelationshipToLeakedKey> =
-                    None;
-                let mut owned_by: Option<crate::datadogV2::model::RelationshipToAccessTokenOwner> =
-                    None;
+                let mut owned_by: Option<crate::datadogV2::model::RelationshipToUser> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -94,13 +76,6 @@ impl<'de> Deserialize<'de> for AccessTokenListItemRelationships {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "leak_information" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            leak_information =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
                         "owned_by" => {
                             if v.is_null() {
                                 continue;
@@ -115,8 +90,7 @@ impl<'de> Deserialize<'de> for AccessTokenListItemRelationships {
                     }
                 }
 
-                let content = AccessTokenListItemRelationships {
-                    leak_information,
+                let content = UpdatedPersonalAccessTokenRelationships {
                     owned_by,
                     additional_properties,
                     _unparsed,
@@ -126,6 +100,6 @@ impl<'de> Deserialize<'de> for AccessTokenListItemRelationships {
             }
         }
 
-        deserializer.deserialize_any(AccessTokenListItemRelationshipsVisitor)
+        deserializer.deserialize_any(UpdatedPersonalAccessTokenRelationshipsVisitor)
     }
 }
