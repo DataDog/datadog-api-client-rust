@@ -10,6 +10,10 @@ use cucumber::{
     given, then, when, World,
 };
 use datadog_api_client::datadog::{APIKey, Configuration};
+use flate2::{
+    write::{GzEncoder, ZlibEncoder},
+    Compression,
+};
 use lazy_static::lazy_static;
 use minijinja::{Environment, State};
 use regex::Regex;
@@ -184,6 +188,34 @@ async fn next_test_server_request(world: &DatadogWorld) -> Option<Value> {
     .expect("failed to decode the next test server request")["request"]
         .as_object()
         .map(|request| Value::Object(request.clone()))
+}
+
+async fn last_test_server_request(world: &DatadogWorld) -> Value {
+    let session = world.test_server_session.as_ref().unwrap();
+    let response = reqwest::Client::new()
+        .get(format!(
+            "{}/__openapi_transformer__/sessions/{session}/last-request",
+            env::var("DD_TEST_SERVER_URL").unwrap(),
+        ))
+        .send()
+        .await
+        .expect("failed to inspect the last test server request");
+    assert!(
+        response.status().is_success(),
+        "Test server last-request failed ({})",
+        response.status(),
+    );
+    let result: Value = serde_json::from_str(
+        &response
+            .text()
+            .await
+            .expect("failed to read the last test server request"),
+    )
+    .expect("failed to decode the last test server request");
+    result["request"]
+        .as_object()
+        .map(|request| Value::Object(request.clone()))
+        .expect("generated test server has not received a request")
 }
 
 async fn start_test_server_session(
@@ -383,7 +415,28 @@ async fn send_test_runner_request(world: &mut DatadogWorld) {
         request = request.header("content-type", content_type);
     }
     if let Some(body) = world.parameters.get("body") {
-        request = request.body(serde_json::to_vec(body).unwrap());
+        let body = serde_json::to_vec(body).unwrap();
+        if let Some(compression) = request_plan["selected_compression"].as_str() {
+            request = request.header("content-encoding", compression);
+            let compressed = match compression {
+                "gzip" => {
+                    let mut encoder = GzEncoder::new(Vec::new(), Compression::default());
+                    encoder.write_all(&body).unwrap();
+                    encoder.finish().unwrap()
+                }
+                "deflate" => {
+                    let mut encoder = ZlibEncoder::new(Vec::new(), Compression::default());
+                    encoder.write_all(&body).unwrap();
+                    encoder.finish().unwrap()
+                }
+                #[cfg(feature = "zstd")]
+                "zstd1" => zstd::stream::encode_all(body.as_slice(), 0).unwrap(),
+                value => panic!("unsupported generated request compression: {value}"),
+            };
+            request = request.body(compressed);
+        } else {
+            request = request.body(body);
+        }
     }
 
     let response = request.send().await.expect("generated test request failed");
@@ -931,6 +984,24 @@ fn enable_unstable(world: &mut DatadogWorld, operation_id: String) {
         .config
         .set_unstable_operation_enabled(&operation_id, true);
     initialize_api_instance(world, world.api_name.clone().unwrap());
+}
+
+#[then(expr = "the request uses {string} compression")]
+async fn request_uses_compression(world: &mut DatadogWorld, compression: String) {
+    if !test_server_enabled() {
+        return;
+    }
+    let request = last_test_server_request(world).await;
+    assert_eq!(
+        request["headers"]["content-encoding"].as_str(),
+        Some(compression.to_lowercase().as_str()),
+        "unexpected Content-Encoding in request received by generated test server",
+    );
+}
+
+#[given(expr = "the client selects {string} compression")]
+fn client_selects_compression(_world: &mut DatadogWorld, _compression: String) {
+    // The generated request plan applies the explicitly selected compression.
 }
 
 #[given(regex = r"^body with value (.*)$")]
