@@ -788,18 +788,9 @@ impl RolesAPI {
 
     /// Create a new role for your organization.
     ///
-    /// The following read permissions are automatically added to every new role, even if they are not included in the request:
-    ///
-    /// - Dashboards Read
-    /// - Notebooks Read
-    /// - Monitors Read
-    /// - APM Read
-    /// - Vulnerability Management Read
-    /// - RUM Apps Read
-    /// - Incidents Read
-    /// - SLOs Read
-    /// - CI Visibility Read
-    /// - CD Visibility Read
+    /// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
+    /// such as Dashboards Read and Monitors Read, are added to every new role by default, even if they are omitted from
+    /// the request. To exclude them, set `default_permissions_opt_out` to `true`.
     pub async fn create_role(
         &self,
         body: crate::datadogV2::model::RoleCreateRequest,
@@ -820,18 +811,9 @@ impl RolesAPI {
 
     /// Create a new role for your organization.
     ///
-    /// The following read permissions are automatically added to every new role, even if they are not included in the request:
-    ///
-    /// - Dashboards Read
-    /// - Notebooks Read
-    /// - Monitors Read
-    /// - APM Read
-    /// - Vulnerability Management Read
-    /// - RUM Apps Read
-    /// - Incidents Read
-    /// - SLOs Read
-    /// - CI Visibility Read
-    /// - CD Visibility Read
+    /// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
+    /// such as Dashboards Read and Monitors Read, are added to every new role by default, even if they are omitted from
+    /// the request. To exclude them, set `default_permissions_opt_out` to `true`.
     pub async fn create_role_with_http_info(
         &self,
         body: crate::datadogV2::model::RoleCreateRequest,
@@ -2065,6 +2047,10 @@ impl RolesAPI {
     }
 
     /// Edit a role. Can only be used with application keys belonging to administrators.
+    ///
+    /// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
+    /// such as Dashboards Read and Monitors Read, remain on the role by default, even if they are omitted from
+    /// the request. To exclude them, set `default_permissions_opt_out` to `true`.
     pub async fn update_role(
         &self,
         role_id: String,
@@ -2085,6 +2071,10 @@ impl RolesAPI {
     }
 
     /// Edit a role. Can only be used with application keys belonging to administrators.
+    ///
+    /// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
+    /// such as Dashboards Read and Monitors Read, remain on the role by default, even if they are omitted from
+    /// the request. To exclude them, set `default_permissions_opt_out` to `true`.
     pub async fn update_role_with_http_info(
         &self,
         role_id: String,
