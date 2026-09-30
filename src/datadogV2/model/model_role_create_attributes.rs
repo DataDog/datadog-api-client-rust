@@ -14,6 +14,11 @@ pub struct RoleCreateAttributes {
     /// Creation time of the role.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
+    /// Whether to exclude restricted default permissions from this role.
+    /// Restricted default permissions are automatically assigned to every role by default. Set this field to `true` to exclude them.
+    /// Some of these permissions can only be excluded after Minimal Access Roles is enabled for the organization.
+    #[serde(rename = "default_permissions_opt_out")]
+    pub default_permissions_opt_out: Option<bool>,
     /// Time of last role modification.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -36,6 +41,7 @@ impl RoleCreateAttributes {
     pub fn new(name: String) -> RoleCreateAttributes {
         RoleCreateAttributes {
             created_at: None,
+            default_permissions_opt_out: None,
             modified_at: None,
             name,
             receives_permissions_from: None,
@@ -46,6 +52,11 @@ impl RoleCreateAttributes {
 
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
+        self
+    }
+
+    pub fn default_permissions_opt_out(mut self, value: bool) -> Self {
+        self.default_permissions_opt_out = Some(value);
         self
     }
 
@@ -86,6 +97,7 @@ impl<'de> Deserialize<'de> for RoleCreateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut default_permissions_opt_out: Option<bool> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut receives_permissions_from: Option<Vec<String>> = None;
@@ -102,6 +114,13 @@ impl<'de> Deserialize<'de> for RoleCreateAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "default_permissions_opt_out" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            default_permissions_opt_out =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "modified_at" => {
                             if v.is_null() {
@@ -131,6 +150,7 @@ impl<'de> Deserialize<'de> for RoleCreateAttributes {
 
                 let content = RoleCreateAttributes {
                     created_at,
+                    default_permissions_opt_out,
                     modified_at,
                     name,
                     receives_permissions_from,
