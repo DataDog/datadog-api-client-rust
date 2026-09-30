@@ -216,6 +216,7 @@ async fn main() {
             SyntheticsTestOptions::new()
                 .accept_self_signed(false)
                 .allow_insecure(true)
+                .bits_ai_auto_investigate(true)
                 .follow_redirects(true)
                 .http_version(SyntheticsTestOptionsHTTPVersion::HTTP2)
                 .min_failure_duration(10)

@@ -18,6 +18,9 @@ pub struct SyntheticsTestOptions {
     /// Allows loading insecure content for an HTTP request in an API test.
     #[serde(rename = "allow_insecure")]
     pub allow_insecure: Option<bool>,
+    /// Whether Bits AI automatically investigates alerts from the test monitor.
+    #[serde(rename = "bits_ai_auto_investigate")]
+    pub bits_ai_auto_investigate: Option<bool>,
     /// Array of URL patterns to block.
     #[serde(rename = "blockedRequestPatterns")]
     pub blocked_request_patterns: Option<Vec<String>>,
@@ -123,6 +126,7 @@ impl SyntheticsTestOptions {
         SyntheticsTestOptions {
             accept_self_signed: None,
             allow_insecure: None,
+            bits_ai_auto_investigate: None,
             blocked_request_patterns: None,
             capture_network_payloads: None,
             check_certificate_revocation: None,
@@ -163,6 +167,12 @@ impl SyntheticsTestOptions {
     #[allow(deprecated)]
     pub fn allow_insecure(mut self, value: bool) -> Self {
         self.allow_insecure = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn bits_ai_auto_investigate(mut self, value: bool) -> Self {
+        self.bits_ai_auto_investigate = Some(value);
         self
     }
 
@@ -368,6 +378,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
             {
                 let mut accept_self_signed: Option<bool> = None;
                 let mut allow_insecure: Option<bool> = None;
+                let mut bits_ai_auto_investigate: Option<bool> = None;
                 let mut blocked_request_patterns: Option<Vec<String>> = None;
                 let mut capture_network_payloads: Option<bool> = None;
                 let mut check_certificate_revocation: Option<bool> = None;
@@ -422,6 +433,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                                 continue;
                             }
                             allow_insecure =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "bits_ai_auto_investigate" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bits_ai_auto_investigate =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "blockedRequestPatterns" => {
@@ -621,6 +639,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                 let content = SyntheticsTestOptions {
                     accept_self_signed,
                     allow_insecure,
+                    bits_ai_auto_investigate,
                     blocked_request_patterns,
                     capture_network_payloads,
                     check_certificate_revocation,

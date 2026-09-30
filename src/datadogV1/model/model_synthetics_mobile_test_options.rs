@@ -17,6 +17,9 @@ pub struct SyntheticsMobileTestOptions {
     /// Array of bindings used for the mobile test.
     #[serde(rename = "bindings")]
     pub bindings: Option<Vec<crate::datadogV1::model::SyntheticsTestRestrictionPolicyBinding>>,
+    /// Whether Bits AI automatically investigates alerts from the test monitor.
+    #[serde(rename = "bits_ai_auto_investigate")]
+    pub bits_ai_auto_investigate: Option<bool>,
     /// CI/CD options for a Synthetic test.
     #[serde(rename = "ci")]
     pub ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions>,
@@ -81,6 +84,7 @@ impl SyntheticsMobileTestOptions {
         SyntheticsMobileTestOptions {
             allow_application_crash: None,
             bindings: None,
+            bits_ai_auto_investigate: None,
             ci: None,
             default_step_timeout: None,
             device_ids,
@@ -113,6 +117,12 @@ impl SyntheticsMobileTestOptions {
         value: Vec<crate::datadogV1::model::SyntheticsTestRestrictionPolicyBinding>,
     ) -> Self {
         self.bindings = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn bits_ai_auto_investigate(mut self, value: bool) -> Self {
+        self.bits_ai_auto_investigate = Some(value);
         self
     }
 
@@ -224,6 +234,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
                 let mut bindings: Option<
                     Vec<crate::datadogV1::model::SyntheticsTestRestrictionPolicyBinding>,
                 > = None;
+                let mut bits_ai_auto_investigate: Option<bool> = None;
                 let mut ci: Option<crate::datadogV1::model::SyntheticsTestCiOptions> = None;
                 let mut default_step_timeout: Option<i32> = None;
                 let mut device_ids: Option<Vec<String>> = None;
@@ -265,6 +276,13 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
                                 continue;
                             }
                             bindings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "bits_ai_auto_investigate" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            bits_ai_auto_investigate =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "ci" => {
                             if v.is_null() {
@@ -372,6 +390,7 @@ impl<'de> Deserialize<'de> for SyntheticsMobileTestOptions {
                 let content = SyntheticsMobileTestOptions {
                     allow_application_crash,
                     bindings,
+                    bits_ai_auto_investigate,
                     ci,
                     default_step_timeout,
                     device_ids,
