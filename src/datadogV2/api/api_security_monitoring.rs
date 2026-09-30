@@ -38,6 +38,9 @@ impl ActivateIntegrationOptionalParams {
 pub struct GetEntityContextOptionalParams {
     /// A free-text query (for example, an email address or principal ID) used to filter the entities returned.
     pub query: Option<String>,
+    /// The type of entity to retrieve. Only `siem_entity_identity` is currently supported.
+    /// Defaults to `siem_entity_identity`.
+    pub entity_type: Option<crate::datadogV2::model::EntityContextEntityType>,
     /// The start of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now-7d`).
     /// Defaults to `now-7d`. Ignored when `as_of` is set.
     pub from: Option<String>,
@@ -58,6 +61,12 @@ impl GetEntityContextOptionalParams {
     /// A free-text query (for example, an email address or principal ID) used to filter the entities returned.
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
+        self
+    }
+    /// The type of entity to retrieve. Only `siem_entity_identity` is currently supported.
+    /// Defaults to `siem_entity_identity`.
+    pub fn entity_type(mut self, value: crate::datadogV2::model::EntityContextEntityType) -> Self {
+        self.entity_type = Some(value);
         self
     }
     /// The start of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now-7d`).
@@ -87,6 +96,65 @@ impl GetEntityContextOptionalParams {
     /// An opaque token used to fetch the next page of results, as returned in `meta.page.next_token` of a previous response.
     pub fn page_token(mut self, value: String) -> Self {
         self.page_token = Some(value);
+        self
+    }
+}
+
+/// GetEntityContextRecentlyUpdatedOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::get_entity_context_recently_updated`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetEntityContextRecentlyUpdatedOptionalParams {
+    /// A free-text query (for example, an email address or principal ID) used to filter the entities returned.
+    pub query: Option<String>,
+    /// The type of entity to retrieve. Only `siem_entity_identity` is currently supported.
+    /// Defaults to `siem_entity_identity`.
+    pub entity_type: Option<crate::datadogV2::model::EntityContextEntityType>,
+    /// The start of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now-7d`).
+    /// Defaults to `now-7d`.
+    pub from: Option<String>,
+    /// The end of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now`).
+    /// Defaults to `now`. Entities are ranked by their most recent revision within `[from, to]`.
+    pub to: Option<String>,
+    /// The number of entities to return. Must be between 1 and 100.
+    pub limit: Option<i64>,
+    /// Which revisions to return for each entity: `latest` returns only the latest revision of each entity as of `to`,
+    /// and `all` returns every revision in the requested time range.
+    pub revisions: Option<crate::datadogV2::model::EntityContextRevisionsMode>,
+}
+
+impl GetEntityContextRecentlyUpdatedOptionalParams {
+    /// A free-text query (for example, an email address or principal ID) used to filter the entities returned.
+    pub fn query(mut self, value: String) -> Self {
+        self.query = Some(value);
+        self
+    }
+    /// The type of entity to retrieve. Only `siem_entity_identity` is currently supported.
+    /// Defaults to `siem_entity_identity`.
+    pub fn entity_type(mut self, value: crate::datadogV2::model::EntityContextEntityType) -> Self {
+        self.entity_type = Some(value);
+        self
+    }
+    /// The start of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now-7d`).
+    /// Defaults to `now-7d`.
+    pub fn from(mut self, value: String) -> Self {
+        self.from = Some(value);
+        self
+    }
+    /// The end of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now`).
+    /// Defaults to `now`. Entities are ranked by their most recent revision within `[from, to]`.
+    pub fn to(mut self, value: String) -> Self {
+        self.to = Some(value);
+        self
+    }
+    /// The number of entities to return. Must be between 1 and 100.
+    pub fn limit(mut self, value: i64) -> Self {
+        self.limit = Some(value);
+        self
+    }
+    /// Which revisions to return for each entity: `latest` returns only the latest revision of each entity as of `to`,
+    /// and `all` returns every revision in the requested time range.
+    pub fn revisions(mut self, value: crate::datadogV2::model::EntityContextRevisionsMode) -> Self {
+        self.revisions = Some(value);
         self
     }
 }
@@ -314,6 +382,9 @@ impl GetSignalEntitiesOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetSingleEntityContextOptionalParams {
+    /// The type of entity to retrieve. Only `siem_entity_identity` is currently supported.
+    /// Defaults to `siem_entity_identity`.
+    pub entity_type: Option<crate::datadogV2::model::EntityContextEntityType>,
     /// The start of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now-7d`).
     /// Defaults to `now-7d`. Ignored when `as_of` is set.
     pub from: Option<String>,
@@ -327,6 +398,12 @@ pub struct GetSingleEntityContextOptionalParams {
 }
 
 impl GetSingleEntityContextOptionalParams {
+    /// The type of entity to retrieve. Only `siem_entity_identity` is currently supported.
+    /// Defaults to `siem_entity_identity`.
+    pub fn entity_type(mut self, value: crate::datadogV2::model::EntityContextEntityType) -> Self {
+        self.entity_type = Some(value);
+        self
+    }
     /// The start of the time range to query, as an RFC3339 timestamp or a relative time (for example, `now-7d`).
     /// Defaults to `now-7d`. Ignored when `as_of` is set.
     pub fn from(mut self, value: String) -> Self {
@@ -2236,6 +2313,14 @@ pub enum GetCustomFrameworkError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetEntityContextError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// GetEntityContextRecentlyUpdatedError is a struct for typed errors of method [`SecurityMonitoringAPI::get_entity_context_recently_updated`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetEntityContextRecentlyUpdatedError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -13235,6 +13320,7 @@ impl SecurityMonitoringAPI {
 
         // unbox and build optional parameters
         let query = params.query;
+        let entity_type = params.entity_type;
         let from = params.from;
         let to = params.to;
         let as_of = params.as_of;
@@ -13253,6 +13339,10 @@ impl SecurityMonitoringAPI {
         if let Some(ref local_query_param) = query {
             local_req_builder =
                 local_req_builder.query(&[("query", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = entity_type {
+            local_req_builder =
+                local_req_builder.query(&[("entity_type", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = from {
             local_req_builder =
@@ -13330,6 +13420,162 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<GetEntityContextError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Get the entities with the most recent updates in the Cloud SIEM entity context store. Entities are ranked
+    /// by the time of their most recent revision in the requested time range, and the top `limit` entities are
+    /// returned in that order. This endpoint is not paginated.
+    pub async fn get_entity_context_recently_updated(
+        &self,
+        params: GetEntityContextRecentlyUpdatedOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::RecentlyUpdatedEntitiesResponse,
+        datadog::Error<GetEntityContextRecentlyUpdatedError>,
+    > {
+        match self
+            .get_entity_context_recently_updated_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Get the entities with the most recent updates in the Cloud SIEM entity context store. Entities are ranked
+    /// by the time of their most recent revision in the requested time range, and the top `limit` entities are
+    /// returned in that order. This endpoint is not paginated.
+    pub async fn get_entity_context_recently_updated_with_http_info(
+        &self,
+        params: GetEntityContextRecentlyUpdatedOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::RecentlyUpdatedEntitiesResponse>,
+        datadog::Error<GetEntityContextRecentlyUpdatedError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_entity_context_recently_updated";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.get_entity_context_recently_updated' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let query = params.query;
+        let entity_type = params.entity_type;
+        let from = params.from;
+        let to = params.to;
+        let limit = params.limit;
+        let revisions = params.revisions;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/entity_context/recently_updated",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = query {
+            local_req_builder =
+                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = entity_type {
+            local_req_builder =
+                local_req_builder.query(&[("entity_type", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = from {
+            local_req_builder =
+                local_req_builder.query(&[("from", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = to {
+            local_req_builder = local_req_builder.query(&[("to", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = limit {
+            local_req_builder =
+                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = revisions {
+            local_req_builder =
+                local_req_builder.query(&[("revisions", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::RecentlyUpdatedEntitiesResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetEntityContextRecentlyUpdatedError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -17064,6 +17310,7 @@ impl SecurityMonitoringAPI {
         }
 
         // unbox and build optional parameters
+        let entity_type = params.entity_type;
         let from = params.from;
         let to = params.to;
         let as_of = params.as_of;
@@ -17078,6 +17325,10 @@ impl SecurityMonitoringAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        if let Some(ref local_query_param) = entity_type {
+            local_req_builder =
+                local_req_builder.query(&[("entity_type", &local_query_param.to_string())]);
+        };
         if let Some(ref local_query_param) = from {
             local_req_builder =
                 local_req_builder.query(&[("from", &local_query_param.to_string())]);
