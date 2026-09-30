@@ -368,6 +368,7 @@ impl Default for Configuration {
             ),
             ("v2.get_content_packs_states".to_owned(), false),
             ("v2.get_entity_context".to_owned(), false),
+            ("v2.get_entity_context_recently_updated".to_owned(), false),
             ("v2.get_entra_id_azure_app_registrations".to_owned(), false),
             ("v2.get_finding".to_owned(), false),
             ("v2.get_historical_job".to_owned(), false),

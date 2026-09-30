@@ -11,9 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsPromptSDKDataAttributes {
-    /// Chat template for this prompt version, as a list of role and content messages. Omitted for text templates.
+    /// Chat template for this prompt version, as a list of messages and named message placeholders. Omitted for text templates.
+    /// **Preview:** Message placeholders are available in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager.
     #[serde(rename = "chat_template")]
-    pub chat_template: Option<Vec<crate::datadogV2::model::LLMObsPromptChatMessage>>,
+    pub chat_template: Option<Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>>,
     /// Versioned prompt configuration is in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager. Customer-owned configuration delivered with a prompt version. Datadog stores and returns the object without interpolating it, validating provider-specific keys, or applying it to model calls. Do not include secrets.
     #[serde(rename = "config")]
     pub config: Option<std::collections::BTreeMap<String, serde_json::Value>>,
@@ -59,7 +60,7 @@ impl LLMObsPromptSDKDataAttributes {
     #[allow(deprecated)]
     pub fn chat_template(
         mut self,
-        value: Vec<crate::datadogV2::model::LLMObsPromptChatMessage>,
+        value: Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>,
     ) -> Self {
         self.chat_template = Some(value);
         self
@@ -134,7 +135,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptSDKDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut chat_template: Option<
-                    Vec<crate::datadogV2::model::LLMObsPromptChatMessage>,
+                    Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>,
                 > = None;
                 let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;

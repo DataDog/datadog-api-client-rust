@@ -3,15 +3,16 @@
 // Copyright 2019-Present Datadog, Inc.
 use serde::{Deserialize, Deserializer, Serialize};
 
-/// A text template, a list of chat messages, or an authored chat object. Text can include an exact prompt version with `{{>prompt-id version=N}}`; other text, including `{{>...}}` sequences without a version, remains literal. Use an authored chat object when including prompts as chat messages.
+/// A text template, a list of chat messages and named message placeholders, or an authored chat object. Text can include an exact prompt version with `{{>prompt-id version=N}}`; other text, including `{{>...}}` sequences without a version, remains literal. Use an authored chat object when including prompts as chat messages.
 /// **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
 /// Without access, inline references remain literal text and structured includes are unsupported. Previously compiled prompt versions remain available for execution.
+/// **Preview:** Message placeholders are available in Preview. To request access, contact [Datadog Support](<https://www.datadoghq.com/support/>) or your Customer Success Manager.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum LLMObsPromptTemplate {
     LLMObsPromptTextTemplate(String),
-    LLMObsPromptChatTemplate(Vec<crate::datadogV2::model::LLMObsPromptChatMessage>),
+    LLMObsPromptChatTemplate(Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>),
     LLMObsPromptAuthoringMessagesTemplate(
         Box<crate::datadogV2::model::LLMObsPromptAuthoringMessagesTemplate>,
     ),
@@ -28,7 +29,7 @@ impl<'de> Deserialize<'de> for LLMObsPromptTemplate {
             return Ok(LLMObsPromptTemplate::LLMObsPromptTextTemplate(_v));
         }
         if let Ok(_v) = serde_json::from_value::<
-            Vec<crate::datadogV2::model::LLMObsPromptChatMessage>,
+            Vec<crate::datadogV2::model::LLMObsPromptChatTemplateItem>,
         >(value.clone())
         {
             return Ok(LLMObsPromptTemplate::LLMObsPromptChatTemplate(_v));
