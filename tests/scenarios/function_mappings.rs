@@ -60057,10 +60057,10 @@ fn test_v2_delete_rum_operation_strong_link(
         .expect("api instance not found");
     let rum_operation_id =
         serde_json::from_value(_parameters.get("rum_operation_id").unwrap().clone()).unwrap();
-    let feature_id =
-        serde_json::from_value(_parameters.get("feature_id").unwrap().clone()).unwrap();
+    let journey_id =
+        serde_json::from_value(_parameters.get("journey_id").unwrap().clone()).unwrap();
     let response = match block_on(
-        api.delete_rum_operation_strong_link_with_http_info(rum_operation_id, feature_id),
+        api.delete_rum_operation_strong_link_with_http_info(rum_operation_id, journey_id),
     ) {
         Ok(response) => response,
         Err(error) => {
@@ -60090,12 +60090,12 @@ fn test_v2_update_rum_operation_strong_link(
         .expect("api instance not found");
     let rum_operation_id =
         serde_json::from_value(_parameters.get("rum_operation_id").unwrap().clone()).unwrap();
-    let feature_id =
-        serde_json::from_value(_parameters.get("feature_id").unwrap().clone()).unwrap();
+    let journey_id =
+        serde_json::from_value(_parameters.get("journey_id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_rum_operation_strong_link_with_http_info(
         rum_operation_id,
-        feature_id,
+        journey_id,
         body,
     )) {
         Ok(response) => response,

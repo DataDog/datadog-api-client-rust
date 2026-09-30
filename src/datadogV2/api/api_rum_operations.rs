@@ -709,10 +709,10 @@ impl RUMOperationsAPI {
     pub async fn delete_rum_operation_strong_link(
         &self,
         rum_operation_id: String,
-        feature_id: String,
+        journey_id: String,
     ) -> Result<(), datadog::Error<DeleteRUMOperationStrongLinkError>> {
         match self
-            .delete_rum_operation_strong_link_with_http_info(rum_operation_id, feature_id)
+            .delete_rum_operation_strong_link_with_http_info(rum_operation_id, journey_id)
             .await
         {
             Ok(_) => Ok(()),
@@ -724,7 +724,7 @@ impl RUMOperationsAPI {
     pub async fn delete_rum_operation_strong_link_with_http_info(
         &self,
         rum_operation_id: String,
-        feature_id: String,
+        journey_id: String,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMOperationStrongLinkError>>
     {
         let local_configuration = &self.config;
@@ -741,10 +741,10 @@ impl RUMOperationsAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/rum/operations/strong_links/{rum_operation_id}/{feature_id}",
+            "{}/api/v2/rum/operations/strong_links/{rum_operation_id}/{journey_id}",
             local_configuration.get_operation_host(local_operation_id),
             rum_operation_id = datadog::urlencode(rum_operation_id),
-            feature_id = datadog::urlencode(feature_id)
+            journey_id = datadog::urlencode(journey_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
@@ -1510,14 +1510,14 @@ impl RUMOperationsAPI {
     pub async fn update_rum_operation_strong_link(
         &self,
         rum_operation_id: String,
-        feature_id: String,
+        journey_id: String,
         body: crate::datadogV2::model::RUMOperationStrongLinkUpdateRequest,
     ) -> Result<
         crate::datadogV2::model::RUMOperationStrongLinkResponse,
         datadog::Error<UpdateRUMOperationStrongLinkError>,
     > {
         match self
-            .update_rum_operation_strong_link_with_http_info(rum_operation_id, feature_id, body)
+            .update_rum_operation_strong_link_with_http_info(rum_operation_id, journey_id, body)
             .await
         {
             Ok(response_content) => {
@@ -1537,7 +1537,7 @@ impl RUMOperationsAPI {
     pub async fn update_rum_operation_strong_link_with_http_info(
         &self,
         rum_operation_id: String,
-        feature_id: String,
+        journey_id: String,
         body: crate::datadogV2::model::RUMOperationStrongLinkUpdateRequest,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::RUMOperationStrongLinkResponse>,
@@ -1557,10 +1557,10 @@ impl RUMOperationsAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/rum/operations/strong_links/{rum_operation_id}/{feature_id}",
+            "{}/api/v2/rum/operations/strong_links/{rum_operation_id}/{journey_id}",
             local_configuration.get_operation_host(local_operation_id),
             rum_operation_id = datadog::urlencode(rum_operation_id),
-            feature_id = datadog::urlencode(feature_id)
+            journey_id = datadog::urlencode(journey_id)
         );
         let mut local_req_builder =
             local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
