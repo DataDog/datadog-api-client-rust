@@ -22,7 +22,7 @@ async fn main() {
     let resp = api
         .update_rum_operation_strong_link(
             "rum_operation_id".to_string(),
-            "feature_id".to_string(),
+            "journey_id".to_string(),
             body,
         )
         .await;

@@ -8,7 +8,7 @@ async fn main() {
     configuration.set_unstable_operation_enabled("v2.DeleteRUMOperationStrongLink", true);
     let api = RUMOperationsAPI::with_config(configuration);
     let resp = api
-        .delete_rum_operation_strong_link("rum_operation_id".to_string(), "feature_id".to_string())
+        .delete_rum_operation_strong_link("rum_operation_id".to_string(), "journey_id".to_string())
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
