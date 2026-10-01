@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::model::DueDateFrom;
 use datadog_api_client::datadogV2::model::DueDatePerSeverityItem;
 use datadog_api_client::datadogV2::model::DueDateRuleAction;
 use datadog_api_client::datadogV2::model::DueDateRuleAttributesCreate;
-use datadog_api_client::datadogV2::model::DueDateRuleDataCreate;
+use datadog_api_client::datadogV2::model::DueDateRuleDataUpdate;
 use datadog_api_client::datadogV2::model::DueDateRuleType;
 use datadog_api_client::datadogV2::model::DueDateRuleUpdateRequest;
 use datadog_api_client::datadogV2::model::DueDateSeverity;
@@ -18,7 +18,7 @@ async fn main() {
     let valid_due_date_rule_data_id =
         uuid::Uuid::parse_str(&std::env::var("VALID_DUE_DATE_RULE_DATA_ID").unwrap())
             .expect("Invalid UUID");
-    let body = DueDateRuleUpdateRequest::new(DueDateRuleDataCreate::new(
+    let body = DueDateRuleUpdateRequest::new(DueDateRuleDataUpdate::new(
         DueDateRuleAttributesCreate::new(
             DueDateRuleAction::new(
                 vec![DueDatePerSeverityItem::new(14, DueDateSeverity::CRITICAL)],
@@ -29,6 +29,7 @@ async fn main() {
                 .query("env:staging".to_string()),
         )
         .enabled(false),
+        valid_due_date_rule_data_id.clone(),
         DueDateRuleType::DUE_DATE_RULES,
     ));
     let mut configuration = datadog::Configuration::new();

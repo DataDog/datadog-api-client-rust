@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::model::AutomationRuleScope;
 use datadog_api_client::datadogV2::model::MuteReason;
 use datadog_api_client::datadogV2::model::MuteRuleAction;
 use datadog_api_client::datadogV2::model::MuteRuleAttributesCreate;
-use datadog_api_client::datadogV2::model::MuteRuleDataCreate;
+use datadog_api_client::datadogV2::model::MuteRuleDataUpdate;
 use datadog_api_client::datadogV2::model::MuteRuleType;
 use datadog_api_client::datadogV2::model::MuteRuleUpdateRequest;
 use datadog_api_client::datadogV2::model::SecurityFindingType;
@@ -16,7 +16,7 @@ async fn main() {
     let valid_mute_rule_data_id =
         uuid::Uuid::parse_str(&std::env::var("VALID_MUTE_RULE_DATA_ID").unwrap())
             .expect("Invalid UUID");
-    let body = MuteRuleUpdateRequest::new(MuteRuleDataCreate::new(
+    let body = MuteRuleUpdateRequest::new(MuteRuleDataUpdate::new(
         MuteRuleAttributesCreate::new(
             MuteRuleAction::new(MuteReason::FALSE_POSITIVE),
             "Example-Security-Monitoring".to_string(),
@@ -24,6 +24,7 @@ async fn main() {
                 .query("env:staging".to_string()),
         )
         .enabled(false),
+        valid_mute_rule_data_id.clone(),
         MuteRuleType::MUTE_RULES,
     ));
     let mut configuration = datadog::Configuration::new();

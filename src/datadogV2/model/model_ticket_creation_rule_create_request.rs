@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TicketCreationRuleCreateRequest {
-    /// The data object for a ticket creation rule create or update request.
+    /// The data object for a ticket creation rule create request.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::TicketCreationRuleDataCreate,
     #[serde(flatten)]

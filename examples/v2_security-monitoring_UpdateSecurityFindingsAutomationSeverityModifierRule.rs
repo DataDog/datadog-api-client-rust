@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::model::AutomationRuleScope;
 use datadog_api_client::datadogV2::model::SecurityFindingType;
 use datadog_api_client::datadogV2::model::SeverityModifierRuleAction;
 use datadog_api_client::datadogV2::model::SeverityModifierRuleAttributesCreate;
-use datadog_api_client::datadogV2::model::SeverityModifierRuleDataCreate;
+use datadog_api_client::datadogV2::model::SeverityModifierRuleDataUpdate;
 use datadog_api_client::datadogV2::model::SeverityModifierRuleSetAction;
 use datadog_api_client::datadogV2::model::SeverityModifierRuleSetActionType;
 use datadog_api_client::datadogV2::model::SeverityModifierRuleType;
@@ -19,7 +19,7 @@ async fn main() {
     let valid_severity_modifier_rule_data_id =
         uuid::Uuid::parse_str(&std::env::var("VALID_SEVERITY_MODIFIER_RULE_DATA_ID").unwrap())
             .expect("Invalid UUID");
-    let body = SeverityModifierRuleUpdateRequest::new(SeverityModifierRuleDataCreate::new(
+    let body = SeverityModifierRuleUpdateRequest::new(SeverityModifierRuleDataUpdate::new(
         SeverityModifierRuleAttributesCreate::new(
             SeverityModifierRuleAction::SeverityModifierRuleSetAction(Box::new(
                 SeverityModifierRuleSetAction::new(
@@ -33,6 +33,7 @@ async fn main() {
                 .query("env:prod team:platform".to_string()),
         )
         .enabled(true),
+        valid_severity_modifier_rule_data_id.clone(),
         SeverityModifierRuleType::SEVERITY_MODIFIER_RULES,
     ));
     let mut configuration = datadog::Configuration::new();
