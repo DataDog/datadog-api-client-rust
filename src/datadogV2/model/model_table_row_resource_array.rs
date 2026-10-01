@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// List of rows from a reference table query.
+/// List of rows from a reference table query, along with metadata about rows that were requested but not found.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,6 +14,9 @@ pub struct TableRowResourceArray {
     /// The rows.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::TableRowResourceData>,
+    /// Metadata about the rows requested, including which ones were not found.
+    #[serde(rename = "meta")]
+    pub meta: Option<crate::datadogV2::model::TableRowResourceArrayMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,9 +28,15 @@ impl TableRowResourceArray {
     pub fn new(data: Vec<crate::datadogV2::model::TableRowResourceData>) -> TableRowResourceArray {
         TableRowResourceArray {
             data,
+            meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn meta(mut self, value: crate::datadogV2::model::TableRowResourceArrayMeta) -> Self {
+        self.meta = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -57,6 +66,7 @@ impl<'de> Deserialize<'de> for TableRowResourceArray {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<Vec<crate::datadogV2::model::TableRowResourceData>> = None;
+                let mut meta: Option<crate::datadogV2::model::TableRowResourceArrayMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -67,6 +77,12 @@ impl<'de> Deserialize<'de> for TableRowResourceArray {
                     match k.as_str() {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -79,6 +95,7 @@ impl<'de> Deserialize<'de> for TableRowResourceArray {
 
                 let content = TableRowResourceArray {
                     data,
+                    meta,
                     additional_properties,
                     _unparsed,
                 };
