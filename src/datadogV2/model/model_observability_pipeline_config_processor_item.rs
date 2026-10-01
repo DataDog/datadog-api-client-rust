@@ -80,6 +80,9 @@ pub enum ObservabilityPipelineConfigProcessorItem {
     ObservabilityPipelineAggregateProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineAggregateProcessor>,
     ),
+    ObservabilityPipelineMetricEnrichmentTableProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineMetricEnrichmentTableProcessor>,
+    ),
     ObservabilityPipelineMetricTagsProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineMetricTagsProcessor>,
     ),
@@ -313,6 +316,17 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorItem {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineAggregateProcessor(_v));
             }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineMetricEnrichmentTableProcessor>,
+        >(value.clone())
+        {
+            match *_v {
+				crate::datadogV2::model::ObservabilityPipelineMetricEnrichmentTableProcessor::UnparsedObject(_v) => {},
+				_ => {
+					return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineMetricEnrichmentTableProcessor(_v))
+				}
+			}
         }
         if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV2::model::ObservabilityPipelineMetricTagsProcessor>,
