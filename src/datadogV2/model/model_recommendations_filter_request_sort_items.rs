@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RecommendationsFilterRequestSortItems {
-    /// Field to sort by (for example, `potential_daily_savings.amount`).
+    /// Field to sort by (for example, `@potential_daily_savings`).
     #[serde(rename = "expression")]
     pub expression: Option<String>,
     /// Sort direction, either `ASC` or `DESC`.

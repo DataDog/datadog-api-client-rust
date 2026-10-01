@@ -19,7 +19,7 @@ async fn main() {
             RecommendationsFilterRequestDataAttributes::new()
                 .scope(RecommendationsFilterRequestScope::CCM)
                 .sort(vec![RecommendationsFilterRequestSortItems::new()
-                    .expression("potential_daily_savings.amount".to_string())
+                    .expression("@potential_daily_savings".to_string())
                     .order("DESC".to_string())]),
         )
         .id("@resource_table:aws_ec2_instance".to_string()),
