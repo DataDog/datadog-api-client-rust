@@ -44,6 +44,9 @@ pub struct DataDeletionResponseItemAttributes {
     /// Query for creating a data deletion request.
     #[serde(rename = "query")]
     pub query: String,
+    /// The source of the deletion request.
+    #[serde(rename = "source")]
+    pub source: Option<String>,
     /// Starting time of the process to delete the requested data.
     #[serde(rename = "starting_at")]
     pub starting_at: String,
@@ -94,6 +97,7 @@ impl DataDeletionResponseItemAttributes {
             org_id,
             product,
             query,
+            source: None,
             starting_at,
             status,
             to_time,
@@ -116,6 +120,11 @@ impl DataDeletionResponseItemAttributes {
 
     pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
+        self
+    }
+
+    pub fn source(mut self, value: String) -> Self {
+        self.source = Some(value);
         self
     }
 
@@ -156,6 +165,7 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                 let mut org_id: Option<i64> = None;
                 let mut product: Option<String> = None;
                 let mut query: Option<String> = None;
+                let mut source: Option<String> = None;
                 let mut starting_at: Option<String> = None;
                 let mut status: Option<String> = None;
                 let mut to_time: Option<i64> = None;
@@ -214,6 +224,12 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "source" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "starting_at" => {
                             starting_at =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -267,6 +283,7 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                     org_id,
                     product,
                     query,
+                    source,
                     starting_at,
                     status,
                     to_time,
