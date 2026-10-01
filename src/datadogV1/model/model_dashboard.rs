@@ -35,6 +35,9 @@ pub struct Dashboard {
         with = "::serde_with::rust::double_option"
     )]
     pub description: Option<Option<String>>,
+    /// The experience type of the dashboard.
+    #[serde(rename = "experience_type")]
+    pub experience_type: Option<crate::datadogV1::model::DashboardExperienceType>,
     /// ID of the dashboard.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -115,6 +118,7 @@ impl Dashboard {
             created_at: None,
             default_timeframe: None,
             description: None,
+            experience_type: None,
             id: None,
             is_read_only: None,
             layout_type,
@@ -164,6 +168,15 @@ impl Dashboard {
     #[allow(deprecated)]
     pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn experience_type(
+        mut self,
+        value: crate::datadogV1::model::DashboardExperienceType,
+    ) -> Self {
+        self.experience_type = Some(value);
         self
     }
 
@@ -272,6 +285,8 @@ impl<'de> Deserialize<'de> for Dashboard {
                     crate::datadogV1::model::DashboardDefaultTimeframeSetting,
                 > = None;
                 let mut description: Option<Option<String>> = None;
+                let mut experience_type: Option<crate::datadogV1::model::DashboardExperienceType> =
+                    None;
                 let mut id: Option<String> = None;
                 let mut is_read_only: Option<bool> = None;
                 let mut layout_type: Option<crate::datadogV1::model::DashboardLayoutType> = None;
@@ -333,6 +348,21 @@ impl<'de> Deserialize<'de> for Dashboard {
                         "description" => {
                             description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "experience_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            experience_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _experience_type) = experience_type {
+                                match _experience_type {
+                                    crate::datadogV1::model::DashboardExperienceType::UnparsedObject(_experience_type) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "id" => {
                             if v.is_null() {
@@ -437,6 +467,7 @@ impl<'de> Deserialize<'de> for Dashboard {
                     created_at,
                     default_timeframe,
                     description,
+                    experience_type,
                     id,
                     is_read_only,
                     layout_type,
