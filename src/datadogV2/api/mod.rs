@@ -75,6 +75,7 @@ pub mod api_ip_allowlist;
 pub mod api_jira_integration;
 pub mod api_key_management;
 pub mod api_logs;
+pub mod api_logs_archive_searches;
 pub mod api_logs_archives;
 pub mod api_logs_custom_destinations;
 pub mod api_logs_metrics;

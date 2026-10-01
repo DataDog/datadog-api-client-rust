@@ -162,6 +162,8 @@ pub struct ApiInstances {
     pub v2_api_okta_integration: Option<datadogV2::api_okta_integration::OktaIntegrationAPI>,
     pub v2_api_ip_allowlist: Option<datadogV2::api_ip_allowlist::IPAllowlistAPI>,
     pub v2_api_logs: Option<datadogV2::api_logs::LogsAPI>,
+    pub v2_api_logs_archive_searches:
+        Option<datadogV2::api_logs_archive_searches::LogsArchiveSearchesAPI>,
     pub v2_api_logs_archives: Option<datadogV2::api_logs_archives::LogsArchivesAPI>,
     pub v2_api_logs_custom_destinations:
         Option<datadogV2::api_logs_custom_destinations::LogsCustomDestinationsAPI>,
@@ -1133,6 +1135,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
+        }
+        "LogsArchiveSearches" => {
+            world.api_instances.v2_api_logs_archive_searches = Some(datadogV2::api_logs_archive_searches::LogsArchiveSearchesAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
         }
         "LogsArchives" => {
             world.api_instances.v2_api_logs_archives = Some(
@@ -6368,6 +6376,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListLogsWithPagination".into(),
         test_v2_list_logs_with_pagination,
     );
+    world.function_mappings.insert(
+        "v2.CreateArchiveSearch".into(),
+        test_v2_create_archive_search,
+    );
+    world
+        .function_mappings
+        .insert("v2.GetArchiveSearch".into(), test_v2_get_archive_search);
     world.function_mappings.insert(
         "v2.GetLogsArchiveOrder".into(),
         test_v2_get_logs_archive_order,
@@ -49210,6 +49225,57 @@ fn test_v2_list_logs_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_create_archive_search(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_logs_archive_searches
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_archive_search_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_archive_search(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_logs_archive_searches
+        .as_ref()
+        .expect("api instance not found");
+    let archive_search_id =
+        serde_json::from_value(_parameters.get("archive_search_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.get_archive_search_with_http_info(archive_search_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_get_logs_archive_order(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
