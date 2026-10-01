@@ -15,8 +15,9 @@ pub struct RecommendationsFilterRequestData {
     /// Attributes used to filter and sort cost recommendations.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::RecommendationsFilterRequestDataAttributes>,
-    /// Filter expression applied to the recommendations. The server treats an omitted ID as `*`
-    /// and returns all recommendations.
+    /// Filter expression applied to the recommendations when `attributes.filter` is omitted.
+    /// When supplied, `attributes.filter` overrides this value, including when empty. If the
+    /// resulting filter is empty, it defaults to `*`. Scope, view, and pagination still apply.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Legacy JSON:API resource type required by the cost recommendations search decoder.
