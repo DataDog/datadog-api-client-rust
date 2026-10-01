@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The data object for creating a RUM operation strong link.
+/// The data object for creating a RUM operation link.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMOperationStrongLinkCreateRequestData {
-    /// Attributes for creating a RUM operation strong link.
+    /// Attributes for creating a RUM operation link.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::RUMOperationStrongLinkCreateRequestAttributes,
-    /// The JSON:API type for RUM operation strong link resources.
+    /// The JSON:API type for RUM operation link resources.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::RUMOperationStrongLinkType,
     #[serde(flatten)]

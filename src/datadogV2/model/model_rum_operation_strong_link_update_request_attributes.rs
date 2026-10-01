@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for updating a RUM operation strong link.
+/// Attributes for updating a RUM operation link.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMOperationStrongLinkUpdateRequestAttributes {
-    /// The status of a RUM operation strong link. Can only be set to `CONFIRMED` or `REJECTED`.
+    /// The status of a RUM operation link. Can only be set to `CONFIRMED` or `REJECTED`.
     #[serde(rename = "status")]
     pub status: crate::datadogV2::model::RUMOperationStrongLinkUpdateStatus,
     #[serde(flatten)]

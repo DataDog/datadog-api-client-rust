@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The data object in a RUM operation strong link response.
+/// The data object in a RUM operation link response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMOperationStrongLinkResponseData {
-    /// Attributes of a RUM operation strong link response.
+    /// Attributes of a RUM operation link response.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::RUMOperationStrongLinkResponseAttributes,
-    /// The unique identifier of the strong link, formatted as `<operation_id>:<feature_id>`.
+    /// The unique identifier of the link, formatted as `<operation_id>:<feature_id>`.
     #[serde(rename = "id")]
     pub id: String,
-    /// The JSON:API type for RUM operation strong link resources.
+    /// The JSON:API type for RUM operation link resources.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::RUMOperationStrongLinkType,
     #[serde(flatten)]

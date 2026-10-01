@@ -1,4 +1,4 @@
-// List RUM operation strong links returns "OK" response
+// List RUM operation links returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_operations::ListRUMOperationStrongLinksOptionalParams;
 use datadog_api_client::datadogV2::api_rum_operations::RUMOperationsAPI;
