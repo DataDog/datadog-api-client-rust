@@ -1,4 +1,4 @@
-// Delete a RUM operation strong link returns "No Content" response
+// Delete a RUM operation link returns "No Content" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_operations::RUMOperationsAPI;
 

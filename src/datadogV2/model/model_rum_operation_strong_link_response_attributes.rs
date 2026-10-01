@@ -6,34 +6,34 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a RUM operation strong link response.
+/// Attributes of a RUM operation link response.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMOperationStrongLinkResponseAttributes {
-    /// The timestamp when the strong link was created.
+    /// The timestamp when the link was created.
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// A description of the strong link.
+    /// A description of the link.
     #[serde(
         rename = "description",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub description: Option<Option<String>>,
-    /// The unique identifier of the linked feature.
+    /// The unique identifier of the linked journey.
     #[serde(rename = "feature_id")]
     pub feature_id: String,
     /// The unique identifier of the linked RUM operation.
     #[serde(rename = "operation_id")]
     pub operation_id: String,
-    /// The status of a RUM operation strong link.
+    /// The status of a RUM operation link.
     #[serde(rename = "status")]
     pub status: crate::datadogV2::model::RUMOperationStrongLinkStatus,
-    /// A list of tags associated with the strong link.
+    /// A list of tags associated with the link.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
-    /// The timestamp when the strong link was last updated.
+    /// The timestamp when the link was last updated.
     #[serde(
         rename = "updated_at",
         default,
