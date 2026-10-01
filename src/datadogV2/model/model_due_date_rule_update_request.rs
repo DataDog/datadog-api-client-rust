@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DueDateRuleUpdateRequest {
-    /// The data object for a due date rule create or update request.
+    /// The data object for a due date rule update request. The `id` must match the `rule_id` path parameter.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::DueDateRuleDataCreate,
+    pub data: crate::datadogV2::model::DueDateRuleDataUpdate,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,7 +22,7 @@ pub struct DueDateRuleUpdateRequest {
 }
 
 impl DueDateRuleUpdateRequest {
-    pub fn new(data: crate::datadogV2::model::DueDateRuleDataCreate) -> DueDateRuleUpdateRequest {
+    pub fn new(data: crate::datadogV2::model::DueDateRuleDataUpdate) -> DueDateRuleUpdateRequest {
         DueDateRuleUpdateRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for DueDateRuleUpdateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::DueDateRuleDataCreate> = None;
+                let mut data: Option<crate::datadogV2::model::DueDateRuleDataUpdate> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

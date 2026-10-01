@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The body of a ticket creation rule update request.
+/// The response of a ticket creation rule reorder request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TicketCreationRuleUpdateRequest {
-    /// The data object for a ticket creation rule update request. The `id` must match the `rule_id` path parameter.
+pub struct TicketCreationRuleReorderResponse {
+    /// The ordered list of all ticket creation rules. Every rule must be included.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::TicketCreationRuleDataUpdate,
+    pub data: Vec<crate::datadogV2::model::TicketCreationRuleReorderItem>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct TicketCreationRuleUpdateRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl TicketCreationRuleUpdateRequest {
+impl TicketCreationRuleReorderResponse {
     pub fn new(
-        data: crate::datadogV2::model::TicketCreationRuleDataUpdate,
-    ) -> TicketCreationRuleUpdateRequest {
-        TicketCreationRuleUpdateRequest {
+        data: Vec<crate::datadogV2::model::TicketCreationRuleReorderItem>,
+    ) -> TicketCreationRuleReorderResponse {
+        TicketCreationRuleReorderResponse {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl TicketCreationRuleUpdateRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for TicketCreationRuleUpdateRequest {
+impl<'de> Deserialize<'de> for TicketCreationRuleReorderResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TicketCreationRuleUpdateRequestVisitor;
-        impl<'a> Visitor<'a> for TicketCreationRuleUpdateRequestVisitor {
-            type Value = TicketCreationRuleUpdateRequest;
+        struct TicketCreationRuleReorderResponseVisitor;
+        impl<'a> Visitor<'a> for TicketCreationRuleReorderResponseVisitor {
+            type Value = TicketCreationRuleReorderResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +58,8 @@ impl<'de> Deserialize<'de> for TicketCreationRuleUpdateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TicketCreationRuleDataUpdate> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::TicketCreationRuleReorderItem>> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,7 +80,7 @@ impl<'de> Deserialize<'de> for TicketCreationRuleUpdateRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = TicketCreationRuleUpdateRequest {
+                let content = TicketCreationRuleReorderResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -89,6 +90,6 @@ impl<'de> Deserialize<'de> for TicketCreationRuleUpdateRequest {
             }
         }
 
-        deserializer.deserialize_any(TicketCreationRuleUpdateRequestVisitor)
+        deserializer.deserialize_any(TicketCreationRuleReorderResponseVisitor)
     }
 }

@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MuteRuleUpdateRequest {
-    /// The data object for a mute rule create or update request.
+    /// The data object for a mute rule update request. The `id` must match the `rule_id` path parameter.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::MuteRuleDataCreate,
+    pub data: crate::datadogV2::model::MuteRuleDataUpdate,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,7 +22,7 @@ pub struct MuteRuleUpdateRequest {
 }
 
 impl MuteRuleUpdateRequest {
-    pub fn new(data: crate::datadogV2::model::MuteRuleDataCreate) -> MuteRuleUpdateRequest {
+    pub fn new(data: crate::datadogV2::model::MuteRuleDataUpdate) -> MuteRuleUpdateRequest {
         MuteRuleUpdateRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for MuteRuleUpdateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::MuteRuleDataCreate> = None;
+                let mut data: Option<crate::datadogV2::model::MuteRuleDataUpdate> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

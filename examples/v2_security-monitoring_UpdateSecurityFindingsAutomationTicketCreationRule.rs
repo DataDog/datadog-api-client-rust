@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::model::AutomationRuleScope;
 use datadog_api_client::datadogV2::model::SecurityFindingType;
 use datadog_api_client::datadogV2::model::TicketCreationRuleAction;
 use datadog_api_client::datadogV2::model::TicketCreationRuleAttributesCreate;
-use datadog_api_client::datadogV2::model::TicketCreationRuleDataCreate;
+use datadog_api_client::datadogV2::model::TicketCreationRuleDataUpdate;
 use datadog_api_client::datadogV2::model::TicketCreationRuleType;
 use datadog_api_client::datadogV2::model::TicketCreationRuleUpdateRequest;
 use datadog_api_client::datadogV2::model::TicketCreationTarget;
@@ -18,7 +18,7 @@ async fn main() {
     let valid_ticket_creation_rule_data_id =
         uuid::Uuid::parse_str(&std::env::var("VALID_TICKET_CREATION_RULE_DATA_ID").unwrap())
             .expect("Invalid UUID");
-    let body = TicketCreationRuleUpdateRequest::new(TicketCreationRuleDataCreate::new(
+    let body = TicketCreationRuleUpdateRequest::new(TicketCreationRuleDataUpdate::new(
         TicketCreationRuleAttributesCreate::new(
             TicketCreationRuleAction::new(
                 5,
@@ -30,6 +30,7 @@ async fn main() {
                 .query("env:staging".to_string()),
         )
         .enabled(false),
+        valid_ticket_creation_rule_data_id.clone(),
         TicketCreationRuleType::TICKET_CREATION_RULES,
     ));
     let mut configuration = datadog::Configuration::new();

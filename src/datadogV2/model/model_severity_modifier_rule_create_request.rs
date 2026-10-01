@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SeverityModifierRuleCreateRequest {
-    /// The data object for a severity modifier rule create or update request.
+    /// The data object for a severity modifier rule create request.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::SeverityModifierRuleDataCreate,
     #[serde(flatten)]

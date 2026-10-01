@@ -6,17 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The data object for a mute rule create request.
+/// The data object for a due date rule update request. The `id` must match the `rule_id` path parameter.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct MuteRuleDataCreate {
-    /// Attributes for creating or updating a mute rule.
+pub struct DueDateRuleDataUpdate {
+    /// Attributes for creating or updating a due date rule.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::MuteRuleAttributesCreate,
-    /// The JSON:API type for mute rules.
+    pub attributes: crate::datadogV2::model::DueDateRuleAttributesCreate,
+    /// The ID of the due date rule to update.
+    #[serde(rename = "id")]
+    pub id: uuid::Uuid,
+    /// The JSON:API type for due date rules.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::MuteRuleType,
+    pub type_: crate::datadogV2::model::DueDateRuleType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,13 +27,15 @@ pub struct MuteRuleDataCreate {
     pub(crate) _unparsed: bool,
 }
 
-impl MuteRuleDataCreate {
+impl DueDateRuleDataUpdate {
     pub fn new(
-        attributes: crate::datadogV2::model::MuteRuleAttributesCreate,
-        type_: crate::datadogV2::model::MuteRuleType,
-    ) -> MuteRuleDataCreate {
-        MuteRuleDataCreate {
+        attributes: crate::datadogV2::model::DueDateRuleAttributesCreate,
+        id: uuid::Uuid,
+        type_: crate::datadogV2::model::DueDateRuleType,
+    ) -> DueDateRuleDataUpdate {
+        DueDateRuleDataUpdate {
             attributes,
+            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -46,14 +51,14 @@ impl MuteRuleDataCreate {
     }
 }
 
-impl<'de> Deserialize<'de> for MuteRuleDataCreate {
+impl<'de> Deserialize<'de> for DueDateRuleDataUpdate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct MuteRuleDataCreateVisitor;
-        impl<'a> Visitor<'a> for MuteRuleDataCreateVisitor {
-            type Value = MuteRuleDataCreate;
+        struct DueDateRuleDataUpdateVisitor;
+        impl<'a> Visitor<'a> for DueDateRuleDataUpdateVisitor {
+            type Value = DueDateRuleDataUpdate;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,9 +68,10 @@ impl<'de> Deserialize<'de> for MuteRuleDataCreate {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::MuteRuleAttributesCreate> =
+                let mut attributes: Option<crate::datadogV2::model::DueDateRuleAttributesCreate> =
                     None;
-                let mut type_: Option<crate::datadogV2::model::MuteRuleType> = None;
+                let mut id: Option<uuid::Uuid> = None;
+                let mut type_: Option<crate::datadogV2::model::DueDateRuleType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,11 +83,14 @@ impl<'de> Deserialize<'de> for MuteRuleDataCreate {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::MuteRuleType::UnparsedObject(
+                                    crate::datadogV2::model::DueDateRuleType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -98,10 +107,12 @@ impl<'de> Deserialize<'de> for MuteRuleDataCreate {
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = MuteRuleDataCreate {
+                let content = DueDateRuleDataUpdate {
                     attributes,
+                    id,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -111,6 +122,6 @@ impl<'de> Deserialize<'de> for MuteRuleDataCreate {
             }
         }
 
-        deserializer.deserialize_any(MuteRuleDataCreateVisitor)
+        deserializer.deserialize_any(DueDateRuleDataUpdateVisitor)
     }
 }

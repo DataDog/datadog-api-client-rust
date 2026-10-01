@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SeverityModifierRuleUpdateRequest {
-    /// The data object for a severity modifier rule create or update request.
+    /// The data object for a severity modifier rule update request. The `id` must match the `rule_id` path parameter.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::SeverityModifierRuleDataCreate,
+    pub data: crate::datadogV2::model::SeverityModifierRuleDataUpdate,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -23,7 +23,7 @@ pub struct SeverityModifierRuleUpdateRequest {
 
 impl SeverityModifierRuleUpdateRequest {
     pub fn new(
-        data: crate::datadogV2::model::SeverityModifierRuleDataCreate,
+        data: crate::datadogV2::model::SeverityModifierRuleDataUpdate,
     ) -> SeverityModifierRuleUpdateRequest {
         SeverityModifierRuleUpdateRequest {
             data,
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for SeverityModifierRuleUpdateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::SeverityModifierRuleDataCreate> =
+                let mut data: Option<crate::datadogV2::model::SeverityModifierRuleDataUpdate> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
