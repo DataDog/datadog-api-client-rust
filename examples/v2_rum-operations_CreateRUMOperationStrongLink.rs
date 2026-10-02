@@ -19,7 +19,7 @@ async fn main() {
             RUMOperationStrongLinkType::STRONG_LINKS,
         ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateRUMOperationStrongLink", true);
+    configuration.set_unstable_operation_enabled("v2.create_rum_operation_strong_link", true);
     let api = RUMOperationsAPI::with_config(configuration);
     let resp = api.create_rum_operation_strong_link(body).await;
     if let Ok(value) = resp {

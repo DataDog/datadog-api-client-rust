@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_cloud_cost_management::CloudCostManagemen
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListUnitCosts", true);
+    configuration.set_unstable_operation_enabled("v2.list_unit_costs", true);
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api.list_unit_costs().await;
     if let Ok(value) = resp {

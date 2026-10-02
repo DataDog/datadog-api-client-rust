@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_rum_retention_filters::RumRetentionFilter
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListExclusionFilters", true);
+    configuration.set_unstable_operation_enabled("v2.list_exclusion_filters", true);
     let api = RumRetentionFiltersAPI::with_config(configuration);
     let resp = api.list_exclusion_filters("app_id".to_string()).await;
     if let Ok(value) = resp {

@@ -22,7 +22,7 @@ async fn main() {
         HamrOrgConnectionType::HAMR_ORG_CONNECTIONS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateHamrOrgConnection", true);
+    configuration.set_unstable_operation_enabled("v2.create_hamr_org_connection", true);
     let api = HighAvailabilityMultiRegionAPI::with_config(configuration);
     let resp = api.create_hamr_org_connection(body).await;
     if let Ok(value) = resp {

@@ -40,7 +40,7 @@ async fn main() {
         FormVersionType::FORM_VERSIONS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpsertFormVersion", true);
+    configuration.set_unstable_operation_enabled("v2.upsert_form_version", true);
     let api = FormsAPI::with_config(configuration);
     let resp = api.upsert_form_version(form_data_id.clone(), body).await;
     if let Ok(value) = resp {

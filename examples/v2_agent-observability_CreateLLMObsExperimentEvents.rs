@@ -60,7 +60,7 @@ TimeoutError: Model response timed out"#
         LLMObsEventType::EVENTS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateLLMObsExperimentEvents", true);
+    configuration.set_unstable_operation_enabled("v2.create_llm_obs_experiment_events", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .create_llm_obs_experiment_events("experiment_id".to_string(), body)

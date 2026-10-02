@@ -14,7 +14,7 @@ async fn main() {
             .type_(CustomRuleDataType::CUSTOM_RULE),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateCustomRule", true);
+    configuration.set_unstable_operation_enabled("v2.create_custom_rule", true);
     let api = StaticAnalysisAPI::with_config(configuration);
     let resp = api
         .create_custom_rule("ruleset_name".to_string(), body)

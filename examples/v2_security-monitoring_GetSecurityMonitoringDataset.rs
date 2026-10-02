@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetSecurityMonitoringDataset", true);
+    configuration.set_unstable_operation_enabled("v2.get_security_monitoring_dataset", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .get_security_monitoring_dataset("123e4567-e89b-12d3-a456-426614174000".to_string())

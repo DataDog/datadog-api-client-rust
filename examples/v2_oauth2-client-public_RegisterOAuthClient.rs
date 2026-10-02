@@ -24,7 +24,7 @@ async fn main() {
     .token_endpoint_auth_method("none".to_string())
     .tos_uri("https://example.com/tos".to_string());
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.RegisterOAuthClient", true);
+    configuration.set_unstable_operation_enabled("v2.register_o_auth_client", true);
     let api = OAuth2ClientPublicAPI::with_config(configuration);
     let resp = api.register_o_auth_client(body).await;
     if let Ok(value) = resp {

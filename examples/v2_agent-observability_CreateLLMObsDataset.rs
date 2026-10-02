@@ -13,7 +13,7 @@ async fn main() {
         LLMObsDatasetType::DATASETS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateLLMObsDataset", true);
+    configuration.set_unstable_operation_enabled("v2.create_llm_obs_dataset", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .create_llm_obs_dataset("project_id".to_string(), body)

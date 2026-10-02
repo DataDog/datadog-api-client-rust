@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_cloud_cost_management::GetCostTagMetadata
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetCostTagMetadataCurrency", true);
+    configuration.set_unstable_operation_enabled("v2.get_cost_tag_metadata_currency", true);
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api
         .get_cost_tag_metadata_currency(

@@ -56,7 +56,7 @@ async fn main() {
             ),
         );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateUnitCost", true);
+    configuration.set_unstable_operation_enabled("v2.create_unit_cost", true);
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api.create_unit_cost(body).await;
     if let Ok(value) = resp {

@@ -69,7 +69,7 @@ async fn main() {
         ),
     )]);
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateChangeRequest", true);
+    configuration.set_unstable_operation_enabled("v2.update_change_request", true);
     let api = ChangeManagementAPI::with_config(configuration);
     let resp = api
         .update_change_request("change_request_id".to_string(), body)

@@ -46,7 +46,7 @@ async fn main() {
             .type_(CustomRuleRevisionDataType::CUSTOM_RULE_REVISION),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateCustomRuleRevision", true);
+    configuration.set_unstable_operation_enabled("v2.create_custom_rule_revision", true);
     let api = StaticAnalysisAPI::with_config(configuration);
     let resp = api
         .create_custom_rule_revision("ruleset_name".to_string(), "rule_name".to_string(), body)

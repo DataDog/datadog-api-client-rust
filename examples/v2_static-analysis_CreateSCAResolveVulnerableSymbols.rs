@@ -15,7 +15,7 @@ async fn main() {
         .attributes(ResolveVulnerableSymbolsRequestDataAttributes::new().purls(vec![])),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateSCAResolveVulnerableSymbols", true);
+    configuration.set_unstable_operation_enabled("v2.create_sca_resolve_vulnerable_symbols", true);
     let api = StaticAnalysisAPI::with_config(configuration);
     let resp = api.create_sca_resolve_vulnerable_symbols(body).await;
     if let Ok(value) = resp {

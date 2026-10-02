@@ -17,7 +17,7 @@ async fn main() {
         GetAstRequestDataType::GET_AST_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateStaticAnalysisAst", true);
+    configuration.set_unstable_operation_enabled("v2.create_static_analysis_ast", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_static_analysis_ast(body).await;
     if let Ok(value) = resp {

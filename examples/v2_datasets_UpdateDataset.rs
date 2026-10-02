@@ -23,7 +23,7 @@ async fn main() {
         DatasetType::DATASET,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateDataset", true);
+    configuration.set_unstable_operation_enabled("v2.update_dataset", true);
     let api = DatasetsAPI::with_config(configuration);
     let resp = api.update_dataset(dataset_data_id.clone(), body).await;
     if let Ok(value) = resp {

@@ -47,7 +47,7 @@ async fn main() {
         RUMOperationType::OPERATIONS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateRUMOperation", true);
+    configuration.set_unstable_operation_enabled("v2.update_rum_operation", true);
     let api = RUMOperationsAPI::with_config(configuration);
     let resp = api
         .update_rum_operation("rum_operation_id".to_string(), body)

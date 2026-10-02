@@ -14,7 +14,7 @@ async fn main() {
         OwnershipSettingsType::OWNERSHIP_SETTINGS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.PostOwnershipSettings", true);
+    configuration.set_unstable_operation_enabled("v2.post_ownership_settings", true);
     let api = CSMOwnershipAPI::with_config(configuration);
     let resp = api.post_ownership_settings(body).await;
     if let Ok(value) = resp {

@@ -32,7 +32,7 @@ async fn main() {
         ArchiveSearchType::ARCHIVE_SEARCH,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateArchiveSearch", true);
+    configuration.set_unstable_operation_enabled("v2.create_archive_search", true);
     let api = LogsArchiveSearchesAPI::with_config(configuration);
     let resp = api.create_archive_search(body).await;
     if let Ok(value) = resp {

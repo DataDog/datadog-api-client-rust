@@ -25,7 +25,7 @@ async fn main() {
             WebIntegrationAccountType::ACCOUNT,
         ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateWebIntegrationAccount", true);
+    configuration.set_unstable_operation_enabled("v2.update_web_integration_account", true);
     let api = WebIntegrationsAPI::with_config(configuration);
     let resp = api
         .update_web_integration_account(

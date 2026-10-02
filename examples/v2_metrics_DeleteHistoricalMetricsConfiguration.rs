@@ -5,7 +5,8 @@ use datadog_api_client::datadogV2::api_metrics::MetricsAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteHistoricalMetricsConfiguration", true);
+    configuration
+        .set_unstable_operation_enabled("v2.delete_historical_metrics_configuration", true);
     let api = MetricsAPI::with_config(configuration);
     let resp = api
         .delete_historical_metrics_configuration("metric_name".to_string())

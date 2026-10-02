@@ -15,7 +15,7 @@ async fn main() {
         .attributes(GetMultipleRulesetsRequestDataAttributes::new().rulesets(vec![])),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListMultipleRulesets", true);
+    configuration.set_unstable_operation_enabled("v2.list_multiple_rulesets", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.list_multiple_rulesets(body).await;
     if let Ok(value) = resp {

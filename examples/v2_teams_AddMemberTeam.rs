@@ -12,7 +12,7 @@ async fn main() {
         MemberTeamType::MEMBER_TEAMS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.AddMemberTeam", true);
+    configuration.set_unstable_operation_enabled("v2.add_member_team", true);
     let api = TeamsAPI::with_config(configuration);
     let resp = api.add_member_team("super_team_id".to_string(), body).await;
     if let Ok(value) = resp {

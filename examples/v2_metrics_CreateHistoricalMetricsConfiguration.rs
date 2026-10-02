@@ -14,7 +14,8 @@ async fn main() {
         ),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateHistoricalMetricsConfiguration", true);
+    configuration
+        .set_unstable_operation_enabled("v2.create_historical_metrics_configuration", true);
     let api = MetricsAPI::with_config(configuration);
     let resp = api.create_historical_metrics_configuration(body).await;
     if let Ok(value) = resp {

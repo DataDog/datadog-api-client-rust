@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_fleet_automation::ListFleetAgentTracersOp
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListFleetAgentTracers", true);
+    configuration.set_unstable_operation_enabled("v2.list_fleet_agent_tracers", true);
     let api = FleetAutomationAPI::with_config(configuration);
     let resp = api
         .list_fleet_agent_tracers(

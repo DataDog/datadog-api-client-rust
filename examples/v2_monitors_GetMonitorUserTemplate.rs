@@ -8,7 +8,7 @@ async fn main() {
     // there is a valid "monitor_user_template" in the system
     let monitor_user_template_data_id = std::env::var("MONITOR_USER_TEMPLATE_DATA_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetMonitorUserTemplate", true);
+    configuration.set_unstable_operation_enabled("v2.get_monitor_user_template", true);
     let api = MonitorsAPI::with_config(configuration);
     let resp = api
         .get_monitor_user_template(

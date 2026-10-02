@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_agent_observability::AgentObservabilityAP
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListLLMObsPatternsConfigs", true);
+    configuration.set_unstable_operation_enabled("v2.list_llm_obs_patterns_configs", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api.list_llm_obs_patterns_configs().await;
     if let Ok(value) = resp {

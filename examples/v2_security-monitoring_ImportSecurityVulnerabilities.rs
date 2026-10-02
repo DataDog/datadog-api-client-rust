@@ -62,7 +62,7 @@ async fn main() {
     )
     .version(1);
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ImportSecurityVulnerabilities", true);
+    configuration.set_unstable_operation_enabled("v2.import_security_vulnerabilities", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.import_security_vulnerabilities(body).await;
     if let Ok(value) = resp {

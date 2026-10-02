@@ -7,7 +7,7 @@ async fn main() {
     // there is a valid "user" in the system
     let user_data_id = std::env::var("USER_DATA_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListUserRestrictionQueries", true);
+    configuration.set_unstable_operation_enabled("v2.list_user_restriction_queries", true);
     let api = LogsRestrictionQueriesAPI::with_config(configuration);
     let resp = api
         .list_user_restriction_queries(user_data_id.clone())

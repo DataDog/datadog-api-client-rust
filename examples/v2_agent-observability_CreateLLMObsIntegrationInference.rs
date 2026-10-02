@@ -112,7 +112,7 @@ async fn main() {
             .project_ids(vec!["my-gcp-project".to_string()]),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateLLMObsIntegrationInference", true);
+    configuration.set_unstable_operation_enabled("v2.create_llm_obs_integration_inference", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .create_llm_obs_integration_inference(

@@ -39,7 +39,7 @@ async fn main() {
     )
     .spec_version(STIXSpecVersion::VERSION_2_1);
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.AddSTIXThreatIntel", true);
+    configuration.set_unstable_operation_enabled("v2.add_stix_threat_intel", true);
     let api = ThreatIntelligenceAPI::with_config(configuration);
     let resp = api
         .add_stix_threat_intel(

@@ -26,7 +26,7 @@ async fn main() {
         ExecutionPolicyType::EXECUTION_POLICY,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateExecutionPolicy", true);
+    configuration.set_unstable_operation_enabled("v2.update_execution_policy", true);
     let api = ExecutionPolicyAPI::with_config(configuration);
     let resp = api
         .update_execution_policy(execution_policy_data_id.clone(), body)

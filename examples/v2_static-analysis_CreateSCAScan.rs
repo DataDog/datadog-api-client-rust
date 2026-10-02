@@ -25,7 +25,7 @@ async fn main() {
         McpScanRequestDataType::MCPSCANREQUEST,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateSCAScan", true);
+    configuration.set_unstable_operation_enabled("v2.create_sca_scan", true);
     let api = StaticAnalysisAPI::with_config(configuration);
     let resp = api.create_sca_scan(body).await;
     if let Ok(value) = resp {

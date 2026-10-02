@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_apm_trace::GetPrunedTraceByIDOptionalPara
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetPrunedTraceByID", true);
+    configuration.set_unstable_operation_enabled("v2.get_pruned_trace_by_id", true);
     let api = APMTraceAPI::with_config(configuration);
     let resp = api
         .get_pruned_trace_by_id(

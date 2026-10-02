@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_incidents::IncidentsAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteGlobalIncidentHandle", true);
+    configuration.set_unstable_operation_enabled("v2.delete_global_incident_handle", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api.delete_global_incident_handle().await;
     if let Ok(value) = resp {

@@ -16,7 +16,7 @@ async fn main() {
         CommitCoverageSummaryRequestType::CI_APP_COVERAGE_COMMIT_SUMMARY_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetCodeCoverageCommitSummary", true);
+    configuration.set_unstable_operation_enabled("v2.get_code_coverage_commit_summary", true);
     let api = CodeCoverageAPI::with_config(configuration);
     let resp = api.get_code_coverage_commit_summary(body).await;
     if let Ok(value) = resp {

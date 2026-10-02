@@ -15,7 +15,7 @@ async fn main() {
         TagIndexingRuleExemptionType::TAG_INDEXING_RULE_EXEMPTIONS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateTagIndexingRuleExemption", true);
+    configuration.set_unstable_operation_enabled("v2.create_tag_indexing_rule_exemption", true);
     let api = MetricsAPI::with_config(configuration);
     let resp = api
         .create_tag_indexing_rule_exemption("metric_name".to_string(), body)

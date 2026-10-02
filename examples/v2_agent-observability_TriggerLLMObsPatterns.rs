@@ -15,7 +15,7 @@ async fn main() {
         LLMObsPatternsRequestType::TOPIC_DISCOVERY,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.TriggerLLMObsPatterns", true);
+    configuration.set_unstable_operation_enabled("v2.trigger_llm_obs_patterns", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api.trigger_llm_obs_patterns(body).await;
     if let Ok(value) = resp {

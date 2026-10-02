@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetSecurityMonitoringHistsignal", true);
+    configuration.set_unstable_operation_enabled("v2.get_security_monitoring_histsignal", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .get_security_monitoring_histsignal("histsignal_id".to_string())

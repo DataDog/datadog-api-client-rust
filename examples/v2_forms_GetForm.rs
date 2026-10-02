@@ -9,7 +9,7 @@ async fn main() {
     let form_data_id =
         uuid::Uuid::parse_str(&std::env::var("FORM_DATA_ID").unwrap()).expect("Invalid UUID");
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetForm", true);
+    configuration.set_unstable_operation_enabled("v2.get_form", true);
     let api = FormsAPI::with_config(configuration);
     let resp = api
         .get_form(form_data_id.clone(), GetFormOptionalParams::default())

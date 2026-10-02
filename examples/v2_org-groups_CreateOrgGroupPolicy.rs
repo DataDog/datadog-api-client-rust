@@ -33,7 +33,7 @@ async fn main() {
         OrgGroupPolicyType::ORG_GROUP_POLICIES,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateOrgGroupPolicy", true);
+    configuration.set_unstable_operation_enabled("v2.create_org_group_policy", true);
     let api = OrgGroupsAPI::with_config(configuration);
     let resp = api.create_org_group_policy(body).await;
     if let Ok(value) = resp {

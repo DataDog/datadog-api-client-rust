@@ -37,7 +37,7 @@ async fn main() {
         CreateSnapshotType::CREATE_SNAPSHOT,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateSnapshot", true);
+    configuration.set_unstable_operation_enabled("v2.create_snapshot", true);
     let api = ReportingAndSharingAPI::with_config(configuration);
     let resp = api.create_snapshot(body).await;
     if let Ok(value) = resp {
