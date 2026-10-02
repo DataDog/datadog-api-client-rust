@@ -968,7 +968,6 @@ impl Default for Configuration {
             ("v2.update_rum_operation".to_owned(), false),
             ("v2.update_rum_operation_strong_link".to_owned(), false),
             ("v2.query_aggregated_long_tasks".to_owned(), false),
-            ("v2.query_aggregated_signals_problems".to_owned(), false),
             ("v2.query_aggregated_waterfall".to_owned(), false),
             ("v2.create_scorecard_outcomes_batch".to_owned(), false),
             ("v2.get_entity_risk_score".to_owned(), false),
