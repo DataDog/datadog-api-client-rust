@@ -979,6 +979,7 @@ impl Default for Configuration {
             ("v2.get_slo_status".to_owned(), false),
             ("v2.create_snapshot".to_owned(), false),
             ("v2.get_spa_recommendations".to_owned(), false),
+            ("v2.get_spa_recommendations_v2".to_owned(), false),
             ("v2.get_spa_recommendations_with_shard".to_owned(), false),
             ("v2.create_ai_custom_rule".to_owned(), false),
             ("v2.create_ai_custom_rule_revision".to_owned(), false),
