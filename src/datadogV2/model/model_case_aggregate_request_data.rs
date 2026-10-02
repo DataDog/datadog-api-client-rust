@@ -14,7 +14,7 @@ pub struct CaseAggregateRequestData {
     /// Attributes for the aggregation request, including the search query and grouping configuration.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseAggregateRequestAttributes,
-    /// JSON:API resource type for case aggregation requests.
+    /// JSON:API resource type for work item aggregation requests.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseAggregateResourceType,
     #[serde(flatten)]

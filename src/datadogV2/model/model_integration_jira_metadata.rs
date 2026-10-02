@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Metadata for connecting a case management project to a Jira project.
+/// Metadata for connecting a Work Management project to a Jira project.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,7 +17,7 @@ pub struct IntegrationJiraMetadata {
     /// The Jira issue type identifier to use when creating issues.
     #[serde(rename = "issue_type_id")]
     pub issue_type_id: Option<String>,
-    /// The Jira project identifier to associate with this case project.
+    /// The Jira project identifier to associate with this Work Management project.
     #[serde(rename = "project_id")]
     pub project_id: Option<String>,
     #[serde(flatten)]

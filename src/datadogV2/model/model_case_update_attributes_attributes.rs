@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case update attributes attributes
+/// Work item update attributes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateAttributesAttributes {
-    /// Key-value pairs of case attributes. Each key maps to an array of string values, used for flexible metadata such as labels or tags.
+    /// Key-value pairs of work item attributes. Each key maps to an array of string values, used for flexible metadata such as labels or tags.
     #[serde(rename = "attributes")]
     pub attributes: std::collections::BTreeMap<String, Vec<String>>,
     #[serde(flatten)]

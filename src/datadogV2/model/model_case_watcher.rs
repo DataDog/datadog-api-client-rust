@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Represents a user who is subscribed to notifications for a case. Watchers receive updates when the case's status, priority, assignee, or comments change.
+/// Represents a user who is subscribed to notifications for a work item. Watchers receive updates when the work item's status, priority, assignee, or comments change.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseWatcher {
-    /// The primary identifier of the case watcher.
+    /// The primary identifier of the work item watcher.
     #[serde(rename = "id")]
     pub id: String,
-    /// Relationships for a case watcher, linking to the underlying user resource.
+    /// Relationships for a work item watcher, linking to the underlying user resource.
     #[serde(rename = "relationships")]
     pub relationships: crate::datadogV2::model::CaseWatcherRelationships,
-    /// JSON:API resource type for case watchers.
+    /// JSON:API resource type for work item watchers.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseWatcherResourceType,
     #[serde(flatten)]

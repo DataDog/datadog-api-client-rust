@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseLinkCreateRequest {
-    /// Data object for creating a case link.
+    /// Data object for creating a work item link.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseLinkCreate,
     #[serde(flatten)]

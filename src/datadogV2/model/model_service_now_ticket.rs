@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// ServiceNow ticket attached to case
+/// ServiceNow ticket attached to work item
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +14,7 @@ pub struct ServiceNowTicket {
     /// ServiceNow ticket information
     #[serde(rename = "result")]
     pub result: Option<crate::datadogV2::model::ServiceNowTicketResult>,
-    /// Case status
+    /// Work item status
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::Case3rdPartyTicketStatus>,
     #[serde(flatten)]

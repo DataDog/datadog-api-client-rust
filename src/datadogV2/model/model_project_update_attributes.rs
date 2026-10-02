@@ -14,7 +14,7 @@ pub struct ProjectUpdateAttributes {
     /// Project columns configuration.
     #[serde(rename = "columns_config")]
     pub columns_config: Option<crate::datadogV2::model::ProjectColumnsConfig>,
-    /// List of enabled custom case type IDs.
+    /// List of enabled custom work item type IDs.
     #[serde(rename = "enabled_custom_case_types")]
     pub enabled_custom_case_types: Option<Vec<String>>,
     /// Project name.

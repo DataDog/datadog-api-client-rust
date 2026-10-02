@@ -50,7 +50,7 @@ pub enum UpdateCustomAttributeConfigError {
     UnknownValue(serde_json::Value),
 }
 
-/// View and configure custom attributes within Case Management. See the [Case Management page](<https://docs.datadoghq.com/service_management/case_management/>) for more information.
+/// View and configure custom attributes within Work Management. See the [Work Management page](<https://docs.datadoghq.com/incident_response/work_management/>) for more information.
 #[derive(Debug, Clone)]
 pub struct CaseManagementAttributeAPI {
     config: datadog::Configuration,
@@ -124,7 +124,7 @@ impl CaseManagementAttributeAPI {
         Self { config, client }
     }
 
-    /// Create custom attribute config for a case type
+    /// Create a custom attribute configuration for a work item type.
     pub async fn create_custom_attribute_config(
         &self,
         case_type_id: String,
@@ -150,7 +150,7 @@ impl CaseManagementAttributeAPI {
         }
     }
 
-    /// Create custom attribute config for a case type
+    /// Create a custom attribute configuration for a work item type.
     pub async fn create_custom_attribute_config_with_http_info(
         &self,
         case_type_id: String,
@@ -380,7 +380,7 @@ impl CaseManagementAttributeAPI {
         }
     }
 
-    /// Get all custom attribute config of case type
+    /// Get custom attribute configurations for a work item type.
     pub async fn get_all_custom_attribute_configs_by_case_type(
         &self,
         case_type_id: String,
@@ -405,7 +405,7 @@ impl CaseManagementAttributeAPI {
         }
     }
 
-    /// Get all custom attribute config of case type
+    /// Get custom attribute configurations for a work item type.
     pub async fn get_all_custom_attribute_configs_by_case_type_with_http_info(
         &self,
         case_type_id: String,
@@ -598,7 +598,7 @@ impl CaseManagementAttributeAPI {
         }
     }
 
-    /// Updates the display name, description, type, or options of an existing custom attribute configuration for a case type.
+    /// Updates the display name, description, type, or options of an existing custom attribute configuration for a work item type.
     pub async fn update_custom_attribute_config(
         &self,
         case_type_id: String,
@@ -625,7 +625,7 @@ impl CaseManagementAttributeAPI {
         }
     }
 
-    /// Updates the display name, description, type, or options of an existing custom attribute configuration for a case type.
+    /// Updates the display name, description, type, or options of an existing custom attribute configuration for a work item type.
     pub async fn update_custom_attribute_config_with_http_info(
         &self,
         case_type_id: String,

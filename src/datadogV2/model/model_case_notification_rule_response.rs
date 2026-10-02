@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseNotificationRuleResponse {
-    /// A notification rule for case management
+    /// A notification rule for Work Management
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::CaseNotificationRule>,
     #[serde(flatten)]

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A single value within a count group, representing the number of cases with that specific field value.
+/// A single value within a count group, representing the number of work items with that specific field value.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseCountGroupValue {
-    /// Count of cases for this value.
+    /// Count of work items for this value.
     #[serde(rename = "count")]
     pub count: i64,
     /// The group value.

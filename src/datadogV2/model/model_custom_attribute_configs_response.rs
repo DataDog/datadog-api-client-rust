@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomAttributeConfigsResponse {
-    /// List of custom attribute configs of case type
+    /// List of custom attribute configs of work item type
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::CustomAttributeConfig>>,
     #[serde(flatten)]

@@ -6,28 +6,28 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case creation attributes
+/// Work item creation attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseCreateAttributes {
-    /// Case custom attributes
+    /// Work item custom attributes
     #[serde(rename = "custom_attributes")]
     pub custom_attributes:
         Option<std::collections::BTreeMap<String, crate::datadogV2::model::CustomAttributeValue>>,
     /// Description
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// Case priority
+    /// Work item priority
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::CasePriority>,
-    /// Status of the case. Must be one of the existing statuses for the case's type.
+    /// Status of the work item. Must be one of the existing statuses for the work item's type.
     #[serde(rename = "status_name")]
     pub status_name: Option<String>,
     /// Title
     #[serde(rename = "title")]
     pub title: String,
-    /// Case type UUID
+    /// Work item type UUID
     #[serde(rename = "type_id")]
     pub type_id: String,
     #[serde(flatten)]

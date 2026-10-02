@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for creating a case link.
+/// Data object for creating a work item link.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseLinkCreate {
-    /// Attributes describing a directional relationship between two entities (cases, incidents, or pages).
+    /// Attributes describing a directional relationship between two entities (work items, incidents, or pages).
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseLinkAttributes,
-    /// JSON:API resource type for case links.
+    /// JSON:API resource type for work item links.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseLinkResourceType,
     #[serde(flatten)]

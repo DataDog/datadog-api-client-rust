@@ -20,13 +20,13 @@ pub struct IntegrationIncident {
     /// Whether incident integration is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
-    /// List of mappings between incident fields and case fields.
+    /// List of mappings between incident fields and work item fields.
     #[serde(rename = "field_mappings")]
     pub field_mappings: Option<Vec<crate::datadogV2::model::IntegrationIncidentFieldMappingsItems>>,
     /// Incident type.
     #[serde(rename = "incident_type")]
     pub incident_type: Option<String>,
-    /// Severity configuration for mapping incident priorities to case priorities.
+    /// Severity configuration for mapping incident priorities to work item priorities.
     #[serde(rename = "severity_config")]
     pub severity_config: Option<crate::datadogV2::model::IntegrationIncidentSeverityConfig>,
     #[serde(flatten)]

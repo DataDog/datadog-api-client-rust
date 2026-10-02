@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectSettings {
-    /// Auto-close inactive cases settings.
+    /// Auto-close inactive work items settings.
     #[serde(rename = "auto_close_inactive_cases")]
     pub auto_close_inactive_cases: Option<crate::datadogV2::model::AutoCloseInactiveCases>,
-    /// Auto-transition assigned cases settings.
+    /// Auto-transition assigned work items settings.
     #[serde(rename = "auto_transition_assigned_cases")]
     pub auto_transition_assigned_cases:
         Option<crate::datadogV2::model::AutoTransitionAssignedCases>,
