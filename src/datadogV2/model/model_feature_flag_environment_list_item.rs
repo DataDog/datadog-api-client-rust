@@ -33,6 +33,9 @@ pub struct FeatureFlagEnvironmentListItem {
     /// Indicates whether the environment is production.
     #[serde(rename = "is_production")]
     pub is_production: Option<bool>,
+    /// Indicates whether feature flag evaluation events include original targeting identifiers and full evaluation context.
+    #[serde(rename = "observe_full_evaluation_data")]
+    pub observe_full_evaluation_data: Option<bool>,
     /// The allocation key used for the override variant.
     #[serde(rename = "override_allocation_key")]
     pub override_allocation_key: Option<String>,
@@ -75,6 +78,7 @@ impl FeatureFlagEnvironmentListItem {
             environment_name: None,
             environment_queries: None,
             is_production: None,
+            observe_full_evaluation_data: None,
             override_allocation_key: None,
             override_variant_id: None,
             pending_suggestion_id: None,
@@ -107,6 +111,11 @@ impl FeatureFlagEnvironmentListItem {
 
     pub fn is_production(mut self, value: bool) -> Self {
         self.is_production = Some(value);
+        self
+    }
+
+    pub fn observe_full_evaluation_data(mut self, value: bool) -> Self {
+        self.observe_full_evaluation_data = Some(value);
         self
     }
 
@@ -162,6 +171,7 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironmentListItem {
                 let mut environment_name: Option<String> = None;
                 let mut environment_queries: Option<Vec<String>> = None;
                 let mut is_production: Option<bool> = None;
+                let mut observe_full_evaluation_data: Option<bool> = None;
                 let mut override_allocation_key: Option<String> = None;
                 let mut override_variant_id: Option<Option<String>> = None;
                 let mut pending_suggestion_id: Option<Option<String>> = None;
@@ -209,6 +219,13 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironmentListItem {
                                 continue;
                             }
                             is_production =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "observe_full_evaluation_data" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            observe_full_evaluation_data =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "override_allocation_key" => {
@@ -264,6 +281,7 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironmentListItem {
                     environment_name,
                     environment_queries,
                     is_production,
+                    observe_full_evaluation_data,
                     override_allocation_key,
                     override_variant_id,
                     pending_suggestion_id,
