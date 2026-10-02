@@ -14,6 +14,9 @@ pub struct SecurityMonitoringSignalRuleResponse {
     /// Cases for generating signals.
     #[serde(rename = "cases")]
     pub cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>>,
+    /// The version of the rule at which its detection logic last changed. Updates that only change the name, message, tags, or notifications do not change this value.
+    #[serde(rename = "compatibleVersion")]
+    pub compatible_version: Option<i64>,
     /// When the rule was created, timestamp in milliseconds.
     #[serde(rename = "createdAt")]
     pub created_at: Option<i64>,
@@ -82,6 +85,7 @@ impl SecurityMonitoringSignalRuleResponse {
     pub fn new() -> SecurityMonitoringSignalRuleResponse {
         SecurityMonitoringSignalRuleResponse {
             cases: None,
+            compatible_version: None,
             created_at: None,
             creation_author_id: None,
             custom_message: None,
@@ -111,6 +115,11 @@ impl SecurityMonitoringSignalRuleResponse {
         value: Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>,
     ) -> Self {
         self.cases = Some(value);
+        self
+    }
+
+    pub fn compatible_version(mut self, value: i64) -> Self {
+        self.compatible_version = Some(value);
         self
     }
 
@@ -255,6 +264,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
             {
                 let mut cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCase>> =
                     None;
+                let mut compatible_version: Option<i64> = None;
                 let mut created_at: Option<i64> = None;
                 let mut creation_author_id: Option<i64> = None;
                 let mut custom_message: Option<String> = None;
@@ -292,6 +302,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                                 continue;
                             }
                             cases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "compatibleVersion" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            compatible_version =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "createdAt" => {
                             if v.is_null() {
@@ -431,6 +448,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
 
                 let content = SecurityMonitoringSignalRuleResponse {
                     cases,
+                    compatible_version,
                     created_at,
                     creation_author_id,
                     custom_message,
