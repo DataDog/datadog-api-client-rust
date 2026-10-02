@@ -20,6 +20,9 @@ pub struct TeamNotificationRuleAttributes {
     /// PagerDuty notification settings for the team
     #[serde(rename = "pagerduty")]
     pub pagerduty: Option<crate::datadogV2::model::TeamNotificationRuleAttributesPagerduty>,
+    /// ServiceNow notification settings for the team.
+    #[serde(rename = "servicenow")]
+    pub servicenow: Option<crate::datadogV2::model::TeamNotificationRuleAttributesServiceNow>,
     /// Slack notification settings for the team
     #[serde(rename = "slack")]
     pub slack: Option<crate::datadogV2::model::TeamNotificationRuleAttributesSlack>,
@@ -36,6 +39,7 @@ impl TeamNotificationRuleAttributes {
             email: None,
             ms_teams: None,
             pagerduty: None,
+            servicenow: None,
             slack: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -63,6 +67,14 @@ impl TeamNotificationRuleAttributes {
         value: crate::datadogV2::model::TeamNotificationRuleAttributesPagerduty,
     ) -> Self {
         self.pagerduty = Some(value);
+        self
+    }
+
+    pub fn servicenow(
+        mut self,
+        value: crate::datadogV2::model::TeamNotificationRuleAttributesServiceNow,
+    ) -> Self {
+        self.servicenow = Some(value);
         self
     }
 
@@ -115,6 +127,9 @@ impl<'de> Deserialize<'de> for TeamNotificationRuleAttributes {
                 let mut pagerduty: Option<
                     crate::datadogV2::model::TeamNotificationRuleAttributesPagerduty,
                 > = None;
+                let mut servicenow: Option<
+                    crate::datadogV2::model::TeamNotificationRuleAttributesServiceNow,
+                > = None;
                 let mut slack: Option<
                     crate::datadogV2::model::TeamNotificationRuleAttributesSlack,
                 > = None;
@@ -144,6 +159,12 @@ impl<'de> Deserialize<'de> for TeamNotificationRuleAttributes {
                             }
                             pagerduty = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "servicenow" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            servicenow = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "slack" => {
                             if v.is_null() {
                                 continue;
@@ -162,6 +183,7 @@ impl<'de> Deserialize<'de> for TeamNotificationRuleAttributes {
                     email,
                     ms_teams,
                     pagerduty,
+                    servicenow,
                     slack,
                     additional_properties,
                     _unparsed,
