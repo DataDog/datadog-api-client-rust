@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes that can be updated on a case view. All fields are optional; only provided fields are changed.
+/// Attributes that can be updated on a work item view. All fields are optional; only provided fields are changed.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,10 +14,10 @@ pub struct CaseViewUpdateAttributes {
     /// The name of the view.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The identifier of a notification rule linked to this view. When set, users subscribed to the view receive alerts for matching cases.
+    /// The identifier of a notification rule linked to this view. When set, users subscribed to the view receive alerts for matching work items.
     #[serde(rename = "np_rule_id")]
     pub np_rule_id: Option<String>,
-    /// The query used to filter cases in this view.
+    /// The query used to filter work items in this view.
     #[serde(rename = "query")]
     pub query: Option<String>,
     #[serde(flatten)]

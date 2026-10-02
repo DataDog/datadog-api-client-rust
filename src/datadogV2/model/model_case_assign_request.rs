@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case assign request
+/// Work item assign request
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseAssignRequest {
-    /// Case assign
+    /// Work item assign
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseAssign,
     #[serde(flatten)]

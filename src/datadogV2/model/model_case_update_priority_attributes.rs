@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case update priority attributes
+/// Work item update priority attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdatePriorityAttributes {
-    /// Case priority
+    /// Work item priority
     #[serde(rename = "priority")]
     pub priority: crate::datadogV2::model::CasePriority,
     #[serde(flatten)]

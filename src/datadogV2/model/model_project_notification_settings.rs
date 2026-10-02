@@ -17,25 +17,25 @@ pub struct ProjectNotificationSettings {
     /// Whether notifications are enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
-    /// Whether to send a notification when a case is assigned.
+    /// Whether to send a notification when a work item is assigned.
     #[serde(rename = "notify_on_case_assignment")]
     pub notify_on_case_assignment: Option<bool>,
-    /// Whether to send a notification when a case is closed.
+    /// Whether to send a notification when a work item is closed.
     #[serde(rename = "notify_on_case_closed")]
     pub notify_on_case_closed: Option<bool>,
-    /// Whether to send a notification when a comment is added to a case.
+    /// Whether to send a notification when a comment is added to a work item.
     #[serde(rename = "notify_on_case_comment")]
     pub notify_on_case_comment: Option<bool>,
-    /// Whether to send a notification when a user is mentioned in a case comment.
+    /// Whether to send a notification when a user is mentioned in a work item comment.
     #[serde(rename = "notify_on_case_comment_mention")]
     pub notify_on_case_comment_mention: Option<bool>,
-    /// Whether to send a notification when a case's priority changes.
+    /// Whether to send a notification when a work item's priority changes.
     #[serde(rename = "notify_on_case_priority_change")]
     pub notify_on_case_priority_change: Option<bool>,
-    /// Whether to send a notification when a case's status changes.
+    /// Whether to send a notification when a work item's status changes.
     #[serde(rename = "notify_on_case_status_change")]
     pub notify_on_case_status_change: Option<bool>,
-    /// Whether to send a notification when a case is unassigned.
+    /// Whether to send a notification when a work item is unassigned.
     #[serde(rename = "notify_on_case_unassignment")]
     pub notify_on_case_unassignment: Option<bool>,
     #[serde(flatten)]

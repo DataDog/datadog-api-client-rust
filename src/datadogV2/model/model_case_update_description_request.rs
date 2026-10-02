@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case update description request
+/// Work item update description request
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateDescriptionRequest {
-    /// Case update description
+    /// Work item update description
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseUpdateDescription,
     #[serde(flatten)]

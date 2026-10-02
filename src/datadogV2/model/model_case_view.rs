@@ -6,21 +6,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A saved case view that provides a filtered, reusable list of cases matching a specific query. Views act as persistent dashboards for monitoring case subsets.
+/// A saved work item view that provides a filtered, reusable list of work items matching a specific query. Views act as persistent dashboards for monitoring work item subsets.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseView {
-    /// Attributes of a case view, including the filter query and optional notification rule.
+    /// Attributes of a work item view, including the filter query and optional notification rule.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseViewAttributes,
     /// The view's identifier.
     #[serde(rename = "id")]
     pub id: String,
-    /// Related resources for the case view, including the creator, last modifier, and associated project.
+    /// Related resources for the work item view, including the creator, last modifier, and associated project.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::CaseViewRelationships>,
-    /// JSON:API resource type for case views.
+    /// JSON:API resource type for work item views.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseViewResourceType,
     #[serde(flatten)]

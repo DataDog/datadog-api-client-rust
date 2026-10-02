@@ -17,10 +17,10 @@ pub struct AutomationRuleCreateAttributes {
     /// Name of the automation rule.
     #[serde(rename = "name")]
     pub name: String,
-    /// Whether the automation rule is active. Enabled rules trigger on matching case events; disabled rules are inactive but preserve their configuration.
+    /// Whether the automation rule is active. Enabled rules trigger on matching work item events; disabled rules are inactive but preserve their configuration.
     #[serde(rename = "state")]
     pub state: Option<crate::datadogV2::model::CaseAutomationRuleState>,
-    /// Defines when the rule activates. Combines a trigger type (the case event to listen for) with optional trigger data (conditions that narrow when the trigger fires).
+    /// Defines when the rule activates. Combines a trigger type (the work item event to listen for) with optional trigger data (conditions that narrow when the trigger fires).
     #[serde(rename = "trigger")]
     pub trigger: crate::datadogV2::model::AutomationRuleTrigger,
     #[serde(flatten)]

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Relationships for a case watcher, linking to the underlying user resource.
+/// Relationships for a work item watcher, linking to the underlying user resource.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseWatcherRelationships {
-    /// The user relationship for a case watcher.
+    /// The user relationship for a work item watcher.
     #[serde(rename = "user")]
     pub user: crate::datadogV2::model::CaseWatcherUserRelationship,
     #[serde(flatten)]

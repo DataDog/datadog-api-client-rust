@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request payload for updating a case's due date.
+/// Request payload for updating a work item's due date.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateDueDateRequest {
-    /// Data object for updating a case's due date.
+    /// Data object for updating a work item's due date.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseUpdateDueDate,
     #[serde(flatten)]

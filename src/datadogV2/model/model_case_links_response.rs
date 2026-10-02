@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing a list of case links.
+/// Response containing a list of work item links.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseLinksResponse {
-    /// A list of case links.
+    /// A list of work item links.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::CaseLink>,
     #[serde(flatten)]
