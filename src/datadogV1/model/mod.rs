@@ -100,6 +100,8 @@ pub mod model_dashboard_fixed_timeframe_type;
 pub use self::model_dashboard_fixed_timeframe_type::DashboardFixedTimeframeType;
 pub mod model_dashboard_default_timeframe_setting;
 pub use self::model_dashboard_default_timeframe_setting::DashboardDefaultTimeframeSetting;
+pub mod model_dashboard_experience_type;
+pub use self::model_dashboard_experience_type::DashboardExperienceType;
 pub mod model_dashboard_reflow_type;
 pub use self::model_dashboard_reflow_type::DashboardReflowType;
 pub mod model_dashboard_tab;
