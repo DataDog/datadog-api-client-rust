@@ -1,4 +1,4 @@
-// Patch a deployment event by version returns "Accepted" response
+// Mark a deployment as failed by version returns "Accepted" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
 use datadog_api_client::datadogV2::model::DORADeploymentPatchByVersionRemediation;
@@ -32,8 +32,7 @@ async fn main() {
                 DORADeploymentPatchRequestDataType::DORA_DEPLOYMENT_PATCH_REQUEST,
             ),
         );
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.PatchDORADeploymentByVersion", true);
+    let configuration = datadog::Configuration::new();
     let api = DORAMetricsAPI::with_config(configuration);
     let resp = api.patch_dora_deployment_by_version(body).await;
     if let Ok(value) = resp {
