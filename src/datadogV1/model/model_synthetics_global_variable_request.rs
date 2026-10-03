@@ -20,6 +20,9 @@ pub struct SyntheticsGlobalVariableRequest {
     /// Unique identifier of the global variable.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// Whether this global variable is a persistent email variable. Set this when creating the variable and omit `value`; Datadog generates an immutable email address. The variable cannot be converted to or from a persistent email variable.
+    #[serde(rename = "is_email")]
+    pub is_email: Option<bool>,
     /// Determines if the global variable is a FIDO variable.
     #[serde(rename = "is_fido")]
     pub is_fido: Option<bool>,
@@ -59,6 +62,7 @@ impl SyntheticsGlobalVariableRequest {
             attributes: None,
             description,
             id: None,
+            is_email: None,
             is_fido: None,
             is_totp: None,
             name,
@@ -81,6 +85,11 @@ impl SyntheticsGlobalVariableRequest {
 
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn is_email(mut self, value: bool) -> Self {
+        self.is_email = Some(value);
         self
     }
 
@@ -143,6 +152,7 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableRequest {
                 > = None;
                 let mut description: Option<String> = None;
                 let mut id: Option<String> = None;
+                let mut is_email: Option<bool> = None;
                 let mut is_fido: Option<bool> = None;
                 let mut is_totp: Option<bool> = None;
                 let mut name: Option<String> = None;
@@ -176,6 +186,12 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableRequest {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_email" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "is_fido" => {
                             if v.is_null() {
@@ -231,6 +247,7 @@ impl<'de> Deserialize<'de> for SyntheticsGlobalVariableRequest {
                     attributes,
                     description,
                     id,
+                    is_email,
                     is_fido,
                     is_totp,
                     name,
