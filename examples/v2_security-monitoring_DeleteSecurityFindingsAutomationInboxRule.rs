@@ -10,7 +10,7 @@ async fn main() {
             .expect("Invalid UUID");
     let mut configuration = datadog::Configuration::new();
     configuration
-        .set_unstable_operation_enabled("v2.DeleteSecurityFindingsAutomationInboxRule", true);
+        .set_unstable_operation_enabled("v2.delete_security_findings_automation_inbox_rule", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .delete_security_findings_automation_inbox_rule(valid_inbox_rule_data_id.clone())

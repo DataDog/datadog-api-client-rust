@@ -27,7 +27,7 @@ async fn main() {
         IncidentImpactType::INCIDENT_IMPACTS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateIncidentImpact", true);
+    configuration.set_unstable_operation_enabled("v2.create_incident_impact", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .create_incident_impact(

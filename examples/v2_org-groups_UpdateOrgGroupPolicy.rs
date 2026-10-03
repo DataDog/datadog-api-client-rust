@@ -21,7 +21,7 @@ async fn main() {
         OrgGroupPolicyType::ORG_GROUP_POLICIES,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateOrgGroupPolicy", true);
+    configuration.set_unstable_operation_enabled("v2.update_org_group_policy", true);
     let api = OrgGroupsAPI::with_config(configuration);
     let resp = api
         .update_org_group_policy(

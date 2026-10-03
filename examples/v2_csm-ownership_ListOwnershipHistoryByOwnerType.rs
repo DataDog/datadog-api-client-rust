@@ -7,7 +7,7 @@ use datadog_api_client::datadogV2::model::OwnershipOwnerType;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListOwnershipHistoryByOwnerType", true);
+    configuration.set_unstable_operation_enabled("v2.list_ownership_history_by_owner_type", true);
     let api = CSMOwnershipAPI::with_config(configuration);
     let resp = api
         .list_ownership_history_by_owner_type(

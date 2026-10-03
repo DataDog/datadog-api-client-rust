@@ -13,7 +13,7 @@ async fn main() {
         LLMObsProjectType::PROJECTS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateLLMObsProject", true);
+    configuration.set_unstable_operation_enabled("v2.update_llm_obs_project", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .update_llm_obs_project("project_id".to_string(), body)

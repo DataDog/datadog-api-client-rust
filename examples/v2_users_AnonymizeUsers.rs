@@ -18,7 +18,7 @@ async fn main() {
         .id("00000000-0000-0000-0000-000000000000".to_string()),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.AnonymizeUsers", true);
+    configuration.set_unstable_operation_enabled("v2.anonymize_users", true);
     let api = UsersAPI::with_config(configuration);
     let resp = api.anonymize_users(body).await;
     if let Ok(value) = resp {

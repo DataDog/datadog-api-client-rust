@@ -7,7 +7,7 @@ async fn main() {
     // there is a valid "dataset" in the system
     let dataset_data_id = std::env::var("DATASET_DATA_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetDataset", true);
+    configuration.set_unstable_operation_enabled("v2.get_dataset", true);
     let api = DatasetsAPI::with_config(configuration);
     let resp = api.get_dataset(dataset_data_id.clone()).await;
     if let Ok(value) = resp {

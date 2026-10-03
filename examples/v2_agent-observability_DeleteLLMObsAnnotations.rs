@@ -17,7 +17,7 @@ async fn main() {
         LLMObsAnnotationsType::ANNOTATIONS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteLLMObsAnnotations", true);
+    configuration.set_unstable_operation_enabled("v2.delete_llm_obs_annotations", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .delete_llm_obs_annotations("queue_id".to_string(), body)

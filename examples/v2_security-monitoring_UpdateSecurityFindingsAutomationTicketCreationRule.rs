@@ -35,7 +35,7 @@ async fn main() {
     ));
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled(
-        "v2.UpdateSecurityFindingsAutomationTicketCreationRule",
+        "v2.update_security_findings_automation_ticket_creation_rule",
         true,
     );
     let api = SecurityMonitoringAPI::with_config(configuration);

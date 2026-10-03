@@ -35,7 +35,7 @@ async fn main() {
             IncidentIntegrationMetadataType::INCIDENT_INTEGRATIONS,
         ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateIncidentIntegration", true);
+    configuration.set_unstable_operation_enabled("v2.update_incident_integration", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .update_incident_integration(

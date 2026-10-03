@@ -19,7 +19,7 @@ async fn main() {
         RumExclusionFilterType::EXCLUSION_FILTERS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateExclusionFilter", true);
+    configuration.set_unstable_operation_enabled("v2.create_exclusion_filter", true);
     let api = RumRetentionFiltersAPI::with_config(configuration);
     let resp = api
         .create_exclusion_filter("app_id".to_string(), body)

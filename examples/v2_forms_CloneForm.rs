@@ -14,7 +14,7 @@ async fn main() {
             .attributes(CloneFormDataAttributes::new().name("Copy of My Form".to_string())),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CloneForm", true);
+    configuration.set_unstable_operation_enabled("v2.clone_form", true);
     let api = FormsAPI::with_config(configuration);
     let resp = api
         .clone_form(

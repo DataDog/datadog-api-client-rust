@@ -15,7 +15,7 @@ async fn main() {
             LLMObsDatasetType::DATASETS,
         ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.RestoreLLMObsDatasetVersion", true);
+    configuration.set_unstable_operation_enabled("v2.restore_llm_obs_dataset_version", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .restore_llm_obs_dataset_version("project_id".to_string(), "dataset_id".to_string(), body)

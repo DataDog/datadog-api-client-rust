@@ -50,7 +50,7 @@ async fn main() {
         IntegrationAccountType::INTEGRATION_ACCOUNT,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateTwilioIntegrationAccount", true);
+    configuration.set_unstable_operation_enabled("v2.create_twilio_integration_account", true);
     let api = TwilioIntegrationAPI::with_config(configuration);
     let resp = api.create_twilio_integration_account(body).await;
     if let Ok(value) = resp {

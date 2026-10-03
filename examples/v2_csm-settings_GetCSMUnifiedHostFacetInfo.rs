@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_csm_settings::GetCSMUnifiedHostFacetInfoO
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetCSMUnifiedHostFacetInfo", true);
+    configuration.set_unstable_operation_enabled("v2.get_csm_unified_host_facet_info", true);
     let api = CSMSettingsAPI::with_config(configuration);
     let resp = api
         .get_csm_unified_host_facet_info(

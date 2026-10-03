@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_agent_observability::AgentObservabilityAP
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.LockLLMObsDatasetDraftState", true);
+    configuration.set_unstable_operation_enabled("v2.lock_llm_obs_dataset_draft_state", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .lock_llm_obs_dataset_draft_state("project_id".to_string(), "dataset_id".to_string())

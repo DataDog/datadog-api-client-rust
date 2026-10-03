@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_model_lab_api::ModelLabAPIAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetModelLabArtifactContent", true);
+    configuration.set_unstable_operation_enabled("v2.get_model_lab_artifact_content", true);
     let api = ModelLabAPIAPI::with_config(configuration);
     let resp = api
         .get_model_lab_artifact_content("1".to_string(), "runs/42/model/weights.pt".to_string())

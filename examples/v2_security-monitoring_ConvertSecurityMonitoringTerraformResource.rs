@@ -27,7 +27,7 @@ async fn main() {
     );
     let mut configuration = datadog::Configuration::new();
     configuration
-        .set_unstable_operation_enabled("v2.ConvertSecurityMonitoringTerraformResource", true);
+        .set_unstable_operation_enabled("v2.convert_security_monitoring_terraform_resource", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .convert_security_monitoring_terraform_resource(

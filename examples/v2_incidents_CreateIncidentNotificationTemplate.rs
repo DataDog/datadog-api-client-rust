@@ -42,7 +42,7 @@ Please join the incident channel for updates."#
         ),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateIncidentNotificationTemplate", true);
+    configuration.set_unstable_operation_enabled("v2.create_incident_notification_template", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api.create_incident_notification_template(body).await;
     if let Ok(value) = resp {

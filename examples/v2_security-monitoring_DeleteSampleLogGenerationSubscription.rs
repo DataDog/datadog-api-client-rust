@@ -5,7 +5,8 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteSampleLogGenerationSubscription", true);
+    configuration
+        .set_unstable_operation_enabled("v2.delete_sample_log_generation_subscription", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .delete_sample_log_generation_subscription("content_pack_id".to_string())

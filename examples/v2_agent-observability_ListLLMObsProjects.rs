@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_agent_observability::ListLLMObsProjectsOp
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListLLMObsProjects", true);
+    configuration.set_unstable_operation_enabled("v2.list_llm_obs_projects", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .list_llm_obs_projects(ListLLMObsProjectsOptionalParams::default())

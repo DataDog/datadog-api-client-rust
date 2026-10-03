@@ -33,7 +33,7 @@ async fn main() {
             ),
         );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.PatchDORADeploymentByVersion", true);
+    configuration.set_unstable_operation_enabled("v2.patch_dora_deployment_by_version", true);
     let api = DORAMetricsAPI::with_config(configuration);
     let resp = api.patch_dora_deployment_by_version(body).await;
     if let Ok(value) = resp {

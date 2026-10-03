@@ -162,7 +162,7 @@ async fn main() {
             ),
         );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.QueryProductAnalyticsJourneyScalar", true);
+    configuration.set_unstable_operation_enabled("v2.query_product_analytics_journey_scalar", true);
     let api = ProductAnalyticsAPI::with_config(configuration);
     let resp = api.query_product_analytics_journey_scalar(body).await;
     if let Ok(value) = resp {

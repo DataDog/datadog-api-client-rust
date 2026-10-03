@@ -27,7 +27,7 @@ async fn main() {
         ),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateGovernanceDetection", true);
+    configuration.set_unstable_operation_enabled("v2.update_governance_detection", true);
     let api = GovernanceConsoleAPI::with_config(configuration);
     let resp = api
         .update_governance_detection("detection_id".to_string(), body)

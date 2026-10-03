@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_dashboard_secure_embed::DashboardSecureEm
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteDashboardSecureEmbed", true);
+    configuration.set_unstable_operation_enabled("v2.delete_dashboard_secure_embed", true);
     let api = DashboardSecureEmbedAPI::with_config(configuration);
     let resp = api
         .delete_dashboard_secure_embed("dashboard_id".to_string(), "token".to_string())

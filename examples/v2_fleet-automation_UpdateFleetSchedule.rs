@@ -26,7 +26,7 @@ async fn main() {
         ),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateFleetSchedule", true);
+    configuration.set_unstable_operation_enabled("v2.update_fleet_schedule", true);
     let api = FleetAutomationAPI::with_config(configuration);
     let resp = api.update_fleet_schedule("id".to_string(), body).await;
     if let Ok(value) = resp {

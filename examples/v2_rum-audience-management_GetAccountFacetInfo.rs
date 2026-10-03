@@ -26,7 +26,7 @@ async fn main() {
             .id("facet_info_request".to_string()),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetAccountFacetInfo", true);
+    configuration.set_unstable_operation_enabled("v2.get_account_facet_info", true);
     let api = RumAudienceManagementAPI::with_config(configuration);
     let resp = api.get_account_facet_info(body).await;
     if let Ok(value) = resp {

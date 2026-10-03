@@ -14,7 +14,7 @@ async fn main() {
         std::env::var("EXECUTION_POLICY_DATA_ATTRIBUTES_NAME").unwrap();
     let execution_policy_data_id = std::env::var("EXECUTION_POLICY_DATA_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListExecutionPolicies", true);
+    configuration.set_unstable_operation_enabled("v2.list_execution_policies", true);
     let api = ExecutionPolicyAPI::with_config(configuration);
     let resp = api
         .list_execution_policies(

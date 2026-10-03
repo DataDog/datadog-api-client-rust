@@ -13,7 +13,7 @@ async fn main() {
         OrgGroupType::ORG_GROUPS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateOrgGroup", true);
+    configuration.set_unstable_operation_enabled("v2.create_org_group", true);
     let api = OrgGroupsAPI::with_config(configuration);
     let resp = api.create_org_group(body).await;
     if let Ok(value) = resp {

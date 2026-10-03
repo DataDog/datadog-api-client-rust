@@ -56,7 +56,7 @@ async fn main() {
         )),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateIncidentPostmortemTemplate", true);
+    configuration.set_unstable_operation_enabled("v2.create_incident_postmortem_template", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api.create_incident_postmortem_template(body).await;
     if let Ok(value) = resp {

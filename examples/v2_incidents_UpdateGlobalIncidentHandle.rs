@@ -36,7 +36,7 @@ async fn main() {
         )),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateGlobalIncidentHandle", true);
+    configuration.set_unstable_operation_enabled("v2.update_global_incident_handle", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .update_global_incident_handle(body, UpdateGlobalIncidentHandleOptionalParams::default())

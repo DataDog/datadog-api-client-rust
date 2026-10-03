@@ -14,7 +14,7 @@ async fn main() {
             .type_(RevertCustomRuleRevisionDataType::REVERT_CUSTOM_RULE_REVISION_REQUEST),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.RevertCustomRuleRevision", true);
+    configuration.set_unstable_operation_enabled("v2.revert_custom_rule_revision", true);
     let api = StaticAnalysisAPI::with_config(configuration);
     let resp = api
         .revert_custom_rule_revision("ruleset_name".to_string(), "rule_name".to_string(), body)

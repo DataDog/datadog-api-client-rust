@@ -23,7 +23,7 @@ async fn main() {
         TeamsOwnershipMappingType::TEAMS_OWNERSHIP_MAPPINGS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateTeamsOwnershipMapping", true);
+    configuration.set_unstable_operation_enabled("v2.create_teams_ownership_mapping", true);
     let api = RumTeamsOwnershipAPI::with_config(configuration);
     let resp = api.create_teams_ownership_mapping(body).await;
     if let Ok(value) = resp {

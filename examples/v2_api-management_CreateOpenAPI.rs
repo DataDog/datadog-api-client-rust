@@ -7,7 +7,7 @@ use std::fs;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateOpenAPI", true);
+    configuration.set_unstable_operation_enabled("v2.create_open_api", true);
     let api = APIManagementAPI::with_config(configuration);
     let resp = api
         .create_open_api(

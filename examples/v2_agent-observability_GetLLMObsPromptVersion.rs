@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_agent_observability::AgentObservabilityAP
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetLLMObsPromptVersion", true);
+    configuration.set_unstable_operation_enabled("v2.get_llm_obs_prompt_version", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .get_llm_obs_prompt_version("prompt_id".to_string(), 9223372036854775807)

@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_snowflake_integration::SnowflakeIntegrati
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListSnowflakeIntegrationAccounts", true);
+    configuration.set_unstable_operation_enabled("v2.list_snowflake_integration_accounts", true);
     let api = SnowflakeIntegrationAPI::with_config(configuration);
     let resp = api.list_snowflake_integration_accounts().await;
     if let Ok(value) = resp {

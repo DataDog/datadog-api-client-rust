@@ -36,7 +36,7 @@ async fn main() {
         SecureEmbedUpdateRequestType::SECURE_EMBED_UPDATE_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateDashboardSecureEmbed", true);
+    configuration.set_unstable_operation_enabled("v2.update_dashboard_secure_embed", true);
     let api = DashboardSecureEmbedAPI::with_config(configuration);
     let resp = api
         .update_dashboard_secure_embed("dashboard_id".to_string(), "token".to_string(), body)

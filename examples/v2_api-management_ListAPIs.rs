@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_api_management::ListAPIsOptionalParams;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListAPIs", true);
+    configuration.set_unstable_operation_enabled("v2.list_apis", true);
     let api = APIManagementAPI::with_config(configuration);
     let resp = api.list_apis(ListAPIsOptionalParams::default()).await;
     if let Ok(value) = resp {

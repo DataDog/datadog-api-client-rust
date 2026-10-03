@@ -17,8 +17,10 @@ async fn main() {
         ),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration
-        .set_unstable_operation_enabled("v2.BulkExportSecurityMonitoringTerraformResources", true);
+    configuration.set_unstable_operation_enabled(
+        "v2.bulk_export_security_monitoring_terraform_resources",
+        true,
+    );
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .bulk_export_security_monitoring_terraform_resources(

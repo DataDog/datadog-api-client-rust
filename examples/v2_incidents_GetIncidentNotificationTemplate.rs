@@ -10,7 +10,7 @@ async fn main() {
         uuid::Uuid::parse_str(&std::env::var("NOTIFICATION_TEMPLATE_DATA_ID").unwrap())
             .expect("Invalid UUID");
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetIncidentNotificationTemplate", true);
+    configuration.set_unstable_operation_enabled("v2.get_incident_notification_template", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .get_incident_notification_template(

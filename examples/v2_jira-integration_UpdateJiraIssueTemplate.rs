@@ -17,7 +17,7 @@ async fn main() {
         JiraIssueTemplateType::JIRA_ISSUE_TEMPLATE,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateJiraIssueTemplate", true);
+    configuration.set_unstable_operation_enabled("v2.update_jira_issue_template", true);
     let api = JiraIntegrationAPI::with_config(configuration);
     let resp = api
         .update_jira_issue_template(

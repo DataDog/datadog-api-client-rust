@@ -29,7 +29,7 @@ async fn main() {
             .id(incident_attachment_data_id.clone()),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateIncidentAttachment", true);
+    configuration.set_unstable_operation_enabled("v2.update_incident_attachment", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .update_incident_attachment(

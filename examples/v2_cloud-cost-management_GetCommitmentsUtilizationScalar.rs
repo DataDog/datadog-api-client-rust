@@ -7,7 +7,7 @@ use datadog_api_client::datadogV2::model::CommitmentsProvider;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetCommitmentsUtilizationScalar", true);
+    configuration.set_unstable_operation_enabled("v2.get_commitments_utilization_scalar", true);
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api
         .get_commitments_utilization_scalar(

@@ -6,7 +6,7 @@ use uuid::Uuid;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteOrgGroupPolicy", true);
+    configuration.set_unstable_operation_enabled("v2.delete_org_group_policy", true);
     let api = OrgGroupsAPI::with_config(configuration);
     let resp = api
         .delete_org_group_policy(

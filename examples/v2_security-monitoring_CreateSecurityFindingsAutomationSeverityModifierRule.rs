@@ -33,7 +33,7 @@ async fn main() {
     ));
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled(
-        "v2.CreateSecurityFindingsAutomationSeverityModifierRule",
+        "v2.create_security_findings_automation_severity_modifier_rule",
         true,
     );
     let api = SecurityMonitoringAPI::with_config(configuration);

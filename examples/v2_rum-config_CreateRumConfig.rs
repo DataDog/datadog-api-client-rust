@@ -13,7 +13,7 @@ async fn main() {
         RumConfigType::RUM_CONFIG,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateRumConfig", true);
+    configuration.set_unstable_operation_enabled("v2.create_rum_config", true);
     let api = RUMConfigAPI::with_config(configuration);
     let resp = api.create_rum_config(body).await;
     if let Ok(value) = resp {

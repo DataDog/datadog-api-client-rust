@@ -23,7 +23,7 @@ async fn main() {
         FormType::FORMS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateAndPublishForm", true);
+    configuration.set_unstable_operation_enabled("v2.create_and_publish_form", true);
     let api = FormsAPI::with_config(configuration);
     let resp = api.create_and_publish_form(body).await;
     if let Ok(value) = resp {

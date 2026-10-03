@@ -38,7 +38,7 @@ async fn main() {
         ),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateTagIndexingRule", true);
+    configuration.set_unstable_operation_enabled("v2.update_tag_indexing_rule", true);
     let api = MetricsAPI::with_config(configuration);
     let resp = api
         .update_tag_indexing_rule(tag_indexing_rule_data_id.clone(), body)

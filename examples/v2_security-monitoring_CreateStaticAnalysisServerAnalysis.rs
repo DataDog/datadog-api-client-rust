@@ -37,7 +37,7 @@ async fn main() {
         AnalysisRequestDataType::ANALYSIS_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateStaticAnalysisServerAnalysis", true);
+    configuration.set_unstable_operation_enabled("v2.create_static_analysis_server_analysis", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_static_analysis_server_analysis(body).await;
     if let Ok(value) = resp {

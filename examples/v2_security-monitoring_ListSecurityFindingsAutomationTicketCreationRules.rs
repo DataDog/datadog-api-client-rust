@@ -8,7 +8,7 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 async fn main() {
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled(
-        "v2.ListSecurityFindingsAutomationTicketCreationRules",
+        "v2.list_security_findings_automation_ticket_creation_rules",
         true,
     );
     let api = SecurityMonitoringAPI::with_config(configuration);

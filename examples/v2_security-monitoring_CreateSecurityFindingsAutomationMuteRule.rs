@@ -24,7 +24,7 @@ async fn main() {
     ));
     let mut configuration = datadog::Configuration::new();
     configuration
-        .set_unstable_operation_enabled("v2.CreateSecurityFindingsAutomationMuteRule", true);
+        .set_unstable_operation_enabled("v2.create_security_findings_automation_mute_rule", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .create_security_findings_automation_mute_rule(body)

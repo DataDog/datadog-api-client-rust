@@ -29,7 +29,7 @@ async fn main() {
         AggregatedLongTasksRequestType::AGGREGATED_LONG_TASKS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.QueryAggregatedLongTasks", true);
+    configuration.set_unstable_operation_enabled("v2.query_aggregated_long_tasks", true);
     let api = RUMInsightsAPI::with_config(configuration);
     let resp = api.query_aggregated_long_tasks(body).await;
     if let Ok(value) = resp {

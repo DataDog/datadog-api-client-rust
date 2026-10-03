@@ -25,7 +25,7 @@ async fn main() {
         .id("@resource_table:aws_ec2_instance".to_string()),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.SearchCostRecommendations", true);
+    configuration.set_unstable_operation_enabled("v2.search_cost_recommendations", true);
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api
         .search_cost_recommendations(body, SearchCostRecommendationsOptionalParams::default())

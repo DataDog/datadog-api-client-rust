@@ -6,7 +6,7 @@ use uuid::Uuid;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteJiraIssueTemplate", true);
+    configuration.set_unstable_operation_enabled("v2.delete_jira_issue_template", true);
     let api = JiraIntegrationAPI::with_config(configuration);
     let resp = api
         .delete_jira_issue_template(

@@ -7,7 +7,7 @@ use uuid::Uuid;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteIncidentNotificationRule", true);
+    configuration.set_unstable_operation_enabled("v2.delete_incident_notification_rule", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .delete_incident_notification_rule(
