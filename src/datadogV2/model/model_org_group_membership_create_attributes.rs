@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for bulk updating org group memberships.
+/// Attributes for adding organizations to an org group.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct OrgGroupMembershipBulkUpdateAttributes {
-    /// List of organizations to move. Between 1 and 100 per request. Each `org_uuid` and `org_site` pair must be unique.
+pub struct OrgGroupMembershipCreateAttributes {
+    /// List of organizations to add. Between 1 and 100 per request. Each `org_uuid` and `org_site` pair must be unique.
     #[serde(rename = "orgs")]
     pub orgs: Vec<crate::datadogV2::model::GlobalOrgIdentifier>,
     #[serde(flatten)]
@@ -21,11 +21,11 @@ pub struct OrgGroupMembershipBulkUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl OrgGroupMembershipBulkUpdateAttributes {
+impl OrgGroupMembershipCreateAttributes {
     pub fn new(
         orgs: Vec<crate::datadogV2::model::GlobalOrgIdentifier>,
-    ) -> OrgGroupMembershipBulkUpdateAttributes {
-        OrgGroupMembershipBulkUpdateAttributes {
+    ) -> OrgGroupMembershipCreateAttributes {
+        OrgGroupMembershipCreateAttributes {
             orgs,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl OrgGroupMembershipBulkUpdateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
+impl<'de> Deserialize<'de> for OrgGroupMembershipCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct OrgGroupMembershipBulkUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for OrgGroupMembershipBulkUpdateAttributesVisitor {
-            type Value = OrgGroupMembershipBulkUpdateAttributes;
+        struct OrgGroupMembershipCreateAttributesVisitor;
+        impl<'a> Visitor<'a> for OrgGroupMembershipCreateAttributesVisitor {
+            type Value = OrgGroupMembershipCreateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
                 }
                 let orgs = orgs.ok_or_else(|| M::Error::missing_field("orgs"))?;
 
-                let content = OrgGroupMembershipBulkUpdateAttributes {
+                let content = OrgGroupMembershipCreateAttributes {
                     orgs,
                     additional_properties,
                     _unparsed,
@@ -89,6 +89,6 @@ impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(OrgGroupMembershipBulkUpdateAttributesVisitor)
+        deserializer.deserialize_any(OrgGroupMembershipCreateAttributesVisitor)
     }
 }

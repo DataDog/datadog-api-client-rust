@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for bulk updating org group memberships.
+/// Request to add organizations to an org group.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct OrgGroupMembershipBulkUpdateAttributes {
-    /// List of organizations to move. Between 1 and 100 per request. Each `org_uuid` and `org_site` pair must be unique.
-    #[serde(rename = "orgs")]
-    pub orgs: Vec<crate::datadogV2::model::GlobalOrgIdentifier>,
+pub struct OrgGroupMembershipCreateRequest {
+    /// Data for adding organizations to an org group.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::OrgGroupMembershipCreateData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,12 +21,12 @@ pub struct OrgGroupMembershipBulkUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl OrgGroupMembershipBulkUpdateAttributes {
+impl OrgGroupMembershipCreateRequest {
     pub fn new(
-        orgs: Vec<crate::datadogV2::model::GlobalOrgIdentifier>,
-    ) -> OrgGroupMembershipBulkUpdateAttributes {
-        OrgGroupMembershipBulkUpdateAttributes {
-            orgs,
+        data: crate::datadogV2::model::OrgGroupMembershipCreateData,
+    ) -> OrgGroupMembershipCreateRequest {
+        OrgGroupMembershipCreateRequest {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -41,14 +41,14 @@ impl OrgGroupMembershipBulkUpdateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
+impl<'de> Deserialize<'de> for OrgGroupMembershipCreateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct OrgGroupMembershipBulkUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for OrgGroupMembershipBulkUpdateAttributesVisitor {
-            type Value = OrgGroupMembershipBulkUpdateAttributes;
+        struct OrgGroupMembershipCreateRequestVisitor;
+        impl<'a> Visitor<'a> for OrgGroupMembershipCreateRequestVisitor {
+            type Value = OrgGroupMembershipCreateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut orgs: Option<Vec<crate::datadogV2::model::GlobalOrgIdentifier>> = None;
+                let mut data: Option<crate::datadogV2::model::OrgGroupMembershipCreateData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -67,8 +67,8 @@ impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "orgs" => {
-                            orgs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -77,10 +77,10 @@ impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
                         }
                     }
                 }
-                let orgs = orgs.ok_or_else(|| M::Error::missing_field("orgs"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = OrgGroupMembershipBulkUpdateAttributes {
-                    orgs,
+                let content = OrgGroupMembershipCreateRequest {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -89,6 +89,6 @@ impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(OrgGroupMembershipBulkUpdateAttributesVisitor)
+        deserializer.deserialize_any(OrgGroupMembershipCreateRequestVisitor)
     }
 }
