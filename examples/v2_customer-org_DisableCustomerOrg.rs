@@ -17,7 +17,7 @@ async fn main() {
             .id("1".to_string()),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DisableCustomerOrg", true);
+    configuration.set_unstable_operation_enabled("v2.disable_customer_org", true);
     let api = CustomerOrgAPI::with_config(configuration);
     let resp = api.disable_customer_org(body).await;
     if let Ok(value) = resp {

@@ -30,7 +30,7 @@ async fn main() {
     );
     let mut configuration = datadog::Configuration::new();
     configuration
-        .set_unstable_operation_enabled("v2.CreateLLMObsAnnotationQueueInteractions", true);
+        .set_unstable_operation_enabled("v2.create_llm_obs_annotation_queue_interactions", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .create_llm_obs_annotation_queue_interactions("queue_id".to_string(), body)

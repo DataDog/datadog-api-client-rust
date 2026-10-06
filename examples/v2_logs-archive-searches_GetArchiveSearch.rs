@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_logs_archive_searches::LogsArchiveSearche
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetArchiveSearch", true);
+    configuration.set_unstable_operation_enabled("v2.get_archive_search", true);
     let api = LogsArchiveSearchesAPI::with_config(configuration);
     let resp = api
         .get_archive_search("archive_search_id".to_string())

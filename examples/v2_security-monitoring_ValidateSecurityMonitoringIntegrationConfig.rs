@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 async fn main() {
     let mut configuration = datadog::Configuration::new();
     configuration
-        .set_unstable_operation_enabled("v2.ValidateSecurityMonitoringIntegrationConfig", true);
+        .set_unstable_operation_enabled("v2.validate_security_monitoring_integration_config", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .validate_security_monitoring_integration_config("integration_config_id".to_string())

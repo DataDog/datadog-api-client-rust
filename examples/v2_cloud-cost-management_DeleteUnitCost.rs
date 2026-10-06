@@ -6,7 +6,7 @@ use uuid::Uuid;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteUnitCost", true);
+    configuration.set_unstable_operation_enabled("v2.delete_unit_cost", true);
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api
         .delete_unit_cost(

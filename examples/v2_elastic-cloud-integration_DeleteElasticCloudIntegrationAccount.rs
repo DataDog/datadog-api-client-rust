@@ -5,7 +5,8 @@ use datadog_api_client::datadogV2::api_elastic_cloud_integration::ElasticCloudIn
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteElasticCloudIntegrationAccount", true);
+    configuration
+        .set_unstable_operation_enabled("v2.delete_elastic_cloud_integration_account", true);
     let api = ElasticCloudIntegrationAPI::with_config(configuration);
     let resp = api
         .delete_elastic_cloud_integration_account("account_id".to_string())

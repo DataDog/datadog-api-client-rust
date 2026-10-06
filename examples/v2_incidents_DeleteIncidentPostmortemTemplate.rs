@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_incidents::IncidentsAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteIncidentPostmortemTemplate", true);
+    configuration.set_unstable_operation_enabled("v2.delete_incident_postmortem_template", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .delete_incident_postmortem_template("template_id".to_string())

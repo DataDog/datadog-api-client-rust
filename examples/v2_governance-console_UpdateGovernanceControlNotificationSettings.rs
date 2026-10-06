@@ -30,7 +30,7 @@ async fn main() {
     );
     let mut configuration = datadog::Configuration::new();
     configuration
-        .set_unstable_operation_enabled("v2.UpdateGovernanceControlNotificationSettings", true);
+        .set_unstable_operation_enabled("v2.update_governance_control_notification_settings", true);
     let api = GovernanceConsoleAPI::with_config(configuration);
     let resp = api
         .update_governance_control_notification_settings("detection_type".to_string(), body)

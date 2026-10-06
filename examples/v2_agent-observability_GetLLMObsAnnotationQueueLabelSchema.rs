@@ -5,7 +5,8 @@ use datadog_api_client::datadogV2::api_agent_observability::AgentObservabilityAP
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetLLMObsAnnotationQueueLabelSchema", true);
+    configuration
+        .set_unstable_operation_enabled("v2.get_llm_obs_annotation_queue_label_schema", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .get_llm_obs_annotation_queue_label_schema("queue_id".to_string())

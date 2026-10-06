@@ -6,8 +6,10 @@ use uuid::Uuid;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration
-        .set_unstable_operation_enabled("v2.DeleteSecurityFindingsAutomationDueDateRule", true);
+    configuration.set_unstable_operation_enabled(
+        "v2.delete_security_findings_automation_due_date_rule",
+        true,
+    );
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .delete_security_findings_automation_due_date_rule(

@@ -17,7 +17,7 @@ async fn main() {
         ),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateTagRule", true);
+    configuration.set_unstable_operation_enabled("v2.update_tag_rule", true);
     let api = TagRulesAPI::with_config(configuration);
     let resp = api.update_tag_rule("rule_id".to_string(), body).await;
     if let Ok(value) = resp {

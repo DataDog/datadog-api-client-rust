@@ -16,7 +16,7 @@ async fn main() {
         IncidentType::INCIDENTS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ImportIncident", true);
+    configuration.set_unstable_operation_enabled("v2.import_incident", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .import_incident(body, ImportIncidentOptionalParams::default())

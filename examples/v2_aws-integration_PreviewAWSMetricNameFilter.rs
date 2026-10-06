@@ -23,7 +23,7 @@ async fn main() {
         AWSMetricNameFilterPreviewType::METRIC_NAME_FILTER_PREVIEW,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.PreviewAWSMetricNameFilter", true);
+    configuration.set_unstable_operation_enabled("v2.preview_aws_metric_name_filter", true);
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api
         .preview_aws_metric_name_filter("aws_account_config_id".to_string(), body)

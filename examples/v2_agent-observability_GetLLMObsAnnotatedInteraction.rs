@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_agent_observability::GetLLMObsAnnotatedIn
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetLLMObsAnnotatedInteraction", true);
+    configuration.set_unstable_operation_enabled("v2.get_llm_obs_annotated_interaction", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .get_llm_obs_annotated_interaction(

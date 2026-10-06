@@ -7,7 +7,7 @@ async fn main() {
     // there is a valid "incident_type" in the system
     let incident_type_data_id = std::env::var("INCIDENT_TYPE_DATA_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteIncidentType", true);
+    configuration.set_unstable_operation_enabled("v2.delete_incident_type", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .delete_incident_type(incident_type_data_id.clone())

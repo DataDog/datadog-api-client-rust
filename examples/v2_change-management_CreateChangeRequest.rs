@@ -36,7 +36,7 @@ async fn main() {
         ChangeRequestResourceType::CHANGE_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateChangeRequest", true);
+    configuration.set_unstable_operation_enabled("v2.create_change_request", true);
     let api = ChangeManagementAPI::with_config(configuration);
     let resp = api.create_change_request(body).await;
     if let Ok(value) = resp {

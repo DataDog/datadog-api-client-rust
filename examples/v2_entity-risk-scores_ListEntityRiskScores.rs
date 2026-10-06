@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_entity_risk_scores::ListEntityRiskScoresO
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListEntityRiskScores", true);
+    configuration.set_unstable_operation_enabled("v2.list_entity_risk_scores", true);
     let api = EntityRiskScoresAPI::with_config(configuration);
     let resp = api
         .list_entity_risk_scores(ListEntityRiskScoresOptionalParams::default())

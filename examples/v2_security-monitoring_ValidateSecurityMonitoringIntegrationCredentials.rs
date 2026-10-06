@@ -39,7 +39,7 @@ async fn main() {
         );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled(
-        "v2.ValidateSecurityMonitoringIntegrationCredentials",
+        "v2.validate_security_monitoring_integration_credentials",
         true,
     );
     let api = SecurityMonitoringAPI::with_config(configuration);

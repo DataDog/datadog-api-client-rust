@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_static_analysis::StaticAnalysisAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListAiCustomRuleRevisions", true);
+    configuration.set_unstable_operation_enabled("v2.list_ai_custom_rule_revisions", true);
     let api = StaticAnalysisAPI::with_config(configuration);
     let resp = api
         .list_ai_custom_rule_revisions(

@@ -18,7 +18,7 @@ async fn main() {
             .type_(RolesType::ROLES),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.RemoveRoleFromRestrictionQuery", true);
+    configuration.set_unstable_operation_enabled("v2.remove_role_from_restriction_query", true);
     let api = LogsRestrictionQueriesAPI::with_config(configuration);
     let resp = api
         .remove_role_from_restriction_query(restriction_query_data_id.clone(), body)

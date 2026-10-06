@@ -39,7 +39,7 @@ async fn main() {
             SecurityMonitoringDatasetUpdateType::DATASET_UPDATE,
         ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateSecurityMonitoringDataset", true);
+    configuration.set_unstable_operation_enabled("v2.update_security_monitoring_dataset", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .update_security_monitoring_dataset(

@@ -18,7 +18,7 @@ async fn main() {
         .timezone("America/New_York".to_string()),
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateSLOReportJob", true);
+    configuration.set_unstable_operation_enabled("v2.create_slo_report_job", true);
     let api = ServiceLevelObjectivesAPI::with_config(configuration);
     let resp = api.create_slo_report_job(body).await;
     if let Ok(value) = resp {

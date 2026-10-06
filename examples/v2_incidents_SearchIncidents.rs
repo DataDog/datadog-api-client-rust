@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_incidents::SearchIncidentsOptionalParams;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.SearchIncidents", true);
+    configuration.set_unstable_operation_enabled("v2.search_incidents", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .search_incidents(

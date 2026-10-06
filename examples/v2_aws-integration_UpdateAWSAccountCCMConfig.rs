@@ -21,7 +21,7 @@ async fn main() {
         AWSCcmConfigType::CCM_CONFIG,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateAWSAccountCCMConfig", true);
+    configuration.set_unstable_operation_enabled("v2.update_aws_account_ccm_config", true);
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api
         .update_aws_account_ccm_config("aws_account_config_id".to_string(), body)

@@ -92,7 +92,7 @@ async fn main() {
         RumSdkConfigType::RUM_SDK_CONFIG,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateRumSdkConfig", true);
+    configuration.set_unstable_operation_enabled("v2.update_rum_sdk_config", true);
     let api = RUMRemoteConfigAPI::with_config(configuration);
     let resp = api
         .update_rum_sdk_config("config_id".to_string(), body)

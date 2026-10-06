@@ -35,7 +35,7 @@ async fn main() {
             )
             .sort(SecurityMonitoringSignalsSort::TIMESTAMP_ASCENDING);
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.SearchSecurityMonitoringHistsignals", true);
+    configuration.set_unstable_operation_enabled("v2.search_security_monitoring_histsignals", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .search_security_monitoring_histsignals(

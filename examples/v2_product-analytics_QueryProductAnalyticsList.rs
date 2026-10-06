@@ -32,7 +32,7 @@ async fn main() {
             ProductAnalyticsAnalyticsListRequestType::FORMULA_ANALYTICS_EXTENDED_LIST_REQUEST,
         ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.QueryProductAnalyticsList", true);
+    configuration.set_unstable_operation_enabled("v2.query_product_analytics_list", true);
     let api = ProductAnalyticsAPI::with_config(configuration);
     let resp = api.query_product_analytics_list(body).await;
     if let Ok(value) = resp {

@@ -10,7 +10,7 @@ async fn main() {
     // there is a valid "incident_attachment" in the system
     let incident_attachment_data_id = std::env::var("INCIDENT_ATTACHMENT_DATA_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteIncidentAttachment", true);
+    configuration.set_unstable_operation_enabled("v2.delete_incident_attachment", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .delete_incident_attachment(

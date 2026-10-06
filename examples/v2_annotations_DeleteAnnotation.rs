@@ -8,7 +8,7 @@ async fn main() {
     let annotation_data_id =
         uuid::Uuid::parse_str(&std::env::var("ANNOTATION_DATA_ID").unwrap()).expect("Invalid UUID");
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteAnnotation", true);
+    configuration.set_unstable_operation_enabled("v2.delete_annotation", true);
     let api = AnnotationsAPI::with_config(configuration);
     let resp = api.delete_annotation(annotation_data_id.clone()).await;
     if let Ok(value) = resp {

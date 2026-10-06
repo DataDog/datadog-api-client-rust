@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_csm_settings::CSMSettingsAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListCSMAgentlessHostFacets", true);
+    configuration.set_unstable_operation_enabled("v2.list_csm_agentless_host_facets", true);
     let api = CSMSettingsAPI::with_config(configuration);
     let resp = api.list_csm_agentless_host_facets().await;
     if let Ok(value) = resp {

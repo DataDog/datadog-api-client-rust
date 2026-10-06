@@ -15,7 +15,7 @@ async fn main() {
         TagIndexingRuleType::TAG_INDEXING_RULES,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ReorderTagIndexingRules", true);
+    configuration.set_unstable_operation_enabled("v2.reorder_tag_indexing_rules", true);
     let api = MetricsAPI::with_config(configuration);
     let resp = api.reorder_tag_indexing_rules(body).await;
     if let Ok(value) = resp {

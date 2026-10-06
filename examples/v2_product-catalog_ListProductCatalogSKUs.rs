@@ -7,7 +7,7 @@ use datadog_api_client::datadogV2::model::ProductCatalogSKUsAPIVersion;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListProductCatalogSKUs", true);
+    configuration.set_unstable_operation_enabled("v2.list_product_catalog_sk_us", true);
     let api = ProductCatalogAPI::with_config(configuration);
     let resp = api
         .list_product_catalog_sk_us(

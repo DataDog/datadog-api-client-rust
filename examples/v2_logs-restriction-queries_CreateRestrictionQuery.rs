@@ -16,7 +16,7 @@ async fn main() {
             .type_(LogsRestrictionQueriesType::LOGS_RESTRICTION_QUERIES),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateRestrictionQuery", true);
+    configuration.set_unstable_operation_enabled("v2.create_restriction_query", true);
     let api = LogsRestrictionQueriesAPI::with_config(configuration);
     let resp = api.create_restriction_query(body).await;
     if let Ok(value) = resp {

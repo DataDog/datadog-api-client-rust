@@ -15,8 +15,10 @@ async fn main() {
         ),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration
-        .set_unstable_operation_enabled("v2.BatchGetSecurityMonitoringDatasetDependencies", true);
+    configuration.set_unstable_operation_enabled(
+        "v2.batch_get_security_monitoring_dataset_dependencies",
+        true,
+    );
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .batch_get_security_monitoring_dataset_dependencies(body)

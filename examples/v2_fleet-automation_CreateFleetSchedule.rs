@@ -26,7 +26,7 @@ async fn main() {
         FleetScheduleResourceType::SCHEDULE,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateFleetSchedule", true);
+    configuration.set_unstable_operation_enabled("v2.create_fleet_schedule", true);
     let api = FleetAutomationAPI::with_config(configuration);
     let resp = api.create_fleet_schedule(body).await;
     if let Ok(value) = resp {

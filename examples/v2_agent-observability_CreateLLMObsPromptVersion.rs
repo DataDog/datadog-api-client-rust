@@ -27,7 +27,7 @@ async fn main() {
         LLMObsPromptVersionType::PROMPT_TEMPLATE_VERSIONS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateLLMObsPromptVersion", true);
+    configuration.set_unstable_operation_enabled("v2.create_llm_obs_prompt_version", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .create_llm_obs_prompt_version("prompt_id".to_string(), body)

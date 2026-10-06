@@ -13,7 +13,7 @@ async fn main() {
         "ioc_triage_state".to_string(),
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateIoCTriageState", true);
+    configuration.set_unstable_operation_enabled("v2.create_io_c_triage_state", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_io_c_triage_state(body).await;
     if let Ok(value) = resp {

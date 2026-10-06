@@ -30,7 +30,7 @@ async fn main() {
         IncidentUserDefinedFieldType::USER_DEFINED_FIELD,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateIncidentUserDefinedField", true);
+    configuration.set_unstable_operation_enabled("v2.update_incident_user_defined_field", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .update_incident_user_defined_field(

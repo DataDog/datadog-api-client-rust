@@ -25,7 +25,7 @@ async fn main() {
         TagRuleResourceType::TAG_RULE,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateTagRule", true);
+    configuration.set_unstable_operation_enabled("v2.create_tag_rule", true);
     let api = TagRulesAPI::with_config(configuration);
     let resp = api.create_tag_rule(body).await;
     if let Ok(value) = resp {

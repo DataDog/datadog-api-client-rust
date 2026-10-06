@@ -32,7 +32,7 @@ async fn main() {
         .id(form_data_id.clone()),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateForm", true);
+    configuration.set_unstable_operation_enabled("v2.update_form", true);
     let api = FormsAPI::with_config(configuration);
     let resp = api.update_form(form_data_id.clone(), body).await;
     if let Ok(value) = resp {

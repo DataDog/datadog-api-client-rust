@@ -28,7 +28,7 @@ async fn main() {
             LLMObsExperimentationType::EXPERIMENTATION,
         ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.SearchLLMObsExperimentation", true);
+    configuration.set_unstable_operation_enabled("v2.search_llm_obs_experimentation", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api.search_llm_obs_experimentation(body).await;
     if let Ok(value) = resp {

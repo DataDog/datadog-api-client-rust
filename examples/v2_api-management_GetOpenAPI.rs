@@ -8,7 +8,7 @@ async fn main() {
     let managed_api_data_id = uuid::Uuid::parse_str(&std::env::var("MANAGED_API_DATA_ID").unwrap())
         .expect("Invalid UUID");
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetOpenAPI", true);
+    configuration.set_unstable_operation_enabled("v2.get_open_api", true);
     let api = APIManagementAPI::with_config(configuration);
     let resp = api.get_open_api(managed_api_data_id.clone()).await;
     if let Ok(value) = resp {

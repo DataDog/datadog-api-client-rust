@@ -7,7 +7,7 @@ use datadog_api_client::datadogV2::model::OwnershipOwnerType;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetOwnershipInference", true);
+    configuration.set_unstable_operation_enabled("v2.get_ownership_inference", true);
     let api = CSMOwnershipAPI::with_config(configuration);
     let resp = api
         .get_ownership_inference(

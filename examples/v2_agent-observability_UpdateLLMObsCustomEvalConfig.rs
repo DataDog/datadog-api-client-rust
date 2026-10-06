@@ -114,7 +114,7 @@ async fn main() {
             ).id("my-custom-evaluator".to_string()),
         );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateLLMObsCustomEvalConfig", true);
+    configuration.set_unstable_operation_enabled("v2.update_llm_obs_custom_eval_config", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .update_llm_obs_custom_eval_config("eval_name".to_string(), body)

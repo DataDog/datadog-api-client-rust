@@ -26,7 +26,7 @@ async fn main() {
         IncidentTodoType::INCIDENT_TODOS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateIncidentTodo", true);
+    configuration.set_unstable_operation_enabled("v2.update_incident_todo", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .update_incident_todo(

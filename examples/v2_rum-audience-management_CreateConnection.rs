@@ -37,7 +37,7 @@ async fn main() {
             .id("crm-integration".to_string()),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateConnection", true);
+    configuration.set_unstable_operation_enabled("v2.create_connection", true);
     let api = RumAudienceManagementAPI::with_config(configuration);
     let resp = api.create_connection("users".to_string(), body).await;
     if let Ok(value) = resp {

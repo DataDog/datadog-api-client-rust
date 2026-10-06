@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_metrics::MetricsAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetTagIndexingRuleExemption", true);
+    configuration.set_unstable_operation_enabled("v2.get_tag_indexing_rule_exemption", true);
     let api = MetricsAPI::with_config(configuration);
     let resp = api
         .get_tag_indexing_rule_exemption("metric_name".to_string())

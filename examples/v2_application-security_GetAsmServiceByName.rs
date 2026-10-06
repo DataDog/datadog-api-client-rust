@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_application_security::ApplicationSecurity
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetAsmServiceByName", true);
+    configuration.set_unstable_operation_enabled("v2.get_asm_service_by_name", true);
     let api = ApplicationSecurityAPI::with_config(configuration);
     let resp = api
         .get_asm_service_by_name("service_filter".to_string())

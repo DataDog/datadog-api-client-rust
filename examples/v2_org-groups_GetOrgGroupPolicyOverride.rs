@@ -6,7 +6,7 @@ use uuid::Uuid;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetOrgGroupPolicyOverride", true);
+    configuration.set_unstable_operation_enabled("v2.get_org_group_policy_override", true);
     let api = OrgGroupsAPI::with_config(configuration);
     let resp = api
         .get_org_group_policy_override(

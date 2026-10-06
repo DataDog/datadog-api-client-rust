@@ -32,7 +32,7 @@ async fn main() {
         SecureEmbedRequestType::SECURE_EMBED_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateDashboardSecureEmbed", true);
+    configuration.set_unstable_operation_enabled("v2.create_dashboard_secure_embed", true);
     let api = DashboardSecureEmbedAPI::with_config(configuration);
     let resp = api
         .create_dashboard_secure_embed("dashboard_id".to_string(), body)

@@ -9,8 +9,10 @@ async fn main() {
         uuid::Uuid::parse_str(&std::env::var("VALID_DUE_DATE_RULE_DATA_ID").unwrap())
             .expect("Invalid UUID");
     let mut configuration = datadog::Configuration::new();
-    configuration
-        .set_unstable_operation_enabled("v2.DeleteSecurityFindingsAutomationDueDateRule", true);
+    configuration.set_unstable_operation_enabled(
+        "v2.delete_security_findings_automation_due_date_rule",
+        true,
+    );
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .delete_security_findings_automation_due_date_rule(valid_due_date_rule_data_id.clone())

@@ -16,7 +16,7 @@ async fn main() {
         LLMObsExperimentType::EXPERIMENTS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateLLMObsExperiment", true);
+    configuration.set_unstable_operation_enabled("v2.update_llm_obs_experiment", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .update_llm_obs_experiment("experiment_id".to_string(), body)

@@ -10,7 +10,7 @@ async fn main() {
             .expect("Invalid UUID");
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled(
-        "v2.DeleteSecurityFindingsAutomationSeverityModifierRule",
+        "v2.delete_security_findings_automation_severity_modifier_rule",
         true,
     );
     let api = SecurityMonitoringAPI::with_config(configuration);

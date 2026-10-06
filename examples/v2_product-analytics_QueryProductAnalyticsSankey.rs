@@ -53,7 +53,7 @@ async fn main() {
         ProductAnalyticsSankeyRequestType::SANKEY_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.QueryProductAnalyticsSankey", true);
+    configuration.set_unstable_operation_enabled("v2.query_product_analytics_sankey", true);
     let api = ProductAnalyticsAPI::with_config(configuration);
     let resp = api.query_product_analytics_sankey(body).await;
     if let Ok(value) = resp {

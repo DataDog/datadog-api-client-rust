@@ -82,6 +82,7 @@ pub struct ApiInstances {
     pub v2_api_test_optimization: Option<datadogV2::api_test_optimization::TestOptimizationAPI>,
     pub v2_api_ci_visibility_tests:
         Option<datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI>,
+    pub v2_api_ci_visibility_logs: Option<datadogV2::api_ci_visibility_logs::CIVisibilityLogsAPI>,
     pub v2_api_cloud_authentication:
         Option<datadogV2::api_cloud_authentication::CloudAuthenticationAPI>,
     pub v2_api_security_monitoring:
@@ -779,6 +780,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "CIVisibilityTests" => {
             world.api_instances.v2_api_ci_visibility_tests = Some(
                 datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "CIVisibilityLogs" => {
+            world.api_instances.v2_api_ci_visibility_logs = Some(
+                datadogV2::api_ci_visibility_logs::CIVisibilityLogsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -3659,6 +3668,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.SearchCIAppTestEventsWithPagination".into(),
         test_v2_search_ci_app_test_events_with_pagination,
     );
+    world
+        .function_mappings
+        .insert("v2.SubmitCILog".into(), test_v2_submit_ci_log);
     world.function_mappings.insert(
         "v2.ListAWSCloudAuthPersonaMappings".into(),
         test_v2_list_aws_cloud_auth_persona_mappings,
@@ -26597,6 +26609,36 @@ fn test_v2_search_ci_app_test_events_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_submit_ci_log(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_ci_visibility_logs
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let content_encoding = _parameters
+        .get("Content-Encoding")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_ci_visibility_logs::SubmitCILogOptionalParams::default();
+    params.content_encoding = content_encoding;
+    let response = match block_on(api.submit_ci_log_with_http_info(body, params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_list_aws_cloud_auth_persona_mappings(

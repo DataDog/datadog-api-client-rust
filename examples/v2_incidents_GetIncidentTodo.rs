@@ -10,7 +10,7 @@ async fn main() {
     // the "incident" has an "incident_todo"
     let incident_todo_data_id = std::env::var("INCIDENT_TODO_DATA_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetIncidentTodo", true);
+    configuration.set_unstable_operation_enabled("v2.get_incident_todo", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .get_incident_todo(incident_data_id.clone(), incident_todo_data_id.clone())

@@ -40,7 +40,7 @@ async fn main() {
         ),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateIncidentNotificationRule", true);
+    configuration.set_unstable_operation_enabled("v2.create_incident_notification_rule", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api.create_incident_notification_rule(body).await;
     if let Ok(value) = resp {

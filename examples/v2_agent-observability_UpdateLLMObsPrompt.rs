@@ -13,7 +13,7 @@ async fn main() {
         LLMObsPromptType::PROMPT_TEMPLATES,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateLLMObsPrompt", true);
+    configuration.set_unstable_operation_enabled("v2.update_llm_obs_prompt", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .update_llm_obs_prompt("prompt_id".to_string(), body)

@@ -20,7 +20,7 @@ async fn main() {
             .type_(AiCustomRulesetDataType::AI_RULESET),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateAiCustomRuleset", true);
+    configuration.set_unstable_operation_enabled("v2.update_ai_custom_ruleset", true);
     let api = StaticAnalysisAPI::with_config(configuration);
     let resp = api
         .update_ai_custom_ruleset("my-ai-ruleset".to_string(), body)

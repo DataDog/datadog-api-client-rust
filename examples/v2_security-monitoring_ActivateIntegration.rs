@@ -25,7 +25,7 @@ async fn main() {
             .type_(SecurityMonitoringIntegrationActivateResourceType::ACTIVATE_ENTRA_ID_REQUEST),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ActivateIntegration", true);
+    configuration.set_unstable_operation_enabled("v2.activate_integration", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .activate_integration(

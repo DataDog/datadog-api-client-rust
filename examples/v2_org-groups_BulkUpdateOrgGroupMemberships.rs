@@ -32,7 +32,7 @@ async fn main() {
         OrgGroupMembershipBulkUpdateType::ORG_GROUP_MEMBERSHIP_BULK_UPDATES,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.BulkUpdateOrgGroupMemberships", true);
+    configuration.set_unstable_operation_enabled("v2.bulk_update_org_group_memberships", true);
     let api = OrgGroupsAPI::with_config(configuration);
     let resp = api.bulk_update_org_group_memberships(body).await;
     if let Ok(value) = resp {

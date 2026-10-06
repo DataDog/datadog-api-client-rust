@@ -36,7 +36,8 @@ async fn main() {
         ),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateLLMObsAnnotationQueueLabelSchema", true);
+    configuration
+        .set_unstable_operation_enabled("v2.update_llm_obs_annotation_queue_label_schema", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .update_llm_obs_annotation_queue_label_schema("queue_id".to_string(), body)

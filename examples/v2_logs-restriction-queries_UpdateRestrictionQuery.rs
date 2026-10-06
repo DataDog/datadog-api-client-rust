@@ -18,7 +18,7 @@ async fn main() {
             .type_(LogsRestrictionQueriesType::LOGS_RESTRICTION_QUERIES),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateRestrictionQuery", true);
+    configuration.set_unstable_operation_enabled("v2.update_restriction_query", true);
     let api = LogsRestrictionQueriesAPI::with_config(configuration);
     let resp = api
         .update_restriction_query(restriction_query_data_id.clone(), body)

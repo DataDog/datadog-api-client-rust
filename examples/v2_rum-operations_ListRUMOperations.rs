@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_rum_operations::RUMOperationsAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListRUMOperations", true);
+    configuration.set_unstable_operation_enabled("v2.list_rum_operations", true);
     let api = RUMOperationsAPI::with_config(configuration);
     let resp = api
         .list_rum_operations(ListRUMOperationsOptionalParams::default())

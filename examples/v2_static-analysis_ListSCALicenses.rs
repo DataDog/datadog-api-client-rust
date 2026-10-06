@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_static_analysis::StaticAnalysisAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListSCALicenses", true);
+    configuration.set_unstable_operation_enabled("v2.list_sca_licenses", true);
     let api = StaticAnalysisAPI::with_config(configuration);
     let resp = api.list_sca_licenses().await;
     if let Ok(value) = resp {

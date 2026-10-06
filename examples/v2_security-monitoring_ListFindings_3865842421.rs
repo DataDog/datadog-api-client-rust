@@ -8,7 +8,7 @@ use futures_util::stream::StreamExt;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListFindings", true);
+    configuration.set_unstable_operation_enabled("v2.list_findings", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let response = api.list_findings_with_pagination(ListFindingsOptionalParams::default());
     pin_mut!(response);

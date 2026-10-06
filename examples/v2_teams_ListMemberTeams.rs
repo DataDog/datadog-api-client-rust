@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_teams::TeamsAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListMemberTeams", true);
+    configuration.set_unstable_operation_enabled("v2.list_member_teams", true);
     let api = TeamsAPI::with_config(configuration);
     let resp = api
         .list_member_teams(

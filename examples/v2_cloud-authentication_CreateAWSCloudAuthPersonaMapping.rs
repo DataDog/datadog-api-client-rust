@@ -17,7 +17,7 @@ async fn main() {
             AWSCloudAuthPersonaMappingType::AWS_CLOUD_AUTH_CONFIG,
         ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateAWSCloudAuthPersonaMapping", true);
+    configuration.set_unstable_operation_enabled("v2.create_aws_cloud_auth_persona_mapping", true);
     let api = CloudAuthenticationAPI::with_config(configuration);
     let resp = api.create_aws_cloud_auth_persona_mapping(body).await;
     if let Ok(value) = resp {

@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_entity_integration_configs::EntityIntegra
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteEntityIntegrationConfig", true);
+    configuration.set_unstable_operation_enabled("v2.delete_entity_integration_config", true);
     let api = EntityIntegrationConfigsAPI::with_config(configuration);
     let resp = api
         .delete_entity_integration_config("github".to_string())

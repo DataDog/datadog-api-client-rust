@@ -30,7 +30,7 @@ async fn main() {
         AggregatedWaterfallRequestType::AGGREGATED_WATERFALL,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.QueryAggregatedWaterfall", true);
+    configuration.set_unstable_operation_enabled("v2.query_aggregated_waterfall", true);
     let api = RUMInsightsAPI::with_config(configuration);
     let resp = api.query_aggregated_waterfall(body).await;
     if let Ok(value) = resp {

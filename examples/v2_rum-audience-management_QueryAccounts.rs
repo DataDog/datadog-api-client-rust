@@ -38,7 +38,7 @@ async fn main() {
             .id("query_account_request".to_string()),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.QueryAccounts", true);
+    configuration.set_unstable_operation_enabled("v2.query_accounts", true);
     let api = RumAudienceManagementAPI::with_config(configuration);
     let resp = api.query_accounts(body).await;
     if let Ok(value) = resp {

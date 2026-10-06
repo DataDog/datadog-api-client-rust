@@ -7,7 +7,7 @@ async fn main() {
     // there is a valid "security_rule" in the system
     let security_rule_id = std::env::var("SECURITY_RULE_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.RestoreSecurityMonitoringRule", true);
+    configuration.set_unstable_operation_enabled("v2.restore_security_monitoring_rule", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .restore_security_monitoring_rule(security_rule_id.clone(), 1)
