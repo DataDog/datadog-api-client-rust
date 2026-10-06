@@ -363,6 +363,22 @@ impl ListCostAnomaliesOptionalParams {
     }
 }
 
+/// ListCostCloudAccountsV2OptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_cloud_accounts_v2`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListCostCloudAccountsV2OptionalParams {
+    /// Filter by cloud, either `oci` or `aws_cur2` (case insensitive). Omit or leave empty to return both.
+    pub filter_cloud: Option<String>,
+}
+
+impl ListCostCloudAccountsV2OptionalParams {
+    /// Filter by cloud, either `oci` or `aws_cur2` (case insensitive). Omit or leave empty to return both.
+    pub fn filter_cloud(mut self, value: String) -> Self {
+        self.filter_cloud = Some(value);
+        self
+    }
+}
+
 /// ListCostTagDescriptionsOptionalParams is a struct for passing parameters to the method [`CloudCostManagementAPI::list_cost_tag_descriptions`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -967,6 +983,15 @@ pub enum ListCostAnomaliesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListCostAzureUCConfigsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListCostCloudAccountsV2Error is a struct for typed errors of method [`CloudCostManagementAPI::list_cost_cloud_accounts_v2`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListCostCloudAccountsV2Error {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -6549,6 +6574,139 @@ impl CloudCostManagementAPI {
         }
     }
 
+    /// List the OCI and AWS CUR 2.0 cloud accounts for your organization, including account IDs, status, and validation errors.
+    /// Use `filter[cloud]=oci` or `filter[cloud]=aws_cur2` to return a single cloud. When omitted or empty, both clouds are returned.
+    /// AWS CUR 1.0, Azure, and GCP accounts are available through their dedicated configuration endpoints.
+    /// Archived accounts are excluded. The response contains all matching accounts and is not paginated.
+    ///
+    /// This endpoint replaces `GET /api/v2/cost/oci_config`. To migrate, use `filter[cloud]=oci` and update clients to accept
+    /// the `cloud_account` resource type instead of `oci_config`. Account IDs and the existing attributes are preserved;
+    /// each account also includes the `cloud` attribute.
+    pub async fn list_cost_cloud_accounts_v2(
+        &self,
+        params: ListCostCloudAccountsV2OptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::CloudCostAccountsResponse,
+        datadog::Error<ListCostCloudAccountsV2Error>,
+    > {
+        match self
+            .list_cost_cloud_accounts_v2_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List the OCI and AWS CUR 2.0 cloud accounts for your organization, including account IDs, status, and validation errors.
+    /// Use `filter[cloud]=oci` or `filter[cloud]=aws_cur2` to return a single cloud. When omitted or empty, both clouds are returned.
+    /// AWS CUR 1.0, Azure, and GCP accounts are available through their dedicated configuration endpoints.
+    /// Archived accounts are excluded. The response contains all matching accounts and is not paginated.
+    ///
+    /// This endpoint replaces `GET /api/v2/cost/oci_config`. To migrate, use `filter[cloud]=oci` and update clients to accept
+    /// the `cloud_account` resource type instead of `oci_config`. Account IDs and the existing attributes are preserved;
+    /// each account also includes the `cloud` attribute.
+    pub async fn list_cost_cloud_accounts_v2_with_http_info(
+        &self,
+        params: ListCostCloudAccountsV2OptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::CloudCostAccountsResponse>,
+        datadog::Error<ListCostCloudAccountsV2Error>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_cost_cloud_accounts_v2";
+
+        // unbox and build optional parameters
+        let filter_cloud = params.filter_cloud;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/cost/cloud_accounts",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_cloud {
+            local_req_builder =
+                local_req_builder.query(&[("filter[cloud]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::CloudCostAccountsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListCostCloudAccountsV2Error> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// List the Google Cloud Usage Cost configs.
     pub async fn list_cost_gcp_usage_cost_configs(
         &self,
@@ -6655,7 +6813,9 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// **Note**: This endpoint is deprecated. View OCI accounts in Cloud Cost Settings in the Datadog web application instead.
+    /// **Note**: This endpoint is deprecated. Use [List Cloud Cost Management cloud accounts](<https://docs.datadoghq.com/api/latest/cloud-cost-management/#list-cloud-cost-management-cloud-accounts>)
+    /// with `filter[cloud]=oci` instead. Update clients to accept the `cloud_account` resource type instead of `oci_config`.
+    /// Account IDs and the existing attributes are preserved; each account also includes the `cloud` attribute.
     ///
     /// List the OCI configs.
     pub async fn list_cost_oci_configs(
@@ -6676,7 +6836,9 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// **Note**: This endpoint is deprecated. View OCI accounts in Cloud Cost Settings in the Datadog web application instead.
+    /// **Note**: This endpoint is deprecated. Use [List Cloud Cost Management cloud accounts](<https://docs.datadoghq.com/api/latest/cloud-cost-management/#list-cloud-cost-management-cloud-accounts>)
+    /// with `filter[cloud]=oci` instead. Update clients to accept the `cloud_account` resource type instead of `oci_config`.
+    /// Account IDs and the existing attributes are preserved; each account also includes the `cloud` attribute.
     ///
     /// List the OCI configs.
     pub async fn list_cost_oci_configs_with_http_info(
