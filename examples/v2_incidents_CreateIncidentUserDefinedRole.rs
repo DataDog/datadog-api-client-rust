@@ -29,7 +29,7 @@ async fn main() {
         IncidentUserDefinedRoleType::INCIDENT_USER_DEFINED_ROLES,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateIncidentUserDefinedRole", true);
+    configuration.set_unstable_operation_enabled("v2.create_incident_user_defined_role", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .create_incident_user_defined_role(

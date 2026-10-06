@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_twilio_integration::TwilioIntegrationAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetTwilioIntegrationAccount", true);
+    configuration.set_unstable_operation_enabled("v2.get_twilio_integration_account", true);
     let api = TwilioIntegrationAPI::with_config(configuration);
     let resp = api
         .get_twilio_integration_account("account_id".to_string())

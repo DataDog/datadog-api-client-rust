@@ -27,7 +27,7 @@ async fn main() {
             .type_(JiraIssueTemplateType::JIRA_ISSUE_TEMPLATE),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateJiraIssueTemplate", true);
+    configuration.set_unstable_operation_enabled("v2.create_jira_issue_template", true);
     let api = JiraIntegrationAPI::with_config(configuration);
     let resp = api.create_jira_issue_template(body).await;
     if let Ok(value) = resp {

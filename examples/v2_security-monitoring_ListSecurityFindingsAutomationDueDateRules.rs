@@ -7,8 +7,10 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration
-        .set_unstable_operation_enabled("v2.ListSecurityFindingsAutomationDueDateRules", true);
+    configuration.set_unstable_operation_enabled(
+        "v2.list_security_findings_automation_due_date_rules",
+        true,
+    );
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .list_security_findings_automation_due_date_rules(

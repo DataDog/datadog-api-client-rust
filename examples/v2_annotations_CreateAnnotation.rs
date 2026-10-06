@@ -22,7 +22,7 @@ async fn main() {
         AnnotationType::ANNOTATION,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateAnnotation", true);
+    configuration.set_unstable_operation_enabled("v2.create_annotation", true);
     let api = AnnotationsAPI::with_config(configuration);
     let resp = api.create_annotation(body).await;
     if let Ok(value) = resp {

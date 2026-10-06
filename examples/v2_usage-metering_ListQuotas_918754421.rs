@@ -8,7 +8,7 @@ use futures_util::stream::StreamExt;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListQuotas", true);
+    configuration.set_unstable_operation_enabled("v2.list_quotas", true);
     let api = UsageMeteringAPI::with_config(configuration);
     let response = api.list_quotas_with_pagination(
         "ai_credits".to_string(),

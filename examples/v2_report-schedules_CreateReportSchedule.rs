@@ -37,7 +37,7 @@ RRULE:FREQ=WEEKLY;BYDAY=MO;BYHOUR=9;BYMINUTE=0"#.to_string(),
             ),
         );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateReportSchedule", true);
+    configuration.set_unstable_operation_enabled("v2.create_report_schedule", true);
     let api = ReportSchedulesAPI::with_config(configuration);
     let resp = api.create_report_schedule(body).await;
     if let Ok(value) = resp {

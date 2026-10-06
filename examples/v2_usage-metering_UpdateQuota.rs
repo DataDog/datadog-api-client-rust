@@ -16,7 +16,7 @@ async fn main() {
         UsageQuotaType::QUOTAS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateQuota", true);
+    configuration.set_unstable_operation_enabled("v2.update_quota", true);
     let api = UsageMeteringAPI::with_config(configuration);
     let resp = api
         .update_quota(

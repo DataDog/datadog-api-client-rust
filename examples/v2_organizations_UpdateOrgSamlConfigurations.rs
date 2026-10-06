@@ -22,7 +22,7 @@ async fn main() {
             .id("00000000-0000-0000-0000-000000000000".to_string()),
         );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateOrgSamlConfigurations", true);
+    configuration.set_unstable_operation_enabled("v2.update_org_saml_configurations", true);
     let api = OrganizationsAPI::with_config(configuration);
     let resp = api.update_org_saml_configurations(body).await;
     if let Ok(value) = resp {

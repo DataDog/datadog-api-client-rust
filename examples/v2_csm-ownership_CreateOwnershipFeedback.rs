@@ -21,7 +21,7 @@ async fn main() {
         OwnershipFeedbackType::OWNERSHIP_FEEDBACK,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateOwnershipFeedback", true);
+    configuration.set_unstable_operation_enabled("v2.create_ownership_feedback", true);
     let api = CSMOwnershipAPI::with_config(configuration);
     let resp = api
         .create_ownership_feedback("res-1".to_string(), OwnershipOwnerType::TEAM, body)

@@ -6,7 +6,7 @@ use uuid::Uuid;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetOrgGroupMembership", true);
+    configuration.set_unstable_operation_enabled("v2.get_org_group_membership", true);
     let api = OrgGroupsAPI::with_config(configuration);
     let resp = api
         .get_org_group_membership(

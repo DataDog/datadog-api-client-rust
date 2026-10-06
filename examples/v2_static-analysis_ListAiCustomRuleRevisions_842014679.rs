@@ -9,7 +9,7 @@ use futures_util::stream::StreamExt;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListAiCustomRuleRevisions", true);
+    configuration.set_unstable_operation_enabled("v2.list_ai_custom_rule_revisions", true);
     let api = StaticAnalysisAPI::with_config(configuration);
     let response = api.list_ai_custom_rule_revisions_with_pagination(
         "my-ai-ruleset".to_string(),

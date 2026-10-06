@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_agent_observability::AgentObservabilityAP
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteLLMObsCustomEvalConfig", true);
+    configuration.set_unstable_operation_enabled("v2.delete_llm_obs_custom_eval_config", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .delete_llm_obs_custom_eval_config("eval_name".to_string())

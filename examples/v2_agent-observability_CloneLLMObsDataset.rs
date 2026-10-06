@@ -15,7 +15,7 @@ async fn main() {
         LLMObsDatasetType::DATASETS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CloneLLMObsDataset", true);
+    configuration.set_unstable_operation_enabled("v2.clone_llm_obs_dataset", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .clone_llm_obs_dataset("project_id".to_string(), "dataset_id".to_string(), body)

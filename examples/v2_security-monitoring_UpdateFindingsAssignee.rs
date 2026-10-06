@@ -27,7 +27,7 @@ async fn main() {
         .id("00000000-0000-0000-0000-000000000001".to_string()),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateFindingsAssignee", true);
+    configuration.set_unstable_operation_enabled("v2.update_findings_assignee", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.update_findings_assignee(body).await;
     if let Ok(value) = resp {

@@ -174,7 +174,7 @@ async fn main() {
             ),
         );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.QueryProductAnalyticsJourneyList", true);
+    configuration.set_unstable_operation_enabled("v2.query_product_analytics_journey_list", true);
     let api = ProductAnalyticsAPI::with_config(configuration);
     let resp = api.query_product_analytics_journey_list(body).await;
     if let Ok(value) = resp {

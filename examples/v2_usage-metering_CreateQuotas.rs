@@ -20,7 +20,7 @@ async fn main() {
         UsageQuotaType::QUOTAS,
     )]);
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateQuotas", true);
+    configuration.set_unstable_operation_enabled("v2.create_quotas", true);
     let api = UsageMeteringAPI::with_config(configuration);
     let resp = api
         .create_quotas(

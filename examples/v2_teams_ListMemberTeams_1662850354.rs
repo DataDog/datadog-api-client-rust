@@ -8,7 +8,7 @@ use futures_util::stream::StreamExt;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListMemberTeams", true);
+    configuration.set_unstable_operation_enabled("v2.list_member_teams", true);
     let api = TeamsAPI::with_config(configuration);
     let response = api.list_member_teams_with_pagination(
         "super_team_id".to_string(),

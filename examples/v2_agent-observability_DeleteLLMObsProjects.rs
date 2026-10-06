@@ -15,7 +15,7 @@ async fn main() {
         LLMObsProjectType::PROJECTS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteLLMObsProjects", true);
+    configuration.set_unstable_operation_enabled("v2.delete_llm_obs_projects", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api.delete_llm_obs_projects(body).await;
     if let Ok(value) = resp {

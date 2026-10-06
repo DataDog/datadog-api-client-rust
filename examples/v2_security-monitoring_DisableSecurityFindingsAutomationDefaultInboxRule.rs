@@ -7,7 +7,7 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 async fn main() {
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled(
-        "v2.DisableSecurityFindingsAutomationDefaultInboxRule",
+        "v2.disable_security_findings_automation_default_inbox_rule",
         true,
     );
     let api = SecurityMonitoringAPI::with_config(configuration);

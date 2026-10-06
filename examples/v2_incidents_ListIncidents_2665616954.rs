@@ -8,7 +8,7 @@ use futures_util::stream::StreamExt;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListIncidents", true);
+    configuration.set_unstable_operation_enabled("v2.list_incidents", true);
     let api = IncidentsAPI::with_config(configuration);
     let response =
         api.list_incidents_with_pagination(ListIncidentsOptionalParams::default().page_size(2));

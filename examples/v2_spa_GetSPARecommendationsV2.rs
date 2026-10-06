@@ -13,7 +13,7 @@ async fn main() {
         RecommendationV2RequestType::RECOMMENDATION_V2_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetSPARecommendationsV2", true);
+    configuration.set_unstable_operation_enabled("v2.get_spa_recommendations_v2", true);
     let api = SpaAPI::with_config(configuration);
     let resp = api
         .get_spa_recommendations_v2("service".to_string(), body)

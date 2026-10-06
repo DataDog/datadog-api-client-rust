@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_execution_policy::ListExecutionPoliciesOp
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListExecutionPolicies", true);
+    configuration.set_unstable_operation_enabled("v2.list_execution_policies", true);
     let api = ExecutionPolicyAPI::with_config(configuration);
     let resp = api
         .list_execution_policies(ListExecutionPoliciesOptionalParams::default())

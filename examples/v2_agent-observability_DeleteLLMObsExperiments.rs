@@ -15,7 +15,7 @@ async fn main() {
         LLMObsExperimentType::EXPERIMENTS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteLLMObsExperiments", true);
+    configuration.set_unstable_operation_enabled("v2.delete_llm_obs_experiments", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api.delete_llm_obs_experiments(body).await;
     if let Ok(value) = resp {

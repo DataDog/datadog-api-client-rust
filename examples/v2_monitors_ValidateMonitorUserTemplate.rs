@@ -35,7 +35,7 @@ async fn main() {
         MonitorUserTemplateResourceType::MONITOR_USER_TEMPLATE,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ValidateMonitorUserTemplate", true);
+    configuration.set_unstable_operation_enabled("v2.validate_monitor_user_template", true);
     let api = MonitorsAPI::with_config(configuration);
     let resp = api.validate_monitor_user_template(body).await;
     if let Ok(value) = resp {

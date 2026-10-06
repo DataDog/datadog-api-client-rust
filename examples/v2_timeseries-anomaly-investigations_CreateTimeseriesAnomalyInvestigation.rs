@@ -31,7 +31,8 @@ async fn main() {
             TimeseriesAnomalyInvestigationType::TIMESERIES_ANOMALY_INVESTIGATION,
         ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateTimeseriesAnomalyInvestigation", true);
+    configuration
+        .set_unstable_operation_enabled("v2.create_timeseries_anomaly_investigation", true);
     let api = TimeseriesAnomalyInvestigationsAPI::with_config(configuration);
     let resp = api.create_timeseries_anomaly_investigation(body).await;
     if let Ok(value) = resp {

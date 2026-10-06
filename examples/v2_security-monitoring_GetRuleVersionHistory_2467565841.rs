@@ -8,7 +8,7 @@ async fn main() {
     // there is a valid "security_rule" in the system
     let security_rule_id = std::env::var("SECURITY_RULE_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetRuleVersionHistory", true);
+    configuration.set_unstable_operation_enabled("v2.get_rule_version_history", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .get_rule_version_history(

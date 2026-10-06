@@ -15,7 +15,7 @@ async fn main() {
         LLMObsRecordType::RECORDS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteLLMObsDatasetRecords", true);
+    configuration.set_unstable_operation_enabled("v2.delete_llm_obs_dataset_records", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api
         .delete_llm_obs_dataset_records("project_id".to_string(), "dataset_id".to_string(), body)

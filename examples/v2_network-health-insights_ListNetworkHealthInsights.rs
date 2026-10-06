@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_network_health_insights::NetworkHealthIns
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListNetworkHealthInsights", true);
+    configuration.set_unstable_operation_enabled("v2.list_network_health_insights", true);
     let api = NetworkHealthInsightsAPI::with_config(configuration);
     let resp = api
         .list_network_health_insights(ListNetworkHealthInsightsOptionalParams::default())

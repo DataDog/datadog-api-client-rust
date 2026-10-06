@@ -7,7 +7,7 @@ async fn main() {
     // there is a valid "restriction_query" in the system
     let restriction_query_data_id = std::env::var("RESTRICTION_QUERY_DATA_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteRestrictionQuery", true);
+    configuration.set_unstable_operation_enabled("v2.delete_restriction_query", true);
     let api = LogsRestrictionQueriesAPI::with_config(configuration);
     let resp = api
         .delete_restriction_query(restriction_query_data_id.clone())

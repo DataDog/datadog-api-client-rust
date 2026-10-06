@@ -21,7 +21,7 @@ async fn main() {
         DatasetType::DATASET,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateDataset", true);
+    configuration.set_unstable_operation_enabled("v2.create_dataset", true);
     let api = DatasetsAPI::with_config(configuration);
     let resp = api.create_dataset(body).await;
     if let Ok(value) = resp {

@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_tag_rules::TagRulesAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetTagRuleScore", true);
+    configuration.set_unstable_operation_enabled("v2.get_tag_rule_score", true);
     let api = TagRulesAPI::with_config(configuration);
     let resp = api
         .get_tag_rule_score(

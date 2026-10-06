@@ -11,7 +11,7 @@ async fn main() {
     let incident_integration_metadata_data_id =
         std::env::var("INCIDENT_INTEGRATION_METADATA_DATA_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetIncidentIntegration", true);
+    configuration.set_unstable_operation_enabled("v2.get_incident_integration", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .get_incident_integration(

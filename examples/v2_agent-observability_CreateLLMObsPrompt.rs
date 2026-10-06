@@ -28,7 +28,7 @@ async fn main() {
         LLMObsPromptType::PROMPT_TEMPLATES,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateLLMObsPrompt", true);
+    configuration.set_unstable_operation_enabled("v2.create_llm_obs_prompt", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let resp = api.create_llm_obs_prompt(body).await;
     if let Ok(value) = resp {

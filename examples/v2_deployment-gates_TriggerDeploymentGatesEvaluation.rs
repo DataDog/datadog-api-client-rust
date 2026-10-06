@@ -42,7 +42,7 @@ async fn main() {
         DeploymentGatesEvaluationRequestDataType::DEPLOYMENT_GATES_EVALUATION_REQUEST,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.TriggerDeploymentGatesEvaluation", true);
+    configuration.set_unstable_operation_enabled("v2.trigger_deployment_gates_evaluation", true);
     let api = DeploymentGatesAPI::with_config(configuration);
     let resp = api.trigger_deployment_gates_evaluation(body).await;
     if let Ok(value) = resp {

@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_logs_restriction_queries::LogsRestriction
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListRestrictionQueries", true);
+    configuration.set_unstable_operation_enabled("v2.list_restriction_queries", true);
     let api = LogsRestrictionQueriesAPI::with_config(configuration);
     let resp = api
         .list_restriction_queries(ListRestrictionQueriesOptionalParams::default())

@@ -9,7 +9,7 @@ async fn main() {
     let suppression_data_id = std::env::var("SUPPRESSION_DATA_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
     configuration
-        .set_unstable_operation_enabled("v2.ExportSecurityMonitoringTerraformResource", true);
+        .set_unstable_operation_enabled("v2.export_security_monitoring_terraform_resource", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .export_security_monitoring_terraform_resource(

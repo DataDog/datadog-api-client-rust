@@ -9,7 +9,8 @@ async fn main() {
         uuid::Uuid::parse_str(&std::env::var("VALID_MUTE_RULE_DATA_ID").unwrap())
             .expect("Invalid UUID");
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetSecurityFindingsAutomationMuteRule", true);
+    configuration
+        .set_unstable_operation_enabled("v2.get_security_findings_automation_mute_rule", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .get_security_findings_automation_mute_rule(valid_mute_rule_data_id.clone())

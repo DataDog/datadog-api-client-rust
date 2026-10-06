@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_rum_audience_management::RumAudienceManag
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteConnection", true);
+    configuration.set_unstable_operation_enabled("v2.delete_connection", true);
     let api = RumAudienceManagementAPI::with_config(configuration);
     let resp = api
         .delete_connection("connection-id-123".to_string(), "users".to_string())

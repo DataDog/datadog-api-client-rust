@@ -18,7 +18,7 @@ async fn main() {
     );
     let mut configuration = datadog::Configuration::new();
     configuration
-        .set_unstable_operation_enabled("v2.BulkCreateSampleLogGenerationSubscriptions", true);
+        .set_unstable_operation_enabled("v2.bulk_create_sample_log_generation_subscriptions", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .bulk_create_sample_log_generation_subscriptions(body)

@@ -9,7 +9,8 @@ async fn main() {
         uuid::Uuid::parse_str(&std::env::var("VALID_INBOX_RULE_DATA_ID").unwrap())
             .expect("Invalid UUID");
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetSecurityFindingsAutomationInboxRule", true);
+    configuration
+        .set_unstable_operation_enabled("v2.get_security_findings_automation_inbox_rule", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api
         .get_security_findings_automation_inbox_rule(valid_inbox_rule_data_id.clone())

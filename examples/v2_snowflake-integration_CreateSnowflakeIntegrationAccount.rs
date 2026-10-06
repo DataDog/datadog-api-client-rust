@@ -126,7 +126,7 @@ MIIE...
             ),
         );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateSnowflakeIntegrationAccount", true);
+    configuration.set_unstable_operation_enabled("v2.create_snowflake_integration_account", true);
     let api = SnowflakeIntegrationAPI::with_config(configuration);
     let resp = api.create_snowflake_integration_account(body).await;
     if let Ok(value) = resp {

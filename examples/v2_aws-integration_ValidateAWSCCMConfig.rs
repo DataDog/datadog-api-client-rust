@@ -19,7 +19,7 @@ async fn main() {
         AWSCcmConfigValidationType::CCM_CONFIG_VALIDATION,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ValidateAWSCCMConfig", true);
+    configuration.set_unstable_operation_enabled("v2.validate_awsccm_config", true);
     let api = AWSIntegrationAPI::with_config(configuration);
     let resp = api.validate_awsccm_config(body).await;
     if let Ok(value) = resp {

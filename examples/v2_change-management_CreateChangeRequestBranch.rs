@@ -16,7 +16,7 @@ async fn main() {
         ChangeRequestBranchResourceType::CHANGE_REQUEST_BRANCH,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateChangeRequestBranch", true);
+    configuration.set_unstable_operation_enabled("v2.create_change_request_branch", true);
     let api = ChangeManagementAPI::with_config(configuration);
     let resp = api
         .create_change_request_branch("change_request_id".to_string(), body)

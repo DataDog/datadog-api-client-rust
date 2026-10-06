@@ -7,7 +7,7 @@ use uuid::Uuid;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetIncidentUserDefinedRole", true);
+    configuration.set_unstable_operation_enabled("v2.get_incident_user_defined_role", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .get_incident_user_defined_role(

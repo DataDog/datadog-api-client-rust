@@ -8,7 +8,7 @@ use futures_util::stream::StreamExt;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetLLMObsAnnotatedInteraction", true);
+    configuration.set_unstable_operation_enabled("v2.get_llm_obs_annotated_interaction", true);
     let api = AgentObservabilityAPI::with_config(configuration);
     let response = api.get_llm_obs_annotated_interaction_with_pagination(
         "queue_id".to_string(),

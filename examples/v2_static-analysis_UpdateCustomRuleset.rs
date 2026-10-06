@@ -83,7 +83,7 @@ async fn main() {
         CustomRulesetDataType::CUSTOM_RULESET,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateCustomRuleset", true);
+    configuration.set_unstable_operation_enabled("v2.update_custom_ruleset", true);
     let api = StaticAnalysisAPI::with_config(configuration);
     let resp = api
         .update_custom_ruleset("ruleset_name".to_string(), body)

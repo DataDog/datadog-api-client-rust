@@ -24,7 +24,7 @@ async fn main() {
             .type_(AiMemoryViolationResultDataType::AI_MEMORY_VIOLATION_RESULT),
     );
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateAiMemoryViolationResult", true);
+    configuration.set_unstable_operation_enabled("v2.create_ai_memory_violation_result", true);
     let api = StaticAnalysisAPI::with_config(configuration);
     let resp = api.create_ai_memory_violation_result(body).await;
     if let Ok(value) = resp {

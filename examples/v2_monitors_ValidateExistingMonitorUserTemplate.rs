@@ -38,7 +38,8 @@ async fn main() {
         MonitorUserTemplateResourceType::MONITOR_USER_TEMPLATE,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ValidateExistingMonitorUserTemplate", true);
+    configuration
+        .set_unstable_operation_enabled("v2.validate_existing_monitor_user_template", true);
     let api = MonitorsAPI::with_config(configuration);
     let resp = api
         .validate_existing_monitor_user_template(monitor_user_template_data_id.clone(), body)

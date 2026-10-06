@@ -15,7 +15,7 @@ async fn main() {
         OrgGroupType::ORG_GROUPS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateOrgGroup", true);
+    configuration.set_unstable_operation_enabled("v2.update_org_group", true);
     let api = OrgGroupsAPI::with_config(configuration);
     let resp = api
         .update_org_group(

@@ -16,7 +16,7 @@ async fn main() {
         FormPublicationType::FORM_PUBLICATIONS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.PublishForm", true);
+    configuration.set_unstable_operation_enabled("v2.publish_form", true);
     let api = FormsAPI::with_config(configuration);
     let resp = api.publish_form(form_data_id.clone(), body).await;
     if let Ok(value) = resp {

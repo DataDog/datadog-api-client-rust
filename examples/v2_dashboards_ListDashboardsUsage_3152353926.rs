@@ -8,7 +8,7 @@ use futures_util::stream::StreamExt;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListDashboardsUsage", true);
+    configuration.set_unstable_operation_enabled("v2.list_dashboards_usage", true);
     let api = DashboardsAPI::with_config(configuration);
     let response = api.list_dashboards_usage_with_pagination(
         ListDashboardsUsageOptionalParams::default().page_limit(500),

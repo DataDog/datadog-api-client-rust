@@ -39,7 +39,7 @@ async fn main() {
             SecurityMonitoringDatasetCreateType::DATASET_CREATE,
         ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateSecurityMonitoringDataset", true);
+    configuration.set_unstable_operation_enabled("v2.create_security_monitoring_dataset", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.create_security_monitoring_dataset(body).await;
     if let Ok(value) = resp {

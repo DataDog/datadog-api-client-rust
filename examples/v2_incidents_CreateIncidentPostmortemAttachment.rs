@@ -36,7 +36,7 @@ This incident was caused by..."#
         IncidentAttachmentType::INCIDENT_ATTACHMENTS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateIncidentPostmortemAttachment", true);
+    configuration.set_unstable_operation_enabled("v2.create_incident_postmortem_attachment", true);
     let api = IncidentsAPI::with_config(configuration);
     let resp = api
         .create_incident_postmortem_attachment(

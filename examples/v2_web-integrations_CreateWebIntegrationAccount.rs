@@ -23,7 +23,7 @@ async fn main() {
             WebIntegrationAccountType::ACCOUNT,
         ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.CreateWebIntegrationAccount", true);
+    configuration.set_unstable_operation_enabled("v2.create_web_integration_account", true);
     let api = WebIntegrationsAPI::with_config(configuration);
     let resp = api
         .create_web_integration_account("integration_name".to_string(), body)

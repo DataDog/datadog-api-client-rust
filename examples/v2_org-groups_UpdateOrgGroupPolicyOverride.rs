@@ -18,7 +18,7 @@ async fn main() {
         OrgGroupPolicyOverrideType::ORG_GROUP_POLICY_OVERRIDES,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateOrgGroupPolicyOverride", true);
+    configuration.set_unstable_operation_enabled("v2.update_org_group_policy_override", true);
     let api = OrgGroupsAPI::with_config(configuration);
     let resp = api
         .update_org_group_policy_override(

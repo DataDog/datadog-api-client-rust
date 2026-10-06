@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_security_monitoring::SecurityMonitoringAP
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetEntraIdAzureAppRegistrations", true);
+    configuration.set_unstable_operation_enabled("v2.get_entra_id_azure_app_registrations", true);
     let api = SecurityMonitoringAPI::with_config(configuration);
     let resp = api.get_entra_id_azure_app_registrations().await;
     if let Ok(value) = resp {

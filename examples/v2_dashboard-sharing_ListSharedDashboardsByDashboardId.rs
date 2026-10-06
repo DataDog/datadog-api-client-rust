@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_dashboard_sharing::DashboardSharingAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListSharedDashboardsByDashboardId", true);
+    configuration.set_unstable_operation_enabled("v2.list_shared_dashboards_by_dashboard_id", true);
     let api = DashboardSharingAPI::with_config(configuration);
     let resp = api
         .list_shared_dashboards_by_dashboard_id("abc-def-ghi".to_string())

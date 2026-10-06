@@ -6,7 +6,7 @@ use datadog_api_client::datadogV2::api_cloud_cost_management::ListCostTagKeySour
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.ListCostTagKeySources", true);
+    configuration.set_unstable_operation_enabled("v2.list_cost_tag_key_sources", true);
     let api = CloudCostManagementAPI::with_config(configuration);
     let resp = api
         .list_cost_tag_key_sources(

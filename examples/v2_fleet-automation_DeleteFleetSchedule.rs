@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::api_fleet_automation::FleetAutomationAPI;
 #[tokio::main]
 async fn main() {
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.DeleteFleetSchedule", true);
+    configuration.set_unstable_operation_enabled("v2.delete_fleet_schedule", true);
     let api = FleetAutomationAPI::with_config(configuration);
     let resp = api.delete_fleet_schedule("id".to_string()).await;
     if let Ok(value) = resp {

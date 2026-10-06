@@ -8,7 +8,7 @@ async fn main() {
     let annotation_data_attributes_page_id =
         std::env::var("ANNOTATION_DATA_ATTRIBUTES_PAGE_ID").unwrap();
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.GetPageAnnotations", true);
+    configuration.set_unstable_operation_enabled("v2.get_page_annotations", true);
     let api = AnnotationsAPI::with_config(configuration);
     let resp = api
         .get_page_annotations(

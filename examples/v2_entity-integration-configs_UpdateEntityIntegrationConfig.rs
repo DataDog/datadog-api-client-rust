@@ -14,7 +14,7 @@ async fn main() {
         EntityIntegrationConfigRequestType::ENTITY_INTEGRATION_CONFIG_REQUESTS,
     ));
     let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.UpdateEntityIntegrationConfig", true);
+    configuration.set_unstable_operation_enabled("v2.update_entity_integration_config", true);
     let api = EntityIntegrationConfigsAPI::with_config(configuration);
     let resp = api
         .update_entity_integration_config("github".to_string(), body)
