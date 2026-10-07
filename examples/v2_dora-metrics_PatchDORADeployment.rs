@@ -1,4 +1,4 @@
-// Patch a deployment event returns "Accepted" response
+// Mark a deployment as failed by ID returns "Accepted" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
 use datadog_api_client::datadogV2::model::DORADeploymentPatchRemediation;
