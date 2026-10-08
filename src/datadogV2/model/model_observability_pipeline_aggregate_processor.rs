@@ -13,6 +13,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineAggregateProcessor {
+    /// Configures how metrics are assigned to aggregation windows. When omitted, metrics are grouped using system time.
+    #[serde(rename = "aggregation_timing")]
+    pub aggregation_timing:
+        Option<crate::datadogV2::model::ObservabilityPipelineAggregateProcessorAggregationTiming>,
     /// The display name for a component.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
@@ -51,6 +55,7 @@ impl ObservabilityPipelineAggregateProcessor {
         type_: crate::datadogV2::model::ObservabilityPipelineAggregateProcessorType,
     ) -> ObservabilityPipelineAggregateProcessor {
         ObservabilityPipelineAggregateProcessor {
+            aggregation_timing: None,
             display_name: None,
             enabled,
             id,
@@ -61,6 +66,14 @@ impl ObservabilityPipelineAggregateProcessor {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn aggregation_timing(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineAggregateProcessorAggregationTiming,
+    ) -> Self {
+        self.aggregation_timing = Some(value);
+        self
     }
 
     pub fn display_name(mut self, value: String) -> Self {
@@ -94,6 +107,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAggregateProcessor {
             where
                 M: MapAccess<'a>,
             {
+                let mut aggregation_timing: Option<crate::datadogV2::model::ObservabilityPipelineAggregateProcessorAggregationTiming> = None;
                 let mut display_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
@@ -113,6 +127,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAggregateProcessor {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "aggregation_timing" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            aggregation_timing =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "display_name" => {
                             if v.is_null() {
                                 continue;
@@ -171,6 +192,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAggregateProcessor {
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ObservabilityPipelineAggregateProcessor {
+                    aggregation_timing,
                     display_name,
                     enabled,
                     id,
