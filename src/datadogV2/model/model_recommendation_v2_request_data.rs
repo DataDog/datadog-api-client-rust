@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RecommendationV2RequestData {
     /// Attributes for requesting SPA recommendations by forwarding a Spark job's raw arguments
-    /// instead of a precomputed shard.
+    /// instead of a pre-computed shard.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::RecommendationV2RequestAttributes,
     /// JSON:API resource type for the SPA v2 recommendation request.
