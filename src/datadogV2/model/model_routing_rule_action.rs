@@ -14,6 +14,7 @@ pub enum RoutingRuleAction {
     RoutingRuleEscalationPolicyAction(
         Box<crate::datadogV2::model::RoutingRuleEscalationPolicyAction>,
     ),
+    RoutingRuleRerouteToTeamAction(Box<crate::datadogV2::model::RoutingRuleRerouteToTeamAction>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -51,6 +52,14 @@ impl<'de> Deserialize<'de> for RoutingRuleAction {
         {
             if !_v._unparsed {
                 return Ok(RoutingRuleAction::RoutingRuleEscalationPolicyAction(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::RoutingRuleRerouteToTeamAction>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(RoutingRuleAction::RoutingRuleRerouteToTeamAction(_v));
             }
         }
 
