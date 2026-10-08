@@ -6,20 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Represents a user object in the context of a schedule, including their `id`, type, and basic attributes.
+/// Data for creating an on-call schedule override.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ScheduleUser {
-    /// Provides basic user information for a schedule, including a name and email address.
+pub struct CreateOverrideRequestData {
+    /// Attributes for creating an on-call schedule override.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::ScheduleUserAttributes>,
-    /// The unique user identifier.
-    #[serde(rename = "id")]
-    pub id: String,
-    /// Users resource type.
+    pub attributes: crate::datadogV2::model::CreateOverrideRequestAttributes,
+    /// Relationships to set when creating an on-call schedule override.
+    #[serde(rename = "relationships")]
+    pub relationships: Option<crate::datadogV2::model::CreateOverrideRequestRelationships>,
+    /// Indicates that the resource is of type 'overrides'.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ScheduleUserType,
+    pub type_: crate::datadogV2::model::OverrideDataType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,19 +27,25 @@ pub struct ScheduleUser {
     pub(crate) _unparsed: bool,
 }
 
-impl ScheduleUser {
-    pub fn new(id: String, type_: crate::datadogV2::model::ScheduleUserType) -> ScheduleUser {
-        ScheduleUser {
-            attributes: None,
-            id,
+impl CreateOverrideRequestData {
+    pub fn new(
+        attributes: crate::datadogV2::model::CreateOverrideRequestAttributes,
+        type_: crate::datadogV2::model::OverrideDataType,
+    ) -> CreateOverrideRequestData {
+        CreateOverrideRequestData {
+            attributes,
+            relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn attributes(mut self, value: crate::datadogV2::model::ScheduleUserAttributes) -> Self {
-        self.attributes = Some(value);
+    pub fn relationships(
+        mut self,
+        value: crate::datadogV2::model::CreateOverrideRequestRelationships,
+    ) -> Self {
+        self.relationships = Some(value);
         self
     }
 
@@ -52,14 +58,14 @@ impl ScheduleUser {
     }
 }
 
-impl<'de> Deserialize<'de> for ScheduleUser {
+impl<'de> Deserialize<'de> for CreateOverrideRequestData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ScheduleUserVisitor;
-        impl<'a> Visitor<'a> for ScheduleUserVisitor {
-            type Value = ScheduleUser;
+        struct CreateOverrideRequestDataVisitor;
+        impl<'a> Visitor<'a> for CreateOverrideRequestDataVisitor {
+            type Value = CreateOverrideRequestData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -69,9 +75,13 @@ impl<'de> Deserialize<'de> for ScheduleUser {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::ScheduleUserAttributes> = None;
-                let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::ScheduleUserType> = None;
+                let mut attributes: Option<
+                    crate::datadogV2::model::CreateOverrideRequestAttributes,
+                > = None;
+                let mut relationships: Option<
+                    crate::datadogV2::model::CreateOverrideRequestRelationships,
+                > = None;
+                let mut type_: Option<crate::datadogV2::model::OverrideDataType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,19 +91,20 @@ impl<'de> Deserialize<'de> for ScheduleUser {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "relationships" => {
                             if v.is_null() {
                                 continue;
                             }
-                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "id" => {
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            relationships =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::ScheduleUserType::UnparsedObject(
+                                    crate::datadogV2::model::OverrideDataType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -109,12 +120,12 @@ impl<'de> Deserialize<'de> for ScheduleUser {
                         }
                     }
                 }
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ScheduleUser {
+                let content = CreateOverrideRequestData {
                     attributes,
-                    id,
+                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,
@@ -124,6 +135,6 @@ impl<'de> Deserialize<'de> for ScheduleUser {
             }
         }
 
-        deserializer.deserialize_any(ScheduleUserVisitor)
+        deserializer.deserialize_any(CreateOverrideRequestDataVisitor)
     }
 }

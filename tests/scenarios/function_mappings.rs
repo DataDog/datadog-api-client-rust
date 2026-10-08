@@ -7078,6 +7078,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_schedule_on_call_user,
     );
     world.function_mappings.insert(
+        "v2.ListScheduleOverrides".into(),
+        test_v2_list_schedule_overrides,
+    );
+    world.function_mappings.insert(
+        "v2.ListScheduleOverridesWithPagination".into(),
+        test_v2_list_schedule_overrides_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.CreateScheduleOverrides".into(),
+        test_v2_create_schedule_overrides,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteScheduleOverride".into(),
+        test_v2_delete_schedule_override,
+    );
+    world.function_mappings.insert(
         "v2.GetScheduleOnCallResponders".into(),
         test_v2_get_schedule_on_call_responders,
     );
@@ -55222,6 +55238,178 @@ fn test_v2_get_schedule_on_call_user(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_schedule_overrides(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_id =
+        serde_json::from_value(_parameters.get("schedule_id").unwrap().clone()).unwrap();
+    let filter_start =
+        serde_json::from_value(_parameters.get("filter[start]").unwrap().clone()).unwrap();
+    let filter_end =
+        serde_json::from_value(_parameters.get("filter[end]").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::ListScheduleOverridesOptionalParams::default();
+    params.include = include;
+    params.page_size = page_size;
+    params.page_number = page_number;
+    let response = match block_on(api.list_schedule_overrides_with_http_info(
+        schedule_id,
+        filter_start,
+        filter_end,
+        params,
+    )) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_schedule_overrides_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_id =
+        serde_json::from_value(_parameters.get("schedule_id").unwrap().clone()).unwrap();
+    let filter_start =
+        serde_json::from_value(_parameters.get("filter[start]").unwrap().clone()).unwrap();
+    let filter_end =
+        serde_json::from_value(_parameters.get("filter[end]").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::ListScheduleOverridesOptionalParams::default();
+    params.include = include;
+    params.page_size = page_size;
+    params.page_number = page_number;
+    let response =
+        api.list_schedule_overrides_with_pagination(schedule_id, filter_start, filter_end, params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_create_schedule_overrides(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_id =
+        serde_json::from_value(_parameters.get("schedule_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_on_call::CreateScheduleOverridesOptionalParams::default();
+    params.include = include;
+    let response =
+        match block_on(api.create_schedule_overrides_with_http_info(schedule_id, body, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_schedule_override(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_on_call
+        .as_ref()
+        .expect("api instance not found");
+    let schedule_id =
+        serde_json::from_value(_parameters.get("schedule_id").unwrap().clone()).unwrap();
+    let override_id =
+        serde_json::from_value(_parameters.get("override_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_schedule_override_with_http_info(schedule_id, override_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

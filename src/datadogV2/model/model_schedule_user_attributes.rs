@@ -11,6 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScheduleUserAttributes {
+    /// The user's on-call color, as a hex code (for example, `#FF0000`). Included only when `user.color` is requested in the `include` parameter.
+    #[serde(rename = "color")]
+    pub color: Option<String>,
     /// The user's email address.
     #[serde(rename = "email")]
     pub email: Option<String>,
@@ -30,12 +33,18 @@ pub struct ScheduleUserAttributes {
 impl ScheduleUserAttributes {
     pub fn new() -> ScheduleUserAttributes {
         ScheduleUserAttributes {
+            color: None,
             email: None,
             name: None,
             status: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn color(mut self, value: String) -> Self {
+        self.color = Some(value);
+        self
     }
 
     pub fn email(mut self, value: String) -> Self {
@@ -85,6 +94,7 @@ impl<'de> Deserialize<'de> for ScheduleUserAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut color: Option<String> = None;
                 let mut email: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut status: Option<crate::datadogV2::model::UserAttributesStatus> = None;
@@ -96,6 +106,12 @@ impl<'de> Deserialize<'de> for ScheduleUserAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "color" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            color = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "email" => {
                             if v.is_null() {
                                 continue;
@@ -131,6 +147,7 @@ impl<'de> Deserialize<'de> for ScheduleUserAttributes {
                 }
 
                 let content = ScheduleUserAttributes {
+                    color,
                     email,
                     name,
                     status,
