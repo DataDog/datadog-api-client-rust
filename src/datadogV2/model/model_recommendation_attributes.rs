@@ -20,6 +20,10 @@ pub struct RecommendationAttributes {
     /// Resource recommendation for a single Spark component (driver or executor). Contains estimation data used to patch Spark job specs.
     #[serde(rename = "executor")]
     pub executor: crate::datadogV2::model::ComponentRecommendation,
+    /// Only returned by the v2 endpoint. The job parameters whose values the recommendation was matched on, as `parameter=value` pairs joined by `|`.
+    /// An empty string means the service-wide (coarse) recommendation was used.
+    #[serde(rename = "matched_params")]
+    pub matched_params: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -36,6 +40,7 @@ impl RecommendationAttributes {
             confidence_level: None,
             driver,
             executor,
+            matched_params: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -43,6 +48,11 @@ impl RecommendationAttributes {
 
     pub fn confidence_level(mut self, value: f64) -> Self {
         self.confidence_level = Some(value);
+        self
+    }
+
+    pub fn matched_params(mut self, value: String) -> Self {
+        self.matched_params = Some(value);
         self
     }
 
@@ -75,6 +85,7 @@ impl<'de> Deserialize<'de> for RecommendationAttributes {
                 let mut confidence_level: Option<f64> = None;
                 let mut driver: Option<crate::datadogV2::model::ComponentRecommendation> = None;
                 let mut executor: Option<crate::datadogV2::model::ComponentRecommendation> = None;
+                let mut matched_params: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -96,6 +107,13 @@ impl<'de> Deserialize<'de> for RecommendationAttributes {
                         "executor" => {
                             executor = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "matched_params" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            matched_params =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -110,6 +128,7 @@ impl<'de> Deserialize<'de> for RecommendationAttributes {
                     confidence_level,
                     driver,
                     executor,
+                    matched_params,
                     additional_properties,
                     _unparsed,
                 };

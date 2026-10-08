@@ -7,7 +7,7 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// Request body for retrieving SPA recommendations by forwarding a Spark job's raw arguments
-/// instead of a precomputed shard.
+/// instead of a pre-computed shard.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
