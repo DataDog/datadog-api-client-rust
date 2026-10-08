@@ -23,8 +23,7 @@ async fn main() {
         ),
         TriggerInvestigationRequestType::TRIGGER_INVESTIGATION_REQUEST,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.trigger_investigation", true);
+    let configuration = datadog::Configuration::new();
     let api = BitsAIAPI::with_config(configuration);
     let resp = api.trigger_investigation(body).await;
     if let Ok(value) = resp {

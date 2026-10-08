@@ -8,7 +8,6 @@ use flate2::{
     Compression,
 };
 use futures_core::stream::Stream;
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -176,14 +175,6 @@ impl BitsAIAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_investigation";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_investigation' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -329,14 +320,6 @@ impl BitsAIAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_investigations";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_investigations' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let page_offset = params.page_offset;
@@ -432,7 +415,8 @@ impl BitsAIAPI {
     }
 
     /// Trigger a Bits AI investigation from a monitor alert or a general investigation.
-    /// The `monitors_read` permission is required when the trigger type is `monitor_alert_trigger`.
+    /// This endpoint requires the `bits_investigations_write` permission. When the trigger type is
+    /// `monitor_alert_trigger`, the `monitors_read` permission is also required.
     pub async fn trigger_investigation(
         &self,
         body: crate::datadogV2::model::TriggerInvestigationRequest,
@@ -455,7 +439,8 @@ impl BitsAIAPI {
     }
 
     /// Trigger a Bits AI investigation from a monitor alert or a general investigation.
-    /// The `monitors_read` permission is required when the trigger type is `monitor_alert_trigger`.
+    /// This endpoint requires the `bits_investigations_write` permission. When the trigger type is
+    /// `monitor_alert_trigger`, the `monitors_read` permission is also required.
     pub async fn trigger_investigation_with_http_info(
         &self,
         body: crate::datadogV2::model::TriggerInvestigationRequest,
@@ -465,14 +450,6 @@ impl BitsAIAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.trigger_investigation";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.trigger_investigation' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
