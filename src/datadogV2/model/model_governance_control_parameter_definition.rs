@@ -11,9 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct GovernanceControlParameterDefinition {
-    /// The default value of the parameter. The JSON type depends on the parameter's `type`.
+    /// The default value of the parameter. The JSON type depends on the parameter's `type`. `null` when the parameter has no default.
+    #[serialize_always]
     #[serde(rename = "default_value")]
-    pub default_value: serde_json::Value,
+    pub default_value: Option<serde_json::Value>,
     /// A human-readable description of the parameter.
     #[serde(rename = "description")]
     pub description: String,
@@ -42,7 +43,7 @@ pub struct GovernanceControlParameterDefinition {
 
 impl GovernanceControlParameterDefinition {
     pub fn new(
-        default_value: serde_json::Value,
+        default_value: Option<serde_json::Value>,
         description: String,
         display_name: String,
         name: String,
@@ -89,7 +90,7 @@ impl<'de> Deserialize<'de> for GovernanceControlParameterDefinition {
             where
                 M: MapAccess<'a>,
             {
-                let mut default_value: Option<serde_json::Value> = None;
+                let mut default_value: Option<Option<serde_json::Value>> = None;
                 let mut description: Option<String> = None;
                 let mut display_name: Option<String> = None;
                 let mut name: Option<String> = None;
