@@ -5056,6 +5056,22 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_create_deployment_gate,
     );
     world.function_mappings.insert(
+        "v2.ListDeploymentGateEvaluations".into(),
+        test_v2_list_deployment_gate_evaluations,
+    );
+    world.function_mappings.insert(
+        "v2.ListDeploymentGateEvaluationsWithPagination".into(),
+        test_v2_list_deployment_gate_evaluations_with_pagination,
+    );
+    world.function_mappings.insert(
+        "v2.ListDeploymentRuleEvaluations".into(),
+        test_v2_list_deployment_rule_evaluations,
+    );
+    world.function_mappings.insert(
+        "v2.ListDeploymentRuleEvaluationsWithPagination".into(),
+        test_v2_list_deployment_rule_evaluations_with_pagination,
+    );
+    world.function_mappings.insert(
         "v2.GetDeploymentGateRules".into(),
         test_v2_get_deployment_gate_rules,
     );
@@ -38488,6 +38504,18 @@ fn test_v2_list_deployment_gates(world: &mut DatadogWorld, _parameters: &HashMap
         .v2_api_deployment_gates
         .as_ref()
         .expect("api instance not found");
+    let filter_service = _parameters
+        .get("filter[service]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_env = _parameters
+        .get("filter[env]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_identifier = _parameters
+        .get("filter[identifier]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_dry_run = _parameters
+        .get("filter[dry_run]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let page_cursor = _parameters
         .get("page[cursor]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -38495,6 +38523,10 @@ fn test_v2_list_deployment_gates(world: &mut DatadogWorld, _parameters: &HashMap
         .get("page[size]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_deployment_gates::ListDeploymentGatesOptionalParams::default();
+    params.filter_service = filter_service;
+    params.filter_env = filter_env;
+    params.filter_identifier = filter_identifier;
+    params.filter_dry_run = filter_dry_run;
     params.page_cursor = page_cursor;
     params.page_size = page_size;
     let response = match block_on(api.list_deployment_gates_with_http_info(params)) {
@@ -38538,6 +38570,372 @@ fn test_v2_create_deployment_gate(world: &mut DatadogWorld, _parameters: &HashMa
     };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_deployment_gate_evaluations(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let filter_from = _parameters
+        .get("filter[from]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to = _parameters
+        .get("filter[to]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_service = _parameters
+        .get("filter[service]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_env = _parameters
+        .get("filter[env]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_identifier = _parameters
+        .get("filter[identifier]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_dry_run = _parameters
+        .get("filter[dry_run]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_evaluation_id = _parameters
+        .get("filter[evaluation_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_gate_id = _parameters
+        .get("filter[gate_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_version = _parameters
+        .get("filter[version]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_deployment_gates::ListDeploymentGateEvaluationsOptionalParams::default();
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.filter_service = filter_service;
+    params.filter_env = filter_env;
+    params.filter_identifier = filter_identifier;
+    params.filter_status = filter_status;
+    params.filter_dry_run = filter_dry_run;
+    params.filter_evaluation_id = filter_evaluation_id;
+    params.filter_gate_id = filter_gate_id;
+    params.filter_version = filter_version;
+    params.page_size = page_size;
+    params.page_cursor = page_cursor;
+    let response = match block_on(api.list_deployment_gate_evaluations_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_deployment_gate_evaluations_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let filter_from = _parameters
+        .get("filter[from]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to = _parameters
+        .get("filter[to]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_service = _parameters
+        .get("filter[service]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_env = _parameters
+        .get("filter[env]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_identifier = _parameters
+        .get("filter[identifier]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_dry_run = _parameters
+        .get("filter[dry_run]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_evaluation_id = _parameters
+        .get("filter[evaluation_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_gate_id = _parameters
+        .get("filter[gate_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_version = _parameters
+        .get("filter[version]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_deployment_gates::ListDeploymentGateEvaluationsOptionalParams::default();
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.filter_service = filter_service;
+    params.filter_env = filter_env;
+    params.filter_identifier = filter_identifier;
+    params.filter_status = filter_status;
+    params.filter_dry_run = filter_dry_run;
+    params.filter_evaluation_id = filter_evaluation_id;
+    params.filter_gate_id = filter_gate_id;
+    params.filter_version = filter_version;
+    params.page_size = page_size;
+    params.page_cursor = page_cursor;
+    let response = api.list_deployment_gate_evaluations_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
+
+fn test_v2_list_deployment_rule_evaluations(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let filter_from = _parameters
+        .get("filter[from]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to = _parameters
+        .get("filter[to]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_gate_evaluation_id = _parameters
+        .get("filter[gate_evaluation_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_evaluation_id = _parameters
+        .get("filter[evaluation_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_gate_id = _parameters
+        .get("filter[gate_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_id = _parameters
+        .get("filter[rule_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_service = _parameters
+        .get("filter[service]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_env = _parameters
+        .get("filter[env]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_identifier = _parameters
+        .get("filter[identifier]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_version = _parameters
+        .get("filter[version]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_type = _parameters
+        .get("filter[type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_dry_run = _parameters
+        .get("filter[dry_run]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_gate_dry_run = _parameters
+        .get("filter[gate_dry_run]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_name = _parameters
+        .get("filter[name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_deployment_gates::ListDeploymentRuleEvaluationsOptionalParams::default();
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.filter_gate_evaluation_id = filter_gate_evaluation_id;
+    params.filter_evaluation_id = filter_evaluation_id;
+    params.filter_gate_id = filter_gate_id;
+    params.filter_rule_id = filter_rule_id;
+    params.filter_service = filter_service;
+    params.filter_env = filter_env;
+    params.filter_identifier = filter_identifier;
+    params.filter_version = filter_version;
+    params.filter_status = filter_status;
+    params.filter_type = filter_type;
+    params.filter_dry_run = filter_dry_run;
+    params.filter_gate_dry_run = filter_gate_dry_run;
+    params.filter_name = filter_name;
+    params.page_size = page_size;
+    params.page_cursor = page_cursor;
+    let response = match block_on(api.list_deployment_rule_evaluations_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_deployment_rule_evaluations_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_deployment_gates
+        .as_ref()
+        .expect("api instance not found");
+    let filter_from = _parameters
+        .get("filter[from]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_to = _parameters
+        .get("filter[to]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_gate_evaluation_id = _parameters
+        .get("filter[gate_evaluation_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_evaluation_id = _parameters
+        .get("filter[evaluation_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_gate_id = _parameters
+        .get("filter[gate_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rule_id = _parameters
+        .get("filter[rule_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_service = _parameters
+        .get("filter[service]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_env = _parameters
+        .get("filter[env]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_identifier = _parameters
+        .get("filter[identifier]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_version = _parameters
+        .get("filter[version]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_status = _parameters
+        .get("filter[status]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_type = _parameters
+        .get("filter[type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_dry_run = _parameters
+        .get("filter[dry_run]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_gate_dry_run = _parameters
+        .get("filter[gate_dry_run]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_name = _parameters
+        .get("filter[name]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_deployment_gates::ListDeploymentRuleEvaluationsOptionalParams::default();
+    params.filter_from = filter_from;
+    params.filter_to = filter_to;
+    params.filter_gate_evaluation_id = filter_gate_evaluation_id;
+    params.filter_evaluation_id = filter_evaluation_id;
+    params.filter_gate_id = filter_gate_id;
+    params.filter_rule_id = filter_rule_id;
+    params.filter_service = filter_service;
+    params.filter_env = filter_env;
+    params.filter_identifier = filter_identifier;
+    params.filter_version = filter_version;
+    params.filter_status = filter_status;
+    params.filter_type = filter_type;
+    params.filter_dry_run = filter_dry_run;
+    params.filter_gate_dry_run = filter_gate_dry_run;
+    params.filter_name = filter_name;
+    params.page_size = page_size;
+    params.page_cursor = page_cursor;
+    let response = api.list_deployment_rule_evaluations_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
 }
 
 fn test_v2_get_deployment_gate_rules(
