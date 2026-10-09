@@ -14278,6 +14278,8 @@ pub mod model_sourcemap_file_attributes;
 pub use self::model_sourcemap_file_attributes::SourcemapFileAttributes;
 pub mod model_sourcemap_file_data_type;
 pub use self::model_sourcemap_file_data_type::SourcemapFileDataType;
+pub mod model_sourcemap_search_by;
+pub use self::model_sourcemap_search_by::SourcemapSearchBy;
 pub mod model_list_sourcemaps_response;
 pub use self::model_list_sourcemaps_response::ListSourcemapsResponse;
 pub mod model_sourcemaps_list_meta;

@@ -14,7 +14,14 @@ pub struct SourcemapsListMetaPage {
     /// Whether there are more results available beyond the current page.
     #[serde(rename = "has_more_results")]
     pub has_more_results: bool,
-    /// Total number of source maps matching the filter criteria.
+    /// Cursor for the next page of a JavaScript cursor-based listing. Pass
+    /// this value as `page[after]` with the same search mode and filters.
+    /// Only returned when another page is available.
+    #[serde(rename = "next_cursor")]
+    pub next_cursor: Option<String>,
+    /// Total number of matching source maps for legacy page-number pagination.
+    /// Cursor-based listings do not compute a total; this field may be zero
+    /// even when records are returned. Use `has_more_results` to continue.
     #[serde(rename = "total_filtered_count")]
     pub total_filtered_count: i64,
     #[serde(flatten)]
@@ -28,10 +35,16 @@ impl SourcemapsListMetaPage {
     pub fn new(has_more_results: bool, total_filtered_count: i64) -> SourcemapsListMetaPage {
         SourcemapsListMetaPage {
             has_more_results,
+            next_cursor: None,
             total_filtered_count,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn next_cursor(mut self, value: String) -> Self {
+        self.next_cursor = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -61,6 +74,7 @@ impl<'de> Deserialize<'de> for SourcemapsListMetaPage {
                 M: MapAccess<'a>,
             {
                 let mut has_more_results: Option<bool> = None;
+                let mut next_cursor: Option<String> = None;
                 let mut total_filtered_count: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -72,6 +86,13 @@ impl<'de> Deserialize<'de> for SourcemapsListMetaPage {
                     match k.as_str() {
                         "has_more_results" => {
                             has_more_results =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "next_cursor" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            next_cursor =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "total_filtered_count" => {
@@ -92,6 +113,7 @@ impl<'de> Deserialize<'de> for SourcemapsListMetaPage {
 
                 let content = SourcemapsListMetaPage {
                     has_more_results,
+                    next_cursor,
                     total_filtered_count,
                     additional_properties,
                     _unparsed,

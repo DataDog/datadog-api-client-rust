@@ -61023,8 +61023,14 @@ fn test_v2_list_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .v2_api_rum
         .as_ref()
         .expect("api instance not found");
+    let search_by = _parameters
+        .get("search_by")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mapkind = _parameters
         .get("mapkind")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_after = _parameters
+        .get("page[after]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let page_size = _parameters
         .get("page[size]")
@@ -61087,7 +61093,9 @@ fn test_v2_list_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<Strin
         .get("filter[file_hash]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_rum::ListSourcemapsOptionalParams::default();
+    params.search_by = search_by;
     params.mapkind = mapkind;
+    params.page_after = page_after;
     params.page_size = page_size;
     params.page_number = page_number;
     params.filter_service = filter_service;
