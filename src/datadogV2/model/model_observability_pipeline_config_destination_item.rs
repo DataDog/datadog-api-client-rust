@@ -27,6 +27,9 @@ pub enum ObservabilityPipelineConfigDestinationItem {
         Box<crate::datadogV2::model::ObservabilityPipelineAmazonSecurityLakeDestination>,
     ),
     AzureStorageDestination(Box<crate::datadogV2::model::AzureStorageDestination>),
+    ObservabilityPipelineAzureDataExplorerDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestination>,
+    ),
     ObservabilityPipelineClickhouseDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineClickhouseDestination>,
     ),
@@ -154,6 +157,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigDestinationItem::AzureStorageDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineAzureDataExplorerDestination(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
