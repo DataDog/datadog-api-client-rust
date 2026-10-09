@@ -6,14 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for bulk updating org group memberships.
+/// A resource identifier for an org group membership to delete.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct OrgGroupMembershipBulkUpdateAttributes {
-    /// List of organizations to move. Between 1 and 100 per request. Each `org_uuid` and `org_site` pair must be unique.
-    #[serde(rename = "orgs")]
-    pub orgs: Vec<crate::datadogV2::model::GlobalOrgIdentifier>,
+pub struct OrgGroupMembershipBulkDeleteRequestData {
+    /// The ID of the org group membership.
+    #[serde(rename = "id")]
+    pub id: uuid::Uuid,
+    /// Org group memberships resource type.
+    #[serde(rename = "type")]
+    pub type_: crate::datadogV2::model::OrgGroupMembershipType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,12 +24,14 @@ pub struct OrgGroupMembershipBulkUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl OrgGroupMembershipBulkUpdateAttributes {
+impl OrgGroupMembershipBulkDeleteRequestData {
     pub fn new(
-        orgs: Vec<crate::datadogV2::model::GlobalOrgIdentifier>,
-    ) -> OrgGroupMembershipBulkUpdateAttributes {
-        OrgGroupMembershipBulkUpdateAttributes {
-            orgs,
+        id: uuid::Uuid,
+        type_: crate::datadogV2::model::OrgGroupMembershipType,
+    ) -> OrgGroupMembershipBulkDeleteRequestData {
+        OrgGroupMembershipBulkDeleteRequestData {
+            id,
+            type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -41,14 +46,14 @@ impl OrgGroupMembershipBulkUpdateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
+impl<'de> Deserialize<'de> for OrgGroupMembershipBulkDeleteRequestData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct OrgGroupMembershipBulkUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for OrgGroupMembershipBulkUpdateAttributesVisitor {
-            type Value = OrgGroupMembershipBulkUpdateAttributes;
+        struct OrgGroupMembershipBulkDeleteRequestDataVisitor;
+        impl<'a> Visitor<'a> for OrgGroupMembershipBulkDeleteRequestDataVisitor {
+            type Value = OrgGroupMembershipBulkDeleteRequestData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +63,8 @@ impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut orgs: Option<Vec<crate::datadogV2::model::GlobalOrgIdentifier>> = None;
+                let mut id: Option<uuid::Uuid> = None;
+                let mut type_: Option<crate::datadogV2::model::OrgGroupMembershipType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -67,8 +73,19 @@ impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "orgs" => {
-                            orgs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "id" => {
+                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "type" => {
+                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _type_) = type_ {
+                                match _type_ {
+                                    crate::datadogV2::model::OrgGroupMembershipType::UnparsedObject(_type_) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -77,10 +94,12 @@ impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
                         }
                     }
                 }
-                let orgs = orgs.ok_or_else(|| M::Error::missing_field("orgs"))?;
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
+                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = OrgGroupMembershipBulkUpdateAttributes {
-                    orgs,
+                let content = OrgGroupMembershipBulkDeleteRequestData {
+                    id,
+                    type_,
                     additional_properties,
                     _unparsed,
                 };
@@ -89,6 +108,6 @@ impl<'de> Deserialize<'de> for OrgGroupMembershipBulkUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(OrgGroupMembershipBulkUpdateAttributesVisitor)
+        deserializer.deserialize_any(OrgGroupMembershipBulkDeleteRequestDataVisitor)
     }
 }

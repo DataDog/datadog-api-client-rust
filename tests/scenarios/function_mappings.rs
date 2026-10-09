@@ -7238,8 +7238,20 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_org_group_memberships,
     );
     world.function_mappings.insert(
+        "v2.CreateOrgGroupMemberships".into(),
+        test_v2_create_org_group_memberships,
+    );
+    world.function_mappings.insert(
         "v2.BulkUpdateOrgGroupMemberships".into(),
         test_v2_bulk_update_org_group_memberships,
+    );
+    world.function_mappings.insert(
+        "v2.BulkDeleteOrgGroupMemberships".into(),
+        test_v2_bulk_delete_org_group_memberships,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteOrgGroupMembership".into(),
+        test_v2_delete_org_group_membership,
     );
     world.function_mappings.insert(
         "v2.GetOrgGroupMembership".into(),
@@ -56695,6 +56707,34 @@ fn test_v2_list_org_group_memberships(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_create_org_group_memberships(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_groups
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_org_group_memberships_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_bulk_update_org_group_memberships(
     world: &mut DatadogWorld,
     _parameters: &HashMap<String, Value>,
@@ -56719,6 +56759,74 @@ fn test_v2_bulk_update_org_group_memberships(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_bulk_delete_org_group_memberships(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_groups
+        .as_ref()
+        .expect("api instance not found");
+    let filter_org_group_id =
+        serde_json::from_value(_parameters.get("filter[org_group_id]").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.bulk_delete_org_group_memberships_with_http_info(filter_org_group_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_org_group_membership(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_org_groups
+        .as_ref()
+        .expect("api instance not found");
+    let org_group_membership_id =
+        serde_json::from_value(_parameters.get("org_group_membership_id").unwrap().clone())
+            .unwrap();
+    let filter_org_group_id =
+        serde_json::from_value(_parameters.get("filter[org_group_id]").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.delete_org_group_membership_with_http_info(
+            org_group_membership_id,
+            filter_org_group_id,
+        )) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
