@@ -14,7 +14,7 @@ async fn main() {
         CloudWorkloadSecurityAgentPolicyUpdateData::new(
             CloudWorkloadSecurityAgentPolicyUpdateAttributes::new()
                 .description("Updated agent policy".to_string())
-                .enabled(true)
+                .enabled(false)
                 .host_tags_lists(vec![vec!["env:test".to_string()]])
                 .name("updated_agent_policy".to_string()),
             CloudWorkloadSecurityAgentPolicyType::POLICY,
