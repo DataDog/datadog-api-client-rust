@@ -20,6 +20,12 @@ pub struct SecurityMonitoringStandardRuleQuery {
     /// Source of events, either logs, audit trail, security signals, or Datadog events. `app_sec_spans` is deprecated in favor of `spans`.
     #[serde(rename = "dataSource")]
     pub data_source: Option<crate::datadogV2::model::SecurityMonitoringStandardDataSource>,
+    /// IDs of the datasets queried by the rule. Only used when `queryLanguage` is `sql`.
+    #[serde(rename = "datasetIds")]
+    pub dataset_ids: Option<Vec<String>>,
+    /// Version of each dataset used by the rule, keyed by dataset ID. Only used when `queryLanguage` is `sql`.
+    #[serde(rename = "datasetVersions")]
+    pub dataset_versions: Option<std::collections::BTreeMap<String, i64>>,
     /// Field for which the cardinality is measured. Sent as an array.
     #[serde(rename = "distinctFields")]
     pub distinct_fields: Option<Vec<String>>,
@@ -50,6 +56,9 @@ pub struct SecurityMonitoringStandardRuleQuery {
     /// Query to run on logs.
     #[serde(rename = "query")]
     pub query: Option<String>,
+    /// Language of the query. Use `sql` for SQL-based rules over datasets. Defaults to `event_query`.
+    #[serde(rename = "queryLanguage")]
+    pub query_language: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -64,6 +73,8 @@ impl SecurityMonitoringStandardRuleQuery {
             aggregation: None,
             custom_query_extension: None,
             data_source: None,
+            dataset_ids: None,
+            dataset_versions: None,
             distinct_fields: None,
             group_by_fields: None,
             has_optional_group_by_fields: None,
@@ -73,6 +84,7 @@ impl SecurityMonitoringStandardRuleQuery {
             metrics: None,
             name: None,
             query: None,
+            query_language: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -99,6 +111,18 @@ impl SecurityMonitoringStandardRuleQuery {
         value: crate::datadogV2::model::SecurityMonitoringStandardDataSource,
     ) -> Self {
         self.data_source = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn dataset_ids(mut self, value: Vec<String>) -> Self {
+        self.dataset_ids = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn dataset_versions(mut self, value: std::collections::BTreeMap<String, i64>) -> Self {
+        self.dataset_versions = Some(value);
         self
     }
 
@@ -156,6 +180,12 @@ impl SecurityMonitoringStandardRuleQuery {
         self
     }
 
+    #[allow(deprecated)]
+    pub fn query_language(mut self, value: String) -> Self {
+        self.query_language = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -195,6 +225,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                 let mut data_source: Option<
                     crate::datadogV2::model::SecurityMonitoringStandardDataSource,
                 > = None;
+                let mut dataset_ids: Option<Vec<String>> = None;
+                let mut dataset_versions: Option<std::collections::BTreeMap<String, i64>> = None;
                 let mut distinct_fields: Option<Vec<String>> = None;
                 let mut group_by_fields: Option<Vec<String>> = None;
                 let mut has_optional_group_by_fields: Option<bool> = None;
@@ -204,6 +236,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                 let mut metrics: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
+                let mut query_language: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -248,6 +281,20 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                                     _ => {}
                                 }
                             }
+                        }
+                        "datasetIds" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dataset_ids =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "datasetVersions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dataset_versions =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "distinctFields" => {
                             if v.is_null() {
@@ -306,6 +353,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "queryLanguage" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            query_language =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -319,6 +373,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                     aggregation,
                     custom_query_extension,
                     data_source,
+                    dataset_ids,
+                    dataset_versions,
                     distinct_fields,
                     group_by_fields,
                     has_optional_group_by_fields,
@@ -328,6 +384,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                     metrics,
                     name,
                     query,
+                    query_language,
                     additional_properties,
                     _unparsed,
                 };
