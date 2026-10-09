@@ -520,6 +520,7 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.update_findings_assignee".to_owned(), false),
+            ("v2.update_findings_severity".to_owned(), false),
             (
                 "v2.update_security_findings_automation_due_date_rule".to_owned(),
                 false,
