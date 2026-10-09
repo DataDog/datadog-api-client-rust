@@ -11,8 +11,9 @@ async fn main() {
     let body = UsageQuotaUpdateRequest::new(UsageQuotaUpdateData::new(
         UsageQuotaUpdateAttributes::new()
             .enforced(Some(false))
+            .pending_usage_limit(Some(50000))
             .usage_limit(Some(120000)),
-        "MjAfYWlfY3JlZGl0c1911c2VyX2hhbmRsZTpfX0FMTF9f".to_string(),
+        "MTIzNB9haV9jcmVkaXRzH3VzZXJfaGFuZGxlOl9fQUxMX18".to_string(),
         UsageQuotaType::QUOTAS,
     ));
     let mut configuration = datadog::Configuration::new();
@@ -21,7 +22,7 @@ async fn main() {
     let resp = api
         .update_quota(
             "ai_credits".to_string(),
-            "MjAfYWlfY3JlZGl0c1911c2VyX2hhbmRsZTpfX0FMTF9f".to_string(),
+            "MTIzNB9haV9jcmVkaXRzH3VzZXJfaGFuZGxlOl9fQUxMX18".to_string(),
             body,
         )
         .await;

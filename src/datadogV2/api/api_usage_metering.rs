@@ -387,6 +387,15 @@ pub enum CreateQuotasError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeletePendingQuotaError is a struct for typed errors of method [`UsageMeteringAPI::delete_pending_quota`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeletePendingQuotaError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteQuotaError is a struct for typed errors of method [`UsageMeteringAPI::delete_quota`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -601,7 +610,11 @@ impl UsageMeteringAPI {
         Self { config, client }
     }
 
-    /// Creates or updates one or more usage quotas by scope. If a quota already exists for a supplied scope, it is updated; otherwise, a new quota is created. Requires the `billing_edit` permission.
+    /// Creates or updates one or more usage quotas by scope. If a quota already exists for a supplied scope, it is updated.
+    /// Otherwise, a quota is created only when `usage_limit` and `enforced` are provided.
+    /// For the organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period and can
+    /// accompany an immediate limit or update an existing quota by itself.
+    /// Scheduled changes follow `include_descendants` like the other fields. Requires the `billing_edit` permission.
     pub async fn create_quotas(
         &self,
         quota_namespace: String,
@@ -626,7 +639,11 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Creates or updates one or more usage quotas by scope. If a quota already exists for a supplied scope, it is updated; otherwise, a new quota is created. Requires the `billing_edit` permission.
+    /// Creates or updates one or more usage quotas by scope. If a quota already exists for a supplied scope, it is updated.
+    /// Otherwise, a quota is created only when `usage_limit` and `enforced` are provided.
+    /// For the organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period and can
+    /// accompany an immediate limit or update an existing quota by itself.
+    /// Scheduled changes follow `include_descendants` like the other fields. Requires the `billing_edit` permission.
     pub async fn create_quotas_with_http_info(
         &self,
         quota_namespace: String,
@@ -768,6 +785,108 @@ impl UsageMeteringAPI {
             };
         } else {
             let local_entity: Option<CreateQuotasError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Cancels the limit change scheduled to take effect at the start of the next usage period, leaving the usage quota and its current limit unchanged. Returns `404` when the quota does not exist, has no scheduled change, or its scheduled change has already taken effect; in every case the quota is left unchanged. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
+    pub async fn delete_pending_quota(
+        &self,
+        quota_namespace: String,
+        id: String,
+    ) -> Result<(), datadog::Error<DeletePendingQuotaError>> {
+        match self
+            .delete_pending_quota_with_http_info(quota_namespace, id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Cancels the limit change scheduled to take effect at the start of the next usage period, leaving the usage quota and its current limit unchanged. Returns `404` when the quota does not exist, has no scheduled change, or its scheduled change has already taken effect; in every case the quota is left unchanged. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
+    pub async fn delete_pending_quota_with_http_info(
+        &self,
+        quota_namespace: String,
+        id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeletePendingQuotaError>> {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_pending_quota";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_pending_quota' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/quotas/{quota_namespace}/{id}/pending",
+            local_configuration.get_operation_host(local_operation_id),
+            quota_namespace = datadog::urlencode(quota_namespace),
+            id = datadog::urlencode(id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeletePendingQuotaError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -2926,7 +3045,7 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Updates the supplied fields on a usage quota and leaves omitted fields unchanged. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
+    /// Updates the supplied fields on a usage quota and leaves omitted fields unchanged. For an organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
     pub async fn update_quota(
         &self,
         quota_namespace: String,
@@ -2950,7 +3069,7 @@ impl UsageMeteringAPI {
         }
     }
 
-    /// Updates the supplied fields on a usage quota and leaves omitted fields unchanged. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
+    /// Updates the supplied fields on a usage quota and leaves omitted fields unchanged. For an organization-wide quota, `pending_usage_limit` schedules a limit for the next usage period. The quota must belong to the caller's organization or one of its descendants, and its opaque identifier must belong to the requested quota namespace. Requires the `billing_edit` permission.
     pub async fn update_quota_with_http_info(
         &self,
         quota_namespace: String,

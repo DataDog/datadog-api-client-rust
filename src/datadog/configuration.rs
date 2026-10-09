@@ -584,6 +584,7 @@ impl Default for Configuration {
             ("v2.search_cost_recommendations".to_owned(), false),
             ("v2.update_unit_cost".to_owned(), false),
             ("v2.create_quotas".to_owned(), false),
+            ("v2.delete_pending_quota".to_owned(), false),
             ("v2.delete_quota".to_owned(), false),
             ("v2.list_quotas".to_owned(), false),
             ("v2.update_quota".to_owned(), false),
