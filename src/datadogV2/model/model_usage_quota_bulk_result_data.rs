@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageQuotaBulkResultData {
-    /// Attributes of a usage quota bulk write result. On success, all fields except `error` are present. On failure, only `error` is present and the other fields are omitted.
+    /// Attributes of a usage quota bulk write result. On success, quota fields are present as applicable, and pending fields are present only when a change is scheduled. On failure, only `error` is present and the other fields are omitted.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::UsageQuotaBulkResultAttributes,
     /// An opaque usage quota identifier. Clients must pass this value back verbatim in update and delete requests and must not infer any structure from it.
