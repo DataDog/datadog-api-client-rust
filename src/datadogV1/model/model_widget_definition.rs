@@ -25,6 +25,7 @@ pub enum WidgetDefinition {
     ),
     GeomapWidgetDefinition(Box<crate::datadogV1::model::GeomapWidgetDefinition>),
     GroupWidgetDefinition(Box<crate::datadogV1::model::GroupWidgetDefinition>),
+    HeatgridWidgetDefinition(Box<crate::datadogV1::model::HeatgridWidgetDefinition>),
     HeatMapWidgetDefinition(Box<crate::datadogV1::model::HeatMapWidgetDefinition>),
     HostMapWidgetDefinition(Box<crate::datadogV1::model::HostMapWidgetDefinition>),
     IFrameWidgetDefinition(Box<crate::datadogV1::model::IFrameWidgetDefinition>),
@@ -174,6 +175,14 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         ) {
             if !_v._unparsed {
                 return Ok(WidgetDefinition::GroupWidgetDefinition(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV1::model::HeatgridWidgetDefinition>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(WidgetDefinition::HeatgridWidgetDefinition(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
