@@ -1,4 +1,4 @@
-// List all teams returns "OK" response
+// Get all teams returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_teams::ListTeamsOptionalParams;
 use datadog_api_client::datadogV2::api_teams::TeamsAPI;
