@@ -1,4 +1,4 @@
-// Create a Workload Protection policy returns "OK" response
+// Create a Workload Protection policy returns "Created" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_csm_threats::CSMThreatsAPI;
 use datadog_api_client::datadogV2::model::CloudWorkloadSecurityAgentPolicyCreateAttributes;
@@ -12,7 +12,7 @@ async fn main() {
         CloudWorkloadSecurityAgentPolicyCreateData::new(
             CloudWorkloadSecurityAgentPolicyCreateAttributes::new("my_agent_policy_2".to_string())
                 .description("My agent policy".to_string())
-                .enabled(true)
+                .enabled(false)
                 .host_tags_lists(vec![vec!["env:test".to_string()]]),
             CloudWorkloadSecurityAgentPolicyType::POLICY,
         ),
