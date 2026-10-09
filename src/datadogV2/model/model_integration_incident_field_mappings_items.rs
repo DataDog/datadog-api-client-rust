@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Mapping between an incident user-defined field and a case field.
+/// Mapping between an incident user-defined field and a work item field.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationIncidentFieldMappingsItems {
-    /// The case field to map the incident field value to.
+    /// The work item field to map the incident field value to.
     #[serde(rename = "case_field")]
     pub case_field: Option<String>,
     /// The identifier of the incident user-defined field to map from.

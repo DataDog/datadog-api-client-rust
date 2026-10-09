@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProjectCreateAttributes {
-    /// List of enabled custom case type IDs.
+    /// List of enabled custom work item type IDs.
     #[serde(rename = "enabled_custom_case_types")]
     pub enabled_custom_case_types: Option<Vec<String>>,
     /// Project's key. Cannot be "CASE".

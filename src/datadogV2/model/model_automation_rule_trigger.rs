@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Defines when the rule activates. Combines a trigger type (the case event to listen for) with optional trigger data (conditions that narrow when the trigger fires).
+/// Defines when the rule activates. Combines a trigger type (the work item event to listen for) with optional trigger data (conditions that narrow when the trigger fires).
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +14,7 @@ pub struct AutomationRuleTrigger {
     /// Additional configuration for the trigger, dependent on the trigger type. For `STATUS_TRANSITIONED` triggers, specify `from_status_name` and `to_status_name`. For `ATTRIBUTE_VALUE_CHANGED` triggers, specify `field` and `change_type`.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::AutomationRuleTriggerData>,
-    /// The case event that activates the automation rule.
+    /// The work item event that activates the automation rule.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::AutomationRuleTriggerType,
     #[serde(flatten)]

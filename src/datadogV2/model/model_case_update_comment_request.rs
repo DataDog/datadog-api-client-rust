@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request payload for updating a comment on a case timeline.
+/// Request payload for updating a comment on a work item timeline.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateCommentRequest {
-    /// Data object for updating a case comment.
+    /// Data object for updating a work item comment.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseUpdateComment,
     #[serde(flatten)]

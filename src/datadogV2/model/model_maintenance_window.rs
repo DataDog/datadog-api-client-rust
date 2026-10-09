@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A maintenance window that defines a scheduled time period during which case-related notifications and automation rules are suppressed. Each maintenance window applies to cases matching a specified query.
+/// A maintenance window that defines a scheduled time period during which notifications and automation rules related to work items are suppressed. Each maintenance window applies to work items matching a specified query.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MaintenanceWindow {
-    /// Attributes of a maintenance window, including its schedule and the query that determines which cases are affected.
+    /// Attributes of a maintenance window, including its schedule and the query that determines which work items are affected.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::MaintenanceWindowAttributes,
     /// The maintenance window's identifier.

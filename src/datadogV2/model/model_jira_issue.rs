@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Jira issue attached to case
+/// Jira issue attached to work item
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +14,7 @@ pub struct JiraIssue {
     /// Jira issue information
     #[serde(rename = "result")]
     pub result: Option<crate::datadogV2::model::JiraIssueResult>,
-    /// Case status
+    /// Work item status
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::Case3rdPartyTicketStatus>,
     #[serde(flatten)]

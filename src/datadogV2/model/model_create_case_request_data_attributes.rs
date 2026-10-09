@@ -17,7 +17,7 @@ pub struct CreateCaseRequestDataAttributes {
     /// Description of the case. If not provided, the description will be automatically generated.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// Case priority
+    /// Work item priority
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::CasePriority>,
     /// Title of the case. If not provided, the title will be automatically generated.

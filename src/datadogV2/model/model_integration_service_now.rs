@@ -14,7 +14,7 @@ pub struct IntegrationServiceNow {
     /// Assignment group.
     #[serde(rename = "assignment_group")]
     pub assignment_group: Option<String>,
-    /// Auto-creation settings for ServiceNow incidents from cases.
+    /// Auto-creation settings for ServiceNow incidents from work items.
     #[serde(rename = "auto_creation")]
     pub auto_creation: Option<crate::datadogV2::model::IntegrationServiceNowAutoCreation>,
     /// Whether ServiceNow integration is enabled.

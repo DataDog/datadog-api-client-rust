@@ -14,7 +14,7 @@ pub struct CustomAttributeConfigAttributesCreate {
     /// A description explaining the purpose and expected values for this custom attribute.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The human-readable label shown in the Case Management UI for this custom attribute.
+    /// The human-readable label shown in the Work Management UI for this custom attribute.
     #[serde(rename = "display_name")]
     pub display_name: String,
     /// If `true`, this attribute accepts an array of values. If `false`, only a single value is allowed.
