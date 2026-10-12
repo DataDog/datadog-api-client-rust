@@ -23,6 +23,10 @@ pub struct JSSourcemapAttributes {
     /// The timestamp when the source map was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
+    /// The debug identifier (UUID format) that uniquely identifies this
+    /// JavaScript source map. Returned for source maps indexed by debug ID.
+    #[serde(rename = "debug_id")]
+    pub debug_id: Option<String>,
     /// The domain associated with the source map.
     #[serde(rename = "domain")]
     pub domain: Option<String>,
@@ -65,6 +69,7 @@ impl JSSourcemapAttributes {
             blob_storage_sourcemap_path: None,
             build_id: None,
             created_at,
+            debug_id: None,
             domain: None,
             file_name: None,
             mapkind,
@@ -90,6 +95,11 @@ impl JSSourcemapAttributes {
 
     pub fn build_id(mut self, value: String) -> Self {
         self.build_id = Some(value);
+        self
+    }
+
+    pub fn debug_id(mut self, value: String) -> Self {
+        self.debug_id = Some(value);
         self
     }
 
@@ -153,6 +163,7 @@ impl<'de> Deserialize<'de> for JSSourcemapAttributes {
                 let mut blob_storage_sourcemap_path: Option<String> = None;
                 let mut build_id: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut debug_id: Option<String> = None;
                 let mut domain: Option<String> = None;
                 let mut file_name: Option<String> = None;
                 let mut mapkind: Option<String> = None;
@@ -191,6 +202,12 @@ impl<'de> Deserialize<'de> for JSSourcemapAttributes {
                         }
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "debug_id" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            debug_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "domain" => {
                             if v.is_null() {
@@ -251,6 +268,7 @@ impl<'de> Deserialize<'de> for JSSourcemapAttributes {
                     blob_storage_sourcemap_path,
                     build_id,
                     created_at,
+                    debug_id,
                     domain,
                     file_name,
                     mapkind,
