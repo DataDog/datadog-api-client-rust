@@ -1,6 +1,6 @@
 // Send AI tool user activity returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_ai_impact::AIImpactAPI;
+use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
 use datadog_api_client::datadogV2::model::AIImpactUserActivityAttributes;
 use datadog_api_client::datadogV2::model::AIImpactUserActivityData;
 use datadog_api_client::datadogV2::model::AIImpactUserActivityRequest;
@@ -19,7 +19,7 @@ async fn main() {
         AIImpactUserActivityType::AI_IMPACT_USER_ACTIVITY,
     )]);
     let configuration = datadog::Configuration::new();
-    let api = AIImpactAPI::with_config(configuration);
+    let api = DORAMetricsAPI::with_config(configuration);
     let resp = api.create_ai_impact_user_activity(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
