@@ -2069,6 +2069,7 @@ lazy_static! {
                     "browser-intake-us5-datadoghq.com".into(),
                     "browser-intake-ap1-datadoghq.com".into(),
                     "browser-intake-ap2-datadoghq.com".into(),
+                    "browser-intake-uk1-datadoghq.com".into(),
                     "browser-intake-datadoghq.eu".into(),
                 ],
             },
