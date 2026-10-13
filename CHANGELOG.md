@@ -1,5 +1,64 @@
 # CHANGELOG
 
+## 0.38.0/2026-10-13
+
+### Added
+* Clarify JavaScript source map listing and pagination [#2198](https://github.com/DataDog/datadog-api-client-rust/pull/2198)
+* Document public Deployment Gate and rule evaluation endpoints [#2197](https://github.com/DataDog/datadog-api-client-rust/pull/2197)
+* Add Heatgrid dashboard widget support [#2194](https://github.com/DataDog/datadog-api-client-rust/pull/2194)
+* Mark Bits Investigation endpoints as stable [#2193](https://github.com/DataDog/datadog-api-client-rust/pull/2193)
+* Add endpoint to override the severity of security findings [#2190](https://github.com/DataDog/datadog-api-client-rust/pull/2190)
+* Add reroute_to_team action to On-Call team routing rules [#2189](https://github.com/DataDog/datadog-api-client-rust/pull/2189)
+* Include the matched shard in the SPA v2 response [#2188](https://github.com/DataDog/datadog-api-client-rust/pull/2188)
+* Add aggregate event-time configuration to Observability Pipelines [#2182](https://github.com/DataDog/datadog-api-client-rust/pull/2182)
+* Publish Cloud Cost Management cloud account listing [#2181](https://github.com/DataDog/datadog-api-client-rust/pull/2181)
+* Add AI Impact user activity endpoint [#2173](https://github.com/DataDog/datadog-api-client-rust/pull/2173)
+* Rename Patch a deployment event to Mark a deployment as failed by ID [#2172](https://github.com/DataDog/datadog-api-client-rust/pull/2172)
+* Promote Mark a deployment as failed by version endpoint to GA [#2171](https://github.com/DataDog/datadog-api-client-rust/pull/2171)
+* Document Supply Chain Firewall reports API [#2170](https://github.com/DataDog/datadog-api-client-rust/pull/2170)
+* Add compatibleVersion to security monitoring rule responses [#2167](https://github.com/DataDog/datadog-api-client-rust/pull/2167)
+* Add CI job logs intake API [#2165](https://github.com/DataDog/datadog-api-client-rust/pull/2165)
+* Add Archive Search endpoints to the public API [#2163](https://github.com/DataDog/datadog-api-client-rust/pull/2163)
+* Add SPA recommendations v2 endpoint [#2162](https://github.com/DataDog/datadog-api-client-rust/pull/2162)
+* Add dashboard experience type to API responses [#2161](https://github.com/DataDog/datadog-api-client-rust/pull/2161)
+* Extend Cloud Auth Config endpoints to support new GitHub provider [#2160](https://github.com/DataDog/datadog-api-client-rust/pull/2160)
+* Add case_stream to dashboard list stream sources [#2155](https://github.com/DataDog/datadog-api-client-rust/pull/2155)
+* Add metrics enrichment table processor to Observability Pipelines [#2154](https://github.com/DataDog/datadog-api-client-rust/pull/2154)
+* Add bits_ai_auto_investigate to synthetics test options [#2151](https://github.com/DataDog/datadog-api-client-rust/pull/2151)
+* Document `source` field in DataDeletionResponseItemAttributes [#2150](https://github.com/DataDog/datadog-api-client-rust/pull/2150)
+* Document Flink as a Confluent Cloud resource type [#2146](https://github.com/DataDog/datadog-api-client-rust/pull/2146)
+* Document recently updated entities endpoint and entity_type parameter [#2145](https://github.com/DataDog/datadog-api-client-rust/pull/2145)
+* Publish stable Experiments v2 APIs [#2142](https://github.com/DataDog/datadog-api-client-rust/pull/2142)
+* Document leak information on personal and service access tokens [#2138](https://github.com/DataDog/datadog-api-client-rust/pull/2138)
+* Increase Reference Tables Upsert/DeleteRows payload limit to 1 MiB [#2127](https://github.com/DataDog/datadog-api-client-rust/pull/2127)
+* add recipient_email and servicenow to team notification rule [#2124](https://github.com/DataDog/datadog-api-client-rust/pull/2124)
+* Document the meta object returned by Reference Tables Get rows by id [#2108](https://github.com/DataDog/datadog-api-client-rust/pull/2108)
+* Add support for general investigations to Bits Investigations trigger API [#2101](https://github.com/DataDog/datadog-api-client-rust/pull/2101)
+* Document managed prompt message placeholders [#2075](https://github.com/DataDog/datadog-api-client-rust/pull/2075)
+
+### Changed
+* Document AI Impact user activity endpoint under DORA Metrics [#2192](https://github.com/DataDog/datadog-api-client-rust/pull/2192)
+* Document dashboard quality scores in usage APIs [#2179](https://github.com/DataDog/datadog-api-client-rust/pull/2179)
+* Update signalsDetected description to reflect risk-contributing signals [#2095](https://github.com/DataDog/datadog-api-client-rust/pull/2095)
+
+### Fixed
+* Allow null default_value in governance control parameter definitions [#2191](https://github.com/DataDog/datadog-api-client-rust/pull/2191)
+* Remove bearer token auth from the CreateEvent intake endpoint [#2187](https://github.com/DataDog/datadog-api-client-rust/pull/2187)
+* Clarify the Archive Search tag description [#2174](https://github.com/DataDog/datadog-api-client-rust/pull/2174)
+* Fix Workload Protection policy creation success response to 201 Created [#2166](https://github.com/DataDog/datadog-api-client-rust/pull/2166)
+* Document DDSQL query permissions and OAuth scope [#2144](https://github.com/DataDog/datadog-api-client-rust/pull/2144)
+* Specify UUID format for Databricks Private Action Runner connection fields [#2129](https://github.com/DataDog/datadog-api-client-rust/pull/2129)
+* CCM Recommendations API - Re-add filter request attribute and fix sort examples [#2114](https://github.com/DataDog/datadog-api-client-rust/pull/2114)
+* Automation pipelines require ID in updates and use different request/response schemas [#2043](https://github.com/DataDog/datadog-api-client-rust/pull/2043)
+* RUM Rename feature to journey strong link to link in comments and desc [#2014](https://github.com/DataDog/datadog-api-client-rust/pull/2014)
+* Document missing limitations and 409 response for org disable endpoint [#1860](https://github.com/DataDog/datadog-api-client-rust/pull/1860)
+
+### Deprecated
+* Deprecate Salesforce Incidents API endpoints [#2184](https://github.com/DataDog/datadog-api-client-rust/pull/2184)
+
+### Removed
+* Retire the RUM aggregated signals and problems endpoint [#2147](https://github.com/DataDog/datadog-api-client-rust/pull/2147)
+
 ## 0.37.0/2026-09-24
 
 ### Added
