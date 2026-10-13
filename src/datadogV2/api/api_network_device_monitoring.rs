@@ -796,6 +796,7 @@ impl NetworkDeviceMonitoringAPI {
     }
 
     /// Update the tags for a device.
+    /// A device supports up to 20 user tags by default. To request a higher limit for your organization, [contact Support](<https://docs.datadoghq.com/help/>).
     pub async fn update_device_user_tags(
         &self,
         device_id: String,
@@ -820,6 +821,7 @@ impl NetworkDeviceMonitoringAPI {
     }
 
     /// Update the tags for a device.
+    /// A device supports up to 20 user tags by default. To request a higher limit for your organization, [contact Support](<https://docs.datadoghq.com/help/>).
     pub async fn update_device_user_tags_with_http_info(
         &self,
         device_id: String,
