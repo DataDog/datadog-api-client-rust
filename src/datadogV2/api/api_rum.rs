@@ -154,6 +154,45 @@ impl DeleteSourcemapsOptionalParams {
     }
 }
 
+/// GetSourcemapsOptionalParams is a struct for passing parameters to the method [`RUMAPI::get_sourcemaps`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct GetSourcemapsOptionalParams {
+    /// The debug ID of the JavaScript source map, in UUID format. When provided,
+    /// filename, service, and version are not required and are ignored.
+    pub debug_id: Option<uuid::Uuid>,
+    /// The path to the source map file. Required when `debug_id` is omitted.
+    pub filename: Option<String>,
+    /// The service name associated with the source map. Required when `debug_id` is omitted.
+    pub service: Option<String>,
+    /// The version of the service associated with the source map. Required when `debug_id` is omitted.
+    pub version: Option<String>,
+}
+
+impl GetSourcemapsOptionalParams {
+    /// The debug ID of the JavaScript source map, in UUID format. When provided,
+    /// filename, service, and version are not required and are ignored.
+    pub fn debug_id(mut self, value: uuid::Uuid) -> Self {
+        self.debug_id = Some(value);
+        self
+    }
+    /// The path to the source map file. Required when `debug_id` is omitted.
+    pub fn filename(mut self, value: String) -> Self {
+        self.filename = Some(value);
+        self
+    }
+    /// The service name associated with the source map. Required when `debug_id` is omitted.
+    pub fn service(mut self, value: String) -> Self {
+        self.service = Some(value);
+        self
+    }
+    /// The version of the service associated with the source map. Required when `debug_id` is omitted.
+    pub fn version(mut self, value: String) -> Self {
+        self.version = Some(value);
+        self
+    }
+}
+
 /// ListRUMEventsOptionalParams is a struct for passing parameters to the method [`RUMAPI::list_rum_events`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -1750,19 +1789,45 @@ impl RUMAPI {
         }
     }
 
-    /// Retrieves the content of a specific JavaScript source map file by its
-    /// filename, service name, and version.
+    /// Retrieves the content of a specific JavaScript source map file. Provide either
+    /// `debug_id` with a UUID, or all three of `filename`, `service`, and `version`.
+    /// When `debug_id` is provided, filename, service, and version are not required
+    /// and are ignored.
+    ///
+    /// **Examples:** the following commands use the US1 API host. Replace the host
+    /// with the API host for your site, and the filename, service, version, and
+    /// debug ID with values from your organization. Use `--get` so curl sends the
+    /// parameters in the query string.
+    ///
+    /// **1. Retrieve a source map by debug ID**
+    ///
+    /// Provide `debug_id` with a UUID. No filename, service, or version is required.
+    ///
+    /// ```bash
+    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
+    ///   -H "Accept: application/json" \
+    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+    ///   --data-urlencode "debug_id=00000000-0000-4000-8000-000000000001"
+    /// ```
+    ///
+    /// **2. Retrieve a source map by service and version**
+    ///
+    /// Provide `filename` together with `service` and `version`.
+    ///
+    /// ```bash
+    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
+    ///   -H "Accept: application/json" \
+    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+    ///   --data-urlencode "filename=js/bundle.min.js.map" \
+    ///   --data-urlencode "service=my-web-service" \
+    ///   --data-urlencode "version=1.0.0"
+    /// ```
     pub async fn get_sourcemaps(
         &self,
-        filename: String,
-        service: String,
-        version: String,
+        params: GetSourcemapsOptionalParams,
     ) -> Result<crate::datadogV2::model::SourcemapFileResponse, datadog::Error<GetSourcemapsError>>
     {
-        match self
-            .get_sourcemaps_with_http_info(filename, service, version)
-            .await
-        {
+        match self.get_sourcemaps_with_http_info(params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
@@ -1776,13 +1841,42 @@ impl RUMAPI {
         }
     }
 
-    /// Retrieves the content of a specific JavaScript source map file by its
-    /// filename, service name, and version.
+    /// Retrieves the content of a specific JavaScript source map file. Provide either
+    /// `debug_id` with a UUID, or all three of `filename`, `service`, and `version`.
+    /// When `debug_id` is provided, filename, service, and version are not required
+    /// and are ignored.
+    ///
+    /// **Examples:** the following commands use the US1 API host. Replace the host
+    /// with the API host for your site, and the filename, service, version, and
+    /// debug ID with values from your organization. Use `--get` so curl sends the
+    /// parameters in the query string.
+    ///
+    /// **1. Retrieve a source map by debug ID**
+    ///
+    /// Provide `debug_id` with a UUID. No filename, service, or version is required.
+    ///
+    /// ```bash
+    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
+    ///   -H "Accept: application/json" \
+    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+    ///   --data-urlencode "debug_id=00000000-0000-4000-8000-000000000001"
+    /// ```
+    ///
+    /// **2. Retrieve a source map by service and version**
+    ///
+    /// Provide `filename` together with `service` and `version`.
+    ///
+    /// ```bash
+    /// curl -sS --get "<https://api.datadoghq.com/api/v2/sourcemaps"> \
+    ///   -H "Accept: application/json" \
+    ///   -H "Authorization: Bearer ${DD_BEARER_TOKEN}" \
+    ///   --data-urlencode "filename=js/bundle.min.js.map" \
+    ///   --data-urlencode "service=my-web-service" \
+    ///   --data-urlencode "version=1.0.0"
+    /// ```
     pub async fn get_sourcemaps_with_http_info(
         &self,
-        filename: String,
-        service: String,
-        version: String,
+        params: GetSourcemapsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::SourcemapFileResponse>,
         datadog::Error<GetSourcemapsError>,
@@ -1798,6 +1892,12 @@ impl RUMAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        // unbox and build optional parameters
+        let debug_id = params.debug_id;
+        let filename = params.filename;
+        let service = params.service;
+        let version = params.version;
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -1807,9 +1907,22 @@ impl RUMAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("filename", &filename.to_string())]);
-        local_req_builder = local_req_builder.query(&[("service", &service.to_string())]);
-        local_req_builder = local_req_builder.query(&[("version", &version.to_string())]);
+        if let Some(ref local_query_param) = debug_id {
+            local_req_builder =
+                local_req_builder.query(&[("debug_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filename {
+            local_req_builder =
+                local_req_builder.query(&[("filename", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = service {
+            local_req_builder =
+                local_req_builder.query(&[("service", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = version {
+            local_req_builder =
+                local_req_builder.query(&[("version", &local_query_param.to_string())]);
+        };
 
         // build headers
         let mut headers = HeaderMap::new();
