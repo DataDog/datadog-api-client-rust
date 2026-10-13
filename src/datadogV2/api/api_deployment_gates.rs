@@ -2,27 +2,157 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
+use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use futures_core::stream::Stream;
 use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
+/// ListDeploymentGateEvaluationsOptionalParams is a struct for passing parameters to the method [`DeploymentGatesAPI::list_deployment_gate_evaluations`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListDeploymentGateEvaluationsOptionalParams {
+    /// Inclusive evaluation start time. Defaults to 24 hours before the request. Together with `filter[to]`, the window may span no more than 30 days.
+    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
+    /// Exclusive evaluation start time. Defaults to the request time. Must be after `filter[from]`; the window may span no more than 30 days.
+    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
+    /// Service values. Repeated or comma-separated values are combined with OR.
+    pub filter_service: Option<Vec<String>>,
+    /// Environment values. Repeated or comma-separated values are combined with OR.
+    pub filter_env: Option<Vec<String>>,
+    /// Gate identifier values. Repeated or comma-separated values are combined with OR.
+    pub filter_identifier: Option<Vec<String>>,
+    /// Gate outcomes. Repeated or comma-separated values are combined with OR.
+    pub filter_status: Option<
+        Vec<crate::datadogV2::model::DeploymentGatesEvaluationResultResponseAttributesGateStatus>,
+    >,
+    /// Gate-level dry-run state.
+    pub filter_dry_run: Option<bool>,
+    /// Gate evaluation UUID. No match returns an empty list.
+    pub filter_evaluation_id: Option<uuid::Uuid>,
+    /// Configured gate UUID. Just-in-time evaluations have no gate ID.
+    pub filter_gate_id: Option<uuid::Uuid>,
+    /// Deployment version values. Repeated or comma-separated values are combined with OR.
+    pub filter_version: Option<Vec<String>>,
+    /// Maximum evaluations returned.
+    pub page_size: Option<i64>,
+    /// Opaque cursor returned in `meta.page.next_cursor` by the previous page. Invalid cursors return 400.
+    pub page_cursor: Option<String>,
+}
+
+impl ListDeploymentGateEvaluationsOptionalParams {
+    /// Inclusive evaluation start time. Defaults to 24 hours before the request. Together with `filter[to]`, the window may span no more than 30 days.
+    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// Exclusive evaluation start time. Defaults to the request time. Must be after `filter[from]`; the window may span no more than 30 days.
+    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// Service values. Repeated or comma-separated values are combined with OR.
+    pub fn filter_service(mut self, value: Vec<String>) -> Self {
+        self.filter_service = Some(value);
+        self
+    }
+    /// Environment values. Repeated or comma-separated values are combined with OR.
+    pub fn filter_env(mut self, value: Vec<String>) -> Self {
+        self.filter_env = Some(value);
+        self
+    }
+    /// Gate identifier values. Repeated or comma-separated values are combined with OR.
+    pub fn filter_identifier(mut self, value: Vec<String>) -> Self {
+        self.filter_identifier = Some(value);
+        self
+    }
+    /// Gate outcomes. Repeated or comma-separated values are combined with OR.
+    pub fn filter_status(
+        mut self,
+        value: Vec<
+            crate::datadogV2::model::DeploymentGatesEvaluationResultResponseAttributesGateStatus,
+        >,
+    ) -> Self {
+        self.filter_status = Some(value);
+        self
+    }
+    /// Gate-level dry-run state.
+    pub fn filter_dry_run(mut self, value: bool) -> Self {
+        self.filter_dry_run = Some(value);
+        self
+    }
+    /// Gate evaluation UUID. No match returns an empty list.
+    pub fn filter_evaluation_id(mut self, value: uuid::Uuid) -> Self {
+        self.filter_evaluation_id = Some(value);
+        self
+    }
+    /// Configured gate UUID. Just-in-time evaluations have no gate ID.
+    pub fn filter_gate_id(mut self, value: uuid::Uuid) -> Self {
+        self.filter_gate_id = Some(value);
+        self
+    }
+    /// Deployment version values. Repeated or comma-separated values are combined with OR.
+    pub fn filter_version(mut self, value: Vec<String>) -> Self {
+        self.filter_version = Some(value);
+        self
+    }
+    /// Maximum evaluations returned.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Opaque cursor returned in `meta.page.next_cursor` by the previous page. Invalid cursors return 400.
+    pub fn page_cursor(mut self, value: String) -> Self {
+        self.page_cursor = Some(value);
+        self
+    }
+}
+
 /// ListDeploymentGatesOptionalParams is a struct for passing parameters to the method [`DeploymentGatesAPI::list_deployment_gates`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListDeploymentGatesOptionalParams {
-    /// Cursor for pagination. Use the `meta.page.next_cursor` value from the previous response.
+    /// Service name.
+    pub filter_service: Option<String>,
+    /// Environment name.
+    pub filter_env: Option<String>,
+    /// Gate identifier.
+    pub filter_identifier: Option<String>,
+    /// Dry-run state.
+    pub filter_dry_run: Option<bool>,
+    /// Cursor for pagination. Use the `meta.page.next_cursor` value from the previous response. Invalid cursors return 400.
     pub page_cursor: Option<String>,
     /// Number of results per page. Defaults to 50. Must be between 1 and 1000.
     pub page_size: Option<i64>,
 }
 
 impl ListDeploymentGatesOptionalParams {
-    /// Cursor for pagination. Use the `meta.page.next_cursor` value from the previous response.
+    /// Service name.
+    pub fn filter_service(mut self, value: String) -> Self {
+        self.filter_service = Some(value);
+        self
+    }
+    /// Environment name.
+    pub fn filter_env(mut self, value: String) -> Self {
+        self.filter_env = Some(value);
+        self
+    }
+    /// Gate identifier.
+    pub fn filter_identifier(mut self, value: String) -> Self {
+        self.filter_identifier = Some(value);
+        self
+    }
+    /// Dry-run state.
+    pub fn filter_dry_run(mut self, value: bool) -> Self {
+        self.filter_dry_run = Some(value);
+        self
+    }
+    /// Cursor for pagination. Use the `meta.page.next_cursor` value from the previous response. Invalid cursors return 400.
     pub fn page_cursor(mut self, value: String) -> Self {
         self.page_cursor = Some(value);
         self
@@ -30,6 +160,146 @@ impl ListDeploymentGatesOptionalParams {
     /// Number of results per page. Defaults to 50. Must be between 1 and 1000.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
+        self
+    }
+}
+
+/// ListDeploymentRuleEvaluationsOptionalParams is a struct for passing parameters to the method [`DeploymentGatesAPI::list_deployment_rule_evaluations`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListDeploymentRuleEvaluationsOptionalParams {
+    /// Inclusive gate evaluation start time. Defaults to 24 hours before the request. Together with `filter[to]`, the window may span no more than 30 days.
+    pub filter_from: Option<chrono::DateTime<chrono::Utc>>,
+    /// Exclusive gate evaluation start time. Defaults to the request time. Must be after `filter[from]`; the window may span no more than 30 days.
+    pub filter_to: Option<chrono::DateTime<chrono::Utc>>,
+    /// Gate evaluation UUID. No match returns an empty list.
+    pub filter_gate_evaluation_id: Option<uuid::Uuid>,
+    /// Rule evaluation UUID. No match returns an empty list.
+    pub filter_evaluation_id: Option<uuid::Uuid>,
+    /// Configured gate UUID. Just-in-time evaluations have no gate ID.
+    pub filter_gate_id: Option<uuid::Uuid>,
+    /// Configured rule UUID. Just-in-time rules have no rule ID.
+    pub filter_rule_id: Option<uuid::Uuid>,
+    /// Evaluated service values. Repeated or comma-separated values are combined with OR.
+    pub filter_service: Option<Vec<String>>,
+    /// Evaluated environment values. Repeated or comma-separated values are combined with OR.
+    pub filter_env: Option<Vec<String>>,
+    /// Gate identifier values. Repeated or comma-separated values are combined with OR.
+    pub filter_identifier: Option<Vec<String>>,
+    /// Evaluated deployment version values. Repeated or comma-separated values are combined with OR.
+    pub filter_version: Option<Vec<String>>,
+    /// Rule statuses. Repeated or comma-separated values are combined with OR.
+    pub filter_status: Option<
+        Vec<crate::datadogV2::model::DeploymentGatesEvaluationResultResponseAttributesGateStatus>,
+    >,
+    /// Rule types. Repeated or comma-separated values are combined with OR.
+    /// Defaults to all rule types.
+    pub filter_type: Option<Vec<crate::datadogV2::model::DeploymentGateRuleEvaluationType>>,
+    /// Rule-level dry-run state. A failed dry-run rule is ignored when computing the gate outcome.
+    pub filter_dry_run: Option<bool>,
+    /// Gate-level dry-run state. A failed dry-run gate blocks but does not stop deployment.
+    pub filter_gate_dry_run: Option<bool>,
+    /// Rule names. Repeated or comma-separated values are combined with OR.
+    pub filter_name: Option<Vec<String>>,
+    /// Maximum rule evaluations returned.
+    pub page_size: Option<i64>,
+    /// Opaque cursor returned in `meta.page.next_cursor` by the previous page. Invalid cursors return 400.
+    pub page_cursor: Option<String>,
+}
+
+impl ListDeploymentRuleEvaluationsOptionalParams {
+    /// Inclusive gate evaluation start time. Defaults to 24 hours before the request. Together with `filter[to]`, the window may span no more than 30 days.
+    pub fn filter_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_from = Some(value);
+        self
+    }
+    /// Exclusive gate evaluation start time. Defaults to the request time. Must be after `filter[from]`; the window may span no more than 30 days.
+    pub fn filter_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.filter_to = Some(value);
+        self
+    }
+    /// Gate evaluation UUID. No match returns an empty list.
+    pub fn filter_gate_evaluation_id(mut self, value: uuid::Uuid) -> Self {
+        self.filter_gate_evaluation_id = Some(value);
+        self
+    }
+    /// Rule evaluation UUID. No match returns an empty list.
+    pub fn filter_evaluation_id(mut self, value: uuid::Uuid) -> Self {
+        self.filter_evaluation_id = Some(value);
+        self
+    }
+    /// Configured gate UUID. Just-in-time evaluations have no gate ID.
+    pub fn filter_gate_id(mut self, value: uuid::Uuid) -> Self {
+        self.filter_gate_id = Some(value);
+        self
+    }
+    /// Configured rule UUID. Just-in-time rules have no rule ID.
+    pub fn filter_rule_id(mut self, value: uuid::Uuid) -> Self {
+        self.filter_rule_id = Some(value);
+        self
+    }
+    /// Evaluated service values. Repeated or comma-separated values are combined with OR.
+    pub fn filter_service(mut self, value: Vec<String>) -> Self {
+        self.filter_service = Some(value);
+        self
+    }
+    /// Evaluated environment values. Repeated or comma-separated values are combined with OR.
+    pub fn filter_env(mut self, value: Vec<String>) -> Self {
+        self.filter_env = Some(value);
+        self
+    }
+    /// Gate identifier values. Repeated or comma-separated values are combined with OR.
+    pub fn filter_identifier(mut self, value: Vec<String>) -> Self {
+        self.filter_identifier = Some(value);
+        self
+    }
+    /// Evaluated deployment version values. Repeated or comma-separated values are combined with OR.
+    pub fn filter_version(mut self, value: Vec<String>) -> Self {
+        self.filter_version = Some(value);
+        self
+    }
+    /// Rule statuses. Repeated or comma-separated values are combined with OR.
+    pub fn filter_status(
+        mut self,
+        value: Vec<
+            crate::datadogV2::model::DeploymentGatesEvaluationResultResponseAttributesGateStatus,
+        >,
+    ) -> Self {
+        self.filter_status = Some(value);
+        self
+    }
+    /// Rule types. Repeated or comma-separated values are combined with OR.
+    /// Defaults to all rule types.
+    pub fn filter_type(
+        mut self,
+        value: Vec<crate::datadogV2::model::DeploymentGateRuleEvaluationType>,
+    ) -> Self {
+        self.filter_type = Some(value);
+        self
+    }
+    /// Rule-level dry-run state. A failed dry-run rule is ignored when computing the gate outcome.
+    pub fn filter_dry_run(mut self, value: bool) -> Self {
+        self.filter_dry_run = Some(value);
+        self
+    }
+    /// Gate-level dry-run state. A failed dry-run gate blocks but does not stop deployment.
+    pub fn filter_gate_dry_run(mut self, value: bool) -> Self {
+        self.filter_gate_dry_run = Some(value);
+        self
+    }
+    /// Rule names. Repeated or comma-separated values are combined with OR.
+    pub fn filter_name(mut self, value: Vec<String>) -> Self {
+        self.filter_name = Some(value);
+        self
+    }
+    /// Maximum rule evaluations returned.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Opaque cursor returned in `meta.page.next_cursor` by the previous page. Invalid cursors return 400.
+    pub fn page_cursor(mut self, value: String) -> Self {
+        self.page_cursor = Some(value);
         self
     }
 }
@@ -119,6 +389,15 @@ pub enum GetDeploymentRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListDeploymentGateEvaluationsError is a struct for typed errors of method [`DeploymentGatesAPI::list_deployment_gate_evaluations`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListDeploymentGateEvaluationsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListDeploymentGatesError is a struct for typed errors of method [`DeploymentGatesAPI::list_deployment_gates`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -126,6 +405,15 @@ pub enum ListDeploymentGatesError {
     HTTPCDGatesBadRequestResponse(crate::datadogV2::model::HTTPCDGatesBadRequestResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     HTTPCIAppErrors(crate::datadogV2::model::HTTPCIAppErrors),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListDeploymentRuleEvaluationsError is a struct for typed errors of method [`DeploymentGatesAPI::list_deployment_rule_evaluations`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListDeploymentRuleEvaluationsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -1250,6 +1538,239 @@ impl DeploymentGatesAPI {
         }
     }
 
+    /// Returns deployment gate evaluations started in a maximum 30-day window (the default is the previous 24 hours).
+    /// Results are ordered by start time, newest first.
+    /// In-progress state is near-real-time and mutable. Finished state is eventually consistent.
+    pub async fn list_deployment_gate_evaluations(
+        &self,
+        params: ListDeploymentGateEvaluationsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::DeploymentGateEvaluationsResponse,
+        datadog::Error<ListDeploymentGateEvaluationsError>,
+    > {
+        match self
+            .list_deployment_gate_evaluations_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_deployment_gate_evaluations_with_pagination(
+        &self,
+        mut params: ListDeploymentGateEvaluationsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::DeploymentGateEvaluationData,
+            datadog::Error<ListDeploymentGateEvaluationsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 20;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_deployment_gate_evaluations(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count == 0 {
+                    break;
+                }
+                let Some(next_cursor) = resp.meta.page.next_cursor else { break };
+
+                params.page_cursor = Some(next_cursor);
+            }
+        }
+    }
+
+    /// Returns deployment gate evaluations started in a maximum 30-day window (the default is the previous 24 hours).
+    /// Results are ordered by start time, newest first.
+    /// In-progress state is near-real-time and mutable. Finished state is eventually consistent.
+    pub async fn list_deployment_gate_evaluations_with_http_info(
+        &self,
+        params: ListDeploymentGateEvaluationsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DeploymentGateEvaluationsResponse>,
+        datadog::Error<ListDeploymentGateEvaluationsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_deployment_gate_evaluations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_deployment_gate_evaluations' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_from = params.filter_from;
+        let filter_to = params.filter_to;
+        let filter_service = params.filter_service;
+        let filter_env = params.filter_env;
+        let filter_identifier = params.filter_identifier;
+        let filter_status = params.filter_status;
+        let filter_dry_run = params.filter_dry_run;
+        let filter_evaluation_id = params.filter_evaluation_id;
+        let filter_gate_id = params.filter_gate_id;
+        let filter_version = params.filter_version;
+        let page_size = params.page_size;
+        let page_cursor = params.page_cursor;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/deployment_gates/evaluations",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_from {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[from]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_to {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[to]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local) = filter_service {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[service]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_env {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[env]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_identifier {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[identifier]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_status {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[status]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = filter_dry_run {
+            local_req_builder =
+                local_req_builder.query(&[("filter[dry_run]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_evaluation_id {
+            local_req_builder = local_req_builder
+                .query(&[("filter[evaluation_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_gate_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[gate_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = filter_version {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[version]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::DeploymentGateEvaluationsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListDeploymentGateEvaluationsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Returns a paginated list of all deployment gates for the organization.
     /// Use `page[cursor]` and `page[size]` query parameters to paginate through results.
     pub async fn list_deployment_gates(
@@ -1294,6 +1815,10 @@ impl DeploymentGatesAPI {
         }
 
         // unbox and build optional parameters
+        let filter_service = params.filter_service;
+        let filter_env = params.filter_env;
+        let filter_identifier = params.filter_identifier;
+        let filter_dry_run = params.filter_dry_run;
         let page_cursor = params.page_cursor;
         let page_size = params.page_size;
 
@@ -1306,6 +1831,22 @@ impl DeploymentGatesAPI {
         let mut local_req_builder =
             local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        if let Some(ref local_query_param) = filter_service {
+            local_req_builder =
+                local_req_builder.query(&[("filter[service]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_env {
+            local_req_builder =
+                local_req_builder.query(&[("filter[env]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_identifier {
+            local_req_builder =
+                local_req_builder.query(&[("filter[identifier]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_dry_run {
+            local_req_builder =
+                local_req_builder.query(&[("filter[dry_run]", &local_query_param.to_string())]);
+        };
         if let Some(ref local_query_param) = page_cursor {
             local_req_builder =
                 local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
@@ -1371,6 +1912,275 @@ impl DeploymentGatesAPI {
             };
         } else {
             let local_entity: Option<ListDeploymentGatesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Returns rule evaluations whose gate evaluation started in a maximum 30-day window (the default is the previous 24 hours).
+    /// Filter by gate, rule, gate evaluation, or rule evaluation ID; omit IDs for cross-evaluation searches.
+    /// Results are ordered by start time, newest first.
+    /// In-progress state is near-real-time and mutable. Finished state is eventually consistent.
+    /// Gate-level and rule-level dry-run states are independent.
+    /// Pagination is deterministic but not snapshot isolated; clients should deduplicate by rule evaluation ID.
+    pub async fn list_deployment_rule_evaluations(
+        &self,
+        params: ListDeploymentRuleEvaluationsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::DeploymentGateRuleEvaluationsResponse,
+        datadog::Error<ListDeploymentRuleEvaluationsError>,
+    > {
+        match self
+            .list_deployment_rule_evaluations_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_deployment_rule_evaluations_with_pagination(
+        &self,
+        mut params: ListDeploymentRuleEvaluationsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::DeploymentGateRuleEvaluationData,
+            datadog::Error<ListDeploymentRuleEvaluationsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 50;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_deployment_rule_evaluations(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count == 0 {
+                    break;
+                }
+                let Some(next_cursor) = resp.meta.page.next_cursor else { break };
+
+                params.page_cursor = Some(next_cursor);
+            }
+        }
+    }
+
+    /// Returns rule evaluations whose gate evaluation started in a maximum 30-day window (the default is the previous 24 hours).
+    /// Filter by gate, rule, gate evaluation, or rule evaluation ID; omit IDs for cross-evaluation searches.
+    /// Results are ordered by start time, newest first.
+    /// In-progress state is near-real-time and mutable. Finished state is eventually consistent.
+    /// Gate-level and rule-level dry-run states are independent.
+    /// Pagination is deterministic but not snapshot isolated; clients should deduplicate by rule evaluation ID.
+    pub async fn list_deployment_rule_evaluations_with_http_info(
+        &self,
+        params: ListDeploymentRuleEvaluationsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::DeploymentGateRuleEvaluationsResponse>,
+        datadog::Error<ListDeploymentRuleEvaluationsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_deployment_rule_evaluations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_deployment_rule_evaluations' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_from = params.filter_from;
+        let filter_to = params.filter_to;
+        let filter_gate_evaluation_id = params.filter_gate_evaluation_id;
+        let filter_evaluation_id = params.filter_evaluation_id;
+        let filter_gate_id = params.filter_gate_id;
+        let filter_rule_id = params.filter_rule_id;
+        let filter_service = params.filter_service;
+        let filter_env = params.filter_env;
+        let filter_identifier = params.filter_identifier;
+        let filter_version = params.filter_version;
+        let filter_status = params.filter_status;
+        let filter_type = params.filter_type;
+        let filter_dry_run = params.filter_dry_run;
+        let filter_gate_dry_run = params.filter_gate_dry_run;
+        let filter_name = params.filter_name;
+        let page_size = params.page_size;
+        let page_cursor = params.page_cursor;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/deployment_gates/evaluations/rules",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_from {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[from]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_to {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[to]",
+                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_gate_evaluation_id {
+            local_req_builder = local_req_builder
+                .query(&[("filter[gate_evaluation_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_evaluation_id {
+            local_req_builder = local_req_builder
+                .query(&[("filter[evaluation_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_gate_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[gate_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_rule_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[rule_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = filter_service {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[service]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_env {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[env]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_identifier {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[identifier]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_version {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[version]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_status {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[status]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = filter_type {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[type]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = filter_dry_run {
+            local_req_builder =
+                local_req_builder.query(&[("filter[dry_run]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_gate_dry_run {
+            local_req_builder = local_req_builder
+                .query(&[("filter[gate_dry_run]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = filter_name {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[name]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::DeploymentGateRuleEvaluationsResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListDeploymentRuleEvaluationsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
