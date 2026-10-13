@@ -16,7 +16,7 @@ pub struct ScheduleUser {
     pub attributes: Option<crate::datadogV2::model::ScheduleUserAttributes>,
     /// The unique user identifier.
     #[serde(rename = "id")]
-    pub id: Option<String>,
+    pub id: String,
     /// Users resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ScheduleUserType,
@@ -28,10 +28,10 @@ pub struct ScheduleUser {
 }
 
 impl ScheduleUser {
-    pub fn new(type_: crate::datadogV2::model::ScheduleUserType) -> ScheduleUser {
+    pub fn new(id: String, type_: crate::datadogV2::model::ScheduleUserType) -> ScheduleUser {
         ScheduleUser {
             attributes: None,
-            id: None,
+            id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -40,11 +40,6 @@ impl ScheduleUser {
 
     pub fn attributes(mut self, value: crate::datadogV2::model::ScheduleUserAttributes) -> Self {
         self.attributes = Some(value);
-        self
-    }
-
-    pub fn id(mut self, value: String) -> Self {
-        self.id = Some(value);
         self
     }
 
@@ -92,9 +87,6 @@ impl<'de> Deserialize<'de> for ScheduleUser {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
@@ -117,6 +109,7 @@ impl<'de> Deserialize<'de> for ScheduleUser {
                         }
                     }
                 }
+                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = ScheduleUser {

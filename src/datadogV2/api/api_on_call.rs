@@ -44,6 +44,22 @@ impl CreateOnCallScheduleOptionalParams {
     }
 }
 
+/// CreateScheduleOverridesOptionalParams is a struct for passing parameters to the method [`OnCallAPI::create_schedule_overrides`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct CreateScheduleOverridesOptionalParams {
+    /// Comma-separated list of included relationships to be returned. Allowed values: `user`, `overridden_user`, `user.color`.
+    pub include: Option<String>,
+}
+
+impl CreateScheduleOverridesOptionalParams {
+    /// Comma-separated list of included relationships to be returned. Allowed values: `user`, `overridden_user`, `user.color`.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// GetOnCallEscalationPolicyOptionalParams is a struct for passing parameters to the method [`OnCallAPI::get_on_call_escalation_policy`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -100,7 +116,7 @@ pub struct GetScheduleOnCallRespondersOptionalParams {
     pub include: Option<String>,
     /// Comma-separated list of positions to retrieve. Allowed values: `previous`, `current`, `next`. Defaults to `current` if omitted.
     pub filter_position: Option<String>,
-    /// Retrieves the on-call responders at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01Z` or `2025-05-07T02:53:01+00:00`). When using timezone offsets with `+` or `-`, ensure proper URL encoding (`+` should be encoded as `%2B`). Defaults to the current time if omitted.
+    /// Retrieves the on-call responders at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01Z` or `2025-05-07T02:53:01+00:00`). If you use a time zone offset with `+`, URL-encode the `+` as `%2B`. Defaults to the current time if omitted.
     pub filter_at_ts: Option<String>,
 }
 
@@ -115,7 +131,7 @@ impl GetScheduleOnCallRespondersOptionalParams {
         self.filter_position = Some(value);
         self
     }
-    /// Retrieves the on-call responders at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01Z` or `2025-05-07T02:53:01+00:00`). When using timezone offsets with `+` or `-`, ensure proper URL encoding (`+` should be encoded as `%2B`). Defaults to the current time if omitted.
+    /// Retrieves the on-call responders at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01Z` or `2025-05-07T02:53:01+00:00`). If you use a time zone offset with `+`, URL-encode the `+` as `%2B`. Defaults to the current time if omitted.
     pub fn filter_at_ts(mut self, value: String) -> Self {
         self.filter_at_ts = Some(value);
         self
@@ -128,7 +144,7 @@ impl GetScheduleOnCallRespondersOptionalParams {
 pub struct GetScheduleOnCallUserOptionalParams {
     /// Specifies related resources to include in the response as a comma-separated list. Allowed value: `user`.
     pub include: Option<String>,
-    /// Retrieves the on-call user at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01Z` or `2025-05-07T02:53:01+00:00`). When using timezone offsets with `+` or `-`, ensure proper URL encoding (`+` should be encoded as `%2B`). Defaults to the current time if omitted.
+    /// Retrieves the on-call user at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01Z` or `2025-05-07T02:53:01+00:00`). If you use a time zone offset with `+`, URL-encode the `+` as `%2B`. Defaults to the current time if omitted.
     pub filter_at_ts: Option<String>,
 }
 
@@ -138,7 +154,7 @@ impl GetScheduleOnCallUserOptionalParams {
         self.include = Some(value);
         self
     }
-    /// Retrieves the on-call user at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01Z` or `2025-05-07T02:53:01+00:00`). When using timezone offsets with `+` or `-`, ensure proper URL encoding (`+` should be encoded as `%2B`). Defaults to the current time if omitted.
+    /// Retrieves the on-call user at the given timestamp in RFC3339 format (for example, `2025-05-07T02:53:01Z` or `2025-05-07T02:53:01+00:00`). If you use a time zone offset with `+`, URL-encode the `+` as `%2B`. Defaults to the current time if omitted.
     pub fn filter_at_ts(mut self, value: String) -> Self {
         self.filter_at_ts = Some(value);
         self
@@ -210,6 +226,36 @@ impl ListOnCallSchedulesOptionalParams {
     /// Comma-separated list of included relationships to be returned. Allowed value: `teams`.
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
+        self
+    }
+}
+
+/// ListScheduleOverridesOptionalParams is a struct for passing parameters to the method [`OnCallAPI::list_schedule_overrides`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListScheduleOverridesOptionalParams {
+    /// Comma-separated list of related resources to include in the response. Allowed values: `user`, `overridden_user`, `user.color`.
+    pub include: Option<String>,
+    /// Number of overrides to return per page. The maximum allowed value is 50.
+    pub page_size: Option<i64>,
+    /// Specific page number to return.
+    pub page_number: Option<i64>,
+}
+
+impl ListScheduleOverridesOptionalParams {
+    /// Comma-separated list of related resources to include in the response. Allowed values: `user`, `overridden_user`, `user.color`.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+    /// Number of overrides to return per page. The maximum allowed value is 50.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
         self
     }
 }
@@ -310,6 +356,14 @@ pub enum CreateOnCallScheduleError {
     UnknownValue(serde_json::Value),
 }
 
+/// CreateScheduleOverridesError is a struct for typed errors of method [`OnCallAPI::create_schedule_overrides`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateScheduleOverridesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// CreateUserNotificationChannelError is a struct for typed errors of method [`OnCallAPI::create_user_notification_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -338,6 +392,14 @@ pub enum DeleteOnCallEscalationPolicyError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteOnCallScheduleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteScheduleOverrideError is a struct for typed errors of method [`OnCallAPI::delete_schedule_override`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteScheduleOverrideError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -426,6 +488,14 @@ pub enum GetUserNotificationRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListOnCallSchedulesError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListScheduleOverridesError is a struct for typed errors of method [`OnCallAPI::list_schedule_overrides`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListScheduleOverridesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -873,6 +943,177 @@ impl OnCallAPI {
             };
         } else {
             let local_entity: Option<CreateOnCallScheduleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Create one or more overrides for the specified On-Call schedule.
+    pub async fn create_schedule_overrides(
+        &self,
+        schedule_id: String,
+        body: crate::datadogV2::model::CreateOverridesRequest,
+        params: CreateScheduleOverridesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::OverrideCreateResponse,
+        datadog::Error<CreateScheduleOverridesError>,
+    > {
+        match self
+            .create_schedule_overrides_with_http_info(schedule_id, body, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create one or more overrides for the specified On-Call schedule.
+    pub async fn create_schedule_overrides_with_http_info(
+        &self,
+        schedule_id: String,
+        body: crate::datadogV2::model::CreateOverridesRequest,
+        params: CreateScheduleOverridesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::OverrideCreateResponse>,
+        datadog::Error<CreateScheduleOverridesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.create_schedule_overrides";
+
+        // unbox and build optional parameters
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/on-call/schedules/{schedule_id}/overrides",
+            local_configuration.get_operation_host(local_operation_id),
+            schedule_id = datadog::urlencode(schedule_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::OverrideCreateResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateScheduleOverridesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1378,6 +1619,100 @@ impl OnCallAPI {
             })
         } else {
             let local_entity: Option<DeleteOnCallScheduleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete an override from the specified On-Call schedule.
+    pub async fn delete_schedule_override(
+        &self,
+        schedule_id: String,
+        override_id: String,
+    ) -> Result<(), datadog::Error<DeleteScheduleOverrideError>> {
+        match self
+            .delete_schedule_override_with_http_info(schedule_id, override_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete an override from the specified On-Call schedule.
+    pub async fn delete_schedule_override_with_http_info(
+        &self,
+        schedule_id: String,
+        override_id: String,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScheduleOverrideError>> {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_schedule_override";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/on-call/schedules/{schedule_id}/overrides/{override_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            schedule_id = datadog::urlencode(schedule_id),
+            override_id = datadog::urlencode(override_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteScheduleOverrideError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -2704,6 +3039,184 @@ impl OnCallAPI {
             };
         } else {
             let local_entity: Option<ListOnCallSchedulesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieve a list of overrides for the specified On-Call schedule within a given time range.
+    pub async fn list_schedule_overrides(
+        &self,
+        schedule_id: String,
+        filter_start: chrono::DateTime<chrono::Utc>,
+        filter_end: chrono::DateTime<chrono::Utc>,
+        params: ListScheduleOverridesOptionalParams,
+    ) -> Result<crate::datadogV2::model::Overrides, datadog::Error<ListScheduleOverridesError>>
+    {
+        match self
+            .list_schedule_overrides_with_http_info(schedule_id, filter_start, filter_end, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_schedule_overrides_with_pagination(
+        &self,
+        schedule_id: String,
+        filter_start: chrono::DateTime<chrono::Utc>,
+        filter_end: chrono::DateTime<chrono::Utc>,
+        mut params: ListScheduleOverridesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::OverrideData,
+            datadog::Error<ListScheduleOverridesError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 10;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_schedule_overrides( schedule_id.clone(), filter_start.clone(), filter_end.clone(),params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
+    /// Retrieve a list of overrides for the specified On-Call schedule within a given time range.
+    pub async fn list_schedule_overrides_with_http_info(
+        &self,
+        schedule_id: String,
+        filter_start: chrono::DateTime<chrono::Utc>,
+        filter_end: chrono::DateTime<chrono::Utc>,
+        params: ListScheduleOverridesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::Overrides>,
+        datadog::Error<ListScheduleOverridesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_schedule_overrides";
+
+        // unbox and build optional parameters
+        let include = params.include;
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/on-call/schedules/{schedule_id}/overrides",
+            local_configuration.get_operation_host(local_operation_id),
+            schedule_id = datadog::urlencode(schedule_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        local_req_builder = local_req_builder.query(&[(
+            "filter[start]",
+            &filter_start.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
+        local_req_builder = local_req_builder.query(&[(
+            "filter[end]",
+            &filter_end.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        )]);
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::Overrides>(&local_content) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListScheduleOverridesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
