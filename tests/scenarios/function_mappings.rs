@@ -56,7 +56,8 @@ pub struct ApiInstances {
     pub v2_api_action_connection: Option<datadogV2::api_action_connection::ActionConnectionAPI>,
     pub v2_api_execution_policy: Option<datadogV2::api_execution_policy::ExecutionPolicyAPI>,
     pub v2_api_agentless_scanning: Option<datadogV2::api_agentless_scanning::AgentlessScanningAPI>,
-    pub v2_api_dora_metrics: Option<datadogV2::api_dora_metrics::DORAMetricsAPI>,
+    pub v2_api_delivery_performance:
+        Option<datadogV2::api_delivery_performance::DeliveryPerformanceAPI>,
     pub v2_api_annotations: Option<datadogV2::api_annotations::AnnotationsAPI>,
     pub v2_api_users: Option<datadogV2::api_users::UsersAPI>,
     pub v2_api_key_management: Option<datadogV2::api_key_management::KeyManagementAPI>,
@@ -652,9 +653,9 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "DORAMetrics" => {
-            world.api_instances.v2_api_dora_metrics = Some(
-                datadogV2::api_dora_metrics::DORAMetricsAPI::with_client_and_config(
+        "DeliveryPerformance" => {
+            world.api_instances.v2_api_delivery_performance = Some(
+                datadogV2::api_delivery_performance::DeliveryPerformanceAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -20234,7 +20235,7 @@ fn test_v2_create_ai_impact_user_activity(
 ) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -20259,7 +20260,7 @@ fn test_v2_create_ai_impact_user_activity(
 fn test_v2_create_dora_deployment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -20284,7 +20285,7 @@ fn test_v2_create_dora_deployment(world: &mut DatadogWorld, _parameters: &HashMa
 fn test_v2_delete_dora_deployment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let deployment_id =
@@ -20313,7 +20314,7 @@ fn test_v2_patch_dora_deployment_by_version(
 ) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -20338,7 +20339,7 @@ fn test_v2_patch_dora_deployment_by_version(
 fn test_v2_list_dora_deployments(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -20363,7 +20364,7 @@ fn test_v2_list_dora_deployments(world: &mut DatadogWorld, _parameters: &HashMap
 fn test_v2_get_dora_deployment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let deployment_id =
@@ -20389,7 +20390,7 @@ fn test_v2_get_dora_deployment(world: &mut DatadogWorld, _parameters: &HashMap<S
 fn test_v2_patch_dora_deployment(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let deployment_id =
@@ -20416,7 +20417,7 @@ fn test_v2_patch_dora_deployment(world: &mut DatadogWorld, _parameters: &HashMap
 fn test_v2_create_dora_failure(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -20441,7 +20442,7 @@ fn test_v2_create_dora_failure(world: &mut DatadogWorld, _parameters: &HashMap<S
 fn test_v2_delete_dora_failure(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let failure_id =
@@ -20467,7 +20468,7 @@ fn test_v2_delete_dora_failure(world: &mut DatadogWorld, _parameters: &HashMap<S
 fn test_v2_list_dora_failures(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
@@ -20492,7 +20493,7 @@ fn test_v2_list_dora_failures(world: &mut DatadogWorld, _parameters: &HashMap<St
 fn test_v2_get_dora_failure(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let failure_id =
@@ -20518,7 +20519,7 @@ fn test_v2_get_dora_failure(world: &mut DatadogWorld, _parameters: &HashMap<Stri
 fn test_v2_create_dora_incident(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
-        .v2_api_dora_metrics
+        .v2_api_delivery_performance
         .as_ref()
         .expect("api instance not found");
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();

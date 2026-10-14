@@ -10,7 +10,7 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// CreateAIImpactUserActivityError is a struct for typed errors of method [`DORAMetricsAPI::create_ai_impact_user_activity`]
+/// CreateAIImpactUserActivityError is a struct for typed errors of method [`DeliveryPerformanceAPI::create_ai_impact_user_activity`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateAIImpactUserActivityError {
@@ -19,7 +19,7 @@ pub enum CreateAIImpactUserActivityError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateDORADeploymentError is a struct for typed errors of method [`DORAMetricsAPI::create_dora_deployment`]
+/// CreateDORADeploymentError is a struct for typed errors of method [`DeliveryPerformanceAPI::create_dora_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateDORADeploymentError {
@@ -28,7 +28,7 @@ pub enum CreateDORADeploymentError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateDORAFailureError is a struct for typed errors of method [`DORAMetricsAPI::create_dora_failure`]
+/// CreateDORAFailureError is a struct for typed errors of method [`DeliveryPerformanceAPI::create_dora_failure`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateDORAFailureError {
@@ -37,7 +37,7 @@ pub enum CreateDORAFailureError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateDORAIncidentError is a struct for typed errors of method [`DORAMetricsAPI::create_dora_incident`]
+/// CreateDORAIncidentError is a struct for typed errors of method [`DeliveryPerformanceAPI::create_dora_incident`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateDORAIncidentError {
@@ -46,7 +46,7 @@ pub enum CreateDORAIncidentError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteDORADeploymentError is a struct for typed errors of method [`DORAMetricsAPI::delete_dora_deployment`]
+/// DeleteDORADeploymentError is a struct for typed errors of method [`DeliveryPerformanceAPI::delete_dora_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteDORADeploymentError {
@@ -55,7 +55,7 @@ pub enum DeleteDORADeploymentError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteDORAFailureError is a struct for typed errors of method [`DORAMetricsAPI::delete_dora_failure`]
+/// DeleteDORAFailureError is a struct for typed errors of method [`DeliveryPerformanceAPI::delete_dora_failure`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteDORAFailureError {
@@ -64,7 +64,7 @@ pub enum DeleteDORAFailureError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetDORADeploymentError is a struct for typed errors of method [`DORAMetricsAPI::get_dora_deployment`]
+/// GetDORADeploymentError is a struct for typed errors of method [`DeliveryPerformanceAPI::get_dora_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetDORADeploymentError {
@@ -73,7 +73,7 @@ pub enum GetDORADeploymentError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetDORAFailureError is a struct for typed errors of method [`DORAMetricsAPI::get_dora_failure`]
+/// GetDORAFailureError is a struct for typed errors of method [`DeliveryPerformanceAPI::get_dora_failure`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetDORAFailureError {
@@ -82,7 +82,7 @@ pub enum GetDORAFailureError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListDORADeploymentsError is a struct for typed errors of method [`DORAMetricsAPI::list_dora_deployments`]
+/// ListDORADeploymentsError is a struct for typed errors of method [`DeliveryPerformanceAPI::list_dora_deployments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListDORADeploymentsError {
@@ -91,7 +91,7 @@ pub enum ListDORADeploymentsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListDORAFailuresError is a struct for typed errors of method [`DORAMetricsAPI::list_dora_failures`]
+/// ListDORAFailuresError is a struct for typed errors of method [`DeliveryPerformanceAPI::list_dora_failures`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListDORAFailuresError {
@@ -100,7 +100,7 @@ pub enum ListDORAFailuresError {
     UnknownValue(serde_json::Value),
 }
 
-/// PatchDORADeploymentError is a struct for typed errors of method [`DORAMetricsAPI::patch_dora_deployment`]
+/// PatchDORADeploymentError is a struct for typed errors of method [`DeliveryPerformanceAPI::patch_dora_deployment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchDORADeploymentError {
@@ -109,7 +109,7 @@ pub enum PatchDORADeploymentError {
     UnknownValue(serde_json::Value),
 }
 
-/// PatchDORADeploymentByVersionError is a struct for typed errors of method [`DORAMetricsAPI::patch_dora_deployment_by_version`]
+/// PatchDORADeploymentByVersionError is a struct for typed errors of method [`DeliveryPerformanceAPI::patch_dora_deployment_by_version`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchDORADeploymentByVersionError {
@@ -118,22 +118,22 @@ pub enum PatchDORADeploymentByVersionError {
     UnknownValue(serde_json::Value),
 }
 
-/// Search, send, or delete events for DORA Metrics to measure and improve your software delivery performance. See the [DORA Metrics page](<https://docs.datadoghq.com/dora_metrics/>) for more information.
+/// Search, send, or delete events for Delivery Performance (formerly DORA Metrics) to measure and improve your software delivery performance. See the [Delivery Performance page](<https://docs.datadoghq.com/dora_metrics/>) for more information.
 ///
-/// **Note**: DORA Metrics are not available in the US1-FED site.
+/// **Note**: Delivery Performance is not available in the US1-FED site.
 #[derive(Debug, Clone)]
-pub struct DORAMetricsAPI {
+pub struct DeliveryPerformanceAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for DORAMetricsAPI {
+impl Default for DeliveryPerformanceAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl DORAMetricsAPI {
+impl DeliveryPerformanceAPI {
     pub fn new() -> Self {
         Self::default()
     }

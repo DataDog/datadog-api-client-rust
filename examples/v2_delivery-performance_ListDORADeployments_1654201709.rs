@@ -1,7 +1,7 @@
-// Get a list of deployment events returns "OK" response
+// Get a list of deployment events returns deployments with date-time timestamps
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
+use datadog_api_client::datadogV2::api_delivery_performance::DeliveryPerformanceAPI;
 use datadog_api_client::datadogV2::model::DORAListDeploymentsRequest;
 use datadog_api_client::datadogV2::model::DORAListDeploymentsRequestAttributes;
 use datadog_api_client::datadogV2::model::DORAListDeploymentsRequestData;
@@ -13,19 +13,18 @@ async fn main() {
         DORAListDeploymentsRequestData::new(
             DORAListDeploymentsRequestAttributes::new()
                 .from(
-                    DateTime::parse_from_rfc3339("2025-03-23T00:00:00+00:00")
+                    DateTime::parse_from_rfc3339("2023-08-31T00:00:00+00:00")
                         .expect("Failed to parse datetime")
                         .with_timezone(&Utc),
                 )
-                .limit(1)
-                .to(DateTime::parse_from_rfc3339("2025-03-24T00:00:00+00:00")
+                .to(DateTime::parse_from_rfc3339("2023-09-01T00:00:00+00:00")
                     .expect("Failed to parse datetime")
                     .with_timezone(&Utc)),
         )
         .type_(DORAListDeploymentsRequestDataType::DORA_DEPLOYMENTS_LIST_REQUEST),
     );
     let configuration = datadog::Configuration::new();
-    let api = DORAMetricsAPI::with_config(configuration);
+    let api = DeliveryPerformanceAPI::with_config(configuration);
     let resp = api.list_dora_deployments(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

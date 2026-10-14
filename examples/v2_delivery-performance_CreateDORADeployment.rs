@@ -1,6 +1,6 @@
 // Send a deployment event returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
+use datadog_api_client::datadogV2::api_delivery_performance::DeliveryPerformanceAPI;
 use datadog_api_client::datadogV2::model::DORADeploymentRequest;
 use datadog_api_client::datadogV2::model::DORADeploymentRequestAttributes;
 use datadog_api_client::datadogV2::model::DORADeploymentRequestData;
@@ -21,7 +21,7 @@ async fn main() {
         .version("v1.12.07".to_string()),
     ));
     let configuration = datadog::Configuration::new();
-    let api = DORAMetricsAPI::with_config(configuration);
+    let api = DeliveryPerformanceAPI::with_config(configuration);
     let resp = api.create_dora_deployment(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

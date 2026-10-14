@@ -1,7 +1,7 @@
 // Get a list of failure events returns "OK" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
+use datadog_api_client::datadogV2::api_delivery_performance::DeliveryPerformanceAPI;
 use datadog_api_client::datadogV2::model::DORAListFailuresRequest;
 use datadog_api_client::datadogV2::model::DORAListFailuresRequestAttributes;
 use datadog_api_client::datadogV2::model::DORAListFailuresRequestData;
@@ -25,7 +25,7 @@ async fn main() {
         .type_(DORAListFailuresRequestDataType::DORA_FAILURES_LIST_REQUEST),
     );
     let configuration = datadog::Configuration::new();
-    let api = DORAMetricsAPI::with_config(configuration);
+    let api = DeliveryPerformanceAPI::with_config(configuration);
     let resp = api.list_dora_failures(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

@@ -1,6 +1,6 @@
 // Mark a deployment as failed by version returns "Accepted" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
+use datadog_api_client::datadogV2::api_delivery_performance::DeliveryPerformanceAPI;
 use datadog_api_client::datadogV2::model::DORADeploymentPatchByVersionRemediation;
 use datadog_api_client::datadogV2::model::DORADeploymentPatchByVersionRemediationByVersion;
 use datadog_api_client::datadogV2::model::DORADeploymentPatchByVersionRequest;
@@ -33,7 +33,7 @@ async fn main() {
             ),
         );
     let configuration = datadog::Configuration::new();
-    let api = DORAMetricsAPI::with_config(configuration);
+    let api = DeliveryPerformanceAPI::with_config(configuration);
     let resp = api.patch_dora_deployment_by_version(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

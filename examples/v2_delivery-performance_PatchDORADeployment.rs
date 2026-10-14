@@ -1,6 +1,6 @@
 // Mark a deployment as failed by ID returns "Accepted" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_dora_metrics::DORAMetricsAPI;
+use datadog_api_client::datadogV2::api_delivery_performance::DeliveryPerformanceAPI;
 use datadog_api_client::datadogV2::model::DORADeploymentPatchRemediation;
 use datadog_api_client::datadogV2::model::DORADeploymentPatchRemediationType;
 use datadog_api_client::datadogV2::model::DORADeploymentPatchRequest;
@@ -22,7 +22,7 @@ async fn main() {
         DORADeploymentPatchRequestDataType::DORA_DEPLOYMENT_PATCH_REQUEST,
     ));
     let configuration = datadog::Configuration::new();
-    let api = DORAMetricsAPI::with_config(configuration);
+    let api = DeliveryPerformanceAPI::with_config(configuration);
     let resp = api
         .patch_dora_deployment("deployment_id".to_string(), body)
         .await;
