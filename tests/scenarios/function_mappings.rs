@@ -61605,10 +61605,24 @@ fn test_v2_get_sourcemaps(world: &mut DatadogWorld, _parameters: &HashMap<String
         .v2_api_rum
         .as_ref()
         .expect("api instance not found");
-    let filename = serde_json::from_value(_parameters.get("filename").unwrap().clone()).unwrap();
-    let service = serde_json::from_value(_parameters.get("service").unwrap().clone()).unwrap();
-    let version = serde_json::from_value(_parameters.get("version").unwrap().clone()).unwrap();
-    let response = match block_on(api.get_sourcemaps_with_http_info(filename, service, version)) {
+    let debug_id = _parameters
+        .get("debug_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filename = _parameters
+        .get("filename")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let service = _parameters
+        .get("service")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let version = _parameters
+        .get("version")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_rum::GetSourcemapsOptionalParams::default();
+    params.debug_id = debug_id;
+    params.filename = filename;
+    params.service = service;
+    params.version = version;
+    let response = match block_on(api.get_sourcemaps_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
