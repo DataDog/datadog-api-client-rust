@@ -14,6 +14,9 @@ pub struct ExperimentsPublicProtocolListResponseDataAttributes {
     /// Text that explains the protocol.
     #[serde(rename = "description")]
     pub description: Option<String>,
+    /// Number of experiments in the organization that use this protocol, excluding deleted experiments.
+    #[serde(rename = "experiment_count")]
+    pub experiment_count: i64,
     /// Display name of the protocol.
     #[serde(rename = "name")]
     pub name: String,
@@ -34,7 +37,8 @@ pub struct ExperimentsPublicProtocolListResponseDataAttributes {
     /// ID of the subject type used by this configuration.
     #[serde(rename = "subject_type_id")]
     pub subject_type_id: Option<String>,
-    /// RFC3339 update time. Preserve all fractional seconds when passing this value as expected_updated_at.
+    /// RFC3339 update time. Preserve all fractional seconds when passing this value as
+    /// `expected_updated_at`.
     #[serde(rename = "updated_at")]
     pub updated_at: String,
     #[serde(flatten)]
@@ -46,12 +50,14 @@ pub struct ExperimentsPublicProtocolListResponseDataAttributes {
 
 impl ExperimentsPublicProtocolListResponseDataAttributes {
     pub fn new(
+        experiment_count: i64,
         name: String,
         status: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesStatus,
         updated_at: String,
     ) -> ExperimentsPublicProtocolListResponseDataAttributes {
         ExperimentsPublicProtocolListResponseDataAttributes {
             description: None,
+            experiment_count,
             name,
             primary_metric: None,
             primary_metric_id: None,
@@ -122,6 +128,7 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolListResponseDataAttribut
                 M: MapAccess<'a>,
             {
                 let mut description: Option<String> = None;
+                let mut experiment_count: Option<i64> = None;
                 let mut name: Option<String> = None;
                 let mut primary_metric: Option<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesSubjectType> = None;
                 let mut primary_metric_id: Option<String> = None;
@@ -144,6 +151,10 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolListResponseDataAttribut
                                 continue;
                             }
                             description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "experiment_count" => {
+                            experiment_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
@@ -198,12 +209,15 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolListResponseDataAttribut
                         }
                     }
                 }
+                let experiment_count =
+                    experiment_count.ok_or_else(|| M::Error::missing_field("experiment_count"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
 
                 let content = ExperimentsPublicProtocolListResponseDataAttributes {
                     description,
+                    experiment_count,
                     name,
                     primary_metric,
                     primary_metric_id,

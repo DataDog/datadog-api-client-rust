@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ExperimentsPublicProtocolResponseDataAttributesEnforcement {
-    /// LOCKED prevents changes to confidence interval method. EDITABLE permits changes.
+    /// Always LOCKED. The server keeps this setting locked regardless of the supplied value.
     #[serde(rename = "confidence_interval_method")]
     pub confidence_interval_method: Option<String>,
     /// LOCKED prevents changes to confidence level. EDITABLE permits changes.
@@ -26,7 +26,7 @@ pub struct ExperimentsPublicProtocolResponseDataAttributesEnforcement {
     /// LOCKED prevents changes to environment. EDITABLE permits changes.
     #[serde(rename = "environment")]
     pub environment: Option<String>,
-    /// LOCKED prevents changes to feature flag source. EDITABLE permits changes.
+    /// Always LOCKED. The server keeps this setting locked regardless of the supplied value.
     #[serde(rename = "flag_source")]
     pub flag_source: Option<String>,
     /// LOCKED prevents changes to multiple testing correction. EDITABLE permits changes.
@@ -44,7 +44,7 @@ pub struct ExperimentsPublicProtocolResponseDataAttributesEnforcement {
     /// LOCKED prevents changes to result exploration dimensions. EDITABLE permits changes.
     #[serde(rename = "split_by_exploration_dimensions")]
     pub split_by_exploration_dimensions: Option<String>,
-    /// LOCKED prevents changes to subject type. EDITABLE permits changes.
+    /// Always LOCKED. The server keeps this setting locked regardless of the supplied value.
     #[serde(rename = "subject_type")]
     pub subject_type: Option<String>,
     /// LOCKED prevents changes to targeting rules. EDITABLE permits changes.
