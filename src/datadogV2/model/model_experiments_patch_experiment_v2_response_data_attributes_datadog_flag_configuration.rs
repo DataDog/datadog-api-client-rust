@@ -26,7 +26,7 @@ pub struct ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigur
     pub feature_flag_id: Option<String>,
     /// Rules that select subjects for the experiment.
     #[serde(rename = "targeting_rules")]
-    pub targeting_rules: Option<Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems>>,
+    pub targeting_rules: Option<Vec<crate::datadogV2::model::ExperimentsTargetingRule>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -66,7 +66,7 @@ impl ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfiguration 
 
     pub fn targeting_rules(
         mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems>,
+        value: Vec<crate::datadogV2::model::ExperimentsTargetingRule>,
     ) -> Self {
         self.targeting_rules = Some(value);
         self
@@ -106,7 +106,9 @@ impl<'de> Deserialize<'de>
                 let mut entry_point: Option<Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPoint>> = None;
                 let mut environment_id: Option<String> = None;
                 let mut feature_flag_id: Option<String> = None;
-                let mut targeting_rules: Option<Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems>> = None;
+                let mut targeting_rules: Option<
+                    Vec<crate::datadogV2::model::ExperimentsTargetingRule>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

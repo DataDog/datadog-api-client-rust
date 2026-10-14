@@ -15,8 +15,13 @@ pub struct ExperimentsWarehouseMetricAggregationInput {
     #[serde(rename = "aging_threshold_days")]
     pub aging_threshold_days: Option<i64>,
     /// Optional Datadog measure. Use null when the other measure is selected.
-    #[serde(rename = "datadog_metric_measure", default, with = "::serde_with::rust::double_option")]
-    pub datadog_metric_measure: Option<Option<crate::datadogV2::model::ExperimentsNullableDatadogMetricMeasureInput>>,
+    #[serde(
+        rename = "datadog_metric_measure",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub datadog_metric_measure:
+        Option<Option<crate::datadogV2::model::ExperimentsNullableDatadogMetricMeasureInput>>,
     /// Whether to exclude subjects whose observation time is shorter than the aggregation window.
     #[serde(rename = "enable_aging_subject_filter")]
     pub enable_aging_subject_filter: Option<bool>,
@@ -24,8 +29,13 @@ pub struct ExperimentsWarehouseMetricAggregationInput {
     #[serde(rename = "operation")]
     pub operation: String,
     /// Property filters that select data for this aggregation.
-    #[serde(rename = "property_filters", default, with = "::serde_with::rust::double_option")]
-    pub property_filters: Option<Option<Vec<Vec<crate::datadogV2::model::ExperimentsWarehouseFilterInput>>>>,
+    #[serde(
+        rename = "property_filters",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub property_filters:
+        Option<Option<Vec<Vec<crate::datadogV2::model::ExperimentsWarehouseFilterInput>>>>,
     /// Calculation used to evaluate the threshold.
     #[serde(rename = "threshold_aggregation_type")]
     pub threshold_aggregation_type: Option<String>,
@@ -36,7 +46,7 @@ pub struct ExperimentsWarehouseMetricAggregationInput {
     #[serde(rename = "threshold_comparison_operator")]
     pub threshold_comparison_operator: Option<String>,
     /// Time unit for the threshold evaluation window. Supports seconds, minutes, hours, days, calendar_days, and
-/// weeks. Calendar days start at midnight on the assignment day. Other units start at the assignment time.
+    /// weeks. Calendar days start at midnight on the assignment day. Other units start at the assignment time.
     #[serde(rename = "threshold_timeframe_dimension")]
     pub threshold_timeframe_dimension: Option<String>,
     /// End of the threshold evaluation window, measured from assignment in the configured time unit.
@@ -49,12 +59,12 @@ pub struct ExperimentsWarehouseMetricAggregationInput {
     #[serde(rename = "timeframe_start_value")]
     pub timeframe_start_value: Option<f64>,
     /// Time unit for the aggregation window. Calendar days are measured from midnight on the assignment day.
-/// Other units are measured from the assignment time.
+    /// Other units are measured from the assignment time.
     #[serde(rename = "timeframe_unit")]
     pub timeframe_unit: Option<String>,
     /// Reference to a measure defined in a warehouse metric SQL model.
     #[serde(rename = "warehouse_metric_measure")]
-    pub warehouse_metric_measure: crate::datadogV2::model::ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure,
+    pub warehouse_metric_measure: crate::datadogV2::model::ExperimentsWarehouseMetricMeasure,
     /// Fixed lower bound used to cap extreme measure values.
     #[serde(rename = "winsor_lower_fixed_value")]
     pub winsor_lower_fixed_value: Option<f64>,
@@ -74,13 +84,13 @@ pub struct ExperimentsWarehouseMetricAggregationInput {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
 impl ExperimentsWarehouseMetricAggregationInput {
     pub fn new(
         operation: String,
-        warehouse_metric_measure: crate::datadogV2::model::ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure,
+        warehouse_metric_measure: crate::datadogV2::model::ExperimentsWarehouseMetricMeasure,
     ) -> ExperimentsWarehouseMetricAggregationInput {
         ExperimentsWarehouseMetricAggregationInput {
             aging_threshold_days: None,
@@ -241,7 +251,9 @@ impl<'de> Deserialize<'de> for ExperimentsWarehouseMetricAggregationInput {
                 let mut timeframe_end_value: Option<f64> = None;
                 let mut timeframe_start_value: Option<f64> = None;
                 let mut timeframe_unit: Option<String> = None;
-                let mut warehouse_metric_measure: Option<crate::datadogV2::model::ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure> = None;
+                let mut warehouse_metric_measure: Option<
+                    crate::datadogV2::model::ExperimentsWarehouseMetricMeasure,
+                > = None;
                 let mut winsor_lower_fixed_value: Option<f64> = None;
                 let mut winsor_lower_percentile: Option<f64> = None;
                 let mut winsor_upper_fixed_value: Option<f64> = None;

@@ -12,11 +12,15 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ExperimentsPropertyFilterInput {
     /// Omit this target or use null or a blank string.
-    #[serde(rename = "measure_id", default, with = "::serde_with::rust::double_option")]
+    #[serde(
+        rename = "measure_id",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
     pub measure_id: Option<Option<String>>,
     /// Comparison applied by the warehouse entry-point filter.
     #[serde(rename = "operation")]
-    pub operation: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation,
+    pub operation: crate::datadogV2::model::ExperimentsWarehouseEntryPointFilterOperation,
     /// ID of the property on the aggregation source.
     #[serde(rename = "property_id")]
     pub property_id: uuid::Uuid,
@@ -27,12 +31,12 @@ pub struct ExperimentsPropertyFilterInput {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
 impl ExperimentsPropertyFilterInput {
     pub fn new(
-        operation: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation,
+        operation: crate::datadogV2::model::ExperimentsWarehouseEntryPointFilterOperation,
         property_id: uuid::Uuid,
         values: Vec<String>,
     ) -> ExperimentsPropertyFilterInput {
@@ -78,7 +82,9 @@ impl<'de> Deserialize<'de> for ExperimentsPropertyFilterInput {
                 M: MapAccess<'a>,
             {
                 let mut measure_id: Option<Option<String>> = None;
-                let mut operation: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation> = None;
+                let mut operation: Option<
+                    crate::datadogV2::model::ExperimentsWarehouseEntryPointFilterOperation,
+                > = None;
                 let mut property_id: Option<uuid::Uuid> = None;
                 let mut values: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -96,7 +102,7 @@ impl<'de> Deserialize<'de> for ExperimentsPropertyFilterInput {
                             operation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _operation) = operation {
                                 match _operation {
-                                    crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation::UnparsedObject(_operation) => {
+                                    crate::datadogV2::model::ExperimentsWarehouseEntryPointFilterOperation::UnparsedObject(_operation) => {
                                         _unparsed = true;
                                     },
                                     _ => {}

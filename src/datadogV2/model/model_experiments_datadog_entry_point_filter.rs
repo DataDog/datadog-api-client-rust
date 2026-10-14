@@ -16,10 +16,10 @@ pub struct ExperimentsDatadogEntryPointFilter {
     pub column: String,
     /// Data type of the column evaluated by the entry-point filter.
     #[serde(rename = "column_type")]
-    pub column_type: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType,
+    pub column_type: crate::datadogV2::model::ExperimentsDatadogEntryPointFilterColumnType,
     /// Comparison applied by the Datadog entry-point filter.
     #[serde(rename = "operation")]
-    pub operation: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsOperation,
+    pub operation: crate::datadogV2::model::ExperimentsDatadogEntryPointFilterOperation,
     /// Comparison values used by the filter operation.
     #[serde(rename = "values")]
     pub values: Vec<String>,
@@ -27,14 +27,14 @@ pub struct ExperimentsDatadogEntryPointFilter {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
 impl ExperimentsDatadogEntryPointFilter {
     pub fn new(
         column: String,
-        column_type: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType,
-        operation: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsOperation,
+        column_type: crate::datadogV2::model::ExperimentsDatadogEntryPointFilterColumnType,
+        operation: crate::datadogV2::model::ExperimentsDatadogEntryPointFilterOperation,
         values: Vec<String>,
     ) -> ExperimentsDatadogEntryPointFilter {
         ExperimentsDatadogEntryPointFilter {
@@ -74,8 +74,12 @@ impl<'de> Deserialize<'de> for ExperimentsDatadogEntryPointFilter {
                 M: MapAccess<'a>,
             {
                 let mut column: Option<String> = None;
-                let mut column_type: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType> = None;
-                let mut operation: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsOperation> = None;
+                let mut column_type: Option<
+                    crate::datadogV2::model::ExperimentsDatadogEntryPointFilterColumnType,
+                > = None;
+                let mut operation: Option<
+                    crate::datadogV2::model::ExperimentsDatadogEntryPointFilterOperation,
+                > = None;
                 let mut values: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -93,7 +97,7 @@ impl<'de> Deserialize<'de> for ExperimentsDatadogEntryPointFilter {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _column_type) = column_type {
                                 match _column_type {
-                                    crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType::UnparsedObject(_column_type) => {
+                                    crate::datadogV2::model::ExperimentsDatadogEntryPointFilterColumnType::UnparsedObject(_column_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -104,7 +108,7 @@ impl<'de> Deserialize<'de> for ExperimentsDatadogEntryPointFilter {
                             operation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _operation) = operation {
                                 match _operation {
-                                    crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsOperation::UnparsedObject(_operation) => {
+                                    crate::datadogV2::model::ExperimentsDatadogEntryPointFilterOperation::UnparsedObject(_operation) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
