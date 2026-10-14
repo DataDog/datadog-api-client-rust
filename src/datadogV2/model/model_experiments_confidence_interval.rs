@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceInterval {
+pub struct ExperimentsConfidenceInterval {
     /// Lower bound of the reported interval.
     #[serde(rename = "lower")]
     pub lower: Option<f64>,
@@ -24,11 +24,9 @@ pub struct ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems
     pub(crate) _unparsed: bool,
 }
 
-impl ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceInterval {
-    pub fn new(
-    ) -> ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceInterval
-    {
-        ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceInterval {
+impl ExperimentsConfidenceInterval {
+    pub fn new() -> ExperimentsConfidenceInterval {
+        ExperimentsConfidenceInterval {
             lower: None,
             upper: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -55,24 +53,20 @@ impl ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfid
     }
 }
 
-impl Default
-    for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceInterval
-{
+impl Default for ExperimentsConfidenceInterval {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceInterval
-{
+impl<'de> Deserialize<'de> for ExperimentsConfidenceInterval {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceIntervalVisitor;
-        impl<'a> Visitor<'a> for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceIntervalVisitor {
-            type Value = ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceInterval;
+        struct ExperimentsConfidenceIntervalVisitor;
+        impl<'a> Visitor<'a> for ExperimentsConfidenceIntervalVisitor {
+            type Value = ExperimentsConfidenceInterval;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -84,7 +78,10 @@ impl<'de> Deserialize<'de>
             {
                 let mut lower: Option<f64> = None;
                 let mut upper: Option<f64> = None;
-                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -94,22 +91,22 @@ impl<'de> Deserialize<'de>
                                 continue;
                             }
                             lower = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        },
+                        }
                         "upper" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             upper = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        },
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        },
+                        }
                     }
                 }
 
-                let content = ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceInterval {
+                let content = ExperimentsConfidenceInterval {
                     lower,
                     upper,
                     additional_properties,
@@ -120,6 +117,6 @@ impl<'de> Deserialize<'de>
             }
         }
 
-        deserializer.deserialize_any(ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceIntervalVisitor)
+        deserializer.deserialize_any(ExperimentsConfidenceIntervalVisitor)
     }
 }

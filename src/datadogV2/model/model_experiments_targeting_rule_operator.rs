@@ -6,8 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationTargetingRulesItemsConditionsItemsOperator
-{
+pub enum ExperimentsTargetingRuleOperator {
     LT,
     LTE,
     GT,
@@ -27,7 +26,7 @@ pub enum ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurat
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationTargetingRulesItemsConditionsItemsOperator {
+impl ToString for ExperimentsTargetingRuleOperator {
     fn to_string(&self) -> String {
         match self {
             Self::LT => String::from("LT"),
@@ -51,7 +50,7 @@ impl ToString for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagC
     }
 }
 
-impl Serialize for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationTargetingRulesItemsConditionsItemsOperator {
+impl Serialize for ExperimentsTargetingRuleOperator {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -63,14 +62,32 @@ impl Serialize for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlag
     }
 }
 
-impl<'de> Deserialize<'de> for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationTargetingRulesItemsConditionsItemsOperator {
+impl<'de> Deserialize<'de> for ExperimentsTargetingRuleOperator {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {"LT" => Self::LT,"LTE" => Self::LTE,"GT" => Self::GT,"GTE" => Self::GTE,"MATCHES" => Self::MATCHES,"NOT_MATCHES" => Self::NOT_MATCHES,"ONE_OF" => Self::ONE_OF,"NOT_ONE_OF" => Self::NOT_ONE_OF,"IS_NULL" => Self::IS_NULL,"EQUALS" => Self::EQUALS,"SEMVER_EQ" => Self::SEMVER_EQ,"SEMVER_NEQ" => Self::SEMVER_NEQ,"SEMVER_LT" => Self::SEMVER_LT,"SEMVER_LTE" => Self::SEMVER_LTE,"SEMVER_GT" => Self::SEMVER_GT,"SEMVER_GTE" => Self::SEMVER_GTE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
+        Ok(match s.as_str() {
+            "LT" => Self::LT,
+            "LTE" => Self::LTE,
+            "GT" => Self::GT,
+            "GTE" => Self::GTE,
+            "MATCHES" => Self::MATCHES,
+            "NOT_MATCHES" => Self::NOT_MATCHES,
+            "ONE_OF" => Self::ONE_OF,
+            "NOT_ONE_OF" => Self::NOT_ONE_OF,
+            "IS_NULL" => Self::IS_NULL,
+            "EQUALS" => Self::EQUALS,
+            "SEMVER_EQ" => Self::SEMVER_EQ,
+            "SEMVER_NEQ" => Self::SEMVER_NEQ,
+            "SEMVER_LT" => Self::SEMVER_LT,
+            "SEMVER_LTE" => Self::SEMVER_LTE,
+            "SEMVER_GT" => Self::SEMVER_GT,
+            "SEMVER_GTE" => Self::SEMVER_GTE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

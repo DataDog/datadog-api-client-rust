@@ -12,28 +12,38 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ExperimentsWarehousePercentileAggregationInput {
     /// Optional Datadog percentile measure. Use null when the warehouse measure is selected.
-    #[serde(rename = "datadog_metric_measure", default, with = "::serde_with::rust::double_option")]
-    pub datadog_metric_measure: Option<Option<crate::datadogV2::model::ExperimentsNullableDatadogPercentileMeasureInput>>,
+    #[serde(
+        rename = "datadog_metric_measure",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub datadog_metric_measure:
+        Option<Option<crate::datadogV2::model::ExperimentsNullableDatadogPercentileMeasureInput>>,
     /// Percentile to calculate from the measure values.
     #[serde(rename = "percentile")]
     pub percentile: f64,
     /// Property filters that select data for the percentile calculation.
-    #[serde(rename = "property_filters", default, with = "::serde_with::rust::double_option")]
-    pub property_filters: Option<Option<Vec<Vec<crate::datadogV2::model::ExperimentsPropertyFilterInput>>>>,
+    #[serde(
+        rename = "property_filters",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub property_filters:
+        Option<Option<Vec<Vec<crate::datadogV2::model::ExperimentsPropertyFilterInput>>>>,
     /// Reference to a measure defined in a warehouse metric SQL model.
     #[serde(rename = "warehouse_metric_measure")]
-    pub warehouse_metric_measure: crate::datadogV2::model::ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure,
+    pub warehouse_metric_measure: crate::datadogV2::model::ExperimentsWarehouseMetricMeasure,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
 impl ExperimentsWarehousePercentileAggregationInput {
     pub fn new(
         percentile: f64,
-        warehouse_metric_measure: crate::datadogV2::model::ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure,
+        warehouse_metric_measure: crate::datadogV2::model::ExperimentsWarehouseMetricMeasure,
     ) -> ExperimentsWarehousePercentileAggregationInput {
         ExperimentsWarehousePercentileAggregationInput {
             datadog_metric_measure: None,
@@ -96,7 +106,9 @@ impl<'de> Deserialize<'de> for ExperimentsWarehousePercentileAggregationInput {
                 let mut property_filters: Option<
                     Option<Vec<Vec<crate::datadogV2::model::ExperimentsPropertyFilterInput>>>,
                 > = None;
-                let mut warehouse_metric_measure: Option<crate::datadogV2::model::ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure> = None;
+                let mut warehouse_metric_measure: Option<
+                    crate::datadogV2::model::ExperimentsWarehouseMetricMeasure,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

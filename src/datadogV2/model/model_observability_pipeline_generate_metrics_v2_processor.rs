@@ -22,6 +22,9 @@ pub struct ObservabilityPipelineGenerateMetricsV2Processor {
     /// Indicates whether the processor is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
+    /// [Recommended] Indicates whether generated metrics are automatically aggregated and enriched with the `worker_uuid` tag before being sent to the metric destination.
+    #[serde(rename = "enabled_metric_aggregation")]
+    pub enabled_metric_aggregation: Option<bool>,
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline.
     #[serde(rename = "id")]
     pub id: String,
@@ -50,6 +53,7 @@ impl ObservabilityPipelineGenerateMetricsV2Processor {
         ObservabilityPipelineGenerateMetricsV2Processor {
             display_name: None,
             enabled,
+            enabled_metric_aggregation: None,
             id,
             include: None,
             metrics: None,
@@ -61,6 +65,11 @@ impl ObservabilityPipelineGenerateMetricsV2Processor {
 
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
+        self
+    }
+
+    pub fn enabled_metric_aggregation(mut self, value: bool) -> Self {
+        self.enabled_metric_aggregation = Some(value);
         self
     }
 
@@ -105,6 +114,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGenerateMetricsV2Processor {
             {
                 let mut display_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
+                let mut enabled_metric_aggregation: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
                 let mut metrics: Option<
@@ -130,6 +140,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGenerateMetricsV2Processor {
                         }
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "enabled_metric_aggregation" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            enabled_metric_aggregation =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -171,6 +188,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGenerateMetricsV2Processor {
                 let content = ObservabilityPipelineGenerateMetricsV2Processor {
                     display_name,
                     enabled,
+                    enabled_metric_aggregation,
                     id,
                     include,
                     metrics,

@@ -26,7 +26,7 @@ pub struct ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigur
     pub reset_on_feature_flag_change: Option<bool>,
     /// Use an empty array when no targeting rules apply.
     #[serde(rename = "targeting_rules")]
-    pub targeting_rules: Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems>,
+    pub targeting_rules: Vec<crate::datadogV2::model::ExperimentsTargetingRule>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -39,7 +39,7 @@ impl ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration 
         entry_point: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPoint>,
         environment_id: uuid::Uuid,
         feature_flag_id: uuid::Uuid,
-        targeting_rules: Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems>,
+        targeting_rules: Vec<crate::datadogV2::model::ExperimentsTargetingRule>,
     ) -> ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration {
         ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfiguration {
             entry_point,
@@ -91,7 +91,9 @@ impl<'de> Deserialize<'de>
                 let mut environment_id: Option<uuid::Uuid> = None;
                 let mut feature_flag_id: Option<uuid::Uuid> = None;
                 let mut reset_on_feature_flag_change: Option<bool> = None;
-                let mut targeting_rules: Option<Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems>> = None;
+                let mut targeting_rules: Option<
+                    Vec<crate::datadogV2::model::ExperimentsTargetingRule>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

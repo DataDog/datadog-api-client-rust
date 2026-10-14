@@ -10,8 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure
-{
+pub struct ExperimentsWarehouseMetricMeasure {
     /// Identifier of the warehouse metric measure.
     #[serde(rename = "id")]
     pub id: uuid::Uuid,
@@ -22,12 +21,9 @@ pub struct ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWa
     pub(crate) _unparsed: bool,
 }
 
-impl ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure {
-    pub fn new(
-        id: uuid::Uuid,
-    ) -> ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure
-    {
-        ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure {
+impl ExperimentsWarehouseMetricMeasure {
+    pub fn new(id: uuid::Uuid) -> ExperimentsWarehouseMetricMeasure {
+        ExperimentsWarehouseMetricMeasure {
             id,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -43,16 +39,14 @@ impl ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehous
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure
-{
+impl<'de> Deserialize<'de> for ExperimentsWarehouseMetricMeasure {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasureVisitor;
-        impl<'a> Visitor<'a> for ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasureVisitor {
-            type Value = ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure;
+        struct ExperimentsWarehouseMetricMeasureVisitor;
+        impl<'a> Visitor<'a> for ExperimentsWarehouseMetricMeasureVisitor {
+            type Value = ExperimentsWarehouseMetricMeasure;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,24 +57,27 @@ impl<'de> Deserialize<'de>
                 M: MapAccess<'a>,
             {
                 let mut id: Option<uuid::Uuid> = None;
-                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        },
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        },
+                        }
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
 
-                let content = ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasure {
+                let content = ExperimentsWarehouseMetricMeasure {
                     id,
                     additional_properties,
                     _unparsed,
@@ -90,6 +87,6 @@ impl<'de> Deserialize<'de>
             }
         }
 
-        deserializer.deserialize_any(ExperimentsCreateMetricV2RequestDataAttributesPercentileAggregationWarehouseMetricMeasureVisitor)
+        deserializer.deserialize_any(ExperimentsWarehouseMetricMeasureVisitor)
     }
 }
