@@ -6,14 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertionKind {
+pub enum ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind {
     MANAGED_IDENTITY_CLIENT_ASSERTION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString
-    for ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertionKind
-{
+impl ToString for ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind {
     fn to_string(&self) -> String {
         match self {
             Self::MANAGED_IDENTITY_CLIENT_ASSERTION => {
@@ -24,9 +22,7 @@ impl ToString
     }
 }
 
-impl Serialize
-    for ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertionKind
-{
+impl Serialize for ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -39,7 +35,7 @@ impl Serialize
 }
 
 impl<'de> Deserialize<'de>
-    for ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertionKind
+    for ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind
 {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where

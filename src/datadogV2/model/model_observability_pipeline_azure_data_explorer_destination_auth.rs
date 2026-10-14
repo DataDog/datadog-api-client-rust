@@ -12,7 +12,7 @@ pub enum ObservabilityPipelineAzureDataExplorerDestinationAuth {
 	ObservabilityPipelineAzureDataExplorerDestinationAuthClientSecret(Box<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationAuthClientSecret>),
 	ObservabilityPipelineAzureDataExplorerDestinationAuthClientCertificate(Box<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationAuthClientCertificate>),
 	ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentity(Box<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentity>),
-	ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertion(Box<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertion>),
+	ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertion(Box<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertion>),
 	ObservabilityPipelineAzureDataExplorerDestinationAuthWorkloadIdentity(Box<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationAuthWorkloadIdentity>),
 	UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -43,9 +43,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAzureDataExplorerDestination
                 return Ok(ObservabilityPipelineAzureDataExplorerDestinationAuth::ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentity(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertion>>(value.clone()) {
+        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertion>>(value.clone()) {
 			if !_v._unparsed {
-                return Ok(ObservabilityPipelineAzureDataExplorerDestinationAuth::ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertion(_v));
+                return Ok(ObservabilityPipelineAzureDataExplorerDestinationAuth::ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertion(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationAuthWorkloadIdentity>>(value.clone()) {
