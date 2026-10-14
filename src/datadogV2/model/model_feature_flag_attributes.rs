@@ -61,6 +61,10 @@ pub struct FeatureFlagAttributes {
     /// Indicates the whether a feature flag is stale or not.
     #[serde(rename = "staleness_status")]
     pub staleness_status: Option<String>,
+    /// An explicit staleness status override. Omitted when no override is set.
+    #[serde(rename = "staleness_status_override")]
+    pub staleness_status_override:
+        Option<crate::datadogV2::model::FeatureFlagStalenessStatusOverride>,
     /// Tags associated with the feature flag.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -103,6 +107,7 @@ impl FeatureFlagAttributes {
             require_approval: None,
             staleness_details: None,
             staleness_status: None,
+            staleness_status_override: None,
             tags: None,
             updated_at: None,
             value_type,
@@ -173,6 +178,14 @@ impl FeatureFlagAttributes {
         self
     }
 
+    pub fn staleness_status_override(
+        mut self,
+        value: crate::datadogV2::model::FeatureFlagStalenessStatusOverride,
+    ) -> Self {
+        self.staleness_status_override = Some(value);
+        self
+    }
+
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
@@ -227,6 +240,9 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                     crate::datadogV2::model::FeatureFlagStalenessDetails,
                 > = None;
                 let mut staleness_status: Option<String> = None;
+                let mut staleness_status_override: Option<
+                    crate::datadogV2::model::FeatureFlagStalenessStatusOverride,
+                > = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut value_type: Option<crate::datadogV2::model::ValueType> = None;
@@ -318,6 +334,22 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                             staleness_status =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "staleness_status_override" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            staleness_status_override =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _staleness_status_override) = staleness_status_override
+                            {
+                                match _staleness_status_override {
+                                    crate::datadogV2::model::FeatureFlagStalenessStatusOverride::UnparsedObject(_staleness_status_override) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -375,6 +407,7 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                     require_approval,
                     staleness_details,
                     staleness_status,
+                    staleness_status_override,
                     tags,
                     updated_at,
                     value_type,

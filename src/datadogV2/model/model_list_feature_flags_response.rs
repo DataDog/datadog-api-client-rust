@@ -14,6 +14,9 @@ pub struct ListFeatureFlagsResponse {
     /// List of feature flags.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::FeatureFlagListItem>,
+    /// Pagination links. Follow `next` with the same authentication to retrieve the next page. Links use `page[limit]` and `page[offset]` and preserve the filters. Navigation links are omitted when not applicable.
+    #[serde(rename = "links")]
+    pub links: Option<crate::datadogV2::model::FeatureFlagsPaginationLinks>,
     /// Pagination metadata for feature flags.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::FeatureFlagsPaginationMeta>,
@@ -30,10 +33,16 @@ impl ListFeatureFlagsResponse {
     ) -> ListFeatureFlagsResponse {
         ListFeatureFlagsResponse {
             data,
+            links: None,
             meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn links(mut self, value: crate::datadogV2::model::FeatureFlagsPaginationLinks) -> Self {
+        self.links = Some(value);
+        self
     }
 
     pub fn meta(mut self, value: crate::datadogV2::model::FeatureFlagsPaginationMeta) -> Self {
@@ -68,6 +77,7 @@ impl<'de> Deserialize<'de> for ListFeatureFlagsResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<Vec<crate::datadogV2::model::FeatureFlagListItem>> = None;
+                let mut links: Option<crate::datadogV2::model::FeatureFlagsPaginationLinks> = None;
                 let mut meta: Option<crate::datadogV2::model::FeatureFlagsPaginationMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -79,6 +89,12 @@ impl<'de> Deserialize<'de> for ListFeatureFlagsResponse {
                     match k.as_str() {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "links" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "meta" => {
                             if v.is_null() {
@@ -97,6 +113,7 @@ impl<'de> Deserialize<'de> for ListFeatureFlagsResponse {
 
                 let content = ListFeatureFlagsResponse {
                     data,
+                    links,
                     meta,
                     additional_properties,
                     _unparsed,

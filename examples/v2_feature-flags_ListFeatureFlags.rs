@@ -8,7 +8,13 @@ async fn main() {
     let configuration = datadog::Configuration::new();
     let api = FeatureFlagsAPI::with_config(configuration);
     let resp = api
-        .list_feature_flags(ListFeatureFlagsOptionalParams::default().limit(10))
+        .list_feature_flags(
+            ListFeatureFlagsOptionalParams::default()
+                .tags(vec!["list-test:example-feature-flag".to_string()])
+                .page_limit(1)
+                .page_offset(0)
+                .sort("name".to_string()),
+        )
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

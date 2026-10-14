@@ -14,35 +14,135 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListFeatureFlagsOptionalParams {
-    /// Filter feature flags by key (partial matching).
+    /// Filter feature flags by an exact, case-sensitive key. Use `search` for partial matching.
     pub key: Option<String>,
-    /// Filter by archived status.
+    /// Filter by archived status. If `true`, return only archived flags. If `false`, return only flags that are not archived. If omitted, return both.
     pub is_archived: Option<bool>,
-    /// Maximum number of results to return.
+    /// Deprecated alias for `page[limit]`. Use `page[limit]` for new requests. Used only when `page[limit]` is absent. When both parameters are omitted, the server defaults to `25`. Values that exceed `50` are set to `50`; non-positive or empty values use the server default.
     pub limit: Option<i64>,
-    /// Number of results to skip.
+    /// Deprecated alias for `page[offset]`. Used only when `page[offset]` is absent. Defaults to `0`. Negative or empty values are set to `0`.
     pub offset: Option<i64>,
+    /// Filter by exact tag values using repeated parameters, such as `tags=env:prod&tags=purpose:sitemap`. A flag must have all ordinary tags. Values of the form `team:<handle>` match any selected team and are combined with `teams` into one set. The result must match all ordinary tags, any selected team, and all other filters. Empty values are ignored.
+    pub tags: Option<Vec<String>>,
+    /// Filter by team handles without the `team:` prefix. Use repeated parameters to filter by multiple team handles, such as `teams=checkout&teams=payments`. A flag must belong to at least one selected team. Team handles from `teams` and `team:<handle>` values from tags are treated as a single set and combined with ordinary tags and other filters using AND logic. Duplicate handles do not duplicate results. Unknown handles do not match any flags. Empty handles, surrounding white space, or using the `team:` prefix return a bad request error. Response tags are unchanged.
+    pub teams: Option<Vec<String>>,
+    /// Filter by status across production environments. Use repeated parameters to match any selected status. `ENABLED` matches at least one enabled production environment without a variant override. `OVERRIDDEN` matches at least one enabled production environment with a variant override. `DISABLED` matches flags whose associated production environments are all disabled. A flag can match both `ENABLED` and `OVERRIDDEN` in different environments. Flags without associated production environments do not match. This does not filter by a specific environment. Unknown values do not match any status.
+    pub production_status: Option<Vec<crate::datadogV2::model::FeatureFlagProductionStatus>>,
+    /// Filter by SDK availability. `CLIENT` returns flags with channel `CLIENT` or `ALL`. `SERVER` returns flags with channel `SERVER` or `ALL`. `ALL`, an empty value, or omission applies no channel restriction; it does not select only flags whose channel is `ALL`. Values are case-insensitive and surrounding white space is ignored. Invalid values return a bad request error.
+    pub distribution_channel: Option<crate::datadogV2::model::FeatureFlagDistributionChannel>,
+    /// Case-insensitive substring search on flag names, keys, and tag names. Combined with all other filters. An empty value applies no search restriction.
+    pub search: Option<String>,
+    /// Filter by variant value types using repeated parameters. A flag must match at least one selected type. Empty values are ignored. Invalid types return a bad request error.
+    pub value_type: Option<Vec<crate::datadogV2::model::ValueType>>,
+    /// Filter by creator UUIDs using repeated parameters. A flag must match at least one creator. Empty values are ignored. Invalid UUIDs return a bad request error.
+    pub created_by: Option<Vec<uuid::Uuid>>,
+    /// Filter by feature flag UUIDs using repeated parameters. A flag must match at least one ID and all other filters. Duplicate IDs return each flag once. Unknown IDs and IDs from other organizations do not match any flags. Empty or invalid UUIDs return a bad request error. Pagination still applies.
+    pub flag_ids: Option<Vec<uuid::Uuid>>,
+    /// Filter by the computed staleness status: `ACTIVE`, `STALE`, or `PERMANENT`. Values are case-insensitive and surrounding white space is ignored. An empty value or omission applies no restriction. Invalid values return a bad request error. Read the computed result from `staleness_details.staleness_status`, not the legacy `staleness_status` response field.
+    pub staleness_status: Option<crate::datadogV2::model::FeatureFlagStalenessStatus>,
+    /// Filter to flags that reference this saved filter in their targeting conditions. An empty value or omission applies no restriction. An invalid UUID returns a bad request error.
+    pub saved_filter_id: Option<uuid::Uuid>,
+    /// Sort by `name`, `updated_at`, `created_at`, or `evaluations`. Use a comma-separated list for multiple sort fields and prefix a field with `-` for descending order. The default is `updated_at` descending. When favorites are enabled, the authenticated user's favorite flags take precedence over the selected ordering. Unknown fields return a bad request error.
+    pub sort: Option<String>,
+    /// Maximum number of flags to return. Defaults to `25` and is capped at `50`. Values that exceed `50` are set to `50`. Non-positive or empty values use the default. A non-integer value returns a bad request error. Takes precedence over `limit` when both are present. Pagination applies even when no pagination parameters are supplied.
+    pub page_limit: Option<i64>,
+    /// Number of matching flags to skip before returning results. Defaults to `0`. Negative or empty values are set to `0`. A non-integer value returns a bad request error. Takes precedence over `offset` when both are present.
+    pub page_offset: Option<i64>,
 }
 
 impl ListFeatureFlagsOptionalParams {
-    /// Filter feature flags by key (partial matching).
+    /// Filter feature flags by an exact, case-sensitive key. Use `search` for partial matching.
     pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
         self
     }
-    /// Filter by archived status.
+    /// Filter by archived status. If `true`, return only archived flags. If `false`, return only flags that are not archived. If omitted, return both.
     pub fn is_archived(mut self, value: bool) -> Self {
         self.is_archived = Some(value);
         self
     }
-    /// Maximum number of results to return.
+    /// Deprecated alias for `page[limit]`. Use `page[limit]` for new requests. Used only when `page[limit]` is absent. When both parameters are omitted, the server defaults to `25`. Values that exceed `50` are set to `50`; non-positive or empty values use the server default.
     pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
-    /// Number of results to skip.
+    /// Deprecated alias for `page[offset]`. Used only when `page[offset]` is absent. Defaults to `0`. Negative or empty values are set to `0`.
     pub fn offset(mut self, value: i64) -> Self {
         self.offset = Some(value);
+        self
+    }
+    /// Filter by exact tag values using repeated parameters, such as `tags=env:prod&tags=purpose:sitemap`. A flag must have all ordinary tags. Values of the form `team:<handle>` match any selected team and are combined with `teams` into one set. The result must match all ordinary tags, any selected team, and all other filters. Empty values are ignored.
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
+        self
+    }
+    /// Filter by team handles without the `team:` prefix. Use repeated parameters to filter by multiple team handles, such as `teams=checkout&teams=payments`. A flag must belong to at least one selected team. Team handles from `teams` and `team:<handle>` values from tags are treated as a single set and combined with ordinary tags and other filters using AND logic. Duplicate handles do not duplicate results. Unknown handles do not match any flags. Empty handles, surrounding white space, or using the `team:` prefix return a bad request error. Response tags are unchanged.
+    pub fn teams(mut self, value: Vec<String>) -> Self {
+        self.teams = Some(value);
+        self
+    }
+    /// Filter by status across production environments. Use repeated parameters to match any selected status. `ENABLED` matches at least one enabled production environment without a variant override. `OVERRIDDEN` matches at least one enabled production environment with a variant override. `DISABLED` matches flags whose associated production environments are all disabled. A flag can match both `ENABLED` and `OVERRIDDEN` in different environments. Flags without associated production environments do not match. This does not filter by a specific environment. Unknown values do not match any status.
+    pub fn production_status(
+        mut self,
+        value: Vec<crate::datadogV2::model::FeatureFlagProductionStatus>,
+    ) -> Self {
+        self.production_status = Some(value);
+        self
+    }
+    /// Filter by SDK availability. `CLIENT` returns flags with channel `CLIENT` or `ALL`. `SERVER` returns flags with channel `SERVER` or `ALL`. `ALL`, an empty value, or omission applies no channel restriction; it does not select only flags whose channel is `ALL`. Values are case-insensitive and surrounding white space is ignored. Invalid values return a bad request error.
+    pub fn distribution_channel(
+        mut self,
+        value: crate::datadogV2::model::FeatureFlagDistributionChannel,
+    ) -> Self {
+        self.distribution_channel = Some(value);
+        self
+    }
+    /// Case-insensitive substring search on flag names, keys, and tag names. Combined with all other filters. An empty value applies no search restriction.
+    pub fn search(mut self, value: String) -> Self {
+        self.search = Some(value);
+        self
+    }
+    /// Filter by variant value types using repeated parameters. A flag must match at least one selected type. Empty values are ignored. Invalid types return a bad request error.
+    pub fn value_type(mut self, value: Vec<crate::datadogV2::model::ValueType>) -> Self {
+        self.value_type = Some(value);
+        self
+    }
+    /// Filter by creator UUIDs using repeated parameters. A flag must match at least one creator. Empty values are ignored. Invalid UUIDs return a bad request error.
+    pub fn created_by(mut self, value: Vec<uuid::Uuid>) -> Self {
+        self.created_by = Some(value);
+        self
+    }
+    /// Filter by feature flag UUIDs using repeated parameters. A flag must match at least one ID and all other filters. Duplicate IDs return each flag once. Unknown IDs and IDs from other organizations do not match any flags. Empty or invalid UUIDs return a bad request error. Pagination still applies.
+    pub fn flag_ids(mut self, value: Vec<uuid::Uuid>) -> Self {
+        self.flag_ids = Some(value);
+        self
+    }
+    /// Filter by the computed staleness status: `ACTIVE`, `STALE`, or `PERMANENT`. Values are case-insensitive and surrounding white space is ignored. An empty value or omission applies no restriction. Invalid values return a bad request error. Read the computed result from `staleness_details.staleness_status`, not the legacy `staleness_status` response field.
+    pub fn staleness_status(
+        mut self,
+        value: crate::datadogV2::model::FeatureFlagStalenessStatus,
+    ) -> Self {
+        self.staleness_status = Some(value);
+        self
+    }
+    /// Filter to flags that reference this saved filter in their targeting conditions. An empty value or omission applies no restriction. An invalid UUID returns a bad request error.
+    pub fn saved_filter_id(mut self, value: uuid::Uuid) -> Self {
+        self.saved_filter_id = Some(value);
+        self
+    }
+    /// Sort by `name`, `updated_at`, `created_at`, or `evaluations`. Use a comma-separated list for multiple sort fields and prefix a field with `-` for descending order. The default is `updated_at` descending. When favorites are enabled, the authenticated user's favorite flags take precedence over the selected ordering. Unknown fields return a bad request error.
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Maximum number of flags to return. Defaults to `25` and is capped at `50`. Values that exceed `50` are set to `50`. Non-positive or empty values use the default. A non-integer value returns a bad request error. Takes precedence over `limit` when both are present. Pagination applies even when no pagination parameters are supplied.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// Number of matching flags to skip before returning results. Defaults to `0`. Negative or empty values are set to `0`. A non-integer value returns a bad request error. Takes precedence over `offset` when both are present.
+    pub fn page_offset(mut self, value: i64) -> Self {
+        self.page_offset = Some(value);
         self
     }
 }
@@ -183,6 +283,7 @@ pub enum GetFeatureFlagsEnvironmentError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListFeatureFlagsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1703,8 +1804,9 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Returns a list of feature flags for the organization.
-    /// Supports filtering by key and archived status.
+    /// Returns a paginated list of feature flags for the organization.
+    /// Supports filtering by key, tags, teams, SDK availability, production status, and other flag properties.
+    /// Use `page[limit]` and `page[offset]` to paginate, or follow the `next` link in the response.
     pub async fn list_feature_flags(
         &self,
         params: ListFeatureFlagsOptionalParams,
@@ -1726,8 +1828,9 @@ impl FeatureFlagsAPI {
         }
     }
 
-    /// Returns a list of feature flags for the organization.
-    /// Supports filtering by key and archived status.
+    /// Returns a paginated list of feature flags for the organization.
+    /// Supports filtering by key, tags, teams, SDK availability, production status, and other flag properties.
+    /// Use `page[limit]` and `page[offset]` to paginate, or follow the `next` link in the response.
     pub async fn list_feature_flags_with_http_info(
         &self,
         params: ListFeatureFlagsOptionalParams,
@@ -1743,6 +1846,19 @@ impl FeatureFlagsAPI {
         let is_archived = params.is_archived;
         let limit = params.limit;
         let offset = params.offset;
+        let tags = params.tags;
+        let teams = params.teams;
+        let production_status = params.production_status;
+        let distribution_channel = params.distribution_channel;
+        let search = params.search;
+        let value_type = params.value_type;
+        let created_by = params.created_by;
+        let flag_ids = params.flag_ids;
+        let staleness_status = params.staleness_status;
+        let saved_filter_id = params.saved_filter_id;
+        let sort = params.sort;
+        let page_limit = params.page_limit;
+        let page_offset = params.page_offset;
 
         let local_client = &self.client;
 
@@ -1767,6 +1883,65 @@ impl FeatureFlagsAPI {
         if let Some(ref local_query_param) = offset {
             local_req_builder =
                 local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = tags {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("tags", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = teams {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("teams", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = production_status {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("production_status", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = distribution_channel {
+            local_req_builder = local_req_builder
+                .query(&[("distribution_channel", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = search {
+            local_req_builder =
+                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+        };
+        if let Some(ref local) = value_type {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("value_type", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = created_by {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("created_by", &param.to_string())]);
+            }
+        };
+        if let Some(ref local) = flag_ids {
+            for param in local {
+                local_req_builder = local_req_builder.query(&[("flag_ids", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = staleness_status {
+            local_req_builder =
+                local_req_builder.query(&[("staleness_status", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = saved_filter_id {
+            local_req_builder =
+                local_req_builder.query(&[("saved_filter_id", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
         };
 
         // build headers
