@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for setting the resolution reason on a security case.
+/// Attributes for setting the resolution reason on a security work item.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateResolvedReasonAttributes {
-    /// The reason the security case was resolved (for example, `FALSE_POSITIVE`, `TRUE_POSITIVE`, `BENIGN_POSITIVE`).
+    /// The reason the security work item was resolved (for example, `FALSE_POSITIVE`, `TRUE_POSITIVE`, `BENIGN_POSITIVE`).
     #[serde(rename = "security_resolved_reason")]
     pub security_resolved_reason: String,
     #[serde(flatten)]

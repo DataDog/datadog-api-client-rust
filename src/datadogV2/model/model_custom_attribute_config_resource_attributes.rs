@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a custom attribute configuration, defining an organization-specific metadata field that can be added to cases of a given type.
+/// Attributes of a custom attribute configuration, defining an organization-specific metadata field that can be added to work items of a given type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomAttributeConfigResourceAttributes {
-    /// The UUID of the case type this custom attribute belongs to.
+    /// The UUID of the work item type this custom attribute belongs to.
     #[serde(rename = "case_type_id")]
     pub case_type_id: String,
     /// A description explaining the purpose and expected values for this custom attribute.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The human-readable label shown in the Case Management UI for this custom attribute.
+    /// The human-readable label shown in the Work Management UI for this custom attribute.
     #[serde(rename = "display_name")]
     pub display_name: String,
     /// If `true`, this attribute accepts an array of values. If `false`, only a single value is allowed.

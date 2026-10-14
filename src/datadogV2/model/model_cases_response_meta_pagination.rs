@@ -14,7 +14,7 @@ pub struct CasesResponseMetaPagination {
     /// Current page number
     #[serde(rename = "current")]
     pub current: Option<i64>,
-    /// Number of cases in current page
+    /// Number of work items in current page
     #[serde(rename = "size")]
     pub size: Option<i64>,
     /// Total number of pages

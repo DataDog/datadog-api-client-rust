@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for the bulk update, specifying which cases to update and the action to apply.
+/// Attributes for the bulk update, specifying which work items to update and the action to apply.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseBulkUpdateRequestAttributes {
-    /// An array of case identifiers to apply the bulk action to.
+    /// An array of work item identifiers to apply the bulk action to.
     #[serde(rename = "case_ids")]
     pub case_ids: Vec<String>,
     /// A key-value map of action-specific parameters. The required keys depend on the action type (for example, `priority` for the priority action, `assignee_id` for assign).

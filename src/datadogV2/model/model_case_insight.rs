@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A reference to an external Datadog resource that provides investigative context for a case, such as a security signal, monitor alert, error tracking issue, or incident.
+/// A reference to an external Datadog resource that provides investigative context for a work item, such as a security signal, monitor alert, error tracking issue, or incident.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,7 +17,7 @@ pub struct CaseInsight {
     /// The unique identifier of the referenced Datadog resource (for example, a monitor ID, incident ID, or signal ID).
     #[serde(rename = "resource_id")]
     pub resource_id: String,
-    /// The type of Datadog resource linked to the case as contextual evidence. Each type corresponds to a different Datadog product signal (for example, a security finding, a monitor alert, or an incident).
+    /// The type of Datadog resource linked to the work item as contextual evidence. Each type corresponds to a different Datadog product signal (for example, a security finding, a monitor alert, or an incident).
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseInsightType,
     #[serde(flatten)]

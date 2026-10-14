@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case update title attributes
+/// Work item update title attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateTitleAttributes {
-    /// Case new title
+    /// Work item new title
     #[serde(rename = "title")]
     pub title: String,
     #[serde(flatten)]

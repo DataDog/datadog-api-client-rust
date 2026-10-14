@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for updating a case view.
+/// Data object for updating a work item view.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseViewUpdate {
-    /// Attributes that can be updated on a case view. All fields are optional; only provided fields are changed.
+    /// Attributes that can be updated on a work item view. All fields are optional; only provided fields are changed.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CaseViewUpdateAttributes>,
-    /// JSON:API resource type for case views.
+    /// JSON:API resource type for work item views.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseViewResourceType,
     #[serde(flatten)]

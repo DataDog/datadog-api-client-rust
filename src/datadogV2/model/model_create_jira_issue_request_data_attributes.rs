@@ -20,7 +20,7 @@ pub struct CreateJiraIssueRequestDataAttributes {
     /// Custom fields of the Jira issue to create. For the list of available fields, see [Jira documentation](<https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-issues/#api-rest-api-2-issue-createmeta-projectidorkey-issuetypes-issuetypeid-get>).
     #[serde(rename = "fields")]
     pub fields: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    /// Case priority
+    /// Work item priority
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::CasePriority>,
     /// Title of the Jira issue. If not provided, the title will be automatically generated.

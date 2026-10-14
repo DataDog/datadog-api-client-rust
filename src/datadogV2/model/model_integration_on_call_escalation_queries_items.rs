@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// An On-Call escalation query entry used to route cases to on-call responders.
+/// An On-Call escalation query entry used to route work items to on-call responders.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,7 +17,7 @@ pub struct IntegrationOnCallEscalationQueriesItems {
     /// Unique identifier of the escalation query.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// The query used to match cases for escalation.
+    /// The query used to match work items for escalation.
     #[serde(rename = "query")]
     pub query: Option<String>,
     /// The target recipient for an On-Call escalation query.

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case empty request
+/// Work item empty request
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseEmptyRequest {
-    /// Case empty request data
+    /// Work item empty request data
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseEmpty,
     #[serde(flatten)]

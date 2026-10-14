@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseBulkUpdateRequestData {
-    /// Attributes for the bulk update, specifying which cases to update and the action to apply.
+    /// Attributes for the bulk update, specifying which work items to update and the action to apply.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseBulkUpdateRequestAttributes,
-    /// JSON:API resource type for bulk case operations.
+    /// JSON:API resource type for bulk work item operations.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseBulkResourceType,
     #[serde(flatten)]

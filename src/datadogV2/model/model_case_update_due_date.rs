@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for updating a case's due date.
+/// Data object for updating a work item's due date.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateDueDate {
-    /// Attributes for setting or clearing a case's due date.
+    /// Attributes for setting or clearing a work item's due date.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseUpdateDueDateAttributes,
-    /// JSON:API resource type for cases.
+    /// JSON:API resource type for work items.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
     #[serde(flatten)]

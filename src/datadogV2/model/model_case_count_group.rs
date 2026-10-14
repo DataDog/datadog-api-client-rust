@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A facet group containing counts broken down by the distinct values of a case field (for example, status or priority).
+/// A facet group containing counts broken down by the distinct values of a work item field (for example, status or priority).
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

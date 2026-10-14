@@ -14,7 +14,7 @@ pub struct CaseAggregateResponseAttributes {
     /// Aggregated groups.
     #[serde(rename = "groups")]
     pub groups: Vec<crate::datadogV2::model::CaseAggregateGroup>,
-    /// Total count of aggregated cases.
+    /// Total count of aggregated work items.
     #[serde(rename = "total")]
     pub total: f64,
     #[serde(flatten)]

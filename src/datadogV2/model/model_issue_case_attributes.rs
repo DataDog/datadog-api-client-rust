@@ -44,10 +44,10 @@ pub struct IssueCaseAttributes {
     /// Timestamp of when the case was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// Case priority
+    /// Work item priority
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::CasePriority>,
-    /// Deprecated way of representing the case status, which only supports OPEN, IN_PROGRESS, and CLOSED statuses. Use `status_name` instead.
+    /// Deprecated way of representing the work item status, which only supports OPEN, IN_PROGRESS, and CLOSED statuses. Use `status_name` instead.
     #[deprecated]
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::CaseStatus>,

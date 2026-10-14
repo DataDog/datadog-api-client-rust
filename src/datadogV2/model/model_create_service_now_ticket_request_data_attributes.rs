@@ -17,7 +17,7 @@ pub struct CreateServiceNowTicketRequestDataAttributes {
     /// Description of the ServiceNow ticket. If not provided, the description will be automatically generated.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// Case priority
+    /// Work item priority
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::CasePriority>,
     /// Title of the ServiceNow ticket. If not provided, the title will be automatically generated.

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A custom attribute configuration that defines an organization-specific metadata field on cases. Custom attributes are scoped to a case type and can hold text, URLs, numbers, or predefined select options.
+/// A custom attribute configuration that defines an organization-specific metadata field on work items. Custom attributes are scoped to a work item type and can hold text, URLs, numbers, or predefined select options.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomAttributeConfig {
-    /// Attributes of a custom attribute configuration, defining an organization-specific metadata field that can be added to cases of a given type.
+    /// Attributes of a custom attribute configuration, defining an organization-specific metadata field that can be added to work items of a given type.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CustomAttributeConfigResourceAttributes>,
     /// Custom attribute configs identifier

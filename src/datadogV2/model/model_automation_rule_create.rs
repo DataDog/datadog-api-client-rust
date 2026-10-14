@@ -14,7 +14,7 @@ pub struct AutomationRuleCreate {
     /// Attributes required to create an automation rule.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::AutomationRuleCreateAttributes,
-    /// JSON:API resource type for case automation rules.
+    /// JSON:API resource type for work item automation rules.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseAutomationRuleResourceType,
     #[serde(flatten)]

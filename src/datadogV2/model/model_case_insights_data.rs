@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseInsightsData {
-    /// Attributes for adding or removing insights from a case.
+    /// Attributes for adding or removing insights from a work item.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseInsightsAttributes,
-    /// JSON:API resource type for cases.
+    /// JSON:API resource type for work items.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
     #[serde(flatten)]

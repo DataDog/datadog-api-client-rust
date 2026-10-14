@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request payload for applying a single action (such as changing priority, status, or assignment) to multiple cases at once.
+/// Request payload for applying a single action (such as changing priority, status, or assignment) to multiple work items at once.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

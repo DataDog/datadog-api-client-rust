@@ -14,7 +14,7 @@ pub struct CaseNotificationRuleAttributes {
     /// Whether the notification rule is enabled
     #[serde(rename = "is_enabled")]
     pub is_enabled: Option<bool>,
-    /// Query to filter cases for this notification rule
+    /// Query to filter work items for this notification rule
     #[serde(rename = "query")]
     pub query: Option<String>,
     /// List of notification recipients

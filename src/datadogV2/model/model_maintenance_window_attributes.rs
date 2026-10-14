@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a maintenance window, including its schedule and the query that determines which cases are affected.
+/// Attributes of a maintenance window, including its schedule and the query that determines which work items are affected.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -20,7 +20,7 @@ pub struct MaintenanceWindowAttributes {
     /// A human-readable name for the maintenance window (for example, `Database migration - Dec 15`).
     #[serde(rename = "name")]
     pub name: String,
-    /// A case search query that determines which cases are affected during the maintenance window. Uses the same syntax as the Case Management search bar.
+    /// A work item search query that determines which work items are affected during the maintenance window. Uses the same syntax as the Work Management search bar.
     #[serde(rename = "query")]
     pub query: String,
     /// The ISO 8601 timestamp when the maintenance window begins and notifications start being suppressed.

@@ -14,7 +14,7 @@ pub struct CaseAggregateGroup {
     /// The value of the field being grouped on (for example, `OPEN` when grouping by status).
     #[serde(rename = "group")]
     pub group: String,
-    /// The count of cases in this group.
+    /// The count of work items in this group.
     #[serde(rename = "value")]
     pub value: Vec<f64>,
     #[serde(flatten)]

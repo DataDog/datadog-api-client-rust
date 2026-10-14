@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A case type that defines a classification category for cases. Each case type can have its own custom attributes, statuses, and automation rules.
+/// A work item type that defines a classification category for work items. Each work item type can have its own custom attributes, statuses, and automation rules.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseTypeResource {
-    /// Attributes of a case type, which define a classification category for cases. Organizations use case types to model different workflows (for example, Security Incident, Bug Report, Change Request).
+    /// Attributes of a work item type, which define a classification category for work items. Organizations use work item types to model different workflows (for example, Security Incident, Bug Report, Change Request).
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CaseTypeResourceAttributes>,
-    /// Case type's identifier
+    /// Work item type's identifier
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// JSON:API resource type for case types.
+    /// JSON:API resource type for work item types.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::CaseTypeResourceType>,
     #[serde(flatten)]

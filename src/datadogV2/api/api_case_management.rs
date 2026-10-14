@@ -16,7 +16,7 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct CountCasesOptionalParams {
-    /// Filter query for cases.
+    /// Filter query for work items.
     pub query_filter: Option<String>,
     /// Comma-separated fields to group by.
     pub group_bys: Option<String>,
@@ -25,7 +25,7 @@ pub struct CountCasesOptionalParams {
 }
 
 impl CountCasesOptionalParams {
-    /// Filter query for cases.
+    /// Filter query for work items.
     pub fn query_filter(mut self, value: String) -> Self {
         self.query_filter = Some(value);
         self
@@ -669,9 +669,7 @@ pub enum WatchCaseError {
     UnknownValue(serde_json::Value),
 }
 
-/// **Note**: Work Management is the UI name for Case Management. These API endpoints and permissions use `case` terminology.
-///
-/// View and manage work items and projects within Work Management. For more information, see [Work Management](<https://docs.datadoghq.com/incident_response/work_management/>).
+/// View and manage work items and projects within Work Management. API paths, resource types, and permissions retain `case` terminology. For more information, see [Work Management](<https://docs.datadoghq.com/incident_response/work_management/>).
 #[derive(Debug, Clone)]
 pub struct CaseManagementAPI {
     config: datadog::Configuration,
@@ -745,7 +743,7 @@ impl CaseManagementAPI {
         Self { config, client }
     }
 
-    /// Adds one or more insights to a case. Insights are references to related Datadog resources (such as monitors, security signals, incidents, or error tracking issues) that provide investigative context. Up to 100 insights can be added per request. Each insight requires a type (see `CaseInsightType` for allowed values), a ref (URL path to the resource), and a resource_id.
+    /// Adds one or more insights to a work item. Insights are references to related Datadog resources (such as monitors, security signals, incidents, or error tracking issues) that provide investigative context. Up to 100 insights can be added per request. Each insight requires a type (see `CaseInsightType` for allowed values), a ref (URL path to the resource), and a resource_id.
     pub async fn add_case_insights(
         &self,
         case_id: String,
@@ -765,7 +763,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Adds one or more insights to a case. Insights are references to related Datadog resources (such as monitors, security signals, incidents, or error tracking issues) that provide investigative context. Up to 100 insights can be added per request. Each insight requires a type (see `CaseInsightType` for allowed values), a ref (URL path to the resource), and a resource_id.
+    /// Adds one or more insights to a work item. Insights are references to related Datadog resources (such as monitors, security signals, incidents, or error tracking issues) that provide investigative context. Up to 100 insights can be added per request. Each insight requires a type (see `CaseInsightType` for allowed values), a ref (URL path to the resource), and a resource_id.
     pub async fn add_case_insights_with_http_info(
         &self,
         case_id: String,
@@ -898,7 +896,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Performs an aggregation query over cases, grouping results by specified fields and returning counts per group along with a total. Useful for dashboards and analytics.
+    /// Performs an aggregation query over work items, grouping results by specified fields and returning counts per group along with a total. Useful for dashboards and analytics.
     pub async fn aggregate_cases(
         &self,
         body: crate::datadogV2::model::CaseAggregateRequest,
@@ -918,7 +916,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Performs an aggregation query over cases, grouping results by specified fields and returning counts per group along with a total. Useful for dashboards and analytics.
+    /// Performs an aggregation query over work items, grouping results by specified fields and returning counts per group along with a total. Useful for dashboards and analytics.
     pub async fn aggregate_cases_with_http_info(
         &self,
         body: crate::datadogV2::model::CaseAggregateRequest,
@@ -1051,7 +1049,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Archive case
+    /// Archive work item
     pub async fn archive_case(
         &self,
         case_id: String,
@@ -1071,7 +1069,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Archive case
+    /// Archive work item
     pub async fn archive_case_with_http_info(
         &self,
         case_id: String,
@@ -1203,7 +1201,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Assign case to a user
+    /// Assign work item to a user
     pub async fn assign_case(
         &self,
         case_id: String,
@@ -1223,7 +1221,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Assign case to a user
+    /// Assign work item to a user
     pub async fn assign_case_with_http_info(
         &self,
         case_id: String,
@@ -1355,7 +1353,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Applies a single action (such as changing priority, status, assignment, or archiving) to multiple cases at once. The list of case IDs and the action type with its payload are specified in the request body.
+    /// Applies a single action (such as changing priority, status, assignment, or archiving) to multiple work items at once. The list of work item IDs and the action type with its payload are specified in the request body.
     pub async fn bulk_update_cases(
         &self,
         body: crate::datadogV2::model::CaseBulkUpdateRequest,
@@ -1366,7 +1364,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Applies a single action (such as changing priority, status, assignment, or archiving) to multiple cases at once. The list of case IDs and the action type with its payload are specified in the request body.
+    /// Applies a single action (such as changing priority, status, assignment, or archiving) to multiple work items at once. The list of work item IDs and the action type with its payload are specified in the request body.
     pub async fn bulk_update_cases_with_http_info(
         &self,
         body: crate::datadogV2::model::CaseBulkUpdateRequest,
@@ -1489,7 +1487,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Comment case
+    /// Add a comment to a work item.
     pub async fn comment_case(
         &self,
         case_id: String,
@@ -1509,7 +1507,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Comment case
+    /// Add a comment to a work item.
     pub async fn comment_case_with_http_info(
         &self,
         case_id: String,
@@ -1642,7 +1640,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns case counts, optionally grouped by one or more fields (for example, status, priority). Supports a query filter to narrow the scope.
+    /// Returns work item counts, optionally grouped by one or more fields (for example, status, priority). Supports a query filter to narrow the scope.
     pub async fn count_cases(
         &self,
         params: CountCasesOptionalParams,
@@ -1661,7 +1659,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns case counts, optionally grouped by one or more fields (for example, status, priority). Supports a query filter to narrow the scope.
+    /// Returns work item counts, optionally grouped by one or more fields (for example, status, priority). Supports a query filter to narrow the scope.
     pub async fn count_cases_with_http_info(
         &self,
         params: CountCasesOptionalParams,
@@ -1763,7 +1761,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Create a Case
+    /// Create a work item
     pub async fn create_case(
         &self,
         body: crate::datadogV2::model::CaseCreateRequest,
@@ -1782,7 +1780,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Create a Case
+    /// Create a work item
     pub async fn create_case_with_http_info(
         &self,
         body: crate::datadogV2::model::CaseCreateRequest,
@@ -1912,7 +1910,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Creates an automation rule for a project. The rule defines a trigger event (for example, case created, status transitioned) and an action to execute.
+    /// Creates an automation rule for a project. The rule defines a trigger event (for example, work item created, status transitioned) and an action to execute.
     pub async fn create_case_automation_rule(
         &self,
         project_id: String,
@@ -1938,7 +1936,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Creates an automation rule for a project. The rule defines a trigger event (for example, case created, status transitioned) and an action to execute.
+    /// Creates an automation rule for a project. The rule defines a trigger event (for example, work item created, status transitioned) and an action to execute.
     pub async fn create_case_automation_rule_with_http_info(
         &self,
         project_id: String,
@@ -2073,7 +2071,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Create a new Jira issue and link it to a case
+    /// Create a new Jira issue and link it to a work item
     pub async fn create_case_jira_issue(
         &self,
         case_id: String,
@@ -2088,7 +2086,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Create a new Jira issue and link it to a case
+    /// Create a new Jira issue and link it to a work item
     pub async fn create_case_jira_issue_with_http_info(
         &self,
         case_id: String,
@@ -2213,7 +2211,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Creates a directional link between two cases (for example, case A blocks case B). The parent and child cases and their relationship type must be specified.
+    /// Creates a directional link between two work items (for example, work item A blocks work item B). The parent and child work items and their relationship type must be specified.
     pub async fn create_case_link(
         &self,
         body: crate::datadogV2::model::CaseLinkCreateRequest,
@@ -2233,7 +2231,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Creates a directional link between two cases (for example, case A blocks case B). The parent and child cases and their relationship type must be specified.
+    /// Creates a directional link between two work items (for example, work item A blocks work item B). The parent and child work items and their relationship type must be specified.
     pub async fn create_case_link_with_http_info(
         &self,
         body: crate::datadogV2::model::CaseLinkCreateRequest,
@@ -2365,7 +2363,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Create a new investigation notebook and link it to a case
+    /// Create a new investigation notebook and link it to a work item
     pub async fn create_case_notebook(
         &self,
         case_id: String,
@@ -2380,7 +2378,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Create a new investigation notebook and link it to a case
+    /// Create a new investigation notebook and link it to a work item
     pub async fn create_case_notebook_with_http_info(
         &self,
         case_id: String,
@@ -2505,7 +2503,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Create a new ServiceNow incident ticket and link it to a case
+    /// Create a new ServiceNow incident ticket and link it to a work item
     pub async fn create_case_service_now_ticket(
         &self,
         case_id: String,
@@ -2520,7 +2518,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Create a new ServiceNow incident ticket and link it to a case
+    /// Create a new ServiceNow incident ticket and link it to a work item
     pub async fn create_case_service_now_ticket_with_http_info(
         &self,
         case_id: String,
@@ -2645,7 +2643,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Creates a new saved case view with a name, filter query, and associated project. Optionally, a notification rule can be linked to the view.
+    /// Creates a new saved work item view with a name, filter query, and associated project. Optionally, a notification rule can be linked to the view.
     pub async fn create_case_view(
         &self,
         body: crate::datadogV2::model::CaseViewCreateRequest,
@@ -2665,7 +2663,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Creates a new saved case view with a name, filter query, and associated project. Optionally, a notification rule can be linked to the view.
+    /// Creates a new saved work item view with a name, filter query, and associated project. Optionally, a notification rule can be linked to the view.
     pub async fn create_case_view_with_http_info(
         &self,
         body: crate::datadogV2::model::CaseViewCreateRequest,
@@ -2797,7 +2795,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Creates a maintenance window for event management cases with a name, case filter query, and time range (start and end).
+    /// Creates a maintenance window for event management work items with a name, work item filter query, and time range (start and end).
     pub async fn create_maintenance_window(
         &self,
         body: crate::datadogV2::model::MaintenanceWindowCreateRequest,
@@ -2819,7 +2817,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Creates a maintenance window for event management cases with a name, case filter query, and time range (start and end).
+    /// Creates a maintenance window for event management work items with a name, work item filter query, and time range (start and end).
     pub async fn create_maintenance_window_with_http_info(
         &self,
         body: crate::datadogV2::model::MaintenanceWindowCreateRequest,
@@ -3357,7 +3355,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Delete case comment
+    /// Delete work item comment
     pub async fn delete_case_comment(
         &self,
         case_id: String,
@@ -3372,7 +3370,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Delete case comment
+    /// Delete work item comment
     pub async fn delete_case_comment_with_http_info(
         &self,
         case_id: String,
@@ -3451,7 +3449,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Delete custom attribute from case
+    /// Delete custom attribute from work item
     pub async fn delete_case_custom_attribute(
         &self,
         case_id: String,
@@ -3475,7 +3473,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Delete custom attribute from case
+    /// Delete custom attribute from work item
     pub async fn delete_case_custom_attribute_with_http_info(
         &self,
         case_id: String,
@@ -3562,7 +3560,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Deletes an existing link between cases by link ID.
+    /// Deletes an existing link between work items by link ID.
     pub async fn delete_case_link(
         &self,
         link_id: String,
@@ -3573,7 +3571,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Deletes an existing link between cases by link ID.
+    /// Deletes an existing link between work items by link ID.
     pub async fn delete_case_link_with_http_info(
         &self,
         link_id: String,
@@ -3650,7 +3648,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Permanently deletes a saved case view.
+    /// Permanently deletes a saved work item view.
     pub async fn delete_case_view(
         &self,
         view_id: String,
@@ -3661,7 +3659,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Permanently deletes a saved case view.
+    /// Permanently deletes a saved work item view.
     pub async fn delete_case_view_with_http_info(
         &self,
         view_id: String,
@@ -4012,7 +4010,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Disables an automation rule so it no longer triggers on case events. The rule configuration is preserved.
+    /// Disables an automation rule so it no longer triggers on work item events. The rule configuration is preserved.
     pub async fn disable_case_automation_rule(
         &self,
         project_id: String,
@@ -4038,7 +4036,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Disables an automation rule so it no longer triggers on case events. The rule configuration is preserved.
+    /// Disables an automation rule so it no longer triggers on work item events. The rule configuration is preserved.
     pub async fn disable_case_automation_rule_with_http_info(
         &self,
         project_id: String,
@@ -4127,7 +4125,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Enables a previously disabled automation rule so it triggers on matching case events.
+    /// Enables a previously disabled automation rule so it triggers on matching work item events.
     pub async fn enable_case_automation_rule(
         &self,
         project_id: String,
@@ -4153,7 +4151,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Enables a previously disabled automation rule so it triggers on matching case events.
+    /// Enables a previously disabled automation rule so it triggers on matching work item events.
     pub async fn enable_case_automation_rule_with_http_info(
         &self,
         project_id: String,
@@ -4242,7 +4240,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Marks a case project as a favorite for the current authenticated user.
+    /// Marks a Work Management project as a favorite for the current authenticated user.
     pub async fn favorite_case_project(
         &self,
         project_id: String,
@@ -4253,7 +4251,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Marks a case project as a favorite for the current authenticated user.
+    /// Marks a Work Management project as a favorite for the current authenticated user.
     pub async fn favorite_case_project_with_http_info(
         &self,
         project_id: String,
@@ -4330,7 +4328,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Get the details of case by `case_id`
+    /// Get the details of a work item by `case_id`.
     pub async fn get_case(
         &self,
         case_id: String,
@@ -4349,7 +4347,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Get the details of case by `case_id`
+    /// Get the details of a work item by `case_id`.
     pub async fn get_case_with_http_info(
         &self,
         case_id: String,
@@ -4548,7 +4546,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns a single saved case view identified by its UUID, including its query, associated project, and timestamps.
+    /// Returns a single saved work item view identified by its UUID, including its query, associated project, and timestamps.
     pub async fn get_case_view(
         &self,
         view_id: String,
@@ -4567,7 +4565,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns a single saved case view identified by its UUID, including its query, associated project, and timestamps.
+    /// Returns a single saved work item view identified by its UUID, including its query, associated project, and timestamps.
     pub async fn get_case_view_with_http_info(
         &self,
         view_id: String,
@@ -4968,7 +4966,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Link an incident to a case
+    /// Link an incident to a work item
     pub async fn link_incident(
         &self,
         case_id: String,
@@ -4988,7 +4986,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Link an incident to a case
+    /// Link an incident to a work item
     pub async fn link_incident_with_http_info(
         &self,
         case_id: String,
@@ -5120,7 +5118,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Link an existing Jira issue to a case
+    /// Link an existing Jira issue to a work item
     pub async fn link_jira_issue_to_case(
         &self,
         case_id: String,
@@ -5135,7 +5133,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Link an existing Jira issue to a case
+    /// Link an existing Jira issue to a work item
     pub async fn link_jira_issue_to_case_with_http_info(
         &self,
         case_id: String,
@@ -5260,7 +5258,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns all automation rules configured for a project. Automation rules allow automatic actions to be triggered by case events like creation, status transitions, or attribute changes.
+    /// Returns all automation rules configured for a project. Automation rules allow automatic actions to be triggered by work item events like creation, status transitions, or attribute changes.
     pub async fn list_case_automation_rules(
         &self,
         project_id: String,
@@ -5285,7 +5283,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns all automation rules configured for a project. Automation rules allow automatic actions to be triggered by case events like creation, status transitions, or attribute changes.
+    /// Returns all automation rules configured for a project. Automation rules allow automatic actions to be triggered by work item events like creation, status transitions, or attribute changes.
     pub async fn list_case_automation_rules_with_http_info(
         &self,
         project_id: String,
@@ -5372,7 +5370,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns all links associated with a case. Links define relationships (for example, BLOCKS) between cases. Requires entity_type and entity_id query parameters.
+    /// Returns all links associated with a work item. Links define relationships (for example, BLOCKS) between work items. Requires entity_type and entity_id query parameters.
     pub async fn list_case_links(
         &self,
         entity_type: String,
@@ -5397,7 +5395,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns all links associated with a case. Links define relationships (for example, BLOCKS) between cases. Requires entity_type and entity_id query parameters.
+    /// Returns all links associated with a work item. Links define relationships (for example, BLOCKS) between work items. Requires entity_type and entity_id query parameters.
     pub async fn list_case_links_with_http_info(
         &self,
         entity_type: String,
@@ -5494,7 +5492,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns the timeline of events for a case, including comments, status changes, and other activity. Supports pagination and sort order.
+    /// Returns the timeline of events for a work item, including comments, status changes, and other activity. Supports pagination and sort order.
     pub async fn list_case_timeline(
         &self,
         case_id: String,
@@ -5518,7 +5516,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns the timeline of events for a case, including comments, status changes, and other activity. Supports pagination and sort order.
+    /// Returns the timeline of events for a work item, including comments, status changes, and other activity. Supports pagination and sort order.
     pub async fn list_case_timeline_with_http_info(
         &self,
         case_id: String,
@@ -5623,7 +5621,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns all saved case views for a given project. Views are saved search queries that allow quick access to filtered lists of cases.
+    /// Returns all saved work item views for a given project. Views are saved search queries that allow quick access to filtered lists of work items.
     pub async fn list_case_views(
         &self,
         project_id: String,
@@ -5643,7 +5641,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns all saved case views for a given project. Views are saved search queries that allow quick access to filtered lists of cases.
+    /// Returns all saved work item views for a given project. Views are saved search queries that allow quick access to filtered lists of work items.
     pub async fn list_case_views_with_http_info(
         &self,
         project_id: String,
@@ -5730,7 +5728,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns the list of users who are watching a case. Watchers receive notifications about updates to the case.
+    /// Returns the list of users who are watching a work item. Watchers receive notifications about updates to the work item.
     pub async fn list_case_watchers(
         &self,
         case_id: String,
@@ -5750,7 +5748,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns the list of users who are watching a case. Watchers receive notifications about updates to the case.
+    /// Returns the list of users who are watching a work item. Watchers receive notifications about updates to the work item.
     pub async fn list_case_watchers_with_http_info(
         &self,
         case_id: String,
@@ -5837,7 +5835,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns all configured maintenance windows for event management cases. Maintenance windows define time periods during which case notifications and automation rules are suppressed for cases matching a given query.
+    /// Returns all configured maintenance windows for event management work items. Maintenance windows define time periods during which work item notifications and automation rules are suppressed for work items matching a given query.
     pub async fn list_maintenance_windows(
         &self,
     ) -> Result<
@@ -5858,7 +5856,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns all configured maintenance windows for event management cases. Maintenance windows define time periods during which case notifications and automation rules are suppressed for cases matching a given query.
+    /// Returns all configured maintenance windows for event management work items. Maintenance windows define time periods during which work item notifications and automation rules are suppressed for work items matching a given query.
     pub async fn list_maintenance_windows_with_http_info(
         &self,
     ) -> Result<
@@ -5943,7 +5941,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns the list of case projects that the current authenticated user has marked as favorites.
+    /// Returns the list of Work Management projects that the current authenticated user has marked as favorites.
     pub async fn list_user_case_project_favorites(
         &self,
     ) -> Result<
@@ -5964,7 +5962,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Returns the list of case projects that the current authenticated user has marked as favorites.
+    /// Returns the list of Work Management projects that the current authenticated user has marked as favorites.
     pub async fn list_user_case_project_favorites_with_http_info(
         &self,
     ) -> Result<
@@ -6049,7 +6047,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update the project associated with a case
+    /// Update the project associated with a work item
     pub async fn move_case_to_project(
         &self,
         case_id: String,
@@ -6072,7 +6070,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update the project associated with a case
+    /// Update the project associated with a work item
     pub async fn move_case_to_project_with_http_info(
         &self,
         case_id: String,
@@ -6205,7 +6203,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Removes one or more previously added insights from a case by specifying their type and resource identifier in the request body.
+    /// Removes one or more previously added insights from a work item by specifying their type and resource identifier in the request body.
     pub async fn remove_case_insights(
         &self,
         case_id: String,
@@ -6229,7 +6227,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Removes one or more previously added insights from a case by specifying their type and resource identifier in the request body.
+    /// Removes one or more previously added insights from a work item by specifying their type and resource identifier in the request body.
     pub async fn remove_case_insights_with_http_info(
         &self,
         case_id: String,
@@ -6362,7 +6360,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Search cases.
+    /// Search work items.
     pub async fn search_cases(
         &self,
         params: SearchCasesOptionalParams,
@@ -6413,7 +6411,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Search cases.
+    /// Search work items.
     pub async fn search_cases_with_http_info(
         &self,
         params: SearchCasesOptionalParams,
@@ -6524,7 +6522,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Unarchive case
+    /// Unarchive work item
     pub async fn unarchive_case(
         &self,
         case_id: String,
@@ -6544,7 +6542,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Unarchive case
+    /// Unarchive work item
     pub async fn unarchive_case_with_http_info(
         &self,
         case_id: String,
@@ -6677,7 +6675,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Unassign case
+    /// Unassign work item
     pub async fn unassign_case(
         &self,
         case_id: String,
@@ -6697,7 +6695,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Unassign case
+    /// Unassign work item
     pub async fn unassign_case_with_http_info(
         &self,
         case_id: String,
@@ -6829,7 +6827,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Removes a case project from the current user's favorites list.
+    /// Removes a Work Management project from the current user's favorites list.
     pub async fn unfavorite_case_project(
         &self,
         project_id: String,
@@ -6843,7 +6841,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Removes a case project from the current user's favorites list.
+    /// Removes a Work Management project from the current user's favorites list.
     pub async fn unfavorite_case_project_with_http_info(
         &self,
         project_id: String,
@@ -6920,7 +6918,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Remove the link between a Jira issue and a case
+    /// Remove the link between a Jira issue and a work item
     pub async fn unlink_jira_issue(
         &self,
         case_id: String,
@@ -6931,7 +6929,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Remove the link between a Jira issue and a case
+    /// Remove the link between a Jira issue and a work item
     pub async fn unlink_jira_issue_with_http_info(
         &self,
         case_id: String,
@@ -7008,7 +7006,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Removes a user from the watchers list of a case. The user no longer receives notifications about updates to the case.
+    /// Removes a user from the watchers list of a work item. The user no longer receives notifications about updates to the work item.
     pub async fn unwatch_case(
         &self,
         case_id: String,
@@ -7020,7 +7018,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Removes a user from the watchers list of a case. The user no longer receives notifications about updates to the case.
+    /// Removes a user from the watchers list of a work item. The user no longer receives notifications about updates to the work item.
     pub async fn unwatch_case_with_http_info(
         &self,
         case_id: String,
@@ -7098,7 +7096,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case attributes
+    /// Update work item attributes
     pub async fn update_attributes(
         &self,
         case_id: String,
@@ -7118,7 +7116,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case attributes
+    /// Update work item attributes
     pub async fn update_attributes_with_http_info(
         &self,
         case_id: String,
@@ -7415,7 +7413,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Updates the text content of an existing comment on a case timeline. The comment is identified by its cell ID.
+    /// Updates the text content of an existing comment on a work item timeline. The comment is identified by its cell ID.
     pub async fn update_case_comment(
         &self,
         case_id: String,
@@ -7431,7 +7429,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Updates the text content of an existing comment on a case timeline. The comment is identified by its cell ID.
+    /// Updates the text content of an existing comment on a work item timeline. The comment is identified by its cell ID.
     pub async fn update_case_comment_with_http_info(
         &self,
         case_id: String,
@@ -7558,7 +7556,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case custom attribute
+    /// Update work item custom attribute
     pub async fn update_case_custom_attribute(
         &self,
         case_id: String,
@@ -7583,7 +7581,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case custom attribute
+    /// Update work item custom attribute
     pub async fn update_case_custom_attribute_with_http_info(
         &self,
         case_id: String,
@@ -7718,7 +7716,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case description
+    /// Update work item description
     pub async fn update_case_description(
         &self,
         case_id: String,
@@ -7742,7 +7740,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case description
+    /// Update work item description
     pub async fn update_case_description_with_http_info(
         &self,
         case_id: String,
@@ -7875,7 +7873,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Sets or updates the due date for a case. The due date is a calendar date (without a time component) indicating when the case should be resolved.
+    /// Sets or updates the due date for a work item. The due date is a calendar date (without a time component) indicating when the work item should be resolved.
     pub async fn update_case_due_date(
         &self,
         case_id: String,
@@ -7898,7 +7896,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Sets or updates the due date for a case. The due date is a calendar date (without a time component) indicating when the case should be resolved.
+    /// Sets or updates the due date for a work item. The due date is a calendar date (without a time component) indicating when the work item should be resolved.
     pub async fn update_case_due_date_with_http_info(
         &self,
         case_id: String,
@@ -8031,7 +8029,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Sets the resolved reason for a security case (for example, FALSE_POSITIVE, TRUE_POSITIVE). Applicable to security-type cases.
+    /// Sets the resolved reason for a security work item (for example, FALSE_POSITIVE, TRUE_POSITIVE). Applicable to security-type work items.
     pub async fn update_case_resolved_reason(
         &self,
         case_id: String,
@@ -8055,7 +8053,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Sets the resolved reason for a security case (for example, FALSE_POSITIVE, TRUE_POSITIVE). Applicable to security-type cases.
+    /// Sets the resolved reason for a security work item (for example, FALSE_POSITIVE, TRUE_POSITIVE). Applicable to security-type work items.
     pub async fn update_case_resolved_reason_with_http_info(
         &self,
         case_id: String,
@@ -8188,7 +8186,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case title
+    /// Update work item title
     pub async fn update_case_title(
         &self,
         case_id: String,
@@ -8208,7 +8206,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case title
+    /// Update work item title
     pub async fn update_case_title_with_http_info(
         &self,
         case_id: String,
@@ -8341,7 +8339,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Updates the name, query, or notification rule of an existing case view.
+    /// Updates the name, query, or notification rule of an existing work item view.
     pub async fn update_case_view(
         &self,
         view_id: String,
@@ -8362,7 +8360,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Updates the name, query, or notification rule of an existing case view.
+    /// Updates the name, query, or notification rule of an existing work item view.
     pub async fn update_case_view_with_http_info(
         &self,
         view_id: String,
@@ -8657,7 +8655,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case priority
+    /// Update work item priority
     pub async fn update_priority(
         &self,
         case_id: String,
@@ -8677,7 +8675,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case priority
+    /// Update work item priority
     pub async fn update_priority_with_http_info(
         &self,
         case_id: String,
@@ -9107,7 +9105,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case status
+    /// Update work item status
     pub async fn update_status(
         &self,
         case_id: String,
@@ -9127,7 +9125,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Update case status
+    /// Update work item status
     pub async fn update_status_with_http_info(
         &self,
         case_id: String,
@@ -9259,7 +9257,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Adds a user (identified by their UUID) as a watcher of a case. The user receives notifications about subsequent updates to the case.
+    /// Adds a user (identified by their UUID) as a watcher of a work item. The user receives notifications about subsequent updates to the work item.
     pub async fn watch_case(
         &self,
         case_id: String,
@@ -9271,7 +9269,7 @@ impl CaseManagementAPI {
         }
     }
 
-    /// Adds a user (identified by their UUID) as a watcher of a case. The user receives notifications about subsequent updates to the case.
+    /// Adds a user (identified by their UUID) as a watcher of a work item. The user receives notifications about subsequent updates to the work item.
     pub async fn watch_case_with_http_info(
         &self,
         case_id: String,

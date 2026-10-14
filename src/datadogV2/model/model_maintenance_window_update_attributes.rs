@@ -17,7 +17,7 @@ pub struct MaintenanceWindowUpdateAttributes {
     /// The name of the maintenance window.
     #[serde(rename = "name")]
     pub name: Option<String>,
-    /// The query to filter event management cases for this maintenance window.
+    /// The query to filter event management work items for this maintenance window.
     #[serde(rename = "query")]
     pub query: Option<String>,
     /// The start time of the maintenance window.
