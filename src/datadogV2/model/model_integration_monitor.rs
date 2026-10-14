@@ -14,7 +14,7 @@ pub struct IntegrationMonitor {
     /// Whether auto-resolve is enabled.
     #[serde(rename = "auto_resolve_enabled")]
     pub auto_resolve_enabled: Option<bool>,
-    /// Case type ID for monitor integration.
+    /// Work item type ID for monitor integration.
     #[serde(rename = "case_type_id")]
     pub case_type_id: Option<String>,
     /// Whether monitor integration is enabled.

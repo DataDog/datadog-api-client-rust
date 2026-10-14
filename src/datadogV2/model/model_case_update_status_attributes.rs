@@ -6,16 +6,16 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case update status attributes
+/// Work item update status attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateStatusAttributes {
-    /// Deprecated way of representing the case status, which only supports OPEN, IN_PROGRESS, and CLOSED statuses. Use `status_name` instead.
+    /// Deprecated way of representing the work item status, which only supports OPEN, IN_PROGRESS, and CLOSED statuses. Use `status_name` instead.
     #[deprecated]
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::CaseStatus>,
-    /// Status of the case. Must be one of the existing statuses for the case's type.
+    /// Status of the work item. Must be one of the existing statuses for the work item's type.
     #[serde(rename = "status_name")]
     pub status_name: Option<String>,
     #[serde(flatten)]

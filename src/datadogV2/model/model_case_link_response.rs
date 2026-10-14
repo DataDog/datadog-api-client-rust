@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing a single case link.
+/// Response containing a single work item link.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseLinkResponse {
-    /// A directional link representing a relationship between two entities. At least one entity must be a case.
+    /// A directional link representing a relationship between two entities. At least one entity must be a work item.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseLink,
     #[serde(flatten)]

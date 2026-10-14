@@ -11,13 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IntegrationServiceNowSyncConfigPriority {
-    /// Mapping of case priority values to ServiceNow impact values.
+    /// Mapping of work item priority values to ServiceNow impact values.
     #[serde(rename = "impact_mapping")]
     pub impact_mapping: Option<std::collections::BTreeMap<String, String>>,
     /// The type of synchronization to apply for priority.
     #[serde(rename = "sync_type")]
     pub sync_type: Option<String>,
-    /// Mapping of case priority values to ServiceNow urgency values.
+    /// Mapping of work item priority values to ServiceNow urgency values.
     #[serde(rename = "urgency_mapping")]
     pub urgency_mapping: Option<std::collections::BTreeMap<String, String>>,
     #[serde(flatten)]

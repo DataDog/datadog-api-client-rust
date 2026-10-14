@@ -6,18 +6,18 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case creation data
+/// Work item creation data
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseCreate {
-    /// Case creation attributes
+    /// Work item creation attributes
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseCreateAttributes,
-    /// Relationships formed with the case on creation
+    /// Relationships formed with the work item on creation
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::CaseCreateRelationships>,
-    /// JSON:API resource type for cases.
+    /// JSON:API resource type for work items.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
     #[serde(flatten)]

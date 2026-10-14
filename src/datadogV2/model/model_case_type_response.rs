@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing a single case type.
+/// Response containing a single work item type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseTypeResponse {
-    /// A case type that defines a classification category for cases. Each case type can have its own custom attributes, statuses, and automation rules.
+    /// A work item type that defines a classification category for work items. Each work item type can have its own custom attributes, statuses, and automation rules.
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::CaseTypeResource>,
     #[serde(flatten)]

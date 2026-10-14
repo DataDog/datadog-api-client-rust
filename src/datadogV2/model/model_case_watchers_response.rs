@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing the list of users watching a case.
+/// Response containing the list of users watching a work item.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseWatchersResponse {
-    /// List of case watchers.
+    /// List of work item watchers.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::CaseWatcher>,
     #[serde(flatten)]

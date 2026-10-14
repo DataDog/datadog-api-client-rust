@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for updating a case's resolved reason.
+/// Data object for updating a work item's resolved reason.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateResolvedReason {
-    /// Attributes for setting the resolution reason on a security case.
+    /// Attributes for setting the resolution reason on a security work item.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseUpdateResolvedReasonAttributes,
-    /// JSON:API resource type for cases.
+    /// JSON:API resource type for work items.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
     #[serde(flatten)]

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request payload for updating a case view.
+/// Request payload for updating a work item view.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseViewUpdateRequest {
-    /// Data object for updating a case view.
+    /// Data object for updating a work item view.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseViewUpdate,
     #[serde(flatten)]

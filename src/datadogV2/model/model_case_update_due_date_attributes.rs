@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for setting or clearing a case's due date.
+/// Attributes for setting or clearing a work item's due date.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateDueDateAttributes {
-    /// The target resolution date for the case, in `YYYY-MM-DD` format. Set to `null` to clear the due date.
+    /// The target resolution date for the work item, in `YYYY-MM-DD` format. Set to `null` to clear the due date.
     #[serde(rename = "due_date")]
     pub due_date: String,
     #[serde(flatten)]

@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case update status
+/// Work item update status
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateStatus {
-    /// Case update status attributes
+    /// Work item update status attributes
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseUpdateStatusAttributes,
-    /// JSON:API resource type for cases.
+    /// JSON:API resource type for work items.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseResourceType,
     #[serde(flatten)]

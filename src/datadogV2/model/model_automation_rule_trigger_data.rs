@@ -17,7 +17,7 @@ pub struct AutomationRuleTriggerData {
     /// The kind of attribute change to match. Allowed values: `VALUE_ADDED`, `VALUE_DELETED`, `ANY_CHANGES`. Used with `ATTRIBUTE_VALUE_CHANGED` triggers.
     #[serde(rename = "change_type")]
     pub change_type: Option<String>,
-    /// The case attribute field name to monitor for changes. Used with `ATTRIBUTE_VALUE_CHANGED` triggers.
+    /// The work item attribute field name to monitor for changes. Used with `ATTRIBUTE_VALUE_CHANGED` triggers.
     #[serde(rename = "field")]
     pub field: Option<String>,
     /// The originating status name. Used with `STATUS_TRANSITIONED` triggers to match transitions from this status.

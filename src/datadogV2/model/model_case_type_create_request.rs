@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request payload for creating a case type.
+/// Request payload for creating a work item type.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseTypeCreateRequest {
-    /// Data object for creating a case type.
+    /// Data object for creating a work item type.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseTypeCreate,
     #[serde(flatten)]

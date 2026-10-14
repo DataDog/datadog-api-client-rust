@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a case view, including the filter query and optional notification rule.
+/// Attributes of a work item view, including the filter query and optional notification rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -17,13 +17,13 @@ pub struct CaseViewAttributes {
     /// Timestamp when the view was last modified.
     #[serde(rename = "modified_at")]
     pub modified_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// A human-readable name for the view, displayed in the Case Management UI.
+    /// A human-readable name for the view, displayed in the Work Management UI.
     #[serde(rename = "name")]
     pub name: String,
-    /// The identifier of a notification rule linked to this view. When set, users subscribed to the view receive alerts for matching cases.
+    /// The identifier of a notification rule linked to this view. When set, users subscribed to the view receive alerts for matching work items.
     #[serde(rename = "np_rule_id")]
     pub np_rule_id: Option<String>,
-    /// The search query that determines which cases appear in this view. Uses the same syntax as the Case Management search bar (for example, `status:open priority:P1`).
+    /// The search query that determines which work items appear in this view. Uses the same syntax as the Work Management search bar (for example, `status:open priority:P1`).
     #[serde(rename = "query")]
     pub query: String,
     #[serde(flatten)]

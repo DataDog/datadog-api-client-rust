@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Response containing a list of case types.
+/// Response containing a list of work item types.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseTypesResponse {
-    /// List of case types
+    /// List of work item types
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::CaseTypeResource>>,
     #[serde(flatten)]

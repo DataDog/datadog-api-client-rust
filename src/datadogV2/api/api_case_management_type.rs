@@ -42,7 +42,7 @@ pub enum UpdateCaseTypeError {
     UnknownValue(serde_json::Value),
 }
 
-/// View and configure case types within Case Management. See the [Case Management page](<https://docs.datadoghq.com/service_management/case_management/>) for more information.
+/// View and configure work item types within Work Management. See the [Work Management page](<https://docs.datadoghq.com/incident_response/work_management/>) for more information.
 #[derive(Debug, Clone)]
 pub struct CaseManagementTypeAPI {
     config: datadog::Configuration,
@@ -116,7 +116,7 @@ impl CaseManagementTypeAPI {
         Self { config, client }
     }
 
-    /// Create a Case Type
+    /// Create a work item type.
     pub async fn create_case_type(
         &self,
         body: crate::datadogV2::model::CaseTypeCreateRequest,
@@ -136,7 +136,7 @@ impl CaseManagementTypeAPI {
         }
     }
 
-    /// Create a Case Type
+    /// Create a work item type.
     pub async fn create_case_type_with_http_info(
         &self,
         body: crate::datadogV2::model::CaseTypeCreateRequest,
@@ -268,7 +268,7 @@ impl CaseManagementTypeAPI {
         }
     }
 
-    /// Delete a case type
+    /// Delete a work item type
     pub async fn delete_case_type(
         &self,
         case_type_id: String,
@@ -279,7 +279,7 @@ impl CaseManagementTypeAPI {
         }
     }
 
-    /// Delete a case type
+    /// Delete a work item type
     pub async fn delete_case_type_with_http_info(
         &self,
         case_type_id: String,
@@ -356,7 +356,7 @@ impl CaseManagementTypeAPI {
         }
     }
 
-    /// Get all case types
+    /// Get all work item types
     pub async fn get_all_case_types(
         &self,
     ) -> Result<crate::datadogV2::model::CaseTypesResponse, datadog::Error<GetAllCaseTypesError>>
@@ -375,7 +375,7 @@ impl CaseManagementTypeAPI {
         }
     }
 
-    /// Get all case types
+    /// Get all work item types
     pub async fn get_all_case_types_with_http_info(
         &self,
     ) -> Result<
@@ -459,7 +459,7 @@ impl CaseManagementTypeAPI {
         }
     }
 
-    /// Updates the name, emoji, or description of an existing case type.
+    /// Updates the name, emoji, or description of an existing work item type.
     pub async fn update_case_type(
         &self,
         case_type_id: String,
@@ -483,7 +483,7 @@ impl CaseManagementTypeAPI {
         }
     }
 
-    /// Updates the name, emoji, or description of an existing case type.
+    /// Updates the name, emoji, or description of an existing work item type.
     pub async fn update_case_type_with_http_info(
         &self,
         case_type_id: String,

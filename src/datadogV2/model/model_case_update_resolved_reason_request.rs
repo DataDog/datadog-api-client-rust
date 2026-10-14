@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Request payload for updating the resolution reason on a closed security case.
+/// Request payload for updating the resolution reason on a closed security work item.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateResolvedReasonRequest {
-    /// Data object for updating a case's resolved reason.
+    /// Data object for updating a work item's resolved reason.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseUpdateResolvedReason,
     #[serde(flatten)]

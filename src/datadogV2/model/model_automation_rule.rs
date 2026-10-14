@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// An automation rule that executes an action (such as running a Datadog workflow or assigning an AI agent) when a specified case event occurs within a project.
+/// An automation rule that executes an action (such as running a Datadog workflow or assigning an AI agent) when a specified work item event occurs within a project.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -20,7 +20,7 @@ pub struct AutomationRule {
     /// Related resources for the automation rule, including the users who created and last modified it.
     #[serde(rename = "relationships")]
     pub relationships: Option<crate::datadogV2::model::AutomationRuleRelationships>,
-    /// JSON:API resource type for case automation rules.
+    /// JSON:API resource type for work item automation rules.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseAutomationRuleResourceType,
     #[serde(flatten)]

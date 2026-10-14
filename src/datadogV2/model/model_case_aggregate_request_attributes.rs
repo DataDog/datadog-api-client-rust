@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseAggregateRequestAttributes {
-    /// Configuration for grouping aggregated results by one or more case fields.
+    /// Configuration for grouping aggregated results by one or more work item fields.
     #[serde(rename = "group_by")]
     pub group_by: crate::datadogV2::model::CaseAggregateGroupBy,
-    /// A search query to filter which cases are included in the aggregation. Uses the same syntax as the Case Management search bar.
+    /// A search query to filter which work items are included in the aggregation. Uses the same syntax as the Work Management search bar.
     #[serde(rename = "query_filter")]
     pub query_filter: String,
     #[serde(flatten)]

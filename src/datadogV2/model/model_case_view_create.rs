@@ -6,15 +6,15 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Data object for creating a case view.
+/// Data object for creating a work item view.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseViewCreate {
-    /// Attributes required to create a case view.
+    /// Attributes required to create a work item view.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CaseViewCreateAttributes,
-    /// JSON:API resource type for case views.
+    /// JSON:API resource type for work item views.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::CaseViewResourceType,
     #[serde(flatten)]

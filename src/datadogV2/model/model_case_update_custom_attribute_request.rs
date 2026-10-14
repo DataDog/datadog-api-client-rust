@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case update custom attribute request
+/// Work item update custom attribute request
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseUpdateCustomAttributeRequest {
-    /// Case update custom attribute
+    /// Work item update custom attribute
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::CaseUpdateCustomAttribute,
     #[serde(flatten)]

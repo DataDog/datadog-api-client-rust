@@ -23,7 +23,7 @@ pub struct CreateLinearIssueRequestDataAttributes {
     /// Unique identifier of the Linear project to pin the issue to. If not provided, the issue is not associated with a Linear project.
     #[serde(rename = "linear_project_id")]
     pub linear_project_id: Option<String>,
-    /// Case priority
+    /// Work item priority
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::CasePriority>,
     /// Title of the Linear issue. If not provided, the title will be automatically generated.

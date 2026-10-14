@@ -6,39 +6,39 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Case resource attributes
+/// Work item resource attributes
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseAttributes {
-    /// Timestamp of when the case was archived
+    /// Timestamp of when the work item was archived
     #[serde(
         rename = "archived_at",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub archived_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// Key-value pairs of case attributes. Each key maps to an array of string values, used for flexible metadata such as labels or tags.
+    /// Key-value pairs of work item attributes. Each key maps to an array of string values, used for flexible metadata such as labels or tags.
     #[serde(rename = "attributes")]
     pub attributes: Option<std::collections::BTreeMap<String, Vec<String>>>,
-    /// Timestamp of when the case was closed
+    /// Timestamp of when the work item was closed
     #[serde(
         rename = "closed_at",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub closed_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// Timestamp of when the case was created
+    /// Timestamp of when the work item was created
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
-    /// Case custom attributes
+    /// Work item custom attributes
     #[serde(rename = "custom_attributes")]
     pub custom_attributes:
         Option<std::collections::BTreeMap<String, crate::datadogV2::model::CustomAttributeValue>>,
     /// Description
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// Jira issue attached to case
+    /// Jira issue attached to work item
     #[serde(
         rename = "jira_issue",
         default,
@@ -48,41 +48,41 @@ pub struct CaseAttributes {
     /// Key
     #[serde(rename = "key")]
     pub key: Option<String>,
-    /// Timestamp of when the case was last modified
+    /// Timestamp of when the work item was last modified
     #[serde(
         rename = "modified_at",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub modified_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
-    /// Case priority
+    /// Work item priority
     #[serde(rename = "priority")]
     pub priority: Option<crate::datadogV2::model::CasePriority>,
-    /// ServiceNow ticket attached to case
+    /// ServiceNow ticket attached to work item
     #[serde(
         rename = "service_now_ticket",
         default,
         with = "::serde_with::rust::double_option"
     )]
     pub service_now_ticket: Option<Option<crate::datadogV2::model::ServiceNowTicket>>,
-    /// Deprecated way of representing the case status, which only supports OPEN, IN_PROGRESS, and CLOSED statuses. Use `status_name` instead.
+    /// Deprecated way of representing the work item status, which only supports OPEN, IN_PROGRESS, and CLOSED statuses. Use `status_name` instead.
     #[deprecated]
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV2::model::CaseStatus>,
-    /// Status group of the case.
+    /// Status group of the work item.
     #[serde(rename = "status_group")]
     pub status_group: Option<crate::datadogV2::model::CaseStatusGroup>,
-    /// Status of the case. Must be one of the existing statuses for the case's type.
+    /// Status of the work item. Must be one of the existing statuses for the work item's type.
     #[serde(rename = "status_name")]
     pub status_name: Option<String>,
     /// Title
     #[serde(rename = "title")]
     pub title: Option<String>,
-    /// Case type
+    /// Work item type
     #[deprecated]
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::CaseType>,
-    /// Case type UUID
+    /// Work item type UUID
     #[serde(rename = "type_id")]
     pub type_id: Option<String>,
     #[serde(flatten)]

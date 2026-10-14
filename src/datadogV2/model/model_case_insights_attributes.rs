@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes for adding or removing insights from a case.
+/// Attributes for adding or removing insights from a work item.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CaseInsightsAttributes {
-    /// Array of insights to add to or remove from a case.
+    /// Array of insights to add to or remove from a work item.
     #[serde(rename = "insights")]
     pub insights: Vec<crate::datadogV2::model::CaseInsight>,
     #[serde(flatten)]
