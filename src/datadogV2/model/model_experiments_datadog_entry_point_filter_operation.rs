@@ -6,8 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsOperation
-{
+pub enum ExperimentsDatadogEntryPointFilterOperation {
     EQ,
     IN,
     NEQ,
@@ -19,7 +18,7 @@ pub enum ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurat
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsOperation {
+impl ToString for ExperimentsDatadogEntryPointFilterOperation {
     fn to_string(&self) -> String {
         match self {
             Self::EQ => String::from("eq"),
@@ -35,7 +34,7 @@ impl ToString for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagC
     }
 }
 
-impl Serialize for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsOperation {
+impl Serialize for ExperimentsDatadogEntryPointFilterOperation {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -47,14 +46,24 @@ impl Serialize for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlag
     }
 }
 
-impl<'de> Deserialize<'de> for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsOperation {
+impl<'de> Deserialize<'de> for ExperimentsDatadogEntryPointFilterOperation {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {"eq" => Self::EQ,"in" => Self::IN,"neq" => Self::NEQ,"not_in" => Self::NOT_IN,"gte" => Self::GTE,"lte" => Self::LTE,"gt" => Self::GT,"lt" => Self::LT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
+        Ok(match s.as_str() {
+            "eq" => Self::EQ,
+            "in" => Self::IN,
+            "neq" => Self::NEQ,
+            "not_in" => Self::NOT_IN,
+            "gte" => Self::GTE,
+            "lte" => Self::LTE,
+            "gt" => Self::GT,
+            "lt" => Self::LT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }

@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ExperimentsWarehouseExposureFilter {
     /// Comparison applied by the warehouse entry-point filter.
     #[serde(rename = "operation")]
-    pub operation: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation,
+    pub operation: crate::datadogV2::model::ExperimentsWarehouseEntryPointFilterOperation,
     /// Warehouse property UUID.
     #[serde(rename = "property_id")]
     pub property_id: String,
@@ -24,12 +24,12 @@ pub struct ExperimentsWarehouseExposureFilter {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
 impl ExperimentsWarehouseExposureFilter {
     pub fn new(
-        operation: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation,
+        operation: crate::datadogV2::model::ExperimentsWarehouseEntryPointFilterOperation,
         property_id: String,
         values: Vec<String>,
     ) -> ExperimentsWarehouseExposureFilter {
@@ -68,7 +68,9 @@ impl<'de> Deserialize<'de> for ExperimentsWarehouseExposureFilter {
             where
                 M: MapAccess<'a>,
             {
-                let mut operation: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation> = None;
+                let mut operation: Option<
+                    crate::datadogV2::model::ExperimentsWarehouseEntryPointFilterOperation,
+                > = None;
                 let mut property_id: Option<String> = None;
                 let mut values: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -83,7 +85,7 @@ impl<'de> Deserialize<'de> for ExperimentsWarehouseExposureFilter {
                             operation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _operation) = operation {
                                 match _operation {
-                                    crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation::UnparsedObject(_operation) => {
+                                    crate::datadogV2::model::ExperimentsWarehouseEntryPointFilterOperation::UnparsedObject(_operation) => {
                                         _unparsed = true;
                                     },
                                     _ => {}

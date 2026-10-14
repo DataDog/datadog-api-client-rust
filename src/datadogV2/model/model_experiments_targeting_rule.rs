@@ -10,8 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems
-{
+pub struct ExperimentsTargetingRule {
     /// Conditions that must all match for this rule. Each condition must use exactly one shape: saved_filter_id alone or operator plus attribute plus value.
     #[serde(rename = "conditions")]
     pub conditions: Vec<crate::datadogV2::model::ExperimentsTargetingRuleCondition>,
@@ -22,12 +21,11 @@ pub struct ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigur
     pub(crate) _unparsed: bool,
 }
 
-impl ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems {
+impl ExperimentsTargetingRule {
     pub fn new(
         conditions: Vec<crate::datadogV2::model::ExperimentsTargetingRuleCondition>,
-    ) -> ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems
-    {
-        ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems {
+    ) -> ExperimentsTargetingRule {
+        ExperimentsTargetingRule {
             conditions,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -43,14 +41,14 @@ impl ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationT
     }
 }
 
-impl<'de> Deserialize<'de> for ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems {
+impl<'de> Deserialize<'de> for ExperimentsTargetingRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItemsVisitor;
-        impl<'a> Visitor<'a> for ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItemsVisitor {
-            type Value = ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems;
+        struct ExperimentsTargetingRuleVisitor;
+        impl<'a> Visitor<'a> for ExperimentsTargetingRuleVisitor {
+            type Value = ExperimentsTargetingRule;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -60,25 +58,30 @@ impl<'de> Deserialize<'de> for ExperimentsCreateExperimentV2RequestDataAttribute
             where
                 M: MapAccess<'a>,
             {
-                let mut conditions: Option<Vec<crate::datadogV2::model::ExperimentsTargetingRuleCondition>> = None;
-                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
+                let mut conditions: Option<
+                    Vec<crate::datadogV2::model::ExperimentsTargetingRuleCondition>,
+                > = None;
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "conditions" => {
                             conditions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        },
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        },
+                        }
                     }
                 }
                 let conditions = conditions.ok_or_else(|| M::Error::missing_field("conditions"))?;
 
-                let content = ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems {
+                let content = ExperimentsTargetingRule {
                     conditions,
                     additional_properties,
                     _unparsed,
@@ -88,6 +91,6 @@ impl<'de> Deserialize<'de> for ExperimentsCreateExperimentV2RequestDataAttribute
             }
         }
 
-        deserializer.deserialize_any(ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItemsVisitor)
+        deserializer.deserialize_any(ExperimentsTargetingRuleVisitor)
     }
 }

@@ -12,9 +12,9 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ExperimentsCreateExperimentV2RequestDataAttributesWarehouseExposureConfiguration {
     /// Optional Warehouse measure that scopes analyzed subjects.
-	#[serialize_always]
+    #[serialize_always]
     #[serde(rename = "entry_point")]
-    pub entry_point: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint>,
+    pub entry_point: Option<crate::datadogV2::model::ExperimentsWarehouseEntryPoint>,
     /// Warehouse experiment key. Must not be blank.
     #[serde(rename = "experiment_key")]
     pub experiment_key: String,
@@ -25,12 +25,12 @@ pub struct ExperimentsCreateExperimentV2RequestDataAttributesWarehouseExposureCo
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
 impl ExperimentsCreateExperimentV2RequestDataAttributesWarehouseExposureConfiguration {
     pub fn new(
-        entry_point: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint>,
+        entry_point: Option<crate::datadogV2::model::ExperimentsWarehouseEntryPoint>,
         experiment_key: String,
         exposure_sql_model_id: String,
     ) -> ExperimentsCreateExperimentV2RequestDataAttributesWarehouseExposureConfiguration {
@@ -71,7 +71,7 @@ impl<'de> Deserialize<'de>
             where
                 M: MapAccess<'a>,
             {
-                let mut entry_point: Option<Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint>> = None;
+                let mut entry_point: Option<Option<crate::datadogV2::model::ExperimentsWarehouseEntryPoint>> = None;
                 let mut experiment_key: Option<String> = None;
                 let mut exposure_sql_model_id: Option<String> = None;
                     let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();

@@ -10,8 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint
-{
+pub struct ExperimentsWarehouseEntryPoint {
     /// Complete ordered Warehouse entry-point filter set.
     #[serde(rename = "filters")]
     pub filters: Vec<crate::datadogV2::model::ExperimentsWarehouseExposureFilter>,
@@ -25,13 +24,12 @@ pub struct ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureCo
     pub(crate) _unparsed: bool,
 }
 
-impl ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint {
+impl ExperimentsWarehouseEntryPoint {
     pub fn new(
         filters: Vec<crate::datadogV2::model::ExperimentsWarehouseExposureFilter>,
         measure_id: String,
-    ) -> ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint
-    {
-        ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint {
+    ) -> ExperimentsWarehouseEntryPoint {
+        ExperimentsWarehouseEntryPoint {
             filters,
             measure_id,
             additional_properties: std::collections::BTreeMap::new(),
@@ -48,16 +46,14 @@ impl ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigur
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint
-{
+impl<'de> Deserialize<'de> for ExperimentsWarehouseEntryPoint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointVisitor;
-        impl<'a> Visitor<'a> for ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointVisitor {
-            type Value = ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint;
+        struct ExperimentsWarehouseEntryPointVisitor;
+        impl<'a> Visitor<'a> for ExperimentsWarehouseEntryPointVisitor {
+            type Value = ExperimentsWarehouseEntryPoint;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,30 +63,35 @@ impl<'de> Deserialize<'de>
             where
                 M: MapAccess<'a>,
             {
-                let mut filters: Option<Vec<crate::datadogV2::model::ExperimentsWarehouseExposureFilter>> = None;
+                let mut filters: Option<
+                    Vec<crate::datadogV2::model::ExperimentsWarehouseExposureFilter>,
+                > = None;
                 let mut measure_id: Option<String> = None;
-                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "filters" => {
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        },
+                        }
                         "measure_id" => {
                             measure_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        },
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        },
+                        }
                     }
                 }
                 let filters = filters.ok_or_else(|| M::Error::missing_field("filters"))?;
                 let measure_id = measure_id.ok_or_else(|| M::Error::missing_field("measure_id"))?;
 
-                let content = ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint {
+                let content = ExperimentsWarehouseEntryPoint {
                     filters,
                     measure_id,
                     additional_properties,
@@ -101,6 +102,6 @@ impl<'de> Deserialize<'de>
             }
         }
 
-        deserializer.deserialize_any(ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointVisitor)
+        deserializer.deserialize_any(ExperimentsWarehouseEntryPointVisitor)
     }
 }

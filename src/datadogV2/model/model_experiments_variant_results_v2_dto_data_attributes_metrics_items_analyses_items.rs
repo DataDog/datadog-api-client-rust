@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems {
     /// Lower and upper bounds of the reported statistical interval.
     #[serde(rename = "confidence_interval")]
-    pub confidence_interval: Option<crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceInterval>,
+    pub confidence_interval: Option<crate::datadogV2::model::ExperimentsConfidenceInterval>,
     /// Configured nominal confidence level. Interval bounds can use an adjusted level for multiple testing or hybrid methods.
     #[serde(rename = "confidence_level")]
     pub confidence_level: Option<f64>,
@@ -112,7 +112,7 @@ impl ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems {
 
     pub fn confidence_interval(
         mut self,
-        value: crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceInterval,
+        value: crate::datadogV2::model::ExperimentsConfidenceInterval,
     ) -> Self {
         self.confidence_interval = Some(value);
         self
@@ -263,7 +263,9 @@ impl<'de> Deserialize<'de>
             where
                 M: MapAccess<'a>,
             {
-                let mut confidence_interval: Option<crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsConfidenceInterval> = None;
+                let mut confidence_interval: Option<
+                    crate::datadogV2::model::ExperimentsConfidenceInterval,
+                > = None;
                 let mut confidence_level: Option<f64> = None;
                 let mut evsi: Option<f64> = None;
                 let mut expectation_above_zero: Option<f64> = None;

@@ -25,7 +25,7 @@ pub struct ExperimentsPatchExperimentV2RequestDataAttributesDatadogFlagConfigura
     pub reset_on_feature_flag_change: Option<bool>,
     /// Omit to keep the stored rules. Use an empty array to remove targeting rules.
     #[serde(rename = "targeting_rules")]
-    pub targeting_rules: Option<Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems>>,
+    pub targeting_rules: Option<Vec<crate::datadogV2::model::ExperimentsTargetingRule>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -71,7 +71,7 @@ impl ExperimentsPatchExperimentV2RequestDataAttributesDatadogFlagConfiguration {
 
     pub fn targeting_rules(
         mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems>,
+        value: Vec<crate::datadogV2::model::ExperimentsTargetingRule>,
     ) -> Self {
         self.targeting_rules = Some(value);
         self
@@ -117,7 +117,9 @@ impl<'de> Deserialize<'de>
                 let mut environment_id: Option<String> = None;
                 let mut feature_flag_id: Option<String> = None;
                 let mut reset_on_feature_flag_change: Option<bool> = None;
-                let mut targeting_rules: Option<Vec<crate::datadogV2::model::ExperimentsCreateExperimentV2RequestDataAttributesDatadogFlagConfigurationTargetingRulesItems>> = None;
+                let mut targeting_rules: Option<
+                    Vec<crate::datadogV2::model::ExperimentsTargetingRule>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

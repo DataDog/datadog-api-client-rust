@@ -12,11 +12,11 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfiguration {
     /// Optional Warehouse measure that scopes analyzed subjects.
-	#[serialize_always]
+    #[serialize_always]
     #[serde(rename = "entry_point")]
-    pub entry_point: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint>,
+    pub entry_point: Option<crate::datadogV2::model::ExperimentsWarehouseEntryPoint>,
     /// Warehouse experiment key. Reads can return null for incomplete configuration; configuration writes require a value.
-	#[serialize_always]
+    #[serialize_always]
     #[serde(rename = "experiment_key")]
     pub experiment_key: Option<String>,
     /// ID of the exposure SQL model that provides assignment data.
@@ -26,12 +26,12 @@ pub struct ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureCo
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
 impl ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfiguration {
     pub fn new(
-        entry_point: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint>,
+        entry_point: Option<crate::datadogV2::model::ExperimentsWarehouseEntryPoint>,
         experiment_key: Option<String>,
         exposure_sql_model_id: String,
     ) -> ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfiguration {
@@ -72,7 +72,7 @@ impl<'de> Deserialize<'de>
             where
                 M: MapAccess<'a>,
             {
-                let mut entry_point: Option<Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPoint>> = None;
+                let mut entry_point: Option<Option<crate::datadogV2::model::ExperimentsWarehouseEntryPoint>> = None;
                 let mut experiment_key: Option<Option<String>> = None;
                 let mut exposure_sql_model_id: Option<String> = None;
                     let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();

@@ -6,14 +6,13 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation
-{
+pub enum ExperimentsWarehouseEntryPointFilterOperation {
     IS,
     IS_NOT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation {
+impl ToString for ExperimentsWarehouseEntryPointFilterOperation {
     fn to_string(&self) -> String {
         match self {
             Self::IS => String::from("IS"),
@@ -23,7 +22,7 @@ impl ToString for ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExp
     }
 }
 
-impl Serialize for ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation {
+impl Serialize for ExperimentsWarehouseEntryPointFilterOperation {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -35,14 +34,18 @@ impl Serialize for ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseEx
     }
 }
 
-impl<'de> Deserialize<'de> for ExperimentsPatchExperimentV2ResponseDataAttributesWarehouseExposureConfigurationEntryPointFiltersItemsOperation {
+impl<'de> Deserialize<'de> for ExperimentsWarehouseEntryPointFilterOperation {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {"IS" => Self::IS,"IS_NOT" => Self::IS_NOT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
+        Ok(match s.as_str() {
+            "IS" => Self::IS,
+            "IS_NOT" => Self::IS_NOT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }
