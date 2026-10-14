@@ -46,8 +46,7 @@ async fn main() {
         "abc12345-1234-5678-abcd-ef1234567890".to_string(),
         RUMOperationType::OPERATIONS,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.update_rum_operation", true);
+    let configuration = datadog::Configuration::new();
     let api = RUMOperationsAPI::with_config(configuration);
     let resp = api
         .update_rum_operation("rum_operation_id".to_string(), body)
