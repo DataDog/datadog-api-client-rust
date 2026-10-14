@@ -16,7 +16,7 @@ pub struct ExperimentsCreateExperimentV2RequestDataAttributesSplitByPropertiesIt
     pub column_name: String,
     /// Data type of the column evaluated by the entry-point filter.
     #[serde(rename = "column_type")]
-    pub column_type: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType>,
+    pub column_type: Option<crate::datadogV2::model::ExperimentsDatadogEntryPointFilterColumnType>,
     /// Optional display name. Defaults to column_name for a new property.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -24,7 +24,7 @@ pub struct ExperimentsCreateExperimentV2RequestDataAttributesSplitByPropertiesIt
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
 impl ExperimentsCreateExperimentV2RequestDataAttributesSplitByPropertiesItems {
@@ -42,7 +42,7 @@ impl ExperimentsCreateExperimentV2RequestDataAttributesSplitByPropertiesItems {
 
     pub fn column_type(
         mut self,
-        value: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType,
+        value: crate::datadogV2::model::ExperimentsDatadogEntryPointFilterColumnType,
     ) -> Self {
         self.column_type = Some(value);
         self
@@ -84,7 +84,9 @@ impl<'de> Deserialize<'de>
                 M: MapAccess<'a>,
             {
                 let mut column_name: Option<String> = None;
-                let mut column_type: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType> = None;
+                let mut column_type: Option<
+                    crate::datadogV2::model::ExperimentsDatadogEntryPointFilterColumnType,
+                > = None;
                 let mut name: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -106,7 +108,7 @@ impl<'de> Deserialize<'de>
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _column_type) = column_type {
                                 match _column_type {
-                                    crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType::UnparsedObject(_column_type) => {
+                                    crate::datadogV2::model::ExperimentsDatadogEntryPointFilterColumnType::UnparsedObject(_column_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}

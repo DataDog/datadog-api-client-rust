@@ -49,7 +49,6 @@ async fn main() {
                                 "classic".to_string(),
                                 ListStreamColumnWidth::AUTO,
                             ),
-                            ListStreamColumn::new("".to_string(), ListStreamColumnWidth::AUTO),
                         ])
                         .query(
                             ListStreamQuery::new(ListStreamSource::LOGS_STREAM, "".to_string())

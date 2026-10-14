@@ -16,7 +16,7 @@ pub struct ExperimentsInlineCondition {
     pub attribute: String,
     /// Required with attribute and value for an inline condition; omit when saved_filter_id is set.
     #[serde(rename = "operator")]
-    pub operator: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationTargetingRulesItemsConditionsItemsOperator,
+    pub operator: crate::datadogV2::model::ExperimentsTargetingRuleOperator,
     /// Values used by the operator. Every operator requires at least one value.
     #[serde(rename = "value")]
     pub value: Vec<String>,
@@ -24,13 +24,13 @@ pub struct ExperimentsInlineCondition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool
+    pub(crate) _unparsed: bool,
 }
 
 impl ExperimentsInlineCondition {
     pub fn new(
         attribute: String,
-        operator: crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationTargetingRulesItemsConditionsItemsOperator,
+        operator: crate::datadogV2::model::ExperimentsTargetingRuleOperator,
         value: Vec<String>,
     ) -> ExperimentsInlineCondition {
         ExperimentsInlineCondition {
@@ -69,7 +69,9 @@ impl<'de> Deserialize<'de> for ExperimentsInlineCondition {
                 M: MapAccess<'a>,
             {
                 let mut attribute: Option<String> = None;
-                let mut operator: Option<crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationTargetingRulesItemsConditionsItemsOperator> = None;
+                let mut operator: Option<
+                    crate::datadogV2::model::ExperimentsTargetingRuleOperator,
+                > = None;
                 let mut value: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -86,7 +88,7 @@ impl<'de> Deserialize<'de> for ExperimentsInlineCondition {
                             operator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _operator) = operator {
                                 match _operator {
-                                    crate::datadogV2::model::ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationTargetingRulesItemsConditionsItemsOperator::UnparsedObject(_operator) => {
+                                    crate::datadogV2::model::ExperimentsTargetingRuleOperator::UnparsedObject(_operator) => {
                                         _unparsed = true;
                                     },
                                     _ => {}

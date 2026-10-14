@@ -6,8 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType
-{
+pub enum ExperimentsDatadogEntryPointFilterColumnType {
     VARCHAR,
     INT,
     DOUBLE,
@@ -19,7 +18,7 @@ pub enum ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurat
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType {
+impl ToString for ExperimentsDatadogEntryPointFilterColumnType {
     fn to_string(&self) -> String {
         match self {
             Self::VARCHAR => String::from("varchar"),
@@ -35,7 +34,7 @@ impl ToString for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagC
     }
 }
 
-impl Serialize for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType {
+impl Serialize for ExperimentsDatadogEntryPointFilterColumnType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -47,14 +46,24 @@ impl Serialize for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlag
     }
 }
 
-impl<'de> Deserialize<'de> for ExperimentsPatchExperimentV2ResponseDataAttributesDatadogFlagConfigurationEntryPointFiltersItemsItemsColumnType {
+impl<'de> Deserialize<'de> for ExperimentsDatadogEntryPointFilterColumnType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {"varchar" => Self::VARCHAR,"int" => Self::INT,"double" => Self::DOUBLE,"boolean" => Self::BOOLEAN,"varchar_array" => Self::VARCHAR_ARRAY,"int_array" => Self::INT_ARRAY,"double_array" => Self::DOUBLE_ARRAY,"raw" => Self::RAW,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
+        Ok(match s.as_str() {
+            "varchar" => Self::VARCHAR,
+            "int" => Self::INT,
+            "double" => Self::DOUBLE,
+            "boolean" => Self::BOOLEAN,
+            "varchar_array" => Self::VARCHAR_ARRAY,
+            "int_array" => Self::INT_ARRAY,
+            "double_array" => Self::DOUBLE_ARRAY,
+            "raw" => Self::RAW,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
+                value: serde_json::Value::String(s.into()),
+            }),
         })
     }
 }
