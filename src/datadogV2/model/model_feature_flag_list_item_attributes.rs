@@ -59,9 +59,14 @@ pub struct FeatureFlagListItemAttributes {
     /// The feature flag's current staleness state and suggested actions.
     #[serde(rename = "staleness_details")]
     pub staleness_details: Option<crate::datadogV2::model::FeatureFlagStalenessDetails>,
-    /// Indicates the staleness status of the feature flag.
+    /// Legacy status retained for compatibility. This field is always `ACTIVE`; use `staleness_details.staleness_status` for the computed status.
+    #[deprecated]
     #[serde(rename = "staleness_status")]
     pub staleness_status: Option<String>,
+    /// An explicit staleness status override. Omitted when no override is set.
+    #[serde(rename = "staleness_status_override")]
+    pub staleness_status_override:
+        Option<crate::datadogV2::model::FeatureFlagStalenessStatusOverride>,
     /// Tags associated with the feature flag.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -89,6 +94,7 @@ impl FeatureFlagListItemAttributes {
         value_type: crate::datadogV2::model::ValueType,
         variants: Vec<crate::datadogV2::model::Variant>,
     ) -> FeatureFlagListItemAttributes {
+        #[allow(deprecated)]
         FeatureFlagListItemAttributes {
             archived_at: None,
             created_at: None,
@@ -104,6 +110,7 @@ impl FeatureFlagListItemAttributes {
             require_approval: None,
             staleness_details: None,
             staleness_status: None,
+            staleness_status_override: None,
             tags: None,
             updated_at: None,
             value_type,
@@ -113,26 +120,31 @@ impl FeatureFlagListItemAttributes {
         }
     }
 
+    #[allow(deprecated)]
     pub fn archived_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.archived_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn created_by(mut self, value: uuid::Uuid) -> Self {
         self.created_by = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn distribution_channel(mut self, value: String) -> Self {
         self.distribution_channel = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn feature_flag_environments(
         mut self,
         value: Vec<crate::datadogV2::model::FeatureFlagEnvironmentListItem>,
@@ -141,26 +153,31 @@ impl FeatureFlagListItemAttributes {
         self
     }
 
+    #[allow(deprecated)]
     pub fn is_favorite(mut self, value: bool) -> Self {
         self.is_favorite = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn json_schema(mut self, value: Option<String>) -> Self {
         self.json_schema = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn last_updated_by(mut self, value: uuid::Uuid) -> Self {
         self.last_updated_by = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn require_approval(mut self, value: bool) -> Self {
         self.require_approval = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn staleness_details(
         mut self,
         value: crate::datadogV2::model::FeatureFlagStalenessDetails,
@@ -169,16 +186,28 @@ impl FeatureFlagListItemAttributes {
         self
     }
 
+    #[allow(deprecated)]
     pub fn staleness_status(mut self, value: String) -> Self {
         self.staleness_status = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn staleness_status_override(
+        mut self,
+        value: crate::datadogV2::model::FeatureFlagStalenessStatusOverride,
+    ) -> Self {
+        self.staleness_status_override = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
@@ -228,6 +257,9 @@ impl<'de> Deserialize<'de> for FeatureFlagListItemAttributes {
                     crate::datadogV2::model::FeatureFlagStalenessDetails,
                 > = None;
                 let mut staleness_status: Option<String> = None;
+                let mut staleness_status_override: Option<
+                    crate::datadogV2::model::FeatureFlagStalenessStatusOverride,
+                > = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut value_type: Option<crate::datadogV2::model::ValueType> = None;
@@ -319,6 +351,22 @@ impl<'de> Deserialize<'de> for FeatureFlagListItemAttributes {
                             staleness_status =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "staleness_status_override" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            staleness_status_override =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _staleness_status_override) = staleness_status_override
+                            {
+                                match _staleness_status_override {
+                                    crate::datadogV2::model::FeatureFlagStalenessStatusOverride::UnparsedObject(_staleness_status_override) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -361,6 +409,7 @@ impl<'de> Deserialize<'de> for FeatureFlagListItemAttributes {
                 let value_type = value_type.ok_or_else(|| M::Error::missing_field("value_type"))?;
                 let variants = variants.ok_or_else(|| M::Error::missing_field("variants"))?;
 
+                #[allow(deprecated)]
                 let content = FeatureFlagListItemAttributes {
                     archived_at,
                     created_at,
@@ -376,6 +425,7 @@ impl<'de> Deserialize<'de> for FeatureFlagListItemAttributes {
                     require_approval,
                     staleness_details,
                     staleness_status,
+                    staleness_status_override,
                     tags,
                     updated_at,
                     value_type,

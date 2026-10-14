@@ -41800,11 +41800,63 @@ fn test_v2_list_feature_flags(world: &mut DatadogWorld, _parameters: &HashMap<St
     let offset = _parameters
         .get("offset")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let tags = _parameters
+        .get("tags")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let teams = _parameters
+        .get("teams")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let production_status = _parameters
+        .get("production_status")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let distribution_channel = _parameters
+        .get("distribution_channel")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let search = _parameters
+        .get("search")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let value_type = _parameters
+        .get("value_type")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let created_by = _parameters
+        .get("created_by")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let flag_ids = _parameters
+        .get("flag_ids")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let staleness_status = _parameters
+        .get("staleness_status")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let saved_filter_id = _parameters
+        .get("saved_filter_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_feature_flags::ListFeatureFlagsOptionalParams::default();
     params.key = key;
     params.is_archived = is_archived;
     params.limit = limit;
     params.offset = offset;
+    params.tags = tags;
+    params.teams = teams;
+    params.production_status = production_status;
+    params.distribution_channel = distribution_channel;
+    params.search = search;
+    params.value_type = value_type;
+    params.created_by = created_by;
+    params.flag_ids = flag_ids;
+    params.staleness_status = staleness_status;
+    params.saved_filter_id = saved_filter_id;
+    params.sort = sort;
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
     let response = match block_on(api.list_feature_flags_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
