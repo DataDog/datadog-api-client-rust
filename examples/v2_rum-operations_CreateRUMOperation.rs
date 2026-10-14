@@ -45,8 +45,7 @@ async fn main() {
         .feature_ids(vec![]),
         RUMOperationType::OPERATIONS,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.create_rum_operation", true);
+    let configuration = datadog::Configuration::new();
     let api = RUMOperationsAPI::with_config(configuration);
     let resp = api.create_rum_operation(body).await;
     if let Ok(value) = resp {

@@ -6,7 +6,6 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -305,14 +304,6 @@ impl RUMOperationsAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_rum_operation";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_rum_operation' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -475,14 +466,6 @@ impl RUMOperationsAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_rum_operation_strong_link";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_rum_operation_strong_link' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -627,14 +610,6 @@ impl RUMOperationsAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMOperationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_operation";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_rum_operation' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -729,14 +704,6 @@ impl RUMOperationsAPI {
     {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_operation_strong_link";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_rum_operation_strong_link' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -841,14 +808,6 @@ impl RUMOperationsAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_operation";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_rum_operation' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -958,14 +917,6 @@ impl RUMOperationsAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_operation_by_name";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_rum_operation_by_name' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1215,14 +1166,6 @@ impl RUMOperationsAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_operations";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_rum_operations' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let query = params.query;
@@ -1376,14 +1319,6 @@ impl RUMOperationsAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_rum_operation";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_rum_operation' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1547,14 +1482,6 @@ impl RUMOperationsAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_rum_operation_strong_link";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_rum_operation_strong_link' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
