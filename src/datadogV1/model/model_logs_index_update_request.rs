@@ -20,6 +20,10 @@ pub struct LogsIndexUpdateRequest {
     /// A percentage threshold of the daily quota at which a Datadog warning event is generated.
     #[serde(rename = "daily_limit_warning_threshold_percentage")]
     pub daily_limit_warning_threshold_percentage: Option<f64>,
+    /// A description of the index, to help explain its purpose or configuration to other users.
+    /// Maximum length of 250 characters.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
     /// If true, sets the `daily_limit` value to null and the index is not limited on a daily basis (any
     /// specified `daily_limit` value in the request is ignored). If false or omitted, the index's current
     /// `daily_limit` is maintained.
@@ -63,6 +67,7 @@ impl LogsIndexUpdateRequest {
             daily_limit: None,
             daily_limit_reset: None,
             daily_limit_warning_threshold_percentage: None,
+            description: None,
             disable_daily_limit: None,
             exclusion_filters: None,
             filter,
@@ -89,6 +94,11 @@ impl LogsIndexUpdateRequest {
 
     pub fn daily_limit_warning_threshold_percentage(mut self, value: f64) -> Self {
         self.daily_limit_warning_threshold_percentage = Some(value);
+        self
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
         self
     }
 
@@ -147,6 +157,7 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                 let mut daily_limit_reset: Option<crate::datadogV1::model::LogsDailyLimitReset> =
                     None;
                 let mut daily_limit_warning_threshold_percentage: Option<f64> = None;
+                let mut description: Option<String> = None;
                 let mut disable_daily_limit: Option<bool> = None;
                 let mut exclusion_filters: Option<Vec<crate::datadogV1::model::LogsExclusion>> =
                     None;
@@ -181,6 +192,13 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                                 continue;
                             }
                             daily_limit_warning_threshold_percentage =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "disable_daily_limit" => {
@@ -233,6 +251,7 @@ impl<'de> Deserialize<'de> for LogsIndexUpdateRequest {
                     daily_limit,
                     daily_limit_reset,
                     daily_limit_warning_threshold_percentage,
+                    description,
                     disable_daily_limit,
                     exclusion_filters,
                     filter,
