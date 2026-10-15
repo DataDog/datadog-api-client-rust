@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertion {
+pub struct ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertion {
     /// The Azure credential kind. The value should always be `managed_identity_client_assertion`.
     #[serde(rename = "azure_credential_kind")]
-    pub azure_credential_kind: crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertionKind,
+    pub azure_credential_kind: crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind,
     /// The client ID of the Microsoft Entra application that trusts the managed identity.
     #[serde(rename = "client_assertion_client_id")]
     pub client_assertion_client_id: String,
@@ -33,13 +33,13 @@ pub struct ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityC
     pub(crate) _unparsed: bool
 }
 
-impl ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertion {
+impl ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertion {
     pub fn new(
-        azure_credential_kind: crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertionKind,
+        azure_credential_kind: crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind,
         client_assertion_client_id: String,
         client_assertion_tenant_id: String,
-    ) -> ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertion {
-        ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertion {
+    ) -> ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertion {
+        ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertion {
             azure_credential_kind,
             client_assertion_client_id,
             client_assertion_tenant_id,
@@ -73,15 +73,17 @@ impl ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientA
 }
 
 impl<'de> Deserialize<'de>
-    for ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertion
+    for ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertion
 {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertionVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertionVisitor {
-            type Value = ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertion;
+        struct ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionVisitor;
+        impl<'a> Visitor<'a>
+            for ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionVisitor
+        {
+            type Value = ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertion;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -91,42 +93,52 @@ impl<'de> Deserialize<'de>
             where
                 M: MapAccess<'a>,
             {
-                let mut azure_credential_kind: Option<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertionKind> = None;
+                let mut azure_credential_kind: Option<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind> = None;
                 let mut client_assertion_client_id: Option<String> = None;
                 let mut client_assertion_tenant_id: Option<String> = None;
                 let mut user_assigned_managed_identity_id: Option<Option<String>> = None;
                 let mut user_assigned_managed_identity_id_type: Option<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationManagedIdentityIdType> = None;
-                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
+                let mut additional_properties: std::collections::BTreeMap<
+                    String,
+                    serde_json::Value,
+                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "azure_credential_kind" => {
-                            azure_credential_kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            azure_credential_kind =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _azure_credential_kind) = azure_credential_kind {
                                 match _azure_credential_kind {
-                                    crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertionKind::UnparsedObject(_azure_credential_kind) => {
+                                    crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind::UnparsedObject(_azure_credential_kind) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
                                 }
                             }
-                        },
+                        }
                         "client_assertion_client_id" => {
-                            client_assertion_client_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        },
+                            client_assertion_client_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "client_assertion_tenant_id" => {
-                            client_assertion_tenant_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        },
+                            client_assertion_tenant_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "user_assigned_managed_identity_id" => {
-                            user_assigned_managed_identity_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        },
+                            user_assigned_managed_identity_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "user_assigned_managed_identity_id_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            user_assigned_managed_identity_id_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _user_assigned_managed_identity_id_type) = user_assigned_managed_identity_id_type {
+                            user_assigned_managed_identity_id_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _user_assigned_managed_identity_id_type) =
+                                user_assigned_managed_identity_id_type
+                            {
                                 match _user_assigned_managed_identity_id_type {
                                     crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationManagedIdentityIdType::UnparsedObject(_user_assigned_managed_identity_id_type) => {
                                         _unparsed = true;
@@ -134,32 +146,38 @@ impl<'de> Deserialize<'de>
                                     _ => {}
                                 }
                             }
-                        },
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        },
+                        }
                     }
                 }
-                let azure_credential_kind = azure_credential_kind.ok_or_else(|| M::Error::missing_field("azure_credential_kind"))?;
-                let client_assertion_client_id = client_assertion_client_id.ok_or_else(|| M::Error::missing_field("client_assertion_client_id"))?;
-                let client_assertion_tenant_id = client_assertion_tenant_id.ok_or_else(|| M::Error::missing_field("client_assertion_tenant_id"))?;
+                let azure_credential_kind = azure_credential_kind
+                    .ok_or_else(|| M::Error::missing_field("azure_credential_kind"))?;
+                let client_assertion_client_id = client_assertion_client_id
+                    .ok_or_else(|| M::Error::missing_field("client_assertion_client_id"))?;
+                let client_assertion_tenant_id = client_assertion_tenant_id
+                    .ok_or_else(|| M::Error::missing_field("client_assertion_tenant_id"))?;
 
-                let content = ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertion {
-                    azure_credential_kind,
-                    client_assertion_client_id,
-                    client_assertion_tenant_id,
-                    user_assigned_managed_identity_id,
-                    user_assigned_managed_identity_id_type,
-                    additional_properties,
-                    _unparsed,
-                };
+                let content =
+                    ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertion {
+                        azure_credential_kind,
+                        client_assertion_client_id,
+                        client_assertion_tenant_id,
+                        user_assigned_managed_identity_id,
+                        user_assigned_managed_identity_id_type,
+                        additional_properties,
+                        _unparsed,
+                    };
 
                 Ok(content)
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineAzureDataExplorerDestinationAuthManagedIdentityClientAssertionVisitor)
+        deserializer.deserialize_any(
+            ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionVisitor,
+        )
     }
 }
