@@ -14,7 +14,7 @@ pub struct ListCampaignsResponse {
     /// Array of campaigns.
     #[serde(rename = "data")]
     pub data: Vec<crate::datadogV2::model::CampaignResponseData>,
-    /// Metadata for scores response.
+    /// Pagination metadata.
     #[serde(rename = "meta")]
     pub meta: crate::datadogV2::model::PaginatedResponseMeta,
     #[serde(flatten)]

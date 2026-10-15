@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Metadata for scores response.
+/// Pagination metadata.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PaginatedResponseMeta {
-    /// Number of entities in this response.
+    /// Number of results in this response.
     #[serde(rename = "count")]
     pub count: i64,
     /// Pagination limit.
@@ -20,7 +20,7 @@ pub struct PaginatedResponseMeta {
     /// Pagination offset.
     #[serde(rename = "offset")]
     pub offset: i64,
-    /// Total number of entities available.
+    /// Total number of results matching the filters.
     #[serde(rename = "total")]
     pub total: i64,
     #[serde(flatten)]
