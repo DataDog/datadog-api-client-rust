@@ -14,12 +14,18 @@ pub struct ExperimentsPublicProtocolResponseDataAttributes {
     /// Default statistical settings supplied by the protocol.
     #[serde(rename = "analysis_plan")]
     pub analysis_plan: Option<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAnalysisPlan>,
+    /// Time when the protocol was archived. Omitted if it has not been archived.
+    #[serde(rename = "archived_at")]
+    pub archived_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Default properties supplied by the protocol's assignment source.
     #[serde(rename = "assignment_source_default_properties")]
     pub assignment_source_default_properties: Option<Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAssignmentSourceDefaultPropertiesItems>>,
     /// ID of the assignment source selected by the protocol.
     #[serde(rename = "assignment_source_id")]
     pub assignment_source_id: Option<String>,
+    /// Time when the protocol was created.
+    #[serde(rename = "created_at")]
+    pub created_at: chrono::DateTime<chrono::Utc>,
     /// Default experiment duration supplied by the protocol, in days.
     #[serde(rename = "default_duration_days")]
     pub default_duration_days: Option<i64>,
@@ -32,6 +38,9 @@ pub struct ExperimentsPublicProtocolResponseDataAttributes {
     /// ID of the feature flag environment used by the experiment.
     #[serde(rename = "environment_id")]
     pub environment_id: Option<String>,
+    /// Number of experiments in the organization that use this protocol, excluding deleted experiments. Omitted if the count cannot be retrieved. An omitted count does not mean zero.
+    #[serde(rename = "experiment_count")]
+    pub experiment_count: Option<i64>,
     /// Schedule that controls traffic exposure for experiments created from the protocol.
     #[serde(rename = "exposure_schedule")]
     pub exposure_schedule: Option<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesExposureSchedule>,
@@ -86,7 +95,8 @@ pub struct ExperimentsPublicProtocolResponseDataAttributes {
     /// Rules that select subjects for the experiment.
     #[serde(rename = "targeting_rules")]
     pub targeting_rules: Option<Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesTargetingRulesItems>>,
-    /// RFC3339 update time. Preserve all fractional seconds when passing this value as expected_updated_at.
+    /// RFC3339 update time. Preserve all fractional seconds when passing this value as
+/// `expected_updated_at`.
     #[serde(rename = "updated_at")]
     pub updated_at: String,
     #[serde(flatten)]
@@ -98,6 +108,7 @@ pub struct ExperimentsPublicProtocolResponseDataAttributes {
 
 impl ExperimentsPublicProtocolResponseDataAttributes {
     pub fn new(
+        created_at: chrono::DateTime<chrono::Utc>,
         is_duration_required_to_start: bool,
         is_equal_split_enforced: bool,
         is_metric_limit_enabled: bool,
@@ -109,12 +120,15 @@ impl ExperimentsPublicProtocolResponseDataAttributes {
     ) -> ExperimentsPublicProtocolResponseDataAttributes {
         ExperimentsPublicProtocolResponseDataAttributes {
             analysis_plan: None,
+            archived_at: None,
             assignment_source_default_properties: None,
             assignment_source_id: None,
+            created_at,
             default_duration_days: None,
             description: None,
             enforcement: None,
             environment_id: None,
+            experiment_count: None,
             exposure_schedule: None,
             is_duration_required_to_start,
             is_equal_split_enforced,
@@ -144,6 +158,11 @@ impl ExperimentsPublicProtocolResponseDataAttributes {
         value: crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAnalysisPlan,
     ) -> Self {
         self.analysis_plan = Some(value);
+        self
+    }
+
+    pub fn archived_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
+        self.archived_at = Some(value);
         self
     }
 
@@ -180,6 +199,11 @@ impl ExperimentsPublicProtocolResponseDataAttributes {
 
     pub fn environment_id(mut self, value: String) -> Self {
         self.environment_id = Some(value);
+        self
+    }
+
+    pub fn experiment_count(mut self, value: i64) -> Self {
+        self.experiment_count = Some(value);
         self
     }
 
@@ -277,12 +301,15 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut analysis_plan: Option<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAnalysisPlan> = None;
+                let mut archived_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut assignment_source_default_properties: Option<Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAssignmentSourceDefaultPropertiesItems>> = None;
                 let mut assignment_source_id: Option<String> = None;
+                let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut default_duration_days: Option<i64> = None;
                 let mut description: Option<String> = None;
                 let mut enforcement: Option<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesEnforcement> = None;
                 let mut environment_id: Option<String> = None;
+                let mut experiment_count: Option<i64> = None;
                 let mut exposure_schedule: Option<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesExposureSchedule> = None;
                 let mut is_duration_required_to_start: Option<bool> = None;
                 let mut is_equal_split_enforced: Option<bool> = None;
@@ -319,6 +346,13 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributes {
                             analysis_plan =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "archived_at" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            archived_at =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "assignment_source_default_properties" => {
                             if v.is_null() {
                                 continue;
@@ -332,6 +366,9 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributes {
                             }
                             assignment_source_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "created_at" => {
+                            created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "default_duration_days" => {
                             if v.is_null() {
@@ -359,6 +396,13 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributes {
                                 continue;
                             }
                             environment_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "experiment_count" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            experiment_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "exposure_schedule" => {
@@ -482,6 +526,7 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributes {
                         }
                     }
                 }
+                let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let is_duration_required_to_start = is_duration_required_to_start
                     .ok_or_else(|| M::Error::missing_field("is_duration_required_to_start"))?;
                 let is_equal_split_enforced = is_equal_split_enforced
@@ -498,12 +543,15 @@ impl<'de> Deserialize<'de> for ExperimentsPublicProtocolResponseDataAttributes {
 
                 let content = ExperimentsPublicProtocolResponseDataAttributes {
                     analysis_plan,
+                    archived_at,
                     assignment_source_default_properties,
                     assignment_source_id,
+                    created_at,
                     default_duration_days,
                     description,
                     enforcement,
                     environment_id,
+                    experiment_count,
                     exposure_schedule,
                     is_duration_required_to_start,
                     is_equal_split_enforced,
