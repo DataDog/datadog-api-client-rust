@@ -6,17 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Team resource identifier.
+/// Attributes of a list of Agent Observability patterns templates.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamHierarchyMemberTeamData {
-    /// UUID of the team.
-    #[serde(rename = "id")]
-    pub id: uuid::Uuid,
-    /// Requested team resource type.
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::TeamHierarchyMemberTeamType,
+pub struct LLMObsPatternsTemplatesResponseAttributes {
+    /// List of patterns templates.
+    #[serde(rename = "templates")]
+    pub templates: Vec<crate::datadogV2::model::LLMObsPatternsTemplateItem>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,14 +21,12 @@ pub struct TeamHierarchyMemberTeamData {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamHierarchyMemberTeamData {
+impl LLMObsPatternsTemplatesResponseAttributes {
     pub fn new(
-        id: uuid::Uuid,
-        type_: crate::datadogV2::model::TeamHierarchyMemberTeamType,
-    ) -> TeamHierarchyMemberTeamData {
-        TeamHierarchyMemberTeamData {
-            id,
-            type_,
+        templates: Vec<crate::datadogV2::model::LLMObsPatternsTemplateItem>,
+    ) -> LLMObsPatternsTemplatesResponseAttributes {
+        LLMObsPatternsTemplatesResponseAttributes {
+            templates,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -46,14 +41,14 @@ impl TeamHierarchyMemberTeamData {
     }
 }
 
-impl<'de> Deserialize<'de> for TeamHierarchyMemberTeamData {
+impl<'de> Deserialize<'de> for LLMObsPatternsTemplatesResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamHierarchyMemberTeamDataVisitor;
-        impl<'a> Visitor<'a> for TeamHierarchyMemberTeamDataVisitor {
-            type Value = TeamHierarchyMemberTeamData;
+        struct LLMObsPatternsTemplatesResponseAttributesVisitor;
+        impl<'a> Visitor<'a> for LLMObsPatternsTemplatesResponseAttributesVisitor {
+            type Value = LLMObsPatternsTemplatesResponseAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,8 +58,9 @@ impl<'de> Deserialize<'de> for TeamHierarchyMemberTeamData {
             where
                 M: MapAccess<'a>,
             {
-                let mut id: Option<uuid::Uuid> = None;
-                let mut type_: Option<crate::datadogV2::model::TeamHierarchyMemberTeamType> = None;
+                let mut templates: Option<
+                    Vec<crate::datadogV2::model::LLMObsPatternsTemplateItem>,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -73,19 +69,8 @@ impl<'de> Deserialize<'de> for TeamHierarchyMemberTeamData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "id" => {
-                            id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::TeamHierarchyMemberTeamType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                        "templates" => {
+                            templates = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -94,12 +79,10 @@ impl<'de> Deserialize<'de> for TeamHierarchyMemberTeamData {
                         }
                     }
                 }
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let templates = templates.ok_or_else(|| M::Error::missing_field("templates"))?;
 
-                let content = TeamHierarchyMemberTeamData {
-                    id,
-                    type_,
+                let content = LLMObsPatternsTemplatesResponseAttributes {
+                    templates,
                     additional_properties,
                     _unparsed,
                 };
@@ -108,6 +91,6 @@ impl<'de> Deserialize<'de> for TeamHierarchyMemberTeamData {
             }
         }
 
-        deserializer.deserialize_any(TeamHierarchyMemberTeamDataVisitor)
+        deserializer.deserialize_any(LLMObsPatternsTemplatesResponseAttributesVisitor)
     }
 }
