@@ -279,6 +279,15 @@ pub enum GetFeatureFlagsEnvironmentError {
     UnknownValue(serde_json::Value),
 }
 
+/// GetSavedFilterError is a struct for typed errors of method [`FeatureFlagsAPI::get_saved_filter`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetSavedFilterError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListFeatureFlagsError is a struct for typed errors of method [`FeatureFlagsAPI::list_feature_flags`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1794,6 +1803,121 @@ impl FeatureFlagsAPI {
             };
         } else {
             let local_entity: Option<GetFeatureFlagsEnvironmentError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Returns a saved filter by ID, including its full targeting rules, conditions, and values.
+    /// Supports both saved lists and saved rules. Targeting rules are combined with OR,
+    /// and conditions within each rule are combined with AND.
+    /// Returns the stored filter definition rather than evaluating it against users or organizations.
+    /// Archived filters can be retrieved. Filters that are deleted or belong to another organization return a not found error.
+    pub async fn get_saved_filter(
+        &self,
+        saved_filter_id: uuid::Uuid,
+    ) -> Result<crate::datadogV2::model::SavedFilterResponse, datadog::Error<GetSavedFilterError>>
+    {
+        match self.get_saved_filter_with_http_info(saved_filter_id).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Returns a saved filter by ID, including its full targeting rules, conditions, and values.
+    /// Supports both saved lists and saved rules. Targeting rules are combined with OR,
+    /// and conditions within each rule are combined with AND.
+    /// Returns the stored filter definition rather than evaluating it against users or organizations.
+    /// Archived filters can be retrieved. Filters that are deleted or belong to another organization return a not found error.
+    pub async fn get_saved_filter_with_http_info(
+        &self,
+        saved_filter_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SavedFilterResponse>,
+        datadog::Error<GetSavedFilterError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.get_saved_filter";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/feature-flags/saved-filters/{saved_filter_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            saved_filter_id = datadog::urlencode(saved_filter_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SavedFilterResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<GetSavedFilterError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
