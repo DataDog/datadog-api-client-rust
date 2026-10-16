@@ -4,8 +4,7 @@ use datadog_api_client::datadogV2::api_rum_retention_filters::RumRetentionFilter
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.delete_exclusion_filter", true);
+    let configuration = datadog::Configuration::new();
     let api = RumRetentionFiltersAPI::with_config(configuration);
     let resp = api
         .delete_exclusion_filter("app_id".to_string(), "ef_id".to_string())
