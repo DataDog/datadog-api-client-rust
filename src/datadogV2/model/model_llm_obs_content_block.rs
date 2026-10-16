@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 /// - `header`: `content` must be a string; `level`, when set, must be one of `sm`, `md`, `lg`, `xl`.
 /// - `json`: `content` must be a well-formed JSON value (object, array, or scalar).
 /// - `image`: `url` is required.
-/// - `widget`: `tileDef` is required (any well-formed JSON; the frontend owns the renderable schema).
+/// - `univiz`: `tileDef` is required (any well-formed JSON; the frontend owns the renderable schema).
 /// - `llmobs_trace`: `traceId` is required; `interactionType`, when set, must be `trace` or `experiment_trace`.
 /// - `frontend`: `code` is required and must be a non-empty string; `label` is optional.
 ///
@@ -30,7 +30,7 @@ pub struct LLMObsContentBlock {
     pub code: Option<String>,
     /// Block payload. A string for `markdown`, `header`, and `text`; an
     /// arbitrary JSON value (object, array, or scalar) for `json`. Omitted
-    /// for `image`, `widget`, `llmobs_trace`, and `frontend`.
+    /// for `image`, `univiz`, `llmobs_trace`, and `frontend`.
     #[serde(rename = "content")]
     pub content: Option<serde_json::Value>,
     /// Optional rendered height. Must be positive when set.
@@ -47,7 +47,7 @@ pub struct LLMObsContentBlock {
     /// Visual size for a `header` block.
     #[serde(rename = "level")]
     pub level: Option<crate::datadogV2::model::LLMObsContentBlockHeaderLevel>,
-    /// Tile definition for a `widget` block. Required for `widget`. The
+    /// Tile definition for a `univiz` block. Required for `univiz`. The
     /// schema is owned by the frontend renderer.
     #[serde(rename = "tileDef")]
     pub tile_def: Option<serde_json::Value>,
@@ -60,7 +60,7 @@ pub struct LLMObsContentBlock {
     /// Discriminator for a single `display_block` content block. Adding a
     /// variant requires coordinated changes in the frontend renderer.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::LLMObsContentBlockType,
+    pub type_: Option<crate::datadogV2::model::LLMObsContentBlockType>,
     /// URL of the image. Required for `image` blocks.
     #[serde(rename = "url")]
     pub url: Option<String>,
@@ -72,7 +72,7 @@ pub struct LLMObsContentBlock {
 }
 
 impl LLMObsContentBlock {
-    pub fn new(type_: crate::datadogV2::model::LLMObsContentBlockType) -> LLMObsContentBlock {
+    pub fn new() -> LLMObsContentBlock {
         LLMObsContentBlock {
             alt: None,
             code: None,
@@ -84,7 +84,7 @@ impl LLMObsContentBlock {
             tile_def: None,
             time_frame: None,
             trace_id: None,
-            type_,
+            type_: None,
             url: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -147,6 +147,11 @@ impl LLMObsContentBlock {
         self
     }
 
+    pub fn type_(mut self, value: crate::datadogV2::model::LLMObsContentBlockType) -> Self {
+        self.type_ = Some(value);
+        self
+    }
+
     pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
@@ -158,6 +163,12 @@ impl LLMObsContentBlock {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for LLMObsContentBlock {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -280,6 +291,9 @@ impl<'de> Deserialize<'de> for LLMObsContentBlock {
                             trace_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
@@ -303,7 +317,6 @@ impl<'de> Deserialize<'de> for LLMObsContentBlock {
                         }
                     }
                 }
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = LLMObsContentBlock {
                     alt,

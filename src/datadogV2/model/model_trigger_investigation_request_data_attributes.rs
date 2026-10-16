@@ -69,6 +69,16 @@ impl<'de> Deserialize<'de> for TriggerInvestigationRequestDataAttributes {
                     match k.as_str() {
                         "trigger" => {
                             trigger = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _trigger) = trigger {
+                                match _trigger {
+                                    crate::datadogV2::model::TriggerAttributes::UnparsedObject(
+                                        _trigger,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {

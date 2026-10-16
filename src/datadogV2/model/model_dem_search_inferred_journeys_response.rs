@@ -13,7 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct DemSearchInferredJourneysResponse {
     /// List of inferred journey items matching the search criteria.
     #[serde(rename = "data")]
-    pub data: Vec<serde_json::Value>,
+    pub data: Vec<crate::datadogV2::model::DemInferredJourneyItem>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,7 +22,9 @@ pub struct DemSearchInferredJourneysResponse {
 }
 
 impl DemSearchInferredJourneysResponse {
-    pub fn new(data: Vec<serde_json::Value>) -> DemSearchInferredJourneysResponse {
+    pub fn new(
+        data: Vec<crate::datadogV2::model::DemInferredJourneyItem>,
+    ) -> DemSearchInferredJourneysResponse {
         DemSearchInferredJourneysResponse {
             data,
             additional_properties: std::collections::BTreeMap::new(),
@@ -56,7 +58,7 @@ impl<'de> Deserialize<'de> for DemSearchInferredJourneysResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<serde_json::Value>> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::DemInferredJourneyItem>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
