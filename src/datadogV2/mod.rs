@@ -135,7 +135,6 @@ pub use self::api::api_service_now_integration;
 pub use self::api::api_slack_integration;
 pub use self::api::api_snowflake_integration;
 pub use self::api::api_software_catalog;
-pub use self::api::api_spa;
 pub use self::api::api_spans;
 pub use self::api::api_spans_metrics;
 pub use self::api::api_static_analysis;
