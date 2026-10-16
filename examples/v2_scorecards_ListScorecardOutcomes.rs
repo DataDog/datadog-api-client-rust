@@ -8,7 +8,10 @@ async fn main() {
     let configuration = datadog::Configuration::new();
     let api = ScorecardsAPI::with_config(configuration);
     let resp = api
-        .list_scorecard_outcomes(ListScorecardOutcomesOptionalParams::default())
+        .list_scorecard_outcomes(
+            ListScorecardOutcomesOptionalParams::default()
+                .filter_rule_id("00000000-0000-0000-0000-000000000000".to_string()),
+        )
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
