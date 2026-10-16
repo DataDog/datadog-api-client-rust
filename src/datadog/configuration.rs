@@ -206,6 +206,7 @@ impl Default for Configuration {
             ),
             ("v2.list_llm_obs_patterns_configs".to_owned(), false),
             ("v2.list_llm_obs_patterns_runs".to_owned(), false),
+            ("v2.list_llm_obs_patterns_templates".to_owned(), false),
             ("v2.list_llm_obs_patterns_topics".to_owned(), false),
             (
                 "v2.list_llm_obs_patterns_topics_with_clustered_points".to_owned(),
@@ -1036,7 +1037,6 @@ impl Default for Configuration {
             ("v2.update_ai_custom_ruleset".to_owned(), false),
             ("v2.update_custom_ruleset".to_owned(), false),
             ("v2.add_member_team".to_owned(), false),
-            ("v2.get_team_hierarchy_members".to_owned(), false),
             ("v2.list_member_teams".to_owned(), false),
             ("v2.remove_member_team".to_owned(), false),
             (

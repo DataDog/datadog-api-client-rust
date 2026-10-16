@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Linkage to the requested team.
+/// Response containing a list of Agent Observability patterns templates.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct TeamHierarchyMemberTeamRelationship {
-    /// Team resource identifier.
+pub struct LLMObsPatternsTemplatesResponse {
+    /// Data object of a list of Agent Observability patterns templates.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::TeamHierarchyMemberTeamData,
+    pub data: crate::datadogV2::model::LLMObsPatternsTemplatesResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct TeamHierarchyMemberTeamRelationship {
     pub(crate) _unparsed: bool,
 }
 
-impl TeamHierarchyMemberTeamRelationship {
+impl LLMObsPatternsTemplatesResponse {
     pub fn new(
-        data: crate::datadogV2::model::TeamHierarchyMemberTeamData,
-    ) -> TeamHierarchyMemberTeamRelationship {
-        TeamHierarchyMemberTeamRelationship {
+        data: crate::datadogV2::model::LLMObsPatternsTemplatesResponseData,
+    ) -> LLMObsPatternsTemplatesResponse {
+        LLMObsPatternsTemplatesResponse {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl TeamHierarchyMemberTeamRelationship {
     }
 }
 
-impl<'de> Deserialize<'de> for TeamHierarchyMemberTeamRelationship {
+impl<'de> Deserialize<'de> for LLMObsPatternsTemplatesResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct TeamHierarchyMemberTeamRelationshipVisitor;
-        impl<'a> Visitor<'a> for TeamHierarchyMemberTeamRelationshipVisitor {
-            type Value = TeamHierarchyMemberTeamRelationship;
+        struct LLMObsPatternsTemplatesResponseVisitor;
+        impl<'a> Visitor<'a> for LLMObsPatternsTemplatesResponseVisitor {
+            type Value = LLMObsPatternsTemplatesResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +58,8 @@ impl<'de> Deserialize<'de> for TeamHierarchyMemberTeamRelationship {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::TeamHierarchyMemberTeamData> = None;
+                let mut data: Option<crate::datadogV2::model::LLMObsPatternsTemplatesResponseData> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,7 +80,7 @@ impl<'de> Deserialize<'de> for TeamHierarchyMemberTeamRelationship {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = TeamHierarchyMemberTeamRelationship {
+                let content = LLMObsPatternsTemplatesResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -89,6 +90,6 @@ impl<'de> Deserialize<'de> for TeamHierarchyMemberTeamRelationship {
             }
         }
 
-        deserializer.deserialize_any(TeamHierarchyMemberTeamRelationshipVisitor)
+        deserializer.deserialize_any(LLMObsPatternsTemplatesResponseVisitor)
     }
 }

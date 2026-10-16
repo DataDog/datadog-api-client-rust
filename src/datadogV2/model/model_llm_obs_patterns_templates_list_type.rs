@@ -6,21 +6,23 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TeamHierarchyMemberTeamType {
-    TEAMS,
+pub enum LLMObsPatternsTemplatesListType {
+    LIST_TOPIC_DISCOVERY_TEMPLATES_RESPONSE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for TeamHierarchyMemberTeamType {
+impl ToString for LLMObsPatternsTemplatesListType {
     fn to_string(&self) -> String {
         match self {
-            Self::TEAMS => String::from("teams"),
+            Self::LIST_TOPIC_DISCOVERY_TEMPLATES_RESPONSE => {
+                String::from("list_topic_discovery_templates_response")
+            }
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
 }
 
-impl Serialize for TeamHierarchyMemberTeamType {
+impl Serialize for LLMObsPatternsTemplatesListType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,14 +34,16 @@ impl Serialize for TeamHierarchyMemberTeamType {
     }
 }
 
-impl<'de> Deserialize<'de> for TeamHierarchyMemberTeamType {
+impl<'de> Deserialize<'de> for LLMObsPatternsTemplatesListType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
-            "teams" => Self::TEAMS,
+            "list_topic_discovery_templates_response" => {
+                Self::LIST_TOPIC_DISCOVERY_TEMPLATES_RESPONSE
+            }
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
