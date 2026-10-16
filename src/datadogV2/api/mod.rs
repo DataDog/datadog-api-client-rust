@@ -134,7 +134,6 @@ pub mod api_service_now_integration;
 pub mod api_slack_integration;
 pub mod api_snowflake_integration;
 pub mod api_software_catalog;
-pub mod api_spa;
 pub mod api_spans;
 pub mod api_spans_metrics;
 pub mod api_static_analysis;
