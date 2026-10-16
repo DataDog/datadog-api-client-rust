@@ -6,7 +6,6 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -236,14 +235,6 @@ impl RumRetentionFiltersAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_exclusion_filter";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_exclusion_filter' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -558,14 +549,6 @@ impl RumRetentionFiltersAPI {
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteExclusionFilterError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_exclusion_filter";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_exclusion_filter' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -768,14 +751,6 @@ impl RumRetentionFiltersAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_exclusion_filter";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_exclusion_filter' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1118,14 +1093,6 @@ impl RumRetentionFiltersAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_exclusion_filters";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_exclusion_filters' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -1637,14 +1604,6 @@ impl RumRetentionFiltersAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_exclusion_filter";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_exclusion_filter' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
