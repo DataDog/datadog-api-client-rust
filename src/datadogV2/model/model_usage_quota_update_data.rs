@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct UsageQuotaUpdateData {
-    /// Attributes to update on a usage quota. Omitting a property leaves its current value unchanged.
+    /// Attributes to update on a usage quota. At least one of `usage_limit`, `enforced`, or `pending_usage_limit` must be provided. Omitting a property leaves its current value unchanged.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::UsageQuotaUpdateAttributes,
     /// The opaque usage quota identifier, which must match the identifier in the request path.
