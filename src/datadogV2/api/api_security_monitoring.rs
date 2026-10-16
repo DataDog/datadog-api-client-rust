@@ -1004,6 +1004,74 @@ impl ListSecurityFindingsAutomationTicketCreationRulesOptionalParams {
     }
 }
 
+/// ListSecurityMonitoringBatchMigrationResourcesOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_batch_migration_resources`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSecurityMonitoringBatchMigrationResourcesOptionalParams {
+    /// Size for a given page. The maximum allowed value is 500.
+    pub page_size: Option<i64>,
+    /// Specific page number to return, starting at 1.
+    pub page_number: Option<i64>,
+    /// A search query in Datadog search syntax to filter resources, such as
+    /// `status:completed`. Filterable attributes are `id`, `name`, `description`, `inputType`,
+    /// `status`, `input`, `createdBy`, and `lastUpdatedBy`. Free text matches the resource name.
+    pub filter_query: Option<String>,
+}
+
+impl ListSecurityMonitoringBatchMigrationResourcesOptionalParams {
+    /// Size for a given page. The maximum allowed value is 500.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return, starting at 1.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// A search query in Datadog search syntax to filter resources, such as
+    /// `status:completed`. Filterable attributes are `id`, `name`, `description`, `inputType`,
+    /// `status`, `input`, `createdBy`, and `lastUpdatedBy`. Free text matches the resource name.
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
+        self
+    }
+}
+
+/// ListSecurityMonitoringBatchMigrationsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_batch_migrations`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListSecurityMonitoringBatchMigrationsOptionalParams {
+    /// Size for a given page. The maximum allowed value is 500.
+    pub page_size: Option<i64>,
+    /// Specific page number to return, starting at 1.
+    pub page_number: Option<i64>,
+    /// A search query in Datadog search syntax to filter batch migrations, such as
+    /// `status:completed`. Filterable attributes are `id`, `name`, `description`, `status`,
+    /// `createdBy`, and `lastUpdatedBy`. Free text matches the batch migration name.
+    pub filter_query: Option<String>,
+}
+
+impl ListSecurityMonitoringBatchMigrationsOptionalParams {
+    /// Size for a given page. The maximum allowed value is 500.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return, starting at 1.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// A search query in Datadog search syntax to filter batch migrations, such as
+    /// `status:completed`. Filterable attributes are `id`, `name`, `description`, `status`,
+    /// `createdBy`, and `lastUpdatedBy`. Free text matches the batch migration name.
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
+        self
+    }
+}
+
 /// ListSecurityMonitoringDatasetsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::list_security_monitoring_datasets`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -1856,6 +1924,15 @@ pub enum CancelHistoricalJobError {
     UnknownValue(serde_json::Value),
 }
 
+/// CancelSecurityMonitoringBatchMigrationError is a struct for typed errors of method [`SecurityMonitoringAPI::cancel_security_monitoring_batch_migration`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CancelSecurityMonitoringBatchMigrationError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ConvertExistingSecurityMonitoringRuleError is a struct for typed errors of method [`SecurityMonitoringAPI::convert_existing_security_monitoring_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1984,6 +2061,24 @@ pub enum CreateSecurityFindingsAutomationSeverityModifierRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateSecurityFindingsAutomationTicketCreationRuleError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// CreateSecurityMonitoringBatchMigrationError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_monitoring_batch_migration`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateSecurityMonitoringBatchMigrationError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// CreateSecurityMonitoringBatchMigrationResourcesError is a struct for typed errors of method [`SecurityMonitoringAPI::create_security_monitoring_batch_migration_resources`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CreateSecurityMonitoringBatchMigrationResourcesError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -2158,6 +2253,24 @@ pub enum DeleteSecurityFindingsAutomationSeverityModifierRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteSecurityFindingsAutomationTicketCreationRuleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteSecurityMonitoringBatchMigrationError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_security_monitoring_batch_migration`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteSecurityMonitoringBatchMigrationError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// DeleteSecurityMonitoringBatchMigrationResourcesError is a struct for typed errors of method [`SecurityMonitoringAPI::delete_security_monitoring_batch_migration_resources`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteSecurityMonitoringBatchMigrationResourcesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2800,6 +2913,24 @@ pub enum ListSecurityFindingsAutomationTicketCreationRulesError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListSecurityMonitoringBatchMigrationResourcesError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_monitoring_batch_migration_resources`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSecurityMonitoringBatchMigrationResourcesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListSecurityMonitoringBatchMigrationsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_monitoring_batch_migrations`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListSecurityMonitoringBatchMigrationsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListSecurityMonitoringCriticalAssetsError is a struct for typed errors of method [`SecurityMonitoringAPI::list_security_monitoring_critical_assets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -2911,6 +3042,15 @@ pub enum PatchVulnerabilityNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// PublishSecurityMonitoringBatchMigrationError is a struct for typed errors of method [`SecurityMonitoringAPI::publish_security_monitoring_batch_migration`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PublishSecurityMonitoringBatchMigrationError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ReorderSecurityFindingsAutomationDueDateRulesError is a struct for typed errors of method [`SecurityMonitoringAPI::reorder_security_findings_automation_due_date_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -3000,6 +3140,15 @@ pub enum SearchSecurityMonitoringSignalsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SendSecurityMonitoringNotificationPreviewError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// StartSecurityMonitoringBatchMigrationError is a struct for typed errors of method [`SecurityMonitoringAPI::start_security_monitoring_batch_migration`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum StartSecurityMonitoringBatchMigrationError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -3102,6 +3251,24 @@ pub enum UpdateSecurityFindingsAutomationSeverityModifierRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateSecurityFindingsAutomationTicketCreationRuleError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateSecurityMonitoringBatchMigrationError is a struct for typed errors of method [`SecurityMonitoringAPI::update_security_monitoring_batch_migration`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateSecurityMonitoringBatchMigrationError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateSecurityMonitoringBatchMigrationResourceError is a struct for typed errors of method [`SecurityMonitoringAPI::update_security_monitoring_batch_migration_resource`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateSecurityMonitoringBatchMigrationResourceError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -5734,6 +5901,117 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Cancel an `in_progress` batch migration. Resources that are `pending` or `in_progress`
+    /// become `canceled`. Resources that are already `completed` or `failed` keep their status
+    /// and output, so completed resources can still be published. Canceling a `canceled` batch
+    /// migration succeeds, so the request can be safely retried. Returns `409 Conflict` if the
+    /// batch migration is `draft` or `completed`.
+    pub async fn cancel_security_monitoring_batch_migration(
+        &self,
+        batch_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<CancelSecurityMonitoringBatchMigrationError>> {
+        match self
+            .cancel_security_monitoring_batch_migration_with_http_info(batch_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Cancel an `in_progress` batch migration. Resources that are `pending` or `in_progress`
+    /// become `canceled`. Resources that are already `completed` or `failed` keep their status
+    /// and output, so completed resources can still be published. Canceling a `canceled` batch
+    /// migration succeeds, so the request can be safely retried. Returns `409 Conflict` if the
+    /// batch migration is `draft` or `completed`.
+    pub async fn cancel_security_monitoring_batch_migration_with_http_info(
+        &self,
+        batch_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<CancelSecurityMonitoringBatchMigrationError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.cancel_security_monitoring_batch_migration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.cancel_security_monitoring_batch_migration' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/batch-migrations/{batch_id}/cancel",
+            local_configuration.get_operation_host(local_operation_id),
+            batch_id = datadog::urlencode(batch_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<CancelSecurityMonitoringBatchMigrationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Convert an existing rule from JSON to Terraform for Datadog provider
     /// resource `datadog_security_monitoring_rule`. You can do so for the following rule types:
     /// - App and API Protection
@@ -8298,6 +8576,358 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<CreateSecurityFindingsAutomationTicketCreationRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Create a batch migration in the `draft` status, together with 1 to 100 initial
+    /// resources. Each resource holds one source rule to translate into a Cloud SIEM detection
+    /// rule. To load more rules, add them with the add resources endpoint before starting the
+    /// batch migration. A batch migration can hold up to 1000 resources. The response does not
+    /// include the created resources: list the resources of the batch migration to retrieve them.
+    pub async fn create_security_monitoring_batch_migration(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringBatchMigrationResponse,
+        datadog::Error<CreateSecurityMonitoringBatchMigrationError>,
+    > {
+        match self
+            .create_security_monitoring_batch_migration_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create a batch migration in the `draft` status, together with 1 to 100 initial
+    /// resources. Each resource holds one source rule to translate into a Cloud SIEM detection
+    /// rule. To load more rules, add them with the add resources endpoint before starting the
+    /// batch migration. A batch migration can hold up to 1000 resources. The response does not
+    /// include the created resources: list the resources of the batch migration to retrieve them.
+    pub async fn create_security_monitoring_batch_migration_with_http_info(
+        &self,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringBatchMigrationResponse>,
+        datadog::Error<CreateSecurityMonitoringBatchMigrationError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.create_security_monitoring_batch_migration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_security_monitoring_batch_migration' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/batch-migrations",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringBatchMigrationResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateSecurityMonitoringBatchMigrationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Add 1 to 1000 resources to a `draft` batch migration. Returns `409 Conflict` if the
+    /// batch migration is not `draft`, and `400 Bad Request` if the batch migration would
+    /// contain more than 1000 resources.
+    pub async fn create_security_monitoring_batch_migration_resources(
+        &self,
+        batch_id: uuid::Uuid,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationResourcesCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringBatchMigrationResourcesCreateResponse,
+        datadog::Error<CreateSecurityMonitoringBatchMigrationResourcesError>,
+    > {
+        match self
+            .create_security_monitoring_batch_migration_resources_with_http_info(batch_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Add 1 to 1000 resources to a `draft` batch migration. Returns `409 Conflict` if the
+    /// batch migration is not `draft`, and `400 Bad Request` if the batch migration would
+    /// contain more than 1000 resources.
+    pub async fn create_security_monitoring_batch_migration_resources_with_http_info(
+        &self,
+        batch_id: uuid::Uuid,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationResourcesCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringBatchMigrationResourcesCreateResponse,
+        >,
+        datadog::Error<CreateSecurityMonitoringBatchMigrationResourcesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.create_security_monitoring_batch_migration_resources";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.create_security_monitoring_batch_migration_resources' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/batch-migrations/{batch_id}/resources",
+            local_configuration.get_operation_host(local_operation_id),
+            batch_id = datadog::urlencode(batch_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringBatchMigrationResourcesCreateResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<CreateSecurityMonitoringBatchMigrationResourcesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -11085,6 +11715,272 @@ impl SecurityMonitoringAPI {
             })
         } else {
             let local_entity: Option<DeleteSecurityFindingsAutomationTicketCreationRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete a batch migration and its resources. Detection rules that were already
+    /// published are not deleted. Returns `409 Conflict` while any resource is `in_progress`
+    /// or `publishing`: cancel the batch migration, or wait for publishing to finish, and
+    /// then try again.
+    pub async fn delete_security_monitoring_batch_migration(
+        &self,
+        batch_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<DeleteSecurityMonitoringBatchMigrationError>> {
+        match self
+            .delete_security_monitoring_batch_migration_with_http_info(batch_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete a batch migration and its resources. Detection rules that were already
+    /// published are not deleted. Returns `409 Conflict` while any resource is `in_progress`
+    /// or `publishing`: cancel the batch migration, or wait for publishing to finish, and
+    /// then try again.
+    pub async fn delete_security_monitoring_batch_migration_with_http_info(
+        &self,
+        batch_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<DeleteSecurityMonitoringBatchMigrationError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_security_monitoring_batch_migration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_security_monitoring_batch_migration' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/batch-migrations/{batch_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            batch_id = datadog::urlencode(batch_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteSecurityMonitoringBatchMigrationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete resources from a batch migration. The request is all-or-nothing: it returns
+    /// `404 Not Found` if any resource does not exist, and `409 Conflict` if any resource is
+    /// `in_progress` or `publishing`. In both cases nothing is deleted. Duplicate resource IDs
+    /// are ignored. Detection rules already published from the deleted resources are not deleted.
+    pub async fn delete_security_monitoring_batch_migration_resources(
+        &self,
+        batch_id: uuid::Uuid,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationResourcesDeleteRequest,
+    ) -> Result<(), datadog::Error<DeleteSecurityMonitoringBatchMigrationResourcesError>> {
+        match self
+            .delete_security_monitoring_batch_migration_resources_with_http_info(batch_id, body)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete resources from a batch migration. The request is all-or-nothing: it returns
+    /// `404 Not Found` if any resource does not exist, and `409 Conflict` if any resource is
+    /// `in_progress` or `publishing`. In both cases nothing is deleted. Duplicate resource IDs
+    /// are ignored. Detection rules already published from the deleted resources are not deleted.
+    pub async fn delete_security_monitoring_batch_migration_resources_with_http_info(
+        &self,
+        batch_id: uuid::Uuid,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationResourcesDeleteRequest,
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<DeleteSecurityMonitoringBatchMigrationResourcesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_security_monitoring_batch_migration_resources";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.delete_security_monitoring_batch_migration_resources' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/batch-migrations/{batch_id}/resources",
+            local_configuration.get_operation_host(local_operation_id),
+            batch_id = datadog::urlencode(batch_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteSecurityMonitoringBatchMigrationResourcesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -21353,6 +22249,300 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// List the resources of a batch migration, including the input of each source rule and,
+    /// once translated, the proposed Cloud SIEM detection rule in `output`.
+    pub async fn list_security_monitoring_batch_migration_resources(
+        &self,
+        batch_id: uuid::Uuid,
+        params: ListSecurityMonitoringBatchMigrationResourcesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringBatchMigrationResourcesListResponse,
+        datadog::Error<ListSecurityMonitoringBatchMigrationResourcesError>,
+    > {
+        match self
+            .list_security_monitoring_batch_migration_resources_with_http_info(batch_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List the resources of a batch migration, including the input of each source rule and,
+    /// once translated, the proposed Cloud SIEM detection rule in `output`.
+    pub async fn list_security_monitoring_batch_migration_resources_with_http_info(
+        &self,
+        batch_id: uuid::Uuid,
+        params: ListSecurityMonitoringBatchMigrationResourcesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringBatchMigrationResourcesListResponse,
+        >,
+        datadog::Error<ListSecurityMonitoringBatchMigrationResourcesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_security_monitoring_batch_migration_resources";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_security_monitoring_batch_migration_resources' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+        let filter_query = params.filter_query;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/batch-migrations/{batch_id}/resources",
+            local_configuration.get_operation_host(local_operation_id),
+            batch_id = datadog::urlencode(batch_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringBatchMigrationResourcesListResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSecurityMonitoringBatchMigrationResourcesError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List the batch migrations of your organization. A batch migration groups detection
+    /// rules from another SIEM that the Datadog Detection Agent translates into Cloud SIEM
+    /// detection rules. To retrieve a single batch migration, filter by its ID with
+    /// `filter[query]=id:<batch_id>`. Poll this endpoint to follow the progress of a batch
+    /// migration through its `status` and `resourceStatusCounts`.
+    pub async fn list_security_monitoring_batch_migrations(
+        &self,
+        params: ListSecurityMonitoringBatchMigrationsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringBatchMigrationsListResponse,
+        datadog::Error<ListSecurityMonitoringBatchMigrationsError>,
+    > {
+        match self
+            .list_security_monitoring_batch_migrations_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List the batch migrations of your organization. A batch migration groups detection
+    /// rules from another SIEM that the Datadog Detection Agent translates into Cloud SIEM
+    /// detection rules. To retrieve a single batch migration, filter by its ID with
+    /// `filter[query]=id:<batch_id>`. Poll this endpoint to follow the progress of a batch
+    /// migration through its `status` and `resourceStatusCounts`.
+    pub async fn list_security_monitoring_batch_migrations_with_http_info(
+        &self,
+        params: ListSecurityMonitoringBatchMigrationsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringBatchMigrationsListResponse,
+        >,
+        datadog::Error<ListSecurityMonitoringBatchMigrationsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_security_monitoring_batch_migrations";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_security_monitoring_batch_migrations' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+        let filter_query = params.filter_query;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/batch-migrations",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringBatchMigrationsListResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListSecurityMonitoringBatchMigrationsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get the list of all critical assets.
     pub async fn list_security_monitoring_critical_assets(
         &self,
@@ -23759,6 +24949,203 @@ impl SecurityMonitoringAPI {
         }
     }
 
+    /// Create a Cloud SIEM detection rule from the `output` of each selected `completed`
+    /// resource of a batch migration. Completed resources can be published while the rest of
+    /// the batch migration is still being translated. When `resourceIds` is omitted or empty,
+    /// every `completed` resource is published. Published rules are created disabled.
+    ///
+    /// Every requested resource must be publishable: `completed`, or left in `publishing` for
+    /// more than one minute after an uncertain result. Otherwise, the request returns
+    /// `409 Conflict` and nothing is published. Already published resources are not publishable.
+    ///
+    /// The response reports the outcome of each resource, and some resources can be published
+    /// while others fail. A `failed` result that contains a `ruleId` means the rule was created:
+    /// do not retry that resource. Publishing a rule with a `block_ip` or `block_user` action
+    /// requires the `appsec_protect_write` permission.
+    pub async fn publish_security_monitoring_batch_migration(
+        &self,
+        batch_id: uuid::Uuid,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishRequest,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishResponse,
+        datadog::Error<PublishSecurityMonitoringBatchMigrationError>,
+    > {
+        match self
+            .publish_security_monitoring_batch_migration_with_http_info(batch_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create a Cloud SIEM detection rule from the `output` of each selected `completed`
+    /// resource of a batch migration. Completed resources can be published while the rest of
+    /// the batch migration is still being translated. When `resourceIds` is omitted or empty,
+    /// every `completed` resource is published. Published rules are created disabled.
+    ///
+    /// Every requested resource must be publishable: `completed`, or left in `publishing` for
+    /// more than one minute after an uncertain result. Otherwise, the request returns
+    /// `409 Conflict` and nothing is published. Already published resources are not publishable.
+    ///
+    /// The response reports the outcome of each resource, and some resources can be published
+    /// while others fail. A `failed` result that contains a `ruleId` means the rule was created:
+    /// do not retry that resource. Publishing a rule with a `block_ip` or `block_user` action
+    /// requires the `appsec_protect_write` permission.
+    pub async fn publish_security_monitoring_batch_migration_with_http_info(
+        &self,
+        batch_id: uuid::Uuid,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishRequest,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishResponse,
+        >,
+        datadog::Error<PublishSecurityMonitoringBatchMigrationError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.publish_security_monitoring_batch_migration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.publish_security_monitoring_batch_migration' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/batch-migrations/{batch_id}/publish",
+            local_configuration.get_operation_host(local_operation_id),
+            batch_id = datadog::urlencode(batch_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringBatchMigrationPublishResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<PublishSecurityMonitoringBatchMigrationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Reorder the list of due date rules for the current organization.
     pub async fn reorder_security_findings_automation_due_date_rules(
         &self,
@@ -25620,6 +27007,133 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<SendSecurityMonitoringNotificationPreviewError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Start translating the `pending` resources of a `draft` batch migration into Cloud SIEM
+    /// detection rules. The batch migration moves to `in_progress`, and its resources are
+    /// translated asynchronously. Once no resource is `pending` or `in_progress`, the batch
+    /// migration moves to `completed`. Starting an `in_progress` batch migration again does not
+    /// queue duplicate work, so the request can be safely retried, including after a timeout or
+    /// a `5xx` error. Returns `409 Conflict` if the batch migration is `completed` or `canceled`.
+    ///
+    /// An organization can translate up to 2000 resources in total across all of its batch
+    /// migrations. Resources that were already processed count toward this limit even after
+    /// they are deleted, and `pending` resources of `in_progress` batch migrations reserve
+    /// capacity. Returns `409 Conflict` if starting the batch migration would exceed this limit.
+    /// To request a higher limit for your organization, contact
+    /// [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn start_security_monitoring_batch_migration(
+        &self,
+        batch_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<StartSecurityMonitoringBatchMigrationError>> {
+        match self
+            .start_security_monitoring_batch_migration_with_http_info(batch_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Start translating the `pending` resources of a `draft` batch migration into Cloud SIEM
+    /// detection rules. The batch migration moves to `in_progress`, and its resources are
+    /// translated asynchronously. Once no resource is `pending` or `in_progress`, the batch
+    /// migration moves to `completed`. Starting an `in_progress` batch migration again does not
+    /// queue duplicate work, so the request can be safely retried, including after a timeout or
+    /// a `5xx` error. Returns `409 Conflict` if the batch migration is `completed` or `canceled`.
+    ///
+    /// An organization can translate up to 2000 resources in total across all of its batch
+    /// migrations. Resources that were already processed count toward this limit even after
+    /// they are deleted, and `pending` resources of `in_progress` batch migrations reserve
+    /// capacity. Returns `409 Conflict` if starting the batch migration would exceed this limit.
+    /// To request a higher limit for your organization, contact
+    /// [Datadog support](<https://docs.datadoghq.com/help/>).
+    pub async fn start_security_monitoring_batch_migration_with_http_info(
+        &self,
+        batch_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<StartSecurityMonitoringBatchMigrationError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.start_security_monitoring_batch_migration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.start_security_monitoring_batch_migration' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/batch-migrations/{batch_id}/start",
+            local_configuration.get_operation_host(local_operation_id),
+            batch_id = datadog::urlencode(batch_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<StartSecurityMonitoringBatchMigrationError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -27627,6 +29141,366 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<UpdateSecurityFindingsAutomationTicketCreationRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update the name, description, or tags of a batch migration, in any status. At least
+    /// one of these attributes must be provided. Omitted attributes are left unchanged, and
+    /// `tags` replaces the full list of tags.
+    pub async fn update_security_monitoring_batch_migration(
+        &self,
+        batch_id: uuid::Uuid,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationUpdateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringBatchMigrationResponse,
+        datadog::Error<UpdateSecurityMonitoringBatchMigrationError>,
+    > {
+        match self
+            .update_security_monitoring_batch_migration_with_http_info(batch_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update the name, description, or tags of a batch migration, in any status. At least
+    /// one of these attributes must be provided. Omitted attributes are left unchanged, and
+    /// `tags` replaces the full list of tags.
+    pub async fn update_security_monitoring_batch_migration_with_http_info(
+        &self,
+        batch_id: uuid::Uuid,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationUpdateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SecurityMonitoringBatchMigrationResponse>,
+        datadog::Error<UpdateSecurityMonitoringBatchMigrationError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.update_security_monitoring_batch_migration";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_security_monitoring_batch_migration' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/batch-migrations/{batch_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            batch_id = datadog::urlencode(batch_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringBatchMigrationResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateSecurityMonitoringBatchMigrationError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Update a resource of a batch migration. At least one of `name`, `description`,
+    /// `inputType`, or `input` must be provided. `name` and `description` can be updated at
+    /// any time. `inputType` and `input` can only be updated while the resource is `pending`;
+    /// otherwise, the request returns `409 Conflict`. The translated `output` cannot be edited.
+    pub async fn update_security_monitoring_batch_migration_resource(
+        &self,
+        batch_id: uuid::Uuid,
+        resource_id: uuid::Uuid,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationResourceUpdateRequest,
+    ) -> Result<
+        crate::datadogV2::model::SecurityMonitoringBatchMigrationResourceResponse,
+        datadog::Error<UpdateSecurityMonitoringBatchMigrationResourceError>,
+    > {
+        match self
+            .update_security_monitoring_batch_migration_resource_with_http_info(
+                batch_id,
+                resource_id,
+                body,
+            )
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Update a resource of a batch migration. At least one of `name`, `description`,
+    /// `inputType`, or `input` must be provided. `name` and `description` can be updated at
+    /// any time. `inputType` and `input` can only be updated while the resource is `pending`;
+    /// otherwise, the request returns `409 Conflict`. The translated `output` cannot be edited.
+    pub async fn update_security_monitoring_batch_migration_resource_with_http_info(
+        &self,
+        batch_id: uuid::Uuid,
+        resource_id: uuid::Uuid,
+        body: crate::datadogV2::model::SecurityMonitoringBatchMigrationResourceUpdateRequest,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::SecurityMonitoringBatchMigrationResourceResponse,
+        >,
+        datadog::Error<UpdateSecurityMonitoringBatchMigrationResourceError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.update_security_monitoring_batch_migration_resource";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.update_security_monitoring_batch_migration_resource' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security_monitoring/batch-migrations/{batch_id}/resources/{resource_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            batch_id = datadog::urlencode(batch_id.to_string()),
+            resource_id = datadog::urlencode(resource_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::SecurityMonitoringBatchMigrationResourceResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateSecurityMonitoringBatchMigrationResourceError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
