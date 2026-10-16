@@ -42,8 +42,6 @@ pub struct DemInferredJourneyIgnoredAttributes {
     /// List of variants associated with a DEM journey.
     #[serde(rename = "variants")]
     pub variants: Vec<crate::datadogV2::model::DemVariant>,
-    #[serde(flatten)]
-    pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
     pub(crate) _unparsed: bool,
@@ -69,7 +67,6 @@ impl DemInferredJourneyIgnoredAttributes {
             tags,
             test_suite: None,
             variants,
-            additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
@@ -81,14 +78,6 @@ impl DemInferredJourneyIgnoredAttributes {
 
     pub fn test_suite(mut self, value: crate::datadogV2::model::DemTestSuiteNested) -> Self {
         self.test_suite = Some(value);
-        self
-    }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
-        self.additional_properties = value;
         self
     }
 }
@@ -119,10 +108,6 @@ impl<'de> Deserialize<'de> for DemInferredJourneyIgnoredAttributes {
                 let mut tags: Option<Vec<String>> = None;
                 let mut test_suite: Option<crate::datadogV2::model::DemTestSuiteNested> = None;
                 let mut variants: Option<Vec<crate::datadogV2::model::DemVariant>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -160,9 +145,9 @@ impl<'de> Deserialize<'de> for DemInferredJourneyIgnoredAttributes {
                             variants = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
-                            if let Ok(value) = serde_json::from_value(v.clone()) {
-                                additional_properties.insert(k, value);
-                            }
+                            return Err(serde::de::Error::custom(
+                                "Additional properties not allowed",
+                            ));
                         }
                     }
                 }
@@ -185,7 +170,6 @@ impl<'de> Deserialize<'de> for DemInferredJourneyIgnoredAttributes {
                     tags,
                     test_suite,
                     variants,
-                    additional_properties,
                     _unparsed,
                 };
 
