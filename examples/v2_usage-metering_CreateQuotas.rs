@@ -8,15 +8,14 @@ use datadog_api_client::datadogV2::model::UsageQuotaCreateAttributes;
 use datadog_api_client::datadogV2::model::UsageQuotaCreateData;
 use datadog_api_client::datadogV2::model::UsageQuotaType;
 use datadog_api_client::datadogV2::model::UsageQuotasCreateRequest;
-use std::collections::BTreeMap;
 
 #[tokio::main]
 async fn main() {
     let body = UsageQuotasCreateRequest::new(vec![UsageQuotaCreateData::new(
-        UsageQuotaCreateAttributes::new(true, 100000).scope(BTreeMap::from([(
-            "user_handle".to_string(),
-            "jane@example.com".to_string(),
-        )])),
+        UsageQuotaCreateAttributes::new()
+            .enforced(true)
+            .pending_usage_limit(100000)
+            .usage_limit(600000),
         UsageQuotaType::QUOTAS,
     )]);
     let mut configuration = datadog::Configuration::new();

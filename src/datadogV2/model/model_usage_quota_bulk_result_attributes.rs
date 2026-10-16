@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a usage quota bulk write result. On success, all fields except `error` are present. On failure, only `error` is present and the other fields are omitted.
+/// Attributes of a usage quota bulk write result. On success, quota fields are present as applicable, and pending fields are present only when a change is scheduled. On failure, only `error` is present and the other fields are omitted.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -20,6 +20,12 @@ pub struct UsageQuotaBulkResultAttributes {
     /// The public ID of the organization that owns the quota. Omitted if this item failed to write.
     #[serde(rename = "org_public_id")]
     pub org_public_id: Option<String>,
+    /// The future UTC month when the scheduled limit takes effect, formatted as `YYYY-MM`, starting at 00:00 UTC on its first day. Present only together with `pending_usage_limit` and omitted when no change is scheduled or this item failed to write.
+    #[serde(rename = "pending_effective_from")]
+    pub pending_effective_from: Option<String>,
+    /// The usage limit scheduled for the organization-wide quota in the usage units defined by the quota namespace. A value of `0` is valid. At the start of the effective month, this value becomes `usage_limit` and both pending fields are omitted. Omitted when no change is scheduled or this item failed to write.
+    #[serde(rename = "pending_usage_limit")]
+    pub pending_usage_limit: Option<f64>,
     /// A namespace-specific key and value identifying what the quota applies to within an organization. The object contains exactly one entry. A value of `"*"` identifies the default quota applied to entities without a specific quota. This field is omitted for an organization-wide quota.
     #[serde(rename = "scope")]
     pub scope: Option<std::collections::BTreeMap<String, String>>,
@@ -39,6 +45,8 @@ impl UsageQuotaBulkResultAttributes {
             enforced: None,
             error: None,
             org_public_id: None,
+            pending_effective_from: None,
+            pending_usage_limit: None,
             scope: None,
             usage_limit: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -58,6 +66,16 @@ impl UsageQuotaBulkResultAttributes {
 
     pub fn org_public_id(mut self, value: String) -> Self {
         self.org_public_id = Some(value);
+        self
+    }
+
+    pub fn pending_effective_from(mut self, value: String) -> Self {
+        self.pending_effective_from = Some(value);
+        self
+    }
+
+    pub fn pending_usage_limit(mut self, value: f64) -> Self {
+        self.pending_usage_limit = Some(value);
         self
     }
 
@@ -106,6 +124,8 @@ impl<'de> Deserialize<'de> for UsageQuotaBulkResultAttributes {
                 let mut enforced: Option<bool> = None;
                 let mut error: Option<String> = None;
                 let mut org_public_id: Option<String> = None;
+                let mut pending_effective_from: Option<String> = None;
+                let mut pending_usage_limit: Option<f64> = None;
                 let mut scope: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut usage_limit: Option<f64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -135,6 +155,20 @@ impl<'de> Deserialize<'de> for UsageQuotaBulkResultAttributes {
                             org_public_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "pending_effective_from" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            pending_effective_from =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "pending_usage_limit" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
+                            pending_usage_limit =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "scope" => {
                             if v.is_null() {
                                 continue;
@@ -160,6 +194,8 @@ impl<'de> Deserialize<'de> for UsageQuotaBulkResultAttributes {
                     enforced,
                     error,
                     org_public_id,
+                    pending_effective_from,
+                    pending_usage_limit,
                     scope,
                     usage_limit,
                     additional_properties,

@@ -10,7 +10,7 @@ async fn main() {
     let resp = api
         .delete_quota(
             "ai_credits".to_string(),
-            "MjAfYWlfY3JlZGl0c1911c2VyX2hhbmRsZTpfX0FMTF9f".to_string(),
+            "MTIzNB9haV9jcmVkaXRzH3VzZXJfaGFuZGxlOl9fQUxMX18".to_string(),
         )
         .await;
     if let Ok(value) = resp {
