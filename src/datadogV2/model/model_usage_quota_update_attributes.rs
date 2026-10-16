@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes to update on a usage quota. Omitting a property leaves its current value unchanged.
+/// Attributes to update on a usage quota. At least one of `usage_limit`, `enforced`, or `pending_usage_limit` must be provided. Omitting a property leaves its current value unchanged.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -18,6 +18,13 @@ pub struct UsageQuotaUpdateAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub enforced: Option<Option<bool>>,
+    /// The non-negative, whole-number limit to schedule for the organization-wide quota in the usage units defined by the quota namespace. It is not checked against current usage. Each write schedules the value for 00:00 UTC on the first day of the next calendar month and replaces any previously scheduled change; the server computes `pending_effective_from`. Omit this field to leave any scheduled change unchanged, including when raising `usage_limit`; use `DELETE /api/v2/usage/quotas/{quota_namespace}/{id}/pending` to cancel one.
+    #[serde(
+        rename = "pending_usage_limit",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub pending_usage_limit: Option<Option<i64>>,
     /// The new quota limit in the usage units defined by the quota namespace. For an organization-wide quota (empty scope), the limit must be greater than the usage already recorded in the current period. Omit this field to leave the current limit unchanged.
     #[serde(
         rename = "usage_limit",
@@ -36,6 +43,7 @@ impl UsageQuotaUpdateAttributes {
     pub fn new() -> UsageQuotaUpdateAttributes {
         UsageQuotaUpdateAttributes {
             enforced: None,
+            pending_usage_limit: None,
             usage_limit: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -44,6 +52,11 @@ impl UsageQuotaUpdateAttributes {
 
     pub fn enforced(mut self, value: Option<bool>) -> Self {
         self.enforced = Some(value);
+        self
+    }
+
+    pub fn pending_usage_limit(mut self, value: Option<i64>) -> Self {
+        self.pending_usage_limit = Some(value);
         self
     }
 
@@ -85,6 +98,7 @@ impl<'de> Deserialize<'de> for UsageQuotaUpdateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut enforced: Option<Option<bool>> = None;
+                let mut pending_usage_limit: Option<Option<i64>> = None;
                 let mut usage_limit: Option<Option<i64>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -96,6 +110,10 @@ impl<'de> Deserialize<'de> for UsageQuotaUpdateAttributes {
                     match k.as_str() {
                         "enforced" => {
                             enforced = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "pending_usage_limit" => {
+                            pending_usage_limit =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "usage_limit" => {
                             usage_limit =
@@ -111,6 +129,7 @@ impl<'de> Deserialize<'de> for UsageQuotaUpdateAttributes {
 
                 let content = UsageQuotaUpdateAttributes {
                     enforced,
+                    pending_usage_limit,
                     usage_limit,
                     additional_properties,
                     _unparsed,
