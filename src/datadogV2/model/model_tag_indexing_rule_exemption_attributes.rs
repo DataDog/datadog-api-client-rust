@@ -17,12 +17,30 @@ pub struct TagIndexingRuleExemptionAttributes {
     /// Handle of the user who created the exemption.
     #[serde(rename = "created_by_handle")]
     pub created_by_handle: Option<String>,
+    /// Estimated change in indexed cardinality or points if the exemption is removed and the matching tag indexing
+    /// rule applies to the metric. A negative value indicates a reduction in indexed volume, a positive value
+    /// indicates an increase, and zero indicates no change. A `null` value indicates that the estimate is unavailable.
+    #[serde(
+        rename = "estimated_change_in_volume",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub estimated_change_in_volume: Option<Option<i64>>,
     /// Discriminates between an explicit exemption (`exemption`) and a pre-existing legacy tag configuration acting as an implicit exclusion (`legacy_tag_configuration`).
     #[serde(rename = "kind")]
     pub kind: Option<String>,
+    /// Tag keys used to query this metric in monitors, dashboards, notebooks, and SLOs that the matching rule would
+    /// remove or not include if the exemption is removed.
+    #[serde(rename = "missing_indexed_tags")]
+    pub missing_indexed_tags: Option<Vec<String>>,
     /// The reason the metric is exempt from tag indexing rules.
     #[serde(rename = "reason")]
     pub reason: Option<String>,
+    /// Indicates whether `estimated_change_in_volume` is available and, if not, why. `ok` indicates a fresh estimate.
+    /// `unindexed_tags` indicates that the matching rule uses tags that are not indexed for the metric.
+    /// `unavailable` indicates that the estimate is stale, was not computed, or could not be retrieved.
+    #[serde(rename = "volume_status")]
+    pub volume_status: Option<crate::datadogV2::model::TagIndexingRuleExemptionVolumeStatus>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -35,8 +53,11 @@ impl TagIndexingRuleExemptionAttributes {
         TagIndexingRuleExemptionAttributes {
             created_at: None,
             created_by_handle: None,
+            estimated_change_in_volume: None,
             kind: None,
+            missing_indexed_tags: None,
             reason: None,
+            volume_status: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -52,13 +73,31 @@ impl TagIndexingRuleExemptionAttributes {
         self
     }
 
+    pub fn estimated_change_in_volume(mut self, value: Option<i64>) -> Self {
+        self.estimated_change_in_volume = Some(value);
+        self
+    }
+
     pub fn kind(mut self, value: String) -> Self {
         self.kind = Some(value);
         self
     }
 
+    pub fn missing_indexed_tags(mut self, value: Vec<String>) -> Self {
+        self.missing_indexed_tags = Some(value);
+        self
+    }
+
     pub fn reason(mut self, value: String) -> Self {
         self.reason = Some(value);
+        self
+    }
+
+    pub fn volume_status(
+        mut self,
+        value: crate::datadogV2::model::TagIndexingRuleExemptionVolumeStatus,
+    ) -> Self {
+        self.volume_status = Some(value);
         self
     }
 
@@ -96,8 +135,13 @@ impl<'de> Deserialize<'de> for TagIndexingRuleExemptionAttributes {
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by_handle: Option<String> = None;
+                let mut estimated_change_in_volume: Option<Option<i64>> = None;
                 let mut kind: Option<String> = None;
+                let mut missing_indexed_tags: Option<Vec<String>> = None;
                 let mut reason: Option<String> = None;
+                let mut volume_status: Option<
+                    crate::datadogV2::model::TagIndexingRuleExemptionVolumeStatus,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -119,17 +163,43 @@ impl<'de> Deserialize<'de> for TagIndexingRuleExemptionAttributes {
                             created_by_handle =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "estimated_change_in_volume" => {
+                            estimated_change_in_volume =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "kind" => {
                             if v.is_null() {
                                 continue;
                             }
                             kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "missing_indexed_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            missing_indexed_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "reason" => {
                             if v.is_null() {
                                 continue;
                             }
                             reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "volume_status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            volume_status =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _volume_status) = volume_status {
+                                match _volume_status {
+                                    crate::datadogV2::model::TagIndexingRuleExemptionVolumeStatus::UnparsedObject(_volume_status) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -142,8 +212,11 @@ impl<'de> Deserialize<'de> for TagIndexingRuleExemptionAttributes {
                 let content = TagIndexingRuleExemptionAttributes {
                     created_at,
                     created_by_handle,
+                    estimated_change_in_volume,
                     kind,
+                    missing_indexed_tags,
                     reason,
+                    volume_status,
                     additional_properties,
                     _unparsed,
                 };

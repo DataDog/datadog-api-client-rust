@@ -8648,6 +8648,8 @@ pub mod model_tag_indexing_rule_exemption_data;
 pub use self::model_tag_indexing_rule_exemption_data::TagIndexingRuleExemptionData;
 pub mod model_tag_indexing_rule_exemption_attributes;
 pub use self::model_tag_indexing_rule_exemption_attributes::TagIndexingRuleExemptionAttributes;
+pub mod model_tag_indexing_rule_exemption_volume_status;
+pub use self::model_tag_indexing_rule_exemption_volume_status::TagIndexingRuleExemptionVolumeStatus;
 pub mod model_tag_indexing_rule_exemption_type;
 pub use self::model_tag_indexing_rule_exemption_type::TagIndexingRuleExemptionType;
 pub mod model_tag_indexing_rule_exemption_create_request;
