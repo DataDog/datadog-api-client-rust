@@ -309,6 +309,10 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.cancel_historical_job".to_owned(), false),
+            (
+                "v2.cancel_security_monitoring_batch_migration".to_owned(),
+                false,
+            ),
             ("v2.convert_job_result_to_signal".to_owned(), false),
             (
                 "v2.convert_security_monitoring_terraform_resource".to_owned(),
@@ -337,6 +341,14 @@ impl Default for Configuration {
             ),
             (
                 "v2.create_security_findings_automation_ticket_creation_rule".to_owned(),
+                false,
+            ),
+            (
+                "v2.create_security_monitoring_batch_migration".to_owned(),
+                false,
+            ),
+            (
+                "v2.create_security_monitoring_batch_migration_resources".to_owned(),
                 false,
             ),
             ("v2.create_security_monitoring_dataset".to_owned(), false),
@@ -374,6 +386,14 @@ impl Default for Configuration {
             ),
             (
                 "v2.delete_security_findings_automation_ticket_creation_rule".to_owned(),
+                false,
+            ),
+            (
+                "v2.delete_security_monitoring_batch_migration".to_owned(),
+                false,
+            ),
+            (
+                "v2.delete_security_monitoring_batch_migration_resources".to_owned(),
                 false,
             ),
             ("v2.delete_security_monitoring_dataset".to_owned(), false),
@@ -485,6 +505,14 @@ impl Default for Configuration {
                 "v2.list_security_findings_automation_ticket_creation_rules".to_owned(),
                 false,
             ),
+            (
+                "v2.list_security_monitoring_batch_migration_resources".to_owned(),
+                false,
+            ),
+            (
+                "v2.list_security_monitoring_batch_migrations".to_owned(),
+                false,
+            ),
             ("v2.list_security_monitoring_datasets".to_owned(), false),
             ("v2.list_security_monitoring_histsignals".to_owned(), false),
             (
@@ -494,6 +522,10 @@ impl Default for Configuration {
             ("v2.list_static_analysis_codegen_rulesets".to_owned(), false),
             ("v2.list_vulnerabilities".to_owned(), false),
             ("v2.list_vulnerable_assets".to_owned(), false),
+            (
+                "v2.publish_security_monitoring_batch_migration".to_owned(),
+                false,
+            ),
             (
                 "v2.reorder_security_findings_automation_due_date_rules".to_owned(),
                 false,
@@ -520,6 +552,10 @@ impl Default for Configuration {
                 "v2.search_security_monitoring_histsignals".to_owned(),
                 false,
             ),
+            (
+                "v2.start_security_monitoring_batch_migration".to_owned(),
+                false,
+            ),
             ("v2.update_findings_assignee".to_owned(), false),
             ("v2.update_findings_severity".to_owned(), false),
             (
@@ -540,6 +576,14 @@ impl Default for Configuration {
             ),
             (
                 "v2.update_security_findings_automation_ticket_creation_rule".to_owned(),
+                false,
+            ),
+            (
+                "v2.update_security_monitoring_batch_migration".to_owned(),
+                false,
+            ),
+            (
+                "v2.update_security_monitoring_batch_migration_resource".to_owned(),
                 false,
             ),
             ("v2.update_security_monitoring_dataset".to_owned(), false),
