@@ -14,9 +14,9 @@ pub struct LLMObsDatasetRecordsDataRequest {
     /// Attributes for appending records to an Agent Observability dataset.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsDatasetRecordsDataAttributesRequest,
-    /// Resource type of Agent Observability dataset records.
+    /// Resource type of an Agent Observability dataset.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::LLMObsRecordType,
+    pub type_: crate::datadogV2::model::LLMObsDatasetType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,7 +27,7 @@ pub struct LLMObsDatasetRecordsDataRequest {
 impl LLMObsDatasetRecordsDataRequest {
     pub fn new(
         attributes: crate::datadogV2::model::LLMObsDatasetRecordsDataAttributesRequest,
-        type_: crate::datadogV2::model::LLMObsRecordType,
+        type_: crate::datadogV2::model::LLMObsDatasetType,
     ) -> LLMObsDatasetRecordsDataRequest {
         LLMObsDatasetRecordsDataRequest {
             attributes,
@@ -66,7 +66,7 @@ impl<'de> Deserialize<'de> for LLMObsDatasetRecordsDataRequest {
                 let mut attributes: Option<
                     crate::datadogV2::model::LLMObsDatasetRecordsDataAttributesRequest,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::LLMObsRecordType> = None;
+                let mut type_: Option<crate::datadogV2::model::LLMObsDatasetType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,7 +82,7 @@ impl<'de> Deserialize<'de> for LLMObsDatasetRecordsDataRequest {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::LLMObsRecordType::UnparsedObject(
+                                    crate::datadogV2::model::LLMObsDatasetType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;

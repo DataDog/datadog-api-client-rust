@@ -1,10 +1,10 @@
 // Delete Agent Observability dataset records returns "No Content" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_agent_observability::AgentObservabilityAPI;
+use datadog_api_client::datadogV2::model::LLMObsDatasetType;
 use datadog_api_client::datadogV2::model::LLMObsDeleteDatasetRecordsDataAttributesRequest;
 use datadog_api_client::datadogV2::model::LLMObsDeleteDatasetRecordsDataRequest;
 use datadog_api_client::datadogV2::model::LLMObsDeleteDatasetRecordsRequest;
-use datadog_api_client::datadogV2::model::LLMObsRecordType;
 
 #[tokio::main]
 async fn main() {
@@ -12,7 +12,7 @@ async fn main() {
         LLMObsDeleteDatasetRecordsDataAttributesRequest::new(vec![
             "rec-7c3f5a1b-9e2d-4f8a-b1c6-3d7e9f0a2b4c".to_string(),
         ]),
-        LLMObsRecordType::RECORDS,
+        LLMObsDatasetType::DATASETS,
     ));
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.delete_llm_obs_dataset_records", true);
