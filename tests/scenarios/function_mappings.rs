@@ -55,6 +55,7 @@ pub struct ApiInstances {
     pub v2_api_actions_datastores: Option<datadogV2::api_actions_datastores::ActionsDatastoresAPI>,
     pub v2_api_action_connection: Option<datadogV2::api_action_connection::ActionConnectionAPI>,
     pub v2_api_execution_policy: Option<datadogV2::api_execution_policy::ExecutionPolicyAPI>,
+    pub v2_api_agent_health: Option<datadogV2::api_agent_health::AgentHealthAPI>,
     pub v2_api_agentless_scanning: Option<datadogV2::api_agentless_scanning::AgentlessScanningAPI>,
     pub v2_api_delivery_performance:
         Option<datadogV2::api_delivery_performance::DeliveryPerformanceAPI>,
@@ -640,6 +641,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "ExecutionPolicy" => {
             world.api_instances.v2_api_execution_policy = Some(
                 datadogV2::api_execution_policy::ExecutionPolicyAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
+        }
+        "AgentHealth" => {
+            world.api_instances.v2_api_agent_health = Some(
+                datadogV2::api_agent_health::AgentHealthAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -2884,6 +2893,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateExecutionPolicy".into(),
         test_v2_update_execution_policy,
+    );
+    world.function_mappings.insert(
+        "v2.ListAgentHealthHostIssues".into(),
+        test_v2_list_agent_health_host_issues,
     );
     world.function_mappings.insert(
         "v2.ListAwsScanOptions".into(),
@@ -19859,6 +19872,42 @@ fn test_v2_update_execution_policy(world: &mut DatadogWorld, _parameters: &HashM
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_agent_health_host_issues(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_agent_health
+        .as_ref()
+        .expect("api instance not found");
+    let resource_id =
+        serde_json::from_value(_parameters.get("resource_id").unwrap().clone()).unwrap();
+    let agent_type = _parameters
+        .get("agent_type")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_agent_health::ListAgentHealthHostIssuesOptionalParams::default();
+    params.agent_type = agent_type;
+    let response =
+        match block_on(api.list_agent_health_host_issues_with_http_info(resource_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

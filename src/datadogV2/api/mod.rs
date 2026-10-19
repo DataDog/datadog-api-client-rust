@@ -4,6 +4,7 @@
 
 pub mod api_action_connection;
 pub mod api_actions_datastores;
+pub mod api_agent_health;
 pub mod api_agent_observability;
 pub mod api_agentless_scanning;
 pub mod api_annotations;
