@@ -33,9 +33,9 @@ pub struct JSSourcemapAttributes {
     /// The file name of the minified JavaScript file.
     #[serde(rename = "file_name")]
     pub file_name: Option<String>,
-    /// The type of source map.
+    /// The type of source map. Always `js` for JavaScript source maps.
     #[serde(rename = "mapkind")]
-    pub mapkind: String,
+    pub mapkind: crate::datadogV2::model::JSSourcemapMapKind,
     /// The service name associated with the source map.
     #[serde(rename = "service")]
     pub service: Option<String>,
@@ -61,7 +61,7 @@ pub struct JSSourcemapAttributes {
 impl JSSourcemapAttributes {
     pub fn new(
         created_at: chrono::DateTime<chrono::Utc>,
-        mapkind: String,
+        mapkind: crate::datadogV2::model::JSSourcemapMapKind,
         size: i64,
     ) -> JSSourcemapAttributes {
         JSSourcemapAttributes {
@@ -166,7 +166,7 @@ impl<'de> Deserialize<'de> for JSSourcemapAttributes {
                 let mut debug_id: Option<String> = None;
                 let mut domain: Option<String> = None;
                 let mut file_name: Option<String> = None;
-                let mut mapkind: Option<String> = None;
+                let mut mapkind: Option<crate::datadogV2::model::JSSourcemapMapKind> = None;
                 let mut service: Option<String> = None;
                 let mut size: Option<i64> = None;
                 let mut variant: Option<String> = None;
@@ -223,6 +223,16 @@ impl<'de> Deserialize<'de> for JSSourcemapAttributes {
                         }
                         "mapkind" => {
                             mapkind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _mapkind) = mapkind {
+                                match _mapkind {
+                                    crate::datadogV2::model::JSSourcemapMapKind::UnparsedObject(
+                                        _mapkind,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         "service" => {
                             if v.is_null() {

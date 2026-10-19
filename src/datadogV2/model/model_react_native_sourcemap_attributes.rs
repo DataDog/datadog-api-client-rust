@@ -26,9 +26,9 @@ pub struct ReactNativeSourcemapAttributes {
     /// The debug identifier (UUID format).
     #[serde(rename = "debug_id")]
     pub debug_id: Option<String>,
-    /// The type of source map.
+    /// The type of source map. Always `react` for React Native source maps.
     #[serde(rename = "mapkind")]
-    pub mapkind: String,
+    pub mapkind: crate::datadogV2::model::ReactNativeSourcemapMapKind,
     /// The platform the source map was built for (e.g., `ios`, `android`).
     #[serde(rename = "platform")]
     pub platform: Option<String>,
@@ -51,7 +51,7 @@ pub struct ReactNativeSourcemapAttributes {
 impl ReactNativeSourcemapAttributes {
     pub fn new(
         created_at: chrono::DateTime<chrono::Utc>,
-        mapkind: String,
+        mapkind: crate::datadogV2::model::ReactNativeSourcemapMapKind,
         size: i64,
     ) -> ReactNativeSourcemapAttributes {
         ReactNativeSourcemapAttributes {
@@ -136,7 +136,8 @@ impl<'de> Deserialize<'de> for ReactNativeSourcemapAttributes {
                 let mut bundle_version: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut debug_id: Option<String> = None;
-                let mut mapkind: Option<String> = None;
+                let mut mapkind: Option<crate::datadogV2::model::ReactNativeSourcemapMapKind> =
+                    None;
                 let mut platform: Option<String> = None;
                 let mut service: Option<String> = None;
                 let mut size: Option<i64> = None;
@@ -181,6 +182,14 @@ impl<'de> Deserialize<'de> for ReactNativeSourcemapAttributes {
                         }
                         "mapkind" => {
                             mapkind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _mapkind) = mapkind {
+                                match _mapkind {
+                                    crate::datadogV2::model::ReactNativeSourcemapMapKind::UnparsedObject(_mapkind) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "platform" => {
                             if v.is_null() {
