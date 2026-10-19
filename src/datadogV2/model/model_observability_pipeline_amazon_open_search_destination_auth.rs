@@ -8,6 +8,7 @@ use std::fmt::{self, Formatter};
 
 /// Authentication settings for the Amazon OpenSearch destination.
 /// The `strategy` field determines whether basic or AWS-based authentication is used.
+/// When `strategy` is `basic`, use `username_key` and `password_key` to reference credentials stored in environment variables or secrets.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -21,6 +22,9 @@ pub struct ObservabilityPipelineAmazonOpenSearchDestinationAuth {
     /// External ID for the assumed role (used with `aws` strategy).
     #[serde(rename = "external_id")]
     pub external_id: Option<String>,
+    /// Name of the environment variable or secret that holds the Amazon OpenSearch password (used when `strategy` is `basic`).
+    #[serde(rename = "password_key")]
+    pub password_key: Option<String>,
     /// Session name for the assumed role (used with `aws` strategy).
     #[serde(rename = "session_name")]
     pub session_name: Option<String>,
@@ -28,6 +32,9 @@ pub struct ObservabilityPipelineAmazonOpenSearchDestinationAuth {
     #[serde(rename = "strategy")]
     pub strategy:
         crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuthStrategy,
+    /// Name of the environment variable or secret that holds the Amazon OpenSearch username (used when `strategy` is `basic`).
+    #[serde(rename = "username_key")]
+    pub username_key: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -43,8 +50,10 @@ impl ObservabilityPipelineAmazonOpenSearchDestinationAuth {
             assume_role: None,
             aws_region: None,
             external_id: None,
+            password_key: None,
             session_name: None,
             strategy,
+            username_key: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -65,8 +74,18 @@ impl ObservabilityPipelineAmazonOpenSearchDestinationAuth {
         self
     }
 
+    pub fn password_key(mut self, value: String) -> Self {
+        self.password_key = Some(value);
+        self
+    }
+
     pub fn session_name(mut self, value: String) -> Self {
         self.session_name = Some(value);
+        self
+    }
+
+    pub fn username_key(mut self, value: String) -> Self {
+        self.username_key = Some(value);
         self
     }
 
@@ -99,8 +118,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestinationA
                 let mut assume_role: Option<String> = None;
                 let mut aws_region: Option<String> = None;
                 let mut external_id: Option<String> = None;
+                let mut password_key: Option<String> = None;
                 let mut session_name: Option<String> = None;
                 let mut strategy: Option<crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuthStrategy> = None;
+                let mut username_key: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -129,6 +150,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestinationA
                             external_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "password_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            password_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "session_name" => {
                             if v.is_null() {
                                 continue;
@@ -147,6 +175,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestinationA
                                 }
                             }
                         }
+                        "username_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            username_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -160,8 +195,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestinationA
                     assume_role,
                     aws_region,
                     external_id,
+                    password_key,
                     session_name,
                     strategy,
+                    username_key,
                     additional_properties,
                     _unparsed,
                 };
