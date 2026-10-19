@@ -18,8 +18,7 @@ async fn main() {
         "051601eb-54a0-abc0-03f9-cc02efa18892".to_string(),
         RumExclusionFilterType::EXCLUSION_FILTERS,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.update_exclusion_filter", true);
+    let configuration = datadog::Configuration::new();
     let api = RumRetentionFiltersAPI::with_config(configuration);
     let resp = api
         .update_exclusion_filter("app_id".to_string(), "ef_id".to_string(), body)
