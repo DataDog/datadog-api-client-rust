@@ -1,7 +1,6 @@
 // Push events for an Agent Observability experiment returns "Accepted" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_agent_observability::AgentObservabilityAPI;
-use datadog_api_client::datadogV2::model::LLMObsEventType;
 use datadog_api_client::datadogV2::model::LLMObsExperimentEventsDataAttributesRequest;
 use datadog_api_client::datadogV2::model::LLMObsExperimentEventsDataRequest;
 use datadog_api_client::datadogV2::model::LLMObsExperimentEventsRequest;
@@ -11,6 +10,7 @@ use datadog_api_client::datadogV2::model::LLMObsExperimentSpan;
 use datadog_api_client::datadogV2::model::LLMObsExperimentSpanError;
 use datadog_api_client::datadogV2::model::LLMObsExperimentSpanMeta;
 use datadog_api_client::datadogV2::model::LLMObsExperimentSpanStatus;
+use datadog_api_client::datadogV2::model::LLMObsExperimentType;
 use datadog_api_client::datadogV2::model::LLMObsMetricAssessment;
 use datadog_api_client::datadogV2::model::LLMObsMetricScoreType;
 
@@ -57,7 +57,7 @@ TimeoutError: Model response timed out"#
                     .output(None),
             )
             .tags(vec![])]),
-        LLMObsEventType::EVENTS,
+        LLMObsExperimentType::EXPERIMENTS,
     ));
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.create_llm_obs_experiment_events", true);

@@ -5,7 +5,7 @@ use datadog_api_client::datadogV2::model::LLMObsDatasetRecordUpdateItem;
 use datadog_api_client::datadogV2::model::LLMObsDatasetRecordsUpdateDataAttributesRequest;
 use datadog_api_client::datadogV2::model::LLMObsDatasetRecordsUpdateDataRequest;
 use datadog_api_client::datadogV2::model::LLMObsDatasetRecordsUpdateRequest;
-use datadog_api_client::datadogV2::model::LLMObsRecordType;
+use datadog_api_client::datadogV2::model::LLMObsDatasetType;
 
 #[tokio::main]
 async fn main() {
@@ -17,7 +17,7 @@ async fn main() {
             .expected_output(None)
             .input(None),
         ]),
-        LLMObsRecordType::RECORDS,
+        LLMObsDatasetType::DATASETS,
     ));
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.update_llm_obs_dataset_records", true);

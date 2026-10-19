@@ -14,9 +14,9 @@ pub struct LLMObsExperimentEventsDataRequest {
     /// Attributes for pushing experiment events including spans and metrics.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::LLMObsExperimentEventsDataAttributesRequest,
-    /// Resource type for Agent Observability experiment events.
+    /// Resource type of an Agent Observability experiment.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::LLMObsEventType,
+    pub type_: crate::datadogV2::model::LLMObsExperimentType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,7 +27,7 @@ pub struct LLMObsExperimentEventsDataRequest {
 impl LLMObsExperimentEventsDataRequest {
     pub fn new(
         attributes: crate::datadogV2::model::LLMObsExperimentEventsDataAttributesRequest,
-        type_: crate::datadogV2::model::LLMObsEventType,
+        type_: crate::datadogV2::model::LLMObsExperimentType,
     ) -> LLMObsExperimentEventsDataRequest {
         LLMObsExperimentEventsDataRequest {
             attributes,
@@ -66,7 +66,7 @@ impl<'de> Deserialize<'de> for LLMObsExperimentEventsDataRequest {
                 let mut attributes: Option<
                     crate::datadogV2::model::LLMObsExperimentEventsDataAttributesRequest,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::LLMObsEventType> = None;
+                let mut type_: Option<crate::datadogV2::model::LLMObsExperimentType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,11 +82,9 @@ impl<'de> Deserialize<'de> for LLMObsExperimentEventsDataRequest {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::LLMObsEventType::UnparsedObject(
-                                        _type_,
-                                    ) => {
+                                    crate::datadogV2::model::LLMObsExperimentType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
