@@ -14,9 +14,16 @@ pub struct ProcessSummaryAttributes {
     /// Process command line.
     #[serde(rename = "cmdline")]
     pub cmdline: Option<String>,
+    /// Path to the process executable.
+    #[serde(rename = "executable")]
+    pub executable: Option<String>,
     /// Host running the process.
     #[serde(rename = "host")]
     pub host: Option<String>,
+    /// Tags that uniquely identify the process: a host identity tag (`host`, `task_arn`,
+    /// or `eks_fargate_node`) and a `pid` tag. Omitted if either tag is unavailable.
+    #[serde(rename = "identifying_tags")]
+    pub identifying_tags: Option<Vec<String>>,
     /// Process ID.
     #[serde(rename = "pid")]
     pub pid: Option<i64>,
@@ -46,7 +53,9 @@ impl ProcessSummaryAttributes {
     pub fn new() -> ProcessSummaryAttributes {
         ProcessSummaryAttributes {
             cmdline: None,
+            executable: None,
             host: None,
+            identifying_tags: None,
             pid: None,
             ppid: None,
             start: None,
@@ -63,8 +72,18 @@ impl ProcessSummaryAttributes {
         self
     }
 
+    pub fn executable(mut self, value: String) -> Self {
+        self.executable = Some(value);
+        self
+    }
+
     pub fn host(mut self, value: String) -> Self {
         self.host = Some(value);
+        self
+    }
+
+    pub fn identifying_tags(mut self, value: Vec<String>) -> Self {
+        self.identifying_tags = Some(value);
         self
     }
 
@@ -131,7 +150,9 @@ impl<'de> Deserialize<'de> for ProcessSummaryAttributes {
                 M: MapAccess<'a>,
             {
                 let mut cmdline: Option<String> = None;
+                let mut executable: Option<String> = None;
                 let mut host: Option<String> = None;
+                let mut identifying_tags: Option<Vec<String>> = None;
                 let mut pid: Option<i64> = None;
                 let mut ppid: Option<i64> = None;
                 let mut start: Option<String> = None;
@@ -152,11 +173,24 @@ impl<'de> Deserialize<'de> for ProcessSummaryAttributes {
                             }
                             cmdline = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "executable" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            executable = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "host" => {
                             if v.is_null() {
                                 continue;
                             }
                             host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "identifying_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            identifying_tags =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "pid" => {
                             if v.is_null() {
@@ -204,7 +238,9 @@ impl<'de> Deserialize<'de> for ProcessSummaryAttributes {
 
                 let content = ProcessSummaryAttributes {
                     cmdline,
+                    executable,
                     host,
+                    identifying_tags,
                     pid,
                     ppid,
                     start,
