@@ -29,9 +29,9 @@ pub struct ELFSourcemapAttributes {
     /// The Go build ID (UUID format).
     #[serde(rename = "go_build_id")]
     pub go_build_id: Option<String>,
-    /// The type of source map.
+    /// The type of source map. Always `elf` for ELF source maps.
     #[serde(rename = "mapkind")]
-    pub mapkind: String,
+    pub mapkind: crate::datadogV2::model::ELFSourcemapMapKind,
     /// The origin of the ELF file.
     #[serde(rename = "origin")]
     pub origin: Option<String>,
@@ -54,7 +54,7 @@ pub struct ELFSourcemapAttributes {
 impl ELFSourcemapAttributes {
     pub fn new(
         created_at: chrono::DateTime<chrono::Utc>,
-        mapkind: String,
+        mapkind: crate::datadogV2::model::ELFSourcemapMapKind,
         size: i64,
     ) -> ELFSourcemapAttributes {
         ELFSourcemapAttributes {
@@ -146,7 +146,7 @@ impl<'de> Deserialize<'de> for ELFSourcemapAttributes {
                 let mut file_name: Option<String> = None;
                 let mut gnu_build_id: Option<String> = None;
                 let mut go_build_id: Option<String> = None;
-                let mut mapkind: Option<String> = None;
+                let mut mapkind: Option<crate::datadogV2::model::ELFSourcemapMapKind> = None;
                 let mut origin: Option<String> = None;
                 let mut origin_version: Option<String> = None;
                 let mut size: Option<i64> = None;
@@ -196,6 +196,14 @@ impl<'de> Deserialize<'de> for ELFSourcemapAttributes {
                         }
                         "mapkind" => {
                             mapkind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _mapkind) = mapkind {
+                                match _mapkind {
+                                    crate::datadogV2::model::ELFSourcemapMapKind::UnparsedObject(_mapkind) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "origin" => {
                             if v.is_null() {

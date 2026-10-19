@@ -14,9 +14,9 @@ pub struct IOSSourcemapAttributes {
     /// The timestamp when the source map was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
-    /// The type of source map.
+    /// The type of source map. Always `ios` for iOS dSYM source maps.
     #[serde(rename = "mapkind")]
-    pub mapkind: String,
+    pub mapkind: crate::datadogV2::model::IOSSourcemapMapKind,
     /// The size of the dSYM file in bytes.
     #[serde(rename = "size")]
     pub size: i64,
@@ -33,7 +33,7 @@ pub struct IOSSourcemapAttributes {
 impl IOSSourcemapAttributes {
     pub fn new(
         created_at: chrono::DateTime<chrono::Utc>,
-        mapkind: String,
+        mapkind: crate::datadogV2::model::IOSSourcemapMapKind,
         size: i64,
     ) -> IOSSourcemapAttributes {
         IOSSourcemapAttributes {
@@ -78,7 +78,7 @@ impl<'de> Deserialize<'de> for IOSSourcemapAttributes {
                 M: MapAccess<'a>,
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut mapkind: Option<String> = None;
+                let mut mapkind: Option<crate::datadogV2::model::IOSSourcemapMapKind> = None;
                 let mut size: Option<i64> = None;
                 let mut uuids: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -94,6 +94,14 @@ impl<'de> Deserialize<'de> for IOSSourcemapAttributes {
                         }
                         "mapkind" => {
                             mapkind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _mapkind) = mapkind {
+                                match _mapkind {
+                                    crate::datadogV2::model::IOSSourcemapMapKind::UnparsedObject(_mapkind) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "size" => {
                             size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

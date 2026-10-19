@@ -16,6 +16,8 @@ pub enum SourcemapItem {
     ELFSourcemapData(Box<crate::datadogV2::model::ELFSourcemapData>),
     NDKSourcemapData(Box<crate::datadogV2::model::NDKSourcemapData>),
     IL2CPPSourcemapData(Box<crate::datadogV2::model::IL2CPPSourcemapData>),
+    WASMSourcemapData(Box<crate::datadogV2::model::WASMSourcemapData>),
+    PortablePdbSourcemapData(Box<crate::datadogV2::model::PortablePdbSourcemapData>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -80,6 +82,21 @@ impl<'de> Deserialize<'de> for SourcemapItem {
         ) {
             if !_v._unparsed {
                 return Ok(SourcemapItem::IL2CPPSourcemapData(_v));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::WASMSourcemapData>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(SourcemapItem::WASMSourcemapData(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::PortablePdbSourcemapData>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(SourcemapItem::PortablePdbSourcemapData(_v));
             }
         }
 

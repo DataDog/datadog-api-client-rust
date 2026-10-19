@@ -17,9 +17,9 @@ pub struct IL2CPPSourcemapAttributes {
     /// The timestamp when the mapping file was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
-    /// The type of source map.
+    /// The type of source map. Always `il2cpp` for IL2CPP source maps.
     #[serde(rename = "mapkind")]
-    pub mapkind: String,
+    pub mapkind: crate::datadogV2::model::IL2CPPSourcemapMapKind,
     /// The size of the mapping file in bytes.
     #[serde(rename = "size")]
     pub size: i64,
@@ -33,7 +33,7 @@ pub struct IL2CPPSourcemapAttributes {
 impl IL2CPPSourcemapAttributes {
     pub fn new(
         created_at: chrono::DateTime<chrono::Utc>,
-        mapkind: String,
+        mapkind: crate::datadogV2::model::IL2CPPSourcemapMapKind,
         size: i64,
     ) -> IL2CPPSourcemapAttributes {
         IL2CPPSourcemapAttributes {
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for IL2CPPSourcemapAttributes {
             {
                 let mut build_id: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut mapkind: Option<String> = None;
+                let mut mapkind: Option<crate::datadogV2::model::IL2CPPSourcemapMapKind> = None;
                 let mut size: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -100,6 +100,14 @@ impl<'de> Deserialize<'de> for IL2CPPSourcemapAttributes {
                         }
                         "mapkind" => {
                             mapkind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _mapkind) = mapkind {
+                                match _mapkind {
+                                    crate::datadogV2::model::IL2CPPSourcemapMapKind::UnparsedObject(_mapkind) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "size" => {
                             size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

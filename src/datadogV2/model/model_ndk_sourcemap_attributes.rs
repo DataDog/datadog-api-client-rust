@@ -23,9 +23,9 @@ pub struct NDKSourcemapAttributes {
     /// The NDK library file name.
     #[serde(rename = "file_name")]
     pub file_name: Option<String>,
-    /// The type of source map.
+    /// The type of source map. Always `ndk` for Android NDK source maps.
     #[serde(rename = "mapkind")]
-    pub mapkind: String,
+    pub mapkind: crate::datadogV2::model::NDKSourcemapMapKind,
     /// The size of the symbol file in bytes.
     #[serde(rename = "size")]
     pub size: i64,
@@ -39,7 +39,7 @@ pub struct NDKSourcemapAttributes {
 impl NDKSourcemapAttributes {
     pub fn new(
         created_at: chrono::DateTime<chrono::Utc>,
-        mapkind: String,
+        mapkind: crate::datadogV2::model::NDKSourcemapMapKind,
         size: i64,
     ) -> NDKSourcemapAttributes {
         NDKSourcemapAttributes {
@@ -99,7 +99,7 @@ impl<'de> Deserialize<'de> for NDKSourcemapAttributes {
                 let mut build_id: Option<String> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut file_name: Option<String> = None;
-                let mut mapkind: Option<String> = None;
+                let mut mapkind: Option<crate::datadogV2::model::NDKSourcemapMapKind> = None;
                 let mut size: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -132,6 +132,14 @@ impl<'de> Deserialize<'de> for NDKSourcemapAttributes {
                         }
                         "mapkind" => {
                             mapkind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _mapkind) = mapkind {
+                                match _mapkind {
+                                    crate::datadogV2::model::NDKSourcemapMapKind::UnparsedObject(_mapkind) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "size" => {
                             size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
