@@ -5,6 +5,7 @@
 pub mod api;
 pub use self::api::api_action_connection;
 pub use self::api::api_actions_datastores;
+pub use self::api::api_agent_health;
 pub use self::api::api_agent_observability;
 pub use self::api::api_agentless_scanning;
 pub use self::api::api_annotations;
