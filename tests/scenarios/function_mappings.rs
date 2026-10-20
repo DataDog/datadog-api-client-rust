@@ -23,90 +23,70 @@ pub struct ApiInstances {
     pub v1_api_snapshots: Option<datadogV1::api_snapshots::SnapshotsAPI>,
     pub v1_api_hosts: Option<datadogV1::api_hosts::HostsAPI>,
     pub v1_api_aws_integration: Option<datadogV1::api_aws_integration::AWSIntegrationAPI>,
-    pub v1_api_aws_logs_integration:
-        Option<datadogV1::api_aws_logs_integration::AWSLogsIntegrationAPI>,
+    pub v1_api_aws_logs_integration: Option<datadogV1::api_aws_logs_integration::AWSLogsIntegrationAPI>,
     pub v1_api_azure_integration: Option<datadogV1::api_azure_integration::AzureIntegrationAPI>,
     pub v1_api_gcp_integration: Option<datadogV1::api_gcp_integration::GCPIntegrationAPI>,
-    pub v1_api_pager_duty_integration:
-        Option<datadogV1::api_pager_duty_integration::PagerDutyIntegrationAPI>,
+    pub v1_api_pager_duty_integration: Option<datadogV1::api_pager_duty_integration::PagerDutyIntegrationAPI>,
     pub v1_api_slack_integration: Option<datadogV1::api_slack_integration::SlackIntegrationAPI>,
-    pub v1_api_webhooks_integration:
-        Option<datadogV1::api_webhooks_integration::WebhooksIntegrationAPI>,
+    pub v1_api_webhooks_integration: Option<datadogV1::api_webhooks_integration::WebhooksIntegrationAPI>,
     pub v1_api_logs: Option<datadogV1::api_logs::LogsAPI>,
     pub v1_api_logs_indexes: Option<datadogV1::api_logs_indexes::LogsIndexesAPI>,
     pub v1_api_logs_pipelines: Option<datadogV1::api_logs_pipelines::LogsPipelinesAPI>,
     pub v1_api_monitors: Option<datadogV1::api_monitors::MonitorsAPI>,
     pub v1_api_notebooks: Option<datadogV1::api_notebooks::NotebooksAPI>,
     pub v1_api_organizations: Option<datadogV1::api_organizations::OrganizationsAPI>,
-    pub v1_api_security_monitoring:
-        Option<datadogV1::api_security_monitoring::SecurityMonitoringAPI>,
-    pub v1_api_service_level_objectives:
-        Option<datadogV1::api_service_level_objectives::ServiceLevelObjectivesAPI>,
-    pub v1_api_service_level_objective_corrections: Option<
-        datadogV1::api_service_level_objective_corrections::ServiceLevelObjectiveCorrectionsAPI,
-    >,
+    pub v1_api_security_monitoring: Option<datadogV1::api_security_monitoring::SecurityMonitoringAPI>,
+    pub v1_api_service_level_objectives: Option<datadogV1::api_service_level_objectives::ServiceLevelObjectivesAPI>,
+    pub v1_api_service_level_objective_corrections: Option<datadogV1::api_service_level_objective_corrections::ServiceLevelObjectiveCorrectionsAPI>,
     pub v1_api_synthetics: Option<datadogV1::api_synthetics::SyntheticsAPI>,
     pub v1_api_tags: Option<datadogV1::api_tags::TagsAPI>,
     pub v1_api_users: Option<datadogV1::api_users::UsersAPI>,
     pub v1_api_authentication: Option<datadogV1::api_authentication::AuthenticationAPI>,
     pub v2_api_fleet_automation: Option<datadogV2::api_fleet_automation::FleetAutomationAPI>,
-    pub v2_api_agent_observability:
-        Option<datadogV2::api_agent_observability::AgentObservabilityAPI>,
+    pub v2_api_agent_observability: Option<datadogV2::api_agent_observability::AgentObservabilityAPI>,
     pub v2_api_actions_datastores: Option<datadogV2::api_actions_datastores::ActionsDatastoresAPI>,
     pub v2_api_action_connection: Option<datadogV2::api_action_connection::ActionConnectionAPI>,
     pub v2_api_execution_policy: Option<datadogV2::api_execution_policy::ExecutionPolicyAPI>,
     pub v2_api_agent_health: Option<datadogV2::api_agent_health::AgentHealthAPI>,
     pub v2_api_agentless_scanning: Option<datadogV2::api_agentless_scanning::AgentlessScanningAPI>,
-    pub v2_api_delivery_performance:
-        Option<datadogV2::api_delivery_performance::DeliveryPerformanceAPI>,
+    pub v2_api_delivery_performance: Option<datadogV2::api_delivery_performance::DeliveryPerformanceAPI>,
     pub v2_api_annotations: Option<datadogV2::api_annotations::AnnotationsAPI>,
     pub v2_api_users: Option<datadogV2::api_users::UsersAPI>,
     pub v2_api_key_management: Option<datadogV2::api_key_management::KeyManagementAPI>,
     pub v2_api_api_management: Option<datadogV2::api_api_management::APIManagementAPI>,
     pub v2_api_spans_metrics: Option<datadogV2::api_spans_metrics::SpansMetricsAPI>,
-    pub v2_api_apm_retention_filters:
-        Option<datadogV2::api_apm_retention_filters::APMRetentionFiltersAPI>,
+    pub v2_api_apm_retention_filters: Option<datadogV2::api_apm_retention_filters::APMRetentionFiltersAPI>,
     pub v2_api_apm: Option<datadogV2::api_apm::APMAPI>,
     pub v2_api_app_builder: Option<datadogV2::api_app_builder::AppBuilderAPI>,
     pub v2_api_audit: Option<datadogV2::api_audit::AuditAPI>,
     pub v2_api_authn_mappings: Option<datadogV2::api_authn_mappings::AuthNMappingsAPI>,
     pub v2_api_bits_ai: Option<datadogV2::api_bits_ai::BitsAIAPI>,
     pub v2_api_case_management: Option<datadogV2::api_case_management::CaseManagementAPI>,
-    pub v2_api_case_management_type:
-        Option<datadogV2::api_case_management_type::CaseManagementTypeAPI>,
-    pub v2_api_case_management_attribute:
-        Option<datadogV2::api_case_management_attribute::CaseManagementAttributeAPI>,
+    pub v2_api_case_management_type: Option<datadogV2::api_case_management_type::CaseManagementTypeAPI>,
+    pub v2_api_case_management_attribute: Option<datadogV2::api_case_management_attribute::CaseManagementAttributeAPI>,
     pub v2_api_software_catalog: Option<datadogV2::api_software_catalog::SoftwareCatalogAPI>,
     pub v2_api_change_management: Option<datadogV2::api_change_management::ChangeManagementAPI>,
-    pub v2_api_ci_visibility_git_hub_accounts:
-        Option<datadogV2::api_ci_visibility_git_hub_accounts::CIVisibilityGitHubAccountsAPI>,
-    pub v2_api_ci_visibility_pipelines:
-        Option<datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI>,
+    pub v2_api_ci_visibility_git_hub_accounts: Option<datadogV2::api_ci_visibility_git_hub_accounts::CIVisibilityGitHubAccountsAPI>,
+    pub v2_api_ci_visibility_pipelines: Option<datadogV2::api_ci_visibility_pipelines::CIVisibilityPipelinesAPI>,
     pub v2_api_test_optimization: Option<datadogV2::api_test_optimization::TestOptimizationAPI>,
-    pub v2_api_ci_visibility_tests:
-        Option<datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI>,
+    pub v2_api_ci_visibility_tests: Option<datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI>,
     pub v2_api_ci_visibility_logs: Option<datadogV2::api_ci_visibility_logs::CIVisibilityLogsAPI>,
-    pub v2_api_cloud_authentication:
-        Option<datadogV2::api_cloud_authentication::CloudAuthenticationAPI>,
-    pub v2_api_security_monitoring:
-        Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
+    pub v2_api_cloud_authentication: Option<datadogV2::api_cloud_authentication::CloudAuthenticationAPI>,
+    pub v2_api_security_monitoring: Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
     pub v2_api_storage_management: Option<datadogV2::api_storage_management::StorageManagementAPI>,
     pub v2_api_code_coverage: Option<datadogV2::api_code_coverage::CodeCoverageAPI>,
     pub v2_api_compliance: Option<datadogV2::api_compliance::ComplianceAPI>,
     pub v2_api_container_images: Option<datadogV2::api_container_images::ContainerImagesAPI>,
     pub v2_api_containers: Option<datadogV2::api_containers::ContainersAPI>,
-    pub v2_api_cloud_cost_management:
-        Option<datadogV2::api_cloud_cost_management::CloudCostManagementAPI>,
+    pub v2_api_cloud_cost_management: Option<datadogV2::api_cloud_cost_management::CloudCostManagementAPI>,
     pub v2_api_usage_metering: Option<datadogV2::api_usage_metering::UsageMeteringAPI>,
     pub v2_api_csm_agents: Option<datadogV2::api_csm_agents::CSMAgentsAPI>,
-    pub v2_api_csm_coverage_analysis:
-        Option<datadogV2::api_csm_coverage_analysis::CSMCoverageAnalysisAPI>,
+    pub v2_api_csm_coverage_analysis: Option<datadogV2::api_csm_coverage_analysis::CSMCoverageAnalysisAPI>,
     pub v2_api_csm_ownership: Option<datadogV2::api_csm_ownership::CSMOwnershipAPI>,
     pub v2_api_csm_settings: Option<datadogV2::api_csm_settings::CSMSettingsAPI>,
     pub v2_api_dashboard_lists: Option<datadogV2::api_dashboard_lists::DashboardListsAPI>,
     pub v2_api_dashboard_sharing: Option<datadogV2::api_dashboard_sharing::DashboardSharingAPI>,
-    pub v2_api_dashboard_secure_embed:
-        Option<datadogV2::api_dashboard_secure_embed::DashboardSecureEmbedAPI>,
+    pub v2_api_dashboard_secure_embed: Option<datadogV2::api_dashboard_secure_embed::DashboardSecureEmbedAPI>,
     pub v2_api_dashboards: Option<datadogV2::api_dashboards::DashboardsAPI>,
     pub v2_api_data_observability: Option<datadogV2::api_data_observability::DataObservabilityAPI>,
     pub v2_api_datasets: Option<datadogV2::api_datasets::DatasetsAPI>,
@@ -124,124 +104,88 @@ pub struct ApiInstances {
     pub v2_api_organizations: Option<datadogV2::api_organizations::OrganizationsAPI>,
     pub v2_api_governance_console: Option<datadogV2::api_governance_console::GovernanceConsoleAPI>,
     pub v2_api_tag_rules: Option<datadogV2::api_tag_rules::TagRulesAPI>,
-    pub v2_api_high_availability_multi_region:
-        Option<datadogV2::api_high_availability_multi_region::HighAvailabilityMultiRegionAPI>,
+    pub v2_api_high_availability_multi_region: Option<datadogV2::api_high_availability_multi_region::HighAvailabilityMultiRegionAPI>,
     pub v2_api_identity_providers: Option<datadogV2::api_identity_providers::IdentityProvidersAPI>,
-    pub v2_api_entity_integration_configs:
-        Option<datadogV2::api_entity_integration_configs::EntityIntegrationConfigsAPI>,
+    pub v2_api_entity_integration_configs: Option<datadogV2::api_entity_integration_configs::EntityIntegrationConfigsAPI>,
     pub v2_api_incidents: Option<datadogV2::api_incidents::IncidentsAPI>,
-    pub v2_api_databricks_integration:
-        Option<datadogV2::api_databricks_integration::DatabricksIntegrationAPI>,
-    pub v2_api_elastic_cloud_integration:
-        Option<datadogV2::api_elastic_cloud_integration::ElasticCloudIntegrationAPI>,
-    pub v2_api_snowflake_integration:
-        Option<datadogV2::api_snowflake_integration::SnowflakeIntegrationAPI>,
+    pub v2_api_databricks_integration: Option<datadogV2::api_databricks_integration::DatabricksIntegrationAPI>,
+    pub v2_api_elastic_cloud_integration: Option<datadogV2::api_elastic_cloud_integration::ElasticCloudIntegrationAPI>,
+    pub v2_api_snowflake_integration: Option<datadogV2::api_snowflake_integration::SnowflakeIntegrationAPI>,
+    pub v2_api_temporal_cloud_open_metrics_integration: Option<datadogV2::api_temporal_cloud_open_metrics_integration::TemporalCloudOpenMetricsIntegrationAPI>,
     pub v2_api_twilio_integration: Option<datadogV2::api_twilio_integration::TwilioIntegrationAPI>,
     pub v2_api_aws_integration: Option<datadogV2::api_aws_integration::AWSIntegrationAPI>,
-    pub v2_api_aws_logs_integration:
-        Option<datadogV2::api_aws_logs_integration::AWSLogsIntegrationAPI>,
+    pub v2_api_aws_logs_integration: Option<datadogV2::api_aws_logs_integration::AWSLogsIntegrationAPI>,
     pub v2_api_gcp_integration: Option<datadogV2::api_gcp_integration::GCPIntegrationAPI>,
-    pub v2_api_google_chat_integration:
-        Option<datadogV2::api_google_chat_integration::GoogleChatIntegrationAPI>,
+    pub v2_api_google_chat_integration: Option<datadogV2::api_google_chat_integration::GoogleChatIntegrationAPI>,
     pub v2_api_jira_integration: Option<datadogV2::api_jira_integration::JiraIntegrationAPI>,
-    pub v2_api_microsoft_teams_integration:
-        Option<datadogV2::api_microsoft_teams_integration::MicrosoftTeamsIntegrationAPI>,
+    pub v2_api_microsoft_teams_integration: Option<datadogV2::api_microsoft_teams_integration::MicrosoftTeamsIntegrationAPI>,
     pub v2_api_oci_integration: Option<datadogV2::api_oci_integration::OCIIntegrationAPI>,
-    pub v2_api_opsgenie_integration:
-        Option<datadogV2::api_opsgenie_integration::OpsgenieIntegrationAPI>,
-    pub v2_api_salesforce_integration:
-        Option<datadogV2::api_salesforce_integration::SalesforceIntegrationAPI>,
-    pub v2_api_service_now_integration:
-        Option<datadogV2::api_service_now_integration::ServiceNowIntegrationAPI>,
+    pub v2_api_opsgenie_integration: Option<datadogV2::api_opsgenie_integration::OpsgenieIntegrationAPI>,
+    pub v2_api_salesforce_integration: Option<datadogV2::api_salesforce_integration::SalesforceIntegrationAPI>,
+    pub v2_api_service_now_integration: Option<datadogV2::api_service_now_integration::ServiceNowIntegrationAPI>,
     pub v2_api_slack_integration: Option<datadogV2::api_slack_integration::SlackIntegrationAPI>,
-    pub v2_api_statuspage_integration:
-        Option<datadogV2::api_statuspage_integration::StatuspageIntegrationAPI>,
-    pub v2_api_webhooks_integration:
-        Option<datadogV2::api_webhooks_integration::WebhooksIntegrationAPI>,
+    pub v2_api_statuspage_integration: Option<datadogV2::api_statuspage_integration::StatuspageIntegrationAPI>,
+    pub v2_api_webhooks_integration: Option<datadogV2::api_webhooks_integration::WebhooksIntegrationAPI>,
     pub v2_api_integrations: Option<datadogV2::api_integrations::IntegrationsAPI>,
-    pub v2_api_cloudflare_integration:
-        Option<datadogV2::api_cloudflare_integration::CloudflareIntegrationAPI>,
+    pub v2_api_cloudflare_integration: Option<datadogV2::api_cloudflare_integration::CloudflareIntegrationAPI>,
     pub v2_api_confluent_cloud: Option<datadogV2::api_confluent_cloud::ConfluentCloudAPI>,
     pub v2_api_fastly_integration: Option<datadogV2::api_fastly_integration::FastlyIntegrationAPI>,
     pub v2_api_okta_integration: Option<datadogV2::api_okta_integration::OktaIntegrationAPI>,
     pub v2_api_ip_allowlist: Option<datadogV2::api_ip_allowlist::IPAllowlistAPI>,
     pub v2_api_logs: Option<datadogV2::api_logs::LogsAPI>,
-    pub v2_api_logs_archive_searches:
-        Option<datadogV2::api_logs_archive_searches::LogsArchiveSearchesAPI>,
+    pub v2_api_logs_archive_searches: Option<datadogV2::api_logs_archive_searches::LogsArchiveSearchesAPI>,
     pub v2_api_logs_archives: Option<datadogV2::api_logs_archives::LogsArchivesAPI>,
-    pub v2_api_logs_custom_destinations:
-        Option<datadogV2::api_logs_custom_destinations::LogsCustomDestinationsAPI>,
+    pub v2_api_logs_custom_destinations: Option<datadogV2::api_logs_custom_destinations::LogsCustomDestinationsAPI>,
     pub v2_api_logs_metrics: Option<datadogV2::api_logs_metrics::LogsMetricsAPI>,
-    pub v2_api_logs_restriction_queries:
-        Option<datadogV2::api_logs_restriction_queries::LogsRestrictionQueriesAPI>,
+    pub v2_api_logs_restriction_queries: Option<datadogV2::api_logs_restriction_queries::LogsRestrictionQueriesAPI>,
     pub v2_api_metrics: Option<datadogV2::api_metrics::MetricsAPI>,
     pub v2_api_model_lab_api: Option<datadogV2::api_model_lab_api::ModelLabAPIAPI>,
     pub v2_api_monitors: Option<datadogV2::api_monitors::MonitorsAPI>,
-    pub v2_api_network_device_monitoring:
-        Option<datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI>,
-    pub v2_api_network_health_insights:
-        Option<datadogV2::api_network_health_insights::NetworkHealthInsightsAPI>,
-    pub v2_api_cloud_network_monitoring:
-        Option<datadogV2::api_cloud_network_monitoring::CloudNetworkMonitoringAPI>,
-    pub v2_api_o_auth2_client_public:
-        Option<datadogV2::api_o_auth2_client_public::OAuth2ClientPublicAPI>,
-    pub v2_api_observability_pipelines:
-        Option<datadogV2::api_observability_pipelines::ObservabilityPipelinesAPI>,
+    pub v2_api_network_device_monitoring: Option<datadogV2::api_network_device_monitoring::NetworkDeviceMonitoringAPI>,
+    pub v2_api_network_health_insights: Option<datadogV2::api_network_health_insights::NetworkHealthInsightsAPI>,
+    pub v2_api_cloud_network_monitoring: Option<datadogV2::api_cloud_network_monitoring::CloudNetworkMonitoringAPI>,
+    pub v2_api_o_auth2_client_public: Option<datadogV2::api_o_auth2_client_public::OAuth2ClientPublicAPI>,
+    pub v2_api_observability_pipelines: Option<datadogV2::api_observability_pipelines::ObservabilityPipelinesAPI>,
     pub v2_api_on_call: Option<datadogV2::api_on_call::OnCallAPI>,
     pub v2_api_on_call_paging: Option<datadogV2::api_on_call_paging::OnCallPagingAPI>,
     pub v2_api_customer_org: Option<datadogV2::api_customer_org::CustomerOrgAPI>,
-    pub v2_api_org_authorized_clients:
-        Option<datadogV2::api_org_authorized_clients::OrgAuthorizedClientsAPI>,
+    pub v2_api_org_authorized_clients: Option<datadogV2::api_org_authorized_clients::OrgAuthorizedClientsAPI>,
     pub v2_api_org_connections: Option<datadogV2::api_org_connections::OrgConnectionsAPI>,
     pub v2_api_org_groups: Option<datadogV2::api_org_groups::OrgGroupsAPI>,
     pub v2_api_roles: Option<datadogV2::api_roles::RolesAPI>,
     pub v2_api_powerpack: Option<datadogV2::api_powerpack::PowerpackAPI>,
     pub v2_api_processes: Option<datadogV2::api_processes::ProcessesAPI>,
     pub v2_api_product_analytics: Option<datadogV2::api_product_analytics::ProductAnalyticsAPI>,
-    pub v2_api_rum_audience_management:
-        Option<datadogV2::api_rum_audience_management::RumAudienceManagementAPI>,
+    pub v2_api_rum_audience_management: Option<datadogV2::api_rum_audience_management::RumAudienceManagementAPI>,
     pub v2_api_product_catalog: Option<datadogV2::api_product_catalog::ProductCatalogAPI>,
     pub v2_api_apm_trace: Option<datadogV2::api_apm_trace::APMTraceAPI>,
     pub v2_api_reference_tables: Option<datadogV2::api_reference_tables::ReferenceTablesAPI>,
-    pub v2_api_application_security:
-        Option<datadogV2::api_application_security::ApplicationSecurityAPI>,
+    pub v2_api_application_security: Option<datadogV2::api_application_security::ApplicationSecurityAPI>,
     pub v2_api_csm_threats: Option<datadogV2::api_csm_threats::CSMThreatsAPI>,
     pub v2_api_rum_remote_config: Option<datadogV2::api_rum_remote_config::RUMRemoteConfigAPI>,
-    pub v2_api_rum_replay_heatmaps:
-        Option<datadogV2::api_rum_replay_heatmaps::RumReplayHeatmapsAPI>,
+    pub v2_api_rum_replay_heatmaps: Option<datadogV2::api_rum_replay_heatmaps::RumReplayHeatmapsAPI>,
     pub v2_api_report_schedules: Option<datadogV2::api_report_schedules::ReportSchedulesAPI>,
-    pub v2_api_restriction_policies:
-        Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
+    pub v2_api_restriction_policies: Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
     pub v2_api_rum: Option<datadogV2::api_rum::RUMAPI>,
-    pub v2_api_rum_retention_filters:
-        Option<datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI>,
+    pub v2_api_rum_retention_filters: Option<datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI>,
     pub v2_api_rum_config: Option<datadogV2::api_rum_config::RUMConfigAPI>,
     pub v2_api_rum_metrics: Option<datadogV2::api_rum_metrics::RumMetricsAPI>,
-    pub v2_api_rum_retention_quotas:
-        Option<datadogV2::api_rum_retention_quotas::RUMRetentionQuotasAPI>,
-    pub v2_api_rum_teams_ownership:
-        Option<datadogV2::api_rum_teams_ownership::RumTeamsOwnershipAPI>,
+    pub v2_api_rum_retention_quotas: Option<datadogV2::api_rum_retention_quotas::RUMRetentionQuotasAPI>,
+    pub v2_api_rum_teams_ownership: Option<datadogV2::api_rum_teams_ownership::RumTeamsOwnershipAPI>,
     pub v2_api_rum_operations: Option<datadogV2::api_rum_operations::RUMOperationsAPI>,
     pub v2_api_rum_insights: Option<datadogV2::api_rum_insights::RUMInsightsAPI>,
-    pub v2_api_rum_replay_playlists:
-        Option<datadogV2::api_rum_replay_playlists::RumReplayPlaylistsAPI>,
-    pub v2_api_rum_replay_sessions:
-        Option<datadogV2::api_rum_replay_sessions::RumReplaySessionsAPI>,
-    pub v2_api_rum_replay_viewership:
-        Option<datadogV2::api_rum_replay_viewership::RumReplayViewershipAPI>,
+    pub v2_api_rum_replay_playlists: Option<datadogV2::api_rum_replay_playlists::RumReplayPlaylistsAPI>,
+    pub v2_api_rum_replay_sessions: Option<datadogV2::api_rum_replay_sessions::RumReplaySessionsAPI>,
+    pub v2_api_rum_replay_viewership: Option<datadogV2::api_rum_replay_viewership::RumReplayViewershipAPI>,
     pub v2_api_scorecards: Option<datadogV2::api_scorecards::ScorecardsAPI>,
     pub v2_api_seats: Option<datadogV2::api_seats::SeatsAPI>,
     pub v2_api_entity_risk_scores: Option<datadogV2::api_entity_risk_scores::EntityRiskScoresAPI>,
-    pub v2_api_threat_intelligence:
-        Option<datadogV2::api_threat_intelligence::ThreatIntelligenceAPI>,
-    pub v2_api_sensitive_data_scanner:
-        Option<datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI>,
+    pub v2_api_threat_intelligence: Option<datadogV2::api_threat_intelligence::ThreatIntelligenceAPI>,
+    pub v2_api_sensitive_data_scanner: Option<datadogV2::api_sensitive_data_scanner::SensitiveDataScannerAPI>,
     pub v2_api_service_accounts: Option<datadogV2::api_service_accounts::ServiceAccountsAPI>,
     pub v2_api_service_definition: Option<datadogV2::api_service_definition::ServiceDefinitionAPI>,
-    pub v2_api_service_level_objectives:
-        Option<datadogV2::api_service_level_objectives::ServiceLevelObjectivesAPI>,
-    pub v2_api_reporting_and_sharing:
-        Option<datadogV2::api_reporting_and_sharing::ReportingAndSharingAPI>,
+    pub v2_api_service_level_objectives: Option<datadogV2::api_service_level_objectives::ServiceLevelObjectivesAPI>,
+    pub v2_api_reporting_and_sharing: Option<datadogV2::api_reporting_and_sharing::ReportingAndSharingAPI>,
     pub v2_api_spa: Option<datadogV2::api_spa::SpaAPI>,
     pub v2_api_spans: Option<datadogV2::api_spans::SpansAPI>,
     pub v2_api_static_analysis: Option<datadogV2::api_static_analysis::StaticAnalysisAPI>,
@@ -249,15 +193,11 @@ pub struct ApiInstances {
     pub v2_api_stegadography: Option<datadogV2::api_stegadography::StegadographyAPI>,
     pub v2_api_synthetics: Option<datadogV2::api_synthetics::SyntheticsAPI>,
     pub v2_api_teams: Option<datadogV2::api_teams::TeamsAPI>,
-    pub v2_api_timeseries_anomaly_investigations: Option<
-        datadogV2::api_timeseries_anomaly_investigations::TimeseriesAnomalyInvestigationsAPI,
-    >,
-    pub v2_api_user_authorized_clients:
-        Option<datadogV2::api_user_authorized_clients::UserAuthorizedClientsAPI>,
+    pub v2_api_timeseries_anomaly_investigations: Option<datadogV2::api_timeseries_anomaly_investigations::TimeseriesAnomalyInvestigationsAPI>,
+    pub v2_api_user_authorized_clients: Option<datadogV2::api_user_authorized_clients::UserAuthorizedClientsAPI>,
     pub v2_api_web_integrations: Option<datadogV2::api_web_integrations::WebIntegrationsAPI>,
     pub v2_api_widgets: Option<datadogV2::api_widgets::WidgetsAPI>,
-    pub v2_api_workflow_automation:
-        Option<datadogV2::api_workflow_automation::WorkflowAutomationAPI>,
+    pub v2_api_workflow_automation: Option<datadogV2::api_workflow_automation::WorkflowAutomationAPI>,
 }
 
 pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
@@ -1052,6 +992,12 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         }
         "SnowflakeIntegration" => {
             world.api_instances.v2_api_snowflake_integration = Some(datadogV2::api_snowflake_integration::SnowflakeIntegrationAPI::with_client_and_config(
+                world.config.clone(),
+                world.http_client.as_ref().unwrap().clone()
+            ));
+        }
+        "TemporalCloudOpenMetricsIntegration" => {
+            world.api_instances.v2_api_temporal_cloud_open_metrics_integration = Some(datadogV2::api_temporal_cloud_open_metrics_integration::TemporalCloudOpenMetricsIntegrationAPI::with_client_and_config(
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
@@ -6129,6 +6075,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world.function_mappings.insert(
         "v2.UpdateSnowflakeIntegrationAccount".into(),
         test_v2_update_snowflake_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.ListTemporalCloudOpenMetricsIntegrationAccounts".into(),
+        test_v2_list_temporal_cloud_open_metrics_integration_accounts,
+    );
+    world.function_mappings.insert(
+        "v2.CreateTemporalCloudOpenMetricsIntegrationAccount".into(),
+        test_v2_create_temporal_cloud_open_metrics_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteTemporalCloudOpenMetricsIntegrationAccount".into(),
+        test_v2_delete_temporal_cloud_open_metrics_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.GetTemporalCloudOpenMetricsIntegrationAccount".into(),
+        test_v2_get_temporal_cloud_open_metrics_integration_account,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateTemporalCloudOpenMetricsIntegrationAccount".into(),
+        test_v2_update_temporal_cloud_open_metrics_integration_account,
     );
     world.function_mappings.insert(
         "v2.ListTwilioIntegrationAccounts".into(),
@@ -48070,6 +48036,159 @@ fn test_v2_update_snowflake_integration_account(
                 };
             }
         };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_temporal_cloud_open_metrics_integration_accounts(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_temporal_cloud_open_metrics_integration
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(
+        api.list_temporal_cloud_open_metrics_integration_accounts_with_http_info(),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_temporal_cloud_open_metrics_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_temporal_cloud_open_metrics_integration
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.create_temporal_cloud_open_metrics_integration_account_with_http_info(body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_temporal_cloud_open_metrics_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_temporal_cloud_open_metrics_integration
+        .as_ref()
+        .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_temporal_cloud_open_metrics_integration_account_with_http_info(account_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_temporal_cloud_open_metrics_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_temporal_cloud_open_metrics_integration
+        .as_ref()
+        .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_temporal_cloud_open_metrics_integration_account_with_http_info(account_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_temporal_cloud_open_metrics_integration_account(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_temporal_cloud_open_metrics_integration
+        .as_ref()
+        .expect("api instance not found");
+    let account_id =
+        serde_json::from_value(_parameters.get("account_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.update_temporal_cloud_open_metrics_integration_account_with_http_info(account_id, body),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }

@@ -147,6 +147,7 @@ pub use self::api::api_storage_management;
 pub use self::api::api_synthetics;
 pub use self::api::api_tag_rules;
 pub use self::api::api_teams;
+pub use self::api::api_temporal_cloud_open_metrics_integration;
 pub use self::api::api_test_optimization;
 pub use self::api::api_threat_intelligence;
 pub use self::api::api_timeseries_anomaly_investigations;
