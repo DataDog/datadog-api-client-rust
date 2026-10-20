@@ -378,6 +378,79 @@ impl ListQuotasOptionalParams {
     }
 }
 
+/// PublicListMyTemporaryGrantRequestsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::public_list_my_temporary_grant_requests`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct PublicListMyTemporaryGrantRequestsOptionalParams {
+    /// Optional status; defaults to all statuses.
+    pub filter_status: Option<crate::datadogV2::model::TemporaryGrantRequestStatus>,
+    /// Page size, from 1 to 100.
+    pub page_limit: Option<i64>,
+    /// UUID cursor from meta.page.next_cursor.
+    pub page_cursor: Option<uuid::Uuid>,
+}
+
+impl PublicListMyTemporaryGrantRequestsOptionalParams {
+    /// Optional status; defaults to all statuses.
+    pub fn filter_status(
+        mut self,
+        value: crate::datadogV2::model::TemporaryGrantRequestStatus,
+    ) -> Self {
+        self.filter_status = Some(value);
+        self
+    }
+    /// Page size, from 1 to 100.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// UUID cursor from meta.page.next_cursor.
+    pub fn page_cursor(mut self, value: uuid::Uuid) -> Self {
+        self.page_cursor = Some(value);
+        self
+    }
+}
+
+/// PublicListTemporaryGrantRequestsOptionalParams is a struct for passing parameters to the method [`UsageMeteringAPI::public_list_temporary_grant_requests`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct PublicListTemporaryGrantRequestsOptionalParams {
+    /// Optional status; defaults to all statuses.
+    pub filter_status: Option<crate::datadogV2::model::TemporaryGrantRequestStatus>,
+    /// Page size, from 1 to 100.
+    pub page_limit: Option<i64>,
+    /// UUID cursor from meta.page.next_cursor.
+    pub page_cursor: Option<uuid::Uuid>,
+    /// Filter by requester UUID within the authenticated organization.
+    pub filter_requested_by_user_id: Option<uuid::Uuid>,
+}
+
+impl PublicListTemporaryGrantRequestsOptionalParams {
+    /// Optional status; defaults to all statuses.
+    pub fn filter_status(
+        mut self,
+        value: crate::datadogV2::model::TemporaryGrantRequestStatus,
+    ) -> Self {
+        self.filter_status = Some(value);
+        self
+    }
+    /// Page size, from 1 to 100.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// UUID cursor from meta.page.next_cursor.
+    pub fn page_cursor(mut self, value: uuid::Uuid) -> Self {
+        self.page_cursor = Some(value);
+        self
+    }
+    /// Filter by requester UUID within the authenticated organization.
+    pub fn filter_requested_by_user_id(mut self, value: uuid::Uuid) -> Self {
+        self.filter_requested_by_user_id = Some(value);
+        self
+    }
+}
+
 /// CreateQuotasError is a struct for typed errors of method [`UsageMeteringAPI::create_quotas`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -513,6 +586,78 @@ pub enum GetUsageSummaryAvailableFieldsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListQuotasError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// PublicCancelTemporaryGrantRequestError is a struct for typed errors of method [`UsageMeteringAPI::public_cancel_temporary_grant_request`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PublicCancelTemporaryGrantRequestError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// PublicCreateTemporaryGrantRequestError is a struct for typed errors of method [`UsageMeteringAPI::public_create_temporary_grant_request`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PublicCreateTemporaryGrantRequestError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// PublicDecideTemporaryGrantRequestError is a struct for typed errors of method [`UsageMeteringAPI::public_decide_temporary_grant_request`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PublicDecideTemporaryGrantRequestError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// PublicGetMyTemporaryGrantRequestError is a struct for typed errors of method [`UsageMeteringAPI::public_get_my_temporary_grant_request`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PublicGetMyTemporaryGrantRequestError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// PublicGetTemporaryGrantRequestError is a struct for typed errors of method [`UsageMeteringAPI::public_get_temporary_grant_request`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PublicGetTemporaryGrantRequestError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// PublicListMyTemporaryGrantRequestsError is a struct for typed errors of method [`UsageMeteringAPI::public_list_my_temporary_grant_requests`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PublicListMyTemporaryGrantRequestsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// PublicListTemporaryGrantRequestsError is a struct for typed errors of method [`UsageMeteringAPI::public_list_temporary_grant_requests`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PublicListTemporaryGrantRequestsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// PublicRevokeRequestedTemporaryGrantError is a struct for typed errors of method [`UsageMeteringAPI::public_revoke_requested_temporary_grant`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum PublicRevokeRequestedTemporaryGrantError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
@@ -3036,6 +3181,1139 @@ impl UsageMeteringAPI {
             };
         } else {
             let local_entity: Option<ListQuotasError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Cancel an owned pending request. Retains request history and does not create or revoke a grant. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_cancel_temporary_grant_request(
+        &self,
+        request_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<PublicCancelTemporaryGrantRequestError>> {
+        match self
+            .public_cancel_temporary_grant_request_with_http_info(request_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Cancel an owned pending request. Retains request history and does not create or revoke a grant. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_cancel_temporary_grant_request_with_http_info(
+        &self,
+        request_id: uuid::Uuid,
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<PublicCancelTemporaryGrantRequestError>>
+    {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.public_cancel_temporary_grant_request";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.public_cancel_temporary_grant_request' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/temporary-grant-requests/{request_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            request_id = datadog::urlencode(request_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<PublicCancelTemporaryGrantRequestError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Submit a request for the authenticated human user with a target monthly limit in positive whole AI credits, justification, and optional expiry. Fractional credits are not accepted. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_create_temporary_grant_request(
+        &self,
+        body: crate::datadogV2::model::TemporaryGrantRequestCreateRequest,
+    ) -> Result<
+        crate::datadogV2::model::TemporaryGrantRequestResponse,
+        datadog::Error<PublicCreateTemporaryGrantRequestError>,
+    > {
+        match self
+            .public_create_temporary_grant_request_with_http_info(body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Submit a request for the authenticated human user with a target monthly limit in positive whole AI credits, justification, and optional expiry. Fractional credits are not accepted. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_create_temporary_grant_request_with_http_info(
+        &self,
+        body: crate::datadogV2::model::TemporaryGrantRequestCreateRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>,
+        datadog::Error<PublicCreateTemporaryGrantRequestError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.public_create_temporary_grant_request";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.public_create_temporary_grant_request' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/temporary-grant-requests",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<PublicCreateTemporaryGrantRequestError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Approve or deny the immutable submitted terms. Approval atomically writes the grant, audit, and request decision. An expired request cannot be approved. Requires Billing Edit. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_decide_temporary_grant_request(
+        &self,
+        request_id: uuid::Uuid,
+        body: crate::datadogV2::model::TemporaryGrantRequestDecisionRequest,
+    ) -> Result<
+        crate::datadogV2::model::TemporaryGrantRequestResponse,
+        datadog::Error<PublicDecideTemporaryGrantRequestError>,
+    > {
+        match self
+            .public_decide_temporary_grant_request_with_http_info(request_id, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Approve or deny the immutable submitted terms. Approval atomically writes the grant, audit, and request decision. An expired request cannot be approved. Requires Billing Edit. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_decide_temporary_grant_request_with_http_info(
+        &self,
+        request_id: uuid::Uuid,
+        body: crate::datadogV2::model::TemporaryGrantRequestDecisionRequest,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>,
+        datadog::Error<PublicDecideTemporaryGrantRequestError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.public_decide_temporary_grant_request";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.public_decide_temporary_grant_request' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/admin/temporary-grant-requests/{request_id}/decision",
+            local_configuration.get_operation_host(local_operation_id),
+            request_id = datadog::urlencode(request_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<PublicDecideTemporaryGrantRequestError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Read an owned request, its decision, and its linked grant state. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_get_my_temporary_grant_request(
+        &self,
+        request_id: uuid::Uuid,
+    ) -> Result<
+        crate::datadogV2::model::TemporaryGrantRequestResponse,
+        datadog::Error<PublicGetMyTemporaryGrantRequestError>,
+    > {
+        match self
+            .public_get_my_temporary_grant_request_with_http_info(request_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Read an owned request, its decision, and its linked grant state. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_get_my_temporary_grant_request_with_http_info(
+        &self,
+        request_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>,
+        datadog::Error<PublicGetMyTemporaryGrantRequestError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.public_get_my_temporary_grant_request";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.public_get_my_temporary_grant_request' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/temporary-grant-requests/{request_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            request_id = datadog::urlencode(request_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<PublicGetMyTemporaryGrantRequestError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Read an organization request, justification, decision, and linked grant state. Requires Billing Edit. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_get_temporary_grant_request(
+        &self,
+        request_id: uuid::Uuid,
+    ) -> Result<
+        crate::datadogV2::model::TemporaryGrantRequestResponse,
+        datadog::Error<PublicGetTemporaryGrantRequestError>,
+    > {
+        match self
+            .public_get_temporary_grant_request_with_http_info(request_id)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Read an organization request, justification, decision, and linked grant state. Requires Billing Edit. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_get_temporary_grant_request_with_http_info(
+        &self,
+        request_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestResponse>,
+        datadog::Error<PublicGetTemporaryGrantRequestError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.public_get_temporary_grant_request";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.public_get_temporary_grant_request' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/admin/temporary-grant-requests/{request_id}",
+            local_configuration.get_operation_host(local_operation_id),
+            request_id = datadog::urlencode(request_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<PublicGetTemporaryGrantRequestError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List the authenticated user's own requests, including decided requests. Other users' requests are never included. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_list_my_temporary_grant_requests(
+        &self,
+        params: PublicListMyTemporaryGrantRequestsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::TemporaryGrantRequestListResponse,
+        datadog::Error<PublicListMyTemporaryGrantRequestsError>,
+    > {
+        match self
+            .public_list_my_temporary_grant_requests_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn public_list_my_temporary_grant_requests_with_pagination(
+        &self,
+        mut params: PublicListMyTemporaryGrantRequestsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::TemporaryGrantRequestData,
+            datadog::Error<PublicListMyTemporaryGrantRequestsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 50;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.public_list_my_temporary_grant_requests(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count == 0 {
+                    break;
+                }
+                let Some(next_cursor) = resp.meta.page.next_cursor else { break };
+
+                params.page_cursor = Some(next_cursor);
+            }
+        }
+    }
+
+    /// List the authenticated user's own requests, including decided requests. Other users' requests are never included. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_list_my_temporary_grant_requests_with_http_info(
+        &self,
+        params: PublicListMyTemporaryGrantRequestsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestListResponse>,
+        datadog::Error<PublicListMyTemporaryGrantRequestsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.public_list_my_temporary_grant_requests";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.public_list_my_temporary_grant_requests' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_status = params.filter_status;
+        let page_limit = params.page_limit;
+        let page_cursor = params.page_cursor;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/temporary-grant-requests",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_status {
+            local_req_builder =
+                local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<PublicListMyTemporaryGrantRequestsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List all request statuses within the authenticated organization. Filter by pending status for the review queue. Requires Billing Edit, including for reads. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_list_temporary_grant_requests(
+        &self,
+        params: PublicListTemporaryGrantRequestsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::TemporaryGrantRequestListResponse,
+        datadog::Error<PublicListTemporaryGrantRequestsError>,
+    > {
+        match self
+            .public_list_temporary_grant_requests_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn public_list_temporary_grant_requests_with_pagination(
+        &self,
+        mut params: PublicListTemporaryGrantRequestsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::TemporaryGrantRequestData,
+            datadog::Error<PublicListTemporaryGrantRequestsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 50;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.public_list_temporary_grant_requests(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count == 0 {
+                    break;
+                }
+                let Some(next_cursor) = resp.meta.page.next_cursor else { break };
+
+                params.page_cursor = Some(next_cursor);
+            }
+        }
+    }
+
+    /// List all request statuses within the authenticated organization. Filter by pending status for the review queue. Requires Billing Edit, including for reads. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_list_temporary_grant_requests_with_http_info(
+        &self,
+        params: PublicListTemporaryGrantRequestsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TemporaryGrantRequestListResponse>,
+        datadog::Error<PublicListTemporaryGrantRequestsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.public_list_temporary_grant_requests";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.public_list_temporary_grant_requests' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_status = params.filter_status;
+        let page_limit = params.page_limit;
+        let page_cursor = params.page_cursor;
+        let filter_requested_by_user_id = params.filter_requested_by_user_id;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/admin/temporary-grant-requests",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_status {
+            local_req_builder =
+                local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_requested_by_user_id {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[requested_by_user_id]",
+                &local_query_param.to_string(),
+            )]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TemporaryGrantRequestListResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<PublicListTemporaryGrantRequestsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Revoke only the grant still associated with this approved request. Request and audit history remain. A stale request cannot revoke a replacement grant. Requires Billing Edit. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_revoke_requested_temporary_grant(
+        &self,
+        request_id: uuid::Uuid,
+    ) -> Result<(), datadog::Error<PublicRevokeRequestedTemporaryGrantError>> {
+        match self
+            .public_revoke_requested_temporary_grant_with_http_info(request_id)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Revoke only the grant still associated with this approved request. Request and audit history remain. A stale request cannot revoke a replacement grant. Requires Billing Edit. Requires an authenticated human user and the temporary-grants feature enabled for the organization. Service-account credentials are unsupported. Request status remains approved after expiry, revocation, or replacement.
+    pub async fn public_revoke_requested_temporary_grant_with_http_info(
+        &self,
+        request_id: uuid::Uuid,
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<PublicRevokeRequestedTemporaryGrantError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.public_revoke_requested_temporary_grant";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.public_revoke_requested_temporary_grant' is not enabled"
+                    .to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/usage/admin/temporary-grant-requests/{request_id}/grant",
+            local_configuration.get_operation_host(local_operation_id),
+            request_id = datadog::urlencode(request_id.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<PublicRevokeRequestedTemporaryGrantError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
