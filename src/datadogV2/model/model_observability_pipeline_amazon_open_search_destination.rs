@@ -15,14 +15,22 @@ use std::fmt::{self, Formatter};
 pub struct ObservabilityPipelineAmazonOpenSearchDestination {
     /// Authentication settings for the Amazon OpenSearch destination.
     /// The `strategy` field determines whether basic or AWS-based authentication is used.
+    /// When `strategy` is `basic`, use `username_key` and `password_key` to reference credentials stored in environment variables or secrets.
     #[serde(rename = "auth")]
-    pub auth: crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuth,
+    pub auth: Option<crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuth>,
     /// Configuration for buffer settings on destination components.
     #[serde(rename = "buffer")]
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// The index to write logs to.
     #[serde(rename = "bulk_index")]
     pub bulk_index: Option<String>,
+    /// Configuration options for writing to OpenSearch Data Streams instead of a fixed index.
+    #[serde(rename = "data_stream")]
+    pub data_stream:
+        Option<crate::datadogV2::model::ObservabilityPipelineOpenSearchDestinationDataStream>,
+    /// Name of the environment variable or secret that holds the Amazon OpenSearch endpoint URL.
+    #[serde(rename = "endpoint_url_key")]
+    pub endpoint_url_key: Option<String>,
     /// The unique identifier for this component.
     #[serde(rename = "id")]
     pub id: String,
@@ -41,21 +49,30 @@ pub struct ObservabilityPipelineAmazonOpenSearchDestination {
 
 impl ObservabilityPipelineAmazonOpenSearchDestination {
     pub fn new(
-        auth: crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuth,
         id: String,
         inputs: Vec<String>,
         type_: crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationType,
     ) -> ObservabilityPipelineAmazonOpenSearchDestination {
         ObservabilityPipelineAmazonOpenSearchDestination {
-            auth,
+            auth: None,
             buffer: None,
             bulk_index: None,
+            data_stream: None,
+            endpoint_url_key: None,
             id,
             inputs,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn auth(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineAmazonOpenSearchDestinationAuth,
+    ) -> Self {
+        self.auth = Some(value);
+        self
     }
 
     pub fn buffer(
@@ -68,6 +85,19 @@ impl ObservabilityPipelineAmazonOpenSearchDestination {
 
     pub fn bulk_index(mut self, value: String) -> Self {
         self.bulk_index = Some(value);
+        self
+    }
+
+    pub fn data_stream(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineOpenSearchDestinationDataStream,
+    ) -> Self {
+        self.data_stream = Some(value);
+        self
+    }
+
+    pub fn endpoint_url_key(mut self, value: String) -> Self {
+        self.endpoint_url_key = Some(value);
         self
     }
 
@@ -104,6 +134,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestination 
                     crate::datadogV2::model::ObservabilityPipelineBufferOptions,
                 > = None;
                 let mut bulk_index: Option<String> = None;
+                let mut data_stream: Option<
+                    crate::datadogV2::model::ObservabilityPipelineOpenSearchDestinationDataStream,
+                > = None;
+                let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut type_: Option<
@@ -118,6 +152,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestination 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "auth" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "buffer" => {
@@ -139,6 +176,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestination 
                                 continue;
                             }
                             bulk_index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "data_stream" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            data_stream =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "endpoint_url_key" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            endpoint_url_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -164,7 +215,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestination 
                         }
                     }
                 }
-                let auth = auth.ok_or_else(|| M::Error::missing_field("auth"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
@@ -173,6 +223,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAmazonOpenSearchDestination 
                     auth,
                     buffer,
                     bulk_index,
+                    data_stream,
+                    endpoint_url_key,
                     id,
                     inputs,
                     type_,
