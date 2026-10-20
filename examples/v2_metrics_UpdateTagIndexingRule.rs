@@ -33,7 +33,6 @@ async fn main() {
                         )
                         .version(1),
                 )
-                .rule_order(2)
                 .tags(vec!["env".to_string(), "service".to_string()]),
         ),
     );
