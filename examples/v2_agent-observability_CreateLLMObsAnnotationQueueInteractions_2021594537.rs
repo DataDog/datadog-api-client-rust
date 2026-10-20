@@ -19,8 +19,9 @@ async fn main() {
             LLMObsAnnotationQueueInteractionsDataAttributesRequest::new(vec![
                 LLMObsAnnotationQueueInteractionItem::LLMObsDisplayBlockInteractionItem(Box::new(
                     LLMObsDisplayBlockInteractionItem::new(
-                        vec![LLMObsContentBlock::new(LLMObsContentBlockType::MARKDOWN)
-                            .content(Value::from("## Triage Instructions"))],
+                        vec![LLMObsContentBlock::new()
+                            .content(Value::from("## Triage Instructions"))
+                            .type_(LLMObsContentBlockType::MARKDOWN)],
                         LLMObsDisplayBlockInteractionType::DISPLAY_BLOCK,
                     ),
                 )),
