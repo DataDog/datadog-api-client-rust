@@ -19,7 +19,7 @@ pub struct TeamSyncAttributes {
     /// items and their subtrees.
     #[serde(rename = "selection_state")]
     pub selection_state: Option<Vec<crate::datadogV2::model::TeamSyncSelectionStateItem>>,
-    /// The external source platform for team synchronization. Only "github" is supported.
+    /// The external source platform for team synchronization.
     #[serde(rename = "source")]
     pub source: crate::datadogV2::model::TeamSyncAttributesSource,
     /// Whether to sync members from the external team to the Datadog team. Defaults to `false` when not provided.

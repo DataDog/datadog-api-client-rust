@@ -12,14 +12,18 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TeamSyncSelectionStateExternalId {
     /// The type of external identifier for the selection state item.
-    /// For GitHub synchronization, the allowed values are `team` and
-    /// `organization`.
+    /// For GitHub synchronization, `team` refers to a GitHub team and
+    /// `organization` refers to a GitHub organization. For ServiceNow
+    /// synchronization, `team` refers to a ServiceNow group and
+    /// `organization` refers to a ServiceNow instance.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TeamSyncSelectionStateExternalIdType,
     /// The external identifier value from the source
     /// platform. For GitHub, this is the string
     /// representation of a GitHub organization ID or team
-    /// ID.
+    /// ID. For ServiceNow, this is the instance name for
+    /// `organization`, or `<instance_name>/<sys_id>` of the
+    /// group for `team`.
     #[serde(rename = "value")]
     pub value: String,
     #[serde(flatten)]

@@ -14,7 +14,7 @@ pub struct TeamConnectionAttributes {
     /// The entity that manages this team connection.
     #[serde(rename = "managed_by")]
     pub managed_by: Option<String>,
-    /// The name of the external source.
+    /// The name of the external source, such as `github` or `servicenow`.
     #[serde(rename = "source")]
     pub source: Option<String>,
     #[serde(flatten)]
