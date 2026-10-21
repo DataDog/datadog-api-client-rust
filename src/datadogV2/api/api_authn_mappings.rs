@@ -529,7 +529,7 @@ impl AuthNMappingsAPI {
         }
     }
 
-    /// List all AuthN Mappings in the org.
+    /// List all AuthN Mappings in the organization.
     pub async fn list_authn_mappings(
         &self,
         params: ListAuthNMappingsOptionalParams,
@@ -551,7 +551,7 @@ impl AuthNMappingsAPI {
         }
     }
 
-    /// List all AuthN Mappings in the org.
+    /// List all AuthN Mappings in the organization.
     pub async fn list_authn_mappings_with_http_info(
         &self,
         params: ListAuthNMappingsOptionalParams,
