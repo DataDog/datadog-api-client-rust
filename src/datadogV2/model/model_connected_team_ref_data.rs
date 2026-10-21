@@ -12,6 +12,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ConnectedTeamRefData {
     /// The connected team ID as it is referenced throughout the Datadog ecosystem.
+    /// For GitHub teams, this is `@<organization>/<team-slug>`.
+    /// For ServiceNow groups, this is `<instance_name>/<sys_id>`.
     #[serde(rename = "id")]
     pub id: String,
     /// External team resource type.

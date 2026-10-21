@@ -8,6 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TeamSyncAttributesSource {
     GITHUB,
+    SERVICENOW,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -15,6 +16,7 @@ impl ToString for TeamSyncAttributesSource {
     fn to_string(&self) -> String {
         match self {
             Self::GITHUB => String::from("github"),
+            Self::SERVICENOW => String::from("servicenow"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,6 +42,7 @@ impl<'de> Deserialize<'de> for TeamSyncAttributesSource {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "github" => Self::GITHUB,
+            "servicenow" => Self::SERVICENOW,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

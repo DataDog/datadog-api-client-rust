@@ -8,6 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ConnectedTeamRefDataType {
     GITHUB_TEAM,
+    SERVICENOW_TEAM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -15,6 +16,7 @@ impl ToString for ConnectedTeamRefDataType {
     fn to_string(&self) -> String {
         match self {
             Self::GITHUB_TEAM => String::from("github_team"),
+            Self::SERVICENOW_TEAM => String::from("servicenow_team"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,6 +42,7 @@ impl<'de> Deserialize<'de> for ConnectedTeamRefDataType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "github_team" => Self::GITHUB_TEAM,
+            "servicenow_team" => Self::SERVICENOW_TEAM,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
