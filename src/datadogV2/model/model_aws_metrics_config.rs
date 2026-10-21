@@ -20,6 +20,9 @@ pub struct AWSMetricsConfig {
     /// Enable custom metrics collection. Defaults to `false`.
     #[serde(rename = "collect_custom_metrics")]
     pub collect_custom_metrics: Option<bool>,
+    /// Enable Service Quotas collection. Defaults to `false`.
+    #[serde(rename = "collect_service_quotas")]
+    pub collect_service_quotas: Option<bool>,
     /// Enable AWS metrics collection. Defaults to `true`.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
@@ -46,6 +49,7 @@ impl AWSMetricsConfig {
             automute_enabled: None,
             collect_cloudwatch_alarms: None,
             collect_custom_metrics: None,
+            collect_service_quotas: None,
             enabled: None,
             metric_name_filters: None,
             namespace_filters: None,
@@ -67,6 +71,11 @@ impl AWSMetricsConfig {
 
     pub fn collect_custom_metrics(mut self, value: bool) -> Self {
         self.collect_custom_metrics = Some(value);
+        self
+    }
+
+    pub fn collect_service_quotas(mut self, value: bool) -> Self {
+        self.collect_service_quotas = Some(value);
         self
     }
 
@@ -134,6 +143,7 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                 let mut automute_enabled: Option<bool> = None;
                 let mut collect_cloudwatch_alarms: Option<bool> = None;
                 let mut collect_custom_metrics: Option<bool> = None;
+                let mut collect_service_quotas: Option<bool> = None;
                 let mut enabled: Option<bool> = None;
                 let mut metric_name_filters: Option<
                     Vec<crate::datadogV2::model::AWSMetricNameFilters>,
@@ -169,6 +179,13 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                                 continue;
                             }
                             collect_custom_metrics =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "collect_service_quotas" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            collect_service_quotas =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "enabled" => {
@@ -218,6 +235,7 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                     automute_enabled,
                     collect_cloudwatch_alarms,
                     collect_custom_metrics,
+                    collect_service_quotas,
                     enabled,
                     metric_name_filters,
                     namespace_filters,
