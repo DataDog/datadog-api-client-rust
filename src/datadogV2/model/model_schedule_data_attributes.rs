@@ -11,6 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ScheduleDataAttributes {
+    /// Maximum number of users who can be on call at the same time.
+    /// The value is between 1 and the number of layers, and no greater than 10.
+    #[serde(rename = "max_responders")]
+    pub max_responders: Option<i64>,
     /// A short name for the schedule.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -30,12 +34,18 @@ pub struct ScheduleDataAttributes {
 impl ScheduleDataAttributes {
     pub fn new() -> ScheduleDataAttributes {
         ScheduleDataAttributes {
+            max_responders: None,
             name: None,
             tags: None,
             time_zone: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn max_responders(mut self, value: i64) -> Self {
+        self.max_responders = Some(value);
+        self
     }
 
     pub fn name(mut self, value: String) -> Self {
@@ -85,6 +95,7 @@ impl<'de> Deserialize<'de> for ScheduleDataAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut max_responders: Option<i64> = None;
                 let mut name: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut time_zone: Option<String> = None;
@@ -96,6 +107,13 @@ impl<'de> Deserialize<'de> for ScheduleDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "max_responders" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            max_responders =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             if v.is_null() {
                                 continue;
@@ -123,6 +141,7 @@ impl<'de> Deserialize<'de> for ScheduleDataAttributes {
                 }
 
                 let content = ScheduleDataAttributes {
+                    max_responders,
                     name,
                     tags,
                     time_zone,

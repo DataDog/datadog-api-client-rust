@@ -14,6 +14,10 @@ pub struct ScheduleCreateRequestDataAttributes {
     /// The layers of On-Call coverage that define rotation intervals and restrictions.
     #[serde(rename = "layers")]
     pub layers: Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItems>,
+    /// Maximum number of users who can be on call at the same time.
+    /// The value must be between 1 and the number of layers, and no greater than 10.
+    #[serde(rename = "max_responders")]
+    pub max_responders: Option<i64>,
     /// A human-readable name for the new schedule.
     #[serde(rename = "name")]
     pub name: String,
@@ -35,11 +39,17 @@ impl ScheduleCreateRequestDataAttributes {
     ) -> ScheduleCreateRequestDataAttributes {
         ScheduleCreateRequestDataAttributes {
             layers,
+            max_responders: None,
             name,
             time_zone,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn max_responders(mut self, value: i64) -> Self {
+        self.max_responders = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -71,6 +81,7 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributes {
                 let mut layers: Option<
                     Vec<crate::datadogV2::model::ScheduleCreateRequestDataAttributesLayersItems>,
                 > = None;
+                let mut max_responders: Option<i64> = None;
                 let mut name: Option<String> = None;
                 let mut time_zone: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -83,6 +94,13 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributes {
                     match k.as_str() {
                         "layers" => {
                             layers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "max_responders" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            max_responders =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -103,6 +121,7 @@ impl<'de> Deserialize<'de> for ScheduleCreateRequestDataAttributes {
 
                 let content = ScheduleCreateRequestDataAttributes {
                     layers,
+                    max_responders,
                     name,
                     time_zone,
                     additional_properties,
