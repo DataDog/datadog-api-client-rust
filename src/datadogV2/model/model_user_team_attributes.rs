@@ -26,7 +26,7 @@ pub struct UserTeamAttributes {
         with = "::serde_with::rust::double_option"
     )]
     pub provisioned_by_id: Option<Option<String>>,
-    /// The user's role within the team
+    /// The user's role within the team. A value of `null` represents a regular member.
     #[serde(rename = "role", default, with = "::serde_with::rust::double_option")]
     pub role: Option<Option<crate::datadogV2::model::UserTeamRole>>,
     #[serde(flatten)]
