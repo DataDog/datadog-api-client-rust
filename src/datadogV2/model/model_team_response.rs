@@ -14,6 +14,9 @@ pub struct TeamResponse {
     /// A team
     #[serde(rename = "data")]
     pub data: Option<crate::datadogV2::model::Team>,
+    /// Resources related to the team.
+    #[serde(rename = "included")]
+    pub included: Option<Vec<crate::datadogV2::model::TeamIncluded>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,6 +28,7 @@ impl TeamResponse {
     pub fn new() -> TeamResponse {
         TeamResponse {
             data: None,
+            included: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -32,6 +36,11 @@ impl TeamResponse {
 
     pub fn data(mut self, value: crate::datadogV2::model::Team) -> Self {
         self.data = Some(value);
+        self
+    }
+
+    pub fn included(mut self, value: Vec<crate::datadogV2::model::TeamIncluded>) -> Self {
+        self.included = Some(value);
         self
     }
 
@@ -68,6 +77,7 @@ impl<'de> Deserialize<'de> for TeamResponse {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<crate::datadogV2::model::Team> = None;
+                let mut included: Option<Vec<crate::datadogV2::model::TeamIncluded>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,6 +92,12 @@ impl<'de> Deserialize<'de> for TeamResponse {
                             }
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "included" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -92,6 +108,7 @@ impl<'de> Deserialize<'de> for TeamResponse {
 
                 let content = TeamResponse {
                     data,
+                    included,
                     additional_properties,
                     _unparsed,
                 };

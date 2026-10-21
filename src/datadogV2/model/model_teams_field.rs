@@ -22,6 +22,8 @@ pub enum TeamsField {
     LINK_COUNT,
     TEAM_LINKS,
     USER_TEAM_PERMISSIONS,
+    IS_MANAGED,
+    PROVISIONED_BY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -43,6 +45,8 @@ impl ToString for TeamsField {
             Self::LINK_COUNT => String::from("link_count"),
             Self::TEAM_LINKS => String::from("team_links"),
             Self::USER_TEAM_PERMISSIONS => String::from("user_team_permissions"),
+            Self::IS_MANAGED => String::from("is_managed"),
+            Self::PROVISIONED_BY => String::from("provisioned_by"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -82,6 +86,8 @@ impl<'de> Deserialize<'de> for TeamsField {
             "link_count" => Self::LINK_COUNT,
             "team_links" => Self::TEAM_LINKS,
             "user_team_permissions" => Self::USER_TEAM_PERMISSIONS,
+            "is_managed" => Self::IS_MANAGED,
+            "provisioned_by" => Self::PROVISIONED_BY,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

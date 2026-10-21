@@ -30,6 +30,13 @@ pub struct TeamAttributes {
     /// The team's identifier
     #[serde(rename = "handle")]
     pub handle: String,
+    /// Collection of handles associated with the team.
+    #[serde(
+        rename = "handles",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub handles: Option<Option<Vec<String>>>,
     /// Collection of hidden modules for the team
     #[serde(
         rename = "hidden_modules",
@@ -40,6 +47,9 @@ pub struct TeamAttributes {
     /// Whether the team is managed from an external source
     #[serde(rename = "is_managed")]
     pub is_managed: Option<bool>,
+    /// Whether any user can join the team without an invitation.
+    #[serde(rename = "is_open_membership")]
+    pub is_open_membership: Option<bool>,
     /// The number of links belonging to the team
     #[serde(rename = "link_count")]
     pub link_count: Option<i32>,
@@ -49,6 +59,10 @@ pub struct TeamAttributes {
     /// The name of the team
     #[serde(rename = "name")]
     pub name: String,
+    /// The mechanism that created the team, such as `teams_api`, `teams_terraform`, or `teams_ui`.
+    /// Omitted when unknown.
+    #[serde(rename = "provisioned_by")]
+    pub provisioned_by: Option<String>,
     /// A brief summary of the team, derived from the `description`
     #[serde(
         rename = "summary",
@@ -81,11 +95,14 @@ impl TeamAttributes {
             created_at: None,
             description: None,
             handle,
+            handles: None,
             hidden_modules: None,
             is_managed: None,
+            is_open_membership: None,
             link_count: None,
             modified_at: None,
             name,
+            provisioned_by: None,
             summary: None,
             user_count: None,
             visible_modules: None,
@@ -114,6 +131,11 @@ impl TeamAttributes {
         self
     }
 
+    pub fn handles(mut self, value: Option<Vec<String>>) -> Self {
+        self.handles = Some(value);
+        self
+    }
+
     pub fn hidden_modules(mut self, value: Option<Vec<String>>) -> Self {
         self.hidden_modules = Some(value);
         self
@@ -124,6 +146,11 @@ impl TeamAttributes {
         self
     }
 
+    pub fn is_open_membership(mut self, value: bool) -> Self {
+        self.is_open_membership = Some(value);
+        self
+    }
+
     pub fn link_count(mut self, value: i32) -> Self {
         self.link_count = Some(value);
         self
@@ -131,6 +158,11 @@ impl TeamAttributes {
 
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
+        self
+    }
+
+    pub fn provisioned_by(mut self, value: String) -> Self {
+        self.provisioned_by = Some(value);
         self
     }
 
@@ -180,11 +212,14 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut description: Option<Option<String>> = None;
                 let mut handle: Option<String> = None;
+                let mut handles: Option<Option<Vec<String>>> = None;
                 let mut hidden_modules: Option<Option<Vec<String>>> = None;
                 let mut is_managed: Option<bool> = None;
+                let mut is_open_membership: Option<bool> = None;
                 let mut link_count: Option<i32> = None;
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
+                let mut provisioned_by: Option<String> = None;
                 let mut summary: Option<Option<String>> = None;
                 let mut user_count: Option<i32> = None;
                 let mut visible_modules: Option<Option<Vec<String>>> = None;
@@ -215,6 +250,9 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                         "handle" => {
                             handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "handles" => {
+                            handles = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "hidden_modules" => {
                             hidden_modules =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -224,6 +262,13 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                                 continue;
                             }
                             is_managed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "is_open_membership" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_open_membership =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "link_count" => {
                             if v.is_null() {
@@ -240,6 +285,13 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                         }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "provisioned_by" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            provisioned_by =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "summary" => {
                             summary = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -270,11 +322,14 @@ impl<'de> Deserialize<'de> for TeamAttributes {
                     created_at,
                     description,
                     handle,
+                    handles,
                     hidden_modules,
                     is_managed,
+                    is_open_membership,
                     link_count,
                     modified_at,
                     name,
+                    provisioned_by,
                     summary,
                     user_count,
                     visible_modules,
