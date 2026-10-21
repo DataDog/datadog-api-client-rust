@@ -36,7 +36,7 @@ pub struct ListDevicesOptionalParams {
     pub page_size: Option<i64>,
     /// Specific page number to return. Defaults to 0.
     pub page_number: Option<i64>,
-    /// The field to sort the devices by. Defaults to `name`.
+    /// The field to sort devices by. Defaults to `name`. Prefix the field with `-` to sort in descending order, for example, `-name`.
     pub sort: Option<String>,
     /// Filter devices by tag.
     pub filter_tag: Option<String>,
@@ -53,7 +53,7 @@ impl ListDevicesOptionalParams {
         self.page_number = Some(value);
         self
     }
-    /// The field to sort the devices by. Defaults to `name`.
+    /// The field to sort devices by. Defaults to `name`. Prefix the field with `-` to sort in descending order, for example, `-name`.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
@@ -70,6 +70,7 @@ impl ListDevicesOptionalParams {
 #[serde(untagged)]
 pub enum GetDeviceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -86,6 +87,7 @@ pub enum GetInterfacesError {
 #[serde(untagged)]
 pub enum ListDeviceUserTagsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -93,6 +95,7 @@ pub enum ListDeviceUserTagsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListDevicesError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -102,6 +105,7 @@ pub enum ListDevicesError {
 #[serde(untagged)]
 pub enum ListInterfaceUserTagsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -109,6 +113,7 @@ pub enum ListInterfaceUserTagsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateDeviceUserTagsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -117,6 +122,7 @@ pub enum UpdateDeviceUserTagsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateInterfaceUserTagsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
