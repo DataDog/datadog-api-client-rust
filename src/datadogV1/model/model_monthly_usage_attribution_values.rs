@@ -185,16 +185,20 @@ pub struct MonthlyUsageAttributionValues {
     /// The error tracking events usage by tag(s).
     #[serde(rename = "error_tracking_usage")]
     pub error_tracking_usage: Option<f64>,
-    /// The percentage of estimated indexed spans usage by tag(s).
+    /// The percentage of estimated indexed spans usage by tag(s) (To be deprecated on February 1st, 2027).
+    #[deprecated]
     #[serde(rename = "estimated_indexed_spans_percentage")]
     pub estimated_indexed_spans_percentage: Option<f64>,
-    /// The estimated indexed spans usage by tag(s).
+    /// The estimated indexed spans usage by tag(s) (To be deprecated on February 1st, 2027).
+    #[deprecated]
     #[serde(rename = "estimated_indexed_spans_usage")]
     pub estimated_indexed_spans_usage: Option<f64>,
-    /// The percentage of estimated ingested spans usage by tag(s).
+    /// The percentage of estimated ingested spans usage by tag(s) (To be deprecated on February 1st, 2027).
+    #[deprecated]
     #[serde(rename = "estimated_ingested_spans_percentage")]
     pub estimated_ingested_spans_percentage: Option<f64>,
-    /// The estimated ingested spans usage by tag(s).
+    /// The estimated ingested spans usage by tag(s) (To be deprecated on February 1st, 2027).
+    #[deprecated]
     #[serde(rename = "estimated_ingested_spans_usage")]
     pub estimated_ingested_spans_usage: Option<f64>,
     /// The percentage of Fargate usage by tags.
@@ -530,6 +534,7 @@ pub struct MonthlyUsageAttributionValues {
 
 impl MonthlyUsageAttributionValues {
     pub fn new() -> MonthlyUsageAttributionValues {
+        #[allow(deprecated)]
         MonthlyUsageAttributionValues {
             api_percentage: None,
             api_usage: None,
@@ -706,851 +711,1021 @@ impl MonthlyUsageAttributionValues {
         }
     }
 
+    #[allow(deprecated)]
     pub fn api_percentage(mut self, value: f64) -> Self {
         self.api_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn api_usage(mut self, value: f64) -> Self {
         self.api_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn apm_fargate_percentage(mut self, value: f64) -> Self {
         self.apm_fargate_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn apm_fargate_usage(mut self, value: f64) -> Self {
         self.apm_fargate_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn apm_host_percentage(mut self, value: f64) -> Self {
         self.apm_host_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn apm_host_usage(mut self, value: f64) -> Self {
         self.apm_host_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn apm_usm_percentage(mut self, value: f64) -> Self {
         self.apm_usm_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn apm_usm_usage(mut self, value: f64) -> Self {
         self.apm_usm_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn appsec_fargate_percentage(mut self, value: f64) -> Self {
         self.appsec_fargate_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn appsec_fargate_usage(mut self, value: f64) -> Self {
         self.appsec_fargate_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn appsec_percentage(mut self, value: f64) -> Self {
         self.appsec_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn appsec_usage(mut self, value: f64) -> Self {
         self.appsec_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn asm_serverless_traced_invocations_percentage(mut self, value: f64) -> Self {
         self.asm_serverless_traced_invocations_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn asm_serverless_traced_invocations_usage(mut self, value: f64) -> Self {
         self.asm_serverless_traced_invocations_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn bits_ai_investigations_percentage(mut self, value: f64) -> Self {
         self.bits_ai_investigations_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn bits_ai_investigations_usage(mut self, value: f64) -> Self {
         self.bits_ai_investigations_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn browser_percentage(mut self, value: f64) -> Self {
         self.browser_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn browser_usage(mut self, value: f64) -> Self {
         self.browser_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ci_code_coverage_committers_percentage(mut self, value: f64) -> Self {
         self.ci_code_coverage_committers_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ci_code_coverage_committers_usage(mut self, value: f64) -> Self {
         self.ci_code_coverage_committers_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ci_pipeline_indexed_spans_percentage(mut self, value: f64) -> Self {
         self.ci_pipeline_indexed_spans_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ci_pipeline_indexed_spans_usage(mut self, value: f64) -> Self {
         self.ci_pipeline_indexed_spans_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ci_test_indexed_spans_percentage(mut self, value: f64) -> Self {
         self.ci_test_indexed_spans_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ci_test_indexed_spans_usage(mut self, value: f64) -> Self {
         self.ci_test_indexed_spans_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ci_visibility_itr_percentage(mut self, value: f64) -> Self {
         self.ci_visibility_itr_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ci_visibility_itr_usage(mut self, value: f64) -> Self {
         self.ci_visibility_itr_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cloud_siem_percentage(mut self, value: f64) -> Self {
         self.cloud_siem_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cloud_siem_usage(mut self, value: f64) -> Self {
         self.cloud_siem_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn code_security_host_percentage(mut self, value: f64) -> Self {
         self.code_security_host_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn code_security_host_usage(mut self, value: f64) -> Self {
         self.code_security_host_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn container_excl_agent_percentage(mut self, value: f64) -> Self {
         self.container_excl_agent_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn container_excl_agent_usage(mut self, value: f64) -> Self {
         self.container_excl_agent_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn container_percentage(mut self, value: f64) -> Self {
         self.container_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn container_usage(mut self, value: f64) -> Self {
         self.container_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cspm_containers_percentage(mut self, value: f64) -> Self {
         self.cspm_containers_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cspm_containers_usage(mut self, value: f64) -> Self {
         self.cspm_containers_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cspm_hosts_percentage(mut self, value: f64) -> Self {
         self.cspm_hosts_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cspm_hosts_usage(mut self, value: f64) -> Self {
         self.cspm_hosts_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn custom_event_percentage(mut self, value: f64) -> Self {
         self.custom_event_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn custom_event_usage(mut self, value: f64) -> Self {
         self.custom_event_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn custom_ingested_timeseries_percentage(mut self, value: f64) -> Self {
         self.custom_ingested_timeseries_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn custom_ingested_timeseries_usage(mut self, value: f64) -> Self {
         self.custom_ingested_timeseries_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn custom_timeseries_percentage(mut self, value: f64) -> Self {
         self.custom_timeseries_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn custom_timeseries_usage(mut self, value: f64) -> Self {
         self.custom_timeseries_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cws_containers_percentage(mut self, value: f64) -> Self {
         self.cws_containers_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cws_containers_usage(mut self, value: f64) -> Self {
         self.cws_containers_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cws_fargate_task_percentage(mut self, value: f64) -> Self {
         self.cws_fargate_task_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cws_fargate_task_usage(mut self, value: f64) -> Self {
         self.cws_fargate_task_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cws_hosts_percentage(mut self, value: f64) -> Self {
         self.cws_hosts_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn cws_hosts_usage(mut self, value: f64) -> Self {
         self.cws_hosts_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn data_jobs_monitoring_usage(mut self, value: f64) -> Self {
         self.data_jobs_monitoring_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn data_stream_monitoring_usage(mut self, value: f64) -> Self {
         self.data_stream_monitoring_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn dbm_hosts_percentage(mut self, value: f64) -> Self {
         self.dbm_hosts_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn dbm_hosts_usage(mut self, value: f64) -> Self {
         self.dbm_hosts_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn dbm_queries_percentage(mut self, value: f64) -> Self {
         self.dbm_queries_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn dbm_queries_usage(mut self, value: f64) -> Self {
         self.dbm_queries_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn error_tracking_percentage(mut self, value: f64) -> Self {
         self.error_tracking_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn error_tracking_usage(mut self, value: f64) -> Self {
         self.error_tracking_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn estimated_indexed_spans_percentage(mut self, value: f64) -> Self {
         self.estimated_indexed_spans_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn estimated_indexed_spans_usage(mut self, value: f64) -> Self {
         self.estimated_indexed_spans_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn estimated_ingested_spans_percentage(mut self, value: f64) -> Self {
         self.estimated_ingested_spans_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn estimated_ingested_spans_usage(mut self, value: f64) -> Self {
         self.estimated_ingested_spans_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn fargate_percentage(mut self, value: f64) -> Self {
         self.fargate_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn fargate_usage(mut self, value: f64) -> Self {
         self.fargate_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn flex_logs_starter_percentage(mut self, value: f64) -> Self {
         self.flex_logs_starter_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn flex_logs_starter_usage(mut self, value: f64) -> Self {
         self.flex_logs_starter_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn flex_stored_logs_percentage(mut self, value: f64) -> Self {
         self.flex_stored_logs_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn flex_stored_logs_usage(mut self, value: f64) -> Self {
         self.flex_stored_logs_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn functions_percentage(mut self, value: f64) -> Self {
         self.functions_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn functions_usage(mut self, value: f64) -> Self {
         self.functions_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn incident_management_monthly_active_users_percentage(mut self, value: f64) -> Self {
         self.incident_management_monthly_active_users_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn incident_management_monthly_active_users_usage(mut self, value: f64) -> Self {
         self.incident_management_monthly_active_users_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn indexed_spans_percentage(mut self, value: f64) -> Self {
         self.indexed_spans_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn indexed_spans_usage(mut self, value: f64) -> Self {
         self.indexed_spans_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn infra_host_basic_percentage(mut self, value: f64) -> Self {
         self.infra_host_basic_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn infra_host_basic_usage(mut self, value: f64) -> Self {
         self.infra_host_basic_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn infra_host_percentage(mut self, value: f64) -> Self {
         self.infra_host_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn infra_host_usage(mut self, value: f64) -> Self {
         self.infra_host_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ingested_logs_bytes_percentage(mut self, value: f64) -> Self {
         self.ingested_logs_bytes_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ingested_logs_bytes_usage(mut self, value: f64) -> Self {
         self.ingested_logs_bytes_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ingested_spans_bytes_percentage(mut self, value: f64) -> Self {
         self.ingested_spans_bytes_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ingested_spans_bytes_usage(mut self, value: f64) -> Self {
         self.ingested_spans_bytes_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn invocations_percentage(mut self, value: f64) -> Self {
         self.invocations_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn invocations_usage(mut self, value: f64) -> Self {
         self.invocations_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn lambda_traced_invocations_percentage(mut self, value: f64) -> Self {
         self.lambda_traced_invocations_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn lambda_traced_invocations_usage(mut self, value: f64) -> Self {
         self.lambda_traced_invocations_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn llm_observability_percentage(mut self, value: f64) -> Self {
         self.llm_observability_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn llm_observability_usage(mut self, value: f64) -> Self {
         self.llm_observability_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn llm_spans_percentage(mut self, value: f64) -> Self {
         self.llm_spans_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn llm_spans_usage(mut self, value: f64) -> Self {
         self.llm_spans_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_15day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_15day_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_15day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_15day_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_180day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_180day_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_180day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_180day_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_1day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_1day_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_1day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_1day_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_30day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_30day_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_30day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_30day_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_360day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_360day_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_360day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_360day_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_3day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_3day_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_3day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_3day_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_45day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_45day_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_45day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_45day_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_60day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_60day_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_60day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_60day_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_7day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_7day_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_7day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_7day_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_90day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_90day_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_90day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_90day_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_custom_retention_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_custom_retention_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn logs_indexed_custom_retention_usage(mut self, value: f64) -> Self {
         self.logs_indexed_custom_retention_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn mobile_app_testing_percentage(mut self, value: f64) -> Self {
         self.mobile_app_testing_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn mobile_app_testing_usage(mut self, value: f64) -> Self {
         self.mobile_app_testing_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ndm_netflow_percentage(mut self, value: f64) -> Self {
         self.ndm_netflow_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn ndm_netflow_usage(mut self, value: f64) -> Self {
         self.ndm_netflow_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn network_device_wireless_percentage(mut self, value: f64) -> Self {
         self.network_device_wireless_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn network_device_wireless_usage(mut self, value: f64) -> Self {
         self.network_device_wireless_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn npm_host_percentage(mut self, value: f64) -> Self {
         self.npm_host_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn npm_host_usage(mut self, value: f64) -> Self {
         self.npm_host_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn obs_pipeline_bytes_percentage(mut self, value: f64) -> Self {
         self.obs_pipeline_bytes_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn obs_pipeline_bytes_usage(mut self, value: f64) -> Self {
         self.obs_pipeline_bytes_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn obs_pipelines_vcpu_percentage(mut self, value: f64) -> Self {
         self.obs_pipelines_vcpu_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn obs_pipelines_vcpu_usage(mut self, value: f64) -> Self {
         self.obs_pipelines_vcpu_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn online_archive_percentage(mut self, value: f64) -> Self {
         self.online_archive_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn online_archive_usage(mut self, value: f64) -> Self {
         self.online_archive_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn product_analytics_session_percentage(mut self, value: f64) -> Self {
         self.product_analytics_session_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn product_analytics_session_usage(mut self, value: f64) -> Self {
         self.product_analytics_session_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn profiled_container_percentage(mut self, value: f64) -> Self {
         self.profiled_container_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn profiled_container_usage(mut self, value: f64) -> Self {
         self.profiled_container_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn profiled_fargate_percentage(mut self, value: f64) -> Self {
         self.profiled_fargate_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn profiled_fargate_usage(mut self, value: f64) -> Self {
         self.profiled_fargate_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn profiled_host_percentage(mut self, value: f64) -> Self {
         self.profiled_host_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn profiled_host_usage(mut self, value: f64) -> Self {
         self.profiled_host_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn published_app_percentage(mut self, value: f64) -> Self {
         self.published_app_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn published_app_usage(mut self, value: f64) -> Self {
         self.published_app_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_browser_mobile_sessions_percentage(mut self, value: f64) -> Self {
         self.rum_browser_mobile_sessions_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_browser_mobile_sessions_usage(mut self, value: f64) -> Self {
         self.rum_browser_mobile_sessions_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_ingested_percentage(mut self, value: f64) -> Self {
         self.rum_ingested_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_ingested_usage(mut self, value: f64) -> Self {
         self.rum_ingested_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_investigate_percentage(mut self, value: f64) -> Self {
         self.rum_investigate_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_investigate_usage(mut self, value: f64) -> Self {
         self.rum_investigate_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_replay_sessions_percentage(mut self, value: f64) -> Self {
         self.rum_replay_sessions_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_replay_sessions_usage(mut self, value: f64) -> Self {
         self.rum_replay_sessions_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_session_replay_add_on_percentage(mut self, value: f64) -> Self {
         self.rum_session_replay_add_on_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn rum_session_replay_add_on_usage(mut self, value: f64) -> Self {
         self.rum_session_replay_add_on_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn sca_fargate_percentage(mut self, value: f64) -> Self {
         self.sca_fargate_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn sca_fargate_usage(mut self, value: f64) -> Self {
         self.sca_fargate_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn sds_scanned_bytes_percentage(mut self, value: f64) -> Self {
         self.sds_scanned_bytes_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn sds_scanned_bytes_usage(mut self, value: f64) -> Self {
         self.sds_scanned_bytes_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn serverless_apps_apm_percentage(mut self, value: f64) -> Self {
         self.serverless_apps_apm_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn serverless_apps_apm_usage(mut self, value: f64) -> Self {
         self.serverless_apps_apm_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn serverless_apps_percentage(mut self, value: f64) -> Self {
         self.serverless_apps_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn serverless_apps_usage(mut self, value: f64) -> Self {
         self.serverless_apps_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn siem_12mo_retention_percentage(mut self, value: f64) -> Self {
         self.siem_12mo_retention_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn siem_12mo_retention_usage(mut self, value: f64) -> Self {
         self.siem_12mo_retention_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn siem_6mo_retention_percentage(mut self, value: f64) -> Self {
         self.siem_6mo_retention_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn siem_6mo_retention_usage(mut self, value: f64) -> Self {
         self.siem_6mo_retention_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn siem_analyzed_logs_add_on_percentage(mut self, value: f64) -> Self {
         self.siem_analyzed_logs_add_on_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn siem_analyzed_logs_add_on_usage(mut self, value: f64) -> Self {
         self.siem_analyzed_logs_add_on_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn siem_ingested_bytes_percentage(mut self, value: f64) -> Self {
         self.siem_ingested_bytes_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn siem_ingested_bytes_usage(mut self, value: f64) -> Self {
         self.siem_ingested_bytes_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn snmp_percentage(mut self, value: f64) -> Self {
         self.snmp_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn snmp_usage(mut self, value: f64) -> Self {
         self.snmp_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn universal_service_monitoring_percentage(mut self, value: f64) -> Self {
         self.universal_service_monitoring_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn universal_service_monitoring_usage(mut self, value: f64) -> Self {
         self.universal_service_monitoring_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn vuln_management_hosts_percentage(mut self, value: f64) -> Self {
         self.vuln_management_hosts_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn vuln_management_hosts_usage(mut self, value: f64) -> Self {
         self.vuln_management_hosts_usage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn workflow_executions_percentage(mut self, value: f64) -> Self {
         self.workflow_executions_percentage = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn workflow_executions_usage(mut self, value: f64) -> Self {
         self.workflow_executions_usage = Some(value);
         self
@@ -2962,6 +3137,7 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = MonthlyUsageAttributionValues {
                     api_percentage,
                     api_usage,
