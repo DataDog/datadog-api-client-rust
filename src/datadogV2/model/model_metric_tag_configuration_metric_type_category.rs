@@ -9,6 +9,8 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum MetricTagConfigurationMetricTypeCategory {
     NON_DISTRIBUTION,
     DISTRIBUTION,
+    EXPONENTIAL_HISTOGRAM,
+    EXPLICIT_HISTOGRAM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +19,8 @@ impl ToString for MetricTagConfigurationMetricTypeCategory {
         match self {
             Self::NON_DISTRIBUTION => String::from("non_distribution"),
             Self::DISTRIBUTION => String::from("distribution"),
+            Self::EXPONENTIAL_HISTOGRAM => String::from("exponential_histogram"),
+            Self::EXPLICIT_HISTOGRAM => String::from("explicit_histogram"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +47,8 @@ impl<'de> Deserialize<'de> for MetricTagConfigurationMetricTypeCategory {
         Ok(match s.as_str() {
             "non_distribution" => Self::NON_DISTRIBUTION,
             "distribution" => Self::DISTRIBUTION,
+            "exponential_histogram" => Self::EXPONENTIAL_HISTOGRAM,
+            "explicit_histogram" => Self::EXPLICIT_HISTOGRAM,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
