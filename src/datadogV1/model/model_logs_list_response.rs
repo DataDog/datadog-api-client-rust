@@ -22,6 +22,9 @@ pub struct LogsListResponse {
         with = "::serde_with::rust::double_option"
     )]
     pub next_log_id: Option<Option<String>>,
+    /// Unique identifier of the request.
+    #[serde(rename = "requestId")]
+    pub request_id: Option<String>,
     /// Status of the response.
     #[serde(rename = "status")]
     pub status: Option<String>,
@@ -37,6 +40,7 @@ impl LogsListResponse {
         LogsListResponse {
             logs: None,
             next_log_id: None,
+            request_id: None,
             status: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -50,6 +54,11 @@ impl LogsListResponse {
 
     pub fn next_log_id(mut self, value: Option<String>) -> Self {
         self.next_log_id = Some(value);
+        self
+    }
+
+    pub fn request_id(mut self, value: String) -> Self {
+        self.request_id = Some(value);
         self
     }
 
@@ -92,6 +101,7 @@ impl<'de> Deserialize<'de> for LogsListResponse {
             {
                 let mut logs: Option<Vec<crate::datadogV1::model::Log>> = None;
                 let mut next_log_id: Option<Option<String>> = None;
+                let mut request_id: Option<String> = None;
                 let mut status: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -111,6 +121,12 @@ impl<'de> Deserialize<'de> for LogsListResponse {
                             next_log_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "requestId" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            request_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -128,6 +144,7 @@ impl<'de> Deserialize<'de> for LogsListResponse {
                 let content = LogsListResponse {
                     logs,
                     next_log_id,
+                    request_id,
                     status,
                     additional_properties,
                     _unparsed,
