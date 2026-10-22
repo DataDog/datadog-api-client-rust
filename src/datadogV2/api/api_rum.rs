@@ -27,7 +27,7 @@ pub struct DeleteSourcemapsOptionalParams {
     pub filter_variant: Option<Vec<String>>,
     /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
     pub filter_id: Option<Vec<String>>,
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
     pub filter_build_id: Option<Vec<String>>,
     /// Filter by UUID values (multiple values allowed). Supported for `ios`.
     pub filter_uuid: Option<Vec<String>>,
@@ -46,7 +46,7 @@ pub struct DeleteSourcemapsOptionalParams {
     pub filter_origin: Option<Vec<String>>,
     /// Filter by origin version values (multiple values allowed). Supported for `elf`.
     pub filter_origin_version: Option<Vec<String>>,
-    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    /// Filter by filename (single value). Supported for `js`, `elf`, `ndk`, `wasm`, and `portable_pdb`.
     pub filter_filename: Option<String>,
     /// Filter by debug ID (single value). Supported for `react`.
     pub filter_debug_id: Option<String>,
@@ -81,7 +81,7 @@ impl DeleteSourcemapsOptionalParams {
         self.filter_id = Some(value);
         self
     }
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
     pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
         self.filter_build_id = Some(value);
         self
@@ -127,7 +127,7 @@ impl DeleteSourcemapsOptionalParams {
         self.filter_origin_version = Some(value);
         self
     }
-    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    /// Filter by filename (single value). Supported for `js`, `elf`, `ndk`, `wasm`, and `portable_pdb`.
     pub fn filter_filename(mut self, value: String) -> Self {
         self.filter_filename = Some(value);
         self
@@ -278,7 +278,7 @@ pub struct ListSourcemapsOptionalParams {
     pub filter_variant: Option<Vec<String>>,
     /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
     pub filter_id: Option<Vec<String>>,
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
     pub filter_build_id: Option<Vec<String>>,
     /// Filter by UUID values (multiple values allowed). Supported for `ios`.
     pub filter_uuid: Option<Vec<String>>,
@@ -297,7 +297,7 @@ pub struct ListSourcemapsOptionalParams {
     pub filter_origin: Option<Vec<String>>,
     /// Filter by origin version values (multiple values allowed). Supported for `elf`.
     pub filter_origin_version: Option<Vec<String>>,
-    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    /// Filter by filename (single value). Supported for `js`, `elf`, `ndk`, `wasm`, and `portable_pdb`.
     pub filter_filename: Option<String>,
     /// Filter by a single debug ID in UUID format. Supported for `js` and `react`.
     /// For `js`, the lookup returns at most one result and does not require
@@ -369,7 +369,7 @@ impl ListSourcemapsOptionalParams {
         self.filter_id = Some(value);
         self
     }
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
     pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
         self.filter_build_id = Some(value);
         self
@@ -415,7 +415,7 @@ impl ListSourcemapsOptionalParams {
         self.filter_origin_version = Some(value);
         self
     }
-    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    /// Filter by filename (single value). Supported for `js`, `elf`, `ndk`, `wasm`, and `portable_pdb`.
     pub fn filter_filename(mut self, value: String) -> Self {
         self.filter_filename = Some(value);
         self
@@ -458,7 +458,7 @@ pub struct RestoreSourcemapsOptionalParams {
     pub filter_variant: Option<Vec<String>>,
     /// Filter by source map ID values (multiple values allowed). Supported for all map kinds.
     pub filter_id: Option<Vec<String>>,
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
     pub filter_build_id: Option<Vec<String>>,
     /// Filter by UUID values (multiple values allowed). Supported for `ios`.
     pub filter_uuid: Option<Vec<String>>,
@@ -477,7 +477,7 @@ pub struct RestoreSourcemapsOptionalParams {
     pub filter_origin: Option<Vec<String>>,
     /// Filter by origin version values (multiple values allowed). Supported for `elf`.
     pub filter_origin_version: Option<Vec<String>>,
-    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    /// Filter by filename (single value). Supported for `js`, `elf`, `ndk`, `wasm`, and `portable_pdb`.
     pub filter_filename: Option<String>,
     /// Filter by debug ID (single value). Supported for `react`.
     pub filter_debug_id: Option<String>,
@@ -512,7 +512,7 @@ impl RestoreSourcemapsOptionalParams {
         self.filter_id = Some(value);
         self
     }
-    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, and `il2cpp`.
+    /// Filter by build ID values (multiple values allowed). Supported for `jvm`, `ndk`, `il2cpp`, `wasm`, and `portable_pdb`.
     pub fn filter_build_id(mut self, value: Vec<String>) -> Self {
         self.filter_build_id = Some(value);
         self
@@ -558,7 +558,7 @@ impl RestoreSourcemapsOptionalParams {
         self.filter_origin_version = Some(value);
         self
     }
-    /// Filter by filename (single value). Supported for `js`, `elf`, and `ndk`.
+    /// Filter by filename (single value). Supported for `js`, `elf`, `ndk`, `wasm`, and `portable_pdb`.
     pub fn filter_filename(mut self, value: String) -> Self {
         self.filter_filename = Some(value);
         self
