@@ -20,6 +20,9 @@ pub struct EscalationPolicyDataAttributes {
     /// Specifies how many times the escalation sequence is retried if there is no response.
     #[serde(rename = "retries")]
     pub retries: Option<i64>,
+    /// A list of tags attached to the escalation policy, in `key:value` format.
+    #[serde(rename = "tags")]
+    pub tags: Option<Vec<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -33,6 +36,7 @@ impl EscalationPolicyDataAttributes {
             name,
             resolve_page_on_policy_end: None,
             retries: None,
+            tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -45,6 +49,11 @@ impl EscalationPolicyDataAttributes {
 
     pub fn retries(mut self, value: i64) -> Self {
         self.retries = Some(value);
+        self
+    }
+
+    pub fn tags(mut self, value: Vec<String>) -> Self {
+        self.tags = Some(value);
         self
     }
 
@@ -77,6 +86,7 @@ impl<'de> Deserialize<'de> for EscalationPolicyDataAttributes {
                 let mut name: Option<String> = None;
                 let mut resolve_page_on_policy_end: Option<bool> = None;
                 let mut retries: Option<i64> = None;
+                let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -101,6 +111,12 @@ impl<'de> Deserialize<'de> for EscalationPolicyDataAttributes {
                             }
                             retries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -114,6 +130,7 @@ impl<'de> Deserialize<'de> for EscalationPolicyDataAttributes {
                     name,
                     resolve_page_on_policy_end,
                     retries,
+                    tags,
                     additional_properties,
                     _unparsed,
                 };
