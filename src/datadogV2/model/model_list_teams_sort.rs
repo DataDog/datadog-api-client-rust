@@ -11,6 +11,8 @@ pub enum ListTeamsSort {
     _NAME,
     USER_COUNT,
     _USER_COUNT,
+    LINK_COUNT,
+    _LINK_COUNT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -21,6 +23,8 @@ impl ToString for ListTeamsSort {
             Self::_NAME => String::from("-name"),
             Self::USER_COUNT => String::from("user_count"),
             Self::_USER_COUNT => String::from("-user_count"),
+            Self::LINK_COUNT => String::from("link_count"),
+            Self::_LINK_COUNT => String::from("-link_count"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -49,6 +53,8 @@ impl<'de> Deserialize<'de> for ListTeamsSort {
             "-name" => Self::_NAME,
             "user_count" => Self::USER_COUNT,
             "-user_count" => Self::_USER_COUNT,
+            "link_count" => Self::LINK_COUNT,
+            "-link_count" => Self::_LINK_COUNT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

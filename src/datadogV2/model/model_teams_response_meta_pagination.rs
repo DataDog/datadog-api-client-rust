@@ -11,28 +11,58 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TeamsResponseMetaPagination {
+    /// The first page number.
+    #[serde(rename = "first_number")]
+    pub first_number: Option<i64>,
     /// The first offset.
     #[serde(rename = "first_offset")]
     pub first_offset: Option<i64>,
+    /// The last page number.
+    #[serde(
+        rename = "last_number",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub last_number: Option<Option<i64>>,
     /// The last offset.
     #[serde(rename = "last_offset")]
     pub last_offset: Option<i64>,
     /// Pagination limit.
     #[serde(rename = "limit")]
     pub limit: Option<i64>,
+    /// The next page number.
+    #[serde(
+        rename = "next_number",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub next_number: Option<Option<i64>>,
     /// The next offset.
     #[serde(rename = "next_offset")]
     pub next_offset: Option<i64>,
+    /// The current page number, when page-number pagination is used.
+    #[serde(rename = "number")]
+    pub number: Option<i64>,
     /// The offset.
     #[serde(rename = "offset")]
     pub offset: Option<i64>,
+    /// The previous page number.
+    #[serde(
+        rename = "prev_number",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub prev_number: Option<Option<i64>>,
     /// The previous offset.
     #[serde(rename = "prev_offset")]
     pub prev_offset: Option<i64>,
+    /// The page size, when page-number pagination is used.
+    #[serde(rename = "size")]
+    pub size: Option<i64>,
     /// Total results.
     #[serde(rename = "total")]
     pub total: Option<i64>,
-    /// Offset type.
+    /// Pagination type. One of `offset_limit` or `number_size`.
     #[serde(rename = "type")]
     pub type_: Option<String>,
     #[serde(flatten)]
@@ -45,12 +75,18 @@ pub struct TeamsResponseMetaPagination {
 impl TeamsResponseMetaPagination {
     pub fn new() -> TeamsResponseMetaPagination {
         TeamsResponseMetaPagination {
+            first_number: None,
             first_offset: None,
+            last_number: None,
             last_offset: None,
             limit: None,
+            next_number: None,
             next_offset: None,
+            number: None,
             offset: None,
+            prev_number: None,
             prev_offset: None,
+            size: None,
             total: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -58,8 +94,18 @@ impl TeamsResponseMetaPagination {
         }
     }
 
+    pub fn first_number(mut self, value: i64) -> Self {
+        self.first_number = Some(value);
+        self
+    }
+
     pub fn first_offset(mut self, value: i64) -> Self {
         self.first_offset = Some(value);
+        self
+    }
+
+    pub fn last_number(mut self, value: Option<i64>) -> Self {
+        self.last_number = Some(value);
         self
     }
 
@@ -73,8 +119,18 @@ impl TeamsResponseMetaPagination {
         self
     }
 
+    pub fn next_number(mut self, value: Option<i64>) -> Self {
+        self.next_number = Some(value);
+        self
+    }
+
     pub fn next_offset(mut self, value: i64) -> Self {
         self.next_offset = Some(value);
+        self
+    }
+
+    pub fn number(mut self, value: i64) -> Self {
+        self.number = Some(value);
         self
     }
 
@@ -83,8 +139,18 @@ impl TeamsResponseMetaPagination {
         self
     }
 
+    pub fn prev_number(mut self, value: Option<i64>) -> Self {
+        self.prev_number = Some(value);
+        self
+    }
+
     pub fn prev_offset(mut self, value: i64) -> Self {
         self.prev_offset = Some(value);
+        self
+    }
+
+    pub fn size(mut self, value: i64) -> Self {
+        self.size = Some(value);
         self
     }
 
@@ -130,12 +196,18 @@ impl<'de> Deserialize<'de> for TeamsResponseMetaPagination {
             where
                 M: MapAccess<'a>,
             {
+                let mut first_number: Option<i64> = None;
                 let mut first_offset: Option<i64> = None;
+                let mut last_number: Option<Option<i64>> = None;
                 let mut last_offset: Option<i64> = None;
                 let mut limit: Option<i64> = None;
+                let mut next_number: Option<Option<i64>> = None;
                 let mut next_offset: Option<i64> = None;
+                let mut number: Option<i64> = None;
                 let mut offset: Option<i64> = None;
+                let mut prev_number: Option<Option<i64>> = None;
                 let mut prev_offset: Option<i64> = None;
+                let mut size: Option<i64> = None;
                 let mut total: Option<i64> = None;
                 let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -146,11 +218,22 @@ impl<'de> Deserialize<'de> for TeamsResponseMetaPagination {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "first_number" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            first_number =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "first_offset" => {
                             if v.is_null() {
                                 continue;
                             }
                             first_offset =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "last_number" => {
+                            last_number =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "last_offset" => {
@@ -166,6 +249,10 @@ impl<'de> Deserialize<'de> for TeamsResponseMetaPagination {
                             }
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "next_number" => {
+                            next_number =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "next_offset" => {
                             if v.is_null() {
                                 continue;
@@ -173,11 +260,21 @@ impl<'de> Deserialize<'de> for TeamsResponseMetaPagination {
                             next_offset =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "number" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            number = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "offset" => {
                             if v.is_null() {
                                 continue;
                             }
                             offset = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "prev_number" => {
+                            prev_number =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "prev_offset" => {
                             if v.is_null() {
@@ -185,6 +282,12 @@ impl<'de> Deserialize<'de> for TeamsResponseMetaPagination {
                             }
                             prev_offset =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "size" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "total" => {
                             if v.is_null() {
@@ -207,12 +310,18 @@ impl<'de> Deserialize<'de> for TeamsResponseMetaPagination {
                 }
 
                 let content = TeamsResponseMetaPagination {
+                    first_number,
                     first_offset,
+                    last_number,
                     last_offset,
                     limit,
+                    next_number,
                     next_offset,
+                    number,
                     offset,
+                    prev_number,
                     prev_offset,
+                    size,
                     total,
                     type_,
                     additional_properties,
