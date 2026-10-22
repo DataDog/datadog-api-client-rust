@@ -14,6 +14,9 @@ pub struct MetricsQueryMetadata {
     /// Aggregation type.
     #[serde(rename = "aggr", default, with = "::serde_with::rust::double_option")]
     pub aggr: Option<Option<String>>,
+    /// Additional read-only attributes returned for the series.
+    #[serde(rename = "attributes")]
+    pub attributes: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Display name of the metric.
     #[serde(rename = "display_name")]
     pub display_name: Option<String>,
@@ -64,6 +67,7 @@ impl MetricsQueryMetadata {
     pub fn new() -> MetricsQueryMetadata {
         MetricsQueryMetadata {
             aggr: None,
+            attributes: None,
             display_name: None,
             end: None,
             expression: None,
@@ -83,6 +87,14 @@ impl MetricsQueryMetadata {
 
     pub fn aggr(mut self, value: Option<String>) -> Self {
         self.aggr = Some(value);
+        self
+    }
+
+    pub fn attributes(
+        mut self,
+        value: std::collections::BTreeMap<String, serde_json::Value>,
+    ) -> Self {
+        self.attributes = Some(value);
         self
     }
 
@@ -179,6 +191,8 @@ impl<'de> Deserialize<'de> for MetricsQueryMetadata {
                 M: MapAccess<'a>,
             {
                 let mut aggr: Option<Option<String>> = None;
+                let mut attributes: Option<std::collections::BTreeMap<String, serde_json::Value>> =
+                    None;
                 let mut display_name: Option<String> = None;
                 let mut end: Option<i64> = None;
                 let mut expression: Option<String> = None;
@@ -201,6 +215,12 @@ impl<'de> Deserialize<'de> for MetricsQueryMetadata {
                     match k.as_str() {
                         "aggr" => {
                             aggr = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "attributes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "display_name" => {
                             if v.is_null() {
@@ -286,6 +306,7 @@ impl<'de> Deserialize<'de> for MetricsQueryMetadata {
 
                 let content = MetricsQueryMetadata {
                     aggr,
+                    attributes,
                     display_name,
                     end,
                     expression,

@@ -29,15 +29,26 @@ pub struct MetricsQueryResponse {
     /// Type of response.
     #[serde(rename = "res_type")]
     pub res_type: Option<String>,
+    /// Version of the response format.
+    #[serde(rename = "resp_version")]
+    pub resp_version: Option<i64>,
     /// List of timeseries queried.
     #[serde(rename = "series")]
     pub series: Option<Vec<crate::datadogV1::model::MetricsQueryMetadata>>,
     /// Status of the query.
     #[serde(rename = "status")]
     pub status: Option<String>,
+    /// Legacy field, always returned as an empty list. Timestamps are returned
+    /// in the `pointlist` of each entry of `series`.
+    #[serde(rename = "times")]
+    pub times: Option<Vec<serde_json::Value>>,
     /// End of requested time window, milliseconds since Unix epoch.
     #[serde(rename = "to_date")]
     pub to_date: Option<i64>,
+    /// Legacy field, always returned as an empty list. Timeseries values are
+    /// returned in the `pointlist` of each entry of `series`.
+    #[serde(rename = "values")]
+    pub values: Option<Vec<serde_json::Value>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -54,9 +65,12 @@ impl MetricsQueryResponse {
             message: None,
             query: None,
             res_type: None,
+            resp_version: None,
             series: None,
             status: None,
+            times: None,
             to_date: None,
+            values: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -92,6 +106,11 @@ impl MetricsQueryResponse {
         self
     }
 
+    pub fn resp_version(mut self, value: i64) -> Self {
+        self.resp_version = Some(value);
+        self
+    }
+
     pub fn series(mut self, value: Vec<crate::datadogV1::model::MetricsQueryMetadata>) -> Self {
         self.series = Some(value);
         self
@@ -102,8 +121,18 @@ impl MetricsQueryResponse {
         self
     }
 
+    pub fn times(mut self, value: Vec<serde_json::Value>) -> Self {
+        self.times = Some(value);
+        self
+    }
+
     pub fn to_date(mut self, value: i64) -> Self {
         self.to_date = Some(value);
+        self
+    }
+
+    pub fn values(mut self, value: Vec<serde_json::Value>) -> Self {
+        self.values = Some(value);
         self
     }
 
@@ -145,9 +174,12 @@ impl<'de> Deserialize<'de> for MetricsQueryResponse {
                 let mut message: Option<String> = None;
                 let mut query: Option<String> = None;
                 let mut res_type: Option<String> = None;
+                let mut resp_version: Option<i64> = None;
                 let mut series: Option<Vec<crate::datadogV1::model::MetricsQueryMetadata>> = None;
                 let mut status: Option<String> = None;
+                let mut times: Option<Vec<serde_json::Value>> = None;
                 let mut to_date: Option<i64> = None;
+                let mut values: Option<Vec<serde_json::Value>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -192,6 +224,13 @@ impl<'de> Deserialize<'de> for MetricsQueryResponse {
                             }
                             res_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "resp_version" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resp_version =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "series" => {
                             if v.is_null() {
                                 continue;
@@ -204,11 +243,23 @@ impl<'de> Deserialize<'de> for MetricsQueryResponse {
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "times" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            times = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "to_date" => {
                             if v.is_null() {
                                 continue;
                             }
                             to_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "values" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -225,9 +276,12 @@ impl<'de> Deserialize<'de> for MetricsQueryResponse {
                     message,
                     query,
                     res_type,
+                    resp_version,
                     series,
                     status,
+                    times,
                     to_date,
+                    values,
                     additional_properties,
                     _unparsed,
                 };
