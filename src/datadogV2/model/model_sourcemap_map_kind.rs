@@ -15,6 +15,8 @@ pub enum SourcemapMapKind {
     ELF,
     NDK,
     IL2CPP,
+    WASM,
+    PORTABLE_PDB,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -29,6 +31,8 @@ impl ToString for SourcemapMapKind {
             Self::ELF => String::from("elf"),
             Self::NDK => String::from("ndk"),
             Self::IL2CPP => String::from("il2cpp"),
+            Self::WASM => String::from("wasm"),
+            Self::PORTABLE_PDB => String::from("portable_pdb"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -61,6 +65,8 @@ impl<'de> Deserialize<'de> for SourcemapMapKind {
             "elf" => Self::ELF,
             "ndk" => Self::NDK,
             "il2cpp" => Self::IL2CPP,
+            "wasm" => Self::WASM,
+            "portable_pdb" => Self::PORTABLE_PDB,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
