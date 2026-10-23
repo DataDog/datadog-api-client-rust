@@ -6,7 +6,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object describing the suppressions for a rule. There are three types of suppressions, `starts_with`, `ends_with`, and `exact_match`.
+/// Object describing suppressions for a rule, or the recommended suppression lists published by a standard pattern.
+/// There are three types of suppressions, `starts_with`, `ends_with`, and `exact_match`.
+/// Rules based on the Datadog library can use recommended or custom suppressions. Custom rules can only use custom suppressions.
 /// Suppressed matches are not obfuscated, counted in metrics, or displayed in the Findings page.
 #[non_exhaustive]
 #[skip_serializing_none]
@@ -21,6 +23,10 @@ pub struct SensitiveDataScannerSuppressions {
     /// List of strings to use for suppression of matches starting with these strings.
     #[serde(rename = "starts_with")]
     pub starts_with: Option<Vec<String>>,
+    /// Should the rule use the underlying standard pattern suppression configuration. If set to `true`, the rule must be tied
+    /// to a standard pattern. If set to `false`, the specified suppressions are applied.
+    #[serde(rename = "use_recommended_suppressions")]
+    pub use_recommended_suppressions: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,6 +40,7 @@ impl SensitiveDataScannerSuppressions {
             ends_with: None,
             exact_match: None,
             starts_with: None,
+            use_recommended_suppressions: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -51,6 +58,11 @@ impl SensitiveDataScannerSuppressions {
 
     pub fn starts_with(mut self, value: Vec<String>) -> Self {
         self.starts_with = Some(value);
+        self
+    }
+
+    pub fn use_recommended_suppressions(mut self, value: bool) -> Self {
+        self.use_recommended_suppressions = Some(value);
         self
     }
 
@@ -89,6 +101,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerSuppressions {
                 let mut ends_with: Option<Vec<String>> = None;
                 let mut exact_match: Option<Vec<String>> = None;
                 let mut starts_with: Option<Vec<String>> = None;
+                let mut use_recommended_suppressions: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -117,6 +130,13 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerSuppressions {
                             starts_with =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "use_recommended_suppressions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            use_recommended_suppressions =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -129,6 +149,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerSuppressions {
                     ends_with,
                     exact_match,
                     starts_with,
+                    use_recommended_suppressions,
                     additional_properties,
                     _unparsed,
                 };

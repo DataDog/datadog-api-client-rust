@@ -27,6 +27,12 @@ pub struct SensitiveDataScannerStandardPatternAttributes {
     /// Integer from 1 (high) to 5 (low) indicating standard pattern issue severity.
     #[serde(rename = "priority")]
     pub priority: Option<i64>,
+    /// Object describing suppressions for a rule, or the recommended suppression lists published by a standard pattern.
+    /// There are three types of suppressions, `starts_with`, `ends_with`, and `exact_match`.
+    /// Rules based on the Datadog library can use recommended or custom suppressions. Custom rules can only use custom suppressions.
+    /// Suppressed matches are not obfuscated, counted in metrics, or displayed in the Findings page.
+    #[serde(rename = "suppressions")]
+    pub suppressions: Option<crate::datadogV2::model::SensitiveDataScannerSuppressions>,
     /// List of tags.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -46,6 +52,7 @@ impl SensitiveDataScannerStandardPatternAttributes {
             name: None,
             pattern: None,
             priority: None,
+            suppressions: None,
             tags: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -79,6 +86,15 @@ impl SensitiveDataScannerStandardPatternAttributes {
     #[allow(deprecated)]
     pub fn priority(mut self, value: i64) -> Self {
         self.priority = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn suppressions(
+        mut self,
+        value: crate::datadogV2::model::SensitiveDataScannerSuppressions,
+    ) -> Self {
+        self.suppressions = Some(value);
         self
     }
 
@@ -125,6 +141,9 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerStandardPatternAttributes {
                 let mut name: Option<String> = None;
                 let mut pattern: Option<String> = None;
                 let mut priority: Option<i64> = None;
+                let mut suppressions: Option<
+                    crate::datadogV2::model::SensitiveDataScannerSuppressions,
+                > = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -166,6 +185,13 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerStandardPatternAttributes {
                             }
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "suppressions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            suppressions =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "tags" => {
                             if v.is_null() {
                                 continue;
@@ -187,6 +213,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerStandardPatternAttributes {
                     name,
                     pattern,
                     priority,
+                    suppressions,
                     tags,
                     additional_properties,
                     _unparsed,
