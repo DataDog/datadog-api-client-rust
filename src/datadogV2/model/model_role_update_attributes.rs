@@ -30,6 +30,9 @@ pub struct RoleUpdateAttributes {
     /// If empty or not specified, the role does not automatically inherit permissions from any managed role.
     #[serde(rename = "receives_permissions_from")]
     pub receives_permissions_from: Option<Vec<String>>,
+    /// Number of teams with that role.
+    #[serde(rename = "team_count")]
+    pub team_count: Option<i64>,
     /// The user count.
     #[serde(rename = "user_count")]
     pub user_count: Option<i32>,
@@ -48,6 +51,7 @@ impl RoleUpdateAttributes {
             modified_at: None,
             name: None,
             receives_permissions_from: None,
+            team_count: None,
             user_count: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -76,6 +80,11 @@ impl RoleUpdateAttributes {
 
     pub fn receives_permissions_from(mut self, value: Vec<String>) -> Self {
         self.receives_permissions_from = Some(value);
+        self
+    }
+
+    pub fn team_count(mut self, value: i64) -> Self {
+        self.team_count = Some(value);
         self
     }
 
@@ -121,6 +130,7 @@ impl<'de> Deserialize<'de> for RoleUpdateAttributes {
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut receives_permissions_from: Option<Vec<String>> = None;
+                let mut team_count: Option<i64> = None;
                 let mut user_count: Option<i32> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -163,6 +173,12 @@ impl<'de> Deserialize<'de> for RoleUpdateAttributes {
                             receives_permissions_from =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "team_count" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            team_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "user_count" => {
                             if v.is_null() {
                                 continue;
@@ -183,6 +199,7 @@ impl<'de> Deserialize<'de> for RoleUpdateAttributes {
                     modified_at,
                     name,
                     receives_permissions_from,
+                    team_count,
                     user_count,
                     additional_properties,
                     _unparsed,
