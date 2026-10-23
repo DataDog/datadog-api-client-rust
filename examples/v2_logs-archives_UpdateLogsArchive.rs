@@ -29,7 +29,7 @@ async fn main() {
                 "Nginx Archive".to_string(),
                 "source:nginx".to_string(),
             )
-            .compression_method(LogsArchiveAttributesCompressionMethod::GZIP)
+            .compression_method(LogsArchiveAttributesCompressionMethod::ZSTD)
             .include_tags(false)
             .lookup_attributes(vec!["trace_id".to_string(), "user_id".to_string()])
             .partitioning_attributes(vec!["service".to_string(), "status".to_string()])
