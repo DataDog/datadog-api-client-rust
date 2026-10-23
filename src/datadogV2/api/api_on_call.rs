@@ -193,6 +193,78 @@ impl GetUserNotificationRuleOptionalParams {
     }
 }
 
+/// ListOnCallEscalationPoliciesOptionalParams is a struct for passing parameters to the method [`OnCallAPI::list_on_call_escalation_policies`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListOnCallEscalationPoliciesOptionalParams {
+    /// Number of escalation policies to return per page. The maximum allowed value is 50.
+    pub page_size: Option<i64>,
+    /// Specific page number to return.
+    pub page_number: Option<i64>,
+    /// Search query to filter escalation policies. Supports free-text search on the policy name (case-insensitive) and structured filters on `team.id` and `tags`. When set, `filter[team_id]`, `filter[user_id]`, and `filter[schedule_id]` are ignored. Can't be combined with `filter[tags]` or `filter[tags_any]`.
+    pub filter_query: Option<String>,
+    /// Comma-separated list of team IDs. Returns escalation policies that belong to any of these teams or have a step targeting any of them.
+    pub filter_team_id: Option<String>,
+    /// Comma-separated list of user IDs. Returns escalation policies with a step targeting any of these users.
+    pub filter_user_id: Option<String>,
+    /// Comma-separated list of schedule IDs. Returns escalation policies with a step targeting any of these schedules.
+    pub filter_schedule_id: Option<String>,
+    /// Comma-separated list of `key:value` tags. Returns escalation policies that have all of these tags.
+    pub filter_tags: Option<String>,
+    /// Comma-separated list of `key:value` tags. Returns escalation policies that have at least one of these tags.
+    pub filter_tags_any: Option<String>,
+    /// Comma-separated list of included relationships to be returned. Allowed values: `teams`, `steps`, `steps.targets`, `steps.targets.schedule`, `user.color`. `user.color` populates the `color` attribute of users included through `steps.targets`.
+    pub include: Option<String>,
+}
+
+impl ListOnCallEscalationPoliciesOptionalParams {
+    /// Number of escalation policies to return per page. The maximum allowed value is 50.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Specific page number to return.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Search query to filter escalation policies. Supports free-text search on the policy name (case-insensitive) and structured filters on `team.id` and `tags`. When set, `filter[team_id]`, `filter[user_id]`, and `filter[schedule_id]` are ignored. Can't be combined with `filter[tags]` or `filter[tags_any]`.
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Comma-separated list of team IDs. Returns escalation policies that belong to any of these teams or have a step targeting any of them.
+    pub fn filter_team_id(mut self, value: String) -> Self {
+        self.filter_team_id = Some(value);
+        self
+    }
+    /// Comma-separated list of user IDs. Returns escalation policies with a step targeting any of these users.
+    pub fn filter_user_id(mut self, value: String) -> Self {
+        self.filter_user_id = Some(value);
+        self
+    }
+    /// Comma-separated list of schedule IDs. Returns escalation policies with a step targeting any of these schedules.
+    pub fn filter_schedule_id(mut self, value: String) -> Self {
+        self.filter_schedule_id = Some(value);
+        self
+    }
+    /// Comma-separated list of `key:value` tags. Returns escalation policies that have all of these tags.
+    pub fn filter_tags(mut self, value: String) -> Self {
+        self.filter_tags = Some(value);
+        self
+    }
+    /// Comma-separated list of `key:value` tags. Returns escalation policies that have at least one of these tags.
+    pub fn filter_tags_any(mut self, value: String) -> Self {
+        self.filter_tags_any = Some(value);
+        self
+    }
+    /// Comma-separated list of included relationships to be returned. Allowed values: `teams`, `steps`, `steps.targets`, `steps.targets.schedule`, `user.color`. `user.color` populates the `color` attribute of users included through `steps.targets`.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// ListOnCallSchedulesOptionalParams is a struct for passing parameters to the method [`OnCallAPI::list_on_call_schedules`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -480,6 +552,14 @@ pub enum GetUserNotificationChannelError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUserNotificationRuleError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListOnCallEscalationPoliciesError is a struct for typed errors of method [`OnCallAPI::list_on_call_escalation_policies`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListOnCallEscalationPoliciesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -2877,6 +2957,200 @@ impl OnCallAPI {
             };
         } else {
             let local_entity: Option<GetUserNotificationRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Retrieve a paginated list of On-Call escalation policies, sorted by name.
+    pub async fn list_on_call_escalation_policies(
+        &self,
+        params: ListOnCallEscalationPoliciesOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::EscalationPolicies,
+        datadog::Error<ListOnCallEscalationPoliciesError>,
+    > {
+        match self
+            .list_on_call_escalation_policies_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_on_call_escalation_policies_with_pagination(
+        &self,
+        mut params: ListOnCallEscalationPoliciesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::EscalationPolicyListItem,
+            datadog::Error<ListOnCallEscalationPoliciesError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 20;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_on_call_escalation_policies(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
+    /// Retrieve a paginated list of On-Call escalation policies, sorted by name.
+    pub async fn list_on_call_escalation_policies_with_http_info(
+        &self,
+        params: ListOnCallEscalationPoliciesOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::EscalationPolicies>,
+        datadog::Error<ListOnCallEscalationPoliciesError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_on_call_escalation_policies";
+
+        // unbox and build optional parameters
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+        let filter_query = params.filter_query;
+        let filter_team_id = params.filter_team_id;
+        let filter_user_id = params.filter_user_id;
+        let filter_schedule_id = params.filter_schedule_id;
+        let filter_tags = params.filter_tags;
+        let filter_tags_any = params.filter_tags_any;
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/on-call/escalation-policies",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_team_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[team_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_user_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[user_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_schedule_id {
+            local_req_builder =
+                local_req_builder.query(&[("filter[schedule_id]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_tags {
+            local_req_builder =
+                local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_tags_any {
+            local_req_builder =
+                local_req_builder.query(&[("filter[tags_any]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::EscalationPolicies>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListOnCallEscalationPoliciesError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
