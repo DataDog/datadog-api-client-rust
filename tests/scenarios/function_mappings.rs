@@ -20989,6 +20989,9 @@ fn test_v2_list_users(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     let filter_status = _parameters
         .get("filter[status]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_handle = _parameters
+        .get("filter[handle]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_users::ListUsersOptionalParams::default();
     params.page_size = page_size;
     params.page_number = page_number;
@@ -20996,6 +20999,7 @@ fn test_v2_list_users(world: &mut DatadogWorld, _parameters: &HashMap<String, Va
     params.sort_dir = sort_dir;
     params.filter = filter;
     params.filter_status = filter_status;
+    params.filter_handle = filter_handle;
     let response = match block_on(api.list_users_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
@@ -21040,6 +21044,9 @@ fn test_v2_list_users_with_pagination(
     let filter_status = _parameters
         .get("filter[status]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_handle = _parameters
+        .get("filter[handle]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_users::ListUsersOptionalParams::default();
     params.page_size = page_size;
     params.page_number = page_number;
@@ -21047,6 +21054,7 @@ fn test_v2_list_users_with_pagination(
     params.sort_dir = sort_dir;
     params.filter = filter;
     params.filter_status = filter_status;
+    params.filter_handle = filter_handle;
     let response = api.list_users_with_pagination(params);
     let mut result = Vec::new();
 
