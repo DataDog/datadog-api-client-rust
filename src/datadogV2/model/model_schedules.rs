@@ -17,7 +17,7 @@ pub struct Schedules {
     /// Any additional resources related to the schedules, such as teams.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::TeamReference>>,
-    /// Metadata that is included in the response when listing schedules.
+    /// Metadata that is included in the response when listing On-Call resources.
     #[serde(rename = "meta")]
     pub meta: Option<crate::datadogV2::model::SchedulesResponseMeta>,
     #[serde(flatten)]

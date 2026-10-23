@@ -14,7 +14,7 @@ pub struct TeamRoutingRulesDataRelationshipsRulesDataItems {
     /// Specifies the unique identifier for the related routing rule.
     #[serde(rename = "id")]
     pub id: String,
-    /// Indicates that the resource is of type 'team_routing_rules'.
+    /// Indicates that the resource is of type `team_routing_rules`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::TeamRoutingRulesDataRelationshipsRulesDataItemsType,
     #[serde(flatten)]

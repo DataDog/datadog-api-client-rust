@@ -14,7 +14,7 @@ pub struct OverrideRelationshipsScheduleData {
     /// The unique identifier of the schedule.
     #[serde(rename = "id")]
     pub id: String,
-    /// Indicates that the related resource is of type 'schedules'.
+    /// Indicates that the related resource is of type `schedules`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::OverrideRelationshipsScheduleDataType,
     #[serde(flatten)]
