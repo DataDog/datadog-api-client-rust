@@ -17,6 +17,9 @@ pub struct RoleTemplateData {
     /// The `RoleTemplateData` `id`.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// Relationships of the role object returned by the API.
+    #[serde(rename = "relationships")]
+    pub relationships: Option<crate::datadogV2::model::RoleResponseRelationships>,
     /// Roles resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::RoleTemplateDataType,
@@ -32,6 +35,7 @@ impl RoleTemplateData {
         RoleTemplateData {
             attributes: None,
             id: None,
+            relationships: None,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -48,6 +52,14 @@ impl RoleTemplateData {
 
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn relationships(
+        mut self,
+        value: crate::datadogV2::model::RoleResponseRelationships,
+    ) -> Self {
+        self.relationships = Some(value);
         self
     }
 
@@ -80,6 +92,8 @@ impl<'de> Deserialize<'de> for RoleTemplateData {
                 let mut attributes: Option<crate::datadogV2::model::RoleTemplateDataAttributes> =
                     None;
                 let mut id: Option<String> = None;
+                let mut relationships: Option<crate::datadogV2::model::RoleResponseRelationships> =
+                    None;
                 let mut type_: Option<crate::datadogV2::model::RoleTemplateDataType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -100,6 +114,13 @@ impl<'de> Deserialize<'de> for RoleTemplateData {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "relationships" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            relationships =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -124,6 +145,7 @@ impl<'de> Deserialize<'de> for RoleTemplateData {
                 let content = RoleTemplateData {
                     attributes,
                     id,
+                    relationships,
                     type_,
                     additional_properties,
                     _unparsed,
