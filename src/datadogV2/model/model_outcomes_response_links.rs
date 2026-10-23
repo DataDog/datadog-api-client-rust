@@ -6,14 +6,26 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Links attributes.
+/// Pagination links for rule outcomes.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct OutcomesResponseLinks {
+    /// Link for the first set of results.
+    #[serde(rename = "first")]
+    pub first: Option<String>,
+    /// Link for the last set of results.
+    #[serde(rename = "last")]
+    pub last: Option<String>,
     /// Link for the next set of results.
     #[serde(rename = "next")]
     pub next: Option<String>,
+    /// Link for the previous set of results.
+    #[serde(rename = "previous")]
+    pub previous: Option<String>,
+    /// Link for the current set of results.
+    #[serde(rename = "self")]
+    pub self_: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,14 +36,38 @@ pub struct OutcomesResponseLinks {
 impl OutcomesResponseLinks {
     pub fn new() -> OutcomesResponseLinks {
         OutcomesResponseLinks {
+            first: None,
+            last: None,
             next: None,
+            previous: None,
+            self_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    pub fn first(mut self, value: String) -> Self {
+        self.first = Some(value);
+        self
+    }
+
+    pub fn last(mut self, value: String) -> Self {
+        self.last = Some(value);
+        self
+    }
+
     pub fn next(mut self, value: String) -> Self {
         self.next = Some(value);
+        self
+    }
+
+    pub fn previous(mut self, value: String) -> Self {
+        self.previous = Some(value);
+        self
+    }
+
+    pub fn self_(mut self, value: String) -> Self {
+        self.self_ = Some(value);
         self
     }
 
@@ -67,7 +103,11 @@ impl<'de> Deserialize<'de> for OutcomesResponseLinks {
             where
                 M: MapAccess<'a>,
             {
+                let mut first: Option<String> = None;
+                let mut last: Option<String> = None;
                 let mut next: Option<String> = None;
+                let mut previous: Option<String> = None;
+                let mut self_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -76,11 +116,35 @@ impl<'de> Deserialize<'de> for OutcomesResponseLinks {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "first" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            first = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "last" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            last = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "next" => {
                             if v.is_null() {
                                 continue;
                             }
                             next = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "previous" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            previous = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "self" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            self_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -91,7 +155,11 @@ impl<'de> Deserialize<'de> for OutcomesResponseLinks {
                 }
 
                 let content = OutcomesResponseLinks {
+                    first,
+                    last,
                     next,
+                    previous,
+                    self_,
                     additional_properties,
                     _unparsed,
                 };

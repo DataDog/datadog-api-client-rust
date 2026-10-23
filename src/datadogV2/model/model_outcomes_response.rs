@@ -17,9 +17,12 @@ pub struct OutcomesResponse {
     /// Array of rule details.
     #[serde(rename = "included")]
     pub included: Option<Vec<crate::datadogV2::model::OutcomesResponseIncludedItem>>,
-    /// Links attributes.
+    /// Pagination links for rule outcomes.
     #[serde(rename = "links")]
     pub links: Option<crate::datadogV2::model::OutcomesResponseLinks>,
+    /// Metadata for scores response.
+    #[serde(rename = "meta")]
+    pub meta: Option<crate::datadogV2::model::PaginatedResponseMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -33,6 +36,7 @@ impl OutcomesResponse {
             data: None,
             included: None,
             links: None,
+            meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -53,6 +57,11 @@ impl OutcomesResponse {
 
     pub fn links(mut self, value: crate::datadogV2::model::OutcomesResponseLinks) -> Self {
         self.links = Some(value);
+        self
+    }
+
+    pub fn meta(mut self, value: crate::datadogV2::model::PaginatedResponseMeta) -> Self {
+        self.meta = Some(value);
         self
     }
 
@@ -93,6 +102,7 @@ impl<'de> Deserialize<'de> for OutcomesResponse {
                     Vec<crate::datadogV2::model::OutcomesResponseIncludedItem>,
                 > = None;
                 let mut links: Option<crate::datadogV2::model::OutcomesResponseLinks> = None;
+                let mut meta: Option<crate::datadogV2::model::PaginatedResponseMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -119,6 +129,12 @@ impl<'de> Deserialize<'de> for OutcomesResponse {
                             }
                             links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -131,6 +147,7 @@ impl<'de> Deserialize<'de> for OutcomesResponse {
                     data,
                     included,
                     links,
+                    meta,
                     additional_properties,
                     _unparsed,
                 };
