@@ -14,7 +14,7 @@ pub struct OnCallNotificationRuleChannelRelationshipData {
     /// ID of the notification channel
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Indicates that the resource is of type 'notification_channels'.
+    /// Indicates that the resource is of type `notification_channels`.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::NotificationChannelType>,
     #[serde(flatten)]

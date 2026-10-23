@@ -14,7 +14,7 @@ pub struct CreateNotificationChannelData {
     /// Attributes for creating an on-call notification channel.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::CreateNotificationChannelAttributes>,
-    /// Indicates that the resource is of type 'notification_channels'.
+    /// Indicates that the resource is of type `notification_channels`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::NotificationChannelType,
     #[serde(flatten)]
