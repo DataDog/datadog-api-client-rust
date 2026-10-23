@@ -1077,6 +1077,7 @@ impl Default for Configuration {
             ("v2.update_custom_ruleset".to_owned(), false),
             ("v2.add_member_team".to_owned(), false),
             ("v2.list_member_teams".to_owned(), false),
+            ("v2.list_team_hierarchy_members".to_owned(), false),
             ("v2.remove_member_team".to_owned(), false),
             (
                 "v2.create_timeseries_anomaly_investigation".to_owned(),
