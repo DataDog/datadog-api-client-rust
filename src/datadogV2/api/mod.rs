@@ -122,7 +122,6 @@ pub mod api_rum_replay_viewership;
 pub mod api_rum_retention_filters;
 pub mod api_rum_retention_quotas;
 pub mod api_rum_teams_ownership;
-pub mod api_salesforce_integration;
 pub mod api_scorecards;
 pub mod api_seats;
 pub mod api_security_monitoring;
