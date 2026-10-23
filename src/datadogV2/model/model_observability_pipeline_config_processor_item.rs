@@ -20,9 +20,6 @@ pub enum ObservabilityPipelineConfigProcessorItem {
     ObservabilityPipelineAddHostnameProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineAddHostnameProcessor>,
     ),
-    ObservabilityPipelineCustomProcessor(
-        Box<crate::datadogV2::model::ObservabilityPipelineCustomProcessor>,
-    ),
     ObservabilityPipelineDatadogTagsProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessor>,
     ),
@@ -34,9 +31,6 @@ pub enum ObservabilityPipelineConfigProcessorItem {
     ),
     ObservabilityPipelineGenerateMetricsProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineGenerateMetricsProcessor>,
-    ),
-    ObservabilityPipelineGenerateMetricsV2Processor(
-        Box<crate::datadogV2::model::ObservabilityPipelineGenerateMetricsV2Processor>,
     ),
     ObservabilityPipelineOcsfMapperProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineOcsfMapperProcessor>,
@@ -62,17 +56,23 @@ pub enum ObservabilityPipelineConfigProcessorItem {
     ObservabilityPipelineRenameFieldsProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineRenameFieldsProcessor>,
     ),
-    ObservabilityPipelineSampleProcessor(
-        Box<crate::datadogV2::model::ObservabilityPipelineSampleProcessor>,
-    ),
-    ObservabilityPipelineSensitiveDataScannerProcessor(
-        Box<crate::datadogV2::model::ObservabilityPipelineSensitiveDataScannerProcessor>,
-    ),
     ObservabilityPipelineSplitArrayProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineSplitArrayProcessor>,
     ),
     ObservabilityPipelineThrottleProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineThrottleProcessor>,
+    ),
+    ObservabilityPipelineCustomProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineCustomProcessor>,
+    ),
+    ObservabilityPipelineGenerateMetricsV2Processor(
+        Box<crate::datadogV2::model::ObservabilityPipelineGenerateMetricsV2Processor>,
+    ),
+    ObservabilityPipelineSampleProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineSampleProcessor>,
+    ),
+    ObservabilityPipelineSensitiveDataScannerProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineSensitiveDataScannerProcessor>,
     ),
     ObservabilityPipelineAddMetricTagsProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineAddMetricTagsProcessor>,
@@ -138,18 +138,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorItem {
             }
         }
         if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineCustomProcessor>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineCustomProcessor(
-                        _v,
-                    ),
-                );
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV2::model::ObservabilityPipelineDatadogTagsProcessor>,
         >(value.clone())
         {
@@ -183,14 +171,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineGenerateMetricsProcessor(_v));
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineGenerateMetricsV2Processor>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineGenerateMetricsV2Processor(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
@@ -266,6 +246,42 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorItem {
             }
         }
         if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSplitArrayProcessor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineSplitArrayProcessor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineThrottleProcessor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineThrottleProcessor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineCustomProcessor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineCustomProcessor(
+                        _v,
+                    ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineGenerateMetricsV2Processor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineGenerateMetricsV2Processor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV2::model::ObservabilityPipelineSampleProcessor>,
         >(value.clone())
         {
@@ -283,22 +299,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineSensitiveDataScannerProcessor(_v));
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineSplitArrayProcessor>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineSplitArrayProcessor(_v));
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineThrottleProcessor>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineThrottleProcessor(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<

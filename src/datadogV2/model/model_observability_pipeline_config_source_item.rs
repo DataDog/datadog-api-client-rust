@@ -11,6 +11,9 @@ pub enum ObservabilityPipelineConfigSourceItem {
     ObservabilityPipelineDatadogAgentSource(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogAgentSource>,
     ),
+    ObservabilityPipelineOpentelemetrySource(
+        Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>,
+    ),
     ObservabilityPipelineAmazonDataFirehoseSource(
         Box<crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSource>,
     ),
@@ -59,9 +62,6 @@ pub enum ObservabilityPipelineConfigSourceItem {
     ObservabilityPipelineWebsocketSource(
         Box<crate::datadogV2::model::ObservabilityPipelineWebsocketSource>,
     ),
-    ObservabilityPipelineOpentelemetrySource(
-        Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>,
-    ),
     ObservabilityPipelinePrometheusRemoteWriteSource(
         Box<crate::datadogV2::model::ObservabilityPipelinePrometheusRemoteWriteSource>,
     ),
@@ -81,6 +81,18 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
             if !_v._unparsed {
                 return Ok(
                     ObservabilityPipelineConfigSourceItem::ObservabilityPipelineDatadogAgentSource(
+                        _v,
+                    ),
+                );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(
+                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineOpentelemetrySource(
                         _v,
                     ),
                 );
@@ -247,18 +259,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
             if !_v._unparsed {
                 return Ok(
                     ObservabilityPipelineConfigSourceItem::ObservabilityPipelineWebsocketSource(_v),
-                );
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineOpentelemetrySource(
-                        _v,
-                    ),
                 );
             }
         }

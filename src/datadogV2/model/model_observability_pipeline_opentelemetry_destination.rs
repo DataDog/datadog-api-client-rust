@@ -6,17 +6,17 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `opentelemetry` destination forwards metrics using the OpenTelemetry Protocol (OTLP) over HTTP.
+/// The `opentelemetry` destination forwards metrics or traces using the OpenTelemetry Protocol (OTLP) over HTTP.
 ///
-/// **Supported pipeline types:** metrics
+/// **Supported pipeline types:** metrics, traces
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ObservabilityPipelineOpentelemetryMetricsDestination {
+pub struct ObservabilityPipelineOpentelemetryDestination {
     /// Configuration for buffer settings on destination components.
     #[serde(rename = "buffer")]
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
-    /// Environment variable name containing the URI of the OTLP HTTP endpoint to send metrics to.
+    /// Environment variable name containing the URI of the OTLP HTTP endpoint to send metrics or traces to.
     #[serde(rename = "http_client_uri_key")]
     pub http_client_uri_key: Option<String>,
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
@@ -30,7 +30,7 @@ pub struct ObservabilityPipelineOpentelemetryMetricsDestination {
     pub tls: Option<crate::datadogV2::model::ObservabilityPipelineTls>,
     /// The destination type. Always `opentelemetry`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::ObservabilityPipelineOpentelemetryMetricsDestinationType,
+    pub type_: crate::datadogV2::model::ObservabilityPipelineOpentelemetryDestinationType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -38,13 +38,13 @@ pub struct ObservabilityPipelineOpentelemetryMetricsDestination {
     pub(crate) _unparsed: bool,
 }
 
-impl ObservabilityPipelineOpentelemetryMetricsDestination {
+impl ObservabilityPipelineOpentelemetryDestination {
     pub fn new(
         id: String,
         inputs: Vec<String>,
-        type_: crate::datadogV2::model::ObservabilityPipelineOpentelemetryMetricsDestinationType,
-    ) -> ObservabilityPipelineOpentelemetryMetricsDestination {
-        ObservabilityPipelineOpentelemetryMetricsDestination {
+        type_: crate::datadogV2::model::ObservabilityPipelineOpentelemetryDestinationType,
+    ) -> ObservabilityPipelineOpentelemetryDestination {
+        ObservabilityPipelineOpentelemetryDestination {
             buffer: None,
             http_client_uri_key: None,
             id,
@@ -83,14 +83,14 @@ impl ObservabilityPipelineOpentelemetryMetricsDestination {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineOpentelemetryMetricsDestination {
+impl<'de> Deserialize<'de> for ObservabilityPipelineOpentelemetryDestination {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct ObservabilityPipelineOpentelemetryMetricsDestinationVisitor;
-        impl<'a> Visitor<'a> for ObservabilityPipelineOpentelemetryMetricsDestinationVisitor {
-            type Value = ObservabilityPipelineOpentelemetryMetricsDestination;
+        struct ObservabilityPipelineOpentelemetryDestinationVisitor;
+        impl<'a> Visitor<'a> for ObservabilityPipelineOpentelemetryDestinationVisitor {
+            type Value = ObservabilityPipelineOpentelemetryDestination;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -107,7 +107,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpentelemetryMetricsDestinat
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
-                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineOpentelemetryMetricsDestinationType> = None;
+                let mut type_: Option<
+                    crate::datadogV2::model::ObservabilityPipelineOpentelemetryDestinationType,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -153,7 +155,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpentelemetryMetricsDestinat
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::ObservabilityPipelineOpentelemetryMetricsDestinationType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::ObservabilityPipelineOpentelemetryDestinationType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -171,7 +173,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpentelemetryMetricsDestinat
                 let inputs = inputs.ok_or_else(|| M::Error::missing_field("inputs"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = ObservabilityPipelineOpentelemetryMetricsDestination {
+                let content = ObservabilityPipelineOpentelemetryDestination {
                     buffer,
                     http_client_uri_key,
                     id,
@@ -186,6 +188,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpentelemetryMetricsDestinat
             }
         }
 
-        deserializer.deserialize_any(ObservabilityPipelineOpentelemetryMetricsDestinationVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineOpentelemetryDestinationVisitor)
     }
 }

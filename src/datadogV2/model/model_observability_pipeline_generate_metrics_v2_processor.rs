@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `generate_metrics` processor creates custom metrics from logs.
-/// Metrics can be counters, gauges, or distributions and optionally grouped by log fields.
+/// The `generate_metrics` processor creates custom metrics from logs or traces.
+/// Metrics can be counters, gauges, or distributions and optionally grouped by event fields.
 ///
-/// There must be a destination whose `inputs` reference this processor with the `<processor-id>.metrics` suffix to route the generated metrics. All destination types normally supported for `metrics` pipelines are also supported as metrics destinations in `logs` pipelines.
+/// There must be a destination whose `inputs` reference this processor with the `<processor-id>.metrics` suffix to route the generated metrics. All destination types normally supported for `metrics` pipelines are also supported as metrics destinations in `logs` and `traces` pipelines.
 ///
-/// **Supported pipeline types:** logs
+/// **Supported pipeline types:** logs, traces
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -28,7 +28,7 @@ pub struct ObservabilityPipelineGenerateMetricsV2Processor {
     /// The unique identifier for this component. Used to reference this component in other parts of the pipeline.
     #[serde(rename = "id")]
     pub id: String,
-    /// A Datadog search query used to determine which logs this processor targets.
+    /// A Datadog search query used to determine which events this processor targets.
     #[serde(rename = "include")]
     pub include: Option<String>,
     /// Configuration for generating individual metrics.

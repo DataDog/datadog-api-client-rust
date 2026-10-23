@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum ObservabilityPipelineOpentelemetryMetricsDestinationType {
+pub enum ObservabilityPipelineOpentelemetryDestinationType {
     OPENTELEMETRY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for ObservabilityPipelineOpentelemetryMetricsDestinationType {
+impl ToString for ObservabilityPipelineOpentelemetryDestinationType {
     fn to_string(&self) -> String {
         match self {
             Self::OPENTELEMETRY => String::from("opentelemetry"),
@@ -20,7 +20,7 @@ impl ToString for ObservabilityPipelineOpentelemetryMetricsDestinationType {
     }
 }
 
-impl Serialize for ObservabilityPipelineOpentelemetryMetricsDestinationType {
+impl Serialize for ObservabilityPipelineOpentelemetryDestinationType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for ObservabilityPipelineOpentelemetryMetricsDestinationType {
     }
 }
 
-impl<'de> Deserialize<'de> for ObservabilityPipelineOpentelemetryMetricsDestinationType {
+impl<'de> Deserialize<'de> for ObservabilityPipelineOpentelemetryDestinationType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

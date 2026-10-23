@@ -6,9 +6,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `datadog_agent` source collects logs/metrics from the Datadog Agent.
+/// The `datadog_agent` source collects logs, metrics, or traces from the Datadog Agent.
 ///
-/// **Supported pipeline types:** logs, metrics
+/// **Supported pipeline types:** logs, metrics, traces
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

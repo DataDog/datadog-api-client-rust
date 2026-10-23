@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum ObservabilityPipelineConfigPipelineType {
     LOGS,
     METRICS,
+    TRACES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for ObservabilityPipelineConfigPipelineType {
         match self {
             Self::LOGS => String::from("logs"),
             Self::METRICS => String::from("metrics"),
+            Self::TRACES => String::from("traces"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigPipelineType {
         Ok(match s.as_str() {
             "logs" => Self::LOGS,
             "metrics" => Self::METRICS,
+            "traces" => Self::TRACES,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Strategy that increments a generated metric based on the value of a log field.
+/// Strategy that increments a generated metric based on the value of an event field.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineGeneratedMetricIncrementByField {
-    /// Name of the log field containing the numeric value to increment the metric by.
+    /// Name of the field containing the numeric value to increment the metric by.
     #[serde(rename = "field")]
     pub field: String,
     /// Uses a numeric field in the log event as the metric increment.

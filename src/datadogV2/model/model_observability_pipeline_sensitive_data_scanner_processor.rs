@@ -6,9 +6,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `sensitive_data_scanner` processor detects and optionally redacts sensitive data in log events.
+/// The `sensitive_data_scanner` processor detects and optionally redacts sensitive data in log or trace events.
 ///
-/// **Supported pipeline types:** logs
+/// **Supported pipeline types:** logs, traces
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -22,7 +22,7 @@ pub struct ObservabilityPipelineSensitiveDataScannerProcessor {
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
-    /// A Datadog search query used to determine which logs this processor targets.
+    /// A Datadog search query used to determine which events this processor targets.
     #[serde(rename = "include")]
     pub include: String,
     /// A list of rules for identifying and acting on sensitive data patterns.
