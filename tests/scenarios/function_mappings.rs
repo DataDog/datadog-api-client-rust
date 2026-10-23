@@ -5355,8 +5355,32 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_experiment_protocols,
     );
     world.function_mappings.insert(
+        "v2.CreateExperimentProtocol".into(),
+        test_v2_create_experiment_protocol,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteExperimentProtocol".into(),
+        test_v2_delete_experiment_protocol,
+    );
+    world.function_mappings.insert(
         "v2.GetExperimentProtocol".into(),
         test_v2_get_experiment_protocol,
+    );
+    world.function_mappings.insert(
+        "v2.PatchExperimentProtocol".into(),
+        test_v2_patch_experiment_protocol,
+    );
+    world.function_mappings.insert(
+        "v2.ReplaceExperimentProtocol".into(),
+        test_v2_replace_experiment_protocol,
+    );
+    world.function_mappings.insert(
+        "v2.ArchiveExperimentProtocol".into(),
+        test_v2_archive_experiment_protocol,
+    );
+    world.function_mappings.insert(
+        "v2.PublishExperimentProtocol".into(),
+        test_v2_publish_experiment_protocol,
     );
     world.function_mappings.insert(
         "v2.RefreshExperimentResultsForOrg".into(),
@@ -41575,6 +41599,69 @@ fn test_v2_list_experiment_protocols(
     world.response.code = response.status.as_u16();
 }
 
+fn test_v2_create_experiment_protocol(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_experiment_protocol_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_experiment_protocol(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let protocol_id =
+        serde_json::from_value(_parameters.get("protocol_id").unwrap().clone()).unwrap();
+    let expected_updated_at = _parameters
+        .get("expected_updated_at")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_experiments::DeleteExperimentProtocolOptionalParams::default();
+    params.expected_updated_at = expected_updated_at;
+    let response =
+        match block_on(api.delete_experiment_protocol_with_http_info(protocol_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_get_experiment_protocol(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -41584,6 +41671,136 @@ fn test_v2_get_experiment_protocol(world: &mut DatadogWorld, _parameters: &HashM
     let protocol_id =
         serde_json::from_value(_parameters.get("protocol_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_experiment_protocol_with_http_info(protocol_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_patch_experiment_protocol(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let protocol_id =
+        serde_json::from_value(_parameters.get("protocol_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.patch_experiment_protocol_with_http_info(protocol_id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_replace_experiment_protocol(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let protocol_id =
+        serde_json::from_value(_parameters.get("protocol_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let expected_updated_at = _parameters
+        .get("expected_updated_at")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_experiments::ReplaceExperimentProtocolOptionalParams::default();
+    params.expected_updated_at = expected_updated_at;
+    let response =
+        match block_on(api.replace_experiment_protocol_with_http_info(protocol_id, body, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_archive_experiment_protocol(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let protocol_id =
+        serde_json::from_value(_parameters.get("protocol_id").unwrap().clone()).unwrap();
+    let expected_updated_at = _parameters
+        .get("expected_updated_at")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_experiments::ArchiveExperimentProtocolOptionalParams::default();
+    params.expected_updated_at = expected_updated_at;
+    let response =
+        match block_on(api.archive_experiment_protocol_with_http_info(protocol_id, params)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_publish_experiment_protocol(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_experiments
+        .as_ref()
+        .expect("api instance not found");
+    let protocol_id =
+        serde_json::from_value(_parameters.get("protocol_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.publish_experiment_protocol_with_http_info(protocol_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
