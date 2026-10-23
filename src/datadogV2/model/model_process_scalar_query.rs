@@ -6,7 +6,8 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A query for host-level process metrics such as CPU and memory usage.
+/// Per-process metrics from Live Processes. Queries without `aggregator` fail. To scope to one process,
+/// set `tag_filters` to its `identifying_tags` from `GET /api/v2/processes`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -23,10 +24,12 @@ pub struct ProcessScalarQuery {
     /// Whether CPU metrics should be normalized by core count.
     #[serde(rename = "is_normalized_cpu")]
     pub is_normalized_cpu: Option<bool>,
-    /// Maximum number of results to return.
+    /// Maximum number of processes or groups to return. Large values can fail with an `Unprocessable
+    /// Content` error. If so, retry with a smaller limit.
     #[serde(rename = "limit")]
     pub limit: Option<i64>,
-    /// The process metric to query.
+    /// The process metric to query, such as `process.stat.cpu.total_pct`, `process.stat.memory.rss`, or
+    /// `process.stat.memory.vms`.
     #[serde(rename = "metric")]
     pub metric: String,
     /// The variable name for use in formulas.
@@ -35,7 +38,8 @@ pub struct ProcessScalarQuery {
     /// Direction of sort.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::QuerySortOrder>,
-    /// Tag filters to narrow down processes.
+    /// Tags to narrow down processes. To scope to one process, use its `identifying_tags` from
+    /// `GET /api/v2/processes`, for example `host:web-01` and `pid:1234`.
     #[serde(rename = "tag_filters")]
     pub tag_filters: Option<Vec<String>>,
     /// A full-text search filter to match process names or commands.
