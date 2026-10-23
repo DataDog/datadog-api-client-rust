@@ -6,7 +6,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A sort rule.
+/// A sort rule. With `type: alphabetical` (the default), buckets are sorted by facet value
+/// and only `order` is allowed. With `type: measure`, buckets are sorted by a computed value:
+/// set `aggregation`, and set `metric` unless the aggregation is `count`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
