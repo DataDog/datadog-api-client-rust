@@ -6,9 +6,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `sample` processor allows probabilistic sampling of logs at a fixed rate.
+/// The `sample` processor allows probabilistic sampling of logs or traces at a fixed rate.
 ///
-/// **Supported pipeline types:** logs
+/// **Supported pipeline types:** logs, traces
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -25,10 +25,10 @@ pub struct ObservabilityPipelineSampleProcessor {
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
-    /// A Datadog search query used to determine which logs this processor targets.
+    /// A Datadog search query used to determine which events this processor targets.
     #[serde(rename = "include")]
     pub include: String,
-    /// The percentage of logs to sample.
+    /// The percentage of events to sample.
     #[serde(rename = "percentage")]
     pub percentage: f64,
     /// The processor type. The value should always be `sample`.

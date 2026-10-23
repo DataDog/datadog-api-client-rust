@@ -85,14 +85,17 @@ pub enum ObservabilityPipelineConfigDestinationItem {
     ObservabilityPipelineDatadogMetricsDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineDatadogMetricsDestination>,
     ),
-    ObservabilityPipelineOpentelemetryMetricsDestination(
-        Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetryMetricsDestination>,
-    ),
     ObservabilityPipelinePrometheusRemoteWriteDestination(
         Box<crate::datadogV2::model::ObservabilityPipelinePrometheusRemoteWriteDestination>,
     ),
     ObservabilityPipelineSplunkHecMetricsDestination(
         Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecMetricsDestination>,
+    ),
+    ObservabilityPipelineOpentelemetryDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetryDestination>,
+    ),
+    ObservabilityPipelineDatadogTracesDestination(
+        Box<crate::datadogV2::model::ObservabilityPipelineDatadogTracesDestination>,
     ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
@@ -322,14 +325,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
             }
         }
         if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetryMetricsDestination>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineOpentelemetryMetricsDestination(_v));
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
             Box<crate::datadogV2::model::ObservabilityPipelinePrometheusRemoteWriteDestination>,
         >(value.clone())
         {
@@ -343,6 +338,22 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigDestinationItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineSplunkHecMetricsDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetryDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineOpentelemetryDestination(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineDatadogTracesDestination>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigDestinationItem::ObservabilityPipelineDatadogTracesDestination(_v));
             }
         }
 

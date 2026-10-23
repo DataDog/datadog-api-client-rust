@@ -6,9 +6,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The `filter` processor allows conditional processing of logs/metrics based on a Datadog search query. Logs/metrics that match the `include` query are passed through; others are discarded.
+/// The `filter` processor allows conditional processing of logs, metrics, or traces based on a Datadog search query. Events that match the `include` query are passed through; others are discarded.
 ///
-/// **Supported pipeline types:** logs, metrics
+/// **Supported pipeline types:** logs, metrics, traces
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -22,7 +22,7 @@ pub struct ObservabilityPipelineFilterProcessor {
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
-    /// A Datadog search query used to determine which logs/metrics should pass through the filter. Logs/metrics that match this query continue to downstream components; others are dropped.
+    /// A Datadog search query used to determine which events should pass through the filter. Events that match this query continue to downstream components; others are dropped.
     #[serde(rename = "include")]
     pub include: String,
     /// The processor type. The value should always be `filter`.

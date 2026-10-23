@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Defines a log-based custom metric, including its name, type, filter, value computation strategy,
+/// Defines a custom metric generated from logs or traces, including its name, type, filter, value computation strategy,
 /// and optional grouping fields.
 #[non_exhaustive]
 #[skip_serializing_none]
@@ -15,7 +15,7 @@ pub struct ObservabilityPipelineGeneratedMetric {
     /// Optional fields used to group the metric series.
     #[serde(rename = "group_by")]
     pub group_by: Option<Vec<String>>,
-    /// Datadog filter query to match logs for metric generation.
+    /// Datadog filter query to match events for metric generation.
     #[serde(rename = "include")]
     pub include: String,
     /// Type of metric to create.
