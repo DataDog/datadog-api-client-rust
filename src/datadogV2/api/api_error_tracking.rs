@@ -14,17 +14,31 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetIssueOptionalParams {
-    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `assignee`, `case`, and `team_owners`.
+    /// Comma-separated list of relationship objects that should be included in the response.
+    /// Possible values are `assignee`, `case`, `team_owners`, and `samples`.
     pub include: Option<Vec<crate::datadogV2::model::GetIssueIncludeQueryParameterItem>>,
+    /// Comma-separated list of biases used to pick the samples returned with `include=samples`.
+    /// Requires `include=samples`. Defaults to all biases.
+    pub filter_samples_biases: Option<Vec<crate::datadogV2::model::IssueSampleBias>>,
 }
 
 impl GetIssueOptionalParams {
-    /// Comma-separated list of relationship objects that should be included in the response. Possible values are `assignee`, `case`, and `team_owners`.
+    /// Comma-separated list of relationship objects that should be included in the response.
+    /// Possible values are `assignee`, `case`, `team_owners`, and `samples`.
     pub fn include(
         mut self,
         value: Vec<crate::datadogV2::model::GetIssueIncludeQueryParameterItem>,
     ) -> Self {
         self.include = Some(value);
+        self
+    }
+    /// Comma-separated list of biases used to pick the samples returned with `include=samples`.
+    /// Requires `include=samples`. Defaults to all biases.
+    pub fn filter_samples_biases(
+        mut self,
+        value: Vec<crate::datadogV2::model::IssueSampleBias>,
+    ) -> Self {
+        self.filter_samples_biases = Some(value);
         self
     }
 }
@@ -284,6 +298,7 @@ impl ErrorTrackingAPI {
 
         // unbox and build optional parameters
         let include = params.include;
+        let filter_samples_biases = params.filter_samples_biases;
 
         let local_client = &self.client;
 
@@ -298,6 +313,17 @@ impl ErrorTrackingAPI {
         if let Some(ref local) = include {
             local_req_builder = local_req_builder.query(&[(
                 "include",
+                &local
+                    .iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]);
+        };
+        if let Some(ref local) = filter_samples_biases {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[samples.biases]",
                 &local
                     .iter()
                     .map(|p| p.to_string())
