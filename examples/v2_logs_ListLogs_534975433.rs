@@ -19,7 +19,7 @@ async fn main() {
                 LogsQueryFilter::new()
                     .from("now-15m".to_string())
                     .indexes(vec!["main".to_string(), "web".to_string()])
-                    .query("service:web* AND @http.status_code:[200 TO 299]".to_string())
+                    .query("service:web-api AND @http.status_code:[200 TO 299]".to_string())
                     .storage_tier(LogsStorageTier::INDEXES)
                     .to("now".to_string()),
             )
