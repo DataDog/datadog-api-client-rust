@@ -10,6 +10,8 @@ pub enum OrgConnectionTypeEnum {
     LOGS,
     METRICS,
     AUDIT,
+    CI_PIPELINES,
+    CI_TESTS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +21,8 @@ impl ToString for OrgConnectionTypeEnum {
             Self::LOGS => String::from("logs"),
             Self::METRICS => String::from("metrics"),
             Self::AUDIT => String::from("audit"),
+            Self::CI_PIPELINES => String::from("ci_pipelines"),
+            Self::CI_TESTS => String::from("ci_tests"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +50,8 @@ impl<'de> Deserialize<'de> for OrgConnectionTypeEnum {
             "logs" => Self::LOGS,
             "metrics" => Self::METRICS,
             "audit" => Self::AUDIT,
+            "ci_pipelines" => Self::CI_PIPELINES,
+            "ci_tests" => Self::CI_TESTS,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
