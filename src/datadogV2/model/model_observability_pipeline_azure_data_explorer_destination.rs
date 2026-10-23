@@ -38,6 +38,16 @@ pub struct ObservabilityPipelineAzureDataExplorerDestination {
     /// Defaults to `DESTINATION_AZURE_DATA_EXPLORER_INGESTION_ENDPOINT` (prefixed with `DD_OP_` at runtime).
     #[serde(rename = "ingestion_endpoint_key")]
     pub ingestion_endpoint_key: Option<String>,
+    /// The ingestion method used to send data to Azure Data Explorer.
+    ///
+    /// - `streaming`: Sends events directly to the table using streaming ingestion.
+    /// - `queue`: Sends events through queued (batched) ingestion.
+    ///
+    /// Defaults to `streaming`.
+    #[serde(rename = "ingestion_mode")]
+    pub ingestion_mode: Option<
+        crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationIngestionMode,
+    >,
     /// A list of component IDs whose output is used as the `input` for this component.
     #[serde(rename = "inputs")]
     pub inputs: Vec<String>,
@@ -82,6 +92,7 @@ impl ObservabilityPipelineAzureDataExplorerDestination {
             database,
             id,
             ingestion_endpoint_key: None,
+            ingestion_mode: None,
             inputs,
             mapping_reference: None,
             table,
@@ -118,6 +129,14 @@ impl ObservabilityPipelineAzureDataExplorerDestination {
 
     pub fn ingestion_endpoint_key(mut self, value: String) -> Self {
         self.ingestion_endpoint_key = Some(value);
+        self
+    }
+
+    pub fn ingestion_mode(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationIngestionMode,
+    ) -> Self {
+        self.ingestion_mode = Some(value);
         self
     }
 
@@ -170,6 +189,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAzureDataExplorerDestination
                 let mut database: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut ingestion_endpoint_key: Option<String> = None;
+                let mut ingestion_mode: Option<crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationIngestionMode> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut mapping_reference: Option<Option<String>> = None;
                 let mut table: Option<String> = None;
@@ -236,6 +256,21 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAzureDataExplorerDestination
                             ingestion_endpoint_key =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "ingestion_mode" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            ingestion_mode =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _ingestion_mode) = ingestion_mode {
+                                match _ingestion_mode {
+                                    crate::datadogV2::model::ObservabilityPipelineAzureDataExplorerDestinationIngestionMode::UnparsedObject(_ingestion_mode) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -286,6 +321,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAzureDataExplorerDestination
                     database,
                     id,
                     ingestion_endpoint_key,
+                    ingestion_mode,
                     inputs,
                     mapping_reference,
                     table,
