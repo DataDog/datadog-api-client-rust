@@ -14,7 +14,7 @@ async fn main() {
     let body = LogsMetricUpdateRequest::new(LogsMetricUpdateData::new(
         LogsMetricUpdateAttributes::new().filter(
             LogsMetricFilter::new()
-                .query("service:web* AND @http.status_code:[200 TO 299]-updated".to_string()),
+                .query("service:web-api AND @http.status_code:[200 TO 299]-updated".to_string()),
         ),
         LogsMetricType::LOGS_METRICS,
     ));

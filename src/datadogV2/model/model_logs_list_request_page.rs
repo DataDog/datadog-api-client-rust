@@ -14,7 +14,7 @@ pub struct LogsListRequestPage {
     /// List following results with a cursor provided in the previous query.
     #[serde(rename = "cursor")]
     pub cursor: Option<String>,
-    /// Maximum number of logs in the response.
+    /// Requested maximum number of logs in the response.
     #[serde(rename = "limit")]
     pub limit: Option<i32>,
     #[serde(flatten)]
