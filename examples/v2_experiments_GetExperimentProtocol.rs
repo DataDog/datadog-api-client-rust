@@ -1,16 +1,17 @@
 // Get experiment protocol returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_experiments::ExperimentsAPI;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
+    // there is a valid "experiment_protocol" in the system
+    let experiment_protocol_data_id =
+        uuid::Uuid::parse_str(&std::env::var("EXPERIMENT_PROTOCOL_DATA_ID").unwrap())
+            .expect("Invalid UUID");
     let configuration = datadog::Configuration::new();
     let api = ExperimentsAPI::with_config(configuration);
     let resp = api
-        .get_experiment_protocol(
-            Uuid::parse_str("550e8400-e29b-41d4-a716-446655440000").expect("invalid UUID"),
-        )
+        .get_experiment_protocol(experiment_protocol_data_id.clone())
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
