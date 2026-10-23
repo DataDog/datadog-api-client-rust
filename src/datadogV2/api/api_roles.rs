@@ -2051,6 +2051,11 @@ impl RolesAPI {
     /// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
     /// such as Dashboards Read and Monitors Read, remain on the role by default, even if they are omitted from
     /// the request. To exclude them, set `default_permissions_opt_out` to `true`.
+    ///
+    /// Omitting the `permissions` relationship from the request leaves the role's existing permissions
+    /// unchanged. Sending `"permissions": {"data": []}` removes all permissions except restricted default
+    /// permissions, which remain unless `default_permissions_opt_out` is `true`. Some restricted permissions
+    /// can only be excluded after Minimal Access Roles is enabled for the organization.
     pub async fn update_role(
         &self,
         role_id: String,
@@ -2075,6 +2080,11 @@ impl RolesAPI {
     /// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
     /// such as Dashboards Read and Monitors Read, remain on the role by default, even if they are omitted from
     /// the request. To exclude them, set `default_permissions_opt_out` to `true`.
+    ///
+    /// Omitting the `permissions` relationship from the request leaves the role's existing permissions
+    /// unchanged. Sending `"permissions": {"data": []}` removes all permissions except restricted default
+    /// permissions, which remain unless `default_permissions_opt_out` is `true`. Some restricted permissions
+    /// can only be excluded after Minimal Access Roles is enabled for the organization.
     pub async fn update_role_with_http_info(
         &self,
         role_id: String,
