@@ -21,9 +21,10 @@ pub struct AggregatedWaterfallResponseAttributes {
     /// Start of the analyzed time range as a Unix timestamp in seconds.
     #[serde(rename = "from")]
     pub from: i64,
-    /// Network resources in chronological waterfall order.
+    /// Network resources in chronological waterfall order, or null when the sampled views have no resources in their initial load window.
+    #[serialize_always]
     #[serde(rename = "resources")]
-    pub resources: Vec<crate::datadogV2::model::AggregatedResource>,
+    pub resources: Option<Vec<crate::datadogV2::model::AggregatedResource>>,
     /// List of RUM view IDs sampled for this aggregation, capped at 50.
     #[serde(rename = "sampled_view_ids")]
     pub sampled_view_ids: Vec<String>,
@@ -51,7 +52,7 @@ impl AggregatedWaterfallResponseAttributes {
         application_id: String,
         criteria: Option<crate::datadogV2::model::AggregatedWaterfallResponseAttributesCriteria>,
         from: i64,
-        resources: Vec<crate::datadogV2::model::AggregatedResource>,
+        resources: Option<Vec<crate::datadogV2::model::AggregatedResource>>,
         sampled_view_ids: Vec<String>,
         to: i64,
         total_cache_hit_rate_pct: f64,
@@ -104,7 +105,9 @@ impl<'de> Deserialize<'de> for AggregatedWaterfallResponseAttributes {
                     Option<crate::datadogV2::model::AggregatedWaterfallResponseAttributesCriteria>,
                 > = None;
                 let mut from: Option<i64> = None;
-                let mut resources: Option<Vec<crate::datadogV2::model::AggregatedResource>> = None;
+                let mut resources: Option<
+                    Option<Vec<crate::datadogV2::model::AggregatedResource>>,
+                > = None;
                 let mut sampled_view_ids: Option<Vec<String>> = None;
                 let mut to: Option<i64> = None;
                 let mut total_cache_hit_rate_pct: Option<f64> = None;
