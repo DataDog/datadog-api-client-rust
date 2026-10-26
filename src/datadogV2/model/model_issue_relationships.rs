@@ -17,6 +17,9 @@ pub struct IssueRelationships {
     /// Relationship between the issue and case.
     #[serde(rename = "case")]
     pub case: Option<crate::datadogV2::model::IssueCaseRelationship>,
+    /// Relationship between the issue and its curated error samples.
+    #[serde(rename = "samples")]
+    pub samples: Option<crate::datadogV2::model::IssueSamplesRelationship>,
     /// Relationship between the issue and teams.
     #[serde(rename = "team_owners")]
     pub team_owners: Option<crate::datadogV2::model::IssueTeamOwnersRelationship>,
@@ -32,6 +35,7 @@ impl IssueRelationships {
         IssueRelationships {
             assignee: None,
             case: None,
+            samples: None,
             team_owners: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -45,6 +49,11 @@ impl IssueRelationships {
 
     pub fn case(mut self, value: crate::datadogV2::model::IssueCaseRelationship) -> Self {
         self.case = Some(value);
+        self
+    }
+
+    pub fn samples(mut self, value: crate::datadogV2::model::IssueSamplesRelationship) -> Self {
+        self.samples = Some(value);
         self
     }
 
@@ -90,6 +99,7 @@ impl<'de> Deserialize<'de> for IssueRelationships {
             {
                 let mut assignee: Option<crate::datadogV2::model::IssueAssigneeRelationship> = None;
                 let mut case: Option<crate::datadogV2::model::IssueCaseRelationship> = None;
+                let mut samples: Option<crate::datadogV2::model::IssueSamplesRelationship> = None;
                 let mut team_owners: Option<crate::datadogV2::model::IssueTeamOwnersRelationship> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -112,6 +122,12 @@ impl<'de> Deserialize<'de> for IssueRelationships {
                             }
                             case = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "samples" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            samples = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "team_owners" => {
                             if v.is_null() {
                                 continue;
@@ -130,6 +146,7 @@ impl<'de> Deserialize<'de> for IssueRelationships {
                 let content = IssueRelationships {
                     assignee,
                     case,
+                    samples,
                     team_owners,
                     additional_properties,
                     _unparsed,
