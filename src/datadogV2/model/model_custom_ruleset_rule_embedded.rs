@@ -20,9 +20,10 @@ pub struct CustomRulesetRuleEmbedded {
     /// Rule identifier, which is the same as the rule name.
     #[serde(rename = "id")]
     pub id: String,
-    /// A revision of a custom static analysis rule as embedded in a rule or ruleset response.
+    /// The most recent revision of the rule, or null when the rule has no revisions.
+    #[serialize_always]
     #[serde(rename = "last_revision")]
-    pub last_revision: crate::datadogV2::model::CustomRuleRevisionEmbedded,
+    pub last_revision: Option<crate::datadogV2::model::CustomRuleNullableRevisionEmbedded>,
     /// Rule name
     #[serde(rename = "name")]
     pub name: String,
@@ -42,7 +43,7 @@ impl CustomRulesetRuleEmbedded {
         created_at: chrono::DateTime<chrono::Utc>,
         created_by: String,
         id: String,
-        last_revision: crate::datadogV2::model::CustomRuleRevisionEmbedded,
+        last_revision: Option<crate::datadogV2::model::CustomRuleNullableRevisionEmbedded>,
         name: String,
         revisions: Option<Vec<crate::datadogV2::model::CustomRuleRevisionEmbedded>>,
     ) -> CustomRulesetRuleEmbedded {
@@ -87,8 +88,9 @@ impl<'de> Deserialize<'de> for CustomRulesetRuleEmbedded {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut id: Option<String> = None;
-                let mut last_revision: Option<crate::datadogV2::model::CustomRuleRevisionEmbedded> =
-                    None;
+                let mut last_revision: Option<
+                    Option<crate::datadogV2::model::CustomRuleNullableRevisionEmbedded>,
+                > = None;
                 let mut name: Option<String> = None;
                 let mut revisions: Option<
                     Option<Vec<crate::datadogV2::model::CustomRuleRevisionEmbedded>>,

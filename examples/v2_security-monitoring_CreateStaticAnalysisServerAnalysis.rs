@@ -5,6 +5,7 @@ use datadog_api_client::datadogV2::model::AnalysisRequest;
 use datadog_api_client::datadogV2::model::AnalysisRequestData;
 use datadog_api_client::datadogV2::model::AnalysisRequestDataAttributes;
 use datadog_api_client::datadogV2::model::AnalysisRequestDataType;
+use datadog_api_client::datadogV2::model::AnalysisRequestOptions;
 use datadog_api_client::datadogV2::model::AnalysisRequestRule;
 use datadog_api_client::datadogV2::model::AnalysisRequestRuleArgument;
 use datadog_api_client::datadogV2::model::AnalysisRequestRuleTest;
@@ -33,6 +34,11 @@ async fn main() {
             .regex(None)
             .tags(vec![])
             .tests(vec![AnalysisRequestRuleTest::new()])],
+        )
+        .options(
+            AnalysisRequestOptions::new()
+                .log_output(true)
+                .use_tree_sitter(true),
         ),
         AnalysisRequestDataType::ANALYSIS_REQUEST,
     ));
