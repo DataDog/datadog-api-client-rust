@@ -7,6 +7,8 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// A compute rule to compute metrics or timeseries.
+/// All computes in a request must have the same `type`, and `timeseries` computes must use the same `interval`.
+/// To get both totals and timeseries, send separate requests.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

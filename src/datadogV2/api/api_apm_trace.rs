@@ -189,6 +189,8 @@ impl APMTraceAPI {
     /// Retrieve a pruned, hierarchical view of an APM trace by its trace ID.
     /// The trace is summarized as a tree of spans rooted at the trace root and reduced in size
     /// to keep rendering large traces in the UI practical.
+    /// A `400 Bad Request` response means the trace ID is malformed. A `404 Not Found` response means
+    /// no trace with this ID is available, such as when the trace is outside the retention period.
     /// This endpoint is rate limited to `60` requests per minute per organization.
     pub async fn get_pruned_trace_by_id(
         &self,
@@ -216,6 +218,8 @@ impl APMTraceAPI {
     /// Retrieve a pruned, hierarchical view of an APM trace by its trace ID.
     /// The trace is summarized as a tree of spans rooted at the trace root and reduced in size
     /// to keep rendering large traces in the UI practical.
+    /// A `400 Bad Request` response means the trace ID is malformed. A `404 Not Found` response means
+    /// no trace with this ID is available, such as when the trace is outside the retention period.
     /// This endpoint is rate limited to `60` requests per minute per organization.
     pub async fn get_pruned_trace_by_id_with_http_info(
         &self,
@@ -356,6 +360,8 @@ impl APMTraceAPI {
 
     /// Retrieve a full APM trace by its trace ID, including every span in the trace.
     /// Traces are returned from live storage when available and fall back to longer-term storage.
+    /// A `400 Bad Request` response means the trace ID is malformed. A `404 Not Found` response means
+    /// no trace with this ID is available, such as when the trace is outside the retention period.
     /// This endpoint is rate limited to `60` requests per minute per organization.
     pub async fn get_trace_by_id(
         &self,
@@ -378,6 +384,8 @@ impl APMTraceAPI {
 
     /// Retrieve a full APM trace by its trace ID, including every span in the trace.
     /// Traces are returned from live storage when available and fall back to longer-term storage.
+    /// A `400 Bad Request` response means the trace ID is malformed. A `404 Not Found` response means
+    /// no trace with this ID is available, such as when the trace is outside the retention period.
     /// This endpoint is rate limited to `60` requests per minute per organization.
     pub async fn get_trace_by_id_with_http_info(
         &self,
