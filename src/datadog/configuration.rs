@@ -904,6 +904,7 @@ impl Default for Configuration {
             ("v2.get_historical_metrics_configuration".to_owned(), false),
             ("v2.get_tag_indexing_rule".to_owned(), false),
             ("v2.get_tag_indexing_rule_exemption".to_owned(), false),
+            ("v2.list_tag_indexing_rule_exemptions".to_owned(), false),
             ("v2.list_tag_indexing_rules".to_owned(), false),
             ("v2.list_tag_indexing_rules_for_metric".to_owned(), false),
             ("v2.reorder_tag_indexing_rules".to_owned(), false),
