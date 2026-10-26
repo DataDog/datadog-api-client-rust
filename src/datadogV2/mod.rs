@@ -123,7 +123,6 @@ pub use self::api::api_rum_replay_viewership;
 pub use self::api::api_rum_retention_filters;
 pub use self::api::api_rum_retention_quotas;
 pub use self::api::api_rum_teams_ownership;
-pub use self::api::api_salesforce_integration;
 pub use self::api::api_scorecards;
 pub use self::api::api_seats;
 pub use self::api::api_security_monitoring;
