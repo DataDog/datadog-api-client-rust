@@ -10,6 +10,7 @@ pub enum GetIssueIncludeQueryParameterItem {
     ASSIGNEE,
     CASE,
     TEAM_OWNERS,
+    SAMPLES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +20,7 @@ impl ToString for GetIssueIncludeQueryParameterItem {
             Self::ASSIGNEE => String::from("assignee"),
             Self::CASE => String::from("case"),
             Self::TEAM_OWNERS => String::from("team_owners"),
+            Self::SAMPLES => String::from("samples"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +48,7 @@ impl<'de> Deserialize<'de> for GetIssueIncludeQueryParameterItem {
             "assignee" => Self::ASSIGNEE,
             "case" => Self::CASE,
             "team_owners" => Self::TEAM_OWNERS,
+            "samples" => Self::SAMPLES,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

@@ -40450,8 +40450,12 @@ fn test_v2_get_issue(world: &mut DatadogWorld, _parameters: &HashMap<String, Val
     let include = _parameters
         .get("include")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_samples_biases = _parameters
+        .get("filter[samples.biases]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_error_tracking::GetIssueOptionalParams::default();
     params.include = include;
+    params.filter_samples_biases = filter_samples_biases;
     let response = match block_on(api.get_issue_with_http_info(issue_id, params)) {
         Ok(response) => response,
         Err(error) => {
