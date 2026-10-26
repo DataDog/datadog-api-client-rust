@@ -23,6 +23,10 @@ pub struct AnalysisRequestDataAttributes {
     /// The programming language of the source code.
     #[serde(rename = "language")]
     pub language: String,
+    /// Analyzer options sent by browser-based clients. Accepted but ignored: the API always runs
+    /// the analysis with tree-sitter enabled and rule output logged.
+    #[serde(rename = "options")]
+    pub options: Option<crate::datadogV2::model::AnalysisRequestOptions>,
     /// The list of static analysis rules to apply during analysis.
     #[serde(rename = "rules")]
     pub rules: Vec<crate::datadogV2::model::AnalysisRequestRule>,
@@ -46,10 +50,16 @@ impl AnalysisRequestDataAttributes {
             file_encoding,
             filename,
             language,
+            options: None,
             rules,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn options(mut self, value: crate::datadogV2::model::AnalysisRequestOptions) -> Self {
+        self.options = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -82,6 +92,7 @@ impl<'de> Deserialize<'de> for AnalysisRequestDataAttributes {
                 let mut file_encoding: Option<String> = None;
                 let mut filename: Option<String> = None;
                 let mut language: Option<String> = None;
+                let mut options: Option<crate::datadogV2::model::AnalysisRequestOptions> = None;
                 let mut rules: Option<Vec<crate::datadogV2::model::AnalysisRequestRule>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -103,6 +114,12 @@ impl<'de> Deserialize<'de> for AnalysisRequestDataAttributes {
                         }
                         "language" => {
                             language = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "options" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "rules" => {
                             rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -126,6 +143,7 @@ impl<'de> Deserialize<'de> for AnalysisRequestDataAttributes {
                     file_encoding,
                     filename,
                     language,
+                    options,
                     rules,
                     additional_properties,
                     _unparsed,
