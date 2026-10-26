@@ -168,6 +168,64 @@ impl ListTeamHierarchyLinksOptionalParams {
     }
 }
 
+/// ListTeamHierarchyMembersOptionalParams is a struct for passing parameters to the method [`TeamsAPI::list_team_hierarchy_members`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListTeamHierarchyMembersOptionalParams {
+    /// Return only direct members. By default, members inherited from descendant teams are also returned.
+    pub filter_is_direct_only: Option<bool>,
+    /// Include service accounts. Datadog support users are always excluded.
+    pub filter_include_service_accounts: Option<bool>,
+    /// Filter by a case-insensitive substring of the user name, handle, or email.
+    pub filter_keyword: Option<String>,
+    /// Comma-separated resources to include: `user` and `team`. The included team is the requested team. Whitespace is trimmed, and duplicate or empty entries are ignored.
+    pub include: Option<String>,
+    /// Comma-separated sort fields: `name`, `handle`, `is_direct`, and `provisioned_by`. Fields are applied in order, each optionally prefixed with `-` for descending order. By default, team admins come first, followed by other direct members, then inherited members, sorted by name within each group.
+    pub sort: Option<String>,
+    /// Zero-based page number. Negative values become 0. Defaults to 0.
+    pub page_number: Option<i64>,
+    /// Requested number of members per page. Defaults to and maxes out at 100.
+    pub page_size: Option<i64>,
+}
+
+impl ListTeamHierarchyMembersOptionalParams {
+    /// Return only direct members. By default, members inherited from descendant teams are also returned.
+    pub fn filter_is_direct_only(mut self, value: bool) -> Self {
+        self.filter_is_direct_only = Some(value);
+        self
+    }
+    /// Include service accounts. Datadog support users are always excluded.
+    pub fn filter_include_service_accounts(mut self, value: bool) -> Self {
+        self.filter_include_service_accounts = Some(value);
+        self
+    }
+    /// Filter by a case-insensitive substring of the user name, handle, or email.
+    pub fn filter_keyword(mut self, value: String) -> Self {
+        self.filter_keyword = Some(value);
+        self
+    }
+    /// Comma-separated resources to include: `user` and `team`. The included team is the requested team. Whitespace is trimmed, and duplicate or empty entries are ignored.
+    pub fn include(mut self, value: String) -> Self {
+        self.include = Some(value);
+        self
+    }
+    /// Comma-separated sort fields: `name`, `handle`, `is_direct`, and `provisioned_by`. Fields are applied in order, each optionally prefixed with `-` for descending order. By default, team admins come first, followed by other direct members, then inherited members, sorted by name within each group.
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Zero-based page number. Negative values become 0. Defaults to 0.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Requested number of members per page. Defaults to and maxes out at 100.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+}
+
 /// ListTeamsOptionalParams is a struct for passing parameters to the method [`TeamsAPI::list_teams`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -422,6 +480,15 @@ pub enum ListTeamConnectionsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListTeamHierarchyLinksError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListTeamHierarchyMembersError is a struct for typed errors of method [`TeamsAPI::list_team_hierarchy_members`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListTeamHierarchyMembersError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -3849,6 +3916,216 @@ impl TeamsAPI {
             };
         } else {
             let local_entity: Option<ListTeamHierarchyLinksError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List the direct and inherited members of a team, deduplicated by user.
+    /// Members of descendant teams are included unless `filter[is_direct_only]` is true.
+    /// Datadog support users are always excluded.
+    ///
+    /// Use `page[number]` and `page[size]` to paginate through the results.
+    /// Invalid query parameters return a JSON:API error with status 400.
+    /// Invalid or unknown team UUIDs return status 404.
+    pub async fn list_team_hierarchy_members(
+        &self,
+        team_id: String,
+        params: ListTeamHierarchyMembersOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::TeamHierarchyMembersResponse,
+        datadog::Error<ListTeamHierarchyMembersError>,
+    > {
+        match self
+            .list_team_hierarchy_members_with_http_info(team_id, params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_team_hierarchy_members_with_pagination(
+        &self,
+        team_id: String,
+        mut params: ListTeamHierarchyMembersOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::TeamHierarchyMember,
+            datadog::Error<ListTeamHierarchyMembersError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_team_hierarchy_members( team_id.clone(),params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
+    /// List the direct and inherited members of a team, deduplicated by user.
+    /// Members of descendant teams are included unless `filter[is_direct_only]` is true.
+    /// Datadog support users are always excluded.
+    ///
+    /// Use `page[number]` and `page[size]` to paginate through the results.
+    /// Invalid query parameters return a JSON:API error with status 400.
+    /// Invalid or unknown team UUIDs return status 404.
+    pub async fn list_team_hierarchy_members_with_http_info(
+        &self,
+        team_id: String,
+        params: ListTeamHierarchyMembersOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyMembersResponse>,
+        datadog::Error<ListTeamHierarchyMembersError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_team_hierarchy_members";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_team_hierarchy_members' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_is_direct_only = params.filter_is_direct_only;
+        let filter_include_service_accounts = params.filter_include_service_accounts;
+        let filter_keyword = params.filter_keyword;
+        let include = params.include;
+        let sort = params.sort;
+        let page_number = params.page_number;
+        let page_size = params.page_size;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/team/{team_id}/members",
+            local_configuration.get_operation_host(local_operation_id),
+            team_id = datadog::urlencode(team_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_is_direct_only {
+            local_req_builder = local_req_builder
+                .query(&[("filter[is_direct_only]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_include_service_accounts {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[include_service_accounts]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = filter_keyword {
+            local_req_builder =
+                local_req_builder.query(&[("filter[keyword]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyMembersResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListTeamHierarchyMembersError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
