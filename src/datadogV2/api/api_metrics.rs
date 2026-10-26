@@ -193,6 +193,69 @@ impl ListTagConfigurationsOptionalParams {
     }
 }
 
+/// ListTagIndexingRuleExemptionsOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_tag_indexing_rule_exemptions`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct ListTagIndexingRuleExemptionsOptionalParams {
+    /// Filter exemptions to metrics whose names start with this literal prefix.
+    /// Matching is case-sensitive. Wildcard characters are treated literally.
+    pub filter_metric_prefix: Option<String>,
+    /// Filter exemptions by whether they are safe to remove. An exemption is considered safe when a fresh, usable
+    /// estimate indicates that removing it would not increase indexed volume and would not drop tags used to query
+    /// the metric in monitors, dashboards, notebooks, or SLOs. Set to `true` to return safe-to-remove exemptions,
+    /// or `false` to return all other exemptions, including those with unavailable or stale estimates.
+    pub filter_safe: Option<bool>,
+    /// Filter exemptions to metrics matched by the tag indexing rule with this UUID.
+    pub filter_tag_indexing_rule_id: Option<uuid::Uuid>,
+    /// Sort field. Prefix the field with `-` for descending order. The default is `estimated_change_in_volume` in ascending order, with the largest reductions (most negative values) first.
+    pub sort: Option<crate::datadogV2::model::TagIndexingRuleExemptionSort>,
+    /// Maximum number of results per page. Defaults to 10000; accepts values from 1 to 10000. If
+    /// `meta.pagination.next_cursor` is non-null, request the next page by passing that value as `page[cursor]`.
+    /// Continue until `next_cursor` is null.
+    pub page_size: Option<i32>,
+    /// Cursor for pagination. Use `page[size]` to opt-in to pagination and get the first page; for subsequent pages, use the value from `meta.pagination.next_cursor` in the response. Pagination is complete when `next_cursor` is null.
+    pub page_cursor: Option<String>,
+}
+
+impl ListTagIndexingRuleExemptionsOptionalParams {
+    /// Filter exemptions to metrics whose names start with this literal prefix.
+    /// Matching is case-sensitive. Wildcard characters are treated literally.
+    pub fn filter_metric_prefix(mut self, value: String) -> Self {
+        self.filter_metric_prefix = Some(value);
+        self
+    }
+    /// Filter exemptions by whether they are safe to remove. An exemption is considered safe when a fresh, usable
+    /// estimate indicates that removing it would not increase indexed volume and would not drop tags used to query
+    /// the metric in monitors, dashboards, notebooks, or SLOs. Set to `true` to return safe-to-remove exemptions,
+    /// or `false` to return all other exemptions, including those with unavailable or stale estimates.
+    pub fn filter_safe(mut self, value: bool) -> Self {
+        self.filter_safe = Some(value);
+        self
+    }
+    /// Filter exemptions to metrics matched by the tag indexing rule with this UUID.
+    pub fn filter_tag_indexing_rule_id(mut self, value: uuid::Uuid) -> Self {
+        self.filter_tag_indexing_rule_id = Some(value);
+        self
+    }
+    /// Sort field. Prefix the field with `-` for descending order. The default is `estimated_change_in_volume` in ascending order, with the largest reductions (most negative values) first.
+    pub fn sort(mut self, value: crate::datadogV2::model::TagIndexingRuleExemptionSort) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Maximum number of results per page. Defaults to 10000; accepts values from 1 to 10000. If
+    /// `meta.pagination.next_cursor` is non-null, request the next page by passing that value as `page[cursor]`.
+    /// Continue until `next_cursor` is null.
+    pub fn page_size(mut self, value: i32) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Cursor for pagination. Use `page[size]` to opt-in to pagination and get the first page; for subsequent pages, use the value from `meta.pagination.next_cursor` in the response. Pagination is complete when `next_cursor` is null.
+    pub fn page_cursor(mut self, value: String) -> Self {
+        self.page_cursor = Some(value);
+        self
+    }
+}
+
 /// ListTagIndexingRulesOptionalParams is a struct for passing parameters to the method [`MetricsAPI::list_tag_indexing_rules`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -497,6 +560,14 @@ pub enum ListTagConfigurationByNameError {
 #[serde(untagged)]
 pub enum ListTagConfigurationsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListTagIndexingRuleExemptionsError is a struct for typed errors of method [`MetricsAPI::list_tag_indexing_rule_exemptions`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListTagIndexingRuleExemptionsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -3660,6 +3731,201 @@ impl MetricsAPI {
             };
         } else {
             let local_entity: Option<ListTagConfigurationsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Returns explicit exemptions and legacy tag configurations that exclude metrics from tag indexing rules.
+    /// You can filter results by metric name prefix, whether an exemption is safe to remove, or the UUID of a matching
+    /// tag indexing rule. You can sort results by metric name or by estimated change in indexed volume.
+    pub async fn list_tag_indexing_rule_exemptions(
+        &self,
+        params: ListTagIndexingRuleExemptionsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::TagIndexingRuleExemptionsResponse,
+        datadog::Error<ListTagIndexingRuleExemptionsError>,
+    > {
+        match self
+            .list_tag_indexing_rule_exemptions_with_http_info(params)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_tag_indexing_rule_exemptions_with_pagination(
+        &self,
+        mut params: ListTagIndexingRuleExemptionsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::TagIndexingRuleExemptionData,
+            datadog::Error<ListTagIndexingRuleExemptionsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 10000;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_tag_indexing_rule_exemptions(params.clone()).await?;
+                let Some(data) = resp.data else { break };
+
+                let r = data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count == 0 {
+                    break;
+                }
+                let Some(meta) = resp.meta else { break };
+                let Some(pagination) = meta.pagination else { break };
+                let Some(next_cursor) = pagination.next_cursor.unwrap() else { break };
+
+                params.page_cursor = Some(next_cursor);
+            }
+        }
+    }
+
+    /// Returns explicit exemptions and legacy tag configurations that exclude metrics from tag indexing rules.
+    /// You can filter results by metric name prefix, whether an exemption is safe to remove, or the UUID of a matching
+    /// tag indexing rule. You can sort results by metric name or by estimated change in indexed volume.
+    pub async fn list_tag_indexing_rule_exemptions_with_http_info(
+        &self,
+        params: ListTagIndexingRuleExemptionsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::TagIndexingRuleExemptionsResponse>,
+        datadog::Error<ListTagIndexingRuleExemptionsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_tag_indexing_rule_exemptions";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.list_tag_indexing_rule_exemptions' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_metric_prefix = params.filter_metric_prefix;
+        let filter_safe = params.filter_safe;
+        let filter_tag_indexing_rule_id = params.filter_tag_indexing_rule_id;
+        let sort = params.sort;
+        let page_size = params.page_size;
+        let page_cursor = params.page_cursor;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/metrics/list-tag-indexing-rule-exemptions",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local_query_param) = filter_metric_prefix {
+            local_req_builder = local_req_builder
+                .query(&[("filter[metric_prefix]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_safe {
+            local_req_builder =
+                local_req_builder.query(&[("filter[safe]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = filter_tag_indexing_rule_id {
+            local_req_builder = local_req_builder.query(&[(
+                "filter[tag_indexing_rule_id]",
+                &local_query_param.to_string(),
+            )]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_cursor {
+            local_req_builder =
+                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::TagIndexingRuleExemptionsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListTagIndexingRuleExemptionsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

@@ -6859,6 +6859,14 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_get_historical_metrics_configuration,
     );
     world.function_mappings.insert(
+        "v2.ListTagIndexingRuleExemptions".into(),
+        test_v2_list_tag_indexing_rule_exemptions,
+    );
+    world.function_mappings.insert(
+        "v2.ListTagIndexingRuleExemptionsWithPagination".into(),
+        test_v2_list_tag_indexing_rule_exemptions_with_pagination,
+    );
+    world.function_mappings.insert(
         "v2.ListTagIndexingRules".into(),
         test_v2_list_tag_indexing_rules,
     );
@@ -53793,6 +53801,119 @@ fn test_v2_get_historical_metrics_configuration(
         };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_tag_indexing_rule_exemptions(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let filter_metric_prefix = _parameters
+        .get("filter[metric_prefix]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_safe = _parameters
+        .get("filter[safe]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tag_indexing_rule_id = _parameters
+        .get("filter[tag_indexing_rule_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_metrics::ListTagIndexingRuleExemptionsOptionalParams::default();
+    params.filter_metric_prefix = filter_metric_prefix;
+    params.filter_safe = filter_safe;
+    params.filter_tag_indexing_rule_id = filter_tag_indexing_rule_id;
+    params.sort = sort;
+    params.page_size = page_size;
+    params.page_cursor = page_cursor;
+    let response = match block_on(api.list_tag_indexing_rule_exemptions_with_http_info(params)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+fn test_v2_list_tag_indexing_rule_exemptions_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let filter_metric_prefix = _parameters
+        .get("filter[metric_prefix]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_safe = _parameters
+        .get("filter[safe]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_tag_indexing_rule_id = _parameters
+        .get("filter[tag_indexing_rule_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let sort = _parameters
+        .get("sort")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_cursor = _parameters
+        .get("page[cursor]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_metrics::ListTagIndexingRuleExemptionsOptionalParams::default();
+    params.filter_metric_prefix = filter_metric_prefix;
+    params.filter_safe = filter_safe;
+    params.filter_tag_indexing_rule_id = filter_tag_indexing_rule_id;
+    params.sort = sort;
+    params.page_size = page_size;
+    params.page_cursor = page_cursor;
+    let response = api.list_tag_indexing_rule_exemptions_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
 }
 
 fn test_v2_list_tag_indexing_rules(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
