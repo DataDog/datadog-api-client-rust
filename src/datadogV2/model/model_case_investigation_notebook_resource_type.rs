@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum NotebookResourceType {
+pub enum CaseInvestigationNotebookResourceType {
     NOTEBOOK,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for NotebookResourceType {
+impl ToString for CaseInvestigationNotebookResourceType {
     fn to_string(&self) -> String {
         match self {
             Self::NOTEBOOK => String::from("notebook"),
@@ -20,7 +20,7 @@ impl ToString for NotebookResourceType {
     }
 }
 
-impl Serialize for NotebookResourceType {
+impl Serialize for CaseInvestigationNotebookResourceType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for NotebookResourceType {
     }
 }
 
-impl<'de> Deserialize<'de> for NotebookResourceType {
+impl<'de> Deserialize<'de> for CaseInvestigationNotebookResourceType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
