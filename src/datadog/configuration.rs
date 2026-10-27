@@ -909,6 +909,7 @@ impl Default for Configuration {
             ("v2.list_tag_indexing_rules_for_metric".to_owned(), false),
             ("v2.reorder_tag_indexing_rules".to_owned(), false),
             ("v2.update_tag_indexing_rule".to_owned(), false),
+            ("v2.update_tag_indexing_rule_exemption".to_owned(), false),
             ("v2.delete_model_lab_run".to_owned(), false),
             ("v2.get_model_lab_artifact_content".to_owned(), false),
             ("v2.get_model_lab_project".to_owned(), false),

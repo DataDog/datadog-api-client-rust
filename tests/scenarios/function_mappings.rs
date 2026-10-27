@@ -6946,6 +6946,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_create_tag_indexing_rule_exemption,
     );
     world.function_mappings.insert(
+        "v2.UpdateTagIndexingRuleExemption".into(),
+        test_v2_update_tag_indexing_rule_exemption,
+    );
+    world.function_mappings.insert(
         "v2.ListTagIndexingRulesForMetric".into(),
         test_v2_list_tag_indexing_rules_for_metric,
     );
@@ -54595,6 +54599,37 @@ fn test_v2_create_tag_indexing_rule_exemption(
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response =
         match block_on(api.create_tag_indexing_rule_exemption_with_http_info(metric_name, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_tag_indexing_rule_exemption(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let metric_name =
+        serde_json::from_value(_parameters.get("metric_name").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_tag_indexing_rule_exemption_with_http_info(metric_name, body)) {
             Ok(response) => response,
             Err(error) => {
                 return match error {
