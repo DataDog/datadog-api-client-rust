@@ -13,7 +13,8 @@ use std::fmt::{self, Formatter};
 pub struct RUMBucketResponse {
     /// The key-value pairs for each group-by.
     #[serde(rename = "by")]
-    pub by: Option<std::collections::BTreeMap<String, String>>,
+    pub by:
+        Option<std::collections::BTreeMap<String, crate::datadogV2::model::RUMBucketGroupByValue>>,
     /// A map of the metric name to value for regular compute, or a list of values for a timeseries.
     #[serde(rename = "computes")]
     pub computes: Option<
@@ -36,7 +37,10 @@ impl RUMBucketResponse {
         }
     }
 
-    pub fn by(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
+    pub fn by(
+        mut self,
+        value: std::collections::BTreeMap<String, crate::datadogV2::model::RUMBucketGroupByValue>,
+    ) -> Self {
         self.by = Some(value);
         self
     }
@@ -81,7 +85,12 @@ impl<'de> Deserialize<'de> for RUMBucketResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut by: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut by: Option<
+                    std::collections::BTreeMap<
+                        String,
+                        crate::datadogV2::model::RUMBucketGroupByValue,
+                    >,
+                > = None;
                 let mut computes: Option<
                     std::collections::BTreeMap<
                         String,

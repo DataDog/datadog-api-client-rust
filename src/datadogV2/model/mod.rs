@@ -12136,6 +12136,8 @@ pub mod model_rum_aggregation_buckets_response;
 pub use self::model_rum_aggregation_buckets_response::RUMAggregationBucketsResponse;
 pub mod model_rum_bucket_response;
 pub use self::model_rum_bucket_response::RUMBucketResponse;
+pub mod model_rum_bucket_group_by_value;
+pub use self::model_rum_bucket_group_by_value::RUMBucketGroupByValue;
 pub mod model_rum_aggregate_bucket_value_timeseries_point;
 pub use self::model_rum_aggregate_bucket_value_timeseries_point::RUMAggregateBucketValueTimeseriesPoint;
 pub mod model_rum_aggregate_bucket_value;
