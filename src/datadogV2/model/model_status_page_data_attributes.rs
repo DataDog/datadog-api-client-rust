@@ -63,6 +63,9 @@ pub struct StatusPageDataAttributes {
     /// The url that the status page is accessible at.
     #[serde(rename = "page_url")]
     pub page_url: Option<String>,
+    /// Whether the RSS feed is enabled for the status page.
+    #[serde(rename = "rss_feed_enabled")]
+    pub rss_feed_enabled: Option<bool>,
     /// The Slack app icon URL for the status page.
     #[serde(rename = "slack_app_icon")]
     pub slack_app_icon: Option<String>,
@@ -101,6 +104,7 @@ impl StatusPageDataAttributes {
             modified_at: None,
             name: None,
             page_url: None,
+            rss_feed_enabled: None,
             slack_app_icon: None,
             slack_subscriptions_enabled: None,
             subscriptions_enabled: None,
@@ -171,6 +175,11 @@ impl StatusPageDataAttributes {
 
     pub fn page_url(mut self, value: String) -> Self {
         self.page_url = Some(value);
+        self
+    }
+
+    pub fn rss_feed_enabled(mut self, value: bool) -> Self {
+        self.rss_feed_enabled = Some(value);
         self
     }
 
@@ -251,6 +260,7 @@ impl<'de> Deserialize<'de> for StatusPageDataAttributes {
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut page_url: Option<String> = None;
+                let mut rss_feed_enabled: Option<bool> = None;
                 let mut slack_app_icon: Option<String> = None;
                 let mut slack_subscriptions_enabled: Option<bool> = None;
                 let mut subscriptions_enabled: Option<bool> = None;
@@ -334,6 +344,13 @@ impl<'de> Deserialize<'de> for StatusPageDataAttributes {
                             }
                             page_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "rss_feed_enabled" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            rss_feed_enabled =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "slack_app_icon" => {
                             if v.is_null() {
                                 continue;
@@ -405,6 +422,7 @@ impl<'de> Deserialize<'de> for StatusPageDataAttributes {
                     modified_at,
                     name,
                     page_url,
+                    rss_feed_enabled,
                     slack_app_icon,
                     slack_subscriptions_enabled,
                     subscriptions_enabled,
