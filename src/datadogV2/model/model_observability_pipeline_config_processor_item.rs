@@ -56,6 +56,9 @@ pub enum ObservabilityPipelineConfigProcessorItem {
     ObservabilityPipelineRenameFieldsProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineRenameFieldsProcessor>,
     ),
+    ObservabilityPipelineSpikeProtectionProcessor(
+        Box<crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessor>,
+    ),
     ObservabilityPipelineSplitArrayProcessor(
         Box<crate::datadogV2::model::ObservabilityPipelineSplitArrayProcessor>,
     ),
@@ -243,6 +246,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigProcessorItem {
         {
             if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineRenameFieldsProcessor(_v));
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessor>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigProcessorItem::ObservabilityPipelineSpikeProtectionProcessor(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
