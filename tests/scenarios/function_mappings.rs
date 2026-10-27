@@ -6711,12 +6711,24 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_logs_with_pagination,
     );
     world.function_mappings.insert(
+        "v2.ListArchiveSearches".into(),
+        test_v2_list_archive_searches,
+    );
+    world.function_mappings.insert(
         "v2.CreateArchiveSearch".into(),
         test_v2_create_archive_search,
     );
     world
         .function_mappings
         .insert("v2.GetArchiveSearch".into(), test_v2_get_archive_search);
+    world.function_mappings.insert(
+        "v2.RehydrateArchiveSearch".into(),
+        test_v2_rehydrate_archive_search,
+    );
+    world.function_mappings.insert(
+        "v2.CancelArchiveSearch".into(),
+        test_v2_cancel_archive_search,
+    );
     world.function_mappings.insert(
         "v2.GetLogsArchiveOrder".into(),
         test_v2_get_logs_archive_order,
@@ -52656,6 +52668,30 @@ fn test_v2_list_logs_with_pagination(
     world.response.code = 200;
 }
 
+fn test_v2_list_archive_searches(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_logs_archive_searches
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_archive_searches_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
 fn test_v2_create_archive_search(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
     let api = world
         .api_instances
@@ -52690,6 +52726,63 @@ fn test_v2_get_archive_search(world: &mut DatadogWorld, _parameters: &HashMap<St
     let archive_search_id =
         serde_json::from_value(_parameters.get("archive_search_id").unwrap().clone()).unwrap();
     let response = match block_on(api.get_archive_search_with_http_info(archive_search_id)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_rehydrate_archive_search(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_logs_archive_searches
+        .as_ref()
+        .expect("api instance not found");
+    let archive_search_id =
+        serde_json::from_value(_parameters.get("archive_search_id").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.rehydrate_archive_search_with_http_info(archive_search_id, body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_cancel_archive_search(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_logs_archive_searches
+        .as_ref()
+        .expect("api instance not found");
+    let archive_search_id =
+        serde_json::from_value(_parameters.get("archive_search_id").unwrap().clone()).unwrap();
+    let response = match block_on(api.cancel_archive_search_with_http_info(archive_search_id)) {
         Ok(response) => response,
         Err(error) => {
             return match error {
