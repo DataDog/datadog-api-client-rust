@@ -23,6 +23,9 @@ pub struct HistoricalJobResponseAttributes {
     /// ID of the rule used to create the job (if it is created from a rule).
     #[serde(rename = "createdFromRuleId")]
     pub created_from_rule_id: Option<String>,
+    /// Details about why the job failed. Only present when the job has failed and won't be retried.
+    #[serde(rename = "failure")]
+    pub failure: Option<crate::datadogV2::model::HistoricalJobFailure>,
     /// Definition of a historical job.
     #[serde(rename = "jobDefinition")]
     pub job_definition: Option<crate::datadogV2::model::JobDefinition>,
@@ -55,6 +58,7 @@ impl HistoricalJobResponseAttributes {
             created_by_handle: None,
             created_by_name: None,
             created_from_rule_id: None,
+            failure: None,
             job_definition: None,
             job_name: None,
             job_status: None,
@@ -83,6 +87,11 @@ impl HistoricalJobResponseAttributes {
 
     pub fn created_from_rule_id(mut self, value: String) -> Self {
         self.created_from_rule_id = Some(value);
+        self
+    }
+
+    pub fn failure(mut self, value: crate::datadogV2::model::HistoricalJobFailure) -> Self {
+        self.failure = Some(value);
         self
     }
 
@@ -152,6 +161,7 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseAttributes {
                 let mut created_by_handle: Option<String> = None;
                 let mut created_by_name: Option<String> = None;
                 let mut created_from_rule_id: Option<String> = None;
+                let mut failure: Option<crate::datadogV2::model::HistoricalJobFailure> = None;
                 let mut job_definition: Option<crate::datadogV2::model::JobDefinition> = None;
                 let mut job_name: Option<String> = None;
                 let mut job_status: Option<String> = None;
@@ -192,6 +202,12 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseAttributes {
                             }
                             created_from_rule_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "failure" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            failure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "jobDefinition" => {
                             if v.is_null() {
@@ -246,6 +262,7 @@ impl<'de> Deserialize<'de> for HistoricalJobResponseAttributes {
                     created_by_handle,
                     created_by_name,
                     created_from_rule_id,
+                    failure,
                     job_definition,
                     job_name,
                     job_status,
