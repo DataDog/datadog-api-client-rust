@@ -11,6 +11,11 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMApplicationCreateAttributes {
+    /// Whether to create the default retention filters when the application is created: `Sessions with errors` and `Sessions`, each with a 100% retention rate.
+    /// Set to `false` to create the application without them, for example when you add your own retention filters right after creating it. Until you add retention filters, the application only retains sessions matched by its [permanent retention filters](<https://docs.datadoghq.com/real_user_monitoring/rum_without_limits/retention_filters/#permanent-retention-filters>).
+    /// This setting doesn't affect permanent retention filters (sessions with forced replays, Synthetics sessions and RUM-APM flat sampling).
+    #[serde(rename = "create_default_retention_filters")]
+    pub create_default_retention_filters: Option<bool>,
     /// Name of the RUM application.
     #[serde(rename = "name")]
     pub name: String,
@@ -34,6 +39,7 @@ pub struct RUMApplicationCreateAttributes {
 impl RUMApplicationCreateAttributes {
     pub fn new(name: String) -> RUMApplicationCreateAttributes {
         RUMApplicationCreateAttributes {
+            create_default_retention_filters: None,
             name,
             product_analytics_retention_state: None,
             rum_event_processing_state: None,
@@ -41,6 +47,11 @@ impl RUMApplicationCreateAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn create_default_retention_filters(mut self, value: bool) -> Self {
+        self.create_default_retention_filters = Some(value);
+        self
     }
 
     pub fn product_analytics_retention_state(
@@ -90,6 +101,7 @@ impl<'de> Deserialize<'de> for RUMApplicationCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut create_default_retention_filters: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut product_analytics_retention_state: Option<
                     crate::datadogV2::model::RUMProductAnalyticsRetentionState,
@@ -106,6 +118,13 @@ impl<'de> Deserialize<'de> for RUMApplicationCreateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "create_default_retention_filters" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            create_default_retention_filters =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -159,6 +178,7 @@ impl<'de> Deserialize<'de> for RUMApplicationCreateAttributes {
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = RUMApplicationCreateAttributes {
+                    create_default_retention_filters,
                     name,
                     product_analytics_retention_state,
                     rum_event_processing_state,
