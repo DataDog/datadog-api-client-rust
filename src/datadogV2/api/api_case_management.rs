@@ -2367,7 +2367,7 @@ impl CaseManagementAPI {
     pub async fn create_case_notebook(
         &self,
         case_id: String,
-        body: crate::datadogV2::model::NotebookCreateRequest,
+        body: crate::datadogV2::model::CaseInvestigationNotebookCreateRequest,
     ) -> Result<(), datadog::Error<CreateCaseNotebookError>> {
         match self
             .create_case_notebook_with_http_info(case_id, body)
@@ -2382,7 +2382,7 @@ impl CaseManagementAPI {
     pub async fn create_case_notebook_with_http_info(
         &self,
         case_id: String,
-        body: crate::datadogV2::model::NotebookCreateRequest,
+        body: crate::datadogV2::model::CaseInvestigationNotebookCreateRequest,
     ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCaseNotebookError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_case_notebook";

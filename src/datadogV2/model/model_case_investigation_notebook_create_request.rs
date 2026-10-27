@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Notebook creation data
+/// Case investigation notebook creation request.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct NotebookCreateData {
-    /// Notebook resource type
-    #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::NotebookResourceType,
+pub struct CaseInvestigationNotebookCreateRequest {
+    /// Case investigation notebook creation data.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::CaseInvestigationNotebookCreateData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,10 +21,12 @@ pub struct NotebookCreateData {
     pub(crate) _unparsed: bool,
 }
 
-impl NotebookCreateData {
-    pub fn new(type_: crate::datadogV2::model::NotebookResourceType) -> NotebookCreateData {
-        NotebookCreateData {
-            type_,
+impl CaseInvestigationNotebookCreateRequest {
+    pub fn new(
+        data: crate::datadogV2::model::CaseInvestigationNotebookCreateData,
+    ) -> CaseInvestigationNotebookCreateRequest {
+        CaseInvestigationNotebookCreateRequest {
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -39,14 +41,14 @@ impl NotebookCreateData {
     }
 }
 
-impl<'de> Deserialize<'de> for NotebookCreateData {
+impl<'de> Deserialize<'de> for CaseInvestigationNotebookCreateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct NotebookCreateDataVisitor;
-        impl<'a> Visitor<'a> for NotebookCreateDataVisitor {
-            type Value = NotebookCreateData;
+        struct CaseInvestigationNotebookCreateRequestVisitor;
+        impl<'a> Visitor<'a> for CaseInvestigationNotebookCreateRequestVisitor {
+            type Value = CaseInvestigationNotebookCreateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +58,8 @@ impl<'de> Deserialize<'de> for NotebookCreateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut type_: Option<crate::datadogV2::model::NotebookResourceType> = None;
+                let mut data: Option<crate::datadogV2::model::CaseInvestigationNotebookCreateData> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -65,16 +68,8 @@ impl<'de> Deserialize<'de> for NotebookCreateData {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "type" => {
-                            type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _type_) = type_ {
-                                match _type_ {
-                                    crate::datadogV2::model::NotebookResourceType::UnparsedObject(_type_) => {
-                                        _unparsed = true;
-                                    },
-                                    _ => {}
-                                }
-                            }
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -83,10 +78,10 @@ impl<'de> Deserialize<'de> for NotebookCreateData {
                         }
                     }
                 }
-                let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = NotebookCreateData {
-                    type_,
+                let content = CaseInvestigationNotebookCreateRequest {
+                    data,
                     additional_properties,
                     _unparsed,
                 };
@@ -95,6 +90,6 @@ impl<'de> Deserialize<'de> for NotebookCreateData {
             }
         }
 
-        deserializer.deserialize_any(NotebookCreateDataVisitor)
+        deserializer.deserialize_any(CaseInvestigationNotebookCreateRequestVisitor)
     }
 }
