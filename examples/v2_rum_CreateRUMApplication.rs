@@ -1,4 +1,4 @@
-// Create a new RUM application returns "OK" response
+// Create a new RUM application returns "Created" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum::RUMAPI;
 use datadog_api_client::datadogV2::model::RUMApplicationCreate;
