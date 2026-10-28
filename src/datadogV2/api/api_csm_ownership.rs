@@ -308,7 +308,7 @@ impl CSMOwnershipAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/csm/ownership/{resource_id}/{owner_type}/feedback",
+            "{}/api/v2/security/ownership/{resource_id}/{owner_type}/feedback",
             local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id),
             owner_type = datadog::urlencode(owner_type.to_string())
@@ -487,7 +487,7 @@ impl CSMOwnershipAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/csm/ownership/{resource_id}/{owner_type}/evidence",
+            "{}/api/v2/security/ownership/{resource_id}/{owner_type}/evidence",
             local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id),
             owner_type = datadog::urlencode(owner_type.to_string())
@@ -629,7 +629,7 @@ impl CSMOwnershipAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/csm/ownership/{resource_id}/{owner_type}",
+            "{}/api/v2/security/ownership/{resource_id}/{owner_type}",
             local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id),
             owner_type = datadog::urlencode(owner_type.to_string())
@@ -994,7 +994,7 @@ impl CSMOwnershipAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/csm/ownership/{resource_id}/history",
+            "{}/api/v2/security/ownership/{resource_id}/history",
             local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id)
         );
@@ -1132,7 +1132,7 @@ impl CSMOwnershipAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/csm/ownership/{resource_id}/{owner_type}/history",
+            "{}/api/v2/security/ownership/{resource_id}/{owner_type}/history",
             local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id),
             owner_type = datadog::urlencode(owner_type.to_string())
@@ -1262,7 +1262,7 @@ impl CSMOwnershipAPI {
         let local_client = &self.client;
 
         let local_uri_str = format!(
-            "{}/api/v2/csm/ownership/{resource_id}",
+            "{}/api/v2/security/ownership/{resource_id}",
             local_configuration.get_operation_host(local_operation_id),
             resource_id = datadog::urlencode(resource_id)
         );
