@@ -17,6 +17,9 @@ pub struct RumRetentionFilterData {
     /// ID of retention filter in UUID.
     #[serde(rename = "id")]
     pub id: Option<String>,
+    /// Metadata about a RUM retention filter.
+    #[serde(rename = "meta")]
+    pub meta: Option<crate::datadogV2::model::RumRetentionFilterMeta>,
     /// The type of the resource. The value should always be retention_filters.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::RumRetentionFilterType>,
@@ -32,6 +35,7 @@ impl RumRetentionFilterData {
         RumRetentionFilterData {
             attributes: None,
             id: None,
+            meta: None,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -48,6 +52,11 @@ impl RumRetentionFilterData {
 
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
+        self
+    }
+
+    pub fn meta(mut self, value: crate::datadogV2::model::RumRetentionFilterMeta) -> Self {
+        self.meta = Some(value);
         self
     }
 
@@ -91,6 +100,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterData {
                 let mut attributes: Option<crate::datadogV2::model::RumRetentionFilterAttributes> =
                     None;
                 let mut id: Option<String> = None;
+                let mut meta: Option<crate::datadogV2::model::RumRetentionFilterMeta> = None;
                 let mut type_: Option<crate::datadogV2::model::RumRetentionFilterType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -111,6 +121,12 @@ impl<'de> Deserialize<'de> for RumRetentionFilterData {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             if v.is_null() {
@@ -137,6 +153,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterData {
                 let content = RumRetentionFilterData {
                     attributes,
                     id,
+                    meta,
                     type_,
                     additional_properties,
                     _unparsed,

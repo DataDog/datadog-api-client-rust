@@ -14,6 +14,8 @@ pub enum RumRetentionFilterEventType {
     RESOURCE,
     LONG_TASK,
     VITAL,
+    OPERATION,
+    EXECUTION_CONTEXT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -27,6 +29,8 @@ impl ToString for RumRetentionFilterEventType {
             Self::RESOURCE => String::from("resource"),
             Self::LONG_TASK => String::from("long_task"),
             Self::VITAL => String::from("vital"),
+            Self::OPERATION => String::from("operation"),
+            Self::EXECUTION_CONTEXT => String::from("execution_context"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -58,6 +62,8 @@ impl<'de> Deserialize<'de> for RumRetentionFilterEventType {
             "resource" => Self::RESOURCE,
             "long_task" => Self::LONG_TASK,
             "vital" => Self::VITAL,
+            "operation" => Self::OPERATION,
+            "execution_context" => Self::EXECUTION_CONTEXT,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

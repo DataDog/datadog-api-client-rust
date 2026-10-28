@@ -29,6 +29,9 @@ pub struct RumRetentionFilterAttributes {
     /// The sample rate for a RUM retention filter, between 0.1 and 100. Values are truncated to one decimal place.
     #[serde(rename = "sample_rate")]
     pub sample_rate: Option<f64>,
+    /// The product track a RUM retention filter applies to.
+    #[serde(rename = "track")]
+    pub track: Option<crate::datadogV2::model::RumRetentionFilterTrack>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -45,6 +48,7 @@ impl RumRetentionFilterAttributes {
             name: None,
             query: None,
             sample_rate: None,
+            track: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -83,6 +87,11 @@ impl RumRetentionFilterAttributes {
 
     pub fn sample_rate(mut self, value: f64) -> Self {
         self.sample_rate = Some(value);
+        self
+    }
+
+    pub fn track(mut self, value: crate::datadogV2::model::RumRetentionFilterTrack) -> Self {
+        self.track = Some(value);
         self
     }
 
@@ -127,6 +136,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterAttributes {
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
                 let mut sample_rate: Option<f64> = None;
+                let mut track: Option<crate::datadogV2::model::RumRetentionFilterTrack> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -181,6 +191,20 @@ impl<'de> Deserialize<'de> for RumRetentionFilterAttributes {
                             sample_rate =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "track" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            track = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _track) = track {
+                                match _track {
+                                    crate::datadogV2::model::RumRetentionFilterTrack::UnparsedObject(_track) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -196,6 +220,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterAttributes {
                     name,
                     query,
                     sample_rate,
+                    track,
                     additional_properties,
                     _unparsed,
                 };

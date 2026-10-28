@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A Datadog user referenced by a RUM operation.
+/// A Datadog user referenced by a RUM operation. `null` when the user could not be resolved.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
