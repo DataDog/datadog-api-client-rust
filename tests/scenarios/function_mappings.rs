@@ -86,8 +86,6 @@ pub struct ApiInstances {
     pub v2_api_ci_visibility_tests:
         Option<datadogV2::api_ci_visibility_tests::CIVisibilityTestsAPI>,
     pub v2_api_ci_visibility_logs: Option<datadogV2::api_ci_visibility_logs::CIVisibilityLogsAPI>,
-    pub v2_api_cloud_authentication:
-        Option<datadogV2::api_cloud_authentication::CloudAuthenticationAPI>,
     pub v2_api_security_monitoring:
         Option<datadogV2::api_security_monitoring::SecurityMonitoringAPI>,
     pub v2_api_storage_management: Option<datadogV2::api_storage_management::StorageManagementAPI>,
@@ -253,6 +251,8 @@ pub struct ApiInstances {
         Option<datadogV2::api_user_authorized_clients::UserAuthorizedClientsAPI>,
     pub v2_api_web_integrations: Option<datadogV2::api_web_integrations::WebIntegrationsAPI>,
     pub v2_api_widgets: Option<datadogV2::api_widgets::WidgetsAPI>,
+    pub v2_api_cloud_authentication:
+        Option<datadogV2::api_cloud_authentication::CloudAuthenticationAPI>,
     pub v2_api_workflow_automation:
         Option<datadogV2::api_workflow_automation::WorkflowAutomationAPI>,
 }
@@ -803,14 +803,6 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
         "CIVisibilityLogs" => {
             world.api_instances.v2_api_ci_visibility_logs = Some(
                 datadogV2::api_ci_visibility_logs::CIVisibilityLogsAPI::with_client_and_config(
-                    world.config.clone(),
-                    world.http_client.as_ref().unwrap().clone(),
-                ),
-            );
-        }
-        "CloudAuthentication" => {
-            world.api_instances.v2_api_cloud_authentication = Some(
-                datadogV2::api_cloud_authentication::CloudAuthenticationAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -1589,6 +1581,14 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ));
+        }
+        "CloudAuthentication" => {
+            world.api_instances.v2_api_cloud_authentication = Some(
+                datadogV2::api_cloud_authentication::CloudAuthenticationAPI::with_client_and_config(
+                    world.config.clone(),
+                    world.http_client.as_ref().unwrap().clone(),
+                ),
+            );
         }
         "WorkflowAutomation" => {
             world.api_instances.v2_api_workflow_automation = Some(
@@ -3715,54 +3715,6 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.SubmitCILog".into(), test_v2_submit_ci_log);
-    world.function_mappings.insert(
-        "v2.ListAWSCloudAuthPersonaMappings".into(),
-        test_v2_list_aws_cloud_auth_persona_mappings,
-    );
-    world.function_mappings.insert(
-        "v2.CreateAWSCloudAuthPersonaMapping".into(),
-        test_v2_create_aws_cloud_auth_persona_mapping,
-    );
-    world.function_mappings.insert(
-        "v2.DeleteAWSCloudAuthPersonaMapping".into(),
-        test_v2_delete_aws_cloud_auth_persona_mapping,
-    );
-    world.function_mappings.insert(
-        "v2.GetAWSCloudAuthPersonaMapping".into(),
-        test_v2_get_aws_cloud_auth_persona_mapping,
-    );
-    world.function_mappings.insert(
-        "v2.ListGitHubCloudAuthIntakeMappings".into(),
-        test_v2_list_git_hub_cloud_auth_intake_mappings,
-    );
-    world.function_mappings.insert(
-        "v2.CreateGitHubCloudAuthIntakeMapping".into(),
-        test_v2_create_git_hub_cloud_auth_intake_mapping,
-    );
-    world.function_mappings.insert(
-        "v2.DeleteGitHubCloudAuthIntakeMapping".into(),
-        test_v2_delete_git_hub_cloud_auth_intake_mapping,
-    );
-    world.function_mappings.insert(
-        "v2.GetGitHubCloudAuthIntakeMapping".into(),
-        test_v2_get_git_hub_cloud_auth_intake_mapping,
-    );
-    world.function_mappings.insert(
-        "v2.ListGitHubCloudAuthPersonaMappings".into(),
-        test_v2_list_git_hub_cloud_auth_persona_mappings,
-    );
-    world.function_mappings.insert(
-        "v2.CreateGitHubCloudAuthPersonaMapping".into(),
-        test_v2_create_git_hub_cloud_auth_persona_mapping,
-    );
-    world.function_mappings.insert(
-        "v2.DeleteGitHubCloudAuthPersonaMapping".into(),
-        test_v2_delete_git_hub_cloud_auth_persona_mapping,
-    );
-    world.function_mappings.insert(
-        "v2.GetGitHubCloudAuthPersonaMapping".into(),
-        test_v2_get_git_hub_cloud_auth_persona_mapping,
-    );
     world.function_mappings.insert(
         "v2.CreateCustomFramework".into(),
         test_v2_create_custom_framework,
@@ -8945,6 +8897,54 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     world
         .function_mappings
         .insert("v2.UpdateWidget".into(), test_v2_update_widget);
+    world.function_mappings.insert(
+        "v2.ListAWSCloudAuthPersonaMappings".into(),
+        test_v2_list_aws_cloud_auth_persona_mappings,
+    );
+    world.function_mappings.insert(
+        "v2.CreateAWSCloudAuthPersonaMapping".into(),
+        test_v2_create_aws_cloud_auth_persona_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteAWSCloudAuthPersonaMapping".into(),
+        test_v2_delete_aws_cloud_auth_persona_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.GetAWSCloudAuthPersonaMapping".into(),
+        test_v2_get_aws_cloud_auth_persona_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.ListGitHubCloudAuthIntakeMappings".into(),
+        test_v2_list_git_hub_cloud_auth_intake_mappings,
+    );
+    world.function_mappings.insert(
+        "v2.CreateGitHubCloudAuthIntakeMapping".into(),
+        test_v2_create_git_hub_cloud_auth_intake_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteGitHubCloudAuthIntakeMapping".into(),
+        test_v2_delete_git_hub_cloud_auth_intake_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.GetGitHubCloudAuthIntakeMapping".into(),
+        test_v2_get_git_hub_cloud_auth_intake_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.ListGitHubCloudAuthPersonaMappings".into(),
+        test_v2_list_git_hub_cloud_auth_persona_mappings,
+    );
+    world.function_mappings.insert(
+        "v2.CreateGitHubCloudAuthPersonaMapping".into(),
+        test_v2_create_git_hub_cloud_auth_persona_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.DeleteGitHubCloudAuthPersonaMapping".into(),
+        test_v2_delete_git_hub_cloud_auth_persona_mapping,
+    );
+    world.function_mappings.insert(
+        "v2.GetGitHubCloudAuthPersonaMapping".into(),
+        test_v2_get_git_hub_cloud_auth_persona_mapping,
+    );
     world
         .function_mappings
         .insert("v2.ListWorkflows".into(), test_v2_list_workflows);
@@ -27206,358 +27206,6 @@ fn test_v2_submit_ci_log(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let mut params = datadogV2::api_ci_visibility_logs::SubmitCILogOptionalParams::default();
     params.content_encoding = content_encoding;
     let response = match block_on(api.submit_ci_log_with_http_info(body, params)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_aws_cloud_auth_persona_mappings(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let response = match block_on(api.list_aws_cloud_auth_persona_mappings_with_http_info()) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_create_aws_cloud_auth_persona_mapping(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_aws_cloud_auth_persona_mapping_with_http_info(body)) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_aws_cloud_auth_persona_mapping(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let persona_mapping_id =
-        serde_json::from_value(_parameters.get("persona_mapping_id").unwrap().clone()).unwrap();
-    let response = match block_on(
-        api.delete_aws_cloud_auth_persona_mapping_with_http_info(persona_mapping_id),
-    ) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_get_aws_cloud_auth_persona_mapping(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let persona_mapping_id =
-        serde_json::from_value(_parameters.get("persona_mapping_id").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.get_aws_cloud_auth_persona_mapping_with_http_info(persona_mapping_id)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_git_hub_cloud_auth_intake_mappings(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let response = match block_on(api.list_git_hub_cloud_auth_intake_mappings_with_http_info()) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_create_git_hub_cloud_auth_intake_mapping(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response = match block_on(api.create_git_hub_cloud_auth_intake_mapping_with_http_info(body))
-    {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_git_hub_cloud_auth_intake_mapping(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let intake_mapping_id =
-        serde_json::from_value(_parameters.get("intake_mapping_id").unwrap().clone()).unwrap();
-    let response = match block_on(
-        api.delete_git_hub_cloud_auth_intake_mapping_with_http_info(intake_mapping_id),
-    ) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_get_git_hub_cloud_auth_intake_mapping(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let intake_mapping_id =
-        serde_json::from_value(_parameters.get("intake_mapping_id").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.get_git_hub_cloud_auth_intake_mapping_with_http_info(intake_mapping_id))
-        {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_list_git_hub_cloud_auth_persona_mappings(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let response = match block_on(api.list_git_hub_cloud_auth_persona_mappings_with_http_info()) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_create_git_hub_cloud_auth_persona_mapping(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
-    let response =
-        match block_on(api.create_git_hub_cloud_auth_persona_mapping_with_http_info(body)) {
-            Ok(response) => response,
-            Err(error) => {
-                return match error {
-                    Error::ResponseError(e) => {
-                        world.response.code = e.status.as_u16();
-                        if let Some(entity) = e.entity {
-                            world.response.object = serde_json::to_value(entity).unwrap();
-                        }
-                    }
-                    _ => panic!("error parsing response: {error}"),
-                };
-            }
-        };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_delete_git_hub_cloud_auth_persona_mapping(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let persona_mapping_id =
-        serde_json::from_value(_parameters.get("persona_mapping_id").unwrap().clone()).unwrap();
-    let response = match block_on(
-        api.delete_git_hub_cloud_auth_persona_mapping_with_http_info(persona_mapping_id),
-    ) {
-        Ok(response) => response,
-        Err(error) => {
-            return match error {
-                Error::ResponseError(e) => {
-                    world.response.code = e.status.as_u16();
-                    if let Some(entity) = e.entity {
-                        world.response.object = serde_json::to_value(entity).unwrap();
-                    }
-                }
-                _ => panic!("error parsing response: {error}"),
-            };
-        }
-    };
-    world.response.object = serde_json::to_value(response.entity).unwrap();
-    world.response.code = response.status.as_u16();
-}
-
-fn test_v2_get_git_hub_cloud_auth_persona_mapping(
-    world: &mut DatadogWorld,
-    _parameters: &HashMap<String, Value>,
-) {
-    let api = world
-        .api_instances
-        .v2_api_cloud_authentication
-        .as_ref()
-        .expect("api instance not found");
-    let persona_mapping_id =
-        serde_json::from_value(_parameters.get("persona_mapping_id").unwrap().clone()).unwrap();
-    let response = match block_on(
-        api.get_git_hub_cloud_auth_persona_mapping_with_http_info(persona_mapping_id),
-    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {
@@ -72507,6 +72155,358 @@ fn test_v2_update_widget(world: &mut DatadogWorld, _parameters: &HashMap<String,
     let uuid = serde_json::from_value(_parameters.get("uuid").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_widget_with_http_info(experience_type, uuid, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_aws_cloud_auth_persona_mappings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_aws_cloud_auth_persona_mappings_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_aws_cloud_auth_persona_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_aws_cloud_auth_persona_mapping_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_aws_cloud_auth_persona_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let persona_mapping_id =
+        serde_json::from_value(_parameters.get("persona_mapping_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_aws_cloud_auth_persona_mapping_with_http_info(persona_mapping_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_aws_cloud_auth_persona_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let persona_mapping_id =
+        serde_json::from_value(_parameters.get("persona_mapping_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_aws_cloud_auth_persona_mapping_with_http_info(persona_mapping_id)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_git_hub_cloud_auth_intake_mappings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_git_hub_cloud_auth_intake_mappings_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_git_hub_cloud_auth_intake_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.create_git_hub_cloud_auth_intake_mapping_with_http_info(body))
+    {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_git_hub_cloud_auth_intake_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let intake_mapping_id =
+        serde_json::from_value(_parameters.get("intake_mapping_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_git_hub_cloud_auth_intake_mapping_with_http_info(intake_mapping_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_git_hub_cloud_auth_intake_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let intake_mapping_id =
+        serde_json::from_value(_parameters.get("intake_mapping_id").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.get_git_hub_cloud_auth_intake_mapping_with_http_info(intake_mapping_id))
+        {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_list_git_hub_cloud_auth_persona_mappings(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.list_git_hub_cloud_auth_persona_mappings_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_create_git_hub_cloud_auth_persona_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.create_git_hub_cloud_auth_persona_mapping_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_git_hub_cloud_auth_persona_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let persona_mapping_id =
+        serde_json::from_value(_parameters.get("persona_mapping_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_git_hub_cloud_auth_persona_mapping_with_http_info(persona_mapping_id),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_git_hub_cloud_auth_persona_mapping(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_cloud_authentication
+        .as_ref()
+        .expect("api instance not found");
+    let persona_mapping_id =
+        serde_json::from_value(_parameters.get("persona_mapping_id").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_git_hub_cloud_auth_persona_mapping_with_http_info(persona_mapping_id),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {
