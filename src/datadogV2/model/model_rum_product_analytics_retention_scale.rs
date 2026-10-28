@@ -15,6 +15,7 @@ pub struct RUMProductAnalyticsRetentionScale {
     #[serde(rename = "last_modified_at")]
     pub last_modified_at: Option<i64>,
     /// Controls the retention policy for Product Analytics data derived from RUM events.
+    /// Requests also accept `PREVIEW` (the initial state of a new application, reported as `NONE` in responses). Setting `MAX` requires the `product_analytics_apps_write` permission.
     #[serde(rename = "state")]
     pub state: Option<crate::datadogV2::model::RUMProductAnalyticsRetentionState>,
     #[serde(flatten)]

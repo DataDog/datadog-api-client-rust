@@ -62636,7 +62636,32 @@ fn test_v2_get_rum_applications(world: &mut DatadogWorld, _parameters: &HashMap<
         .v2_api_rum
         .as_ref()
         .expect("api instance not found");
-    let response = match block_on(api.get_rum_applications_with_http_info()) {
+    let filter_rum_enabled = _parameters
+        .get("filter[rum_enabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_product_analytics_enabled = _parameters
+        .get("filter[product_analytics_enabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_error_focused_mode_enabled = _parameters
+        .get("filter[error_focused_mode_enabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_remote_config_enabled = _parameters
+        .get("filter[remote_config_enabled]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_rum_event_processing_state = _parameters
+        .get("filter[rum_event_processing_state]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_product_analytics_retention_state = _parameters
+        .get("filter[product_analytics_retention_state]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_rum::GetRUMApplicationsOptionalParams::default();
+    params.filter_rum_enabled = filter_rum_enabled;
+    params.filter_product_analytics_enabled = filter_product_analytics_enabled;
+    params.filter_error_focused_mode_enabled = filter_error_focused_mode_enabled;
+    params.filter_remote_config_enabled = filter_remote_config_enabled;
+    params.filter_rum_event_processing_state = filter_rum_event_processing_state;
+    params.filter_product_analytics_retention_state = filter_product_analytics_retention_state;
+    let response = match block_on(api.get_rum_applications_with_http_info(params)) {
         Ok(response) => response,
         Err(error) => {
             return match error {

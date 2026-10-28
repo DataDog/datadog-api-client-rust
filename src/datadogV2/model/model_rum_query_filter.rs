@@ -11,13 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMQueryFilter {
-    /// The minimum time for the requested events; supports date (in [ISO 8601](<https://www.w3.org/TR/NOTE-datetime>) format with full date, hours, minutes, and the `Z` UTC indicator - seconds and fractional seconds are optional), math, and regular timestamps (in milliseconds).
+    /// The minimum time for the requested events, inclusive. Accepts date math relative to now (for example `now-15m`, `now-1h`, `now-7d`), an absolute date in [ISO 8601](<https://www.w3.org/TR/NOTE-datetime>) format with full date, hours, minutes, and the `Z` UTC indicator (seconds and fractional seconds are optional), or a timestamp in milliseconds since the Unix epoch.
     #[serde(rename = "from")]
     pub from: Option<String>,
-    /// The search query following the RUM search syntax.
+    /// The search query following the [RUM search syntax](<https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>). Filter on attributes with `@attribute:value`, for example `@type:view @application.id:<application_id> @view.name:"/checkout"`, and combine terms with `AND`, `OR` and `-` (negation). Event types are `session`, `view`, `action`, `resource`, `error`, `long_task` and `vital`.
     #[serde(rename = "query")]
     pub query: Option<String>,
-    /// The maximum time for the requested events; supports date (in [ISO 8601](<https://www.w3.org/TR/NOTE-datetime>) format with full date, hours, minutes, and the `Z` UTC indicator - seconds and fractional seconds are optional), math, and regular timestamps (in milliseconds).
+    /// The maximum time for the requested events. Accepts the same formats as `from`.
     #[serde(rename = "to")]
     pub to: Option<String>,
     #[serde(flatten)]

@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMGroupBy {
-    /// The name of the facet to use (required).
+    /// The attribute to group by, for example `@view.name` or `@session.type` (required).
     #[serde(rename = "facet")]
     pub facet: String,
     /// Used to perform a histogram computation (only for measure facets).
@@ -21,7 +21,7 @@ pub struct RUMGroupBy {
     /// The maximum buckets to return for this group-by.
     #[serde(rename = "limit")]
     pub limit: Option<i64>,
-    /// The value to use for logs that don't have the facet used to group by.
+    /// The value to use for events that don't have the facet used to group by.
     #[serde(rename = "missing")]
     pub missing: Option<crate::datadogV2::model::RUMGroupByMissing>,
     /// A sort rule.

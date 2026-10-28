@@ -7,6 +7,7 @@ use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
 /// The object sent with the request to retrieve aggregation buckets of RUM events from your organization.
+/// `filter.indexes` is not supported and ignored.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
