@@ -16,7 +16,13 @@ pub struct IncidentRespondersResponse {
     pub data: Vec<crate::datadogV2::model::IncidentResponderDataResponse>,
     /// Included related resources.
     #[serde(rename = "included")]
-    pub included: Option<Vec<crate::datadogV2::model::IncidentUserData>>,
+    pub included: Option<Vec<crate::datadogV2::model::IncidentResponderIncludedItem>>,
+    /// Links to pages of incident responders.
+    #[serde(rename = "links")]
+    pub links: Option<std::collections::BTreeMap<String, String>>,
+    /// Pagination metadata for the responder list.
+    #[serde(rename = "meta")]
+    pub meta: Option<crate::datadogV2::model::IncidentRespondersResponseMeta>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -31,13 +37,28 @@ impl IncidentRespondersResponse {
         IncidentRespondersResponse {
             data,
             included: None,
+            links: None,
+            meta: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn included(mut self, value: Vec<crate::datadogV2::model::IncidentUserData>) -> Self {
+    pub fn included(
+        mut self,
+        value: Vec<crate::datadogV2::model::IncidentResponderIncludedItem>,
+    ) -> Self {
         self.included = Some(value);
+        self
+    }
+
+    pub fn links(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
+        self.links = Some(value);
+        self
+    }
+
+    pub fn meta(mut self, value: crate::datadogV2::model::IncidentRespondersResponseMeta) -> Self {
+        self.meta = Some(value);
         self
     }
 
@@ -69,7 +90,12 @@ impl<'de> Deserialize<'de> for IncidentRespondersResponse {
             {
                 let mut data: Option<Vec<crate::datadogV2::model::IncidentResponderDataResponse>> =
                     None;
-                let mut included: Option<Vec<crate::datadogV2::model::IncidentUserData>> = None;
+                let mut included: Option<
+                    Vec<crate::datadogV2::model::IncidentResponderIncludedItem>,
+                > = None;
+                let mut links: Option<std::collections::BTreeMap<String, String>> = None;
+                let mut meta: Option<crate::datadogV2::model::IncidentRespondersResponseMeta> =
+                    None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -87,6 +113,18 @@ impl<'de> Deserialize<'de> for IncidentRespondersResponse {
                             }
                             included = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "links" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "meta" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -99,6 +137,8 @@ impl<'de> Deserialize<'de> for IncidentRespondersResponse {
                 let content = IncidentRespondersResponse {
                     data,
                     included,
+                    links,
+                    meta,
                     additional_properties,
                     _unparsed,
                 };

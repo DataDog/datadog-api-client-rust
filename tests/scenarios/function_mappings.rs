@@ -47636,7 +47636,21 @@ fn test_v2_list_incident_responders(
         .expect("api instance not found");
     let incident_id =
         serde_json::from_value(_parameters.get("incident_id").unwrap().clone()).unwrap();
-    let response = match block_on(api.list_incident_responders_with_http_info(incident_id)) {
+    let include = _parameters
+        .get("include")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_incidents::ListIncidentRespondersOptionalParams::default();
+    params.include = include;
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    let response = match block_on(api.list_incident_responders_with_http_info(incident_id, params))
+    {
         Ok(response) => response,
         Err(error) => {
             return match error {
